@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        id: checkout
+      - name: Setup Java
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # v5.0.0
+        with:
+          distribution: adopt
+          java-version: 11
+        id: setup_java
+      - name: Validate SSP schema and constraints (XML)
+        uses: oscal-club/oscal-cli-action@1a210b84bc1fd6adf15c9cf0d46a51d15a3d8301 # v2.0.1
+        with:
+          args: validate Kompendien/Grundschutz++-Kompendium/Grundschutz++-Kompendium.xml
+        id: validate_ssp_xml
+      - name: Validate SSP schema and constraints (JSON)
+        uses: oscal-club/oscal-cli-action@1a210b84bc1fd6adf15c9cf0d46a51d15a3d8301 # v2.0.1
+        with:
+          args: validate Kompendien/Grundschutz++-Kompendium/Grundschutz++-Kompendium.json
+        id: validate_ssp_json
+      #- name: Run shell command  with all setup and context from before
+      #  run: |
+      #    ls -lha
+      #  id: post_setup_shell_command
