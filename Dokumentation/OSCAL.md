@@ -34,7 +34,7 @@ OSCAL ist in mehrere Dokumentenstrukturen gegliedert, die spezifische Modelle f�
 
 ### 1. Kataloge
 
-Ein OSCAL-Katalog ist eine Sammlung von Sicherheitsanforderungen, die in einem strukturierten, maschinenlesbaren Format definiert sind. Ein Standard wie **ISO 27001 Annex A** oder **BSI Grundschutz++** kann als OSCAL-Katalog dargestellt werden. Kataloge organisieren Anforderungen in Gruppen oder Familien, um die Übersichtlichkeit zu verbessern. Zudem können den Anforderungen weitere Metadaten hinzugefügt werden, z.B. Hinweistexte oder Schlagworte. Da alle weiteren OSCAL-Dokumente auf diesen Katalogen basieren, müssen alle verwendeten Anforderungen hier zuerst definiert werden.
+Ein OSCAL-Katalog ist eine Sammlung von Sicherheitsanforderungen, die in einem strukturierten, maschinenlesbaren Format definiert sind. Ein Standard wie **ISO 27001 Annex A** oder **BSI Grundschutz++** kann als OSCAL-Katalog dargestellt werden. Kataloge organisieren Anforderungen in Gruppen oder Familien, um die Übersichtlichkeit zu verbessern. Zudem können den Anforderungen weitere Metadaten hinzugefügt werden, z. B. Hinweistexte oder Schlagworte. Da alle weiteren OSCAL-Dokumente auf diesen Katalogen basieren, müssen alle verwendeten Anforderungen hier zuerst definiert werden.
 
 ### 2. Profiles
 
@@ -51,7 +51,7 @@ Beispielsweise könnten Mindeststandards oder branchenspezifische Sicherheitssta
 
 Die **Implementierungsebene** beschreibt, wie Anforderungen tatsächlich umgesetzt oder vorbereitet werden. Zwei Modelle sind hier zentral:
 
-* **System-Sicherheitsplan (SSP / Implementierungsplan):**
+* **System-Sicherheitsplan (SSP/Implementierungsplan):**
   Ein SSP dokumentiert, wie die ausgewählten Anforderungen in einem konkreten Informationsverbund oder System erfüllt werden. Er enthält nicht nur technische Aspekte (z. B. Konfigurationen oder eingesetzte Software), sondern kann auch die Umsetzung organisatorischer **Richtlinien und Verfahren** darstellen. Damit ist der SSP sowohl für Technik als auch für Management relevant.
 
   **Beispiel:** Ein SSP könnte beschreiben, wie eine Organisation die Anforderung zur Zugriffskontrolle umsetzt – etwa durch den Einsatz von Multi-Faktor-Authentifizierung (technisch) und durch eine Richtlinie, die regelmäßige Passwortänderungen vorschreibt (organisatorisch).
@@ -59,7 +59,7 @@ Die **Implementierungsebene** beschreibt, wie Anforderungen tatsächlich umgeset
 * **Komponentendefinition (Component Definition):**
   Während ein SSP die konkrete Umsetzung in einem System beschreibt, handelt es sich bei Komponentendefinitionen um **wiederverwendbare Vorlagen**. Sie beschreiben die Eigenschaften einer spezifischen Komponente – sei es Hardware, Software, ein externer Service, eine Richtlinie, ein Prozess, ein Verfahren oder auch ein Compliance-Artefakt. Diese Definitionen sind keine Implementierungen an sich, sondern **Vorlagen**, die in unterschiedlichen SSPs referenziert werden können.
 
-  **Beispiel:** Eine Komponentendefinition könnte die Standardkonfiguration eines „Windows Server 2025“ beschreiben oder auch eine generische Datensicherungsrichtlinie einer Institution. Diese OSCAL Komponentendefinitionen können in die Sicherheitsdokumentationen von verschiedenen Projekten oder Systemen eingebunden werden, ohne dass sie jedes Mal neu dokumentiert werden müssen.
+  **Beispiel:** Eine Komponentendefinition könnte die Standardkonfiguration eines „Windows Server 2025“ beschreiben oder auch eine generische Datensicherungsrichtlinie einer Institution. Diese OSCAL-Komponentendefinitionen können in die Sicherheitsdokumentationen von verschiedenen Projekten oder Systemen eingebunden werden, ohne dass sie jedes Mal neu dokumentiert werden müssen.
 
 ![OSCAL-Dokumente: Katalog, Profile, Implementierungsplan, Überprüfung](oscal_simple.png)
 
@@ -160,10 +160,10 @@ back-matter:
 ## Welche Best Practices für Autoren gibt es?
 
 * **Logische Gliederung:** Teilen Sie Ihren Katalog in klar abgegrenzte, thematische oder domänenspezifische Abschnitte auf. Dies erleichtert das Verständnis, die Wartung und spätere Erweiterungen.
-* **Vorhandene Vorlagen nutzen:** Greifen Sie auf OSCAL-Templates, Beispielkataloge und LLM zurück, um den Einstieg zu erleichtern und häufige Fehler zu vermeiden.
+* **Vorhandene Vorlagen nutzen:** Greifen Sie auf OSCAL-Templates, Beispielkataloge und LLMs zurück, um den Einstieg zu erleichtern und häufige Fehler zu vermeiden.
 * **Validierung:** Verwenden Sie automatisierte [Validierungstools](https://pages.nist.gov/oscal-tools/demos/csx/validator/), die prüfen, ob Ihr Dokument den OSCAL-Schemata entspricht. So können Fehler frühzeitig erkannt und behoben werden.
 * **Versionsmanagement:** Nutzen Sie Versionskontrollsysteme (z. B. Git), um Änderungen zu verfolgen und bei Bedarf auf frühere Versionen zurückgreifen zu können.
-* **Teamarbeit:** Arbeiten Sie eng mit anderen Fachexperten zusammen – etwa aus den Bereichen Compliance, Implementierung und Audit – um ein möglichst praxisnahes und robustes OSCAL Profile zu erstellen.
+* **Teamarbeit:** Arbeiten Sie eng mit anderen Fachexperten zusammen – etwa aus den Bereichen Compliance, Implementierung und Audit – um ein möglichst praxisnahes und robustes OSCAL-Profile zu erstellen.
 * **Prototyping:** Erstellen Sie zunächst eine erste Version (MVP) und lassen Sie diese von Stakeholdern validieren.
 * **Kontinuierliche Verbesserung:** Integrieren Sie Feedback, testen Sie regelmäßig und passen Sie den Katalog an neue Anforderungen und geänderte Sicherheitsstandards an.
 * **Automatisierung:** Integrieren Sie die OSCAL-Artefakte in automatisierte Prozesse, um bei jeder Änderung eine automatische Validierung und gegebenenfalls einen Deployment-Vorgang durchzuführen.
@@ -182,7 +182,7 @@ Erstellen Sie ein Profile, das die aus dem Katalog zu verwendenden Anforderungen
 ### Schritt 3: SSP erstellen
 1. Legen Sie eine neue OSCAL-SSP-Datei an.
 2. Füllen Sie die Metadaten aus.
-3. Verweisen Sie auf das verwendete OSCAL Profile.
+3. Verweisen Sie auf das verwendete OSCAL-Profile.
 4. Listen Sie alle Systemkomponenten auf (z. B. Webserver, Datenbank).
 
 ### Schritt 4: Umsetzung dokumentieren
@@ -201,9 +201,9 @@ Für jede Kontrolle fügen Sie eine kurze Beschreibung der Umsetzung hinzu, inkl
 ## Weitere Informationen
 - [US-NIST OSCAL-Dokumentation](https://pages.nist.gov/OSCAL/) und [Chat](https://app.gitter.im/#/room/#usnistgov-OSCAL_Lobby:gitter.im)
 - [Europäische OSCAL-Initiative](https://euroscal.eu/)
-- [Datenbank von OSCAL Inhalten](https://registry.oscal.io/documents)
+- [Datenbank von OSCAL-Inhalten](https://registry.oscal.io/documents)
 
-## OSCAL Tools (international)
+## OSCAL-Tools (international)
 - [Übersicht der wichtigsten OSCAL-Werkzeuge](https://oscal.io/tools/)
 - [Sammlung von Community-Werkzeugen](https://github.com/oscal-club/awesome-oscal)
 - [Online Viewer](https://viewer.oscal.io/) oder [Docker Image](https://github.com/EasyDynamics/oscal-editor-deployment)
