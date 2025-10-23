@@ -8,6 +8,10 @@ Der **Grundschutz++** ist eine umfassende Überarbeitung des bisherigen IT-Grund
 
 Diese Anleitung zeigt Ihnen, wie Sie die bereitgestellten OSCAL-Dateien (im JSON- und XML-Format) herunterladen und mit einem kompatiblen Werkzeug betrachten können.
 
+Die OSCAL-Dateien werden in zwei Varianten zur Verfügung gestellt: einmal ohne Signatur und einmal mit einer Signatur. Die signierten Dateien stehen im Unterordner `(signed)` zur Verfügung.
+
+Inhaltlich unterscheiden sich beide Varianten **nicht** von einander und können als identisch angesehen werden. Die signierten OSCAL-Dateien sind durch eine Signatur gekennzeichnet, die Programmen hilft die richtige Zeichencodierung leichter zu erkennen, ohne dass sie bspw. bei XML-Dateien den XML-Prolog interpretieren müssen und damit insgesamt Vorteile zur verbesserten Fehlervermeidung bei der Verarbeitung von Unicode-Daten plattformübergreifend bieten. Es gilt zu beachten, dass beim Stand der Technik nicht alle Programme signierte OSCAL-Dateien problemlos akzeptieren.
+
 ### Schritt 1: OSCAL-Dateien herunterladen
 
 Sie können die OSCAL-Dateien direkt von diesem GitHub-Repository herunterladen. Die Dateien liegen in den Formaten **JSON** (`.json`) und **XML** (`.xml`) vor.
