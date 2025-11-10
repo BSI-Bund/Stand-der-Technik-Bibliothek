@@ -20,35 +20,45 @@ Die Datei `controls_anforderungen.json` enthält alle Anforderungen der Prozessb
 You are a BSI IT-Grundschutz and G++ compliance expert with deep knowledge of OSCAL.
 
 You have been provided with two critical source documents in your context:
-1.  **Ed2023 Source:** A complete list of all BSI Ed2023 "Prozessbausteine" (e.g., ORP, ISMS, CON, DER) and all their subordinate "Anforderungen" (e.g., "ORP.1.A1", "ORP.1.A2").
-2.  **G++ Source:** A complete list of all non-technical G++ "Kontrollen" (e.g., "GPP.10.1", "GPP.14.2").
+1.  **Ed2023 Source:** A complete list of all BSI Ed2023 Anforderungen for one baustein
+2.  **G++ Source:** A complete list of all G++ Controls (e.g., "GPP.10.1", "GPP.14.2") for the matching Zielobjekt
 
-Your task is to perform a comprehensive, exhaustive, 1:1 semantic mapping. You must map **every single** Ed2023 "Anforderung" from the "Prozessbausteine" source to the **single best-matching** G++ "Kontrolle" from the non-technical G++ source.
+Your task is to perform a comprehensive, exhaustive, 1:1 semantic mapping. You must map **every single** Ed2023 "Anforderung" to the **single best-matching** G++ "Kontrolle" from the G++ source.
 
 **CRITICAL RULES:**
 
-1.  **MAPPING LOGIC:** You must iterate through **every** Ed2023 "Anforderung" (e.g., "ORP.1.A1") and find the G++ "Kontrolle" (e.g., "GPP.10.2") that has the **closest semantic meaning** ("engste Übereinstimmung").
-2.  **1:1 CONSTRAINT (REQUIRED):** You **MUST** select exactly *one* G++ "Kontrolle" for *each* Ed2023 "Anforderung". Do not map one "Anforderung" to multiple "Kontrollen" (1:N is forbidden).
-3.  **N:1 CONSOLIDATION (PERMITTED):** It is **expected and correct** that multiple, different "Anforderungen" (e.g., "ORP.1.A1" and "ORP.1.A2") will map to the *same* G++ "Kontrolle" (e.g., "GPP.10.2"). This is correct G++ consolidation. Do not try to find a unique G++ control for each "Anforderung"; your *only* goal is the **best semantic match**.
-4.  **EXHAUSTIVE MAPPING:** You must process *every* "Anforderung" for *all* "Prozessbausteine" (ORP, ISMS, CON, DER, etc.) found in the Ed2023 source.
-5.  **ID ACCURACY:** You **MUST** use the exact, complete, and correct IDs for both the "Anforderung" (as the key) and the "Kontrolle" (as the value) exactly as they appear in the source documents.
+1.  **MAPPING LOGIC:** You must iterate through **every** Ed2023 "Anforderung" (e.g., "ORP.1.A1") and find the G++ "Kontrolle" (e.g., "GPP.10.2") that has the **closest semantic meaning** 
+2.  **1:1 CONSTRAINT (REQUIRED):** You **MUST** select exactly *one* G++ "Kontrolle" for *each* Ed2023 "Anforderung". Do not map one "Anforderung" to multiple "Controls" (1:N is forbidden).
+3.  **unmatched CONSTRAINT (REQUIRED):** It is **expected and correct** that some "Anforderung" and some "Controls" will not match, you return those in your answer in a separate list for unmatched Anforderungen and unmatched Controls.
+4.  **EXHAUSTIVE MAPPING:** You must process *every* "Anforderung" found in the Ed2023 source.
+5.  **ID ACCURACY:** You **MUST** use the exact, complete, and correct IDs for both the "Anforderung" (as the key) and the "Kontrolle" (as the value) exactly as they appear in the source documents.
 
 **OUTPUT FORMAT:**
 
 Your response **MUST** be a single, valid JSON object. Do not include *any* text, explanations, apologies, or markdown before or after the JSON block.
 
-The JSON object must have a single root key named "prozessbausteine_mapping". The value will be an object where each key is an Ed2023 "Anforderung" ID and its value is the corresponding G++ "Kontrolle" ID.
+The JSON object must have a three root keys like in the example. The value in "mapping" will be an object where each key is an Ed2023 "Anforderung" ID and its value is the corresponding G++ "Kontrolle" ID.
 
 **EXAMPLE STRUCTURE:**
 ```json
 {
-  "prozessbausteine_mapping": {
-    "ORP.1.A1": "GPP.10.2",
-    "ORP.1.A2": "GPP.10.2",
-    "ORP.1.A3": "GPP.14.1",
-    "ORP.2.A1": "GPP.8.5",
-    "...[all other mappings]..."
-  }
+  "mapping": {
+    "ORP.1.A1": "GPP.10.2",
+    "ORP.1.A2": "GPP.10.2",
+    "ORP.1.A3": "GPP.14.1",
+    "ORP.2.A1": "GPP.8.5",
+    "...[all other mappings]..."
+  },
+ "unmapped_gpp": {
+    "GPP.12.1",
+    "GPP.12.1",
+    "..."
+},
+"unmapped_ed2023": {
+"GPP.12.1",
+"GPP.12.1",
+    "..."
+}
 }
 ```
 
