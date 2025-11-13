@@ -1,0 +1,1304 @@
+{
+  "component-definition": {
+    "uuid": "0c5d6c62-94c7-4f00-860d-79940567baa9",
+    "metadata": {
+      "title": "APP.3.1 Webanwendungen - Benutzerdefiniert",
+      "last-modified": "2025-11-13T21:34:49.099347+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "db5b9f50-74e9-4924-add5-fc196d3572b8",
+        "type": "software",
+        "title": "APP.3.1 Webanwendungen",
+        "description": "This component represents the implementation of all controls for Baustein APP.3.1.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Webanwendungen bieten bestimmte Funktionen und dynamische (sich verändernde) Inhalte. Dazu nutzen Webanwendungen die Internetprotokolle HTTP (Hypertext Transfer Protocol) oder HTTPS. Bei HTTPS wird die Verbindung durch das Protokoll TLS (Transport Layer Security) kryptografisch abgesichert. Webanwendungen stellen auf einem Server Dokumente und Bedienoberflächen, z. B. in Form von Eingabemasken, bereit und liefern diese auf Anfrage an entsprechende Programme auf den Clients aus, wie z. B. an Webbrowser.<BR>Webservices sind Anwendungen, die das HTTP(S)-Protokoll verwenden, um Daten für andere Anwendungen bereitzustellen. In der Regel werden sie nicht unmittelbar durch Benutzende angesteuert.<BR>Um eine Webanwendung oder einen Webservice zu betreiben, sind in der Regel mehrere Komponenten notwendig. Üblich sind Webserver, um Daten auszuliefern und Applikationsserver, um die eigentliche Anwendung oder den Webservice zu betreiben. Außerdem werden zusätzliche Hintergrundsysteme benötigt, die oft als Datenquellen über unterschiedliche Schnittstellen angebunden sind, z. B. Datenbanken oder Verzeichnisdienste.<BR>Webanwendungen und Webservices werden sowohl in öffentlichen Datennetzen als auch in lokalen Netzen einer Institution (Intranet) eingesetzt, um Daten und Anwendungen bereitzustellen. In der Regel müssen sich Clients authentisieren, um auf eine Webanwendung oder einen Webservice zugreifen zu können."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, Webanwendungen und Webservices sicher einzusetzen sowie Informationen zu schützen, die durch sie verarbeitet werden."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein ist auf jede Webanwendung und jeden Webservice anzuwenden, die im Informationsverbund eingesetzt werden."
+          },
+          {
+            "name": "2.1. Unzureichende Protokollierung von sicherheitsrelevanten Ereignissen",
+            "value": "Wenn sicherheitsrelevante Ereignisse von der Webanwendung oder dem Webservice unzureichend protokolliert werden, können diese unter Umständen zu einem späteren Zeitpunkt nur schwer nachvollzogen werden. Die Ursachen für ein Ereignis sind dann möglicherweise nicht mehr ermittelbar. So können z. B. kritische Fehler oder unerlaubte Änderungen in der Konfiguration der Webanwendung übersehen werden."
+          },
+          {
+            "name": "2.2. Offenlegung sicherheitsrelevanter Informationen bei Webanwendungen und Webservices",
+            "value": "Webseiten und Daten, die von einer Webanwendung oder einem Webservice generiert und ausgeliefert werden, können Informationen zu den Hintergrundsystemen enthalten, z. B. Angaben zu Datenbanken oder Versionsständen von Frameworks. Diese Informationen können es bei Angriffen erleichtern, gezielt Webanwendungen oder Webservices anzugreifen."
+          },
+          {
+            "name": "2.3. Missbrauch einer Webanwendung durch automatisierte Nutzung",
+            "value": "Wenn Funktionen einer Webanwendung oder eines Webservices automatisiert genutzt werden, können so zahlreiche Vorgänge in kurzer Zeit ausgeführt werden. Mithilfe eines wiederholt durchgeführten Login-Prozesses kann so z. B. versucht werden, gültige Kombinationen von Konten und Passwörtern zu erraten (Brute-Force). Außerdem kann eine Liste mit gültigen Konten erzeugt werden (Enumeration), falls die Webanwendung oder der Webservice Informationen über vorhandene Konten zurück gibt. Darüber hinaus können wiederholte Aufrufe von ressourcenintensiven Funktionen wie z. B. komplexen Datenbankabfragen für Denial-of-Service-Angriffe auf Anwendungsebene missbraucht werden."
+          },
+          {
+            "name": "2.4. Unzureichende Authentisierung",
+            "value": "Oft sollen spezielle Funktionen einer Webanwendung oder eines Webservices nur bestimmten Gruppen vorbehalten bleiben. Die entsprechenden Personen erhalten dann z. B. Konten, die exklusiv mit den notwendigen Zugriffsrechten ausgestattet sind. Unter diesen Konten authentisieren sich die Benutzenden zu Beginn jeder Sitzung in der Webanwendung oder dem Webservice, z. B. mit Kontoname und Passwort. Wird diese Authentisierung nicht korrekt konfiguriert, kann sie möglicherweise umgangen werden. Außerdem kann eine Webanwendung oder ein Webservice so konfiguriert werden, dass Zugangsdaten auf dem Webserver unsicher gespeichert werden. Im Falle eines erfolgreichen Angriffs verfügen Angreifende dann über große Mengen von Zugangsdaten, die sie auch an anderen Stellen einsetzen könnten."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "d2fc031e-acfd-44f0-8781-a28f6e9baf1e",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/webanwendungen_profile.json",
+            "description": "Implementation for all controls in Baustein APP.3.1",
+            "implemented-requirements": [
+              {
+                "uuid": "9052f13f-fcb5-4b62-aa5f-e7046700d9e2",
+                "control-id": "BER.3.9",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a7-m1",
+                    "uuid": "4a234e4d-8bd8-493d-a51f-39367a2b78a0",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es sind keine spezifischen Schutzmechanismen gegen die automatisierte Nutzung implementiert. Die Anwendung ist anfällig für einfache Brute-Force-Angriffe auf Login-Formulare oder Ressourcen-intensive Abfragen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keine Ratenbegrenzung oder CAPTCHA-Funktionalität. Ein einfaches Skript kann das Login-Formular tausende Male pro Minute ohne Einschränkung aufrufen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verwendet ein Automatisierungstool (z.B. Burp Intruder), um eine hohe Anzahl von Anfragen an eine kritische Funktion (z.B. Login, Registrierung, Suche) zu senden und stellt fest, dass keine Gegenmaßnahmen ausgelöst werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a7-m2",
+                    "uuid": "e8abc5de-d5e6-48ca-b529-bdf94005a758",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein einfacher Schutzmechanismus wie ein traditionelles CAPTCHA (z.B. mit verzerrtem Text) ist auf der Login-Seite implementiert. Es gibt eine einfache, serverweite Ratenbegrenzung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine einfache CAPTCHA-Bibliothek ist in das Login-Formular integriert. Der Webserver (z.B. Nginx) ist so konfiguriert, dass er nicht mehr als 100 Anfragen pro Sekunde von einer einzelnen IP-Adresse akzeptiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz und Funktion des CAPTCHAs. Die Konfiguration der Ratenbegrenzung im Webserver wird überprüft. Es wird getestet, ob die Ratenbegrenzung greift und ob das CAPTCHA auch andere kritische Formulare schützt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a7-m3",
+                    "uuid": "1aceeddf-e331-48f2-a900-5a5739c8641f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb MUSS sicherstellen, dass Webanwendungen und Webservices vor unberechtigter automatisierter Nutzung geschützt werden. Dabei MUSS jedoch berücksichtigt werden, wie sich die Schutzmechanismen auf die Nutzungsmöglichkeiten berechtigter Clients auswirken. Wenn die Webanwendung RSS-Feeds oder andere Funktionen enthält, die explizit für die automatisierte Nutzung vorgesehen sind, MUSS dies ebenfalls bei der Konfiguration der Schutzmechanismen berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es sind anwendungsspezifische Ratenbegrenzungen für sensible Funktionen (Login, Passwort-Reset, API-Endpunkte) implementiert. Endpunkte für legitime automatisierte Nutzung (wie RSS-Feeds oder APIs für Partner) werden von den strengsten Ratenbegrenzungen ausgenommen oder erhalten eigene, höhere Limits. Ein modernes Challenge-Response-System (z.B. hCaptcha) wird nach mehreren fehlgeschlagenen Versuchen angezeigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der Schutzmechanismen und verifiziert, dass diese die legitime Nutzung (z.B. Abruf eines RSS-Feeds) nicht behindern. Es wird getestet, ob die Ratenbegrenzung funktionsspezifisch ist und ob nach einer bestimmten Anzahl von Anfragen eine Challenge ausgelöst wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a7-m4",
+                    "uuid": "9dda50fb-863a-44cf-b8f4-e33fb0c29134",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein modernes, benutzerfreundliches Challenge-Response-System (z.B. unsichtbares reCAPTCHA) ist auf allen sensiblen, unauthentifizierten Endpunkten standardmäßig aktiv. Temporäre Sperren werden nicht nur pro IP-Adresse, sondern auch pro Benutzerkonto verhängt. Verdächtige automatisierte Zugriffsversuche werden protokolliert und lösen Alarme aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung integriert einen Dienst wie Google reCAPTCHA v3, der eine Risikobewertung für jede Anfrage liefert und nur bei hohem Risiko eine sichtbare Challenge anzeigt. Die Anwendungslogik verfolgt fehlgeschlagene Versuche pro Konto und sperrt dieses nach zu vielen Versuchen, unabhängig von der Quell-IP. Diese Ereignisse werden an ein SIEM zur Überwachung gesendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Implementierung des Challenge-Response-Systems und testet die Sperrmechanismen für IP-Adressen und Benutzerkonten. Die Alarmierungsregeln im SIEM werden überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a7-m5",
+                    "uuid": "4e16ac4f-6caa-4256-8648-f76c74eaa826",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine dedizierte Bot-Management-Lösung wird eingesetzt, die mittels Geräte-Fingerprinting, Verhaltensanalyse und Reputationsdatenbanken zwischen menschlichen Nutzern, legitimen Bots (z.B. Suchmaschinen) und bösartigen Bots unterscheidet. Auf Basis dieser Klassifizierung werden granulare Zugriffsregeln und Gegenmaßnahmen automatisiert durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein kommerzieller Dienst (z.B. von Akamai, Cloudflare, Imperva) wird vor die Anwendung geschaltet. Dieser analysiert den eingehenden Verkehr und reichert Anfragen mit Metadaten über den Client an. Die Webanwendung oder der Edge-Dienst selbst blockiert, drosselt oder leitet den Verkehr basierend auf der Bot-Klassifizierung um. Suchmaschinen-Crawler werden beispielsweise zugelassen, während Credential-Stuffing-Tools blockiert werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der Bot-Management-Lösung und die definierten Richtlinien. Mit spezialisierten Tools werden verschiedene Bot-Identitäten simuliert, um die korrekte Klassifizierung und Reaktion des Systems zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "7c94464c-4892-4fd2-8e6f-ee0601563a77",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BES",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a9-m3",
+                    "uuid": "c089f387-7e34-49d2-9bf5-1e595562ba4e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu den allgemeinen Aspekten der Beschaffung von Software SOLLTE die Institution mindestens folgendes bei der Beschaffung von Webanwendungen und Webservices berücksichtigen: sichere Eingabevalidierung und Ausgabekodierung, sicheres Session-Management, sichere kryptografische Verfahren, sichere Authentisierungsverfahren, sichere Verfahren zum serverseitigen Speichern von Zugangsdaten, geeignetes Berechtigungsmanagement, ausreichende Protokollierungsmöglichkeiten, regelmäßige Sicherheitsupdates durch den Entwickelnden der Software, Schutzmechanismen vor verbreiteten Angriffen auf Webanwendungen und Webservices sowie Zugriff auf den Quelltext der Webanwendung oder des Webservices."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Anforderungskatalog für die Beschaffung enthält eine detaillierte Checkliste mit den genannten Sicherheitseigenschaften. Anbieter müssen in ihrem Angebot explizit zu jeder Anforderung Stellung nehmen und die Umsetzung beschreiben. Die Erfüllung dieser Anforderungen wird zu einem vertraglichen Bestandteil."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Beschaffungsunterlagen (Ausschreibung, Anforderungskatalog) und die eingegangenen Angebote. Es wird geprüft, ob die Sicherheitsanforderungen klar formuliert sind und ob die Angebote darauf eingehen. Der finale Vertrag wird auf die Verbindlichkeit der Sicherheitszusagen überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a9-m4",
+                    "uuid": "af77f70f-8d4a-48bd-aa6d-214286e704d4",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Anbieter müssen im Rahmen des Beschaffungsprozesses Nachweise über ihren Secure Software Development Lifecycle (SSDLC) erbringen. Die zu beschaffende Software wird vor dem Kauf einer unabhängigen Sicherheitsüberprüfung oder einem Penetrationstest unterzogen. Vertraglich werden feste Fristen für die Bereitstellung von Sicherheitspatches vereinbart."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Anbieter werden gebeten, Zertifizierungen (z.B. ISO 27001) oder Berichte über ihre Entwicklungsprozesse vorzulegen. Ein externer Dienstleister wird beauftragt, eine Testversion der Software zu prüfen. Im Vertrag wird festgelegt, dass kritische Schwachstellen innerhalb von 48 Stunden nach Bekanntwerden durch einen Patch des Herstellers behoben werden müssen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die vom Anbieter vorgelegten Nachweise zum SSDLC und den Bericht der unabhängigen Sicherheitsüberprüfung. Der Vertrag wird auf die Klauseln zu den Service Level Agreements (SLAs) für Sicherheitspatches geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a9-m5",
+                    "uuid": "cf333e18-0df9-4c33-988e-eb21738439db",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Anbieter müssen eine vollständige Software Bill of Materials (SBOM) für das Produkt bereitstellen. Die Software durchläuft vor der finalen Abnahme intensive interne und externe Penetrationstests. Der Vertrag mit dem Anbieter enthält strenge SLAs für die Behebung von Schwachstellen sowie ein Auditrecht, das es der Institution erlaubt, die Entwicklungsprozesse des Anbieters zu überprüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die SBOM wird in einem Standardformat (z.B. CycloneDX) verlangt und automatisch auf bekannte Schwachstellen in den Komponenten geprüft. Das interne Red Team und ein externer Anbieter testen die Software parallel. Der Vertrag enthält eine Klausel, die ein jährliches Audit der Sicherheitspraktiken beim Hersteller durch einen von der Institution beauftragten Dritten erlaubt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die bereitgestellte SBOM und die Ergebnisse der internen und externen Penetrationstests. Die Vertragsklauseln zum Auditrecht und zu den SLAs werden auf ihre Wirksamkeit und Durchsetzbarkeit geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "1981d5bf-2531-49ca-a705-61e607dbdf90",
+                "control-id": "DEV.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a8-m1",
+                    "uuid": "b1cb0c27-a2f1-4fb0-9668-040ffec88d28",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Entwicklung der Anwendung erfolgt ad-hoc mit Fokus auf die schnellstmögliche Bereitstellung von Funktionen. Eine dokumentierte Architektur existiert nicht, und Sicherheitsaspekte werden nicht systematisch berücksichtigt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung ist monolithisch und vermischt verschiedene Verantwortlichkeiten (z.B. Datenzugriff, Geschäftslogik und Darstellung) im selben Code, was als 'Big Ball of Mud' bezeichnet wird. Es gibt keine klaren Schnittstellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt durch Interviews mit den Entwicklern und eine Analyse des Quellcodes fest, dass keine bewusste Architekturentscheidung getroffen wurde und keine Architekturdokumentation vorliegt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a8-m2",
+                    "uuid": "31f8cbe7-5dd6-4362-a4cf-baf3d50a9c5c",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert eine grundlegende Architekturdokumentation, die die Hauptkomponenten der Anwendung und deren Zusammenspiel beschreibt. Allgemeine Sicherheitsaspekte werden erwähnt, sind aber nicht in die Architektur integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt ein einfaches Diagramm, das den Webserver, den Applikationsserver und die Datenbank zeigt. In der Dokumentation steht ein allgemeiner Satz wie 'Die Kommunikation muss sicher sein', ohne dies technisch zu spezifizieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Architekturdokumentation und vergleicht sie mit der tatsächlichen Implementierung. Es wird festgestellt, dass Sicherheitsaspekte nur oberflächlich behandelt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a8-m3",
+                    "uuid": "d07d6195-2dde-4ac6-b450-dd490d3f4d90",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sicherheitsaspekte SOLLTEN bereits während der Planung von Webanwendungen und Webservices betrachtet werden. Auch SOLLTE darauf geachtet werden, dass die Architektur der Webanwendung oder des Webservice die Geschäftslogik der Institution exakt erfasst und korrekt umsetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Planungsphase wird eine Architekturentscheidung (z.B. 3-Tier-Architektur, Microservices) getroffen und dokumentiert. Das Architekturdesign berücksichtigt explizit Sicherheitsprinzipien wie die Trennung von Verantwortlichkeiten und definierte Schnittstellen. Es wird sichergestellt, dass die Architektur die Geschäftsprozesse korrekt abbildet, um logische Fehler zu vermeiden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Architekturdokumentation und verifiziert, dass Sicherheitsaspekte Teil des Entwurfs sind. Durch Workshops mit Fachabteilungen und Entwicklern wird geprüft, ob die Architektur die Geschäftslogik korrekt umsetzt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a8-m4",
+                    "uuid": "5fcff47d-8b82-44f9-9c4c-9ac639a7f2b7",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die geplante Architektur wird ein systematisches Threat Modeling (z.B. nach STRIDE) durchgeführt, um potenzielle Bedrohungen zu identifizieren. Die Architektur wird nach den Prinzipien 'Secure by Design' und 'Defense in Depth' entworfen und beinhaltet explizit Sicherheitskomponenten (z.B. API-Gateway, WAF)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor Beginn der Entwicklung wird ein Workshop durchgeführt, um ein Datenflussdiagramm zu erstellen und mittels STRIDE Bedrohungen für jeden Prozess und Datenfluss zu identifizieren. Die daraus resultierenden Gegenmaßnahmen fließen in das Architekturdesign ein. Das Design wird in einem Architektur-Framework wie C4 Model dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Dokumentation des Threat Modelings und die daraus abgeleiteten Sicherheitsanforderungen. Es wird geprüft, ob die identifizierten Gegenmaßnahmen in der finalen Architektur und Implementierung umgesetzt wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a8-m5",
+                    "uuid": "b9789002-3ffa-4aec-a7b7-f6f8f3ad2ecd",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Systemarchitektur basiert auf einem Zero-Trust-Modell, bei dem keine impliziten Vertrauensstellungen existieren. Jede Interaktion zwischen Komponenten wird explizit authentifiziert und autorisiert. Die Architektur wird von einem formalen Security Architecture Board geprüft und freigegeben und wird kontinuierlich basierend auf neuer Threat Intelligence weiterentwickelt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung wird als eine Sammlung von Microservices implementiert, die über ein Service Mesh (z.B. Istio) kommunizieren. Das Service Mesh erzwingt für die gesamte interne Kommunikation eine gegenseitige TLS-Authentifizierung (mTLS) und feingranulare Autorisierungsrichtlinien. Architekturänderungen erfordern die Zustimmung des Architecture Boards."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des Service Mesh und der Autorisierungsrichtlinien. Es werden die Protokolle des Security Architecture Boards eingesehen. Es wird geprüft, ob die Architektur regelmäßig aktualisiert wird, um auf neue Bedrohungen zu reagieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "516e4e6f-ec15-46b6-b9c7-fdc218c43a7e",
+                "control-id": "DEV.3.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a14-m1",
+                    "uuid": "7533eb6b-1a4f-4403-818c-46d7ec1b96d8",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zugangsdaten werden nur gehasht, aber nicht gesalzen gespeichert. Teile des Quelltextes, wie z.B. Include-Dateien oder Konfigurationsdateien, sind möglicherweise über den Webserver direkt abrufbar."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung verwendet eine `sha1($password)` Funktion, um Passwörter zu speichern. `.inc` oder `.config` Dateien liegen im Web-Root und der Webserver ist nicht so konfiguriert, dass er den direkten Zugriff darauf blockiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer inspiziert den Quellcode für die Passwort-Speicherung. Mit einem Web-Scanner oder manuellen Anfragen wird versucht, auf bekannte Konfigurations- oder Quelltextdateien direkt zuzugreifen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a14-m2",
+                    "uuid": "1ac87625-f381-4659-8149-3bb37c55a59e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zugangsdaten werden mit einem Salt und einem Hash-Verfahren gespeichert, jedoch wird ein veralteter oder schwacher Algorithmus (z.B. MD5 oder SHA1) verwendet. Der Quelltext der Anwendung ist grundsätzlich vor direktem Abruf geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung verwendet eine Funktion wie `md5($salt . $password)`. Der Webserver ist so konfiguriert, dass er den Zugriff auf Dateien mit bestimmten Endungen (.php, .inc) verweigert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft den Quellcode und identifiziert den verwendeten Hashing-Algorithmus. Es wird die Webserver-Konfiguration auf Regeln zum Schutz von Quelltextdateien überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a14-m3",
+                    "uuid": "8a570a58-e506-46a5-8c24-ab4e411fe9bc",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb MUSS sicherstellen, dass Zugangsdaten zur Webanwendung oder zum Webservice serverseitig mithilfe von sicheren kryptografischen Algorithmen vor unbefugtem Zugriff geschützt werden. Dazu MÜSSEN Salted Hash-Verfahren verwendet werden. Die Dateien mit den Quelltexten der Webanwendung oder des Webservices MÜSSEN vor unerlaubten Abrufen geschützt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein modernes, als sicher anerkanntes Salted-Hash-Verfahren (z.B. bcrypt) mit einem angemessenen Kostenfaktor verwendet. Der gesamte Anwendungs-Quelltext wird in einem Verzeichnis außerhalb des Web-Server-Document-Roots gespeichert, sodass nur eine einzelne `index.php`-Datei im öffentlichen Verzeichnis liegt (Front-Controller-Pattern)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert im Quellcode die Verwendung eines sicheren Salted-Hash-Verfahrens. Die Verzeichnisstruktur auf dem Server wird überprüft, um sicherzustellen, dass der Quelltext nicht im Web-Root liegt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a14-m4",
+                    "uuid": "59e55391-4f2c-4304-82fd-e8922b5482d5",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die Speicherung von Zugangsdaten wird ein modernes, rechenintensives Hashing-Verfahren wie Argon2 oder scrypt mit von Sicherheitsexperten empfohlenen Parametern eingesetzt. Der Quelltext wird in einem sicheren Versionskontrollsystem verwaltet und der Zugriff darauf ist stark reglementiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung nutzt eine Standard-Bibliothek, die Argon2id implementiert. Die Parameter für Memory-Cost, Time-Cost und Parallelismus sind gemäß aktuellen Empfehlungen konfiguriert. Der Quellcode liegt in einem Git-Repository, für das Branch-Protection-Regeln und verpflichtende Code-Reviews für Änderungen gelten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des Hashing-Algorithmus und gleicht die Parameter mit den aktuellen Best Practices ab. Die Konfiguration des Versionskontrollsystems und die Zugriffsberechtigungen werden geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a14-m5",
+                    "uuid": "1ad85fc8-0b2f-4a5b-b0d8-d6ecd14f940f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gehashte Zugangsdaten werden zusätzlich mit einem anwendungsspezifischen Schlüssel verschlüsselt, der in einem Hardware Security Module (HSM) oder einem dedizierten Key Management Service (KMS) sicher verwahrt wird. Der Quelltext wird mittels einer sicheren CI/CD-Pipeline, die automatisierte Sicherheitstests (SAST) durchführt, auf die Produktivsysteme ausgerollt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung ruft zur Ver- und Entschlüsselung der gehashten Passwörter eine API eines KMS (z.B. AWS KMS, HashiCorp Vault) auf. Die Authentifizierung der Anwendung am KMS erfolgt über kurzlebige, rollenbasierte Credentials. Die Jenkins- oder GitLab-Pipeline enthält einen Schritt, der vor jedem Deployment einen SAST-Scan ausführt und den Build bei kritischen Funden abbricht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Architektur der Schlüsselverwaltung und verifiziert die Konfiguration und die Zugriffsrichtlinien des HSM/KMS. Die CI/CD-Pipeline-Konfiguration wird auf die Einbindung und die Konfiguration des SAST-Tools überprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2489568d-db32-4836-a16a-efb87f8426fb",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a12-m3",
+                    "uuid": "7b98693f-b4b8-48fa-9fa7-1c93683fafbe",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Webanwendungen und Webservices SOLLTEN so konfiguriert sein, dass auf ihre Ressourcen und Funktionen ausschließlich über die vorgesehenen, abgesicherten Kommunikationspfade zugegriffen werden kann. Der Zugriff auf nicht benötigte Ressourcen und Funktionen SOLLTE deaktiviert werden. Falls dies nicht möglich ist, SOLLTE der Zugriff soweit wie möglich eingeschränkt werden. Folgendes SOLLTE bei der Konfiguration von Webanwendungen und Webservices umgesetzt werden: Deaktivieren nicht benötigter HTTP-Methoden, Konfigurieren der Zeichenkodierung, Vermeiden von sicherheitsrelevanten Informationen in Fehlermeldungen und Antworten, Speichern von Konfigurationsdateien außerhalb des Web-Root-Verzeichnisses sowie Festlegen von Grenzwerten für Zugriffsversuche."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration des Webservers wird manuell angepasst, um nur GET-, POST- und HEAD-Anfragen zu erlauben. In der Anwendung werden detaillierte Fehlermeldungen deaktiviert und generische Fehlerseiten angezeigt. Die Datenbank-Zugangsdaten werden in einer Datei außerhalb des `/var/www/html`-Verzeichnisses gespeichert. Die Zeichenkodierung (z.B. UTF-8) wird in den HTTP-Headern und in der Datenbankverbindung gesetzt. Grenzwerte für Zugriffsversuche werden in der Anwendungslogik implementiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des Webservers und der Anwendung. Mit dem `OPTIONS` HTTP-Request wird geprüft, welche Methoden erlaubt sind. Durch das Provozieren von Fehlern wird verifiziert, dass keine sensiblen Informationen preisgegeben werden. Die Verzeichnisstruktur und die Konfiguration der Zugriffs-Grenzwerte werden kontrolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a12-m4",
+                    "uuid": "489b15d1-39bc-40a5-8ef2-7fc8301aed51",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die sichere Konfiguration der Anwendung und des Webservers wird als Code (Infrastructure as Code) in einem Versionskontrollsystem verwaltet. Dies stellt eine konsistente, nachvollziehbare und wiederholbare Konfiguration über alle Umgebungen (Entwicklung, Test, Produktion) hinweg sicher."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Tools wie Ansible, Puppet oder Terraform verwendet, um Playbooks oder Konfigurationsdateien zu erstellen, die alle Aspekte der sicheren Konfiguration definieren. Diese Dateien werden in einem Git-Repository gespeichert. Änderungen an der Konfiguration müssen über einen Pull-Request-Prozess mit Review erfolgen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die IaC-Skripte im Git-Repository und vergleicht sie mit den Sicherheitsrichtlinien. Es wird geprüft, ob die produktive Konfiguration dem im Repository definierten Zustand entspricht, z.B. durch Ausführen eines `terraform plan` oder `ansible --check`."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a12-m5",
+                    "uuid": "2bc2710c-8866-4189-8627-e01b7624ae42",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfiguration wird kontinuierlich auf Konformität mit einer definierten, gehärteten Baseline überwacht. Jede Abweichung von dieser Baseline (Konfigurationsdrift) löst einen automatisierten Alarm und/oder eine automatische Korrekturmaßnahme aus. Die Konfiguration wird regelmäßig formalen Reviews und Audits unterzogen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Tool für Cloud Security Posture Management (CSPM) oder ein Konfigurationsmanagement-Tool im Enforcing-Modus wird eingesetzt. Wenn z.B. eine Firewall-Regel manuell geändert wird, wird diese entweder automatisch zurückgesetzt oder es wird ein hochpriorisierter Alarm in einem SIEM erzeugt. Die Ergebnisse der Konfigurations-Scans sind Teil der regelmäßigen internen und externen Audits."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des Überwachungstools, die definierten Baselines und die Alarmierungs- bzw. Korrektur-Workflows. Es wird eine absichtliche Fehlkonfiguration vorgenommen, um die Reaktion des Systems zu testen. Die Berichte der regelmäßigen Reviews werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e46e2763-1d1a-4187-8f57-5eec9e005596",
+                "control-id": "KONF.10.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Audit",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "PERF",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a22-m3",
+                    "uuid": "5468defe-66a4-4623-8320-e00d7dac54aa",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Webanwendungen und Webservices SOLLTEN regelmäßig auf Sicherheitsprobleme hin überprüft werden. Insbesondere SOLLTEN regelmäßig Revisionen durchgeführt werden. Die Ergebnisse SOLLTEN nachvollziehbar dokumentiert, ausreichend geschützt und vertraulich behandelt werden. Abweichungen SOLLTE nachgegangen werden. Die Ergebnisse SOLLTEN dem ISB vorgelegt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist ein Prozess etabliert, der vorsieht, dass die Anwendung mindestens einmal im Jahr sowie nach größeren Änderungen von einem internen Team oder einem externen Dienstleister einer Revision oder einem Penetrationstest unterzogen wird. Die Ergebnisse werden in einem Bericht zusammengefasst und die gefundenen Schwachstellen in einem Ticketsystem erfasst und deren Behebung nachverfolgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Berichte der letzten Penetrationstests und Revisionen. Er prüft, ob die Tests regelmäßig stattfinden und ob ein Prozess zur Nachverfolgung und Behebung der Feststellungen existiert. Es wird eine Stichprobe der Feststellungen genommen und geprüft, ob diese behoben wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a22-m4",
+                    "uuid": "ad4f216d-91c7-469e-b86d-3be65fb5d27c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Penetrationstests werden nach einem etablierten Standard (z.B. OWASP ASVS) durchgeführt. Der Scope der Tests umfasst die gesamte Anwendungsarchitektur, einschließlich der angebundenen Hintergrundsysteme und APIs. Die Ergebnisse fließen in einen formalen Schwachstellenmanagementprozess ein, der klare Fristen für die Behebung von Schwachstellen basierend auf ihrer Kritikalität vorgibt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Vertrag mit dem externen Penetrationstester legt fest, dass die Prüfung mindestens Level 2 des Application Security Verification Standard (ASVS) abdecken muss. Für die Behebung von Schwachstellen sind im Schwachstellenmanagement-Prozess SLAs definiert (z.B. kritische Schwachstellen innerhalb von 7 Tagen, hohe innerhalb von 30 Tagen)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht den Testbericht mit dem geforderten Standard (z.B. ASVS) und prüft, ob der Scope angemessen war. Die Einhaltung der SLAs für die Behebung von Schwachstellen wird anhand des Ticketsystems überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a22-m5",
+                    "uuid": "fcaa4492-6c0c-4ecb-a702-f95b50da5097",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es ist ein kontinuierliches Sicherheitstestprogramm etabliert, das automatisierte dynamische Anwendungssicherheitstests (DAST) in der CI/CD-Pipeline, regelmäßige Penetrationstests durch wechselnde Drittanbieter (um Betriebsblindheit zu vermeiden) und ein öffentliches oder privates Bug-Bounty-Programm zur Einbindung der breiteren Sicherheits-Community umfasst."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein DAST-Tool ist in die Staging-Phase der CI/CD-Pipeline integriert und blockiert das Deployment bei neuen, kritischen Funden. Jedes Jahr wird ein anderer renommierter Anbieter für den jährlichen Penetrationstest beauftragt. Ein Bug-Bounty-Programm auf einer Plattform wie HackerOne oder Bugcrowd motiviert externe Sicherheitsforscher, die Anwendung kontinuierlich zu prüfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des DAST-Tools in der Pipeline. Die Verträge und Berichte der verschiedenen Penetrationstest-Anbieter der letzten Jahre werden eingesehen. Die Prozesse und Ergebnisse des Bug-Bounty-Programms werden bewertet."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ce94dd96-75c4-4f31-bb24-6ef58cb1cc99",
+                "control-id": "KONF.11.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a1-m1",
+                    "uuid": "d4ce1704-5b3c-4dd6-983e-3b9ed5ac9b65",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Authentisierung ist nur für einige, aber nicht für alle schutzbedürftigen Bereiche der Webanwendung oder des Webservices implementiert. Es existieren keine oder nur sehr schwach definierte Grenzwerte für fehlgeschlagene Anmeldeversuche."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Entwickler haben nur die offensichtlichsten Endpunkte wie einen Admin-Login geschützt, während andere, ebenfalls sensible Funktionen (z.B. Benutzerprofil-Seiten) offen zugänglich bleiben. Die Konfiguration für Anmeldeversuche wurde im Webserver oder Framework auf den Standardwerten belassen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert durch manuelle Tests und die Durchsicht der Konfiguration, ob alle schutzbedürftigen Ressourcen einen Authentisierungszwang aufweisen. Es wird geprüft, ob eine unlimitierte Anzahl von fehlgeschlagenen Anmeldeversuchen möglich ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a1-m2",
+                    "uuid": "9f99c293-519c-46c4-9fba-7351eefb5fe3",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle schutzbedürftigen Ressourcen der Webanwendung oder des Webservices erfordern eine Authentisierung der Clients. Es werden einfache Authentisierungsmethoden wie Benutzername und Passwort verwendet. Es sind grundlegende Grenzwerte für fehlgeschlagene Anmeldeversuche festgelegt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle serverseitigen Routen, die geschützte Daten liefern oder Funktionen ausführen, prüfen auf eine gültige Benutzersession. In der Konfiguration ist ein Mechanismus wie `fail2ban` oder eine anwendungsinterne Logik implementiert, die einen Benutzer oder eine IP-Adresse nach beispielsweise 10 fehlgeschlagenen Versuchen für eine Minute sperrt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt sicher, dass für alle geschützten Bereiche eine Authentisierung erzwungen wird. Es wird die Konfiguration der Grenzwerte für Anmeldeversuche eingesehen und deren grundlegende Wirksamkeit durch einen Test verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a1-m3",
+                    "uuid": "21383d78-e86f-461c-bcf5-44d3045eea7e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb MUSS Webanwendungen und Webservices so konfigurieren, dass sich Clients gegenüber der Webanwendung oder dem Webservice authentisieren müssen, wenn diese auf geschützte Ressourcen zugreifen wollen. Dafür MUSS eine angemessene Authentisierungsmethode ausgewählt werden. Der IT-Betrieb MUSS geeignete Grenzwerte für fehlgeschlagene Anmeldeversuche festlegen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Auswahl der Authentisierungsmethode (z.B. Formular-basiert, token-basiert wie JWT, oder zertifikatsbasiert) wird basierend auf einer Risikobewertung getroffen. Die Grenzwerte für fehlgeschlagene Anmeldeversuche sind so definiert, dass sie Brute-Force-Angriffe erschweren, aber legitime Benutzer nicht übermäßig behindern (z.B. Sperre für 15 Minuten nach 5 Fehlversuchen)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der Authentisierung und der Grenzwerte für Anmeldeversuche. Es wird geprüft, ob die Auswahl der Authentisierungsmethode für den Schutzbedarf der Anwendung angemessen ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a1-m4",
+                    "uuid": "3fc28017-b4d5-4ab2-8b58-218b232b25b7",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Authentisierung wird durch den Einsatz von Multi-Faktor-Authentisierung (MFA) für alle Benutzerkonten verstärkt. Der Auswahlprozess für die Authentisierungsmethode SOLLTE dokumentiert werden. Die festgelegten Grenzwerte für fehlgeschlagene Anmeldeversuche werden aktiv überwacht und Administratoren werden über auffällige Aktivitäten informiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "MFA wird mittels TOTP (Time-based One-Time Password) oder durch Push-Benachrichtigungen auf eine mobile App realisiert. Der Auswahlprozess wird in der technischen Dokumentation der Anwendung festgehalten. Anmelde-Logs werden an ein zentrales Log-Management-System gesendet, das bei einer hohen Rate fehlgeschlagener Anmeldungen von einer IP-Adresse einen Alarm auslöst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Implementierung der MFA und die Existenz der Dokumentation zum Auswahlprozess. Die Konfiguration des Log-Managements und der Alarmierungsregeln wird eingesehen und getestet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a1-m5",
+                    "uuid": "d036c264-8655-49f5-8848-81fd7ecf1833",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Authentisierung ist für alle Zugriffe obligatorisch und verwendet standardmäßig Phishing-resistente Methoden (z.B. FIDO2/WebAuthn). Anmeldeversuche und Sitzungsaktivitäten werden in Echtzeit durch ein SIEM-System analysiert, das bei Anomalien automatisch Konten sperrt, Sitzungen beendet und Sicherheitsvorfälle generiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung ist als Relying Party bei einem FIDO2-Server registriert. Benutzer werden bei der Registrierung angeleitet, einen Sicherheitsschlüssel oder biometrische Merkmale zu hinterlegen. Die Anwendungslogs werden in ein SIEM eingespeist, das über Playbooks verfügt, um auf Angriffe wie Credential Stuffing oder Brute-Forcing automatisiert zu reagieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der FIDO2-Implementierung und die Wirksamkeit der automatisierten Reaktionsmechanismen im SIEM durch simulierte Angriffe. Die Dokumentation der SIEM-Playbooks und der Incident-Response-Prozesse wird geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "3c12db43-4705-4922-b858-a12826a73084",
+                "control-id": "KONF.11.8",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a11-m3",
+                    "uuid": "6dbf376f-8494-447c-b5b9-78c0748c4993",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zugriff auf Hintergrundsysteme, auf denen Funktionen und Daten ausgelagert werden, SOLLTE ausschließlich über definierte Schnittstellen und von definierten IT-Systemen aus möglich sein. Bei der Kommunikation über Netz- und Standortgrenzen hinweg SOLLTE der Datenverkehr authentisiert und verschlüsselt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Webanwendung kommuniziert mit Backend-Diensten (z.B. Datenbank, Microservices) ausschließlich über wohldefinierte REST- oder gRPC-APIs. Firewall-Regeln stellen sicher, dass nur der Applikationsserver auf diese Dienste zugreifen kann. Die Kommunikation wird mittels TLS verschlüsselt und die Anwendung authentifiziert sich am Backend-Dienst, z.B. mit einem API-Schlüssel."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Netzwerkarchitektur und die Firewall-Regeln. Die Konfiguration der Schnittstellen und der Kommunikation wird auf die Verwendung von Verschlüsselung und Authentisierung geprüft. Es wird versucht, von einem nicht autorisierten System aus auf die Hintergrundsysteme zuzugreifen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a11-m4",
+                    "uuid": "f52f9b95-97c8-4588-8fe4-57a6ee91f7ee",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein API-Gateway wird eingesetzt, um als einziger Zugriffspunkt für alle Hintergrundsysteme zu dienen. Das Gateway erzwingt für alle Anfragen eine starke Authentisierung (z.B. OAuth 2.0), Autorisierung, Ratenbegrenzung und Protokollierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein API-Gateway (z.B. Kong, Tyk) wird vor den Backend-Diensten platziert. Die Webanwendung erhält ein kurzlebiges JWT (JSON Web Token) von einem Identity Provider und sendet dieses bei jeder Anfrage an das API-Gateway. Das Gateway validiert das Token und leitet die Anfrage nur bei gültigem Token und ausreichenden Berechtigungen (Scopes) an den entsprechenden Backend-Dienst weiter."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des API-Gateways, des Identity Providers und der Token-Validierung. Es wird getestet, ob Anfragen mit ungültigen, abgelaufenen oder unzureichend berechtigten Tokens korrekt abgewiesen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a11-m5",
+                    "uuid": "2f456de6-ae3a-4e98-aa78-b9c78df1004e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ein Zero-Trust-Modell angewendet, bei dem jede Anfrage zwischen der Webanwendung und den Hintergrundsystemen unabhängig von ihrem Netzwerkstandort authentifiziert und autorisiert wird. Die gesamte Kommunikation wird durch gegenseitige TLS-Authentifizierung (mTLS) abgesichert, bei der sich sowohl der Client als auch der Server mit Zertifikaten ausweisen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Service Mesh (z.B. Istio, Linkerd) wird im Kubernetes-Cluster eingesetzt, um die gesamte Service-zu-Service-Kommunikation zu verwalten. Das Service Mesh erzwingt mTLS für alle Verbindungen und wendet feingranulare Autorisierungsrichtlinien an, die festlegen, welcher Dienst mit welchem anderen Dienst kommunizieren darf. Die Zertifikate werden automatisch von einer internen PKI rotiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des Service Mesh, der mTLS-Einstellungen und der Autorisierungsrichtlinien. Durch Netzwerk-Sniffing innerhalb des Clusters wird verifiziert, dass der gesamte Verkehr verschlüsselt ist. Es wird versucht, die Autorisierungsrichtlinien zu umgehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "9168daf7-da9c-424a-9b0b-5b0c4f9883b8",
+                "control-id": "KONF.12.1.10",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a21-m3",
+                    "uuid": "28d10d4f-d12e-4e03-915c-4aa18a2b208a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zum Schutz vor Clickjacking, Cross-Site-Scripting und anderen Angriffen SOLLTE der IT-Betrieb geeignete HTTP-Response-Header setzen. Dazu SOLLTEN mindestens die folgenden HTTP-Header verwendet werden: Content-Security-Policy, Strict-Transport-Security, Content-Type, X-Content-Type-Options sowie Cache-Control. Cookies SOLLTEN grundsätzlich mit den Attributen secure, SameSite und httponly gesetzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Webserver oder die Anwendung ist so konfiguriert, dass diese Header bei jeder Antwort mitgesendet werden. Die Content-Security-Policy (CSP) ist zunächst relativ offen (z.B. erlaubt Skripte von der eigenen Domain und bekannten CDNs). HSTS ist mit einer kurzen `max-age` Zeit konfiguriert. Cookies haben `httponly; secure; SameSite=Lax` gesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verwendet die Entwicklerwerkzeuge des Browsers oder ein Tool wie `curl -I`, um die HTTP-Header der Anwendung zu inspizieren. Es wird geprüft, ob die geforderten Header vorhanden sind und ob die Cookie-Attribute korrekt gesetzt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a21-m4",
+                    "uuid": "cfd8f3b0-eca4-4b7d-aa41-9a5eafdfe484",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfiguration der HTTP-Header ist restriktiv und folgt dem Prinzip der geringsten Rechte. Die Content-Security-Policy ist so streng wie möglich konfiguriert und vermeidet unsichere Direktiven wie 'unsafe-inline'. Die `max-age` Direktive des HSTS-Headers ist auf einen langen Zeitraum (z.B. ein Jahr) gesetzt und die `preload` Direktive ist enthalten. Das `SameSite` Attribut von Cookies ist wo immer möglich auf `Strict` gesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die CSP wird so konfiguriert, dass sie Hashes oder Nonces für erlaubte Skripte verwendet, anstatt ganze Domains auf eine Whitelist zu setzen. Nach ausgiebigen Tests wird die Domain in die HSTS-Preload-Liste des Chrome-Projekts eingetragen. Sitzungscookies werden mit `SameSite=Strict` versehen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die CSP mit einem Online-Tool auf Schwächen. Es wird geprüft, ob die HSTS-Preload-Direktive gesetzt ist und die `max-age` ausreichend hoch ist. Das Verhalten der Anwendung bei verschiedenen Cookie-SameSite-Einstellungen wird getestet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a21-m5",
+                    "uuid": "8d52251b-34c8-4bc0-a523-65683163dc31",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Content-Security-Policy wird im 'Enforce'-Modus betrieben und enthält eine `report-uri` oder `report-to` Direktive. Die gemeldeten CSP-Verstöße werden zentral gesammelt, analysiert und zur kontinuierlichen Verbesserung der Policy genutzt. Zusätzliche moderne Sicherheitsheader wie `Permissions-Policy`, `Cross-Origin-Opener-Policy` (COOP) und `Cross-Origin-Embedder-Policy` (COEP) sind implementiert, um die Anwendung weiter zu isolieren und vor Cross-Site-Leaks zu schützen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Dienst wie `report-uri.com` wird verwendet, um CSP-Verstöße zu sammeln und zu aggregieren. Das Sicherheitsteam überprüft diese Berichte regelmäßig, um Angriffsversuche zu erkennen und die CSP bei Bedarf anzupassen. Die COOP/COEP-Header sind so konfiguriert, dass sie einen isolierten Kontext für die Anwendung schaffen und so Angriffe wie Spectre verhindern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der Reporting-Direktiven der CSP und prüft, ob die Berichte ankommen und analysiert werden. Es wird geprüft, ob die COOP/COEP-Header korrekt implementiert sind und die erwartete Isolation bewirken, z.B. durch Überprüfung des `window.opener` Objekts in Pop-ups."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "57b3ac84-f011-463d-9c8f-bc7f2462b0c9",
+                "control-id": "KONF.12.1.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a20-m3",
+                    "uuid": "52e81b8d-0d7c-4d79-896e-0975e3f2f2e0",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Institutionen SOLLTEN Web Application Firewalls (WAF) einsetzen. Die Konfiguration der eingesetzten WAF SOLLTE auf die zu schützende Webanwendung oder den Webservice angepasst werden. Nach jedem Update der Webanwendung oder des Webservices SOLLTE die Konfiguration der WAF geprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine WAF (z.B. ModSecurity mit dem OWASP Core Rule Set) wird vor der Webanwendung im Blockierungsmodus betrieben. Das Regelwerk wird an die Anwendung angepasst, um Fehlalarme (False Positives) zu reduzieren. Nach jedem Anwendungsrelease wird ein Testplan ausgeführt, um sicherzustellen, dass die WAF keine legitimen Funktionen blockiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der WAF und das angewendete Regelwerk. Es wird geprüft, ob die WAF im Blockierungsmodus läuft. Durch das Senden von Test-Angriffen (z.B. `?id=1' OR '1'='1`) wird verifiziert, ob die WAF die Anfragen blockiert. Die Prozesse zur Anpassung der WAF nach Anwendungsupdates werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a20-m4",
+                    "uuid": "587c9311-c1dd-45b9-a8cf-d8d6cee28d82",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das WAF-Regelwerk wird sorgfältig auf die spezifische Anwendung zugeschnitten, um False Positives und False Negatives zu minimieren. Die WAF wird für virtuelles Patchen verwendet, um bekannte Schwachstellen in der Anwendung temporär zu mitigieren, bis ein offizieller Patch verfügbar ist. Die WAF-Logs werden in ein zentrales SIEM integriert und aktiv auf Angriffsindikatoren überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für eine neu entdeckte Schwachstelle (z.B. eine SQL-Injection in einem bestimmten Parameter) wird eine spezifische WAF-Regel erstellt, die Anfragen mit bösartigen Mustern in diesem Parameter blockiert. Diese Regel bleibt aktiv, bis die Entwickler die Schwachstelle im Code behoben haben. WAF-Block-Ereignisse werden als Alerts an das SIEM gesendet und vom SOC-Team analysiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die benutzerdefinierten WAF-Regeln und bewertet deren Wirksamkeit. Die Konfiguration der Log-Weiterleitung an das SIEM und die entsprechenden Korrelationsregeln werden überprüft. Es wird geprüft, ob ein Prozess für virtuelles Patchen existiert und angewendet wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a20-m5",
+                    "uuid": "3300d42a-dea6-4666-8963-5ae3a86a4c32",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die WAF ist Teil einer integrierten Web Application and API Protection (WAAP) Plattform, die auch Bot-Schutz, API-Sicherheit und DDoS-Abwehr umfasst. Die Plattform nutzt maschinelles Lernen, um das Normalverhalten der Anwendung zu erlernen (positive security model) und sich automatisch an neue Angriffsmuster anzupassen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Cloud-basierter WAAP-Dienst (z.B. von Cloudflare, Akamai, Imperva) wird eingesetzt. Der Dienst lernt die API-Spezifikationen der Anwendung (z.B. aus einer OpenAPI-Datei) und blockiert alle Anfragen, die von dieser Spezifikation abweichen. Ein dediziertes Team verwaltet und überwacht die WAAP-Plattform aktiv."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer bewertet die Konfiguration der WAAP-Plattform, einschließlich der API-Schutz- und Bot-Management-Funktionen. Es wird geprüft, wie die Plattform auf Zero-Day-Angriffe und komplexe Angriffe reagiert, die über einfache Signaturerkennung hinausgehen. Die Expertise und die Prozesse des verantwortlichen Teams werden bewertet."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ea82e344-d029-499c-97a7-3ed9e249bfc9",
+                "control-id": "KONF.6.11",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.1-a4-m1",
+                    "uuid": "5af7dcde-064c-44ce-9bf9-0a0f5d6b9906",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Upload-Funktion existiert, prüft jedoch nur oberflächlich den Dateityp (z.B. anhand der Dateiendung) oder erzwingt keine Größenbeschränkungen. Die hochgeladenen Dateien werden an einem unsicheren Ort gespeichert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Code prüft nur, ob der Dateiname mit `.jpg` oder `.pdf` endet. Es gibt keine serverseitige Begrenzung der Dateigröße, was zu Denial-of-Service durch das Hochladen sehr großer Dateien führen kann. Die Dateien landen im selben Verzeichnis wie die Anwendungs-Skripte und sind möglicherweise direkt über eine URL aufrufbar."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer versucht, Dateien mit falschen Endungen (z.B. `shell.php.jpg`), ohne Endung oder sehr große Dateien hochzuladen. Es wird geprüft, ob hochgeladene Dateien direkt über den Webserver ausgeführt oder heruntergeladen werden können."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a4-m2",
+                    "uuid": "c2a265a5-4a49-4a44-8a4e-9816453c1b9b",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Upload-Funktion prüft den MIME-Type der Datei und erzwingt eine maximale Dateigröße. Hochgeladene Dateien werden in einem separaten, dedizierten Verzeichnis gespeichert, die Dateiberechtigungen sind jedoch möglicherweise zu freizügig."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Serverseitig wird der `Content-Type` Header oder eine Magic-Byte-Analyse verwendet, um den Dateityp zu verifizieren. Eine Größenbeschränkung ist im Webserver oder in der Anwendungskonfiguration festgelegt. Es existiert ein `/uploads`-Verzeichnis, dessen Berechtigungen jedoch 777 sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der Dateigrößen- und Typenbeschränkung. Mittels eines Shell-Zugriffs auf den Server wird das Upload-Verzeichnis und dessen Dateiberechtigungen (`ls -l`) überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a4-m3",
+                    "uuid": "40b066cc-12e1-4933-82c2-b9dcfa39c787",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls eine Webanwendung oder ein Webservice eine Upload-Funktion für Dateien anbietet, MUSS diese Funktion durch den IT-Betrieb so weit wie möglich eingeschränkt werden. Insbesondere MÜSSEN die erlaubte Dateigröße, erlaubte Dateitypen und erlaubte Speicherorte festgelegt werden. Es MUSS festgelegt werden, welche Clients die Funktion verwenden dürfen. Auch MÜSSEN Zugriffs- und Ausführungsrechte restriktiv gesetzt werden. Zudem MUSS sichergestellt werden, dass Clients Dateien nur im vorgegebenen erlaubten Speicherort speichern können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Whitelist von erlaubten Dateitypen (basierend auf MIME-Typ und Dateiinhaltsanalyse) und eine maximale Dateigröße sind fest konfiguriert. Der Upload ist nur für authentifizierte Benutzer erlaubt. Die Dateien werden in einem Verzeichnis außerhalb des Web-Roots gespeichert und mit minimalen Berechtigungen versehen (z.B. kein Ausführungsrecht). Der Zugriff auf die Dateien erfolgt über ein Skript, das die Berechtigungen des anfragenden Benutzers prüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der Whitelist, der Größenbeschränkung und der Speicherorte. Es wird verifiziert, dass die Dateiberechtigungen korrekt gesetzt sind und dass anonyme Benutzer keine Dateien hochladen können. Es wird getestet, ob auf hochgeladene Dateien nur nach einer Berechtigungsprüfung zugegriffen werden kann."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a4-m4",
+                    "uuid": "fd4b28e0-e6e8-41e7-8b5f-b3d448459b06",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle hochgeladenen Dateien werden nach dem Upload serverseitig mit einem aktuellen Virenscanner auf Malware überprüft, bevor sie für andere Benutzer verfügbar gemacht werden. Alle Upload-Vorgänge werden protokolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nach dem Speichern der Datei wird ein Kommandozeilen-Scanner (z.B. ClamAV) aufgerufen. Die Datei wird erst dann in das endgültige Verzeichnis verschoben oder in der Datenbank als 'verfügbar' markiert, wenn der Scan negativ ausfällt. Jeder Upload-Versuch (erfolgreich oder nicht) wird mit Benutzer-ID, Zeitstempel, Dateiname und Scan-Ergebnis in eine Log-Datei geschrieben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer versucht, eine Testdatei mit einer EICAR-Signatur hochzuladen und verifiziert, dass diese blockiert oder gelöscht wird. Die Log-Dateien werden auf Vollständigkeit der protokollierten Upload-Vorgänge überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.1-a4-m5",
+                    "uuid": "2c2aa5a1-a9d2-4259-b5d0-0fae44e86bf9",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verarbeitung hochgeladener Dateien (einschließlich Malware-Scan und Inhaltsanalyse) findet in einer isolierten Sandbox-Umgebung statt. Der Dateispeicher ist ein dedizierter, gehärteter Objektspeicher-Dienst, der physisch vom Applikationsserver getrennt ist. Die Dateinamen werden serverseitig neu generiert, um Pfad-Traversal-Angriffe zu verhindern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anwendung lädt Dateien temporär in einen Bucket, was eine serverless Funktion (z.B. AWS Lambda) triggert. Diese Funktion führt in einer Container-Sandbox Virenscans und Inhaltsanalysen durch und verschiebt die validierte Datei dann in einen permanenten, nicht öffentlich zugänglichen S3-Bucket. Die Anwendung generiert signierte, kurzlebige URLs für den autorisierten Zugriff."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Architektur der Upload-Verarbeitung und verifiziert die Konfiguration der Sandbox-Umgebung und des Objektspeichers. Es wird geprüft, ob die generierten Dateinamen keine vom Benutzer kontrollierten Elemente enthalten und ob der direkte Zugriff auf den Speicher blockiert ist."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

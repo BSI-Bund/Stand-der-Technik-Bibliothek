@@ -1,0 +1,1691 @@
+{
+  "component-definition": {
+    "uuid": "082d1149-2d10-440f-823f-728a646ea375",
+    "metadata": {
+      "title": "APP.3.6 DNS-Server - Benutzerdefiniert",
+      "last-modified": "2025-11-13T21:34:49.324584+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "c421914c-06d6-42cc-9f1d-0b8d1807640f",
+        "type": "software",
+        "title": "APP.3.6 DNS-Server",
+        "description": "This component represents the implementation of all controls for Baustein APP.3.6.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Domain Name System (DNS) ist ein Netzdienst, der dazu eingesetzt wird, Hostnamen von IT-Systemen in IP-Adressen umzuwandeln. DNS kann mit einem Telefonbuch verglichen werden, das Namen nicht in Telefonnummern, sondern in IP-Adressen auflöst. Üblicherweise wird über DNS zu einem Hostnamen die entsprechende IP-Adresse gesucht (Vorwärtsauflösung). Ist hingegen die IP-Adresse bekannt und der Hostname wird gesucht, wird dies als Rückwärtsauflösung bezeichnet.<BR>Welche Hostnamen zu welchen IP-Adressen gehören, wird im Domain-Namensraum verwaltet. Dieser ist hierarchisch aufgebaut und wird von DNS-Servern zur Verfügung gestellt. Die Bezeichnung DNS-Server steht im eigentlichen Sinne für die verwendete Software, wird jedoch meist auch als Synonym für das IT-System benutzt, auf dem diese Software betrieben wird.<BR>DNS-Server verwalten den Domain-Namensraum im Internet, werden aber auch häufig im internen Netz einer Institution eingesetzt. Auf den IT-Systemen der Benutzenden sind standardmäßig sogenannte Resolver installiert. Über den Resolver werden die Anfragen an DNS-Server gestellt. Als Antwort liefern die DNS-Server Informationen über den Domain-Namensraum zurück.<BR>DNS-Server können nach ihren Aufgaben unterschieden werden. Dabei gibt es grundsätzlich zwei verschiedenen Typen: Advertising DNS-Server und Resolving DNS-Server. Advertising DNS-Server sind üblicherweise dafür zuständig, Anfragen aus dem Internet zu verarbeiten. Resolving DNS-Server hingegen verarbeiten Anfragen aus dem internen Netz einer Institution.<BR>Der Ausfall eines DNS-Servers kann sich gravierend auf den Betrieb einer IT-Infrastruktur auswirken. Dabei ist nicht das ausgefallene DNS-System an sich problematisch, sondern die DNS-basierten Dienste, die daraus eingeschränkt werden. Unter Umständen sind Webserver oder E-Mail-Server nicht mehr erreichbar oder die Fernwartung funktioniert nicht mehr. Da DNS von sehr vielen Netzanwendungen benötigt wird, müssen laut Spezifikation (RFC 1034) mindestens zwei autoritative DNS-Server (Advertising DNS-Server) für jede Zone betrieben werden."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "In diesem Baustein werden die für einen DNS-Server spezifischen Gefährdungen und die sich daraus ergebenden Anforderungen für einen sicheren Einsatz beschrieben."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.3.6 DNS-Server ist auf jeden im Informationsverbund eingesetzten DNS-Server anzuwenden.<BR>Der vorliegende Baustein enthält grundsätzliche Anforderungen, die zu beachten und zu erfüllen sind, wenn eine Institution DNS-Server einsetzt. Der Fokus liegt dabei auf der Verfügbarkeit von DNS-Servern und der Integrität der übertragenen Informationen. Außerdem werden Probleme behandelt, die auftreten können, wenn DNS-Server eingesetzt werden.<BR>Allgemeine und betriebssystemspezifische Aspekte eines Servers sind nicht Gegenstand dieses Bausteins. Diese werden im Baustein SYS1.1 Allgemeiner Server und in den entsprechenden betriebssystemspezifischen Bausteinen der Schicht SYS IT-Systeme behandelt, z. B. SYS.1.3 Server unter Linux und Unix oder SYS.1.2.3 Windows Server."
+          },
+          {
+            "name": "2.1. Ausfall des DNS-Servers",
+            "value": "Fällt ein DNS-Server aus, kann der gesamte IT-Betrieb davon betroffen sein. Da Clients und andere Server der Institution dann nicht mehr in der Lage sind, interne und externe Adressen auf Basis der Hostnamen aufzulösen, können keine Datenverbindungen mehr aufgebaut werden. Auch externe IT-Systeme, z. B. von mobilen Mitarbeitenden, der Kundschaft sowie Geschäftspartnern und Geschäftspartnerinnen, können nicht auf die Server der Institution zugreifen. Dadurch sind in der Regel essenzielle Geschäftsprozesse gestört."
+          },
+          {
+            "name": "2.2. Unzureichende Leitungskapazitäten",
+            "value": "Reichen die Leitungskapazitäten für einen DNS-Server nicht aus, können sich die Zugriffszeiten auf interne und externe Dienste erhöhen. Dadurch sind diese eventuell nur eingeschränkt oder gar nicht mehr nutzbar. Auch kann der DNS-Server dann leichter durch einen Denial-of-Service-(DoS)-Angriff überlastet werden."
+          },
+          {
+            "name": "2.3. Fehlende oder unzureichende Planung des DNS-Einsatzes",
+            "value": "Fehler in der Planung stellen sich oft als besonders schwerwiegend heraus, da leicht flächendeckende Sicherheitslücken geschaffen werden können. Wird der DNS-Einsatz nicht oder nur unzureichend geplant, kann dies zu Problemen und Sicherheitslücken im laufenden Betrieb führen. Sind beispielsweise die Firewall-Regeln, die den DNS-Verkehr steuern, zu freizügig definiert, kann dies unter Umständen einen Angriff zur Folge haben. Sind die Regeln jedoch zu restriktiv formuliert, können legitime Clients keine Anfragen an die DNS-Server stellen und werden beeinträchtigt, wenn sie etwa Dienste wie E-Mail oder FTP benutzen."
+          },
+          {
+            "name": "2.4. Fehlerhafte Domain-Informationen",
+            "value": "Selbst wenn der DNS-Einsatz sorgfältig geplant und somit alle sicherheitsrelevanten Punkte berücksichtigt wurden, ist das nicht ausreichend, wenn semantisch sowie syntaktisch fehlerhafte Domain-Informationen erstellt werden. Dies gilt beispielsweise dann, wenn einem Hostnamen eine falsche IP-Adresse zugeordnet wird, Daten fehlen, nicht erlaubte Zeichen verwendet werden oder die Vorwärts- und Rückwärtsauflösung inkonsistent sind. Enthalten Domain-Informationen Fehler, funktionieren Dienste, die diese Informationen benutzen, aufgrund der Falschinformationen nur eingeschränkt."
+          },
+          {
+            "name": "2.5. Fehlerhafte Konfiguration eines DNS-Servers",
+            "value": "Sicherheitskritische Standardeinstellungen, selbst konfigurierte sicherheitskritische Einstellungen oder fehlerhafte Konfigurationen können dazu führen, dass ein DNS-Server nicht ordnungsgemäß funktioniert. Ist beispielsweise ein Resolving DNS-Server so konfiguriert, dass er rekursive Anfragen uneingeschränkt entgegennimmt, also sowohl aus dem internen Datennetz als auch aus dem Internet, kann aufgrund der erhöhten Last die Verfügbarkeit des Servers stark beeinträchtigt sein. Zusätzlich könnte er dadurch anfällig für DNS-Reflection-Angriffe werden.<BR>Ebenso besteht bei fehlerhaft konfigurierten DNS-Servern die Gefahr, dass die Zonentransfers nicht auf berechtigte DNS-Server beschränkt sind. Damit kann jeder Host, der die Möglichkeit hat, eine Anfrage an die DNS-Server zu stellen, die gesamten Domain-Informationen dieser Server auslesen. Die so gewonnenen Daten können spätere Angriffe erleichtern."
+          },
+          {
+            "name": "2.6. DNS-Manipulation",
+            "value": "Mit einem DNS-Cache-Poisoning-Angriff wird das Ziel verfolgt, dass das angegriffene IT-System falsche Zuordnungen von IP-Adressen und Namen speichert. Dabei wird ausgenutzt, dass DNS-Server erhaltene Domain-Informationen für einen gewissen Zeitraum im Cache zwischenspeichern. So können sich gefälschte Daten weiträumig verbreiten. Werden dann entsprechende Anfragen an den manipulierten DNS-Server gestellt, liefert dieser als Antwort die gefälschten Daten. Das IT-System, das diese Antwort empfängt, speichert diese zwischen und sein Cache ist somit ebenfalls „vergiftet\". Die gespeicherten Daten haben eine definierte Haltbarkeit (Time-To-Live, TTL). Wird der Resolving DNS-Server nach einer manipulierten Adresse gefragt, so wird er erst dann wieder einen anderen DNS-Server anfragen, wenn die Haltbarkeit abgelaufen ist. So können sich manipulierte DNS-Informationen lange halten, obwohl sie auf dem ursprünglich angegriffenen DNS-Server bereits wieder korrigiert sind. Gelingt es Angreifenden beispielsweise, die Namensauflösung für eine Domain zu übernehmen, indem sie die Einträge so manipulieren, dass ihre DNS-Server befragt werden, sind alle Subdomains automatisch mitbetroffen. DNS-Cache-Poisoning-Angriffe werden oft mit dem Ziel geführt, Anfragen auf bösartige Server umzuleiten."
+          },
+          {
+            "name": "2.7. DNS-Hijacking",
+            "value": "DNS-Hijacking ist eine Angriffsmethode, die verwendet wird, um die Kommunikation zwischen Advertising DNS-Servern und Resolvern über das IT-System der Angreifenden zu leiten. Den Angreifenden ist es mit dieser Man-in-the-Middle-Attacke möglich, die Kommunikation zwischen den Servern abzuhören und aufzuzeichnen. Die weitaus größere Gefahr besteht jedoch darin, dass bei einem erfolgreichen Angriff jeglicher Datenverkehr zwischen den beiden IT-Systemen beliebig verändert werden kann. Wird nach einem erfolgreichen DNS-Hijacking-Angriff vom Resolver eines Clients eine Anfrage an einen DNS-Server gesendet, können Angreifende beispielsweise die Zuordnung von Namen und IP-Adresse ändern. DNS-Hijacking lässt sich auch mit anderen Angriffen kombinieren, zum Beispiel mit Phishing."
+          },
+          {
+            "name": "2.8. DNS-DoS",
+            "value": "Bei einem DoS-Angriff auf einen DNS-Server werden so viele Anfragen an ihn gesendet, dass die Netzverbindung zum DNS-Server bzw. der DNS-Server selbst überlastet wird. In der Regel werden die Anfragen über Botnetze versendet, um die notwendige Datenrate zu erreichen. Ein auf diese Weise überlasteter DNS-Server kann keine legitimen Anfragen mehr beantworten."
+          },
+          {
+            "name": "2.9. DNS-Reflection",
+            "value": "Bei einem DNS-Reflection-Angriff handelt es sich um einen DoS-Angriff, bei dem nicht der DNS-Server, an den die Anfragen gestellt werden, das Ziel ist, sondern das IT-System, das die Antworten empfängt. Dabei wird ausgenutzt, dass bestimmte Anfragen eine verhältnismäßig große Antwortdatenmenge erzeugen. Es ist dabei möglich, einen Verstärkungsfaktor von 100 und mehr zu erreichen. Das bedeutet, dass die Antwort, gemessen in Bytes, mindestens einhundert Mal größer ist als die Anfrage. Durch die Anzahl und Größe der Antworten wird die Netzbandbreite bzw. das empfangende IT-System selbst über seine Leistungskapazität hinaus überlastet. Somit kann jede beliebige technische IT-Komponente das Angriffsziel sein. DNS-Reflection-Angriffe werden durch Open Resolver begünstigt."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "f0a66188-9104-4984-8771-ab6cc4c95806",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/dns-server_profile.json",
+            "description": "Implementation for all controls in Baustein APP.3.6",
+            "implemented-requirements": [
+              {
+                "uuid": "bf00a1e0-0ffa-4293-a0c2-e5d163ee23ca",
+                "control-id": "ARCH.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a11-m3",
+                    "uuid": "539e3b25-addf-4c36-b8e8-9822b2c675c3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Hardware des DNS-Servers SOLLTE ausreichend dimensioniert sein. Die Hardware des DNS-Servers SOLLTE ausschließlich für den Betrieb dieses DNS-Servers benutzt werden. Die Netzanbindungen sämtlicher DNS-Server im Informationsverbund SOLLTEN ausreichend bemessen sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die DNS-Server werden auf dedizierten (virtuellen oder physischen) Maschinen betrieben, auf denen keine anderen kritischen Dienste laufen. Die Dimensionierung von CPU, RAM und Netzwerkbandbreite orientiert sich an der erwarteten Anzahl von Anfragen pro Sekunde (QPS) und der Größe der Zonen, mit einem angemessenen Puffer für Lastspitzen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft, ob die DNS-Server dediziert betrieben werden. Anhand von Leistungsdaten aus dem Monitoring-System wird bewertet, ob die aktuelle Auslastung (CPU, RAM, Netzwerk) in einem unkritischen Bereich liegt und ausreichend Reserven vorhanden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a11-m4",
+                    "uuid": "b831a1f2-44a4-4d00-8172-40c307f0c0d3",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Dimensionierung der DNS-Server basiert auf einer systematischen Kapazitätsplanung. Die Leistungsdaten werden über einen längeren Zeitraum analysiert, um Wachstumstrends zu erkennen. Die Server sind so dimensioniert, dass sie auch einen moderaten DDoS-Angriff (z.B. eine DNS-Amplification-Attacke) ohne signifikante Leistungseinbußen bewältigen können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Kapazitätsmanagementprozess etabliert. Mindestens einmal im Jahr werden die QPS-Trends, die Speichernutzung (insbesondere des Caches) und die CPU-Last analysiert, um den Bedarf für das nächste Jahr zu prognostizieren. Die Netzwerkkarte und die Anbindung sind für 1 Gbit/s oder mehr ausgelegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Dokumentation des Kapazitätsmanagementprozesses und die Analyseberichte. Es wird verifiziert, dass die Hardware- und Netzwerkausstattung den prognostizierten Anforderungen und potenziellen Angriffsszenarien gewachsen ist."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e22e76f5-98d6-4f9c-8596-d7e961fa6faa",
+                "control-id": "ARCH.8.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a2-m1",
+                    "uuid": "9599fc66-7e6a-4db6-900f-9285f54feb2d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur für die als absolut kritisch eingestufte Hauptdomain der Institution existiert ein sekundärer Advertising DNS-Server. Andere wichtige Domains werden nicht redundant vorgehalten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein einzelner zusätzlicher Server wird als Secondary für die www-Domain konfiguriert. Die Konfiguration wird manuell vorgenommen und selten auf ihre Funktion geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die NS-Einträge für alle von der Institution verwalteten Domains und stellt fest, für welche Domains nur ein einziger Nameserver eingetragen ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m2",
+                    "uuid": "898bd933-b671-4fc0-8cd8-b868f088ba42",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für jeden primären Advertising DNS-Server existiert ein sekundärer Server. Beide Server befinden sich jedoch im selben Rechenzentrum oder sogar im selben Rack."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jede Zone wird ein zweiter Server als Slave konfiguriert. Zonentransfers werden eingerichtet, aber nicht aktiv auf Fehler oder Latenz überwacht. Die Server teilen sich möglicherweise kritische Infrastrukturkomponenten (Strom, Netzwerk-Switch)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor verifiziert, dass für alle Advertising-Zonen mindestens zwei NS-Einträge existieren. Es wird die Netzwerktopologie und der physische Standort der Server geprüft, um Single Points of Failure zu identifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m3",
+                    "uuid": "81350c53-2f28-446b-b4cc-63ff91463fe4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Advertising DNS-Server MÜSSEN redundant ausgelegt werden. Für jeden Advertising DNS-Server MUSS es mindestens einen zusätzlichen Secondary DNS-Server geben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jede autoritative Zone werden mindestens zwei Nameserver konfiguriert. Der primäre (Master) und der sekundäre (Slave) Server befinden sich in unterschiedlichen Brandabschnitten und sind an unterschiedliche Kern-Switches angebunden, um die Verfügbarkeit zu erhöhen. Die Konfiguration ist dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die DNS-Konfiguration und die öffentlichen NS-Einträge für alle Zonen, um sicherzustellen, dass mindestens zwei Server pro Zone definiert sind. Anhand der Netzwerk- und Infrastrukturpläne wird verifiziert, dass die Server eine grundlegende physische Redundanz aufweisen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m4",
+                    "uuid": "58a37e29-63d4-4e95-8c39-43ee86fad137",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die sekundären Advertising DNS-Server sind geografisch und topologisch getrennt vom primären Server platziert (z.B. in einem anderen Rechenzentrum oder bei einem externen Provider). Zonentransfers werden aktiv überwacht, und es gibt automatisierte Alarme bei Fehlern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mindestens ein Secondary DNS-Server wird in einem zweiten, geografisch getrennten Standort betrieben. Die Zonen werden per TSIG abgesichert. Ein Monitoring-System überprüft regelmäßig die Serial Number der Zone auf allen Servern und alarmiert, wenn ein sekundärer Server nicht mehr aktuell ist."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die IP-Adressen der Nameserver, um ihre geografische und topologische Verteilung zu verifizieren (z.B. durch Überprüfung der AS-Nummern). Es werden die Konfiguration und die Protokolle des Monitoring-Systems eingesehen, um die Überwachung der Zonentransfers zu bestätigen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m5",
+                    "uuid": "0df92052-b4ce-4951-9142-7ff5936352fc",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die autoritativen DNS-Dienste werden über eine Anycast-Infrastruktur mit mehreren Knotenpunkten bei einem oder mehreren spezialisierten DNS-Providern bereitgestellt. Dies gewährleistet höchste Verfügbarkeit, Lastverteilung und Schutz vor DDoS-Angriffen. Die Systemgesundheit wird kontinuierlich überwacht, und der Datenverkehr wird automatisch umgeleitet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Vertrag mit einem Managed-DNS-Provider abgeschlossen, der eine Anycast-basierte Infrastruktur anbietet. Der primäre Server (oft als 'Hidden Master' konfiguriert) bleibt unter eigener Kontrolle und repliziert die Zonendaten sicher auf das Anycast-Netzwerk des Providers."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Verträge und Service Level Agreements (SLAs) mit dem DNS-Provider. Die Konfiguration des 'Hidden Masters' und der sicheren Zonenübertragung zum Provider wird verifiziert. Die Wirksamkeit der Anycast-Implementierung kann durch Abfragen von verschiedenen geografischen Standorten aus überprüft werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "95fefd28-b5ef-46d1-9336-73237010ffa2",
+                "control-id": "ASST.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Improvement",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a19-m3",
+                    "uuid": "6a6b60d3-872f-44c2-812f-305e92a245e9",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der DNS-Server SOLLTE sowohl aus dem Domain-Namensraum als auch aus dem Netzverbund gelöscht werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Wenn ein DNS-Server außer Betrieb genommen wird, wird ein definierter Prozess befolgt: Zuerst werden die NS-Einträge, die auf den Server verweisen, aus den Zonen und bei der Registry entfernt. Nachdem die TTL der entfernten Einträge abgelaufen ist, wird der Server heruntergefahren, die Software deinstalliert und die Firewall-Regeln für den Server werden gelöscht. Der Prozess ist dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft den dokumentierten Prozess zur Außerbetriebnahme von DNS-Servern. Bei einer kürzlich erfolgten Aussonderung werden die Zonenkonfigurationen, die Registry-Einträge und die Firewall-Regeln überprüft, um sicherzustellen, dass alle Verweise auf den alten Server entfernt wurden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "419c3062-6037-4a2a-b5a3-949b955c8940",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BES",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a10-m3",
+                    "uuid": "fe1ded78-e547-41dd-ac27-a4c78729748b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wird ein DNS-Server-Produkt beschafft, dann SOLLTE darauf geachtet werden, dass es sich in der Praxis ausreichend bewährt hat. Das DNS-Server-Produkt SOLLTE die aktuellen RFC-Standards unterstützen. Das DNS-Server-Produkt SOLLTE die Zuständigen dabei unterstützen, syntaktisch korrekte Master Files zu erstellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei der Auswahl einer DNS-Server-Software wird auf etablierte Open-Source- (z.B. BIND, Unbound, Knot, PowerDNS) oder kommerzielle Produkte zurückgegriffen. Es wird geprüft, ob die Software wichtige RFCs (z.B. für DNSSEC, EDNS) unterstützt. Die Software sollte Werkzeuge zur Syntaxprüfung von Zonen- und Konfigurationsdateien mitliefern (z.B. `named-checkzone`)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Dokumentation zur Produktauswahl. Es wird verifiziert, dass das ausgewählte Produkt eine breite Nutzerbasis hat und aktiv weiterentwickelt wird (z.B. durch Prüfung der Release-Historie und Security-Advisories). Die Konformität mit wichtigen RFCs wird anhand der Produktdokumentation geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a10-m4",
+                    "uuid": "3ad39ef2-8094-4de2-8976-fa6f1d7c7c26",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei der Auswahl des DNS-Server-Produkts wird gezielt auf erweiterte Sicherheitsfunktionen geachtet. Dazu gehören eine robuste Implementierung von DNSSEC, Unterstützung für Response Rate Limiting (RRL), DNS-Cookies und DNS-over-TLS (DoT) oder DNS-over-HTTPS (DoH). Die Auswahl wird dokumentiert und begründet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine formale Evaluierung verschiedener Produkte durchgeführt, bei der die Verfügbarkeit und Qualität der Implementierung von Sicherheitsfeatures wie RRL, DoT/DoH und RPZ (DNS-Firewall) ein hohes Gewicht hat. Es wird eine Kombination von Produkten für verschiedene Zwecke in Betracht gezogen (z.B. NSD für autoritative Server, Unbound für Resolver)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Evaluierungsdokumentation und die Begründung für die Produktauswahl. Es wird verifiziert, dass die ausgewählten Produkte die genannten erweiterten Sicherheitsmerkmale unterstützen und dass diese auch im Betriebskonzept zur Nutzung vorgesehen sind."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f6f975d6-7f20-4a44-b21f-b3d941dfd121",
+                "control-id": "BES.2.1.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a8-m2",
+                    "uuid": "ce5180b4-3436-433b-9e0d-192d745475e5",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es ist eine Person aus der IT-Abteilung benannt, die für die Verwaltung der Domainnamen zuständig ist. Die Verlängerung der Domains wird manuell durchgeführt, wenn die Benachrichtigungs-E-Mail vom Registrar eintrifft. Es gibt keine zentrale Liste aller Domains."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Zugangsdaten zum Domain-Registrar sind bei einer Person hinterlegt. Die Kontakt-E-Mail-Adresse für die Domains ist die persönliche E-Mail-Adresse dieses Mitarbeiters."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor fragt nach der zuständigen Person und lässt sich den Prozess zur Domainverlängerung erklären. Es wird geprüft, welche Kontakt-E-Mail-Adressen für die wichtigsten Domains hinterlegt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a8-m3",
+                    "uuid": "02d3629c-5404-46d8-b63a-0026b2fc14d0",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS sichergestellt sein, dass die Registrierungen für alle Domains, die von einer Institution benutzt werden, regelmäßig und rechtzeitig verlängert werden. Eine Person MUSS bestimmt werden, die dafür zuständig ist, die Internet-Domainnamen zu verwalten. Diese Aufgabe kann auch durch die Zentrale Verwaltung wahrgenommen werden. Falls Dienstleistende mit der Domainverwaltung beauftragt werden, MUSS darauf geachtet werden, dass die Institution die Kontrolle über die Domains behält."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine offizielle Rolle (z.B. 'Domain-Verwalter'), die auch von der Zentralen Verwaltung besetzt werden kann, wird benannt und dokumentiert. Es wird eine zentrale Liste aller von der Institution registrierten Domains mit ihren Ablaufdaten geführt. Die Kontakt-E-Mail-Adresse beim Registrar ist eine Funktions-E-Mail-Adresse (z.B. 'domains@institution.de'). Viele Domains werden auf automatische Verlängerung gesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz der Rollenbeschreibung und die Liste der verwalteten Domains. Es wird verifiziert, dass eine Funktions-E-Mail-Adresse als Kontakt hinterlegt ist und dass die Institution als Inhaber (Owner) der Domain eingetragen ist, auch wenn ein Dienstleister die Verwaltung durchführt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a8-m4",
+                    "uuid": "8f53706a-046e-408f-bd7b-fecc74bf4566",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle kritischen Domains sind beim Registrar gegen unautorisierte Transfers und Änderungen mit einer Transfersperre (Registry Lock) geschützt. Der Zugriff auf das Verwaltungskonto beim Registrar ist durch Zwei-Faktor-Authentisierung (2FA) abgesichert. Die Ablaufdaten der Domains werden durch ein automatisiertes System überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Kundenportal des Domain-Registrars wird für alle wichtigen Domains die Option 'Transfer Lock' aktiviert. Für den Login wird eine 2FA-Anwendung (z.B. TOTP) verpflichtend eingerichtet. Ein Kalender oder ein Monitoring-System wird genutzt, um 90, 60 und 30 Tage vor Ablauf einer Domain automatisch zu benachrichtigen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft im Verwaltungsportal des Registrars (oder durch Screenshots), ob die Transfersperre aktiv ist und ob 2FA für den Account erzwungen wird. Es wird die Konfiguration des automatisierten Benachrichtigungssystems für ablaufende Domains geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "7f8f0900-a3dc-4215-95f6-0f144787f743",
+                "control-id": "DET.4.15",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a7-m2",
+                    "uuid": "23851450-8cef-4103-9094-c88e6c1cf7b1",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die grundlegende Verfügbarkeit der DNS-Server (Erreichbarkeit via Ping) und der Zustand des DNS-Dienstes werden von einem zentralen Monitoring-System überwacht. Die Protokolldateien werden gespeichert, aber nicht systematisch ausgewertet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Monitoring-Tool wie Nagios oder Zabbix wird verwendet, um regelmäßig zu prüfen, ob der Server auf ICMP-Anfragen antwortet und der DNS-Port (53/UDP/TCP) offen ist. Eine einfache DNS-Abfrage wird durchgeführt, um die Funktion des Dienstes zu testen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration des Monitoring-Systems, um die eingerichteten Verfügbarkeits-Checks für die DNS-Server zu verifizieren. Es wird geprüft, ob die Protokolldateien der DNS-Server zentral gesammelt und für einen definierten Zeitraum aufbewahrt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a7-m3",
+                    "uuid": "436348b0-a58a-4c9f-82f9-9df90d967024",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "DNS-Server MÜSSEN laufend überwacht werden. Es MUSS überwacht werden, wie ausgelastet die DNS-Server sind, um rechtzeitig die Leistungskapazität der Hardware anpassen zu können. DNS-Server MÜSSEN so konfiguriert werden, dass mindestens die folgenden sicherheitsrelevanten Ereignisse protokolliert werden: Anzahl der DNS-Anfragen, Anzahl der Fehler bei DNS-Anfragen, EDNS-Fehler, auslaufende Zonen sowie fehlgeschlagene Zonentransfers."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Logging des DNS-Servers wird so konfiguriert, dass alle geforderten Ereignisse erfasst werden. Die Log-Dateien werden an ein zentrales Log-Management-System (z.B. Syslog-NG, Fluentd) gesendet. Das Monitoring-System erfasst und visualisiert Leistungskennzahlen wie Anfragen pro Sekunde (QPS), CPU- und Speicherauslastung. Schwellenwerte für Alarme sind definiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration des DNS-Servers, um sicherzustellen, dass das Logging korrekt und umfassend eingerichtet ist. Es wird das Log-Management-System geprüft, um die zentrale Sammlung der Logs zu verifizieren. Die Konfiguration des Monitoring-Systems wird auf die Erfassung von Leistungskennzahlen und die Definition von Alarm-Schwellenwerten geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a7-m4",
+                    "uuid": "0b46e174-55b1-47a8-a933-6f3c30636952",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die protokollierten Daten werden regelmäßig und automatisiert ausgewertet, um Anomalien zu erkennen. Es werden Dashboards zur Visualisierung der DNS-Aktivität und -Leistung erstellt. Alarme werden bei signifikanten Abweichungen vom Normalverhalten ausgelöst, z.B. bei einem plötzlichen Anstieg von NXDOMAIN-Antworten oder SERVFAIL-Fehlern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein SIEM-System oder eine Log-Analyse-Plattform (z.B. ELK-Stack, Splunk, Graylog) wird verwendet, um die DNS-Logs zu parsen, zu indizieren und zu analysieren. Es werden Korrelationsregeln und Dashboards erstellt, die sicherheitsrelevante Muster erkennen und visualisieren. Die Alarme werden an ein zentrales Ticket-System oder einen ChatOps-Kanal weitergeleitet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration des SIEM- oder Log-Analyse-Systems. Es werden die eingerichteten Dashboards und Alarmierungsregeln für DNS-spezifische Ereignisse eingesehen. Stichproben von Alarmen aus der Vergangenheit werden auf ihre korrekte Bearbeitung hin überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a7-m5",
+                    "uuid": "7c4c3116-68a7-4086-889c-26ed06fc65d3",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die DNS-Überwachung nutzt maschinelles Lernen, um Baseline-Profile des normalen DNS-Verkehrs zu erstellen und komplexe, niedrigschwellige Angriffe wie DNS-Tunneling oder Slow-Drip-Datenexfiltration zu erkennen. Die Analyse erfolgt in Echtzeit und kann automatisch Abwehrmaßnahmen auslösen, wie z.B. das Blockieren von verdächtigen Quell-IPs."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Spezialisierte DNS-Security-Lösungen oder fortschrittliche SIEM-Module mit User and Entity Behavior Analytics (UEBA) werden eingesetzt. Diese Systeme analysieren DNS-Anfragemuster, Payload-Größen und Entropie von Domainnamen, um verdächtige Aktivitäten zu identifizieren, die auf Malware-Kommunikation oder Datenexfiltration hindeuten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration und die Wirksamkeit der spezialisierten DNS-Analyse-Tools. Es werden Berichte und Logs des Systems auf erkannte Anomalien und daraufhin erfolgte Reaktionen geprüft. Die Funktionsweise der automatisierten Abwehrmaßnahmen wird verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "105aa5c8-aa9b-40cb-850c-19641eb23c1f",
+                "control-id": "DET.4.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a15-m3",
+                    "uuid": "b36ca94e-6e58-4341-a323-6655854c747f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Logdateien des DNS-Servers SOLLTEN regelmäßig überprüft werden. Die Logdateien des DNS-Servers SOLLTEN regelmäßig ausgewertet werden. Mindestens die folgenden sicherheitsrelevanten Ereignisse SOLLTEN ausgewertet werden: Anzahl der DNS-Anfragen, Anzahl der Fehler bei DNS-Anfragen, EDNS-Fehler, auslaufende Zonen, fehlgeschlagene Zonentransfers sowie Veränderungen im Verhältnis von Fehlern zu DNS-Anfragen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Prozess für die manuelle Überprüfung der DNS-Logdaten wird etabliert und dokumentiert. Wöchentlich oder monatlich werden die Logdateien auf die genannten Ereignisse durchgesehen und auffällige Vorkommnisse protokolliert. Dies kann durch Skripte unterstützt werden, die die relevanten Logeinträge extrahieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz des dokumentierten Prozesses zur Log-Auswertung. Es werden die Protokolle der durchgeführten Überprüfungen eingesehen, um die Regelmäßigkeit und Gründlichkeit der Auswertung zu bewerten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a15-m4",
+                    "uuid": "e73c1dbe-3c20-4377-8c96-960fa68075bd",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Auswertung der DNS-Logdaten erfolgt automatisiert durch ein zentrales Log-Management- oder SIEM-System. Es sind Regeln und Schwellenwerte definiert, die bei signifikanten Abweichungen (z.B. sprunghafter Anstieg von Fehlern, fehlgeschlagene Zonentransfers) automatisch Alarme auslösen. Die Ergebnisse werden in Dashboards visualisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die DNS-Logs werden in Echtzeit an ein SIEM (z.B. Splunk, ELK-Stack) gesendet. Dort werden sie geparst und indiziert. Es sind Korrelationsregeln eingerichtet, die z.B. alarmieren, wenn die Rate der SERVFAIL-Antworten 5% der Gesamtanfragen übersteigt oder wenn ein Zonentransfer mehrfach fehlschlägt. Dashboards zeigen den Verlauf der QPS, Fehlerraten und andere KPIs."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration der Alarmierungsregeln und Dashboards im SIEM-System. Es werden die ausgelösten Alarme der letzten Monate und die dazugehörigen Bearbeitungstickets eingesehen, um die Effektivität des Prozesses zu bewerten."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a40c8fa7-a703-44ca-b0c7-7147448a0e31",
+                "control-id": "DEV.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a1-m1",
+                    "uuid": "70e61b67-f306-4c69-8b08-ca203ddac150",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine rudimentäre Planung für den DNS-Einsatz existiert, konzentriert sich jedoch nur auf die grundlegende Namensauflösung für kritische externe Dienste. Sicherheitsaspekte und interne Auflösung werden nicht systematisch berücksichtigt. Es gibt keine formelle Dokumentation."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Planung erfolgt ad-hoc und wird meist nur in Form von Notizen oder E-Mails festgehalten, wenn ein neues System in Betrieb genommen wird, das eine externe Erreichbarkeit benötigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft durch Interviews mit den Administratoren, ob überhaupt ein Planungsgedanke für den DNS-Einsatz vorhanden ist. Es wird nach jeglicher Form von Dokumentation (z.B. Notizen, Wiki-Einträge) gesucht, die die DNS-Konfiguration begründet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m2",
+                    "uuid": "2618a485-07c1-461b-ac16-908a6cf33e5c",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein grundlegender Plan für den DNS-Einsatz ist vorhanden und dokumentiert. Er legt fest, wie der DNS-Dienst grundsätzlich aufgebaut ist (z.B. welche Server als primäre und sekundäre Server dienen). Die Planung deckt die wichtigsten Domains ab, geht aber nicht auf detaillierte Sicherheitskonfigurationen ein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Dokument (z.B. im Wiki) beschreibt die DNS-Server, ihre IP-Adressen und ihre grundlegenden Rollen (interner Resolver, externer autoritativer Server). Die Zonen für die Hauptdomains sind aufgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz und Aktualität des DNS-Planungsdokuments. Er vergleicht die im Dokument beschriebene Architektur stichprobenartig mit der tatsächlichen Konfiguration der DNS-Server."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m3",
+                    "uuid": "8b3bb56c-e2d2-4ead-adc8-0b22d41d6b59",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Einsatz von DNS-Servern MUSS sorgfältig geplant werden. Es MUSS zuerst festgelegt werden, wie der Netzdienst DNS aufgebaut werden soll. Es MUSS festgelegt werden, welche Domain-Informationen schützenswert sind. Es MUSS geplant werden, wie DNS-Server in das Netz des Informationsverbunds eingebunden werden sollen. Die getroffenen Entscheidungen MÜSSEN geeignet dokumentiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die DNS-Planung ist ein formelles Dokument, das Teil der Netzwerkdokumentation ist. Es definiert klar die Trennung zwischen internen und externen Zonen, die zuständigen autoritativen Server, die internen Resolver und grundlegende Sicherheitsrichtlinien wie erlaubte Zone-Transfers. Das Dokument wird versioniert und bei Änderungen an der DNS-Infrastruktur aktualisiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft, ob eine detaillierte und dokumentierte DNS-Planung vorliegt. Es wird verifiziert, ob die Planung die Unterscheidung schützenswerter Informationen, die Einbindung der Server ins Netz und die generelle Architektur abdeckt. Die Konformität der realen Implementierung mit dem Planungsdokument wird überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m4",
+                    "uuid": "2cb1c3c3-fd53-4edd-bbca-d15f4dfd2818",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die DNS-Planung wird regelmäßig, mindestens jährlich, überprüft und bei Bedarf an neue Bedrohungen und Anforderungen angepasst. Die Planung umfasst detaillierte Sicherheitsaspekte wie DNSSEC-Deployment-Strategien, Logging-Anforderungen und Response Rate Limiting (RRL). Die Dokumentation ist in einer zentralen CMDB hinterlegt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die DNS-Planung ist ein lebendes Dokument, das im Rahmen des Change-Management-Prozesses gepflegt wird. Es enthält explizite Richtlinien für die Konfiguration von DNSSEC, die Überwachung von DNS-Anfragen und die Abwehr von DoS-Angriffen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Protokolle der regelmäßigen Reviews der DNS-Planung. Es wird verifiziert, dass die Planung fortgeschrittene Sicherheitskonzepte (DNSSEC, RRL) adressiert und dass diese Konzepte in der Konfiguration der DNS-Server umgesetzt sind. Die Integration der Dokumentation in eine CMDB wird geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m5",
+                    "uuid": "5efaf434-7797-4242-b96b-10c779a383bc",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die DNS-Planung ist vollständig in die IT-Architektur- und Risikomanagementprozesse integriert. Änderungen an der DNS-Architektur basieren auf proaktiven Bedrohungsanalysen (Threat Modeling). Automatisierte Konfigurations-Checks stellen sicher, dass alle DNS-Server-Deployments und -Änderungen konform zur Planung sind."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools für Infrastructure as Code (IaC) wie Ansible, Puppet oder Terraform werden verwendet, um die DNS-Konfigurationen basierend auf der zentralen Planungsvorgabe automatisiert zu verwalten. Ein System zur kontinuierlichen Konformitätsprüfung (z.B. mit InSpec) meldet Abweichungen in Echtzeit."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Integration der DNS-Planung in die übergeordneten Managementprozesse. Es werden die Ergebnisse der Bedrohungsanalysen und die daraus abgeleiteten Änderungen an der DNS-Architektur eingesehen. Die Funktionsweise der automatisierten Konfigurations- und Konformitätsprüfungen wird verifiziert, z.B. durch Einsicht in die IaC-Skripte und die Logs der Prüf-Tools."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "822c5f23-ffc6-4cd5-8fad-1b8b086b6542",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a4-m2",
+                    "uuid": "5ecfb9c1-29b9-4160-94ba-c0fba2a0de6e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die DNS-Server werden mit den Standardeinstellungen der Distribution betrieben. Kritische Schwachstellen wie offene Rekursion werden durch grundlegende ACLs auf dem Server selbst verhindert. Die Softwareversion wird nicht aktiv verborgen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Konfigurationsdatei (z.B. `named.conf`) wird die `allow-recursion`-Direktive gesetzt, um Anfragen auf das interne Netz zu beschränken. Andere Sicherheitseinstellungen werden nicht von den Standardwerten abweichend konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor führt einen externen Portscan und eine DNS-Abfrage durch, um zu prüfen, ob der Server als Open Resolver fungiert und welche Version er preisgibt. Die Konfigurationsdatei wird auf grundlegende Sicherheitseinstellungen überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a4-m3",
+                    "uuid": "5f727bf2-73b8-4f3f-b894-3e7c82654743",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Resolving DNS-Server MUSS so konfiguriert werden, dass er ausschließlich Anfragen aus dem internen Netz akzeptiert. Wenn ein Resolving DNS-Server Anfragen versendet, MUSS er zufällige Source Ports benutzen. Sind DNS-Server bekannt, die falsche Domain-Informationen liefern, MUSS der Resolving DNS-Server daran gehindert werden, Anfragen dorthin zu senden. Ein Advertising DNS-Server MUSS so konfiguriert werden, dass er Anfragen aus dem Internet immer iterativ behandelt. Es MUSS sichergestellt werden, dass DNS-Zonentransfers zwischen Primary und Secondary DNS-Servern funktionieren. Zonentransfers MÜSSEN auf bestimmte IP-Adressen beschränkt werden. Die Version des verwendeten DNS-Server-Produktes MUSS verborgen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration des Resolving-Servers wird durch Firewall-Regeln und serverseitige ACLs auf das interne Netz beschränkt. Die Source Port Randomization ist in moderner DNS-Software standardmäßig aktiv und wird verifiziert. Zone Transfers werden auf die IP-Adressen der jeweiligen Master/Slave-Server beschränkt. Die Versionsinformation (z.B. per `version.bind` CHAOS TXT query) wird unterdrückt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die DNS-Server-Konfigurationen im Detail: Einschränkung von Rekursion und Zone Transfers, Unterdrückung der Version. Es wird extern geprüft, ob die Versionsinformation auslesbar ist. Die Konfiguration der Source-Port-Nutzung wird verifiziert (z.B. `query-source address * port *;`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a4-m4",
+                    "uuid": "5dfa757d-bc46-45b2-bb91-52d298954b49",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzliche Härtungsmaßnahmen werden umgesetzt. Response Rate Limiting (RRL) wird auf autoritativen Servern aktiviert, um ihre Nutzung für Amplification-Angriffe zu erschweren. Auf Resolvern werden DNS-Cookies verwendet, um die Authentizität von Anfragen und Antworten zu verbessern und Spoofing zu erschweren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Konfiguration des autoritativen Servers (z.B. BIND) wird ein `rate-limit` Block definiert. Auf dem Resolver (z.B. Unbound, BIND) werden DNS-Cookies (`add-cookie`, `send-cookie`) aktiviert. Zonentransfers werden zusätzlich durch Transaction Signatures (TSIG) abgesichert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfigurationsdateien auf die Aktivierung und korrekte Parametrisierung von RRL und DNS-Cookies. Die Absicherung der Zonentransfers mittels TSIG wird durch Prüfung der Konfiguration und der Schlüsseldateien verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a4-m5",
+                    "uuid": "25120fa7-8543-42a1-a138-29ce4c190f69",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle DNS-Server laufen in einer stark eingeschränkten Umgebung, z.B. in einem minimalen Container-Image oder mit strikten Mandatory Access Control (MAC) Profilen wie AppArmor oder SELinux. Der ausgehende Verkehr von Resolvern wird über einen validierenden DNS-Proxy (z.B. DNSCrypt-Proxy) geleitet, der die Authentizität und Vertraulichkeit der Anfragen sicherstellt. Alle Konfigurationen werden über ein automatisiertes System (IaC) verwaltet und auf Konformität überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "DNS-Server werden als Container mit schreibgeschütztem Dateisystem und einem eng gefassten SELinux-Profil betrieben. Die Konfigurationsverwaltung erfolgt über Ansible-Playbooks, die jede Änderung dokumentieren und auf einen zentralen Git-Repository basieren. Ein DNSCrypt-Proxy wird vorgeschaltet, um Anfragen zu externen rekursiven Servern zu verschlüsseln und zu authentifizieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Container-Definitionen und die SELinux/AppArmor-Profile. Die IaC-Konfigurationen und das Änderungsprotokoll im Git-Repository werden eingesehen. Die Netzwerkkonfiguration wird analysiert, um den erzwungenen Datenverkehr über den DNSCrypt-Proxy zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "3d7171b5-e035-4502-9841-112ca703c686",
+                "control-id": "KONF.11.1.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a18-m3",
+                    "uuid": "56229ffa-536b-4b34-a264-9b4c78e2f4b2",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Um Zonentransfers stärker abzusichern, SOLLTEN zusätzlich Transaction Signatures (TSIG) eingesetzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zusätzlich zur Beschränkung von Zonentransfers auf bestimmte IP-Adressen wird ein TSIG-Schlüssel generiert. Dieser Schlüssel wird sicher auf den primären und alle sekundären Server übertragen. Die DNS-Server-Konfiguration wird so angepasst, dass Zonentransfers nur dann erlaubt sind, wenn sie mit diesem Schlüssel signiert sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die DNS-Server-Konfiguration auf beiden Seiten (Master und Slave), um die Konfiguration der TSIG-Schlüssel für den Zonentransfer zu verifizieren. Es wird sichergestellt, dass Zonentransfers ohne gültige Signatur abgewiesen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a18-m4",
+                    "uuid": "8a1d2c7d-ca1f-4552-9bdc-8e5c8f2ed789",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für jeden sekundären Server wird ein eigener, einzigartiger TSIG-Schlüssel verwendet. Die TSIG-Schlüssel werden regelmäßig, mindestens jährlich, gewechselt. Der Prozess zum Schlüsselwechsel ist dokumentiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Anstatt eines gemeinsamen Schlüssels wird für jede Master-Slave-Beziehung ein separater TSIG-Schlüssel generiert. Dies begrenzt den Schaden, falls ein Schlüssel kompromittiert wird. Ein Skript oder ein manueller Prozess wird etabliert, um die Schlüssel periodisch zu erneuern und auf den Servern auszutauschen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration auf die Verwendung individueller TSIG-Schlüssel pro Server-Beziehung. Die Dokumentation und die Protokolle des Schlüsselwechsel-Prozesses werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "4307381c-1760-48d5-97ee-9653b877fa77",
+                "control-id": "KONF.11.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a13-m3",
+                    "uuid": "d7ec66f9-1377-4f62-9a5a-8c9d6093ee60",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Namensraum eines Informationsverbunds SOLLTE in einen öffentlichen und einen institutionsinternen Bereich aufgeteilt werden (Split DNS). Im öffentlichen Teil SOLLTEN nur solche Domain-Informationen enthalten sein, die von Diensten benötigt werden, die von extern erreichbar sein sollen. IT-Systeme im internen Netz SOLLTEN selbst dann keinen von außen auflösbaren DNS-Namen erhalten, wenn sie eine öffentliche IP-Adresse besitzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Split-DNS-Architektur implementiert. Die externen, autoritativen DNS-Server stellen eine 'externe Sicht' der Zonen bereit, die nur die öffentlichen Server (z.B. www, mail, vpn) enthält. Die internen DNS-Server stellen eine 'interne Sicht' bereit, die alle internen Systeme enthält. Interne Clients nutzen ausschließlich die internen Server und erhalten so die interne Sicht. Systeme, die nicht von außen erreichbar sein sollen (z.B. Datenbankserver), erhalten keinen Eintrag in der externen Zone."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor vergleicht den Inhalt der externen Zone (durch Abfrage eines externen Servers, z.B. mit `dig @ext-ns axfr domain.tld`) mit dem Inhalt der internen Zone (durch Abfrage eines internen Servers). Es wird geprüft, ob interne Hostnamen in der externen Zone sichtbar sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a13-m4",
+                    "uuid": "9d0ac937-9adc-4aef-b07d-78a37e233fcc",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verwaltung der internen und externen Zonen wird durch technische Mittel strikt getrennt, um ein versehentliches Veröffentlichen interner Informationen zu verhindern. Zonentransfers (AXFR/IXFR) aus dem Internet werden auf allen autoritativen Servern blockiert. Stattdessen werden alternative, sicherere Methoden zur Abfrage von Zoneninhalten (z.B. DNS Catalog Zones) für administrative Zwecke verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die internen und externen Zonendateien werden in separaten Verzeichnissen mit unterschiedlichen Zugriffsberechtigungen verwaltet. Die Konfiguration des externen autoritativen Servers lässt Zonentransfers nur von den IP-Adressen der anderen autoritativen Server zu. Öffentliche AXFR-Anfragen werden explizit verboten. DNS Catalog Zones (RFC 9432) werden zur automatischen Provisionierung von Zonen auf sekundären Servern genutzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor versucht, einen Zonentransfer von einem externen Standort aus durchzuführen, um die Blockade zu verifizieren. Die Dateisystemberechtigungen und die DNS-Server-Konfigurationen bezüglich der Zonenverwaltung werden überprüft. Der Einsatz von Catalog Zones wird verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "184fc26b-df9a-4b25-b5ed-7f68c5d8edce",
+                "control-id": "KONF.11.8",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a21-m3",
+                    "uuid": "4fbe1bf5-2942-451f-b2e9-57df7f3a076a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der primäre Advertising DNS-Server (Master) wird wie die sekundären Server in den öffentlichen NS-Records der Zone aufgeführt und ist aus dem Internet erreichbar."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Sowohl der Master-Server als auch die Slave-Server werden in den NS-Records der Zone eingetragen. Alle Server beantworten öffentliche DNS-Anfragen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die NS-Records der Zone und stellt fest, ob der als Master konfigurierte Server öffentlich gelistet ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a21-m5",
+                    "uuid": "03eb8e63-dfb1-48ab-8629-7c22ffdd1113",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Um Angriffe auf den primären Advertising DNS-Server zu erschweren, SOLLTE eine sogenannte Hidden-Master-Anordnung vorgenommen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der primäre DNS-Server (Master), auf dem die Zonen bearbeitet werden, ist nicht aus dem Internet erreichbar und nicht in den öffentlichen NS-Records der Zone aufgeführt. Er ist nur für die öffentlich erreichbaren sekundären Server (Slaves) erreichbar, um Zonentransfers zu ermöglichen. Die Firewall-Regeln erlauben eingehende Verbindungen zum Master nur von den IP-Adressen der Slaves auf dem DNS-Port."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die öffentlichen NS-Einträge und verifiziert, dass die IP-Adresse des Master-Servers dort nicht aufgeführt ist. Die Firewall-Konfiguration vor dem Master-Server wird geprüft, um sicherzustellen, dass der Zugriff auf die IP-Adressen der Slaves beschränkt ist. Ein Erreichbarkeitstest des Masters aus dem öffentlichen Internet wird durchgeführt."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "4de2a760-a762-4b69-a0ae-f0c3d97d89c7",
+                "control-id": "KONF.12.14",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a17-m3",
+                    "uuid": "c0bb15d0-cc77-4ec7-8093-cfdbd3a42899",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die DNS-Protokollerweiterung DNSSEC SOLLTE sowohl auf Resolving DNS-Servern als auch auf Advertising DNS-Servern aktiviert werden. Die dabei verwendeten Schlüssel Key-Signing-Keys (KSK) und Zone-Signing-Keys (ZSK) SOLLTEN regelmäßig gewechselt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die externen, autoritativen Zonen werden mit DNSSEC signiert. Der öffentliche KSK wird als DS-Record bei der übergeordneten Zone (z.B. der TLD-Registry) hinterlegt. Die internen Resolver sind so konfiguriert, dass sie DNSSEC-Signaturen validieren (`dnssec-validation auto;`). Es existiert ein dokumentierter Prozess für den regelmäßigen Wechsel (Rollover) der ZSKs (z.B. alle 3 Monate) und der KSKs (z.B. jährlich)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft mit externen Tools (z.B. DNSViz, Verisign DNSSEC Debugger), ob die öffentlichen Zonen korrekt mit DNSSEC signiert und die DS-Records korrekt hinterlegt sind. Die Konfiguration der internen Resolver auf DNSSEC-Validierung wird geprüft. Der Prozess und die Protokolle für den Schlüssel-Rollover werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a17-m4",
+                    "uuid": "022c409a-30d2-4fad-b5aa-5bfca5c3d6bb",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der DNSSEC-Schlüssel-Rollover-Prozess ist weitgehend automatisiert. Die DNSSEC-Validierung wird auf den Resolvern erzwungen. Es gibt ein aktives Monitoring, das bei Validierungsfehlern oder Problemen mit der Signaturkette (z.B. ablaufende Signaturen) alarmiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Moderne DNS-Server-Software wie BIND 9.11+ oder Knot DNS wird genutzt, um den ZSK- und KSK-Rollover über Richtlinien in der Konfiguration zu automatisieren (`dnssec-policy`). Ein Monitoring-Plugin prüft kontinuierlich die Gültigkeit der DNSSEC-Signaturen und die Erreichbarkeit der Schlüssel und alarmiert bei Problemen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration der automatisierten DNSSEC-Richtlinien. Die Logs und Alarme des DNSSEC-Monitorings werden auf aufgetretene Probleme und deren Behebung geprüft. Die korrekte Funktion der Validierung wird durch gezielte Abfragen von absichtlich fehlerhaft signierten oder ungültigen Domains getestet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a17-m5",
+                    "uuid": "cc867715-880e-499e-bbf2-fece1adf28df",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die privaten Anteile der DNSSEC-Schlüssel (insbesondere des KSK) werden in einem Hardware Security Module (HSM) gespeichert und verwendet. Dies bietet den höchstmöglichen Schutz gegen Kompromittierung des Schlüsselmaterials. Die gesamte DNSSEC-Management-Infrastruktur ist hochverfügbar ausgelegt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein oder mehrere netzwerkfähige HSMs werden in die DNS-Infrastruktur integriert. Die DNS-Server-Software wird über eine PKCS#11-Schnittstelle so konfiguriert, dass die Signatur-Operationen auf dem HSM ausgeführt werden, ohne dass der private Schlüssel den HSM jemals verlässt. Der KSK-Rollover-Prozess umfasst eine sichere Zeremonie zur Generierung des neuen Schlüssels."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration der DNS-Software zur Anbindung des HSM. Die Dokumentation der HSM-Einrichtung und der Schlüsselzeremonien wird eingesehen. Die physische und logische Sicherheit der HSMs wird bewertet."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "806cc8b2-d3c0-4500-bb7d-97eeed0cc606",
+                "control-id": "KONF.6.6",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a3-m1",
+                    "uuid": "4973ec3d-872c-4473-a2bd-03b6e8bbc0b4",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein einziger DNS-Server wird für alle Aufgaben eingesetzt (internes Caching/Resolving und externes Advertising). Eine Trennung wird versucht, durch einfache Access Control Lists (ACLs) zu erreichen, die jedoch unvollständig sind."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein BIND-Server ist so konfiguriert, dass er rekursive Abfragen nur für interne IP-Bereiche erlaubt (`allow-recursion`). Er ist jedoch aus dem Internet erreichbar und dient gleichzeitig als autoritativer Server für externe Zonen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor führt eine externe Prüfung durch, um festzustellen, ob der öffentliche DNS-Server rekursive Abfragen beantwortet (Open Resolver). Die Konfigurationsdatei des DNS-Servers wird auf die Vermischung von Resolver- und autoritativen Funktionen überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m2",
+                    "uuid": "7462bb45-5a21-4d62-851a-5b73a3b586dd",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Auf derselben Hardware werden getrennte DNS-Server-Prozesse oder virtuelle Maschinen für die Rollen Advertising und Resolving betrieben. Die Clients sind so konfiguriert, dass sie den korrekten Prozess für ihre Anfragen nutzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf einem Server laufen zwei Instanzen eines DNS-Servers (z.B. BIND) auf unterschiedlichen IP-Adressen oder Ports. Eine Instanz ist für das interne Netz als Resolver konfiguriert, die andere für das externe Netz als autoritativer Server. Interne Clients erhalten per DHCP die IP des internen Resolvers."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Prozessliste und Netzwerkkonfiguration des Servers, um die Trennung der DNS-Dienste zu verifizieren. Die DHCP-Konfiguration wird überprüft, um sicherzustellen, dass interne Clients ausschließlich den internen Resolver verwenden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m3",
+                    "uuid": "c9b6ed7a-90cb-4983-af14-1615bba18493",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Advertising DNS-Server und Resolving DNS-Server MÜSSEN serverseitig getrennt sein. Die Resolver der internen IT-Systeme DÜRFEN NUR die internen Resolving DNS-Server verwenden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden dedizierte IT-Systeme für die Rollen Advertising und Resolving eingesetzt. Der Advertising-Server befindet sich in einer DMZ, während der Resolving-Server im internen Netz platziert ist. Firewall-Regeln stellen sicher, dass Clients aus dem internen Netz nur den Resolving-Server erreichen können und nicht direkt externe DNS-Server."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Netzwerkarchitekturpläne und die Firewall-Regelsätze, um die physische oder logische Trennung der Server und die Durchsetzung der Kommunikationspfade zu verifizieren. Stichproben bei Client-Systemen stellen sicher, dass diese korrekt für die Nutzung des internen Resolvers konfiguriert sind (`ipconfig /all` oder `cat /etc/resolv.conf`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m4",
+                    "uuid": "cfb92f90-a41b-419b-a023-a8ef8a854687",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Trennung von Advertising- und Resolving-Funktionen wird durch den Einsatz unterschiedlicher DNS-Softwareprodukte für die jeweilige Aufgabe weiter gehärtet (z.B. NSD für Advertising, Unbound für Resolving). Die Kommunikation zwischen den internen Resolvern und dem Internet wird durch einen dedizierten DNS-Proxy oder eine Firewall mit DNS-Inspektion kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der DMZ wird ein autoritativer Only-Server wie NSD oder Knot DNS eingesetzt. Im internen Netz wird ein reiner Caching/Resolving-Server wie Unbound oder PowerDNS Recursor verwendet. Dies reduziert die Angriffsfläche, da jede Software nur den für ihre Aufgabe notwendigen Code enthält."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die installierte Software auf den DNS-Servern, um die funktionale Spezialisierung zu bestätigen. Die Konfiguration der Firewall oder des DNS-Proxys wird auf Regeln zur Filterung und Protokollierung von DNS-Verkehr überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m5",
+                    "uuid": "083d8533-1fdb-4086-9408-cfd1857edfa0",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die interne Resolving-Infrastruktur ist mit einer DNS-Firewall (auch als Response Policy Zone, RPZ, bekannt) ausgestattet, die Anfragen an bekannte bösartige, Phishing- oder Command&Control-Domains proaktiv blockiert oder umleitet. Die Bedrohungsinformationen werden automatisiert und in Echtzeit aktualisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der interne Resolving DNS-Server (z.B. BIND, Unbound, Knot Resolver) wird so konfiguriert, dass er einen oder mehrere RPZ-Feeds von kommerziellen oder Open-Source-Threat-Intelligence-Anbietern abonniert. Die Richtlinien sind so festgelegt, dass Anfragen an gelistete Domains blockiert (NXDOMAIN) oder auf eine interne Warnseite umgeleitet werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration des Resolving DNS-Servers auf die Einbindung von RPZ-Zonen. Es wird die Aktualität der Threat-Intelligence-Feeds verifiziert. Test-Anfragen an bekannte bösartige Domains werden durchgeführt, um die korrekte Funktion der Blockierung zu bestätigen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "1b3686c6-45f9-4d13-a418-dfb90f686a19",
+                "control-id": "KONF.6.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a6-m1",
+                    "uuid": "660d1e8c-5ac8-4ffc-8cf1-e504b824b957",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamische DNS-Updates sind für eine interne Zone aktiviert, die Absicherung erfolgt jedoch nur über eine IP-basierte ACL, die z.B. dem DHCP-Server Updates erlaubt. Es gibt keine kryptographische Authentifizierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Zonenkonfiguration des DNS-Servers wird die `allow-update` Direktive mit der IP-Adresse des DHCP-Servers verwendet. Dies ermöglicht es jedem Prozess auf dem DHCP-Server, DNS-Einträge zu ändern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration der DNS-Zone auf die `allow-update` Direktive und prüft, ob diese ausschließlich auf IP-Adressen basiert. Die Sicherheit des als Updater autorisierten Systems (z.B. des DHCP-Servers) wird bewertet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a6-m3",
+                    "uuid": "f7ddd6d8-ca25-49c8-949b-9ac6e782e9fd",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS sichergestellt werden, dass nur legitimierte IT-Systeme Domain-Informationen ändern dürfen. Es MUSS festgelegt werden, welche Domain-Informationen die IT-Systeme ändern dürfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Dynamische DNS-Updates (DDNS) werden mithilfe von Transaction Signatures (TSIG) abgesichert. Für jedes System oder jede Systemgruppe (z.B. den DHCP-Server oder eine Gruppe von Clients), das Updates durchführen darf, wird ein dedizierter TSIG-Schlüssel erstellt. Die Update-Richtlinien in der DNS-Server-Konfiguration legen genau fest, welche Namen (z.B. nur der eigene Hostname) mit welchem Schlüssel geändert werden dürfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die DNS-Server-Konfiguration auf die Verwendung von TSIG für DDNS. Es wird verifiziert, dass die Update-Richtlinien (`update-policy`) restriktiv sind und das Prinzip der geringsten Rechte befolgen. Die sichere Verteilung und Speicherung der TSIG-Schlüssel auf den Clients wird stichprobenartig geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a6-m4",
+                    "uuid": "f23379a7-ca9f-4ec2-9773-7f72c09c68ac",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Authentifizierung für dynamische DNS-Updates wird in eine zentrale Verzeichnisdienst-Infrastruktur integriert (z.B. GSS-TSIG mit Kerberos in einer Active Directory-Umgebung). Die Berechtigungen zur Durchführung von Updates werden über Gruppenrichtlinien oder ähnliche zentrale Mechanismen verwaltet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der DNS-Server wird so konfiguriert, dass er GSS-TSIG verwendet. Windows-Clients, die in die Domäne eingebunden sind, nutzen automatisch ihre Kerberos-Tickets, um sich beim DNS-Server zu authentifizieren und ihre Einträge sicher zu aktualisieren. Die Berechtigungen werden auf der DNS-Zone in den Active Directory-Sicherheitseinstellungen konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die DNS-Server- und Zonenkonfiguration auf die Aktivierung von sicheren dynamischen Updates im Modus 'Secure only'. Die ACLs auf den DNS-Zonenobjekten im Active Directory werden auf korrekte und restriktive Berechtigungen geprüft. Die sichere Kommunikation wird mittels Netzwerkanalyse-Tools verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "512f141f-864e-46c2-a6be-fbe50f5f8657",
+                "control-id": "NOT.4.17",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Audit",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a20-m3",
+                    "uuid": "914500f3-819f-4456-b30f-eff1f57b2c56",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Notfallplan für DNS-Server wird im Rahmen von allgemeinen IT-Notfallübungen theoretisch durchgesprochen (Tabletop-Übung). Die Erkenntnisse werden dokumentiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einmal jährlich findet eine Besprechung statt, bei der das Szenario 'Ausfall des primären DNS-Servers' anhand des Notfallplans durchgespielt wird. Die Teilnehmer diskutieren die im Plan festgelegten Schritte."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Protokolle der Tabletop-Übungen und die daraus resultierenden Erkenntnisse und Verbesserungsmaßnahmen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a20-m5",
+                    "uuid": "38ca9bc4-e6ff-4895-8f68-0288d6e328c8",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE regelmäßig überprüft werden, ob der Notfallplan für DNS-Server durchführbar ist. Dies geschieht durch praktische Übungen, bei denen der Ausfall eines DNS-Servers simuliert und der Wiederanlaufprozess real durchgeführt wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mindestens einmal jährlich wird eine praktische Notfallübung durchgeführt. Dabei wird beispielsweise ein sekundärer Server kontrolliert heruntergefahren und die Wiederherstellung aus dem Backup auf einer neuen virtuellen Maschine getestet. Die Übung wird außerhalb der Hauptgeschäftszeiten durchgeführt. Die Ergebnisse und die benötigte Zeit werden gemessen und zur Verbesserung des Plans verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Planungs- und Ergebnisdokumentation der praktischen Notfallübungen. Es wird verifiziert, dass die Übungen regelmäßig stattfinden und dass die daraus gewonnenen Erkenntnisse zu konkreten Verbesserungen am Notfallplan und an den technischen Systemen geführt haben."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "eabf8cc0-71d4-4936-aff3-78d0f79cfacd",
+                "control-id": "NOT.4.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a9-m2",
+                    "uuid": "40a91947-9f15-4445-bd20-1952f2e839f9",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert ein allgemeiner IT-Notfallplan, der den Ausfall von DNS als mögliches Szenario erwähnt. Es gibt jedoch keine spezifischen Handlungsanweisungen oder Wiederanlaufpläne für den DNS-Dienst. Die Konfigurationsdateien werden unregelmäßig im Rahmen von System-Backups gesichert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Zonen- und Konfigurationsdateien des DNS-Servers sind Teil eines nächtlichen, dateibasierten Backups des gesamten Servers. Es gibt keinen separaten Prozess, um diese spezifischen Daten zu sichern oder wiederherzustellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft den allgemeinen IT-Notfallplan auf Erwähnung von DNS. Es wird die Konfiguration des Backup-Systems überprüft, um festzustellen, ob und wie die DNS-Serverdaten gesichert werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a9-m3",
+                    "uuid": "bd3851f4-799c-4a74-8552-64a77566a0ce",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Notfallplan für DNS-Server MUSS erstellt werden. Der Notfallplan für DNS-Server MUSS in die bereits vorhandenen Notfallpläne der Institution integriert werden. Im Notfallplan für DNS-Server MUSS ein Datensicherungskonzept für die Zonen- und Konfigurationsdateien beschrieben sein. Das Datensicherungskonzept für die Zonen- und Konfigurationsdateien MUSS in das existierende Datensicherungskonzept der Institution integriert werden. Der Notfallplan für DNS-Server MUSS einen Wiederanlaufplan für alle DNS-Server im Informationsverbund enthalten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein spezifisches Kapitel oder Dokument wird dem allgemeinen Notfallplan hinzugefügt, das den DNS-Dienst behandelt. Es beschreibt die Schritte zur Wiederherstellung eines DNS-Servers aus dem Backup, einschließlich der Wiederherstellung der Zonen- und Konfigurationsdateien. Das Datensicherungskonzept sieht eine tägliche Sicherung dieser kritischen Dateien an einem separaten Ort vor."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz und den Inhalt des DNS-spezifischen Notfallplans. Es wird verifiziert, dass ein Datensicherungs- und ein Wiederanlaufplan für die DNS-Konfigurationen und Zonendateien klar dokumentiert und in die übergeordneten Pläne integriert sind. Die Umsetzung des Backup-Konzepts wird überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a9-m4",
+                    "uuid": "1a77f4f6-cc80-442a-b748-292ba79739fe",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der DNS-Notfallplan enthält detaillierte, schrittweise Anleitungen (Runbooks) für verschiedene Ausfallszenarien (z.B. Ausfall des primären Servers, Ausfall eines Resolvers, DNS-Cache-Poisoning-Vorfall). Die Konfigurations- und Zonendateien werden in einem versionierten Repository (z.B. Git) gespeichert, was eine schnelle Wiederherstellung eines bekannten guten Zustands ermöglicht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle DNS-Konfigurationsdateien (`.conf`, `.zone`) werden in einem zentralen Git-Repository verwaltet. Änderungen erfordern einen Commit mit einer aussagekräftigen Nachricht. Das Backup sichert zusätzlich das gesamte Git-Repository. Die Runbooks sind im Wiki der IT-Abteilung hinterlegt und verlinkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz und Qualität der Runbooks für DNS-Notfälle. Das Git-Repository wird auf Vollständigkeit, Aktualität und eine sinnvolle Commit-Historie überprüft. Es wird verifiziert, dass der Wiederanlaufplan die Wiederherstellung aus dem Git-Repository beschreibt."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
