@@ -1,0 +1,248 @@
+{
+  "component-definition": {
+    "uuid": "5a733d02-2b94-4d00-8972-123f7b2d809a",
+    "metadata": {
+      "title": "NET.3.4 Netze - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:59.982098+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "f08fe4c3-b771-4be3-a585-e4ca9f294b97",
+        "type": "interconnection",
+        "title": "NET.3.4 Netze",
+        "description": "This component represents the implementation of all controls for Baustein NET.3.4.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Eine Netzzugangskontrolle (engl. Network Access Control, NAC) sichert Netzzugänge im Endgerätebereich durch Identitätsprüfung (Authentisierung) und Reglementierung (Autorisierung) ab. Unter Endgeräten werden in diesem Baustein alle IT-Systeme verstanden, die am Access Layer eines Campus-Netzes angeschlossen werden. NAC kann sowohl in kabelgebundenen als auch in drahtlosen Netzen eingesetzt werden. Eine Identität kann zum Beispiel über Konten mit Zertifikaten sicher geprüft werden. Durch die folgende Autorisierung werden den Endgeräten über Autorisierungsregeln passende Netzsegmente und Berechtigungen zugewiesen und damit Zugriffsregeln festgelegt. Ebenso kann Endgeräten der Netzzugang verweigert werden.\n\nBeispielsweise kann ein Drucker über NAC als solcher identifiziert und mit einem validen Zertifikat sicher authentisiert werden. Wurde der Drucker erfolgreich authentisiert, wird er dann mittels NAC-Autorisierung dem für den Drucker vorgesehenen Netzsegment zugewiesen.\n\nNAC-Lösungen nutzen dabei entweder die im Standard IEEE 802.1X (Port Based Network Access Control) beschriebenen Techniken oder die sogenannte MAC-Adress-Authentisierung. Bei IEEE 802.1X erfolgt die Authentisierung über das Extensible Authentication Protocol (EAP) zwischen einer Software auf dem Endgerät, dem sogenannten Supplicant, und dem sogenannten Authenticator, der von einem Access-Switch, WLAN Access Point oder WLAN Controller realisiert wird. Für die Authentisierung wird zusätzlich ein zentraler RADIUS-Server (Remote Authentication Dial-In User Service) genutzt. Der RADIUS-Server wird auch als Authentication Server oder AAA-Server (Authentication, Authorization, Accounting) bezeichnet. Bei der MAC-Adress-Authentisierung wird das Endgerät über seine MAC-Adresse authentisiert.\n\nEine NAC-Lösung nach IEEE 802.1X umfasst also folgende Komponenten:\n\n• Authentication Server oder RADIUS-Server\n• Supplicant auf einem Endgerät\n• Authenticator auf einem Access-Switch oder einer WLAN-Komponente (WLAN Access Point oder WLAN Controller)\n• zentrale NAC-Identitätsverwaltung, die als integrierte Identitätsverwaltung auf dem Server realisiert sein kann oder auf bestehende Verzeichnisdienste zurückgreift\n\nEine NAC-Lösung umfasst in diesem Baustein alle zuvor beschriebenen Komponenten. Ist eine einzelne Komponente der NAC-Lösung gemeint, z. B. der RADIUS-Server, dann wird diese Komponente tatsächlich auch als solche benannt. Als zentrale Komponenten einer NAC-Lösung gelten in diesem Baustein der RADIUS-Server und die NAC-Identitätsverwaltung.\n\nDamit eine NAC-Lösung sinnvoll eingesetzt werden kann und die Netzzugänge geeignet abgesichert werden können, müssen viele Punkte festgelegt und die genannten Komponenten der Lösung aufeinander abgestimmt werden. Weiterhin sind NAC-spezifische Prozesse (z. B. Maßnahmen, um Störungen zu beheben) zu definieren und bestehende Prozesse (z. B. Inbetriebnahme von Endgeräten) anzupassen."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, die Informationssicherheit als integralen Bestandteil bei NAC zu etablieren. Eine NAC-Lösung soll sicherstellen, dass der Zugang zum Netz durch identitätsabhängige Autorisierungsregeln reglementiert wird. Dadurch werden Informationen geschützt, die über Netze verarbeitet, gespeichert und übertragen werden."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein NET.3.4 Network Access Control ist auf die Elemente einer NAC-Lösung anzuwenden. Dies beinhaltet betroffene Netze, Clients und zentrale Komponenten.\n\nUm ein IT-Grundschutz-Modell für einen konkreten Informationsverbund zu erstellen, muss grundsätzlich die Gesamtheit aller Bausteine betrachtet werden. In der Regel sind mehrere Bausteine auf das Thema bzw. Zielobjekt anzuwenden.\n\nDieser Baustein behandelt NAC-Lösungen, die auf dem Standard IEEE 802.1X und MAC-Adress-Authentisierung via RADIUS basieren. Dabei liegt der Fokus auf folgende Teilaspekte einer NAC-Lösung:\n\n• allgemeine Festlegungen für NAC sowohl für die zentralen Komponenten als auch für die Endgeräte\n• Anforderungen an Authentisierung und Autorisierung\n• Festlegungen für Management und Betrieb einer NAC-Lösung\n\nFolgende Inhalte sind ebenfalls von Bedeutung und werden an anderer Stelle behandelt:\n\n• Verzeichnisdienste (siehe APP.2.1 Allgemeiner Verzeichnisdienst)\n• Netzarchitektur und -design (siehe NET.1.1 Netzarchitektur und -design)\n• WLAN-spezifische Aspekte (siehe NET.2.1 WLAN-Betrieb und NET.2.2 WLAN-Nutzung)\n• allgemeine Betriebsaspekte (siehe Bausteine der Schicht OPS Betrieb)\n\nDieser Baustein behandelt nicht die folgenden Inhalte:\n\n• Port Security sowie allgemeine Aspekte für Netzkomponenten (siehe NET.3.1 Router und Switches)\n• proprietäre NAC-Implementierungen, die nicht auf IEEE 802.1X basieren\n• die Implementierung eines RADIUS-Servers auf Netzkomponenten (Access-Switch, WLAN Access Point oder WLAN Controller)\n• administrative Authentisierung an Netzkomponenten mittels RADIUS\n• allgemeine Aspekte für Endgeräte (siehe Bausteine der Schichten SYS.2 Desktop-Systeme, SYS.3 Mobile Devices und SYS.4 Sonstige Systeme)\n• allgemeine Aspekte für Server (siehe SYS.1.1 Allgemeiner Server) und Virtualisierung (siehe SYS.1.5 Virtualisierung)\n• allgemeine Aspekte für Identitäts- und Berechtigungsmanagement (siehe ORP.4 Identitäts- und Berechtigungsmanagement)"
+          },
+          {
+            "name": "2.1. Unzureichende Planung der NAC-Lösung",
+            "value": "Sind nicht alle für NAC relevanten IT-Systeme und Informationen in einem IT-Asset-Management erfasst, kann eine NAC-Lösung nicht ausreichend geplant werden. Endgeräte erhalten dann gegebenenfalls keinen Zugang zum Netz oder einen Zugang zu einem falschen Netzsegment.\n\nWurden die Anforderungen an die NAC-Lösung nicht ausreichend erfasst und analysiert, kann auch dies zu einer unzureichenden Planung führen. Beispielsweise ist es dann möglich, dass eingesetzte Switches die Anforderungen an die geplante NAC-Lösung nicht erfüllen können oder der geplante RADIUS-Server falsch dimensioniert wird. Eine weitere Folge könnten auch zu harte oder zu weiche Vorgaben für die genutzten Authentisierungs- und Autorisierungsverfahren sein. Dadurch könnte Endgeräten entweder der Zugang zum Netz verweigert oder unsichere Authentisierungsverfahren könnten genutzt werden, obwohl sichere Verfahren möglich wären. Möglicherweise könnten dadurch auch zu weitreichende Kommunikationsberechtigungen erlangt werden."
+          },
+          {
+            "name": "2.2. Unzureichend abgestimmte Integration von Endgeräten in die NAC-Lösung",
+            "value": "Fehlende oder unzureichend umgesetzte Orchestrierungswerkzeuge, Sicherheitsrichtlinien, Anforderungskataloge und Ressourcen für die Erfassung aller Endgeräte können dazu führen, dass Endgeräte unzureichend abgestimmt in die NAC-Lösung integriert werden. Dies erschwert es, ein sicheres und betriebsfreundliches Authentisierungsverfahren je Endgerätegruppe umzusetzen und ein entsprechendes Inbetriebnahmeverfahren zu konzipieren. Dadurch könnten die Kommunikationsmöglichkeiten der Endgeräte negativ beeinträchtigt werden. Außerdem kann es sein, dass zu schützende Geräte versehentlich in falschen Netzsegmenten positioniert werden.\n\nSind die Endgeräte unzureichend standardisiert oder werden NAC-spezifische Endgeräteanforderungen unzureichend unterstützt, kann dies auch dazu führen, dass unsichere Authentisierungsverfahren eingesetzt werden, obwohl eine starke Authentisierung grundsätzlich möglich wäre."
+          },
+          {
+            "name": "2.3. Nutzung unzureichend sicherer Protokolle bei NAC",
+            "value": "Werden sichere EAP-Authentisierungsverfahren technisch nicht unterstützt, kann es passieren, dass unsichere Authentisierungsprotokolle wie EAP-MD5 oder MAC-Authentisierung eingesetzt werden müssen. In diesem Fall sind Spoofing-, Replay- oder Man-in-the-Middle-Angriffe leichter möglich und es kann nicht ausgeschlossen werden, dass unberechtigte IT-Systeme in das Netz gelangen. Wird für Endgeräte mit schwachen Authentisierungsprotokollen nicht eingeschränkt, mit welchen Zielen und über welche Protokolle sie kommunizieren dürfen, können auch unberechtigte IT-Systeme, die durch einen der oben genannten Angriffe Zugang erhalten, weitreichende Kommunikationsmöglichkeiten erlangen."
+          },
+          {
+            "name": "2.4. Fehlerhafte Konfiguration der NAC-Lösung",
+            "value": "Durch menschliche Fehler, unzureichende Prozesse oder unzureichende Personalkapazitäten und den dadurch bedingten Zeitmangel kann es passieren, dass die NAC-spezifischen Parameter an Endgeräten, Access-Switches oder RADIUS-Servern (NAC-Regelwerk) fehlerhaft konfiguriert werden. Dies kann dazu führen, dass sich die gesamte NAC-Lösung ungewollt falsch verhält, wodurch z. B. Endgeräte benötigte Ressourcen nicht erreichen können oder keinen Netzzugang erhalten.\n\nWerden MAC-Adressen bewusst falsch registriert, können dadurch zu viele Ressourcen freigeschaltet werden, indem falsche Netzsegmente oder andere falsche Autorisierungsparameter zugewiesen werden."
+          },
+          {
+            "name": "2.5. Unzureichende Validierung von Konfigurationsänderungen",
+            "value": "Unzureichende Änderungsprozesse, die Konfigurationsänderungen nicht oder nur unzureichend validieren, begünstigen Fehler in der Konfiguration. Hierdurch kann es passieren, dass für Endgeräte zu viel oder zu wenig schützenswerte Ressourcen erreichbar sind oder es ihnen gänzlich verwehrt wird, auf das Netz zuzugreifen. Wird z. B. NAC an Switch-Ports ohne zwingenden Grund abgeschaltet, können gegebenenfalls unberechtigte Endgeräte uneingeschränkt auf das Netz zugreifen. Wird neue Software auf Endgeräten unzureichend validiert, kann dies z. B. zu Interferenzen zwischen Software-Komponenten führen und die Funktionalität des Supplicants beeinflussen."
+          },
+          {
+            "name": "2.6. Unzureichend geschützter Netzzugang",
+            "value": "Wird NAC an Switch-Ports temporär oder dauerhaft abgeschaltet, ist der Netzzugang unzureichend geschützt. Dadurch ist es möglich, dass unautorisierte Personen auf das Netz zugreifen können oder unsichere IT-Systeme zu weitgehende Kommunikationsberechtigungen erhalten. In der Folge kann unberechtigt auf Informationen zugegriffen und Informationen können manipuliert oder gelöscht werden. Außerdem kann auf diese Weise Schadsoftware eingeschleust werden.\n\nWird die Endgeräte-Compliance unzureichend geprüft, kann dies auch zu einem unzureichend geschützten Netzzugang führen, wenn das Endgerät z. B. über unzureichenden Virenschutz verfügt und dadurch Schadsoftware eingeschleust wird."
+          },
+          {
+            "name": "2.7. Ausfall oder unzureichende Erreichbarkeit der zentralen NAC-Komponenten",
+            "value": "Ein unzureichendes oder unzureichend umgesetztes NAC-Konzept, gestörte NAC-Komponenten oder ein gestörtes Netz, unzureichende Anforderungsanalyse, mangelnde Prozesse oder Denial-of-Service-Angriffe (DoS-Angriffe) können dazu führen, dass die zentralen NAC-Komponenten ausfallen oder nicht erreichbar sind. Dies hat Auswirkungen auf die Fähigkeit der Endgeräte zu kommunizieren. Zum Beispiel haben, abhängig von der Switch-Konfiguration, Endgeräte bei Ausfall aller RADIUS-Server entweder keinen oder einen uneingeschränkten Netzzugang."
+          },
+          {
+            "name": "2.8. Nachverfolgung von Benutzenden",
+            "value": "Ein unzureichendes Administrationskonzept, eine unzureichende Umsetzung der Konzeptionierung, zu lange Speicherzeiten oder eine mangelnde Abstimmung mit Betriebsrat und Datenschutzbeauftragten könnten dazu führen, dass personenrelevante Log-Daten unzureichend geschützt sind. Dadurch könnten Benutzendenprofile erstellt werden, die es ermöglichen, dass Mitarbeitende zeitlich nachverfolgt werden können."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "e0fabb12-2d3a-439d-ae80-506db6399b8a",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/netze_profile.json",
+            "description": "Implementation for all controls in Baustein NET.3.4",
+            "implemented-requirements": [
+              {
+                "uuid": "e73ce258-fbad-4a10-9598-0a2d09562a73",
+                "control-id": "ARCH.2.1",
+                "description": "Implementation for ARCH.2.1 based on BSI NET.3.4.A4",
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A4-m3",
+                    "uuid": "8e0b21ed-5d77-49bb-b13a-5c95e28eeaab",
+                    "description": "Ausgehend von der Entscheidung (A1) und den Anforderungen (A3) SOLLTE ein NAC-Konzept erstellt werden. Dieses SOLLTE mit dem Segmentierungskonzept abgestimmt sein und mindestens folgende Aspekte festlegen: Netzbereiche für NAC, Authentisierung und Autorisierung, Nutzung von Zusatzfunktionen, Konfigurationsvorgaben für alle Komponenten, Aufbau der RADIUS-Infrastruktur und Regelwerk, sowie die Anbindung an externe Sicherheitskomponenten und Verzeichnisdienste. Das Konzept SOLLTE alle technischen und organisatorischen Vorgaben beschreiben, regelmäßig geprüft und aktualisiert werden."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A4-m4",
+                    "uuid": "6c24e000-c7a8-4503-ba1b-bbfa985d33c9",
+                    "description": "Das NAC-Konzept wird um detaillierte Beschreibungen von Ausfallszenarien und den dazugehörigen Fallback-Mechanismen (RADIUS-down-Policies) erweitert. Das Konzept wird formal durch ein Gremium (z.B. IT-Sicherheitsmanagement) geprüft und freigegeben. Es wird ein fester Review-Zyklus (z.B. jährlich) für das Konzept etabliert und dessen Einhaltung nachgewiesen."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A4-m5",
+                    "uuid": "8ffc0f65-8e12-41ac-86d3-4021ccc2ba83",
+                    "description": "Das NAC-Konzept wird als ausführbares Modell im Rahmen eines Infrastructure-as-Code (IaC) Ansatzes umgesetzt. Die Konfigurationen für Switches, RADIUS-Server und Firewalls werden in Code-Templates (z.B. Ansible Playbooks, Terraform-Modelle) beschrieben. Die menschlich lesbare Dokumentation wird aus diesen Code-Templates und Kommentaren automatisch generiert. Das Konzept sieht eine dynamische Anpassung von Policies basierend auf externen Threat-Intelligence-Feeds vor."
+                  }
+                ]
+              },
+              {
+                "uuid": "64ea3cc1-81c5-4f00-b1b9-05a50631a56a",
+                "control-id": "ARCH.2.2",
+                "description": "Implementation for ARCH.2.2 based on BSI NET.3.4.A9",
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A9-m3",
+                    "uuid": "eacceea6-ab03-4085-bc2a-4e222bb7641f",
+                    "description": "Für die NAC-Lösung SOLLTE ein NAC-Regelwerk definiert werden, das das NAC-Konzept umsetzt. Hierin SOLLTE für jedes Endgerät bzw. für jede Endgerätegruppe festgelegt werden, ob uneingeschränkt auf das Netz zugegriffen werden darf, ob der Zugriff verweigert wird oder ob nur Segmente mit eingeschränkten Kommunikationsmöglichkeiten erreichbar sind. Im Regelwerk SOLLTE auch festgelegt werden, auf welcher Basis die Zugangskontrolle erfolgt, indem für alle Endgeräte die genutzten Authentisierungsmethoden und die Bedingungen für eine erfolgreiche Authentisierung festgelegt werden."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A9-m4",
+                    "uuid": "2adc4f43-c9b1-4515-9123-348f67e56302",
+                    "description": "Das Regelwerk ist hochgradig granular und weist Endgeräten spezifische Mikrosemente zu, basierend auf einer Kombination von Attributen wie Benutzergruppe, Gerätetyp und Authentisierungs-Level. Das Regelwerk ist versioniert und jede Änderung daran folgt einem formalen Change-Management-Prozess."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A9-m5",
+                    "uuid": "964e1bc4-d1ef-44c3-befa-80fef7f80cb2",
+                    "description": "Das NAC-Regelwerk ist dynamisch und kontextsensitiv. Die Zugriffsrechte werden in Echtzeit basierend auf dem aktuellen Zustand des Endgeräts (z.B. Compliance-Status aus einem MDM/EDR-System), dem Benutzerkontext und der aktuellen Bedrohungslage bestimmt. Das Regelwerk wird vollständig über einen Infrastructure-as-Code-Ansatz verwaltet und Änderungen werden automatisiert getestet und ausgerollt."
+                  }
+                ]
+              },
+              {
+                "uuid": "16e373fd-921e-4b64-90ca-dfecf864f86d",
+                "control-id": "ARCH.2.3",
+                "description": "Implementation for ARCH.2.3 based on BSI NET.3.4.A2",
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A2-m1",
+                    "uuid": "965f7e4c-9030-4a94-b81d-3c2d5b2b7129",
+                    "description": "Die Planung beschränkt sich auf die Auswahl und Beschaffung einer NAC-Software. Wichtige Aspekte wie die Anpassung von Prozessen, die Erstellung eines detaillierten Konzepts oder die Planung der Migration werden ignoriert."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A2-m2",
+                    "uuid": "10d734ab-e1a2-4457-9a79-852d490368c8",
+                    "description": "Eine grundlegende technische Planung findet statt, die sich auf die Platzierung der RADIUS-Server und die grundlegende Switch-Konfiguration konzentriert. Es fehlt jedoch eine formale, detaillierte Planung der Betriebs- und Incident-Prozesse sowie ein strukturierter Migrationsplan."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A2-m3",
+                    "uuid": "dc2b64ab-2938-429a-806a-3a608885424d",
+                    "description": "Der Einsatz von NAC SOLLTE umfassend und detailliert geplant werden. Die Planung SOLLTE dabei mindestens die Erstellung von Anforderungskatalogen, die Prüfung und Ergänzung des IT-Asset-Managements, die Erstellung eines spezifischen NAC-Konzepts, die Festlegung von Beschaffungs-, Betriebs- und Incident-Prozessen, eine Migrationsplanung sowie das Monitoring und Logging der NAC-Lösung beinhalten."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A2-m4",
+                    "uuid": "efc43666-4a54-4be4-b84f-bc48b372456d",
+                    "description": "Die Planung wird als formales Projekt nach einer anerkannten Projektmanagement-Methode (z.B. PRINCE2, PMBOK) durchgeführt. Der Plan enthält detaillierte Ressourcen- und Zeitpläne, ein explizites Risikomanagement für das Projekt, definierte Erfolgskennzahlen (KPIs) und Test- sowie Rollback-Pläne für die Migration."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A2-m5",
+                    "uuid": "7599a7c3-f75b-48f4-88f6-80ac389dcc26",
+                    "description": "Die Planung ist vollständig in ein Change-Management-System integriert und nutzt automatisierte Werkzeuge zur Unterstützung. Für die Bestandsaufnahme und Abhängigkeitsanalyse werden automatisierte Discovery-Tools eingesetzt. Der Plan ist ein lebendes Dokument, das während der Einführung kontinuierlich auf Basis von Feedback aus den Implementierungsphasen und Monitoring-Ergebnissen angepasst wird."
+                  }
+                ]
+              },
+              {
+                "uuid": "964dbd02-338f-4780-b15b-7f95a9ed8478",
+                "control-id": "ARCH.4.3",
+                "description": "Implementation for ARCH.4.3 based on BSI NET.3.4.A7",
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A7-m3",
+                    "uuid": "63adad2f-c7b0-416b-b941-60da3ed21922",
+                    "description": "Endgeräte SOLLTEN sichere Authentisierungsverfahren nach dem Stand der Technik verwenden und automatisiert auf Basis von Zertifikaten oder Zugangskonten authentisiert werden. Unsichere Authentisierungsverfahren SOLLTEN nur in begründeten Ausnahmefällen genutzt und die Entscheidung dokumentiert werden."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A7-m4",
+                    "uuid": "4d527536-4d76-4b3d-b7d5-d9f40611687c",
+                    "description": "Eine Richtlinie erzwingt die ausschließliche Verwendung von sicheren EAP-Typen, insbesondere EAP-TLS. Die Verwendung schwächerer Methoden wie MAC-Authentisierung oder EAP-MD5 ist grundsätzlich verboten und erfordert einen formalen Risikoakzeptanzprozess durch das Informationssicherheitsmanagement. Die Validierung des RADIUS-Server-Zertifikats wird auf allen Clients erzwungen."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A7-m5",
+                    "uuid": "d7f41025-7876-437d-860f-0ee36a617f1b",
+                    "description": "Für die Authentisierung werden ausschließlich hardware-gestützte Zertifikate verwendet, die sicher in einem Trusted Platform Module (TPM) oder einer vergleichbaren Secure Enclave auf den Endgeräten gespeichert sind. Die Ausstellung, Erneuerung und der Widerruf dieser Zertifikate sind vollständig automatisiert und in eine PKI- und Mobile-Device-Management-Lösung integriert."
+                  }
+                ]
+              },
+              {
+                "uuid": "1da90987-bc39-4266-9b6c-ee455c361660",
+                "control-id": "ARCH.5.1",
+                "description": "Implementation for ARCH.5.1 based on BSI NET.3.4.A3",
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A3-m1",
+                    "uuid": "3cd0986e-a4e0-4f73-a598-8147b2952cbe",
+                    "description": "Einige wenige, hochrangige Anforderungen werden informell in einer E-Mail oder einem kurzen Dokument festgehalten. Es gibt keinen strukturierten Katalog und die Anforderungen decken nicht alle relevanten NAC-Komponenten ab."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A3-m2",
+                    "uuid": "02f142c5-ec61-4dd4-8428-a283199cba31",
+                    "description": "Eine grundlegende Liste funktionaler Anforderungen wird erstellt, die die Hauptkomponenten adressiert. Diese Liste wird jedoch nicht formal mit allen betroffenen Fachabteilungen und Gremien abgestimmt und nicht regelmäßig aktualisiert."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A3-m3",
+                    "uuid": "87d41795-e08d-4cac-ae16-7fb7cc2c9493",
+                    "description": "Die Anforderungen an die NAC-Lösung SOLLTEN in einem Anforderungskatalog erhoben werden. Der Katalog SOLLTE die grundlegenden funktionalen Anforderungen umfassen und alle NAC-Komponenten (z. B. Endgeräte, Access-Switches und RADIUS-Server) adressieren. Er SOLLTE mit allen betroffenen Fachabteilungen, Gremien und Richtlinien abgestimmt, regelmäßig aktualisiert und bei Beschaffungen sowie Tests der Lösung berücksichtigt werden."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A3-m4",
+                    "uuid": "a9d0fdc3-842c-4903-a1f5-df3060b3343a",
+                    "description": "Der Anforderungskatalog wird um nicht-funktionale Anforderungen erweitert. Dazu gehören explizite Vorgaben zur Leistung (z.B. maximale Authentisierungslatenz), Skalierbarkeit (z.B. Anzahl der zu unterstützenden Endpunkte) und Hochverfügbarkeit. Der Katalog ist versioniert und wird formal von allen Stakeholdern unterzeichnet."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A3-m5",
+                    "uuid": "eb2441df-6bc9-4c60-b0ae-f85ddff1937e",
+                    "description": "Der Anforderungskatalog wird in einem dedizierten Requirements-Engineering-Tool verwaltet. Jede Anforderung ist eindeutig identifizierbar und wird über den gesamten Lebenszyklus verfolgt (Traceability), von der ursprünglichen Anforderung über die Umsetzung im Konzept bis hin zu spezifischen Testfällen. Bei neuen Beschaffungsvorhaben wird automatisch geprüft, ob die Ausschreibung alle relevanten NAC-Anforderungen aus dem Tool abdeckt."
+                  }
+                ]
+              },
+              {
+                "uuid": "4b5b39aa-1934-4b37-9929-87e2cabdd8ff",
+                "control-id": "ASST.2.2.1",
+                "description": "Implementation for ASST.2.2.1 based on BSI NET.3.4.A5",
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A5-m3",
+                    "uuid": "631bc72a-faa5-4f20-b3bb-0f8b34e37d19",
+                    "description": "Für die Endgeräte, die in die NAC-Lösung eingebunden werden, SOLLTE NAC in allen relevanten Prozessen angemessen berücksichtigt werden. Insbesondere SOLLTEN die Prozesse zu Inbetriebnahme, Austausch, Änderungen und Störungen angepasst werden. Für Supplicant-Software, Konfiguration und Identitätsmerkmale (z. B. Zertifikate), die für NAC auf den Endgeräten erforderlich sind, SOLLTE ein Prozess festgelegt werden, um die Endgeräte zentral zu verwalten."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A5-m4",
+                    "uuid": "5d3dee08-4dab-42b4-96be-5d23687ccd2d",
+                    "description": "Die angepassten Prozesse sind in einem IT-Service-Management-Tool (ITSM) abgebildet. Die Workflows im Tool werden so angepasst, dass sie NAC-bezogene Aufgaben (z.B. die automatische Beantragung eines Zertifikats bei der Bestellung eines neuen Geräts) beinhalten und deren Abarbeitung sicherstellen."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A5-m5",
+                    "uuid": "bd4fb603-a977-4699-8463-1260b63a8f70",
+                    "description": "Das gesamte Endgeräte-Lifecycle-Management ist hochgradig automatisiert (Zero-Touch-Provisioning). Das ITSM-System orchestriert alle NAC-bezogenen Prozessschritte vollautomatisch, von der Bestellung eines Geräts über die automatische Installation und Konfiguration (inkl. Supplicant und Zertifikat) bis hin zur sicheren Außerbetriebnahme mit automatischem Widerruf des Zertifikats."
+                  }
+                ]
+              },
+              {
+                "uuid": "34a0296e-a236-42df-bf50-7df8f61692ad",
+                "control-id": "DET.4.11",
+                "description": "Implementation for DET.4.11 based on BSI NET.3.4.A6",
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A6-m3",
+                    "uuid": "808957ea-1c0a-436a-961f-21d2f3f4ccec",
+                    "description": "Es SOLLTE erwogen werden, die Sicherheitsmechanismen von NAC temporär zu deaktivieren, wenn die Wirkkette gestört ist. Bei den Notfallmaßnahmen, die im Notfallprozess festgelegt werden, SOLLTEN Produktivität und Informationssicherheit gegeneinander abgewogen werden. Dabei SOLLTEN die Optionen von Notfallmaßnahmen (RADIUS-down-Policies) betrachtet und mit den relevanten Sicherheitsrichtlinien abgestimmt werden, wie z.B. bestehende Verbindungen beibehalten, eine feste Zuweisung von Netzsegmenten vornehmen oder NAC komplett deaktivieren."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A6-m4",
+                    "uuid": "f6506ba0-e570-41ec-bc9e-45c01a0b9095",
+                    "description": "Der Notfallprozess enthält klare Kriterien für die Aktivierung, einen Kommunikationsplan an die Betroffenen (inkl. Helpdesk und Anwender) sowie eindeutig definierte Rollen und Verantwortlichkeiten. Die Fallback-Konfigurationen sind auf den Switches vorkonfiguriert und werden regelmäßig (z.B. im Rahmen von Notfallübungen) getestet, um ihre Funktionsfähigkeit sicherzustellen."
+                  },
+                  {
+                    "statement-id": "NET.3.4.A6-m5",
+                    "uuid": "780e4606-3484-4f5d-9eb6-d209e9f6ce6d",
+                    "description": "Der Notfall-Failover ist automatisiert. Das Monitoring-System erkennt einen kritischen NAC-Ausfall und aktiviert automatisch den vordefinierten, sicheren Fallback-Zustand auf den betreffenden Netzwerkkomponenten. Gleichzeitig wird das Security- und Netzwerkteam alarmiert. Sobald das Problem behoben ist, erkennt das System dies und schaltet automatisch wieder in den Normalbetrieb zurück."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

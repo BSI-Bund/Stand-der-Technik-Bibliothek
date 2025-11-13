@@ -1,0 +1,494 @@
+{
+  "component-definition": {
+    "uuid": "84a6dccf-1e00-45ce-9738-dbe2e0370a66",
+    "metadata": {
+      "title": "APP.5.4 Interpersonelle Kommunikation - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:59.052143+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "321688be-d5a2-4973-be68-5d25bd49a7ee",
+        "type": "software",
+        "title": "APP.5.4 Interpersonelle Kommunikation",
+        "description": "This component represents the implementation of all controls for Baustein APP.5.4.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Unified Communications bezeichnet einen Dienst, der verschiedene Kommunikationsdienste in einer Anwendung und in der Regel auch einem Softclient vereint. Damit wird der Anteil der traditionellen Telefonie in der persönlichen digitalen Kommunikation reduziert. Die möglichen Kommunikationswege werden um zusätzliche Dienste wie Video, diverse Formen von Chats und Erreichbarkeitsanzeigen erweitert.\nEine Kommunikationsbeziehung zwischen zwei oder mehr Teilnehmenden wird unabhängig vom benutzten Dienst als Konversation bezeichnet.\nDie häufig bei Unified Communications und Collaboration (UCC) genannte Zusammenarbeit (Collaboration) geht noch einen Schritt weiter. Während damit in der Vergangenheit häufig nur Dienste wie Screen Sharing und (digitales) Whiteboarding bezeichnet wurden, stellen UCC-Dienste viele weitere Funktionen zur Verfügung. Insbesondere beim Zusammenarbeiten von Teams hat sich eine Anzahl von Anwendungen etabliert, die häufig als Cloud-Dienst benutzt werden und neben Telefonie, Erreichbarkeitsanzeige, klassischen Chats, Video-Anrufen und Konferenzen auch Team-Chatbereiche sowie gemeinsame Dateiablagen beinhalten. Hinzukommen (offene) Schnittstellen, wodurch zusätzliche Anwendungen integriert werden können, so dass der Gesamtdienst funktional gegebenenfalls sehr umfangreich wird."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, die Informationssicherheit als integralen Bestandteil beim erweiterten Kommunikationsspektrum von UCC-Diensten zu etablieren, ein Bewusstsein für die potenzielle Gefährdungslage dieser Anwendungen zu schaffen und Ansätze zur Vermeidung von Gefährdungen anzubieten."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.5.4 Unified Communications und Collaboration (UCC) ist auf alle IT-Systeme und Kommunikationsnetze sowie Anwendungen anzuwenden, mit denen UCC-Dienste betrieben werden. Da UCC über Datennetze betrieben wird, sind zusätzlich zu diesem Baustein die Anforderungen der Bausteine NET.1.1 Netzarchitektur- und Design und NET.3.2 Firewall zu berücksichtigen.\nDa sich der Geltungsbereich von Kommunikationsdiensten durch UCC zunehmend erweitert, gibt es eine besonders große Zahl von Überschneidungen mit anderen Bausteinen.\nDieser Baustein behandelt die folgenden Inhalte:\n• die UCC-Dienste sowie Interaktion und Wechselwirkungen unterschiedlicher Dienste\n• die (Soft-) Clients, die bereitgestellt werden, um diese Dienste zu benutzen und deren Funktionsumfang\n• die zugehörigen Infrastrukturkomponenten, sofern diese nicht bereits durch andere Bausteine abgedeckt sind\n• Themen, die sich aus dem (aus Sicht der Benutzenden) fließenden Übergang zwischen der UCC-Umgebung und weiteren Anwendungen ergeben\nFolgende Inhalte sind ebenfalls von Bedeutung und werden an anderer Stelle behandelt:\n• Falls über eine dedizierte TK-Anlage telefoniert wird, muss der Baustein NET.4.1 TK-Anlagen angewendet werden.\n• Für Voice over IP (VoIP) als ein elementarer Dienst bei UCC-Diensten muss der Baustein NET.4.2 VoIP angewendet werden.\n• Für die zentralen Server sowie diverse Endgeräte und Clients müssen die Bausteine SYS.1.1 Allgemeiner Server und SYS.2.1 Allgemeiner Client sowie gegebenenfalls spezifische Bausteine angewendet werden.\n• Für die zugrundeliegenden Netze muss der Baustein NET.1.1 Netzarchitektur und -design angewendet werden.\n• Falls UCC-Dienste aus der Cloud bereitgestellt werden, ist der Baustein OPS.2.2 Cloud-Nutzung anzuwenden.\n• Um Dateiablagen abzusichern, die im Rahmen der UCC-Dienste bereitgestellt werden, sind insbesondere die Bausteine APP.3.3 Fileserver und SYS.1.8 Speicherlösungen anzuwenden.\nDieser Baustein behandelt nicht die folgenden Inhalte:\n• Der E-Mail-Dienst ist in der Regel nicht Teil der UCC-Dienste. Hier ist der Baustein APP.5.3 Allgemeiner E-Mail-Client und -Server anzuwenden."
+          },
+          {
+            "name": "2.1. Eingeschränkte Verfügbarkeit von UCC-Diensten",
+            "value": "UCC-Dienste unterliegen häufig erhöhten Anforderungen an die Verfügbarkeit und gleichzeitig hängt die Funktionstüchtigkeit von UCC-Diensten von weiteren IT-Systemen und Anwendungen ab.\nFalls die Datennetze, die von UCC-Diensten verwendet werden, nicht voll funktionsfähig sind, kann das die Verfügbarkeit der UCC-Dienste beeinträchtigen. So können beispielsweise Störungen im Datennetz oder bei der Internetverbindung die Qualität der Kommunikation einschränken, was eine verzögerte Sprachverständigung, Artefakte im Videobild oder den Abbruch der Verbindung verursachen kann. Abhängigkeiten zwischen kritischen IT-Systemen können auch die Funktionsfähigkeit von weiteren Diensten oder Organisationseinheiten behindern. Wenn beispielsweise UCC als Kommunikationsplattform zwingend erforderlich ist, um das Netz wiederaufzubauen, das Netz aber benötigt wird, damit die UCC-Dienste funktionieren, dann blockieren sich beide und können nicht wiederhergestellt werden.\nHäufig werden UCC-Dienste als Cloud-Dienst benutzt oder bei einem Dienstleistungsunternehmen betrieben, wodurch Störungen bei externen Netzen oder beim Dienstleistungsunternehmen zu eingeschränkter Verfügbarkeit der UCC-Dienste führen können. Gleiches gilt für den Authentisierungsdienst, über den sich die Benutzenden an den UCC-Diensten anmelden. Fällt der Authentisierungsdienst aus, können die UCC-Dienste oft nicht mehr verwendet werden."
+          },
+          {
+            "name": "2.2. Unzureichende Planung von UCC",
+            "value": "Wenn UCC nicht so geplant wird, wie es auch tatsächlich benutzt werden soll, kann dies Auswirkungen auf die Funktionalität aller UCC-Dienste haben. Werden UCC-Komponenten verändert oder vermehrt benutzt, z. B. durch eine erhöhte Anzahl von Benutzenden, kann eine ursprünglich geeignete Planung unzureichend werden.\nJe nach Bereitstellungsart und benutzten Diensten können sich die Anforderungen der UCC-Komponenten an die Netze stark unterscheiden. Eine auf Sprachkommunikation fokussierte UCC-Komponente im eigenen Netz kann beispielsweise andere Anforderungen an Internet- und WAN-Verbindungen stellen als ein Cloud-Dienst, der auch mobil benutzt werden soll. Werden die Netze nicht so geplant, dass sie UCC-Dienste berücksichtigen, sind die UCC-Dienste nicht ausreichend benutzbar.\nEntsprechende Gefährdungen gibt es auch für die zu berücksichtigenden Endgeräte. Besonders die Videokommunikation und die zugehörigen Funktionen stellen zum Teil sehr hohe Anforderungen an die Clients. Insbesondere bei Thin Clients kann dies zu Problemen führen, da UCC-Dienste häufig ganz oder teilweise auf dem Endgerät ausgeführt werden, um Kommunikationsdatenströme zu optimieren. Clients mit unzureichender Rechenleistung können beispielsweise Aussetzer oder Artefakte bei der Videokommunikation bedingen."
+          },
+          {
+            "name": "2.3. Fehlerhafte Konfiguration von UCC",
+            "value": "Eine große Zahl von Funktionen und Diensten bedeutet oft auch eine Vielzahl von Konfigurationsmöglichkeiten. Dabei können Fehlkonfigurationen auftreten.\nBenutzende können oder müssen ihre UCC-Clients teilweise selbst konfigurieren. Dies kann Benutzende aufgrund der Vielzahl von Konfigurationsmöglichkeiten überfordern und fehlerhafte Konfigurationen verursachen. Wenn beispielsweise im Büro und im Homeoffice verschiedene Headsets verwendet werden, muss die Konfiguration gegebenenfalls angepasst werden. Fehlkonfigurationen können dazu führen, dass Benutzende in Besprechungen nicht hör- oder sichtbar sind oder selbst keinen Ton hören. Darüber hinaus können ungewollt Informationen preisgegeben werden, wenn Raumsysteme so konfiguriert sind, dass eingehende Kommunikationsanfragen automatisch angenommen werden.\nEbenso können durch ein unzureichendes Identitäts- und Berechtigungskonzept Fehler auftreten, wenn UCC-Dienste konfiguriert werden. Administrierende, die im Rahmen der Einrichtung von neuen Konten ebenfalls zentrale Routing-Einstellungen ändern, können hierdurch eine gravierende Fehlkonfiguration verursachen. Diese kann dazu führen, dass Daten verloren gehen, oder der UCC-Dienst ausfällt.\nZu den Fehlkonfigurationen durch ein unzureichendes Identitäts- und Berechtigungskonzept gehören auch unzureichend eingeschränkte Berechtigungen von externen Teilnehmenden. Können diese beispielsweise unberechtigt auf Inhalte von Konversationen zugreifen, so können Informationen abfließen oder manipuliert werden."
+          },
+          {
+            "name": "2.4. Unbefugte oder missbräuchliche Benutzung der Administrationsrechte eines UCC-Dienstes",
+            "value": "Durch die zugewiesenen Administrationsrechte können Administrierende die UCC-Dienste gegebenenfalls tiefgreifend ändern. Werden Administrationsrechte unbefugt oder missbräuchlich benutzt, kann dies weitreichende Folgen haben. Beispielsweise können Administrationsrechte dazu benutzt werden, um einen privaten Bereich, wie einen Chat oder eine Dateiablage, der ursprünglich nur für einen begrenzten Personenkreis zugänglich war, für alle Benutzenden des UCC-Dienstes freizugeben. Hierdurch können schützenswerte Informationen durch unbefugte Personen eingesehen und gegebenenfalls verändert werden.\nWeiterhin können durch vorsätzlich veränderte Routing-Konfigurationen die UCC-Dienste nicht oder nur eingeschränkt zur Verfügung stehen. Falls beispielsweise sämtliche ausgehende Anrufe durch zentrale IT-Systeme blockiert werden, kann der Dienst Telefonie nicht mehr benutzt werden."
+          },
+          {
+            "name": "2.5. Preisgabe von schützenswerten Informationen",
+            "value": "Moderne UCC-Clients verfügen über eine Vielfalt an Funktionen und sind daher für viele Benutzende unübersichtlich. Dies begünstigt Fehlbedienungen, die dazu führen können, dass Informationen nicht regelkonform weitergegeben werden. Wird versehentlich ein falscher Kontakt ausgewählt, erhält dieser gegebenenfalls per Chat ungewollt schützenswerte Informationen. Ein weiteres Szenario ist, ungewollt Informationen bei einer Bildschirmfreigabe preiszugeben, wenn beispielsweise versehentlich der E-Mail-Client statt der vorgesehenen Präsentation freigegeben wird.\nVielen Benutzenden ist nicht bewusst, dass die UCC-Dienste Daten, die beispielsweise innerhalb von privaten Chats gesendet werden, in einer Cloud abspeichern. So können unbewusst Ablagerichtlinien der Institution verletzt werden. Gleiches gilt für Dateien, in denen Konversationen aufgezeichnet wurden.\nTeambereiche verfügen zwar in der Regel über einen definierten Kreis von Benutzenden und entsprechende Zugriffsbeschränkungen, jedoch ist vielen Benutzenden nicht bewusst, dass die Zugriffsrechte und Mitgliedschaften nachträglich modifiziert werden können. Dadurch können weitere Personen auf alle zuvor dort abgelegten Dateien zugreifen. Darüber hinaus werden häufig öffentliche Teambereiche erstellt, denen weitere Personen ohne explizite Erlaubnis beitreten können. Dadurch können gegebenenfalls Daten von unberechtigten Personen eingesehen werden. Beispielsweise kann ein Teambereich eines Projekts ausschließlich aus internen Benutzenden bestehen. Teilnehmende laden nun interne Dokumente hoch, da alle Teammitglieder intern sind. Wenn im weiteren Projektverlauf externe Personen in den Bereich eingeladen werden, können sie auf alle bisherigen Dokumente zugreifen."
+          },
+          {
+            "name": "2.6. Preisgabe von personenbezogenen Informationen",
+            "value": "UCC-Dienste erheben an vielen Stellen Daten, die auch anderen Benutzenden angezeigt werden. Dies kann dazu führen, dass personenbezogene Informationen ungewollt preisgegeben werden.\nUnter anderem kann die Verfügbarkeit von Benutzenden sichtbar sein. Auch Zeitstempel an Beiträgen in Chats bis hin zu umfangreichen Auswertungen über Gespräche, Aktivitäten oder Inhalte für einzelne Benutzende können Teil einer UCC-Komponente sein. Dabei können sogar Personenprofile durch die UCC-Dienste gebildet werden. Auch Personen ohne erweiterte Berechtigungen erhalten häufig Zugriff auf diese Auswertungen. Dadurch können sie Rückschlüsse auf Arbeitszeiten und -inhalte sowie persönliche Beziehungen anderer Personen ziehen und diese beispielsweise zur Leistungsüberwachung verwenden.\nWerden bei mobilem Arbeiten virtuelle Konferenzen benutzt, können ungewollt private Informationen an die Teilnehmenden der Konferenz übermittelt werden. Dazu zählen beispielsweise Personen, die durch das Videobild laufen, persönliche Gegenstände im Hintergrund einer Videoübertragung oder Geräusche und Stimmen aus dem privaten Umfeld."
+          },
+          {
+            "name": "2.7. Wechselwirkungen bei UCC-Diensten",
+            "value": "UCC-Dienste können untereinander Wechselwirkungen verursachen, welche die Funktionalität einschränken.\nUm das Benutzungserlebnis zu verbessern, werden verschiedene Dienste häufig in einer Benutzungsoberfläche verknüpft. Dies kann jedoch zu Abhängigkeiten zwischen den Diensten führen. Wird beispielsweise der Videokonferenzdienst in eine Oberfläche zur Teamkollaboration integriert, kann der Videodienstes nicht mehr verwendet werden, falls die Oberfläche ausfällt.\nUCC-Dienste benutzen häufig gemeinsame Ressourcen. Dies kann zu Konflikten führen, welche die Funktionalität beeinträchtigen. Werden Headsets beispielsweise von einer Telefonie- und einer Videokonferenzanwendung gleichzeitig verwendet, können die Headsets durch eine Anwendung blockiert werden und dann nicht mehr für die andere Anwendung zur Verfügung stehen.\nManche Anwendungen haben sehr hohe Ressourcenanforderungen. Wenn mehrere UCC-Dienste gleichzeitig auf einem IT-System ausgeführt werden, kann dies dazu führen, dass der Client überfordert ist und das IT-System ausfällt oder abstürzt. Wenn beispielsweise mehrere Videokonferenzanwendungen parallel im Hintergrund ausgeführt werden, kann die resultierende Auslastung des Arbeitsspeichers den Client stark beeinträchtigen."
+          },
+          {
+            "name": "2.8. Zugriff auf Applikationen oder Ressourcen durch Freigabe der Steuerung",
+            "value": "Werden den Teilnehmenden innerhalb einer Konversation Desktop- oder Bildschirminhalte angezeigt, kann die Steuerung durch den Freigebenden an andere Benutzende übertragen werden. Dies kann jedoch dazu führen, dass der Freigebende die Kontrolle über weitere Handlungen verliert.\nDa die Funktion zwar häufig vorhanden ist, in der Regel aber nur selten benutzt wird, sind viele Benutzende mit der Bedienung nicht vertraut, akzeptieren die Freigabe und verlieren dann die Kontrolle über ihren Client. Beispielsweise können Benutzende die Steuerung ihrer Maus freigeben, ohne zu wissen, wie die Freigabe beendet werden kann. Dadurch können Teilnehmende der Konversation möglicherweise auf weitere Anwendungen des Clients zugreifen."
+          },
+          {
+            "name": "2.9. Vorspiegelung falscher Identitäten",
+            "value": "Dadurch, dass neue UCC-Dienste eingeführt werden und Externe neue Möglichkeiten erhalten, Kontakt aufzunehmen, ergeben sich neue Wege für Angreifende, die sich als vertrauenswürdige Kommunikationspartner und -partnerin ausgeben wollen, um so an vertrauliche Informationen zu gelangen.\nDie Komplexität von UCC-Diensten erhöht die Wahrscheinlichkeit für Fehlbedienungen oder unbewusste Verletzungen von Sicherheitsrichtlinien durch die Benutzenden. Hyperlinks zu schädlichen Inhalten können beispielsweise geöffnet werden, weil die UCC-Dienste als interne Plattform mit erhöhter Vertrauenswürdigkeit wahrgenommen werden.\nHäufig sind sich die Benutzenden nicht darüber bewusst, dass sie auch von unbekannten Externen kontaktiert werden können. Dadurch sind sie anfälliger für Social Engineering, beispielsweise über einen Chat oder eine Einladung zu einer Konversation.\nWeiterhin können Angreifende ihre angezeigten Namen, ihre Stimme oder ihr Aussehen manipulieren. Dadurch kann sich zum Beispiel eine externe Person über die vermeintlich interne Kommunikationsplattform als vorgesetzte Person ausgeben, um so vertrauliche Informationen oder Dokumente direkt über den Chat zu erhalten."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "eca573b0-d333-454a-8da0-01b924ea9663",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/interpersonelle_kommunikation_profile.json",
+            "description": "Implementation for all controls in Baustein APP.5.4",
+            "implemented-requirements": [
+              {
+                "uuid": "02226257-642c-4a80-b311-544e50e9c97f",
+                "control-id": "ARCH.8.3",
+                "description": "Implementation for ARCH.8.3 based on BSI APP.5.4.A11",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a11-m1",
+                    "uuid": "c42604d0-d999-478f-bc5a-be7fb9c11bda",
+                    "description": "Die Verfügbarkeit der UCC-Dienste hängt von einzelnen, nicht-redundanten Komponenten ab. Es gibt keine spezifischen Maßnahmen zur Sicherstellung der Verfügbarkeit."
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m2",
+                    "uuid": "3ccf7e7d-df96-49cd-980c-228ab3971172",
+                    "description": "Es sind grundlegende Hardware-Redundanzen wie redundante Netzteile oder Festplatten-RAIDs für die zentralen Server vorhanden. Eine Redundanz auf Dienst-Ebene existiert jedoch nicht. Die Dienstverfügbarkeit wird überwacht."
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m3",
+                    "uuid": "b81d046f-b033-41d8-99e2-3d6d8a77e6b3",
+                    "description": "Die Verfügbarkeit von UCC-Diensten wird durch geplante Maßnahmen sichergestellt. Dies beinhaltet eine redundante Auslegung von zentralen Servern und die Nutzung von Call Admission Control (CAC) zur Qualitätssicherung. Die Verfügbarkeit wird durch ein Monitoring überwacht."
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m4",
+                    "uuid": "76bd9b89-ec93-40d1-9300-06e1b94851c8",
+                    "description": "Die Verfügbarkeit von UCC-Diensten SOLLTE insbesondere durch folgende technische Maßnahmen sichergestellt werden: redundante Auslegung zentraler Server und Dienste, Benutzung von Call Admission Control (CAC) und möglichst autark funktionierende UCC-Dienste. Bei Cloud-basierten Diensten SOLLTE der Cloud-Provider sowie der Internet-Provider ausfallsicher angebunden werden. Ein hochverfügbarer SIP-Provider SOLLTE ebenfalls ausfallsicher angebunden sein."
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m5",
+                    "uuid": "bf83849f-25dd-4a1b-92c6-5c66ae585f2f",
+                    "description": "Alle kritischen UCC-Komponenten sind in einer vollredundanten High-Availability-Architektur über mehrere geografische Standorte verteilt (Geo-Redundanz). Der Failover-Prozess ist vollständig automatisiert und wird regelmäßig getestet. Ein umfassendes Monitoring der Dienstgüte (Quality of Experience) liefert proaktiv Hinweise auf sich anbahnende Probleme."
+                  }
+                ]
+              },
+              {
+                "uuid": "fedd4685-5829-4767-8c4d-df4614a9565f",
+                "control-id": "BES.2.1.3",
+                "description": "Implementation for BES.2.1.3 based on BSI APP.5.4.A2",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a2-m1",
+                    "uuid": "e258bf1e-60fc-4447-a4f2-71e750702904",
+                    "description": "Bei der Netzplanung wird lediglich die grob geschätzte zusätzliche Bandbreite für UCC berücksichtigt. Spezifische Leistungsparameter wie Paketverlust, Jitter und Latenz werden ignoriert."
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m2",
+                    "uuid": "e43644ef-04e4-4c1b-84ee-b76e350729a2",
+                    "description": "Vor der Einführung von UCC-Diensten wird eine grundlegende Prüfung der Bandbreite und Latenz im Netzwerk durchgeführt. Die Prüfung ist jedoch nicht systematisch und deckt nicht alle Nutzungsszenarien (z. B. große Videokonferenzen) ab. Aspekte wie PoE und WLAN-Verfügbarkeit werden nicht proaktiv geplant."
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m3",
+                    "uuid": "8acb933f-ee59-45f6-ad40-70db39e3bcd7",
+                    "description": "Bevor UCC-Dienste eingeführt werden, MUSS geprüft werden, ob das Netz die UCC-spezifischen Leistungsparameter erfüllt. Falls nicht, MUSS ein Umgang damit festgelegt werden. Im Rahmen der allgemeinen Netzplanung SOLLTEN insbesondere folgende Aspekte berücksichtigt werden: Erfüllung der Parameter wie Paketverlust, Jitter und Latenz; ausreichende Netzkapazitäten (Bandbreite) für die geplante Nutzung; Berücksichtigung von Power over Ethernet (PoE) und die Verfügbarkeit von WLAN für mobile Endgeräte."
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m4",
+                    "uuid": "6bce0e51-af3f-4e8a-b0ac-b4b6c5feb0a1",
+                    "description": "Die Netzplanung umfasst dedizierte Quality of Service (QoS)-Richtlinien, die UCC-Verkehr (insbesondere Voice und Video) priorisieren. Diese Aspekte werden bei jeder Erweiterung der UCC-Dienste erneut geprüft. Das Netzwerk wird aktiv auf die Einhaltung der definierten Leistungsparameter überwacht."
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m5",
+                    "uuid": "1d7bff3f-3711-44ba-b6e9-20bef3a878a1",
+                    "description": "Die Netzplanung verwendet Simulationswerkzeuge, um die Auswirkungen von UCC-Verkehr unter verschiedenen Lastszenarien zu modellieren und Kapazitätsengpässe proaktiv zu identifizieren. Quality of Service wird dynamisch verwaltet. Für kritische UCC-Dienste sind redundante und ausfallsichere Netzwerkpfade geplant und implementiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "9fed709e-e79e-40db-bbb7-05df8b44e45f",
+                "control-id": "DET.3.1.12",
+                "description": "Implementation for DET.3.1.12 based on BSI APP.5.4.A18",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a18-m1",
+                    "uuid": "7a859f3e-473e-4ff9-b0d0-c0b17fd7f428",
+                    "description": "Die Protokolldateien der UCC-Komponenten werden mit den Standardeinstellungen lokal auf den Systemen gespeichert, aber nicht zentral gesammelt oder ausgewertet."
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m2",
+                    "uuid": "ca8e2a05-106a-4398-afe3-3edc71ba7769",
+                    "description": "Die Protokolldateien von kritischen UCC-Komponenten wie SBCs und zentralen Servern werden zentral gesammelt und archiviert. Es gibt jedoch keine spezifischen Regeln oder Anwendungsfälle zur automatisierten Auswertung dieser Daten auf Sicherheitsvorfälle."
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m3",
+                    "uuid": "b187d6a7-91ba-42fb-ae8d-6121e7669099",
+                    "description": "Die zentralen UCC-Komponenten sind in das Sicherheitsmonitoring eingebunden. Es sind grundlegende Anwendungsfälle für die Erkennung von Sicherheitsvorfällen definiert und im SIEM-System implementiert, z.B. die Erkennung von fehlgeschlagenen Anmeldeversuchen in großer Zahl."
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m4",
+                    "uuid": "29c2dcd6-0759-4d4d-bec3-1f3f96122684",
+                    "description": "Die zentralen UCC-Komponenten SOLLTEN durch ein Sicherheitsmonitoring überwacht werden. Dies SOLLTE mindestens für Komponenten umgesetzt werden, die Verschlüsselungsendpunkte realisieren (z.B. MCUs) oder an Vertrauensgrenzen positioniert sind (z.B. SBCs). Wird ein System zur zentralen Detektion (SIEM) eingesetzt, SOLLTEN die zentralen UCC-Komponenten hierin eingebunden werden. Es werden spezifische Erkennungsregeln für UCC-Angriffe implementiert."
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m5",
+                    "uuid": "87f1f964-a852-4a25-a29b-43fdac068e26",
+                    "description": "Das Sicherheitsmonitoring für UCC nutzt Verhaltensanalyse (User and Entity Behavior Analytics, UEBA), um Anomalien im Kommunikationsverhalten zu erkennen. Das Monitoring ist in eine SOAR-Plattform (Security Orchestration, Automation, and Response) integriert, um auf erkannte Bedrohungen automatisiert zu reagieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "89623b76-2fd3-41aa-a898-c9b074072b35",
+                "control-id": "DET.3.1.4",
+                "description": "Implementation for DET.3.1.4 based on BSI APP.5.4.A13",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a13-m1",
+                    "uuid": "5c2c5ff0-f361-4f5b-b148-4aa95f4c2109",
+                    "description": "Jeder Administrator mit Zugriff auf die UCC-Plattform kann alle Einstellungen des SIP-Trunks eigenmächtig und ohne Überprüfung ändern."
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m2",
+                    "uuid": "85bdbd77-93ab-45e6-ba90-58c368648579",
+                    "description": "Es gibt eine organisatorische Regelung, dass kritische Änderungen an SIP-Trunks von einer zweiten Person geprüft werden sollen. Die Einhaltung dieser Regelung wird jedoch nicht technisch erzwungen oder systematisch kontrolliert."
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m3",
+                    "uuid": "c488f92d-83dc-4f04-9d2f-ab0142f8c4b7",
+                    "description": "Für kritische Änderungen an der Konfiguration von SIP-Trunks wird ein 4-Augen-Prinzip im Rahmen des Change-Management-Prozesses angewendet. Alle Änderungen werden in einem Change-Request-Ticket dokumentiert und müssen vor der Umsetzung genehmigt werden."
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m4",
+                    "uuid": "47113be3-747f-48cd-8e8d-df5687dd294c",
+                    "description": "Wenn SIP-Trunks administriert werden, SOLLTE für folgende Tätigkeiten ein 4-Augen-Prinzip angewendet werden: Änderungen an Routing-Konfigurationen, an Parametern für Call Admission Control, an der Verschlüsselung und an der lokalen Speicherung von Verbindungsdaten. Das 4-Augen-Prinzip wird, wo technisch möglich, durch getrennte Rollen und Berechtigungen im Administrations-Interface durchgesetzt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m5",
+                    "uuid": "0e93a51d-33a5-4e62-82ef-2d37fd11e346",
+                    "description": "Die Administration von SIP-Trunks erfolgt ausschließlich über eine Privileged Access Management (PAM)-Lösung. Änderungen werden über einen automatisierten Workflow mit 4-Augen-Prinzip abgewickelt. Konfigurationsänderungen werden als Code (Infrastructure as Code) verwaltet und Änderungen durchlaufen einen Peer-Review- und einen automatisierten Testprozess, bevor sie zur Genehmigung vorgelegt werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "c386c744-a3cf-416d-8413-58aac8874856",
+                "control-id": "DEV.2.2",
+                "description": "Implementation for DEV.2.2 based on BSI APP.5.4.A1",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a1-m1",
+                    "uuid": "53db8e65-324c-4db8-b5dc-064e14bfe679",
+                    "description": "Eine Planung für UCC-Dienste existiert nur für einzelne Aspekte, beispielsweise für die Ablösung der klassischen Telefonie. Übergreifende Funktionen wie Collaboration, Chat oder Videokonferenzen werden ad hoc und ohne strategische Planung eingeführt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m2",
+                    "uuid": "accfa57c-95eb-4209-85b3-995c15465b23",
+                    "description": "Es wurde ein grundlegender Plan erstellt, der die wichtigsten Einsatzzwecke und funktionalen Anforderungen an die UCC-Dienste beschreibt. Die Planung berücksichtigt jedoch nicht ausreichend die Wechselwirkungen zwischen den Diensten oder die Integration in die bestehende IT-Infrastruktur."
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m3",
+                    "uuid": "f2661c76-94c0-4bdf-b4f0-62c99fc3f939",
+                    "description": "Es MUSS umfassend und detailliert geplant werden, wie und für welchen Zweck UCC eingesetzt werden soll. Die Planung MUSS insbesondere die Wechselwirkungen der UCC-Dienste berücksichtigen und mindestens folgende Aspekte beinhalten: Einsatzzwecke, funktionale Anforderungen, Anforderungen zur Absicherung, Festlegung zu übertragbaren Informationen, Analyse der Abhängigkeiten, Produktauswahl und organisatorische Regelungen. Bei der Planung MUSS berücksichtigt werden, wie UCC in die IT-Infrastruktur integriert wird, einschließlich Netzsegmentierung und Schnittstellen."
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m4",
+                    "uuid": "6458171e-3663-4125-b89e-a86c7effe424",
+                    "description": "Die UCC-Planung ist ein wiederkehrender Prozess, der regelmäßig, mindestens jährlich, sowie bei jeder wesentlichen Änderung der Dienste oder der Infrastruktur überprüft und aktualisiert wird. Die Planung umfasst eine detaillierte Risikoanalyse für die ausgewählten UCC-Dienste und definiert konkrete Maßnahmen zur Risikominderung."
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m5",
+                    "uuid": "2be5a084-8fb2-4edd-bd46-b47e84327396",
+                    "description": "Die UCC-Planung ist vollständig in das übergreifende ISMS und die IT-Strategie der Organisation integriert. Sie basiert auf einem kontinuierlichen Verbesserungsprozess, der Kennzahlen (KPIs) zur Sicherheit, Verfügbarkeit und Nutzung der Dienste erhebt und auswertet. Bedrohungsmodellierungen werden eingesetzt, um proaktiv Sicherheitsanforderungen für zukünftige UCC-Anwendungsfälle zu definieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "a56dd971-cd5e-46ae-b7b0-0b7cbfc46587",
+                "control-id": "KONF.10.2",
+                "description": "Implementation for KONF.10.2 based on BSI APP.5.4.A9",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a9-m1",
+                    "uuid": "33a7dbc8-fee4-43c8-a533-c614279f2612",
+                    "description": "Die Konfiguration der UCC-Systeme erfolgt mit den Standardeinstellungen des Herstellers. Nur die offensichtlichsten Sicherheitseinstellungen, wie das Ändern des Standard-Administratorpassworts, werden vorgenommen."
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m2",
+                    "uuid": "3485eec8-558a-4129-8e4a-3bdc159f0be3",
+                    "description": "Eine grundlegende Härtung der UCC-Systeme wird anhand einer generischen Checkliste durchgeführt. Die Konfiguration wird jedoch nicht auf den spezifischen Kontext der Organisation oder das definierte Schutzbedürfnis angepasst."
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m3",
+                    "uuid": "da7f6513-b4f3-4c25-bc31-20d16127b03e",
+                    "description": "Um UCC sicher zu konfigurieren, SOLLTEN mindestens die folgenden Aspekte berücksichtigt werden: Verschlüsselung von Signalisierungs- und Mediendaten auch auf vertrauenswürdigen Übertragungsstrecken; Absicherung von gespeicherten Daten, insbesondere Festlegung für Zugriffsberechtigung auf Aufzeichnungen; Einschränkung der Dienste auf ausschließlich interne Benutzende; Einschränkung der Übertragung von Erreichbarkeitsinformationen. Gespeicherte Daten SOLLTEN verschlüsselt werden. Auf gespeicherte Daten SOLLTEN Benutzende nur nach vorheriger Authentisierung zugreifen können."
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m4",
+                    "uuid": "7d6a8280-5ec3-413d-843f-1cba8e8867b3",
+                    "description": "Sichere Konfigurationsbaselines werden für alle UCC-Komponenten definiert, dokumentiert und versioniert. Für textbasierte Konversationen SOLLTE ein Malware-Schutz aktiviert werden. Die Umsetzung der Konfiguration SOLLTE regelmäßig und anlassbezogen auf Einhaltung der Vorgaben geprüft und angepasst werden."
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m5",
+                    "uuid": "735ade24-aefc-4941-8c13-e0dab7e40f72",
+                    "description": "Die Konfigurationsbaselines werden mithilfe von Automatisierungswerkzeugen (Infrastructure as Code) verwaltet und durchgesetzt. Jede Abweichung vom definierten Soll-Zustand wird automatisch erkannt und entweder korrigiert oder es wird ein Alarm ausgelöst. Die Sicherheitskonfiguration wird kontinuierlich überwacht."
+                  }
+                ]
+              },
+              {
+                "uuid": "18ef210c-498c-4960-9d40-541919750674",
+                "control-id": "KONF.10.4",
+                "description": "Implementation for KONF.10.4 based on BSI APP.5.4.A4",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a4-m1",
+                    "uuid": "36e6f1a9-3dd8-401d-ab05-6a857e0e2eda",
+                    "description": "Die UCC-Dienste werden mit der Standardkonfiguration des Herstellers betrieben. Nur offensichtlich unsichere oder problematische Funktionen werden bei Bedarf manuell deaktiviert."
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m2",
+                    "uuid": "588f4dfd-b3b4-47a0-a1d8-d37e024f828c",
+                    "description": "Basierend auf einer allgemeinen Checkliste werden einige nicht benötigte Funktionen deaktiviert. Dies geschieht jedoch ohne eine detaillierte Analyse der spezifischen Einsatzzwecke und ohne Berücksichtigung von Wechselwirkungen."
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m3",
+                    "uuid": "ea7f1c85-f641-47d6-a868-bd8446d4e126",
+                    "description": "UCC-Dienste DÜRFEN NUR mit dem geringsten notwendigen Funktionsumfang betrieben werden. Die verfügbaren Funktionen und Dienste MÜSSEN entsprechend der definierten Einsatzzwecke ausgewählt werden. Dabei MÜSSEN Wechselwirkungen berücksichtigt werden. Insbesondere MÜSSEN folgende Dienste und Funktionen auf Notwendigkeit geprüft und ggf. deaktiviert werden: Speicherung personenbezogener Daten, Zugriff und Verarbeitung dieser Daten, Benutzbarkeit von Funktionen durch Externe, Senden von Daten an Externe. Konversationsbezogene Log-Daten DÜRFEN NUR minimal gespeichert werden."
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m4",
+                    "uuid": "c8aea597-f09a-4ee6-953a-f3c16d3dfac5",
+                    "description": "Es wird eine 'Default-Deny'-Richtlinie für UCC-Funktionen umgesetzt. Alle Funktionen sind standardmäßig deaktiviert und müssen explizit für bestimmte Rollen oder Benutzergruppen basierend auf einem dokumentierten Bedarf freigegeben werden. Die Einhaltung dieser Konfiguration wird regelmäßig überprüft."
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m5",
+                    "uuid": "c3ae0c89-1988-4c58-959c-1195e8a4bd36",
+                    "description": "Die Konfiguration des Funktionsumfangs wird durch ein Konfigurationsmanagement-Tool automatisiert durchgesetzt und überwacht. Jede Abweichung von der definierten, gehärteten Baseline wird automatisch korrigiert oder löst einen Sicherheitsalarm aus. Die Freischaltung von Funktionen erfolgt dynamisch basierend auf dem Benutzerkontext (z.B. Gerät, Standort, Rolle)."
+                  }
+                ]
+              },
+              {
+                "uuid": "5ecb1ee5-5562-46c0-9f4c-4fdbf40e965b",
+                "control-id": "KONF.11.8",
+                "description": "Implementation for KONF.11.8 based on BSI APP.5.4.A8",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a8-m1",
+                    "uuid": "d3b55d9b-9843-486a-9d45-c9ac48f8a80e",
+                    "description": "Es wird kein Session Border Controller (SBC) eingesetzt. Die Anbindung an den SIP-Provider erfolgt direkt über die Firewall, auf der die notwendigen Ports geöffnet werden. Eine anwendungsspezifische Absicherung findet nicht statt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m2",
+                    "uuid": "863620d1-2514-414a-8bab-666609c78948",
+                    "description": "Ein SBC wird eingesetzt, aber hauptsächlich zur Lösung von Netzwerkproblemen wie NAT Traversal. Er wird mit einer grundlegenden Standardkonfiguration betrieben, die nur minimale Sicherheitsfunktionen wie Topology Hiding bietet."
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m3",
+                    "uuid": "bcda3133-13c6-4895-a255-d37b8c0240f3",
+                    "description": "Für die UCC-Kommunikation über eingeschränkt vertrauenswürdige Netze SOLLTE mindestens für Sprachdienste ein Session Border Controller (SBC) am Netzübergang zum SIP-Provider eingesetzt werden. Der SBC SOLLTE als Verschlüsselungsendpunkt die Signalisierung und die Medienströme terminieren. Der SBC SOLLTE für die Signalisierung und die Medienströme Filterfunktionen unterstützen, die die jeweiligen Konversationen zusätzlich absichern."
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m4",
+                    "uuid": "b055702a-000a-408f-9c08-9e664fbd2457",
+                    "description": "Die Filterregeln des SBC sind detailliert an die Kommunikationsrichtlinien der Organisation angepasst. Der SBC führt eine Tiefenprüfung (Deep Packet Inspection) der SIP-Nachrichten durch, um Anomalien und Angriffsversuche zu erkennen. Er verfügt über Mechanismen zum Schutz vor Denial-of-Service-Angriffen (DoS). Seine Protokolldaten werden an ein zentrales SIEM-System weitergeleitet."
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m5",
+                    "uuid": "98d6ceeb-f690-4e57-8555-7261f87dff9c",
+                    "description": "Der SBC wird als hochverfügbares Cluster betrieben. Er setzt dynamische Richtlinien durch, die beispielsweise auf externen Threat-Intelligence-Feeds basieren, um Angriffe von bekannten bösartigen IP-Adressen proaktiv zu blockieren. Der SBC ist in der Lage, bei Bedarf Mediendaten zu transkodieren, um die Interoperabilität sicherzustellen."
+                  }
+                ]
+              },
+              {
+                "uuid": "a890889e-f522-4bde-b4f2-bc3d9fbd9b9a",
+                "control-id": "KONF.14.1",
+                "description": "Implementation for KONF.14.1 based on BSI APP.5.4.A6",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a6-m1",
+                    "uuid": "d530fa82-18ac-4186-a9b8-c62a93f86f77",
+                    "description": "Verschlüsselung wird nur dort eingesetzt, wo sie standardmäßig vom Hersteller aktiviert ist. Es gibt keine einheitliche Richtlinie oder Überprüfung der Verschlüsselungseinstellungen. Gespeicherte Daten (at rest) werden grundsätzlich nicht verschlüsselt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m2",
+                    "uuid": "463ce284-94e5-4652-b6df-1888395072bd",
+                    "description": "Die gesamte Kommunikation über unzureichend vertrauenswürdige Netze (z.B. das Internet) wird durchgängig transportverschlüsselt. Eine Verschlüsselung von Daten im Ruhezustand (at rest) oder eine Ende-zu-Ende-Verschlüsselung findet nicht statt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m3",
+                    "uuid": "3a3324f6-fae4-47ff-90f8-9d3edd6eb42f",
+                    "description": "Sämtliche Kommunikation über unzureichend vertrauenswürdige Netze MUSS mit sicheren Verfahren verschlüsselt werden. Dateiablagen, die persistente personenbezogene oder vertrauliche Daten enthalten, MÜSSEN mit Hilfe von sicheren Verschlüsselungsmechanismen abgesichert werden. Dies betrifft sowohl interne als auch externe angebundene Dateiablagen. Die Benutzenden MÜSSEN über den Status der Verschlüsselung innerhalb von Konversationen informiert werden."
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m4",
+                    "uuid": "fbd82f17-43de-4025-bbe2-903892cbe1b6",
+                    "description": "Die eingesetzten Verschlüsselungsverfahren, Algorithmen und Schlüssellängen entsprechen den aktuellen Empfehlungen des BSI (z.B. TR-02102). Wo technisch möglich und sinnvoll, wird eine Ende-zu-Ende-Verschlüsselung für Chats und 1:1-Anrufe eingesetzt. Ein zentrales System für die Verwaltung der Zertifikate wird verwendet."
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m5",
+                    "uuid": "e7bf81fc-d203-458c-83e6-463157a3e4c5",
+                    "description": "Es wird durchgängig eine sichere Ende-zu-Ende-Verschlüsselung für alle Kommunikationsformen, einschließlich Mehrpersonen-Konferenzen (Signalisierung und Medien), erzwungen. Kritische Schlüssel für die serverseitige Verschlüsselung werden in Hardware-Sicherheitsmodulen (HSM) geschützt."
+                  }
+                ]
+              },
+              {
+                "uuid": "432c8f71-448d-4a8d-85da-100f98028094",
+                "control-id": "KONF.14.1.2",
+                "description": "Implementation for KONF.14.1.2 based on BSI APP.5.4.A14",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a14-m1",
+                    "uuid": "2d04647a-5502-4167-8dff-17058f227771",
+                    "description": "Es wird ausschließlich Transportverschlüsselung eingesetzt. Ende-zu-Ende-Verschlüsselung (E2EE) wird nicht als Anforderung betrachtet oder genutzt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m2",
+                    "uuid": "a52cab38-3741-4e79-8425-b96a80ba83c5",
+                    "description": "Ende-zu-Ende-Verschlüsselung wird für einfache Kommunikationsformen wie 1-zu-1-Textchats genutzt, sofern die UCC-Plattform dies standardmäßig anbietet. Für Anrufe, Videokonferenzen oder Gruppenchats wird sie nicht eingesetzt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m3",
+                    "uuid": "b786125b-2f2e-46f7-8696-e76033964098",
+                    "description": "Es wurde eine Richtlinie erstellt, die den Einsatz von Ende-zu-Ende-Verschlüsselung (E2EE) für Kommunikationen mit hohem Schutzbedarf fordert. Es wird eine UCC-Lösung eingesetzt, die E2EE für 1-zu-1-Anrufe und -Chats unterstützt, und diese Funktion ist für alle Benutzer aktiviert."
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m4",
+                    "uuid": "42ef5525-49e3-4f07-8a61-a62cdf9737be",
+                    "description": "Für UCC-Kommunikation SOLLTE eine sichere Ende-zu-Ende-Verschlüsselung benutzt werden. Die E2EE SOLLTE sich sowohl auf die Signalisierung als auch auf die Mediendaten von Audio- und Videokommunikation mit zwei oder mehr Teilnehmenden erstrecken. Bei Konversationen zwischen UCC-Diensten von verschiedenen Herstellenden SOLLTEN die übertragenen Informationen eingeschränkt werden, sofern eine E2EE nicht möglich ist."
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m5",
+                    "uuid": "9d22be73-bee5-4125-b822-5ab2fe522a77",
+                    "description": "Die verwendete Ende-zu-Ende-Verschlüsselung wird technisch für alle Kommunikationsformen erzwungen. Die Implementierung verwendet moderne kryptographische Eigenschaften wie Forward Secrecy und Post-Quantum-Kryptographie-Algorithmen. Die Identität der Kommunikationsteilnehmer wird vor dem Schlüsselaustausch stark verifiziert (z.B. durch Vergleich von Sicherheitsnummern oder Zertifikats-Pinning)."
+                  }
+                ]
+              },
+              {
+                "uuid": "eae21094-6b21-44fa-83b0-b5d428ed3f19",
+                "control-id": "KONF.6.13",
+                "description": "Implementation for KONF.6.13 based on BSI APP.5.4.A17",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a17-m1",
+                    "uuid": "f3b11533-9409-488f-919e-774095d259b1",
+                    "description": "Es gibt keine Einschränkungen bei der Benutzung von UCC-Diensten. Alle Funktionen sind für alle Benutzer, intern wie extern, gleichermaßen verfügbar."
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m2",
+                    "uuid": "58818319-fc27-4432-83eb-4d236cad8e09",
+                    "description": "Es sind grundlegende Einschränkungen für externe Benutzer implementiert, z.B. können diese keine Konferenzen starten. Eine Multi-Faktor-Authentisierung ist für Administratoren aktiviert, aber nicht für normale Benutzer."
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m3",
+                    "uuid": "9fd10e67-62e7-4e04-8023-4c7d94c787bb",
+                    "description": "Die Benutzung von UCC-Diensten wird basierend auf dem Schutzbedarf der übertragenen Informationen eingeschränkt. Die Nutzung von Multi-Faktor-Authentisierung (MFA) für alle internen und externen Benutzer ist als Standard vorgesehen. Funktionen für externe Benutzer werden auf das notwendige Minimum reduziert."
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m4",
+                    "uuid": "42baed8d-aed2-4c5f-bd5f-2a2c4dd2d095",
+                    "description": "Folgende Aspekte SOLLTEN mindestens berücksichtigt werden, um die UCC-Dienste zusätzlich abzusichern: Einschränkung der Dienste entsprechend des Schutzbedarfs, Benutzung von MFA, Deaktivierung von Funktionen für Externe, Deaktivierung der Speicherung von Metadaten, Einschränkung der Sichtbarkeit von Kommunikationsdaten für Admins. Zusätzlich SOLLTEN technische und organisatorische Vorkehrungen getroffen werden, um Konversationen über die Vergabe von PINs/Passwörtern hinaus abzusichern."
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m5",
+                    "uuid": "c4be4966-f05d-4a5a-8e91-19d0990a5315",
+                    "description": "Die Einschränkung der Benutzung wird durch ein System für Conditional Access und Data Loss Prevention (DLP) dynamisch und automatisiert durchgesetzt. Der Zugriff auf UCC-Dienste und -Funktionen hängt vom Benutzer, dem Endgerät, dem Standort und dem Schutzbedarf der Daten ab. Jede administrative Tätigkeit erfordert eine Just-in-Time-Genehmigung über ein Privileged Access Management (PAM)-System."
+                  }
+                ]
+              },
+              {
+                "uuid": "ac664dd9-411a-4269-bf72-70a0966fffb7",
+                "control-id": "KONF.6.7",
+                "description": "Implementation for KONF.6.7 based on BSI APP.5.4.A5",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a5-m1",
+                    "uuid": "98f6e5ec-7dc1-4306-9ec6-e3c9d53d68fe",
+                    "description": "Es existiert keine spezifische Rollendefinition für UCC-Dienste. Es wird lediglich zwischen normalen Benutzern und Administratoren unterschieden. Externe Benutzer erhalten dieselben Rechte wie interne Standardbenutzer."
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m2",
+                    "uuid": "a69e8da2-d0b9-403e-a68c-11f77a20afc3",
+                    "description": "Ein grundlegendes Rollenkonzept mit einigen wenigen Rollen (z.B. 'Moderator', 'Gast') ist dokumentiert. Die Zuweisung und Überprüfung der Rollen erfolgt jedoch manuell und unregelmäßig."
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m3",
+                    "uuid": "6788cdbb-7fa5-410e-a482-2eb591133883",
+                    "description": "Das Rollen- und Berechtigungskonzept MUSS um UCC-spezifische Definitionen von Rollen und Berechtigungen ergänzt werden. Dies MUSS sowohl für interne als auch für externe Benutzende getroffen werden. Es MÜSSEN Berechtigungen zur zielgerichteten Benutzung, zur Konfigurationsanpassung von Konversationen und für spezielle Funktionen wie Aufzeichnung definiert werden. Die Berechtigungen MÜSSEN auf das notwendige Minimum reduziert werden. Die Festlegungen MÜSSEN festgehalten, regelmäßig und anlassbezogen geprüft und aktualisiert werden."
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m4",
+                    "uuid": "e9388cd7-4a0d-4630-bec7-bf7171d8ec97",
+                    "description": "Das Rollen- und Berechtigungskonzept ist fein-granular und unterscheidet zwischen verschiedenen Konversationstypen und Funktionen. Nur explizit berechtigte Benutzende SOLLTEN auf Daten wie Aufzeichnungen oder Dateiablagen zugreifen können. Die Zuweisung von Rollen ist an den Mitarbeiter-Lifecycle gekoppelt (Joiner, Mover, Leaver). Halbjährliche Access Reviews für kritische Berechtigungen werden durchgeführt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m5",
+                    "uuid": "96d9b10e-fc81-4abb-95f5-d7c5419e1dcc",
+                    "description": "Das Berechtigungsmanagement für UCC ist vollständig in ein zentrales Identity and Access Management (IAM) System integriert. Es wird ein Attribute-Based Access Control (ABAC) Ansatz verwendet, bei dem Berechtigungen nicht nur auf statischen Rollen, sondern auch auf dynamischen Attributen (z.B. Projektzugehörigkeit, Gerätetyp, Standort) basieren. Die Access Reviews sind vollständig automatisiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "2d10665d-c4e3-4876-8d4e-3e712aa3e2b6",
+                "control-id": "NOT.4.17",
+                "description": "Implementation for NOT.4.17 based on BSI APP.5.4.A3",
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a3-m1",
+                    "uuid": "578c613c-eff4-477f-a3cc-4703a0660bd2",
+                    "description": "Es werden nur informelle Funktionstests durch IT-Personal durchgeführt, bevor ein neuer UCC-Dienst live geschaltet wird. Interaktionen mit anderen Anwendungen oder Tests durch Endbenutzer finden nicht statt."
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m2",
+                    "uuid": "f6d427e8-0484-40a4-a114-09c7cecc9720",
+                    "description": "Vor der Einführung werden initiale Funktionstests der UCC-Komponenten untereinander durchgeführt. Tests werden jedoch nach Änderungen oder Erweiterungen nicht wiederholt. Benutzertests sind informell und werden nicht systematisch ausgewertet."
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m3",
+                    "uuid": "348737b3-e1e3-45d1-b054-bbe047369fe8",
+                    "description": "Für die UCC-Dienste MÜSSEN initial Tests durchgeführt werden, die verifizieren, dass die UCC-Komponenten untereinander und mit anderen UCC-Diensten interferenzfrei funktionieren. Ebenfalls MÜSSEN Tests mit ausgewählten Benutzenden durchgeführt werden, um insbesondere Wechselwirkungen mit anderen Anwendungen zu überprüfen. Diese Tests SOLLTEN wiederholt werden, wenn die UCC-Dienste erweitert oder verändert werden. Zusätzlich SOLLTE die Konfiguration der UCC-Dienste in regelmäßigen Abständen auf Plausibilität und Konformität für die festgelegten Einsatzzwecke überprüft werden."
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m4",
+                    "uuid": "e9a2b1eb-6c12-4628-bfd6-b52266e06e73",
+                    "description": "Es existiert eine dedizierte Testumgebung, die die Produktionsumgebung weitgehend nachbildet. Vor der Einführung neuer Versionen oder größerer Änderungen werden dort umfassende Regressionstests durchgeführt. Die regelmäßige Überprüfung der Konfiguration erfolgt teilautomatisiert durch Skripte."
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m5",
+                    "uuid": "9dd065ff-d818-4f85-9c92-3f82d7e9d23a",
+                    "description": "Testprozesse sind weitgehend automatisiert und in die CI/CD-Pipeline für die UCC-Verwaltung integriert. Automatisierte Testsuiten führen nach jeder Konfigurationsänderung Regressionstests, Performance-Tests und Lasttests durch. Die Konformitätsprüfung der Konfiguration erfolgt kontinuierlich und Abweichungen lösen automatisch einen Alarm aus."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

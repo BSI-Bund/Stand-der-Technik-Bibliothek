@@ -1,0 +1,649 @@
+{
+  "component-definition": {
+    "uuid": "81dbaaae-31ad-42ec-9499-605b0627a6fd",
+    "metadata": {
+      "title": "SYS.1.7 Hostsysteme - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:59.240806+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "6ca0e624-b950-40e6-8ce6-69bd4142dedc",
+        "type": "hardware",
+        "title": "SYS.1.7 Hostsysteme",
+        "description": "This component represents the implementation of all controls for Baustein SYS.1.7.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Systeme vom Typ „IBM Z“ gehören zu den Server-Systemen, die allgemein als Großrechner („Mainframes\") bezeichnet werden. Großrechner haben sich von klassischen Einzelsystemen mit Stapelverarbeitung hin zu modernen Client-Server-Systemen entwickelt. Die Z-Architektur ist der Nachfolger der 1964 eingeführten S/360-Architektur und wird bei heutigen Großrechner-Installationen häufig eingesetzt."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist der Schutz von Informationen, die auf Z-Systemen verarbeitet, angeboten oder darüber übertragen werden."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.1.7 IBM Z ist auf jeden Server anzuwenden, der auf der Z-Architektur von IBM basiert.\n\nDer Baustein SYS.1.1 Allgemeiner Server bildet die Grundlage für die Absicherung von Servern. Für Z-Systeme müssen sowohl die dort aufgeführten allgemeinen Anforderungen als auch die konkreten Anforderungen im vorliegenden Baustein erfüllt werden.\n\nFür die Z-Hardware sind verschiedene Betriebssysteme verfügbar (z. B. z/OS, z/VM, KVM oder Linux on Z). Die Auswahl erfolgt in der Regel anhand der Parameter Rechnergröße und Einsatzzweck. Die Empfehlungen dieses Bausteins beschränken sich im Wesentlichen auf das Betriebssystem z/OS. Ausgewählte Sicherheitsaspekte von z/VM werden ebenfalls angesprochen. Für das Betriebssystem Linux on Z wird auf den Baustein SYS.1.3 Server unter Linux und Unix verwiesen.\n\nWeitere für IBM Z besonders relevante Anforderungen finden sich im Baustein ORP.4 Identitäts- und Berechtigungsmanagement sowie in OPS.1.2.5 Fernwartung.\n\nEin wichtiger Bestandteil der Sicherheitskonzeption von Z-Systemen auf technischer Ebene ist das eingesetzte Sicherheitssystem, beispielsweise TopSecret, ACF2 (Access Control Facility) oder RACF (Resource Access Control Facility). Um die Darstellung zu vereinfachen, wird im Folgenden nur auf RACF eingegangen. Die Empfehlungen sind entsprechend anzupassen, wenn ein anderes Sicherheitssystem eingesetzt wird."
+          },
+          {
+            "name": "2.1. Unzureichende oder fehlerhafte Konfiguration der Hardware oder des z/OS-Betriebssystems",
+            "value": "Die Konfiguration eines z/OS-Betriebssystems ist sehr komplex und erfordert an vielen Stellen den Eingriff durch Systemadministrierende. Durch falsche oder unzureichende Konfiguration können Schwachstellen entstehen, die zu entsprechenden Sicherheitsproblemen führen können. SuperVisor Calls (SVCs) sind beispielsweise Aufrufe zu speziellen z/OS-Dienstprogrammen, die im hoch autorisierten Kernel-Modus laufen. Unsichere SVC-Programme können unter Umständen benutzt werden, um z/OS-Sicherheitsmechanismen zu umgehen."
+          },
+          {
+            "name": "2.2. Fehlerhafte Konfiguration des z/OS-Sicherheitssystems RACF",
+            "value": "In einem z/OS-Betriebssystem ist für die Authentisierung von Benutzenden und deren Autorisierung auf Ressourcen ein spezielles Sicherheitssystem zuständig. Hierfür wird häufig RACF eingesetzt. Die Konfiguration von RACF im Auslieferungszustand entspricht in der Regel nicht den Sicherheitsanforderungen im jeweiligen Einsatzszenario. Die Ressourcen und z/OS-System-Kommandos werden beispielsweise über spezielle Klassen im RACF geschützt. Durch unzureichende Definitionen dieser Klassen ist es möglich, dass Benutzende Systembefehle absetzen können, die unter Umständen den stabilen Systembetrieb beeinträchtigen."
+          },
+          {
+            "name": "2.3. Fehlbedienung der z/OS-Systemfunktionen",
+            "value": "Aufgrund der Komplexität eines z/OS-Betriebssystems und seiner Komponenten können Fehlbedienungen nicht vollständig ausgeschlossen werden. Je nach Art der Fehlbedienung können in der Folge einzelne Komponenten oder das gesamte System ausfallen. Verriegeln sich zum Beispiel Ressourcen gegenseitig (Contention), können bestimmte Funktionen so lange nicht verfügbar sein, bis die Verriegelung wieder gelöst wird. Oft sind eine Reihe von Systemabfragen (Displays) und viel Betriebserfahrung notwendig, um gegenseitige Verriegelungen mithilfe der richtigen z/OS-Kommandos wieder aufzulösen."
+          },
+          {
+            "name": "2.4. Manipulation der z/OS-Systemsteuerung",
+            "value": "z/OS-Systeme lassen sich über vielfältige Schnittstellen beeinflussen, zum Beispiel über die Hardware Management Console, lokale sowie entfernte MCS-Konsolen, Automationsverfahren und Fernwartungszugänge. Wenn beispielsweise der physische oder der logische Zugang zu entfernten MCS-Konsolen unzureichend geschützt ist, können die z/OS-Systeme unter Umständen von dort aus unbefugt manipuliert werden."
+          },
+          {
+            "name": "2.5. Angriffe über TCP/IP auf z/OS-Systeme",
+            "value": "Um ein z/OS-System über die Netzanbindung anzugreifen, sind häufig keine Spezialkenntnisse der Netzarchitektur oder von z/OS erforderlich. Durch die TCP/IP-Anbindung an (unter Umständen öffentliche) Netze und die Unix System Services sind viele z/OS-Systeme über Standardprotokolle und Dienste, wie z. B. HTTP oder FTP, für interne bzw. externe Angriffe erreichbar. Bei externen Angriffen können unter Umständen über die TCP/IP-Anbindung an öffentliche Netze Denial-of-Service-Angriffe gegen die angebotenen Dienste durchgeführt oder übertragene Daten unbefugt gelesen oder manipuliert werden. Interne Angreifende können über die TCP/IP-Anbindung an interne Netze versuchen, ihre Berechtigungen zu erhöhen, indem sie etwa Kennung und Passwort von Benutzenden mit SPECIAL-Rechten ausspähen."
+          },
+          {
+            "name": "2.6. Fehlerhafte Zeichensatzkonvertierung beim Einsatz von z/OS",
+            "value": "EBCDIC, ASCII und Unicode sind Zeichensätze, die festlegen, wie Buchstaben, Ziffern und andere Zeichen mithilfe von Bits dargestellt werden. z/OS-Systeme arbeiten mit EBCDIC-Code. Lediglich HFS- und zFS-Dateisysteme, die unter Unix System Services (USS) eingesetzt werden, lassen sowohl ASCII- als auch EBCDIC-Speicherung zu. Beim Datenaustausch zwischen z/OS-Systemen und IT-Systemen, die mit ASCII oder Unicode arbeiten (z. B. auch von USS nach z/OS), besteht die Gefahr, dass Informationen verfälscht werden, wenn fehlerhafte Übersetzungstabellen (Code Page Translation) eingesetzt werden. Besonders häufig betroffen ist dabei die Übersetzung von Sonderzeichen."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "5798f4cf-c5ca-4f41-af06-2342d35501b5",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/hostsysteme_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.1.7",
+            "implemented-requirements": [
+              {
+                "uuid": "a185f9aa-050a-4e9d-967b-267ee9c2d11d",
+                "control-id": "ARCH.2.2.3",
+                "description": "Implementation for ARCH.2.2.3 based on BSI SYS.1.7.A33",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a33-m2",
+                    "uuid": "6e9a7e1d-85fd-44a5-985d-104814fb8692",
+                    "description": "Test- und Produktionsumgebungen laufen auf demselben physischen System, getrennt durch Namenskonventionen. Es gibt keine strikte technische Trennung, sodass Testanwendungen potenziell auf Produktionsdaten zugreifen könnten."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a33-m3",
+                    "uuid": "8e2c7afc-9f46-4f14-8c38-b3180519ade9",
+                    "description": "Es SOLLTEN technische Maßnahmen ergriffen werden, um Entwicklungs- und Testsysteme von Produktionssystemen unter z/OS zu trennen. Dabei SOLLTEN eventuelle Zugriffsmöglichkeiten über gemeinsame Festplatten und den Parallel Sysplex beachtet werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a33-m4",
+                    "uuid": "72d33310-e113-4759-93c0-ddc4058951b3",
+                    "description": "Zusätzlich zur LPAR-Trennung wird der Netzwerkverkehr zwischen Test- und Produktions-LPARs durch eine Firewall streng kontrolliert. Datenübertragungen von Produktion nach Test sind nur über einen kontrollierten, dokumentierten und genehmigten Prozess möglich, bei dem sensible Daten anonymisiert oder pseudonymisiert werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a33-m5",
+                    "uuid": "fd16d895-d758-48bb-92ad-8094e26dc0f5",
+                    "description": "Test- und Produktionsumgebungen laufen auf komplett getrennter physischer Hardware (unterschiedliche Central Processor Complexes). Jegliche Verbindung zwischen den Umgebungen ist nur über eine streng kontrollierte und überwachte Demilitarisierte Zone (DMZ) möglich."
+                  }
+                ]
+              },
+              {
+                "uuid": "bb85b622-e1b5-4498-9d2b-1ff8a4560ea6",
+                "control-id": "ASST.2.3.1",
+                "description": "Implementation for ASST.2.3.1 based on BSI SYS.1.7.A19",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a19-m1",
+                    "uuid": "4abfb6a1-7118-4877-88a0-b88119ed5638",
+                    "description": "Subsysteme wie CICS oder IMS nutzen ihre eigene, interne Sicherheitsfunktion (z.B. CICS-interne Transaktionssicherheit). Diese ist nicht mit RACF integriert, was zu einer separaten und inkonsistenten Benutzerverwaltung führt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m2",
+                    "uuid": "2a0e6ae8-78c5-433c-b577-d79d3d8e0747",
+                    "description": "Das Subsystem ist über RACF abgesichert, aber die Berechtigungen werden sehr breit vergeben (z.B. erhalten alle Benutzer einer Abteilung Zugriff auf die gleichen CICS-Transaktionen), ohne das Prinzip der geringsten Rechte (PoLP) zu befolgen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m3",
+                    "uuid": "fafe37eb-6caa-4fc1-9a96-4d18f96d2408",
+                    "description": "Falls Transaktionsmonitore oder Datenbanken (z.B. IMS, CICS, Db2) unter z/OS eingesetzt werden, SOLLTEN diese mittels RACF abgesichert werden. Dies gilt auch für die zugehörigen System-Kommandos und -Dateien. Interne Sicherheitsmechanismen der Transaktionsmonitore und Datenbanken SOLLTEN hingegen nur dort angewandt werden, wo es keine entsprechenden RACF-Funktionen gibt. Benutzende und Administrierende SOLLTEN nur die Zugriffsrechte erhalten, die sie für ihre jeweilige Tätigkeit benötigen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m4",
+                    "uuid": "cba80265-374a-4740-b488-0a856c97ffeb",
+                    "description": "Der Zugriff auf Transaktionen und Daten innerhalb des Subsystems wird durch feingranulare RACF-Profile gesteuert. Sicherheits-Exits in den Subsystemen werden verwendet, um zusätzliche, anwendungsspezifische Sicherheitslogik durchzusetzen. Deren Einsatz ist dokumentiert und kontrolliert."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m5",
+                    "uuid": "7048cbcc-7220-43aa-8372-2928e275cf74",
+                    "description": "Alle sicherheitsrelevanten Ereignisse aus den Subsystemen (z.B. Transaktionsausführung, Datenbankabfragen, fehlgeschlagene Zugriffe) werden in SMF protokolliert und zur Echtzeitüberwachung und Bedrohungserkennung in ein SIEM integriert. Database Activity Monitoring (DAM) Tools werden eingesetzt, um den Zugriff auf sensible Daten in Db2 zu analysieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "881349ec-87ca-48d8-bfce-14586b62a221",
+                "control-id": "ASST.5.2",
+                "description": "Implementation for ASST.5.2 based on BSI SYS.1.7.A3",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a3-m1",
+                    "uuid": "86439b69-0200-4e4e-b398-b06463acb002",
+                    "description": "Patches und Updates werden reaktiv eingespielt, typischerweise erst nach dem Auftreten eines Problems oder Fehlers. Es gibt keinen formalen Wartungsplan."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m2",
+                    "uuid": "04a880db-04f0-4a31-8be6-486b0c653af6",
+                    "description": "Es existiert ein grundlegender Wartungsplan, der regelmäßige Wartungsfenster vorsieht. Updates werden eingespielt, aber der Prozess zur Kontrolle von Hersteller-Updates (insbesondere remote) ist nicht formalisiert."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m3",
+                    "uuid": "14c11dad-6f1b-4545-9720-f985e65222f8",
+                    "description": "Die Z-Hardware und -Firmware, das Betriebssystem sowie die verschiedenen Programme MÜSSEN regelmäßig und bei Bedarf gepflegt werden. Die hierfür notwendigen Wartungsaktivitäten MÜSSEN geplant und in das Änderungsmanagement integriert werden. Insbesondere DÜRFEN Updates durch das herstellende Unternehmen NUR unter Kontrolle der Betreibenden durchgeführt werden, lokal über SE/HMC oder remote über die RSF."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m4",
+                    "uuid": "a4f8aa76-1401-4c2c-b9d2-cfce43ae31fe",
+                    "description": "Der Wartungsplan ist proaktiv und basiert auf Herstellerankündigungen und abonnierten Schwachstellen-Feeds. Alle signifikanten Updates werden vor dem produktiven Einsatz in einer dedizierten Testumgebung validiert. Remote-Wartungssitzungen werden protokolliert und stichprobenartig überprüft."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m5",
+                    "uuid": "1083b1aa-7527-4b17-b0c2-b0a698a614ed",
+                    "description": "Der Patch- und Wartungsprozess ist hochgradig automatisiert. Das System scannt automatisiert nach verfügbaren und notwendigen Updates, testet diese in einer Sandbox-Umgebung und spielt sie gemäß einer risikobasierten Richtlinie automatisiert ein. Alle Wartungsaktivitäten werden zentral protokolliert und mit dem Systemverhalten korreliert, um Anomalien zu erkennen."
+                  }
+                ]
+              },
+              {
+                "uuid": "29d0c7da-b09a-41d7-8dec-ffd0d0c452d4",
+                "control-id": "ASST.5.4",
+                "description": "Implementation for ASST.5.4 based on BSI SYS.1.7.A22",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a22-m1",
+                    "uuid": "f2f71780-66d7-4b7e-840e-0aec976a2730",
+                    "description": "Dynamische Änderungen werden häufig direkt am Produktionssystem ohne formellen Change-Request vorgenommen. Der Zugriff auf SDSF ist nicht granular kontrolliert, sodass viele Benutzer weitreichende Berechtigungen haben."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m2",
+                    "uuid": "603df5a8-bdda-4cf4-b184-f89efbf7f4fc",
+                    "description": "Ein Change-Management-Prozess wird zwar genutzt, aber Notfall-Änderungen umgehen diesen Prozess oft ohne nachträgliche Dokumentation. Operator-Kommandos sind geschützt, aber nicht mit feingranularen Kontrollen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m3",
+                    "uuid": "dee8379d-b4bf-4f83-8924-e3920948a779",
+                    "description": "Alle die Produktion beeinflussenden Wartungsarbeiten sowie dynamische und sonstige Änderungen SOLLTEN nur im Rahmen des Änderungsmanagements durchgeführt werden. SDSF und ähnliche Funktionen sowie die Prioritäten-Steuerung für Jobs SOLLTEN mittels RACF vor unberechtigtem Zugriff geschützt werden. z/OS-System-Kommandos und besonders sicherheitsrelevante Befehle für dynamische Änderungen SOLLTEN über RACF geschützt werden. Bei der dynamischen Definition von Hardware SOLLTE sichergestellt werden, dass eine Ressource im Wirkbetrieb nicht mehreren Einzelsystemen außerhalb eines Parallel Sysplex zugeordnet wird."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m4",
+                    "uuid": "10d792e8-80c6-4ab8-b892-680e3051a545",
+                    "description": "Alle Operator-Kommandos werden protokolliert. Ein Automatisierungstool wird verwendet, um die Parameter einzuschränken, die mit mächtigen Kommandos verwendet werden können. Der Change-Management-Prozess beinhaltet automatisierte Pre-Deployment-Checks zur Validierung der Änderung gegen Systemrichtlinien."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m5",
+                    "uuid": "f98d74ed-6826-49f7-bfd1-2b69ebaaee39",
+                    "description": "Ein 'Least Privilege'-Modell wird auf Operator-Kommandos angewendet, bei dem Operatoren nur die Kommandos ausführen können, die für ihre spezifische Rolle auf einer Whitelist stehen. Alle dynamischen Konfigurationsänderungen werden über automatisierte, getestete und auditierte Skripte anstelle von manuellen Kommandos durchgeführt. Hardware-Konfigurationsänderungen werden gegen eine zentrale Configuration Management Database (CMDB) validiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "b13fbc3a-2cda-42fe-a859-c5e7c7e69c85",
+                "control-id": "ASST.6.4",
+                "description": "Implementation for ASST.6.4 based on BSI SYS.1.7.A20",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a20-m1",
+                    "uuid": "e68bac93-d5fc-4f2f-b681-7efcf5f41cd1",
+                    "description": "Das System wird abgeschaltet, aber Referenzen von anderen Systemen (z.B. in Sysplex-Definitionen oder Netzwerkkonfigurationen) werden nicht entfernt, was zu Fehlern im laufenden Betrieb führt. Die Datenträger werden nicht sicher gelöscht."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m2",
+                    "uuid": "e24b75a4-4465-4055-b657-08f022aee6e5",
+                    "description": "Das System wird ordnungsgemäß aus dem Verbund entfernt. Die Datenträger werden mit Standard-Software-Utilities (z.B. `ICKDSF`) gelöscht. Es gibt keine vertragliche Vereinbarung über die Vernichtung von Datenträgern, die vom Hersteller ausgetauscht werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m3",
+                    "uuid": "dc999078-d99c-4c2d-87e2-040a4b338dcf",
+                    "description": "Bei der Stilllegung von z/OS-Systemen SOLLTEN andere z/OS-Systeme, Verbünde und Verwaltungssysteme so angepasst werden, dass sie nicht mehr auf das stillgelegte System verweisen. Auswirkungen auf Lizenzen SOLLTEN berücksichtigt werden. Datenträger mit vertraulichen Daten SOLLTEN so gelöscht werden, dass ihr Inhalt nicht mehr reproduziert werden kann. Für defekte Datenträger, die vom Hersteller getauscht werden, SOLLTE vertraglich vereinbart sein, dass diese sicher vernichtet oder gelöscht werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m4",
+                    "uuid": "7251c087-5d65-4e91-ae9f-0b41bd7bb213",
+                    "description": "Eine formale Stilllegungs-Checkliste wird verwendet. Die Datenlöschung folgt einem anerkannten Standard (z.B. NIST SP 800-88). Für alle entsorgten oder ausgetauschten Datenträger wird ein Vernichtungs- oder Löschzertifikat eingeholt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m5",
+                    "uuid": "e28085f2-4128-4774-845f-6e29b06ca079",
+                    "description": "Der gesamte Stilllegungsprozess ist, wo möglich, automatisiert. Für höchste Sicherheitsanforderungen werden Datenträger vor der Entsorgung vor Ort physisch zerstört (z.B. geschreddert oder degausst). Der Prozess wird mit einem vollständigen Audit-Trail dokumentiert, der die Seriennummern der zerstörten Medien enthält."
+                  }
+                ]
+              },
+              {
+                "uuid": "fccb7994-1f8b-4071-aeb8-c2bfbdb3c9c5",
+                "control-id": "DET.4.14",
+                "description": "Implementation for DET.4.14 based on BSI SYS.1.7.A16",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a16-m1",
+                    "uuid": "1113b6ca-291f-4a1c-9211-94c247a3bdf0",
+                    "description": "Die Überwachung beschränkt sich auf das Beobachten der Master-Konsole auf kritische WTOR-Nachrichten (Write To Operator with Reply). Andere Datenquellen wie SYSLOG oder SMF werden nicht aktiv überwacht."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m2",
+                    "uuid": "69f8c48b-9864-4683-850e-fefcc1d142e0",
+                    "description": "Ein Automatisierungsprodukt wird zur Filterung von Konsolennachrichten eingesetzt, behandelt aber nur einige wenige grundlegende Ereignisse. Schwellenwerte für Kapazität und Auslastung sind nicht definiert oder werden nicht überwacht."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m3",
+                    "uuid": "8ee73609-bdd0-46f3-88de-714180049af8",
+                    "description": "Während des Betriebs SOLLTE das z/OS-System auf wichtige Meldungen, Ereignisse und die Einhaltung von Grenzwerten überwacht werden. Insbesondere Fehlermeldungen auf der HMC-Konsole, WTOR- und wichtige WTO-Nachrichten, System Tasks, Sicherheitsverletzungen, Kapazitätsgrenzen sowie die Systemauslastung SOLLTEN berücksichtigt werden. Für die Überwachung SOLLTEN außerdem mindestens die MCS-Konsole, die System Management Facility, das SYSLOG und die relevanten Protokolldaten der Anwendungen herangezogen werden. Es SOLLTE gewährleistet sein, dass alle wichtigen Meldungen zeitnah erkannt und, falls notwendig, darauf reagiert wird. Systemnachrichten SOLLTEN dabei so gefiltert werden, dass nur die wichtigen Nachrichten dargestellt werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m4",
+                    "uuid": "1f60820c-e57c-46d3-905c-ad2107b04cb5",
+                    "description": "Die Überwachung ist zentralisiert und automatisiert. Eine dedizierte Monitoring-Lösung bietet Dashboards für alle wichtigen Metriken. Schwellenwerte werden dynamisch basierend auf Workload-Mustern angepasst. Das System öffnet bei bestimmten Ereignissen automatisch Tickets in einem ITSM-System."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m5",
+                    "uuid": "5632bc2e-f4d1-439d-9e52-b3a7ae1bc09a",
+                    "description": "Prädiktive Analysen werden eingesetzt, um potenzielle Probleme (z.B. Kapazitätsengpässe, Leistungsabfall) vorherzusagen, bevor sie den Service beeinträchtigen. Das Überwachungssystem ist in der Lage, für häufige Probleme eine automatisierte Abhilfe durchzuführen (z.B. Erweitern eines Datasets, Neustart einer fehlgeschlagenen Task)."
+                  }
+                ]
+              },
+              {
+                "uuid": "6ae7f518-41a2-479a-a929-e0fb50866bca",
+                "control-id": "DET.4.2",
+                "description": "Implementation for DET.4.2 based on BSI SYS.1.7.A14",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a14-m1",
+                    "uuid": "f056f859-4792-4c74-9bdb-700a1895db2f",
+                    "description": "Sicherheitsrelevante Protokolldaten (SMF) werden zwar gesammelt, aber nur selten und meist nur reaktiv nach einem Sicherheitsvorfall analysiert. Es gibt kein regelmäßiges Berichtswesen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m2",
+                    "uuid": "30158064-cae6-4530-914e-ef04b24ea042",
+                    "description": "Vordefinierte Berichte werden mit einem Sicherheitstool (z.B. zSecure, RACF-Report-Writer) erstellt, aber es gibt keinen formalen Prozess für deren Überprüfung oder die Behandlung von festgestellten Abweichungen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m3",
+                    "uuid": "545fe231-5297-4fca-b2b3-865b29619fe3",
+                    "description": "Zur Überwachung aller sicherheitsrelevanten Tätigkeiten unter z/OS SOLLTE ein Prozess eingerichtet werden. In diesem SOLLTE festgelegt sein, welche Sicherheitsreports regelmäßig erstellt werden, welche Tools und Datenquellen dabei herangezogen werden (z. B. System Management Facility) und wie mit Abweichungen von den Vorgaben umgegangen wird. Die Sicherheitsreports SOLLTEN bei Überprüfungen als Information verwendet werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m4",
+                    "uuid": "7bef08ad-70f3-49e6-b7a5-5e899e8f430f",
+                    "description": "Der Berichtsprozess ist halbautomatisiert. Ein Security Information and Event Management (SIEM) System sammelt und korreliert SMF- und andere Protokolldaten von z/OS. Dashboards bieten eine nahezu echtzeitnahe Übersicht über den Sicherheitsstatus. Definierte Abweichungen lösen automatische Alarme an das Sicherheitsteam aus."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m5",
+                    "uuid": "10557253-25ca-4e42-95b7-1d133682140e",
+                    "description": "Das SIEM nutzt User and Entity Behavior Analytics (UEBA), um proaktiv Bedrohungen und Anomalien in der z/OS-Umgebung zu identifizieren. Der Berichtsprozess ist vollständig in den Workflow des Security Operations Center (SOC) integriert, mit automatisierten Incident-Response-Playbooks für z/OS-spezifische Vorfälle."
+                  }
+                ]
+              },
+              {
+                "uuid": "96c9f114-ac78-48a5-ab8f-9a17e21db076",
+                "control-id": "GEB.7.2",
+                "description": "Implementation for GEB.7.2 based on BSI SYS.1.7.A5",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a5-m1",
+                    "uuid": "e20e219a-d4f4-42d7-b4a1-9076d9024505",
+                    "description": "Nur der physische Zugang zu den Konsolen (HMC, SE) ist eingeschränkt. Logische Sicherheitsmaßnahmen wie das Ändern von Standardpasswörtern werden nicht konsequent umgesetzt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m2",
+                    "uuid": "76c68729-9378-462d-bf51-d956ef885f3b",
+                    "description": "Der physische Zugang ist geschützt und alle Standardpasswörter auf den Konsolen wurden geändert. Nicht benötigte Dienste werden jedoch nicht deaktiviert und die Verschlüsselung für Fernzugriffe wird nicht durchgängig erzwungen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m3",
+                    "uuid": "bcf68c08-82e6-4ce3-b110-45c0fe6f9089",
+                    "description": "Systemnahe z/OS-Terminals (Support-Elemente, HMC-, MCS-, SMCS-Konsolen etc.) MÜSSEN physisch gegen unbefugten Zutritt und logisch gegen unbefugten Zugang geschützt werden. Voreingestellte Passwörter MÜSSEN geändert werden. Zugänge über Webserver und andere Fernzugänge MÜSSEN durch Verschlüsselung geschützt werden. Nicht benötigte Webserver und Fernzugänge MÜSSEN deaktiviert werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m4",
+                    "uuid": "d977529a-f964-42c0-9666-0cb600b071cc",
+                    "description": "Zusätzlich zu den definierten Maßnahmen wird eine Multi-Faktor-Authentisierung (MFA) für alle Konsolenzugriffe, insbesondere für Fernzugriffe, erzwungen. Alle Zugriffe werden protokolliert und aktiv auf verdächtige Aktivitäten überwacht. Das Management-Netzwerk ist durch Netzwerksegmentierung vom restlichen Netz isoliert."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m5",
+                    "uuid": "78cb8c2d-5bdf-4801-836a-abfff91b0435",
+                    "description": "Ein 'Zero Trust' Zugriffsmodell wird auf alle Konsolen angewendet. Der Zugriff ist nur von dedizierten, gehärteten administrativen Workstations (PAWs) aus möglich. Alle Sitzungen werden aufgezeichnet und unterliegen einer Echtzeitanalyse. Hardware-Sicherheitsmodule (HSMs) werden zum Schutz der kryptographischen Schlüssel auf der HMC verwendet."
+                  }
+                ]
+              },
+              {
+                "uuid": "bda644e5-f259-4f02-9b97-21cbe0d5445e",
+                "control-id": "KONF.2.1",
+                "description": "Implementation for KONF.2.1 based on BSI SYS.1.7.A32",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a32-m2",
+                    "uuid": "52d4b282-fdbd-497f-9761-94c5a7f568f7",
+                    "description": "Es existieren informelle Namenskonventionen, die jedoch nicht dokumentiert oder durchgesetzt werden. Dies führt zu Inkonsistenzen bei der Benennung von Datasets, Jobs und anderen Objekten."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a32-m3",
+                    "uuid": "20f31e64-87f1-436d-8cb1-33b26800800c",
+                    "description": "Es SOLLTEN Standards und Namenskonventionen für z/OS-Systemdefinitionen festgelegt und dokumentiert werden. Die Dokumentationen SOLLTEN den Administrierenden zur Verfügung stehen. Die Einhaltung der Standards SOLLTE regelmäßig überprüft werden. Standards SOLLTEN insbesondere für Datei-, Datenbank-, Job- und Volume-Namen sowie für Application-, System- und User-IDs definiert werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a32-m4",
+                    "uuid": "f0fdd3fa-dcd1-4be2-b637-d515d9244d15",
+                    "description": "Die Einhaltung der Namens- und Definitionsstandards wird durch automatisierte Prüfungen erzwungen. Beispielsweise verhindern System-Exits oder Pre-Submission-Checks das Anlegen von Objekten oder das Starten von Jobs mit nicht-konformen Namen."
+                  }
+                ]
+              },
+              {
+                "uuid": "eb667547-0d4b-44d4-8063-ea8af6f6bf53",
+                "control-id": "KONF.2.2",
+                "description": "Implementation for KONF.2.2 based on BSI SYS.1.7.A11",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a11-m1",
+                    "uuid": "6a0d455f-f616-434a-8908-1264af8ff187",
+                    "description": "Verschlüsselung für Terminalsitzungen ist zwar verfügbar, wird aber nicht erzwungen. Administratoren und Benutzer verwenden aus Bequemlichkeit oder Unwissenheit häufig unverschlüsselte Protokolle wie Standard-TN3270."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m2",
+                    "uuid": "9449c83d-dee8-4fc6-999d-7532d12eff11",
+                    "description": "Die Sitzungsdaten für RACF-Administratoren werden durch die Nutzung von TN3270E (TLS) verschlüsselt. Die Sitzungen anderer Benutzer bleiben jedoch unverschlüsselt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m3",
+                    "uuid": "fbf41abb-9e6a-4bd1-9e29-bfcd483e7e99",
+                    "description": "Session-Daten für die Verbindungen der RACF-Administrierenden MÜSSEN verschlüsselt übertragen werden. Für die Verbindungen der anderen Mitarbeitenden SOLLTE dies ebenfalls umgesetzt werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m4",
+                    "uuid": "af69d6a6-15c7-41bb-b2b2-fc66568f1158",
+                    "description": "Alle interaktiven Benutzersitzungen (sowohl von Administratoren als auch von regulären Benutzern) mit dem Mainframe werden unter Verwendung moderner, starker TLS-Protokolle und Cipher-Suiten verschlüsselt. Eine zentrale Richtlinie erzwingt die Verschlüsselung für alle Verbindungen, und nicht konforme Verbindungsversuche werden blockiert."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m5",
+                    "uuid": "a4033d5b-4aac-41ed-9c73-67b103497855",
+                    "description": "Alle Datenübertragungen, einschließlich interaktiver Sitzungen, Batch-Jobs (z.B. FTP) und System-zu-System-Kommunikation, werden transparent durch AT-TLS (Application Transparent TLS) verschlüsselt. Die Richtlinie wird zentral verwaltet und automatisch bereitgestellt. Ein Intrusion-Detection-System überwacht Versuche, die Verschlüsselung herunterzustufen oder zu umgehen."
+                  }
+                ]
+              },
+              {
+                "uuid": "d44726e5-cecf-43e7-b8b9-964e65d7eeba",
+                "control-id": "KONF.2.3",
+                "description": "Implementation for KONF.2.3 based on BSI SYS.1.7.A23",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a23-m2",
+                    "uuid": "1a122255-8724-41c7-bae9-487619230248",
+                    "description": "z/VM wird eingesetzt und Standardpasswörter werden geändert. Die Sicherheitsadministration erfolgt jedoch über die internen Mechanismen von z/VM (CP-Befehle) und nicht über einen externen Sicherheitsmanager wie RACF. Virtuelle Maschinen sind nicht strikt voneinander getrennt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a23-m3",
+                    "uuid": "ca04e4f8-e47d-4310-a1a9-887c73f858e9",
+                    "description": "Falls z/VM eingesetzt wird, SOLLTE das Produkt in das Patch-Management integriert und voreingestellte Passwörter geändert werden. Die Rolle des z/VM-Systemadministrierenden SOLLTE restriktiv vergeben werden. Die Sicherheitsadministration SOLLTE über RACF für z/VM erfolgen. Passwörter von realen und Guest-Usern SOLLTEN mittels RACF verschlüsselt werden. Sicherheitskritische Systemkommandos von z/VM SOLLTEN über RACF geschützt werden. Virtuelle Maschinen SOLLTEN nur die benötigten Ressourcen erhalten und strikt voneinander getrennt sein. Nur benötigte Dienste SOLLTEN gestartet werden. Bei Überprüfungen SOLLTEN die Journaling-Funktion von z/VM und die Audit-Funktionen von RACF eingesetzt werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a23-m4",
+                    "uuid": "a1f1a1bd-33d5-4dfa-918f-7ae1e49c820d",
+                    "description": "Zusätzlich zu den definierten Maßnahmen wird die Trennung der virtuellen Maschinen durch dedizierte VSWITCHes mit VLAN-Tagging durchgesetzt. Die Integrität des z/VM-Systems selbst wird durch regelmäßige Überprüfungen kritischer Systemdateien sichergestellt. Alle sicherheitsrelevanten Protokolle werden an ein zentrales SIEM weitergeleitet und überwacht."
+                  }
+                ]
+              },
+              {
+                "uuid": "000aedd7-a77d-4077-996b-c2e3efd8f729",
+                "control-id": "KONF.2.5",
+                "description": "Implementation for KONF.2.5 based on BSI SYS.1.7.A17",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a17-m1",
+                    "uuid": "725db875-7822-4c82-8a7b-97d3f52beccc",
+                    "description": "Ein Synchronisationsmechanismus wird verwendet, aber er synchronisiert auch die Sperrung von Kennungen nach Fehleingaben. Dies führt dazu, dass ein Benutzer auf allen Systemen gleichzeitig gesperrt wird, was zu Denial-of-Service-Problemen führen kann."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m2",
+                    "uuid": "f34841d7-6ec3-4ecc-a9e0-08b7059262bc",
+                    "description": "Die Synchronisation ist korrekt konfiguriert, um Sperrungen nicht zu synchronisieren. Die beteiligten z/OS-Systeme sind jedoch nicht standardisiert, was zu gelegentlichen Synchronisationsfehlern führt. Die Verwaltungsfunktion des Tools ist nicht angemessen geschützt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m3",
+                    "uuid": "b485137d-3daa-413d-bc32-22f8bcc05765",
+                    "description": "Falls z/OS-Passwörter oder RACF-Kommandos über mehrere z/OS-Systeme automatisch synchronisiert werden sollen, SOLLTEN die jeweiligen Systeme möglichst weitgehend standardisiert sein. Die Sperrung von Kennungen durch Fehleingaben von Passwörtern SOLLTE NICHT synchronisiert werden. Das Risiko durch Synchronisation sicherheitskritischer RACF-Kommandos SOLLTE berücksichtigt werden. Die Verwaltungsfunktion des Synchronisationsprogramms SOLLTE nur autorisierten Mitarbeitenden zur Verfügung stehen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m4",
+                    "uuid": "55fa17ee-c002-48c3-a047-b8d453d16a74",
+                    "description": "Der Synchronisationsprozess wird protokolliert und überwacht. Es wird ein 'Dry-Run'-Modus verwendet, um die Auswirkungen der Synchronisation kritischer Befehle vor der eigentlichen Ausführung zu testen. Ein zentrales, hochverfügbares System ist für die Synchronisation verantwortlich, um Split-Brain-Szenarien zu vermeiden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m5",
+                    "uuid": "4e8bda06-f405-4b79-89d6-f940c9ef4e3b",
+                    "description": "Anstelle der Kommandosynchronisation wird ein Parallel Sysplex mit einer gemeinsam genutzten RACF-Datenbank verwendet. Dies bietet eine konsistente und hochverfügbare Sicherheitsdomäne über alle Systeme des Sysplex und eliminiert die Risiken, die mit Befehlsweiterleitung und Synchronisationsverzögerungen verbunden sind."
+                  }
+                ]
+              },
+              {
+                "uuid": "dc750b49-b1e4-4ab4-b4e6-490cb5fb0e85",
+                "control-id": "KONF.2.8",
+                "description": "Implementation for KONF.2.8 based on BSI SYS.1.7.A21",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a21-m1",
+                    "uuid": "b8141773-6939-4584-aaec-971934e22230",
+                    "description": "Das System kann gestartet werden, aber die dafür notwendigen Parameter sind nicht dokumentiert und basieren auf dem Wissen einzelner Mitarbeiter. Eine Checkliste zur Überprüfung nach dem Start (IPL) existiert nicht."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m2",
+                    "uuid": "b3e2a3c7-99c4-4549-8797-196af73046a4",
+                    "description": "Der Startvorgang ist dokumentiert, aber es gibt keine definierte Fallback-Konfiguration, mit der das System nach einer fehlerhaften Änderung sicher gestartet werden kann. Die Überprüfungen nach dem IPL sind informell."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m3",
+                    "uuid": "ef9998a6-8d1b-4678-adf8-1fc77efae5a6",
+                    "description": "Die für den Startvorgang (IPL) eines z/OS-Systems notwendigen Parameter SOLLTEN dokumentiert und dem Operating-Personal bekannt sein. Die erforderlichen Hardware-Konfigurationen (IOCDS, LPARs) SOLLTEN vorliegen. Eine z/OS-Master-Konsole und eine Backup-Konsole SOLLTEN definiert sein. Nach dem Startvorgang SOLLTE anhand einer Prüfliste kontrolliert werden, ob der Systemstatus den Soll-Vorgaben entspricht. Darüber hinaus SOLLTE eine Fallback-Konfiguration vorgehalten werden, mit der das System vor der letzten Änderung erfolgreich gestartet worden ist."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m4",
+                    "uuid": "0de68be3-5e5a-4bac-958d-c11fc4cc70c5",
+                    "description": "Die Startparameter (z.B. Parmlib-Member) unterliegen der Versionskontrolle. Die Überprüfung nach dem IPL ist automatisiert, wobei ein Skript die wichtigsten Systemeinstellungen und Dienste verifiziert. Der Prozess zur Aktivierung der Fallback-Konfiguration ist dokumentiert und wird regelmäßig getestet."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m5",
+                    "uuid": "a46688d2-83bb-46e3-b2f3-6d9d82150d08",
+                    "description": "Das System nutzt die Secure-Boot-Fähigkeiten der Z-Hardware, um die Integrität des IPL-Codes und wichtiger Betriebssystemkomponenten kryptographisch sicherzustellen. Jede Abweichung von der 'Golden Image'-Startkonfiguration löst einen Alarm aus und verhindert, dass das System in einen produktiven Zustand übergeht."
+                  }
+                ]
+              },
+              {
+                "uuid": "3d99af7b-038d-416c-b155-e7348174c3fd",
+                "control-id": "KONF.4.4",
+                "description": "Implementation for KONF.4.4 based on BSI SYS.1.7.A6",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a6-m1",
+                    "uuid": "3da8e161-4e15-41e1-8904-988dd0c72859",
+                    "description": "Die Remote Support Facility (RSF) wird genutzt, aber der Zugang ist nicht für jede Sitzung explizit freigegeben und gesperrt, sondern bleibt dauerhaft offen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m2",
+                    "uuid": "a66a797a-bca4-41c8-b678-51cc3a29bedd",
+                    "description": "Der RSF-Zugang wird für jede Wartungssitzung explizit freigegeben und danach wieder deaktiviert. Die Kommunikation läuft jedoch nicht über einen dedizierten Proxy-Server und die Sicherheit der Verbindung wird nicht aktiv überprüft."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m3",
+                    "uuid": "ed0e5adc-32e9-4418-a76d-26c4964a9ddf",
+                    "description": "Es MUSS entschieden werden, ob und wie RSF eingesetzt wird. Der Einsatz MUSS im Wartungsvertrag vorgesehen sein. Die RSF-Konfiguration darf nur von autorisierten Personen geändert werden. Wartungszugriffe durch den Hersteller MÜSSEN von Betreibenden explizit freigegeben und nach Beendigung wieder deaktiviert werden. Die RSF-Kommunikation MUSS über Proxy-Server und zusätzlich über gesicherte Verbindungen (wie TLS) stattfinden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m4",
+                    "uuid": "477bf587-5577-429b-9e09-56f1c414383e",
+                    "description": "Alle RSF-Sitzungen werden detailliert protokolliert (z.B. ausgeführte Befehle). Ein lokaler Operator überwacht die Remote-Sitzung in Echtzeit. Zugriffe außerhalb der geplanten Wartungsfenster lösen automatisch einen Alarm aus."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m5",
+                    "uuid": "91941333-1fef-419a-9f43-840b323378d1",
+                    "description": "Der RSF-Zugriff ist nur über einen Bastion-Host/Jump-Server möglich, der MFA und eine vollständige Sitzungsaufzeichnung erzwingt. Die erlaubten Befehle für den Remote-Hersteller werden durch einen Command-Filtering-Proxy eingeschränkt. Alle Sitzungsprotokolle werden automatisch in ein SIEM zur Analyse und Korrelation eingespeist."
+                  }
+                ]
+              },
+              {
+                "uuid": "845d9eec-0f2d-4797-97e5-14d177e4e900",
+                "control-id": "KONF.6.1",
+                "description": "Implementation for KONF.6.1 based on BSI SYS.1.7.A7",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a7-m1",
+                    "uuid": "9d1bdfee-5af0-491d-a139-cfe351e6917c",
+                    "description": "Das Prinzip der geringsten Rechte (PoLP) wird nur auf Benutzer-Datasets angewendet. Systemressourcen wie APF-autorisierte Bibliotheken oder Parmlib-Member sind nicht granular geschützt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m2",
+                    "uuid": "d74ab660-04f0-4dbd-8384-6084e8208bf4",
+                    "description": "Das PoLP-Prinzip wird generell angewendet, aber die Rollendefinitionen sind grob, was dazu führt, dass Benutzer mehr Berechtigungen als nötig haben. Regelmäßige Überprüfungen der Berechtigungen finden nicht statt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m3",
+                    "uuid": "5600ce7a-28d7-4759-af51-980ac653a947",
+                    "description": "Im Rahmen der Grundkonfiguration MÜSSEN die Autorisierungsmechanismen so konfiguriert werden, dass alle Personen (definierte User-IDs in Gruppen gemäß Rolle) nur die Zugriffsmöglichkeiten erhalten, die sie für ihre jeweiligen Tätigkeiten benötigen. Hierfür MÜSSEN insbesondere APF-Autorisierungen, SVCs, Ressourcen des z/OS-Betriebssystems, IPL-Parameter, Parmlib-Definitionen, Started Tasks und JES2/3-Definitionen berücksichtigt werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m4",
+                    "uuid": "5ad93d2e-d73d-4d1f-9247-4f2c4730c833",
+                    "description": "Ein formales rollenbasiertes Zugriffskontrollmodell (RBAC) ist definiert und umgesetzt. Zugriffsrechte werden regelmäßig (z.B. quartalsweise) halbautomatisch überprüft. Ein formalisierter Prozess zur Beantragung und Genehmigung von Ausnahmen ist etabliert."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m5",
+                    "uuid": "44a35f17-3901-41fb-8ed4-93141a89254c",
+                    "description": "Ein automatisiertes Identity and Access Management (IAM) System verwaltet den gesamten Lebenszyklus von Rollen und Berechtigungen. Berechtigungs-Reviews sind automatisiert und erfordern eine regelmäßige Re-Zertifizierung durch die Vorgesetzten. Anomalieerkennung wird eingesetzt, um Rechteausweitungen oder ungewöhnliche Zugriffsmuster zu identifizieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "41f6f3d5-7295-4425-95fe-41dc055616d4",
+                "control-id": "KONF.6.1.2",
+                "description": "Implementation for KONF.6.1.2 based on BSI SYS.1.7.A9",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a9-m1",
+                    "uuid": "085c9f45-66e9-45ed-b2b5-8448b980000d",
+                    "description": "Die Trennung von Mandanten beruht hauptsächlich auf Namenskonventionen und organisatorischen Regelungen. Eine strikte technische Trennung durch RACF ist nicht durchgängig umgesetzt."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m2",
+                    "uuid": "bb21b0c8-e5a8-480a-9dc4-b34ea41f8e48",
+                    "description": "Zur Trennung der Mandanten werden RACF-Profile verwendet. Hohe Systemprivilegien (SPECIAL, OPERATIONS) sind jedoch nicht strikt auf den zentralen Betreiber beschränkt, sodass Mandantenadministratoren einige systemweite Rechte besitzen. Wartungsfenster werden angekündigt, aber nicht aktiv mit den Mandanten koordiniert."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m3",
+                    "uuid": "b48c74ae-f983-4b0d-a87a-5c485861e016",
+                    "description": "Falls ein z/OS-System von Mandanten genutzt wird, MUSS ein RACF-Konzept zur Mandantentrennung erstellt werden. Die Daten und Anwendungen der Mandanten MÜSSEN durch RACF-Profile getrennt werden. Hohe Berechtigungen (SPECIAL, OPERATIONS, AUDITOR) und ändernder Zugriff auf Dateien des z/OS-Betriebssystems DÜRFEN NUR Mitarbeitende der Betreibenden haben. Die Wartungsfenster MÜSSEN mit allen Mandanten abgestimmt werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m4",
+                    "uuid": "2669ae8f-9b77-4ad8-8af0-365dc5e9357f",
+                    "description": "Zur stärkeren Isolation zwischen den Mandanten werden logische Partitionen (LPARs) verwendet. Der Netzwerkverkehr zwischen den Mandanten-LPARs wird durch eine Mainframe-Firewall kontrolliert. Regelmäßige Audits werden durchgeführt, um die Wirksamkeit der Trennung zu überprüfen."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m5",
+                    "uuid": "9918d4bc-af56-412b-b474-568b809d7b69",
+                    "description": "Jeder Mandant läuft in einer vollständig separaten LPAR oder, falls die Sicherheitsanforderungen dies erfordern, auf separater physischer Hardware (in unterschiedlichen Central Processor Complexes). Alle potenziellen verdeckten Kanäle zwischen den Mandantenumgebungen sind identifiziert und mitigiert. Die Trennungsmechanismen sind durch einen unabhängigen Dritten zertifiziert."
+                  }
+                ]
+              },
+              {
+                "uuid": "c459b873-6a70-4a3d-add4-2aec78539f49",
+                "control-id": "KONF.6.4",
+                "description": "Implementation for KONF.6.4 based on BSI SYS.1.7.A1",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a1-m1",
+                    "uuid": "0fe02a20-1fab-4a6b-9833-962e28bb74cf",
+                    "description": "Nur einige hoch-privilegierte RACF-Attribute, wie SPECIAL, werden eingeschränkt. Die Kennung IBMUSER ist zwar nicht im produktiven Einsatz, aber nicht formal gesperrt. Ein Notfall-User-Konzept existiert nicht."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m2",
+                    "uuid": "e6b019ec-3bee-45db-b204-2445f616b5ca",
+                    "description": "Alle genannten hoch-privilegierten RACF-Attribute (SPECIAL, OPERATIONS, AUDITOR, UID 0) werden restriktiv gehandhabt. Die Kennung IBMUSER ist gesperrt. Ein Notfall-User existiert, aber der Prozess für dessen Nutzung ist informell und die Nachvollziehbarkeit der Vergabe erfolgt durch manuelle Log-Reviews."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m3",
+                    "uuid": "5a0be17c-cffd-4ab2-b138-5b6bffb64870",
+                    "description": "Berechtigungen mit hoher Autorisierung (insbesondere die RACF-Attribute SPECIAL, OPERATIONS, AUDITOR und die entsprechenden GROUP-Attribute sowie die User-ID 0 unter USS) DÜRFEN NUR an Benutzende vergeben werden, die diese Rechte für ihre Tätigkeiten benötigen. Die Vergabe und der Einsatz MÜSSEN nachvollziehbar sein. Die Kennung IBMUSER DARF NUR bei der Neuinstallation genutzt und MUSS danach dauerhaft gesperrt werden. Es MUSS ein Notfall-User-Verfahren eingerichtet werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m4",
+                    "uuid": "443d63ba-fc34-40ae-a961-16e258e0741d",
+                    "description": "Zusätzlich zu den definierten Prozessen wird ein regelmäßiger, halbautomatischer Review-Prozess für alle hoch-privilegierten Berechtigungen durchgeführt. Die Nutzung des Notfall-Users löst automatische Benachrichtigungen an das Sicherheitsteam aus. Die Vergabe von hohen Berechtigungen erfordert eine Zwei-Faktor-Genehmigung."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m5",
+                    "uuid": "d9a991a6-be77-49ba-812a-53e39a1bc07c",
+                    "description": "Ein Privileged Access Management (PAM) System wird für die Vergabe aller hoch-privilegierten Berechtigungen eingesetzt. Der Zugriff wird nur temporär und Just-in-Time (JIT) gewährt. Alle Aktionen mit diesen Berechtigungen werden in Echtzeit überwacht und durch ein SIEM analysiert. Der Notfall-User-Prozess ist vollautomatisiert und erfordert eine mehrstufige Genehmigung über das PAM-System."
+                  }
+                ]
+              },
+              {
+                "uuid": "0523769e-a3a2-4d29-94eb-5ae113079ebb",
+                "control-id": "KONF.6.4.1",
+                "description": "Implementation for KONF.6.4.1 based on BSI SYS.1.7.A18",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a18-m1",
+                    "uuid": "16cc66e0-ea49-4617-92e0-f23b07cdd388",
+                    "description": "Rollen existieren nur informell und sind nicht dokumentiert oder technisch in RACF (z.B. durch Gruppen) abgebildet. Berechtigungen werden individuell pro Benutzer vergeben."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m2",
+                    "uuid": "d2563ea4-f751-4f9f-9784-f702b5178e32",
+                    "description": "Ein Rollenkonzept ist dokumentiert und RACF-Gruppen werden verwendet. Die Funktionstrennung für die Attribute SPECIAL, OPERATIONS und AUDITOR ist jedoch nicht umgesetzt; eine Person kann mehrere dieser mächtigen Attribute innehaben."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m3",
+                    "uuid": "e9e0ec7b-cbe5-4737-9e6c-36f8892f74fc",
+                    "description": "Mindestens für die Systemverwaltung von z/OS-Systemen SOLLTE ein Rollenkonzept eingeführt werden. Für alle wichtigen Rollen der Systemverwaltung SOLLTEN außerdem Stellvertretungsregelungen vorhanden sein. Die RACF-Attribute SPECIAL, OPERATIONS und AUDITOR SOLLTEN verschiedenen Personen zugeordnet werden (Rollentrennung)."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m4",
+                    "uuid": "8ff0e2c3-0a15-4c48-b6d2-f38bb226343d",
+                    "description": "Das Rollenkonzept umfasst nicht nur Administratoren, sondern auch Anwendungsentwickler und Endbenutzer. Die Zugriffsrechte für jede Rolle sind in einer Rollenmatrix dokumentiert. Ein regelmäßiger Rezertifizierungsprozess stellt sicher, dass die zugewiesenen Rollen noch angemessen sind."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m5",
+                    "uuid": "3429bf4f-9168-4a04-a619-9a0d098f6092",
+                    "description": "Das rollenbasierte Zugriffskontrollmodell (RBAC) wird von einer zentralen IAM-Lösung verwaltet. Die Rollendefinitionen sind feingranular und halten sich strikt an das Prinzip der geringsten Rechte. Das System kann toxische Berechtigungskombinationen, die gegen die Funktionstrennungsrichtlinien verstoßen, automatisch erkennen und melden."
+                  }
+                ]
+              },
+              {
+                "uuid": "87de4f87-e498-4834-9904-1f90252ddc2e",
+                "control-id": "KONF.7.10",
+                "description": "Implementation for KONF.7.10 based on BSI SYS.1.7.A2",
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a2-m1",
+                    "uuid": "e7292af6-5958-4037-a675-553c56c6f7cc",
+                    "description": "Nur die bekanntesten sicherheitskritischen Programme sind durch RACF-Profile geschützt. Alias-Namen werden dabei oft nicht berücksichtigt. Die Installation von (Fremd-)Programmen wird nicht systematisch kontrolliert und erfolgt oft manuell."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m2",
+                    "uuid": "109d9813-e8b9-4e47-8ab8-09e4e2ed3eed",
+                    "description": "Alle bekannten sicherheitskritischen Programme und deren Aliase sind durch RACF-Profile geschützt. Die Installation von Programmen erfolgt standardmäßig über SMP/E, jedoch wird die Herkunft der Installationspakete nicht systematisch verifiziert."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m3",
+                    "uuid": "5eb49935-33c8-48f7-812e-3624d3eae24a",
+                    "description": "Sicherheitskritische (Dienst-)Programme und Kommandos sowie deren Alias-Namen MÜSSEN mit Rechten auf entsprechende RACF-Profile so geschützt werden, dass sie nur von den dafür vorgesehenen und autorisierten Personen benutzt werden können. Es MUSS sichergestellt sein, dass (Fremd-)Programme nicht unerlaubt installiert werden können. Außerdem DÜRFEN Programme NUR von gesicherten Quellen und über nachvollziehbare Methoden (z. B. SMP/E) installiert werden."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m4",
+                    "uuid": "3f2f24f6-52e2-4904-a40e-b5475df8a2cf",
+                    "description": "Zusätzlich zum definierten Schutz wird ein Integritätsüberwachungssystem eingesetzt, das kritische Systembibliotheken (z.B. `SYS1.LPALIB`, `SYS1.LINKLIB`) regelmäßig auf unautorisierte Änderungen überprüft. Der SMP/E-Prozess ist fest in das Change-Management-System integriert und erfordert eine formale Genehmigung für jede Installation."
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m5",
+                    "uuid": "7cb2b494-707b-4970-9148-1322113eeca1",
+                    "description": "Alle sicherheitskritischen Bibliotheken sind durch kryptographische Signaturen geschützt. Das System verhindert automatisch die Ausführung von Programmen, die unautorisiert sind oder deren Signatur ungültig ist. Die Programminstallation ist vollständig über eine CI/CD-Pipeline automatisiert, die Sicherheitstests (z.B. Code-Scanning) und automatische Signierung integriert."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,336 @@
+{
+  "component-definition": {
+    "uuid": "e5501a02-a5f4-4fc2-90b0-0d7eaf349f12",
+    "metadata": {
+      "title": "NET.4.2 TK-Anwendungen - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:08:00.082286+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "6be158e1-8ff7-4c89-8ff2-45d1ea418844",
+        "type": "interconnection",
+        "title": "NET.4.2 TK-Anwendungen",
+        "description": "This component represents the implementation of all controls for Baustein NET.4.2.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Voice over IP (VoIP) bezeichnet das Telefonieren über Datennetze, insbesondere über das Internet. Um Signalisierungsinformationen zu übertragen, beispielsweise bei einem Anruf, werden spezielle Signalisierungsprotokolle eingesetzt. Die eigentlichen Nutzdaten wie Sprache oder Video werden mit Hilfe eines Medientransportprotokolls übermittelt. Beide Protokolle werden jeweils benötigt, um eine Multimediaverbindung aufzubauen und aufrechtzuerhalten. Bei einigen Verfahren wird nur ein Protokoll sowohl für die Signalisierung als auch für den Medientransport benötigt."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Dieser Baustein betrachtet die Sicherheitsaspekte der Endgeräte und Vermittlungseinheiten (Middleware) von VoIP. Die hier beschriebenen Komponenten gleichen hinsichtlich ihrer Funktionalität den im Baustein NET.4.1 TK-Anlagen beschriebenen Telekommunikationsanlagen."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein NET.4.2 VoIP ist auf alle Kommunikationsnetze anzuwenden, in denen VoIP eingesetzt wird. Da VoIP über Datennetze betrieben wird, sind zusätzlich zu diesem Baustein die Anforderungen der Bausteine NET.1.1 Netzarchitektur- und Design oder NET.3.2 Firewall geeignet mit zu berücksichtigen.\n\nIn diesem Baustein werden die Sicherheitsaspekte von VoIP-Komponenten und der Sprachübertragung über VoIP betrachtet. Tauschen leitungsvermittelnde TK-Anlagen Informationen untereinander über ein Datennetz aus, ist dieser Baustein ebenfalls anzuwenden.\n\nDie spezifischen Gefährdungen und Anforderungen von klassischen TK-Anlagen sowie Hybrid-Anlagen werden in dem Baustein NET.4.1 TK-Anlagen betrachtet.\n\nOft wird VoIP-Software nicht auf eigens dafür vorgesehene Hardware betrieben, sondern auf Standard-IT. Werden Softphones auf Clients installiert, sollten die Anforderungen des Bausteins SYS.2.1 Allgemeiner Client sowie der betriebssystemspezifischen Bausteine berücksichtigt werden. Wird Software für VoIP auf Servern betrieben, sollten neben den Anforderungen der betriebssystemspezifischen Bausteine die Anforderungen des Bausteins SYS.1.1 Allgemeiner Server erfüllt werden."
+          },
+          {
+            "name": "Fehlerhafte Konfiguration der VoIP-Middleware",
+            "value": "Eine VoIP-basierte Telefonanlage kann in ähnlicher Weise von Fehlkonfigurationen betroffen sein wie eine leitungsvermittelnde Telefonlösung. So könnten beispielsweise Telefonbenutzenden falsche Telefonnummern zugeordnet werden oder die gesamte Telefoninfrastruktur könnte ausfallen. Auch tendenziell unkritische Fehler, wie ein falsch geschriebener Name im Telefonbuch, können nicht ausgeschlossen werden.\n\nWird mittels VoIP kommuniziert, sind in der Regel mehrere IT-Systeme beteiligt. Wird SIP als Initialisierungsprotokoll eingesetzt, werden meist Systeme wie Registrare, SIP-Proxy-Server und Location-Server für die Kommunikation benötigt. Ändert sich die VoIP-Infrastruktur, müssen alle IT-Systeme angepasst werden. Dadurch können leicht Konfigurationsfehler entstehen. Auch wenn sich alle Dienste auf einem Server befinden, müssen diese häufig einzeln konfiguriert werden. Wird nur ein System fehlerhaft geändert, kann die gesamte Telefoninfrastruktur möglicherweise nicht mehr genutzt werden."
+          },
+          {
+            "name": "Fehlerhafte Konfiguration der VoIP-Komponenten",
+            "value": "Unabhängig davon, ob es sich bei VoIP-Komponenten um dedizierte Hardware („Appliances“) oder softwarebasierte Systeme handelt, ist die Konfiguration entscheidend für die fehlerfreie Funktion des Systems. Neben den Einstellungen zur Signalisierung, die bei der Planung festgelegt wurden, spielt das Übertragungsverfahren für die Medienströme eine wichtige Rolle. Durch ein Kompressionsverfahren kann die Größe der Datenpakete mit den Sprachinformationen verkleinert werden.\n\nDurch die fehlerhafte Konfiguration des Übertragungsverfahrens können Probleme bei der Übertragung auftreten. Wird ein ungeeignetes Verfahren eingesetzt und werden Sprachinformationen zu stark komprimiert, verschlechtert sich oft die Sprachqualität. Wird hingegen ein Verfahren gewählt, das eine zu geringe Kompression vornimmt, wird der Nachrichtenstrom nicht ausreichend vermindert und das Datennetz kann überlastet werden."
+          },
+          {
+            "name": "Abhören von Telefongesprächen",
+            "value": "Wenn Telefongespräche oder Daten unverschlüsselt übertragen werden, könnten Angreifende grundsätzlich Informationen mithören oder mitlesen. So könnten sie beispielsweise die Telefonkabel direkt anzapfen oder an einer zwischen den Gesprächsteilnehmern vermittelnden TK-Anlage lauschen. Bei VoIP können Telefongespräche und Datenübertragungen sogar einfacher als bei klassischen TK-Anlagen abgehört werden. Alle Sprachinformationen werden innerhalb eines Medienstroms, beispielsweise mit dem Realtime Transport Protocol (RTP), übertragen. Durch Techniken wie Spoofing und Sniffing stehen bei VoIP den Angreifenden auch alle Möglichkeiten von Angriffen in Datennetzen zur Verfügung.\n\nBei vielen TK-Anlagen können Anrufende den Empfangenden Nachrichten hinterlassen, wenn diese zum Zeitpunkt des Anrufs telefonisch nicht erreichbar sind. Einige Anrufbeantworter, vor allem bei VoIP-Anlagen, verschicken diese Informationen als Audio-Datei in einer E-Mail. Der Inhalt dieser E-Mail könnte direkt von einem Angreifenden abgefangen und angehört werden."
+          },
+          {
+            "name": "Missbrauch frei zugänglicher Telefonanschlüsse",
+            "value": "Oft werden Telefone betrieben, die keinen Benutzenden persönlich zugeordnet sind. Einige dieser Telefone, wie zum Beispiel solche in Druckerräumen, sind nur einem eingeschränkten Personenkreis zugänglich. Andererseits sind Telefone häufig in Bereichen zu finden, die für Besuchende frei zugänglich sind. Dazu zählen beispielsweise Parkhäuser oder Bereiche vor Zugangskontrollsystemen. Besitzen diese Telefone ein elektronisches Telefonbuch, in dem interne Telefonnummern gespeichert sind, könnten diese Nummern ungewollt nach außen gelangen.\n\nBeim Einsatz von VoIP-Telefonen in frei zugänglichen Bereichen können weitere Aspekte relevant sein. Denn sie haben einen hohen Software-Anteil und werden häufig in Datennetzen betrieben, die auch für andere IT-Anwendungen genutzt werden. Angreifende könnten deshalb durch den direkten Zugriff auf Geräteinformationen versuchen, Schwachstellen in der VoIP-Software auszunutzen oder selbst schädliche Software zu installieren.\n\nVoIP-Telefone müssen an ein Datennetz angeschlossen sein. Angreifende könnten an diesen Netzanschluss ein mobiles IT-System anschließen und so unter Umständen auf das von außen durch eine Firewall geschützte interne Netz zugreifen. Diesen Zugang können sie möglicherweise für Angriffe auf die Vertraulichkeit, Integrität und Verfügbarkeit ausnutzen."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "d3d54f12-1e3a-4a3a-a348-9d848b7616ef",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/tk-anwendungen_profile.json",
+            "description": "Implementation for all controls in Baustein NET.4.2",
+            "implemented-requirements": [
+              {
+                "uuid": "96b89771-069b-46a5-8477-38ca6b6e9b88",
+                "control-id": "ASST.7.1",
+                "description": "Implementation for ASST.7.1 based on BSI NET.4.2.A12",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a12-m1",
+                    "uuid": "7cc1da93-6b9a-47f0-b37b-7c0195d652cc",
+                    "description": "Ausgemusterte VoIP-Geräte werden einfach vom Netz genommen und ohne Löschung der Konfiguration oder Daten gelagert oder entsorgt. Beschriftungen, die auf die Institution oder den Benutzer hinweisen, werden nicht entfernt."
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m2",
+                    "uuid": "8b5352b9-8347-4979-91cd-e256a66ea23e",
+                    "description": "Auf allen VoIP-Komponenten wird vor der Entsorgung oder Weitergabe ein 'Factory Reset' (Zurücksetzen auf Werkseinstellungen) durchgeführt. Dies erfolgt nach einer einfachen Checkliste."
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m3",
+                    "uuid": "df253f20-2210-4339-a69e-4d1caab1e55f",
+                    "description": "Wenn VoIP-Komponenten außer Betrieb genommen oder ersetzt werden, SOLLTEN alle sicherheitsrelevanten Informationen (z.B. Konfiguration, Telefonbücher, Anruflisten, Zugangsdaten) von den Geräten gelöscht werden. Vertrauliche Informationen SOLLTEN auch von zugehörigen Backup-Medien gelöscht werden. Alle Beschriftungen SOLLTEN vor der Entsorgung entfernt werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m4",
+                    "uuid": "249de077-9dc3-4415-ba6a-eec89fe66b7b",
+                    "description": "Nach dem Löschvorgang SOLLTE überprüft und dokumentiert werden, ob die Daten auch tatsächlich erfolgreich und unwiederbringlich entfernt wurden. Es SOLLTE frühzeitig mit Herstellenden oder Service-Unternehmen geklärt werden, welche Maßnahmen zur Löschung sicherheitsrelevanter Informationen mit den Vertrags- und Garantiebedingungen vereinbar sind."
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m5",
+                    "uuid": "3ef01bca-602b-4089-b8ab-c5407e06608f",
+                    "description": "Der Prozess zur Außerbetriebnahme ist vollständig auditiert und nachvollziehbar. Für Geräte, die sensible Daten enthalten, wird eine kryptografische Löschung (Crypto Erase) oder die physische Zerstörung der Speichermedien angewendet. Für jedes entsorgte Gerät wird von einem zertifizierten Dienstleister ein Vernichtungszertifikat eingeholt. Alle zugehörigen Konten, Konfigurationen und Firewall-Regeln werden automatisiert aus den Verwaltungssystemen entfernt (De-Provisioning)."
+                  }
+                ]
+              },
+              {
+                "uuid": "15404d1a-eb71-4790-b2c3-52048b4f6205",
+                "control-id": "BES.2.1.3",
+                "description": "Implementation for BES.2.1.3 based on BSI NET.4.2.A9",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a9-m1",
+                    "uuid": "d6d38337-154a-42ad-8195-5f4cf21a2a55",
+                    "description": "VoIP-Komponenten werden hauptsächlich nach Preis, Markenbekanntheit oder Empfehlung ausgewählt. Es gibt keine formale Anforderungsliste, die als Grundlage für die Auswahl dient."
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m2",
+                    "uuid": "21f24bdc-fe74-4a4e-9c2b-aa28ea212a6c",
+                    "description": "Vor der Beschaffung wird eine grundlegende Liste mit funktionalen Anforderungen erstellt. Produkte am Markt werden anhand dieser Liste und der Herstellerangaben verglichen. Sicherheitsmerkmale spielen eine untergeordnete Rolle."
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m3",
+                    "uuid": "f30754b4-2dea-437b-a3f1-068e8e88054e",
+                    "description": "Bevor VoIP-Komponenten beschafft werden, SOLLTE eine formale Anforderungsliste erstellt werden. Anhand dieser Anforderungsliste SOLLTEN die am Markt erhältlichen Produkte bewertet und die Auswahlentscheidung dokumentiert werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m4",
+                    "uuid": "ecb80a18-70aa-4693-b85d-ceec238b4972",
+                    "description": "Die Anforderungsliste SOLLTE explizit alle Merkmale zur Erreichung des angestrebten Sicherheitsniveaus umfassen. Dies beinhaltet z.B. die Unterstützung spezifischer Verschlüsselungsprotokolle oder Härtungsmaßnahmen. Es SOLLTE ein formaler Prozess geregelt werden, wie die Produkte gemäß der Anforderungsliste bewertet werden, einschließlich der Gewichtung von Sicherheitsmerkmalen."
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m5",
+                    "uuid": "b47158f2-b8fb-4ac7-8f48-f0f17e7e2673",
+                    "description": "Der Auswahlprozess umfasst eine verpflichtende Proof-of-Concept (PoC)-Phase, in der die favorisierten Produkte in einer Testumgebung gegen die definierten Sicherheitsanforderungen validiert werden. Die Sicherheitsreputation des Herstellers, sein Software Development Lifecycle und seine Patch-Politik (z.B. Reaktionszeit auf Schwachstellen) sind entscheidende Kriterien bei der Auswahl."
+                  }
+                ]
+              },
+              {
+                "uuid": "b267d403-a2c8-4dab-a973-c135d2cd2dc8",
+                "control-id": "DEV.2.2",
+                "description": "Implementation for DEV.2.2 based on BSI NET.4.2.A1",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a1-m1",
+                    "uuid": "2ab1eee5-6ea5-4a83-a88c-ac2458668dba",
+                    "description": "Die Entscheidung für den VoIP-Einsatz wird ad hoc und projektbezogen getroffen, ohne eine übergreifende Planung oder Strategie. Es werden nur die unmittelbarsten funktionalen Anforderungen berücksichtigt, ohne eine formale Auswahl von Protokollen oder eine Bewertung der Netzwerkkapazitäten."
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m2",
+                    "uuid": "a875e4e2-d9cd-4500-93c9-af7aded28ea8",
+                    "description": "Es existiert ein grundlegender Plan, in dem entschieden wird, ob eine vollständige oder teilweise Migration zu VoIP erfolgen soll. Die grundlegenden Signalisierungs- und Transportprotokolle werden ausgewählt, jedoch ohne eine tiefgehende Analyse von Sicherheitsaspekten oder der genauen Netzwerkauslastung."
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m3",
+                    "uuid": "515c9091-ccda-43ec-a4f0-a926bd386cd6",
+                    "description": "Die Bedingungen, unter denen VoIP eingesetzt werden soll, MÜSSEN festgelegt werden. Es MUSS unter anderem entschieden werden, ob vollständig oder partiell auf VoIP umgestiegen werden soll. Geeignete Signalisierungs- und Medientransportprotokolle MÜSSEN vor dem Einsatz ausgewählt werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m4",
+                    "uuid": "6bb463c3-68f4-46cd-af4c-a32e0506702e",
+                    "description": "Zusätzlich zur Basisplanung SOLLTEN besondere Anforderungen an die Verfügbarkeit von VoIP sowie an die Vertraulichkeit und Integrität der Telefonate und Signalisierungsinformationen vorab ermittelt und dokumentiert werden. Es SOLLTE entschieden werden, ob und wie die VoIP-Infrastruktur an öffentliche (Daten-)Netze angebunden wird. Die Kapazitäten und das Design von vorhandenen Datennetzen SOLLTEN bei der Planung detailliert berücksichtigt werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m5",
+                    "uuid": "e48da831-5614-449d-96e8-4e2bef79ab5e",
+                    "description": "Die VoIP-Planung ist vollständig in die übergreifende IT-Sicherheitsstrategie und das ISMS integriert. Sie beinhaltet eine detaillierte Risikoanalyse für die spezifische VoIP-Implementierung. Die Kapazitätsplanung wird durch Lasttests validiert. Der Plan ist ein lebendes Dokument, das regelmäßig, mindestens jährlich sowie bei signifikanten Änderungen der Bedrohungslage, überprüft und angepasst wird."
+                  }
+                ]
+              },
+              {
+                "uuid": "479da1d1-979a-4ec4-9e16-8457a853ce81",
+                "control-id": "KONF.10.1",
+                "description": "Implementation for KONF.10.1 based on BSI NET.4.2.A8",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a8-m1",
+                    "uuid": "24fb83d3-d441-4e1b-8a93-bdcda16459bc",
+                    "description": "Verschlüsselung ist nur dort aktiv, wo sie eine Standardeinstellung der verwendeten Clients oder der Middleware ist. Es gibt keine klare Richtlinie oder einheitliche Konfiguration zur Verschlüsselung von VoIP-Verkehr. Oft wird bei Kompatibilitätsproblemen auf unverschlüsselte Kommunikation zurückgefallen."
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m2",
+                    "uuid": "42f2af93-076f-4975-becf-d0535665b29e",
+                    "description": "Es existiert eine Richtlinie, die vorschreibt, dass jeglicher VoIP-Verkehr, der die vertrauenswürdige Netzwerkgrenze verlässt, verschlüsselt werden muss. Dies wird durch einen Session Border Controller (SBC) oder ein VPN-Gateway umgesetzt. Die interne Kommunikation im LAN erfolgt jedoch weiterhin unverschlüsselt."
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m3",
+                    "uuid": "27c6339b-424b-4831-bb7c-4ec17412424c",
+                    "description": "Es SOLLTE entschieden und dokumentiert werden, ob und welche Sprach- und Signalisierungsinformationen verschlüsselt werden sollen. Generell SOLLTEN alle VoIP-Datenpakete, die das gesicherte LAN verlassen, durch geeignete Sicherheitsmechanismen (z.B. TLS für Signalisierung und SRTP für Mediendaten) geschützt werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m4",
+                    "uuid": "af8b8739-85ac-43b5-87a0-002d43b783b1",
+                    "description": "Zusätzlich zur Verschlüsselung des externen Verkehrs wird auch die interne VoIP-Kommunikation (sowohl Signalisierung via TLS als auch Mediendaten via SRTP) standardmäßig verschlüsselt, um auch vor internen Angreifern zu schützen. Die Benutzenden SOLLTEN über die Nutzung und die Grenzen der VoIP-Verschlüsselung (z.B. End-to-End vs. Transport) informiert werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m5",
+                    "uuid": "aa9b0a73-aeec-4fae-8da9-90bef1a79902",
+                    "description": "Wo immer technisch möglich, wird eine Ende-zu-Ende-Verschlüsselung (E2EE) für VoIP-Gespräche durchgesetzt. Es werden ausschließlich starke, zentral verwaltete kryptografische Parameter verwendet. Das System ist so konfiguriert, dass unverschlüsselte Verbindungen strikt abgelehnt werden (Encrypt-or-Drop-Policy). Das Management der Zertifikate für TLS ist automatisiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "302ac726-b092-4713-a82e-053f1e3d7412",
+                "control-id": "KONF.10.3",
+                "description": "Implementation for KONF.10.3 based on BSI NET.4.2.A5",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a5-m1",
+                    "uuid": "5d660fc3-5be7-4428-8a1f-a63c947063a5",
+                    "description": "Die VoIP-Middleware wird mit den Standardeinstellungen des Herstellers betrieben. Nur die für die Grundfunktion absolut notwendigen Parameter und die Administrator-Passwörter werden geändert. Viele nicht benötigte Dienste laufen weiter."
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m2",
+                    "uuid": "e07654f5-aecd-4c55-9166-5d2af76e593e",
+                    "description": "Eine grundlegende Härtung der VoIP-Middleware wird durchgeführt. Alle Standardpasswörter werden geändert und eine Checkliste wird verwendet, um häufige, nicht benötigte Dienste (z. B. unverschlüsselte Administrationsschnittstellen) zu deaktivieren."
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m3",
+                    "uuid": "7bbca541-41ba-46bd-a926-4ad4566368b6",
+                    "description": "Die VoIP-Komponenten (Middleware) MÜSSEN so konfiguriert sein, dass sie den Schutzbedarf angemessen erfüllen. Die Default-Konfigurationen der VoIP-Middleware MÜSSEN vor der produktiven Inbetriebnahme angepasst werden. Alle nicht benötigten Dienste der VoIP-Middleware MÜSSEN deaktiviert werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m4",
+                    "uuid": "e82f902f-4789-40f5-9b4b-6ceeb9a7d8dc",
+                    "description": "Alle Installations- und Konfigurationsschritte SOLLTEN so dokumentiert werden, dass die Installation und Konfiguration durch sachkundige Dritte anhand der Dokumentation nachvollzogen und wiederholt werden können. Die Konfigurationsdokumentation wird versioniert."
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m5",
+                    "uuid": "c64c1e16-99eb-446a-bbeb-1ef217b67500",
+                    "description": "Die Konfiguration der VoIP-Middleware wird mittels Infrastructure as Code (IaC) verwaltet, z.B. mit Ansible, Puppet oder SaltStack. Alle Konfigurationsänderungen werden in einem Versionskontrollsystem (z.B. Git) nachverfolgt, automatisch in einer Staging-Umgebung getestet und dann auf die Produktionssysteme ausgerollt. Die Systemintegrität und Konfigurationstreue werden kontinuierlich überwacht, und Abweichungen führen zu automatisierten Korrekturen oder Alarmen."
+                  }
+                ]
+              },
+              {
+                "uuid": "41b7a53e-a040-43d8-947d-d94d4ac9f705",
+                "control-id": "KONF.10.4",
+                "description": "Implementation for KONF.10.4 based on BSI NET.4.2.A3",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a3-m1",
+                    "uuid": "6d849149-4e40-4b7b-92a1-4f2c0b5be848",
+                    "description": "Nur einige wenige, offensichtlich nicht benötigte Funktionen werden auf einigen VoIP-Endgeräten deaktiviert. Es gibt keine standardisierte Konfiguration oder ein einheitliches Vorgehen zur Härtung der Endgeräte."
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m2",
+                    "uuid": "9b9f2bd2-70ea-4e32-a365-ef7280d2b163",
+                    "description": "Für alle VoIP-Endgeräte wird eine grundlegende Härtung nach einer einfachen Checkliste durchgeführt. Dies beinhaltet das Ändern von Standard-Passwörtern und das Deaktivieren bekannter, nicht benötigter Dienste. Der Zugriff auf die Konfiguration ist durch ein geändertes Passwort geschützt."
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m3",
+                    "uuid": "8c6d2cb3-cc54-4b5b-8644-b9a3a6d8fd4e",
+                    "description": "Nicht benötigte Funktionen der Endgeräte MÜSSEN deaktiviert werden. Die Konfigurationseinstellungen DÜRFEN NICHT unberechtigt geändert werden können, beispielsweise durch einen Passwortschutz."
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m4",
+                    "uuid": "88226dd5-e7d4-4b50-b5e4-79eec915266e",
+                    "description": "Alle Sicherheitsfunktionen der Endgeräte, wie z.B. die Verschlüsselungsoptionen, SOLLTEN vor dem produktiven Einsatz getestet werden. Die eingesetzten Sicherheitsmechanismen und die verwendeten Parameter SOLLTEN dokumentiert werden als Teil der verbindlichen Basiskonfiguration."
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m5",
+                    "uuid": "dc928b87-d54a-4043-91af-55d8892060fc",
+                    "description": "Die Konfiguration der VoIP-Endgeräte wird über einen zentralen Provisionierungsserver automatisiert ausgerollt und verwaltet. Die Integrität der Konfiguration auf den Endgeräten wird regelmäßig und automatisiert überwacht. Jede unautorisierte Konfigurationsänderung löst einen Alarm aus. Alle administrativen Zugriffe und Änderungen werden zentral protokolliert und ausgewertet."
+                  }
+                ]
+              },
+              {
+                "uuid": "e165a59b-db59-44bf-a961-8a57c79fe738",
+                "control-id": "KONF.11.8.2.1",
+                "description": "Implementation for KONF.11.8.2.1 based on BSI NET.4.2.A4",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a4-m1",
+                    "uuid": "dc19a579-6f7b-44af-8c33-89de6e60f7f0",
+                    "description": "Es gibt keine klare Richtlinie, wie externe Teilnehmer auf die VoIP-Infrastruktur zugreifen. Der Zugriff wird fallweise und oft mit sehr weitreichenden Firewall-Regeln (z.B. ANY-ANY zum VoIP-Server) gewährt, um Funktionsprobleme zu vermeiden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m2",
+                    "uuid": "8fa831df-a85b-4e0d-8cdb-a4122c6cabdb",
+                    "description": "Es ist eine grundlegende Richtlinie für den externen Zugriff definiert. Der direkte Zugriff aus unsicheren Netzen auf interne VoIP-Komponenten wird durch grundlegende Netzwerksegmentierung und Firewall-Regeln unterbunden, die nur die notwendigen Ports (z.B. UDP/5060) freigeben."
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m3",
+                    "uuid": "a179e53f-018c-4546-8783-50f74569998b",
+                    "description": "Es MUSS entschieden und dokumentiert werden, wie externe Gesprächspartner und -partnerinnen auf die VoIP-Architektur zugreifen können. Es MUSS durch technische Maßnahmen, wie z.B. eine Firewall, verhindert werden, dass IT-Systeme aus unsicheren Netzen direkte, unkontrollierte Datenverbindungen zu internen VoIP-Komponenten aufbauen können."
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m4",
+                    "uuid": "c764bb4a-4719-4392-a5af-4ad2df125131",
+                    "description": "Wenn alle ein- und ausgehenden Verbindungen über ein zentrales IT-System abgewickelt werden, SOLLTE sichergestellt werden, dass alle Signalisierungs- und Sprachinformationen zwischen dem öffentlichen und dem privaten Datennetz nur über dieses autorisierte IT-System ausgetauscht werden. Dieses System ist typischerweise ein Session Border Controller (SBC)."
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m5",
+                    "uuid": "9cd47a3d-d789-4fba-bfac-5c1fc8000dd1",
+                    "description": "Es wird ein hochverfügbarer Cluster von Session Border Controllern (SBCs) eingesetzt. Der gesamte VoIP-Verkehr wird auf der Anwendungsebene tiefgehend inspiziert (Deep Packet Inspection), um Angriffe wie SIP-Fuzzing oder SQL-Injection in SIP-Headern zu erkennen und zu blockieren. Die SBCs nutzen aktuelle Threat-Intelligence-Feeds und Geo-IP-Filterung, um bekannte bösartige Akteure proaktiv abzuwehren."
+                  }
+                ]
+              },
+              {
+                "uuid": "09d3675b-f6b3-465d-9bb3-dc441013ce61",
+                "control-id": "KONF.14.1",
+                "description": "Implementation for KONF.14.1 based on BSI NET.4.2.A14",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a14-m2",
+                    "uuid": "7831f894-9050-4894-9bcb-d82f37874ead",
+                    "description": "Die Signalisierung wird konsistent mittels TLS zwischen den Endgeräten und dem VoIP-Server geschützt. Es werden jedoch Standard-Kryptographieeinstellungen verwendet und nur die Server-Identität wird durch ein Zertifikat geprüft."
+                  },
+                  {
+                    "statement-id": "net.4.2.a14-m3",
+                    "uuid": "517779b1-4bfb-469d-b36b-1dfb33568f85",
+                    "description": "Die Integrität und Vertraulichkeit der Signalisierungsinformationen SOLLTE durch geeignete kryptografische Verfahren, wie z.B. Transport Layer Security (TLS), gewährleistet werden. Nicht nur die Nutzdaten in der Signalisierung, sondern auch die Authentisierungsdaten SOLLTEN durchgängig verschlüsselt übertragen werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a14-m4",
+                    "uuid": "a6508ad6-da26-4a61-a59b-cfd4f94ba98d",
+                    "description": "Der Zugriff auf das VoIP-Gateway SOLLTE durch die Validierung von VoIP-Adressen (z.B. SIP-URI) und Identitäten (z.B. H.323-ID) so weit wie möglich eingeschränkt werden. Es SOLLTEN zusätzlich Ende-zu-Ende-Sicherheitsmechanismen für die Signalisierung (z.B. durch S/MIME in SIP-Nachrichten) in Betracht gezogen werden. Es SOLLTE dokumentiert werden, wie die Signalisierung geschützt wird."
+                  },
+                  {
+                    "statement-id": "net.4.2.a14-m5",
+                    "uuid": "37dab913-f186-4912-bd6f-95a046405db9",
+                    "description": "Für die TLS-Verbindungen wird Mutual TLS (mTLS) erzwungen, bei dem sich sowohl der Client als auch der Server mit einem gültigen, vertrauenswürdigen Zertifikat authentisieren müssen. Es werden ausschließlich starke und moderne Chiffriersuiten zugelassen. Die Gültigkeit der Zertifikate wird aktiv mittels OCSP Stapling oder CRLs überprüft. Alle Aspekte des Schutzes sind dokumentiert und werden regelmäßig auditiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "4919a295-a2b3-4bfb-8fb4-11c3b854a48e",
+                "control-id": "KONF.14.1.2",
+                "description": "Implementation for KONF.14.1.2 based on BSI NET.4.2.A15",
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a15-m2",
+                    "uuid": "7e568685-8418-4414-97e9-5ca4f8a361fd",
+                    "description": "SRTP wird für alle Anrufe als bevorzugte Methode aktiviert. Wenn ein Endpunkt SRTP nicht unterstützt, wird jedoch ein ungesicherter Fallback auf RTP erlaubt, um die Kompatibilität zu gewährleisten. Es werden Standardmechanismen zum Schlüsselaustausch verwendet."
+                  },
+                  {
+                    "statement-id": "net.4.2.a15-m3",
+                    "uuid": "a477e7b5-668c-4d48-80c6-ab06cb6e6b4d",
+                    "description": "Mediendaten (Sprache, Video), die über das Real-Time Transport Protocol (RTP) übertragen werden, SOLLTEN in geeigneter Weise geschützt werden. Die Nutzdaten SOLLTEN durch den Einsatz von Secure Real-Time Transport Protocol (SRTP) geschützt werden. Der zugehörige Kontrollkanal SOLLTE mittels Secure Real-Time Control Protocol (SRTCP) geschützt werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a15-m4",
+                    "uuid": "b69bddf4-56d7-4708-bad6-77d9a39830f6",
+                    "description": "Der Einsatz von SRTP wird erzwungen ('Encrypt-or-Drop'), sodass keine Anrufe mit unverschlüsseltem RTP zustande kommen können. Es werden sichere Schlüsselaustauschmechanismen wie DTLS-SRTP verwendet. Die sicherheitsrelevanten Optionen der SRTP-Implementierung, wie die ausgewählten Krypto-Profile, SOLLTEN dokumentiert werden."
+                  },
+                  {
+                    "statement-id": "net.4.2.a15-m5",
+                    "uuid": "c1fab595-0eb8-42b3-a584-0114f9a3d8f0",
+                    "description": "Es wird eine Ende-zu-Ende-Verschlüsselung der Mediendaten unter Verwendung von fortgeschrittenen Schlüsselaustauschmechanismen wie ZRTP oder PERC durchgesetzt. Das System ist so konfiguriert, dass nur die stärksten verfügbaren Krypto-Profile für SRTP verwendet werden. Es werden regelmäßige, automatisierte Überprüfungen durchgeführt, um sicherzustellen, dass kein Fallback auf unsicheres RTP stattfindet."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

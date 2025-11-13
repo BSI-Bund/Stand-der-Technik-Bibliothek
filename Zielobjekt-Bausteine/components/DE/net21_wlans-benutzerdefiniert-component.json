@@ -1,0 +1,406 @@
+{
+  "component-definition": {
+    "uuid": "914e513c-71d0-4f21-a57b-cf0a511e23ee",
+    "metadata": {
+      "title": "NET.2.1 WLANs - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:59.701605+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "0216a461-97bd-4946-9b7c-77706953dd04",
+        "type": "interconnection",
+        "title": "NET.2.1 WLANs",
+        "description": "This component represents the implementation of all controls for Baustein NET.2.1.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Über Wireless LANs (WLANs) können drahtlose lokale Netze aufgebaut oder bestehende drahtgebundene Netze erweitert werden. Bis heute basieren fast alle am Markt verfügbaren WLAN-Komponenten auf dem Standard IEEE 802.11 und seinen Ergänzungen. Eine besondere Rolle nimmt dabei das Firmenkonsortium „Wi-Fi Alliance“ ein, das basierend auf dem Standard IEEE 802.11 mit „Wi-Fi“ einen Industriestandard geschaffen hat. Dabei bestätigt die Wi-Fi Alliance mit dem Wi-Fi-Gütesiegel, dass ein Gerät gewisse Interoperabilitäts- und Konformitätstests bestanden hat.\nInnerhalb von Institutionen können WLANs eingesetzt werden, um flexibel mit mobilen Geräten zu arbeiten und diesen den Zugang zum Netz der Institution zu ermöglichen. Hierfür werden innerhalb der Institution Netzzugänge über so genannten Access Points aufgebaut. Aufgrund der meist einfachen und schnellen Installation werden WLANs auch dazu eingesetzt, um temporär Netze einzurichten, beispielsweise auf Messen oder kleineren Veranstaltungen. Darüber hinaus können an öffentlichen Plätzen, wie Flughäfen oder Bahnhöfen, Netzzugänge über so genannte Hotspots angeboten werden. Dadurch werden den mobilen Benutzenden Verbindungen in das Internet oder ihr Institutionsnetz ermöglicht. Die Kommunikation findet dann generell zwischen einem zentralen Zugangspunkt, dem Access Point, und der WLAN-Komponente des Endgeräts statt."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "In diesem Baustein wird systematisch aufgezeigt, wie WLANs sicher in einer Institution aufgebaut und betrieben werden können."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein NET.2.1 WLAN-Betrieb ist auf alle Kommunikationsnetze anzuwenden, die gemäß der Standard-Reihe IEEE 802.11 und deren Erweiterungen aufgebaut und betrieben werden.\nDer Baustein enthält grundsätzliche Anforderungen, die beachtet und erfüllt werden müssen, wenn WLANs in Institutionen aufgebaut und betrieben werden. Anforderungen für eine sichere Nutzung von WLANs sind jedoch nicht Gegenstand dieses Bausteins. Die sichere Nutzung von WLANs wird im Baustein NET.2.2 WLAN-Nutzung behandelt.\nWLANs können entsprechend den Bedürfnissen der betreibenden Institution und der Hardware-Ausstattung, die zur Verfügung steht, in zwei verschiedenen Modi betrieben werden. Im Ad-hoc-Modus kommunizieren zwei oder mehr WLAN-Clients direkt miteinander. WLANs im Ad-hoc-Modus können sich selbstständig, also ohne feste Infrastruktur, aufbauen und konfigurieren. Somit können sie eine vollvermaschte parallele Netz-Infrastruktur etablieren. Dadurch ist der Ad-hoc-Modus in einer zu schützenden Umgebung ungeeignet und wird deshalb im Folgenden nicht weiter betrachtet. In den meisten Fällen werden WLANs im Infrastruktur-Modus betrieben, d. h. die Kommunikation der WLAN-Clients und die Verbindung in kabelgebundene LAN-Segmente erfolgt über Access Points.\nWerden für die Authentisierung am WLAN entsprechende Dienste (z. B. RADIUS) eingesetzt, so müssen die entsprechenden IT-Systeme, auf denen die Dienste betrieben werden, gesondert abgesichert werden. Hierfür können die Bausteine der Schicht SYS.1, wie zum Beispiel SYS.1.1 Allgemeiner Server, herangezogen werden.\nWird ein WLAN betrieben, sollte dieses grundsätzlich mit berücksichtigt werden, wenn die Bausteine NET.1.1 Netzarchitektur und -design, NET.1.2 Netzmanagement und DER.2.1 Behandlung von Sicherheitsvorfällen umgesetzt werden."
+          },
+          {
+            "name": "Ausfall oder Störung eines Funknetzes",
+            "value": "In Funknetzen werden Informationen mittels elektromagnetischer Funkwellen übertragen. Strahlen andere elektromagnetische Quellen im selben Frequenzspektrum Energie ab, können diese die drahtlose Kommunikation stören und im Extremfall den Betrieb des WLANs verhindern. Dies kann durch andere Funksysteme und Geräte, wie beispielsweise Bluetooth, Mikrowellenherde oder andere WLAN-Netze hervorgerufen werden. Darüber hinaus sind auch Denial-of-Service-Angriffe möglich. Werden beispielsweise bestimmte Steuer- und Managementsignale wiederholt gesendet, kann dies dazu führen, dass das Funknetz nicht mehr verfügbar ist."
+          },
+          {
+            "name": "Fehlende oder unzureichende Planung des WLAN-Einsatzes",
+            "value": "Fehler in der Planung stellen sich oft als besonders schwerwiegend heraus, weil dadurch leicht flächendeckende Sicherheitslücken geschaffen werden können. Wird der Einsatz von WLANs nicht oder nur unzureichend geplant, kann sich eine Vielzahl von Problemen ergeben, beispielsweise:\n\n• Vertrauliche Daten könnten mitgelesen werden, etwa wenn WLAN-Standards eingesetzt werden, die nicht mehr dem Stand der Technik entsprechen (z. B. WEP zur Verschlüsselung).\n• Die Übertragungskapazität könnte unzureichend sein. Dadurch können bandbreitenintensive Anwendungen nicht mit der erforderlichen Dienstgüte genutzt werden.\n• Die Abdeckung des WLANs könnte nicht ausreichend sein, sodass an bestimmten Orten kein Netz verfügbar ist."
+          },
+          {
+            "name": "Fehlende oder unzureichende Regelungen zum WLAN-Einsatz",
+            "value": "Bei einer WLAN-Infrastruktur, die nicht zentral administriert wird, sind die Access Points in der Standard-Einstellung meist ohne oder nur mit unzureichenden Sicherheitsmechanismen vorkonfiguriert. Schließen Mitarbeitende beispielsweise aufgrund fehlender Regelungen einen ungenehmigten bzw. ungesicherten Access Point an ein internes Netz der Institution an, kann dies zu schwerwiegenden Problemen führen. Denn sie untergraben damit praktisch sämtliche innerhalb des LANs ergriffenen Sicherheitsmaßnahmen, wie z. B. die Firewall zum Schutz gegen unberechtigte externe Zugriffe."
+          },
+          {
+            "name": "Ungeeignete Auswahl von Authentisierungsverfahren",
+            "value": "Wenn Authentisierungsverfahren und -mechanismen fehlen oder unzureichend sind, können Sicherheitslücken entstehen. Beispielsweise wird im Standard IEEE 802.1X (Port Based Network Access Control) das Extensible Authentication Protocol (EAP) definiert. In einigen der beschriebenen EAP-Methoden sind aber Schwachstellen enthalten. So ist EAP-MD5 etwa anfällig gegenüber Man-in-the-Middle- und Wörterbuchangriffen. Wird EAP-MD5 eingesetzt, können Passwörter erraten werden. Außerdem kann die Kommunikation abgehört werden."
+          },
+          {
+            "name": "Fehlerhafte Konfiguration der WLAN-Infrastruktur",
+            "value": "Access Points und andere WLAN-Komponenten (z. B. WLAN Controller) bieten eine Vielzahl von Konfigurationseinstellungen, die insbesondere auch Sicherheitsfunktionen betreffen. Werden diese falsch konfiguriert, ist entweder keine Kommunikation über einen Access Point möglich oder die Kommunikation erfolgt ungeschützt bzw. mit einem zu geringen Schutzniveau."
+          },
+          {
+            "name": "Unzureichende oder fehlende WLAN-Sicherheitsmechanismen",
+            "value": "Im Auslieferungszustand sind WLAN-Komponenten häufig so konfiguriert, dass keine oder nur wenige Sicherheitsmechanismen aktiviert sind. Einige der Mechanismen sind darüber hinaus unzureichend und bieten somit keinen ausreichenden Schutz. Auch heute werden noch diverse WLAN-Komponenten eingesetzt, die lediglich unzureichende Sicherheitsmechanismen wie z. B. WEP unterstützen. Teilweise können diese Geräte nicht einmal auf stärkere Sicherheitsmechanismen aufgerüstet werden. Werden solche Geräte eingesetzt, können Angreifende leicht die gesamte Kommunikation abhören und damit vertrauliche Informationen einsehen."
+          },
+          {
+            "name": "Abhören der WLAN-Kommunikation",
+            "value": "Da es sich bei Funk um ein Medium handelt, das sich mehrere Benutzende teilen können („Shared Medium“), können die über WLANs übertragenen Daten problemlos mitgehört und aufgezeichnet werden. Wenn die Daten nicht oder nur unzureichend verschlüsselt werden, können die übertragenen Nutzdaten leicht eingesehen werden. Zudem überschreiten Funknetze bzw. die ausgesendeten Funkwellen häufig die Grenzen der selbst genutzten Räumlichkeiten. So werden Daten auch noch in Bereiche ausgestrahlt, die nicht von den Benutzenden oder einer Institution kontrolliert und gesichert werden können."
+          },
+          {
+            "name": "Vortäuschung eines gültigen Access Points (Rogue Access Point)",
+            "value": "Angreifende können sich als Teil der WLAN-Infrastruktur ausgeben, indem sie einen eigenen Access Point mit einem geeignet gewählten Namen (SSID) in der Nähe eines WLAN-Clients installiert. Dieser vorgetäuschte Access Point wird als „Rogue Access Point“ bezeichnet. Bietet dieser dem WLAN-Client eine stärkere Sendeleistung als der echte Access Point, wird der Client diesen als Basisstation nutzen, falls diese sich nicht gegenseitig authentisieren. Zusätzlich könnte auch der echte Access Point durch einen Denial-of-Service-Angriff ausgeschaltet werden. Die Benutzenden melden sich an einem Netz an, das nur vorgibt, das Zielnetz zu sein. Dadurch ist es Angreifenden möglich, die Kommunikation abzuhören. Auch durch Poisoning- oder Spoofing-Methoden können Angreifende eine falsche Identität vortäuschen bzw. den Netzverkehr zu ihren IT-Systemen umlenken. So können sie die Kommunikation belauschen und kontrollieren. Besonders in öffentlichen Funknetzen (sogenannten Hotspots) ist ein Rogue Access Point ein beliebtes Angriffsmittel."
+          },
+          {
+            "name": "Ungeschützter LAN-Zugang am Access Point",
+            "value": "Sind Access Points sichtbar und ohne physischen Schutz montiert, können sich Angreifende zwischen die Access Points und die Switch-Infrastruktur schalten, um den gesamten Netzverkehr abzuhören. Selbst wenn die drahtlose Kommunikation mit WPA2 verschlüsselt wird, stellt dies eine Gefährdung dar, weil diese Methoden nur die Luftschnittstelle absichern, die Ethernet-Anbindung aber nicht weiter berücksichtigen."
+          },
+          {
+            "name": "Hardware-Schäden",
+            "value": "Hardware-Schäden können dazu führen, dass der Funkverkehr gestört wird. Im schlimmsten Fall kann das WLAN sogar komplett ausfallen. Dies betrifft insbesondere WLAN-Geräte, die außerhalb von geschützten Räumen angebracht werden, z. B. um offene Plätze abzudecken. Sie sind zusätzlichen Gefährdungen ausgesetzt, wie beispielsweise vorsätzlichen Beschädigungen durch Angreifende oder umweltbedingten Schäden durch Witterung oder Blitzeinschlag."
+          },
+          {
+            "name": "Diebstahl eines Access Points",
+            "value": "Werden WLAN Access Points ungesichert in öffentlichen Bereichen installiert, können sie gestohlen werden. Dadurch lässt sich beispielsweise ein Shared-Secret Key für die Authentisierung am RADIUS-Server oder der verwendete Schlüssel (beispielsweise für WPA2-Personal) auslesen. Mit diesen Informationen kann dann unberechtigt auf das WLAN zugegriffen werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "e4509546-649b-4110-a572-72bfa46b25ef",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/wlans_profile.json",
+            "description": "Implementation for all controls in Baustein NET.2.1",
+            "implemented-requirements": [
+              {
+                "uuid": "3313a9ee-d2f7-4c53-9fdf-dc387f4a7178",
+                "control-id": "ARCH.2.1",
+                "description": "Implementation for ARCH.2.1 based on BSI NET.2.1.A6",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A6-m1",
+                    "uuid": "519635d8-66a2-4f79-9615-414bc2da2ae9",
+                    "description": "WLAN-Clients befinden sich im selben Netzwerksegment wie die kabelgebundenen Clients, ohne jegliche Trennung."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A6-m2",
+                    "uuid": "ce812f0d-1706-47b3-9eae-d28508564c3c",
+                    "description": "Es gibt ein separates Gast-WLAN, das vom internen Netz getrennt ist. Das Mitarbeiter-WLAN ist jedoch weiterhin direkt mit dem vertrauenswürdigen LAN gekoppelt."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A6-m3",
+                    "uuid": "ccfd38b3-c556-45e1-b660-7a74793fe59f",
+                    "description": "Es MUSS sichergestellt sein, dass mittels der WLAN-Kommunikation keine Sicherheitszonen gekoppelt werden und hierdurch etablierte Schutzmaßnahmen umgangen werden."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A6-m4",
+                    "uuid": "f02b3bc6-d4ae-4d92-a692-e3eae4ac2bfa",
+                    "description": "Die Kopplung von Sicherheitszonen wird durch eine dedizierte WLAN-DMZ-Architektur verhindert. Der gesamte WLAN-Verkehr wird an einem zentralen Punkt terminiert und durch eine Firewall mit anwendungsspezifischen Regeln kontrolliert, bevor er in andere Netzzonen gelangt."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A6-m5",
+                    "uuid": "b5b58d9d-777c-482e-b4a1-95650420c18d",
+                    "description": "Eine Zero-Trust-Architektur wird umgesetzt, bei der jeder Client im WLAN standardmäßig isoliert ist (Client Isolation). Die Kommunikation mit anderen Geräten wird dynamisch auf Basis der Identität des Benutzers und des Gerätezustands durch eine NAC-Lösung (Network Access Control) gesteuert und erzwungen."
+                  }
+                ]
+              },
+              {
+                "uuid": "8c3461e3-a144-4cb2-9ee9-bbd27eec43e8",
+                "control-id": "ARCH.2.2",
+                "description": "Implementation for ARCH.2.2 based on BSI NET.2.1.A9",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A9-m1",
+                    "uuid": "4598a5c6-f582-4fd4-9b75-a391fed6daa6",
+                    "description": "WLANs werden ohne jegliche Absicherung direkt an das LAN angebunden. Der Access Point agiert als simple Bridge."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m2",
+                    "uuid": "a62800fe-1248-4fc6-adb0-fbee49b37899",
+                    "description": "Eine grundsätzliche Trennung des WLAN vom LAN wird durch die Platzierung der WLAN-Clients in einem eigenen VLAN erreicht. Es gibt jedoch keine Firewall oder Paketfilter zwischen den Netzen."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m3",
+                    "uuid": "0e239ca0-4a4e-42ea-8353-1ee519679aac",
+                    "description": "Der Übergang zwischen WLANs und LAN MUSS durch einen Paketfilter oder eine Firewall abgesichert werden. Die Anbindung erfolgt unter Berücksichtigung der Entscheidung über das Distribution System (gemäß NET.2.1.A7)."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m4",
+                    "uuid": "bd4ade84-cb02-4410-a478-bdec0f2c6b4a",
+                    "description": "Der Übergang zwischen WLAN und LAN wird durch eine Next-Generation Firewall (NGFW) mit Stateful Inspection und Intrusion Prevention (IPS) abgesichert. Die Regeln sind anwendungsspezifisch (Layer 7)."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m5",
+                    "uuid": "14f48eab-68a2-4af5-8aaf-150e5a5e27a9",
+                    "description": "Der Übergang wird durch eine Zero-Trust-Architektur gesichert. Jeder Zugriffsversuch aus dem WLAN wird pro Sitzung authentifiziert und autorisiert, unabhängig vom Gerät oder Benutzer. Der gesamte Verkehr wird auf Malware und Bedrohungen untersucht."
+                  }
+                ]
+              },
+              {
+                "uuid": "1d0b1169-ead1-4644-945e-367e73b53d4e",
+                "control-id": "ARCH.2.2.7",
+                "description": "Implementation for ARCH.2.2.7 based on BSI NET.2.1.A12",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A12-m1",
+                    "uuid": "7d7ff416-9abf-40f7-8aec-dafc55abdde6",
+                    "description": "Jeder Access Point wird einzeln und manuell über seine eigene Weboberfläche oder Kommandozeile konfiguriert und verwaltet."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A12-m2",
+                    "uuid": "b61a8cb8-f888-44de-b2bf-645db695e0bc",
+                    "description": "Ein einfaches, zentrales Management-Tool wird eingesetzt, das primär der Überwachung des Betriebszustands (online/offline) und der Verteilung von Firmware-Updates dient."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A12-m3",
+                    "uuid": "fe09eccf-f51b-453b-8b36-0f544babda97",
+                    "description": "Eine zentrale Managementlösung MUSS eingesetzt werden. Der Leistungsumfang der eingesetzten Lösung MUSS im Einklang mit den Anforderungen der WLAN-Strategie sein, insbesondere was die zentrale Konfiguration von Sicherheitsmerkmalen betrifft."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A12-m4",
+                    "uuid": "0b2e5558-9ac8-42c6-8c86-073dc2a8cb5e",
+                    "description": "Die eingesetzte Managementlösung bietet erweiterte Funktionen wie die Erstellung von Heatmaps zur Visualisierung der Funkausleuchtung, die Überwachung der Konfigurationsintegrität und detaillierte Reporting-Funktionen über Clients und Nutzung."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A12-m5",
+                    "uuid": "351a92cf-5f73-460b-b3cb-207c9c90f95f",
+                    "description": "Die WLAN-Management-Lösung ist über APIs vollständig in das IT-Ökosystem (z.B. SIEM, NAC, CMDB) integriert. Konfigurationsänderungen und operative Aufgaben sind weitgehend automatisiert (z.B. durch SOAR-Playbooks)."
+                  }
+                ]
+              },
+              {
+                "uuid": "ad030c5a-5f6c-461e-8c58-2c60d5811334",
+                "control-id": "ARCH.2.4",
+                "description": "Implementation for ARCH.2.4 based on BSI NET.2.1.A14",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A14-m1",
+                    "uuid": "b73c747d-c4ff-44fe-8086-8ab825bb4815",
+                    "description": "Audits der WLAN-Komponenten finden nicht statt. Die Konfiguration wird nach der Ersteinrichtung nicht mehr überprüft."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A14-m2",
+                    "uuid": "de9b4edb-d362-4045-9259-cd2410133c45",
+                    "description": "Bei größeren Änderungen oder Problemen wird die Konfiguration einzelner WLAN-Komponenten manuell und anlassbezogen überprüft."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A14-m3",
+                    "uuid": "87aeacad-9ddb-4960-8b64-d8a8ea866415",
+                    "description": "Bei allen Komponenten der WLAN-Infrastruktur MUSS regelmäßig überprüft werden, ob alle festgelegten Sicherheitsmaßnahmen umgesetzt und die Komponenten korrekt konfiguriert sind. Die Auditergebnisse MÜSSEN nachvollziehbar dokumentiert und mit dem Soll-Zustand abgeglichen werden."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A14-m4",
+                    "uuid": "32ff5df6-fc30-4136-86ff-2b1f0ea50b77",
+                    "description": "Die regelmäßigen Audits umfassen auch stichprobenartige physikalische Überprüfungen von öffentlich aufgestellten Access Points auf Manipulations- oder Öffnungsversuche. Abweichungen vom Soll-Zustand werden systematisch untersucht und nachverfolgt."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A14-m5",
+                    "uuid": "2810da0a-e540-4c20-8777-1d98acd489c8",
+                    "description": "Die Konfiguration aller WLAN-Komponenten wird kontinuierlich und automatisiert durch ein Compliance-Management-Tool überwacht. Physische Manipulationen an Access Points werden durch integrierte Sensoren (z.B. Gehäusekontakt) erkannt und lösen einen sofortigen Alarm aus."
+                  }
+                ]
+              },
+              {
+                "uuid": "5c69f321-8688-48ce-8acd-c243a40acc61",
+                "control-id": "ARCH.3.1",
+                "description": "Implementation for ARCH.3.1 based on BSI NET.2.1.A4",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A4-m1",
+                    "uuid": "b603af51-2e42-485e-91e2-e3855412ad82",
+                    "description": "Access Points werden dort aufgestellt, wo sie benötigt werden, ohne besondere Berücksichtigung von Diebstahlschutz oder gezielter Signalausbreitung."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A4-m2",
+                    "uuid": "596be94c-8732-44d6-aa4e-b878ebf9d4d3",
+                    "description": "Access Points werden an Decken oder Wänden montiert, um eine bessere Abdeckung zu erzielen. Ein grundlegender Schutz vor zufälliger Beschädigung ist gegeben, aber es gibt keinen systematischen Diebstahlschutz oder Maßnahmen zur Begrenzung der Funkwellen."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A4-m3",
+                    "uuid": "2ea74e58-d0e0-43d5-8bff-a75f19b269a4",
+                    "description": "Access Points MÜSSEN zugriffs- und diebstahlsicher montiert werden. Wenn sie aufgestellt werden, MÜSSEN die erforderlichen Bereiche ausreichend abgedeckt werden. Darüber hinaus MUSS darauf geachtet werden, dass sich die Funkwellen in Bereichen, die nicht durch das WLAN versorgt werden sollen, möglichst nicht ausbreiten. Außeninstallationen MÜSSEN vor Witterungseinflüssen und elektrischen Entladungen geeignet geschützt werden."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A4-m4",
+                    "uuid": "21d3aaa9-51c5-4185-8df6-ebf12c66303f",
+                    "description": "Die Planung der AP-Aufstellung erfolgt auf Basis einer professionellen Funkausleuchtung (Site Survey) mit spezieller Software. Die Sendeleistung der Access Points wird aktiv so gesteuert, dass eine optimale Abdeckung bei minimaler Abstrahlung nach außen erreicht wird."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A4-m5",
+                    "uuid": "baf379f9-a914-48d4-8a7d-0ad0bc18e930",
+                    "description": "Die Positionierung und Sendeleistung der Access Points wird kontinuierlich und automatisiert durch das WLAN-Management-System optimiert. Das System reagiert dynamisch auf Veränderungen in der Umgebung (z.B. neue Hindernisse, erhöhte Client-Dichte) und passt die Funkparameter an, um Abdeckung und Sicherheit permanent zu gewährleisten."
+                  }
+                ]
+              },
+              {
+                "uuid": "518008ad-6ecb-4c08-a89c-52b7d138d6a6",
+                "control-id": "ARCH.3.3",
+                "description": "Implementation for ARCH.3.3 based on BSI NET.2.1.A5",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A5-m1",
+                    "uuid": "c8d8cdcb-b2f3-438b-a808-ff09170c65fc",
+                    "description": "Access Points werden im Auslieferungszustand mit voreingestellten SSIDs und Passwörtern in Betrieb genommen."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A5-m2",
+                    "uuid": "af6e06c3-f40b-4f86-848a-ecfea176b5aa",
+                    "description": "Voreingestellte SSIDs und WLAN-Passwörter (PSK) werden geändert. Das administrative Zugangspasswort des Access Points bleibt jedoch auf dem Standardwert."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A5-m3",
+                    "uuid": "50b027cd-afea-4517-bd7b-dce64a6ca3a4",
+                    "description": "Access Points DÜRFEN NICHT in der Konfiguration des Auslieferungszustandes verwendet werden. Voreingestellte SSIDs (Service Set Identifiers), Zugangskennwörter oder kryptografische Schlüssel MÜSSEN vor dem produktiven Einsatz geändert werden. Außerdem MÜSSEN unsichere Administrationszugänge abgeschaltet werden. Access Points DÜRFEN NUR über eine geeignet verschlüsselte Verbindung administriert werden."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A5-m4",
+                    "uuid": "d989aea1-7141-4718-a198-7285531fbfaa",
+                    "description": "Eine zentrale Managementlösung wird verwendet, um eine einheitliche und sichere Basiskonfiguration auf alle Access Points auszurollen. Jede Abweichung von dieser Konfiguration wird erkannt und gemeldet."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A5-m5",
+                    "uuid": "494310c9-2e53-4f8f-8c89-65362bedae1f",
+                    "description": "Die sichere Basiskonfiguration wird als 'Configuration as Code' verwaltet und automatisiert über eine CI/CD-Pipeline auf die Access Points ausgerollt. Jede Konfigurationsänderung erfordert einen Review- und Genehmigungsprozess im Code-Repository. Die Integrität der AP-Firmware wird regelmäßig überprüft."
+                  }
+                ]
+              },
+              {
+                "uuid": "5fe4cc9c-4600-440a-9272-aa247a488954",
+                "control-id": "ARCH.3.4",
+                "description": "Implementation for ARCH.3.4 based on BSI NET.2.1.A3",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A3-m1",
+                    "uuid": "0b094ecc-b970-4c06-9822-445cafe7d391",
+                    "description": "Die WLAN-Kommunikation ist teilweise verschlüsselt, aber es werden unsichere Verfahren wie WEP oder WPA (TKIP) für einzelne Netze, z.B. aus Kompatibilitätsgründen, noch toleriert."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A3-m2",
+                    "uuid": "d1a5187b-a326-464a-aec3-0a7c84819cc5",
+                    "description": "WPA2 wird als Standard für die Verschlüsselung verwendet, jedoch wird bei WPA2-PSK die Komplexität der Schlüssel nicht systematisch durchgesetzt oder überprüft."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A3-m3",
+                    "uuid": "434cbecc-8bd7-4468-9fa9-6390c2875884",
+                    "description": "Die Kommunikation über die Luftschnittstelle MUSS komplett kryptografisch abgesichert werden. Kryptografische Verfahren, die unsicherer als WPA2 sind, DÜRFEN NICHT mehr eingesetzt werden. Wird WPA2 mit Pre-Shared Keys (WPA2-PSK) verwendet, dann MUSS ein komplexer Schlüssel mit einer Mindestlänge von 20 Zeichen verwendet werden."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A3-m4",
+                    "uuid": "9a6b58a1-5f53-49a0-b97c-222c9efa9da2",
+                    "description": "Für Unternehmensnetze wird standardmäßig WPA2/WPA3-Enterprise mit individueller Authentisierung über einen RADIUS-Server eingesetzt. PSKs werden nur noch für dedizierte Netze (z.B. Gäste, IoT) verwendet und dort regelmäßig und nach einem definierten Prozess rotiert."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A3-m5",
+                    "uuid": "4f95d24c-22ea-42ba-9d09-31a5c819fe59",
+                    "description": "Für alle Unternehmens-Clients wird WPA3-Enterprise mit EAP-TLS (zertifikatbasierte Authentisierung) verpflichtend eingesetzt. Die Zertifikate werden automatisiert über eine MDM/PKI-Lösung ausgerollt und verwaltet. PSKs für Gastnetze werden dynamisch und pro-Sitzung generiert oder täglich automatisiert rotiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "2cce82a5-627e-4040-a5ca-9e8fc1663688",
+                "control-id": "ARCH.5.1",
+                "description": "Implementation for ARCH.5.1 based on BSI NET.2.1.A16",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A16-m1",
+                    "uuid": "f0fbefac-3b4d-4db1-9582-3bc4957d4e21",
+                    "description": "Es findet keine zusätzliche Absicherung des Übergangs vom WLAN zum LAN statt."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A16-m2",
+                    "uuid": "26720aa1-48df-4ab1-8075-63e4053cd742",
+                    "description": "Der Übergang vom WLAN zum LAN ist durch einen einfachen Paketfilter (Router ACL) abgesichert, der auf Basis von IP-Adressen und Ports filtert."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A16-m3",
+                    "uuid": "e66544d5-bb33-4d0e-88b6-96aecc2f677a",
+                    "description": "Der Übergang zwischen WLANs und LAN wird standardmäßig durch eine Stateful Firewall abgesichert, die den gesamten Verkehr kontrolliert."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A16-m4",
+                    "uuid": "972ba8d8-c701-4f2a-80fa-9866cee73bf3",
+                    "description": "Wird eine WLAN-Infrastruktur an ein LAN angebunden, wird der Übergang zwischen WLANs und LAN entsprechend des höheren Schutzbedarfs zusätzlich abgesichert, beispielsweise durch eine Next-Generation Firewall (NGFW) mit Intrusion Prevention System (IPS)."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A16-m5",
+                    "uuid": "5442a485-8f89-4a08-bbd8-45391b09683a",
+                    "description": "Der Übergang wird durch eine mehrstufige Sicherheitsarchitektur geschützt, die eine NGFW/IPS, eine Web Application Firewall (WAF) für den Zugriff auf Webanwendungen und eine Malware-Analyse-Lösung (Sandboxing) für Dateiübertragungen umfasst."
+                  }
+                ]
+              },
+              {
+                "uuid": "8b6e746c-d431-4e9b-86f3-a1fb73d01e94",
+                "control-id": "ASST.2.2.1",
+                "description": "Implementation for ASST.2.2.1 based on BSI NET.2.1.A13",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A13-m1",
+                    "uuid": "5443a564-2ca9-461b-addd-e2888d5f82da",
+                    "description": "Sicherheitsüberprüfungen von WLANs finden nicht statt, oder nur reaktiv, wenn ein Problem auftritt."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A13-m2",
+                    "uuid": "b5407a06-e576-4b27-a1cd-b640dfafc6be",
+                    "description": "Gelegentlich werden manuelle Suchen nach unbefugten Access Points durchgeführt, zum Beispiel durch eine Begehung mit einem Laptop und einer WLAN-Scanner-Software."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A13-m3",
+                    "uuid": "9b756fba-ddde-4ca6-b688-98aa6e0c30a0",
+                    "description": "WLANS MÜSSEN regelmäßig daraufhin überprüft werden, ob eventuell Sicherheitslücken existieren. Zusätzlich MUSS regelmäßig nach unbefugt installierten Access Points innerhalb der bereitgestellten WLANs gesucht werden. Die Ergebnisse von Sicherheitschecks MÜSSEN nachvollziehbar dokumentiert und mit dem Soll-Zustand abgeglichen werden."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A13-m4",
+                    "uuid": "1256f061-0f7d-4028-b0a4-58f396afb575",
+                    "description": "Die regelmäßigen Sicherheitschecks umfassen auch die Messung von Performance und Abdeckung. Abweichungen vom Soll-Zustand werden systematisch untersucht und über einen Mängelbehebungsprozess nachverfolgt."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A13-m5",
+                    "uuid": "5d842978-5aea-4e16-9471-c67dab63fbfe",
+                    "description": "Die Sicherheitschecks sind weitgehend automatisiert. Ein Wireless Intrusion Detection/Prevention System (WIDS/WIPS) sucht kontinuierlich nach Rogue APs und anderen Anomalien. Regelmäßige, automatisierte Penetrationstests prüfen die Widerstandsfähigkeit des WLANs gegen Angriffe."
+                  }
+                ]
+              },
+              {
+                "uuid": "05b037ae-a241-4431-8a2a-98b6074e312b",
+                "control-id": "DET.4.10",
+                "description": "Implementation for DET.4.10 based on BSI NET.2.1.A18",
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A18-m1",
+                    "uuid": "25e4bf3f-522d-4a7c-a734-68cb0d66c19f",
+                    "description": "Es werden keine spezialisierten Systeme zur Erkennung oder Verhinderung von Angriffen im WLAN eingesetzt."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A18-m2",
+                    "uuid": "fde8cf16-5c42-43ed-88a5-a4c64c04fed2",
+                    "description": "Die eingesetzte WLAN-Management-Lösung verfügt über eine einfache Funktion zur Erkennung von unautorisierten Access Points (Rogue AP Detection), die auf passiven Scans basiert."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A18-m3",
+                    "uuid": "12f51f51-89a5-4a9f-916d-9f679b98aefa",
+                    "description": "Es wird ein Wireless Intrusion Detection System (WIDS) eingesetzt. Dieses System ist in der Lage, eine Reihe von bekannten WLAN-Angriffen und Anomalien zu erkennen und Administratoren darüber zu alarmieren."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A18-m4",
+                    "uuid": "5eeb5f0e-178c-4238-8c36-8fcc5f83a6cd",
+                    "description": "Es wird ein Wireless Intrusion Prevention System (WIPS) eingesetzt. Dieses System kann auf erkannte Bedrohungen nicht nur alarmieren, sondern auch aktiv und automatisiert Gegenmaßnahmen einleiten."
+                  },
+                  {
+                    "statement-id": "NET.2.1.A18-m5",
+                    "uuid": "fa40a8f4-7426-4e91-90c3-002c01231303",
+                    "description": "Das WIPS ist vollständig in eine SIEM/SOAR-Plattform integriert. Die von ihm erkannten Ereignisse werden mit anderen Sicherheitsinformationen korreliert, und die Reaktionen werden durch automatisierte Playbooks orchestriert, die den gesamten Incident-Response-Prozess abdecken."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

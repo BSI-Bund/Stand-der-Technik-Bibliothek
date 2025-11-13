@@ -1,0 +1,318 @@
+{
+  "component-definition": {
+    "uuid": "5f32e0a7-5f09-4702-8ecd-18ab0d491679",
+    "metadata": {
+      "title": "APP.1.2 Webbrowser - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:58.378541+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "21a3f7d2-fb93-4306-8e35-d798dc62dbe1",
+        "type": "software",
+        "title": "APP.1.2 Webbrowser",
+        "description": "This component represents the implementation of all controls for Baustein APP.1.2.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Webbrowser sind Anwendungsprogramme, die (Hypertext-) Dokumente, Bilder, Video-, Audio- und andere Datenformate aus dem Internet abrufen, verarbeiten, darstellen, ausgeben und auf lokalen IT-Systemen speichern können. Ebenso können Webbrowser auch Daten ins Internet übertragen.\nStationäre und mobile Clients sind heute ohne Webbrowser nicht vorstellbar, weil sehr viele private und geschäftliche Anwendungen entsprechende Inhalte nutzen. Gleichzeitig werden diese Inhalte im Internet immer vielfältiger. Die meisten Webseiten nutzen eingebettete Videos, animierte Elemente und andere aktive Inhalte. Moderne Webbrowser decken zudem eine große Bandbreite an Zusatzfunktionen ab, indem sie Plug-ins und externe Bibliotheken einbinden. Hinzu kommen Erweiterungen für bestimmte Funktionen, Datenformate und Inhalte. Die Komplexität moderner Webbrowser bietet ein hohes Potenzial für gravierende konzeptionelle Fehler und programmtechnische Schwachstellen. Sie erhöht nicht nur die möglichen Gefahren für Angriffe aus dem Internet, sondern birgt zusätzliche Risiken durch Programmier- und Bedienungsfehler.\nDie Risiken für die Vertraulichkeit und Integrität von Daten sind erheblich. Ebenso ist die Verfügbarkeit des gesamten IT-Systems durch solche Schwachstellen bedroht. Internetinhalte müssen demzufolge aus Sicht des Webbrowsers grundsätzlich als nicht vertrauenswürdig angesehen werden."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, Sicherheitsanforderungen für Webbrowser, die auf Clients, also auf stationären und mobilen IT-Systemen sowie auch auf Tablets und Smartphones, eingesetzt werden, zu beschreiben."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.1.2 Webbrowser ist auf jeden Webbrowser einmal anzuwenden.\nEr enthält grundsätzliche Sicherheitsanforderungen, die bei der Installation und dem Betrieb von Webbrowsern für den Zugriff auf Daten aus dem Internet zu beachten und zu erfüllen sind.\nWebbrowser sind eine der am häufigsten genutzten Anwendungen. Sie greifen auf ungeprüfte, potentiell schädliche Daten im Internet zu und stellen damit ein Einfallstor für Angriffe dar, oft mit dem Ziel, sich weiter auf das Betriebssystem auszubreiten. Um die Betriebssysteme abzusichern, sollten daher die Anforderungen der Bausteine der Schichten SYS.2 Desktop-Systeme und SYS.3.2 Tablet und Smartphone erfüllt werden.\nMit Browsern genutzte Webanwendungen sowie zuständige Server werden in den Bausteinen APP.3.1 Webanwendungen und Webservices und APP.3.2 Webserver behandelt.\nAllgemeine Anforderungen an den sicheren Einsatz von Software sind in diesem Baustein nicht enthalten. Sie sind im Baustein APP.6 Allgemeine Software zu finden, der zusätzlich zu diesem Baustein anzuwenden ist."
+          },
+          {
+            "name": "2.1. Ausführung von Schadcode durch Webbrowser",
+            "value": "Webbrowser laden regelmäßig Daten aus nicht vertrauenswürdigen Quellen. Solche Daten können ausführbaren Schadcode enthalten, der Schwachstellen ausnutzen kann und das IT-System der Benutzenden ohne deren Kenntnis infiziert.\nDabei kann es sich um Code handeln, der durch den Webbrowser direkt ausgeführt werden kann, wie etwa JavaScript oder WebAssembly. Ebenso kann es auch ausführbarer Code eines Plug-ins oder einer Erweiterung im Kontext des Browsers sein, wie etwa Java oder Bestandteile von PDF-Dokumenten. Schließlich kann es sich auch um Code handeln, der vom Webbrowser auf den Client geladen und dort außerhalb des Browser-Prozesses ausgeführt wird. Werden die grundlegenden Schutzmechanismen moderner Webbrowser nicht ausreichend angewendet, werden die Vertraulichkeit, Integrität oder Verfügbarkeit von Informationen oder Diensten des Clients oder möglicherweise sogar der mit ihm verbundenen Netze bedroht."
+          },
+          {
+            "name": "2.2. Exploit Kits",
+            "value": "Schwachstellenlisten und sogenannte Exploit Kits erleichtern die Entwicklung individueller Schadsoftware erheblich. Cyberangriffe können automatisiert werden, um Drive-by-Downloads oder andere Verbreitungswege leicht und ohne Expertenwissen zu nutzen. Angreifende können ihnen bekannte Schwachstellen der Webbrowser, der verbundenen Ressourcen oder Erweiterungen ausnutzen, um Folgeangriffe vorzubereiten oder Code mit Schadfunktion auf den Clients zu laden und zu installieren. Oft wird durch den so auf den Clients geladenen Schadcode weitere Schadsoftware nachgeladen, die dann auf den Clients mit den Rechten der Benutzenden ausgeführt wird."
+          },
+          {
+            "name": "2.3. Mitlesen der Internetkommunikation",
+            "value": "Die grundlegende Sicherheit der Kommunikation im Internet hängt wesentlich vom eingesetzten Authentisierungsverfahren und von der Verschlüsselung der Daten auf dem Transportweg ab.\nFehlerhafte Implementierungen der entsprechenden Verfahren sind möglich und verhindern eine wirkungsvolle Authentisierung und Verschlüsselung. Viele Webdienste bieten außerdem immer noch veraltete Verschlüsselungsverfahren an. Somit kann bei einem Angriff die Authentisierung von Servern unterlaufen werden oder die Kommunikation bzw. die Daten werden nicht wirkungsvoll verschlüsselt. Hierdurch können Informationen auf dem Übertragungsweg mitgelesen oder verändert werden. In der Vergangenheit wurden außerdem Zertifizierungsstellen kompromittiert. Angreifende könnten so an Zertifikate für fremde Websites gelangen."
+          },
+          {
+            "name": "2.4. Integritätsverlust in Webbrowsern",
+            "value": "Werden Webbrowser, Plug-ins oder Erweiterungen aus nicht vertrauenswürdigen Quellen bezogen, können unabsichtlich und unbemerkt Schadfunktionen ausgeführt werden. Angreifende können beispielsweise Browserkomponenten wie Toolbars fälschen, um die Benutzenden auf manipulierte Kopien von Webseiten zu locken, mit deren Hilfe Phishing-Angriffe durchgeführt werden. Bösartige Erweiterungen können Inhalte der betrachteten Webseiten manipulieren oder Daten ausspionieren und an die Angreifenden senden."
+          },
+          {
+            "name": "2.5. Verlust der Privatsphäre",
+            "value": "Werden Webbrowser unsicher konfiguriert, können vertrauenswürdige Daten zufällig oder böswillig unbefugten Dritten zugänglich gemacht werden. Auch Passwörter können ungewollt weitergegeben werden. Werden Cookies, Passwörter, Historien, Eingabedaten und Suchanfragen gespeichert oder unnötige Erweiterungen aktiviert, können Daten von Dritten oder von Schadprogrammen leichter missbräuchlich ausgelesen werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "56367f47-b51a-4aa1-ba46-5a7abdc36f3c",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/webbrowser_profile.json",
+            "description": "Implementation for all controls in Baustein APP.1.2",
+            "implemented-requirements": [
+              {
+                "uuid": "9dbae78e-6e16-41dd-b7b1-dc66c42b5fd3",
+                "control-id": "KONF.10.1",
+                "description": "Implementation for KONF.10.1 based on BSI APP.1.2.A13",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a13-m1",
+                    "uuid": "f6ed9334-1be8-48ef-901c-7bbae82ac43f",
+                    "description": "Die DNS-over-HTTPS (DoH)-Einstellung wird den Standardeinstellungen des Browsers überlassen. Dies führt dazu, dass Browser möglicherweise ohne Wissen der IT DoH aktivieren und öffentliche Resolver verwenden, wodurch interne DNS-Richtlinien und -Filter umgangen werden."
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m2",
+                    "uuid": "20c5d199-16c4-4645-ae9d-753cf6c7ca34",
+                    "description": "Es wurde eine Entscheidung über die Nutzung von DoH getroffen, diese wird aber nicht technisch durchgesetzt. Die IT empfiehlt den Benutzern, DoH manuell zu deaktivieren, um die Verwendung des internen DNS-Resolvers sicherzustellen, aber es gibt keine Garantie für die Einhaltung."
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m3",
+                    "uuid": "6277cca2-20cb-4fca-9065-4172762111e1",
+                    "description": "Die Institution MUSS eine dokumentierte Entscheidung treffen, ob die verwendeten Browser DNS-over-HTTPS (DoH) verwenden sollen oder nicht. Die Browser MÜSSEN entsprechend dieser Entscheidung zentral konfiguriert werden. Falls ein interner DNS-Resolver verwendet wird, MUSS dieser auch vom Browser genutzt werden (entweder durch Deaktivierung von DoH oder durch Konfiguration des Browsers, den internen Resolver als DoH-Endpunkt zu nutzen)."
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m4",
+                    "uuid": "7b8005ea-0adb-4c61-bd9d-ceea27456389",
+                    "description": "Zusätzlich zur zentralen Konfiguration werden Netzwerk-Kontrollen implementiert, um die Umgehung der DoH-Richtlinie zu verhindern. Der Netzwerk-Gateway (Firewall) wird so konfiguriert, dass er die IP-Adressen bekannter öffentlicher DoH-Resolver blockiert."
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m5",
+                    "uuid": "cca6f99a-26f5-4649-aa10-0bf34a2f290c",
+                    "description": "Die gesamte DNS-Infrastruktur, einschließlich des verwendeten DoH-Resolvers, ist durch DNSSEC abgesichert. Ausgehender Netzwerkverkehr wird aktiv auf DoH-Anfragen zu nicht autorisierten Endpunkten überwacht (z.B. durch Analyse von SNI-Headern in TLS-Verbindungen). Verdächtige Aktivitäten lösen einen Alarm aus."
+                  }
+                ]
+              },
+              {
+                "uuid": "596bbae4-ca17-46a4-a3ec-4910cf2e821c",
+                "control-id": "KONF.12.1.1",
+                "description": "Implementation for KONF.12.1.1 based on BSI APP.1.2.A3",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a3-m1",
+                    "uuid": "414954aa-56b8-4ddc-9782-91b54f27e83e",
+                    "description": "Der Webbrowser führt eine grundlegende Zertifikatsprüfung durch, aber Benutzer können Warnungen vor ungültigen, abgelaufenen oder selbstsignierten Zertifikaten einfach ignorieren und die Verbindung fortsetzen. Der Trust Store des Browsers oder des Betriebssystems wird nicht aktiv verwaltet."
+                  },
+                  {
+                    "statement-id": "app.1.2.a3-m2",
+                    "uuid": "9800a8cf-1447-4779-b583-e68999e02f55",
+                    "description": "Der Webbrowser führt eine vollständige Prüfung der Zertifikatsgültigkeit (Gültigkeitszeitraum, Signaturkette) durch. Bei Fehlern wird eine deutliche Warnung angezeigt. Die Prüfung des Sperrstatus (Revocation) wird jedoch nicht zuverlässig durchgeführt oder ist nicht erzwungen."
+                  },
+                  {
+                    "statement-id": "app.1.2.a3-m3",
+                    "uuid": "f56cbf16-4f51-4011-9ebc-3e75e1a17e9a",
+                    "description": "Der Webbrowser MUSS die Gültigkeit der Server-Zertifikate vollständig prüfen, einschließlich des Sperrstatus (Revocation) und der gesamten Zertifikatskette. Der Trust Store (Liste der vertrauenswürdigen Wurzelzertifikate) wird durch den IT-Betrieb verwaltet und Benutzer können ihn nicht ändern. Der Browser MUSS den Benutzer eindeutig über den Verschlüsselungsstatus informieren, bei ungültigen Zertifikaten die Verbindung abbrechen und darf sie erst nach ausdrücklicher Bestätigung durch den Benutzer fortsetzen. Lokale Zertifikatssperrungen sind möglich."
+                  },
+                  {
+                    "statement-id": "app.1.2.a3-m4",
+                    "uuid": "c3a968e1-e49e-4a3b-824f-d47f11e0f6e7",
+                    "description": "Zusätzlich zu den definierten Prüfungen wird die 'SOLLTE'-Anforderung umgesetzt: Der Webbrowser bietet dem Benutzer auf Anforderung eine einfache Möglichkeit, das verwendete Serverzertifikat und dessen Details anzuzeigen. OCSP-Stapling wird bevorzugt und, wo vom Server angeboten, für die Sperrprüfung genutzt, um die Privatsphäre und Performance zu verbessern."
+                  },
+                  {
+                    "statement-id": "app.1.2.a3-m5",
+                    "uuid": "542742d2-b987-41d3-8530-ba80e6a97d6a",
+                    "description": "Der Browser wird so konfiguriert, dass er OCSP Must-Staple erzwingt, wann immer dies von einem Zertifikat verlangt wird. Zusätzlich wird die Überprüfung von Certificate Transparency (CT)-Logs für alle öffentlichen Zertifikate erzwungen. Es wird ein minimaler, streng kuratierter Satz von vertrauenswürdigen Root-CAs durchgesetzt und alle anderen werden aktiv blockiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "6689b636-4f2c-491d-aa83-25d919aeb114",
+                "control-id": "KONF.12.4",
+                "description": "Implementation for KONF.12.4 based on BSI APP.1.2.A6",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a6-m1",
+                    "uuid": "7c1fddb2-4f48-4482-8b91-e39988d09b8b",
+                    "description": "Der integrierte Kennwortmanager des Webbrowsers wird verwendet, um Passwörter zu speichern, jedoch ohne die Verwendung eines Master-Kennworts. Die gespeicherten Passwörter sind auf dem System nur durch die Anmeldung am Betriebssystem geschützt."
+                  },
+                  {
+                    "statement-id": "app.1.2.a6-m2",
+                    "uuid": "0bfbe884-2f17-4edd-90ce-d13b1ad90360",
+                    "description": "Die Verwendung eines Master-Kennworts wird den Benutzern empfohlen, um den Passwortspeicher des Browsers zu schützen. Die Umsetzung ist jedoch den Benutzern überlassen und wird nicht erzwungen oder überprüft."
+                  },
+                  {
+                    "statement-id": "app.1.2.a6-m3",
+                    "uuid": "e5d8e584-2ed3-4b6d-b145-8a988dd639d1",
+                    "description": "Wird ein Kennwortmanager im Webbrowser verwendet, MUSS er eine direkte und eindeutige Beziehung zwischen Webseite (Origin) und dem hierfür gespeicherten Kennwort herstellen. Der Kennwortspeicher MUSS die Passwörter verschlüsselt speichern. Es MUSS sichergestellt werden, dass auf die im Kennwortmanager gespeicherten Passwörter nur nach Eingabe eines Master-Kennworts zugegriffen werden kann. Die Authentisierung für den Zugriff ist nur für die aktuelle Sitzung gültig. Der IT-Betrieb MUSS sicherstellen, dass Benutzer gespeicherte Passwörter löschen können."
+                  },
+                  {
+                    "statement-id": "app.1.2.a6-m4",
+                    "uuid": "06ac4428-972f-4ca6-89fb-105d22323ba4",
+                    "description": "Die Speicherung von Passwörtern im Browser ist entweder generell per Richtlinie deaktiviert oder es wird die Verwendung einer dedizierten, von der Organisation genehmigten Passwort-Manager-Erweiterung anstelle der integrierten Funktion vorgeschrieben. Die Komplexität des Master-Kennworts unterliegt den Passwortrichtlinien der Organisation."
+                  },
+                  {
+                    "statement-id": "app.1.2.a6-m5",
+                    "uuid": "a41e1087-5ca6-4b42-b838-9f62a2eff76e",
+                    "description": "Es ist ein zentral verwalteter Enterprise-Passwort-Manager im Einsatz, der als Browser-Erweiterung integriert ist. Dieser erzwingt die Passwortrichtlinien der Organisation, ermöglicht sicheres Teilen von Zugangsdaten in Teams, bietet detaillierte Audit-Logs und warnt proaktiv vor kompromittierten oder schwachen Passwörtern durch Anbindung an Breach-Datenbanken."
+                  }
+                ]
+              },
+              {
+                "uuid": "18d420f7-3a5b-4df6-8104-1ae43dd9615e",
+                "control-id": "KONF.12.5",
+                "description": "Implementation for KONF.12.5 based on BSI APP.1.2.A7",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a7-m1",
+                    "uuid": "8ababfb5-1603-4747-8482-b81c499808bc",
+                    "description": "Benutzer sind sich der Privatsphäre-Einstellungen bewusst, verwalten diese aber nur sporadisch und inkonsistent. Einige Einstellungen wie das Blockieren von Drittanbieter-Cookies werden vielleicht vorgenommen, aber andere datenschutzrelevante Funktionen wie Browser-Synchronisation oder Telemetrie bleiben aktiv."
+                  },
+                  {
+                    "statement-id": "app.1.2.a7-m2",
+                    "uuid": "8a92211b-ed83-4584-993d-de7351a5c604",
+                    "description": "Es gibt eine organisatorische Empfehlung zur Konfiguration von Datenschutzeinstellungen. Benutzer werden angeleitet, Drittanbieter-Cookies zu blockieren und ihre Browserdaten regelmäßig manuell zu löschen. Die Umsetzung wird jedoch nicht technisch erzwungen."
+                  },
+                  {
+                    "statement-id": "app.1.2.a7-m3",
+                    "uuid": "2e821ed5-e9fa-4d4e-8bbd-f9fe7c2cc63f",
+                    "description": "Eine grundlegende Datenschutzkonfiguration wird definiert und zentral ausgerollt. Diese kann beispielsweise die Deaktivierung der Autovervollständigungsfunktion und der Browser-Synchronisation mit Cloud-Diensten umfassen. Die Benutzer werden geschult und angewiesen, Cookies von Drittanbietern zu blockieren und haben die Möglichkeit, ihre Browserdaten (Cookies, Historie) zu löschen."
+                  },
+                  {
+                    "statement-id": "app.1.2.a7-m4",
+                    "uuid": "5c3016b7-21e1-45b9-855d-ff8398455929",
+                    "description": "Alle relevanten 'SOLLTE'-Anforderungen werden durch eine zentrale Richtlinie umgesetzt. Cookies von fremden Institutionen (Drittanbieter-Cookies) SOLLTEN blockiert werden. Telemetriefunktionen und das automatische Senden von Absturzberichten SOLLTEN deaktiviert werden. Der Zugriff auf Peripheriegeräte (Mikrofon, Webcam, Standort) SOLLTE standardmäßig blockiert und nur nach expliziter Genehmigung pro Seite erlaubt sein. Die Konfiguration von WebRTC, HSTS und JavaScript wird dem Benutzer ermöglicht oder ist restriktiv voreingestellt."
+                  },
+                  {
+                    "statement-id": "app.1.2.a7-m5",
+                    "uuid": "25c90a97-ac87-4fdf-938f-9036fb415de0",
+                    "description": "Eine strikte Datenschutzkonfiguration ist erzwungen und kann von Benutzern nicht geändert werden. Dies beinhaltet das Blockieren aller Drittanbieter-Cookies, die Deaktivierung von Telemetrie und Synchronisation sowie die Aktivierung erweiterter Tracking-Schutzmaßnahmen auf der höchsten Stufe. Zusätzlich wird eine Richtlinie zum Löschen aller Browserdaten beim Schließen des Browsers durchgesetzt."
+                  }
+                ]
+              },
+              {
+                "uuid": "1aa070ca-f6f6-4fc4-a0cb-0b6b2dc46362",
+                "control-id": "KONF.12.6",
+                "description": "Implementation for KONF.12.6 based on BSI APP.1.2.A10",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a10-m1",
+                    "uuid": "c07e167b-ba2e-4bca-acc3-ecdee17fd0e8",
+                    "description": "Die Benutzer kennen den privaten Modus (Inkognito-Modus) des Browsers und verwenden ihn gelegentlich nach eigenem Ermessen, ohne dass es eine organisatorische Vorgabe gibt."
+                  },
+                  {
+                    "statement-id": "app.1.2.a10-m2",
+                    "uuid": "bb456d13-7063-43ec-b1a6-6a404766d012",
+                    "description": "Es existiert eine organisatorische Empfehlung, den privaten Modus für das Surfen auf nicht vertrauenswürdigen oder sensiblen Webseiten zu verwenden. Die Einhaltung wird jedoch nicht überprüft."
+                  },
+                  {
+                    "statement-id": "app.1.2.a10-m3",
+                    "uuid": "15d71d93-d7a9-4641-8239-cae6987c8cd6",
+                    "description": "Eine Richtlinie schreibt die Verwendung des privaten Modus für bestimmte Benutzergruppen oder Tätigkeiten mit erhöhtem Vertraulichkeitsbedarf vor. Die Benutzer werden entsprechend geschult."
+                  },
+                  {
+                    "statement-id": "app.1.2.a10-m4",
+                    "uuid": "5b7a205e-3d77-4f00-92fa-ae35e7039ead",
+                    "description": "Der Webbrowser SOLLTE bei erhöhten Anforderungen bezüglich der Vertraulichkeit im sogenannten privaten Modus ausgeführt werden. Der Browser SOLLTE so konfiguriert werden, dass lokale Inhalte beim Beenden gelöscht werden. Dies wird durch eine zentrale Richtlinie erzwungen, die den Browser für alle Benutzer oder definierte Gruppen standardmäßig im privaten Modus startet."
+                  },
+                  {
+                    "statement-id": "app.1.2.a10-m5",
+                    "uuid": "ac00174d-6f80-41aa-b947-67555de92c6f",
+                    "description": "Die Verwendung des privaten Modus wird mit einer Browser-Isolationslösung (siehe APP.1.2.A9) kombiniert. Die Browser-Sitzungen finden in einer entfernten, nicht-persistenten Instanz statt, die nach jeder Sitzung garantiert vollständig zerstört wird. Dies bietet ein höheres Maß an Sicherheit als der lokale private Modus."
+                  }
+                ]
+              },
+              {
+                "uuid": "a37d619d-c24e-44f5-ba5e-53e46b0a15bd",
+                "control-id": "KONF.14.1",
+                "description": "Implementation for KONF.14.1 based on BSI APP.1.2.A2",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a2-m1",
+                    "uuid": "556cd891-d540-4622-893d-0bf5fbfa0447",
+                    "description": "Der Webbrowser unterstützt zwar TLS, jedoch sind veraltete und unsichere Protokollversionen (SSLv3, TLS 1.0, TLS 1.1) weiterhin aktiviert und können für Verbindungen genutzt werden. HSTS wird nicht aktiv eingesetzt oder konfiguriert."
+                  },
+                  {
+                    "statement-id": "app.1.2.a2-m2",
+                    "uuid": "924c1293-1a2b-40e7-ab83-a3c42f3cb136",
+                    "description": "Der Webbrowser ist so konfiguriert, dass er standardmäßig sichere TLS-Versionen (mindestens 1.2) für die Kommunikation nutzt. Verbindungen zu Webservern werden opportunistisch mit TLS verschlüsselt, wenn der Server dies anbietet. HSTS wird vom Browser unterstützt, aber nicht aktiv durch Richtlinien erzwungen."
+                  },
+                  {
+                    "statement-id": "app.1.2.a2-m3",
+                    "uuid": "35cc5635-66f9-43f3-9ba3-cee6839f5826",
+                    "description": "Der Webbrowser MUSS Transport Layer Security (TLS) in einer sicheren Version unterstützen. Verbindungen zu Webservern MÜSSEN mit TLS verschlüsselt werden, falls dies vom Webserver unterstützt wird. Der Webbrowser MUSS den Sicherheitsmechanismus HTTP Strict Transport Security (HSTS) gemäß RFC 6797 unterstützen und einsetzen. Eine Richtlinie, die sichere Protokollversionen und Cipher Suites vorschreibt, ist dokumentiert und umgesetzt."
+                  },
+                  {
+                    "statement-id": "app.1.2.a2-m4",
+                    "uuid": "b820be8c-1280-4c57-98b1-433b55a9a616",
+                    "description": "Die 'SOLLTE'-Anforderung wird umgesetzt: Unsichere Versionen von TLS (insbesondere 1.0 und 1.1) sowie schwache Cipher Suites (z.B. solche mit RC4 oder 3DES) werden explizit und nachweislich durch eine zentrale Richtlinie deaktiviert. Die HSTS-Preload-Liste des Browsers wird aktiv genutzt, um wichtige Domains vor Downgrade-Angriffen zu schützen."
+                  },
+                  {
+                    "statement-id": "app.1.2.a2-m5",
+                    "uuid": "6084aa70-45a2-40da-9d94-f52336ec457d",
+                    "description": "Eine strikte Richtlinie erzwingt ausschließlich TLS 1.3 für alle Verbindungen, wo dies technisch möglich ist. Die Konformität der Verschlüsselungskonfiguration wird kontinuierlich durch Endpoint-Security-Tools überwacht. Der Browser ist so konfiguriert, dass er Certificate Transparency (CT) für alle Verbindungen erzwingt, um die Ausstellung missbräuchlicher Zertifikate zu erkennen."
+                  }
+                ]
+              },
+              {
+                "uuid": "b267d792-944d-434a-aa17-50bba8783dcf",
+                "control-id": "KONF.6.14",
+                "description": "Implementation for KONF.6.14 based on BSI APP.1.2.A1",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a1-m1",
+                    "uuid": "35bcde2a-651d-4c38-ba23-1dd6d78565ea",
+                    "description": "Nur einzelne grundlegende Sicherheitsmechanismen des Webbrowsers wie Sandboxing sind aktiviert. Andere wichtige Mechanismen wie eine Content Security Policy (CSP) sind nicht konfiguriert oder werden nicht durchgesetzt. Die Konfiguration ist über die verschiedenen Systeme der Organisation hinweg inkonsistent."
+                  },
+                  {
+                    "statement-id": "app.1.2.a1-m2",
+                    "uuid": "b35be77e-f694-40b7-9113-ee8acc129a66",
+                    "description": "Die grundlegenden, im Browser integrierten Sicherheitsmechanismen wie Sandboxing, Same-Origin-Policy (SOP) und Subresource Integrity (SRI) sind durchgehend aktiviert. Eine Content Security Policy (CSP) ist jedoch noch nicht implementiert oder nur in einer sehr permissiven Konfiguration (z. B. im Report-Only-Modus) vorhanden."
+                  },
+                  {
+                    "statement-id": "app.1.2.a1-m3",
+                    "uuid": "2fdc4443-322c-412f-a629-7e5b638f96b4",
+                    "description": "Der eingesetzte Webbrowser MUSS sicherstellen, dass jede Instanz und jeder Verarbeitungsprozess nur auf die eigenen Ressourcen zugreifen kann (Sandboxing). Webseiten MÜSSEN als eigenständige Prozesse oder mindestens als eigene Threads voneinander isoliert werden. Plug-ins und Erweiterungen MÜSSEN ebenfalls in isolierten Bereichen ausgeführt werden. Der verwendete Webbrowser MUSS die Content Security Policy (CSP) umsetzen. Der Browser MUSS Maßnahmen zur Same-Origin-Policy und Subresource Integrity unterstützen. Diese Konfigurationen sind dokumentiert und werden konsistent auf alle Systeme ausgerollt."
+                  },
+                  {
+                    "statement-id": "app.1.2.a1-m4",
+                    "uuid": "65d737ff-5eaf-4214-ab61-94b5119193f3",
+                    "description": "Aufbauend auf der definierten Konfiguration wird die 'SOLLTE'-Anforderung umgesetzt: Der aktuell höchste Level der Content Security Policy (CSP) wird erfüllt. Die CSP-Richtlinien sind restriktiv und spezifisch auf die genutzten Webanwendungen zugeschnitten. Die Konfigurationen der Sicherheitsmechanismen werden regelmäßig auf Verbesserungen und neue Features überprüft."
+                  },
+                  {
+                    "statement-id": "app.1.2.a1-m5",
+                    "uuid": "24739405-8667-4c96-b188-994a8e7400ae",
+                    "description": "Alle grundlegenden Sicherheitsmechanismen sind nicht nur implementiert, sondern auch maximal gehärtet. Die CSP ist streng und wird dynamisch verwaltet. Zusätzlich werden fortschrittliche Schutzmaßnahmen wie 'Trusted Types' zur Abwehr von DOM-XSS-Angriffen durchgesetzt. Die Integrität der Browserkonfiguration wird kontinuierlich und automatisiert überwacht."
+                  }
+                ]
+              },
+              {
+                "uuid": "5b191b70-a600-4a86-a34a-21404d442f43",
+                "control-id": "KONF.6.15",
+                "description": "Implementation for KONF.6.15 based on BSI APP.1.2.A9",
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a9-m1",
+                    "uuid": "4ab56af7-38ab-47b7-9cf8-48961eb17e26",
+                    "description": "Eine isolierte Browser-Umgebung wird nur von einzelnen, besonders gefährdeten Personen (z.B. Administratoren) und auf freiwilliger Basis genutzt. Es gibt keine organisatorische Vorgabe."
+                  },
+                  {
+                    "statement-id": "app.1.2.a9-m2",
+                    "uuid": "b790b58e-7c24-4647-b41b-330b83142752",
+                    "description": "Eine standardisierte, virtualisierte Browser-Instanz (z.B. in einer einfachen VM) wird für Hochrisikobenutzer auf Anfrage zur Verfügung gestellt. Das Setup ist grundlegend und wird nicht zentral verwaltet oder gehärtet."
+                  },
+                  {
+                    "statement-id": "app.1.2.a9-m3",
+                    "uuid": "74e95c3e-0ec0-4623-a1c9-f38332b08bbe",
+                    "description": "Basierend auf einer Risikoanalyse wird eine Richtlinie definiert, die vorschreibt, wann eine isolierte Browserumgebung verwendet werden muss (z.B. für den gesamten Zugriff auf das Internet). Eine standardisierte, gehärtete und zentral verwaltete virtualisierte Browser-Instanz wird für alle relevanten Benutzer bereitgestellt."
+                  },
+                  {
+                    "statement-id": "app.1.2.a9-m4",
+                    "uuid": "eab45670-b7cb-4396-b959-9cec67333259",
+                    "description": "Die Institution SOLLTE speziell abgesicherte, isolierte Browserumgebungen einsetzen. Es wird eine dedizierte Browser-Isolationslösung (z.B. Remote Browser Isolation - RBI, oder eine containerbasierte Lösung wie ReCoBS) implementiert. Diese stellt sicher, dass Webinhalte in einer entfernten, nicht-persistenten Umgebung ausgeführt und nur die gerenderten, sicheren Ergebnisse an den Client-Browser gestreamt werden."
+                  },
+                  {
+                    "statement-id": "app.1.2.a9-m5",
+                    "uuid": "3e32797b-5ee2-4fa9-98f8-546f479410c6",
+                    "description": "Die Browser-Isolationslösung ist vollständig in den Sicherheitsstack der Organisation integriert. Der Datenverkehr aus der Isolationsumgebung wird durch einen zentralen Web-Gateway zur Inhaltsprüfung (Malware-Scanning, DLP) geleitet, bevor er zum Benutzer gelangt. Die Isolationsinstanzen sind nicht-persistent und werden nach jeder Sitzung garantiert zerstört. Die Lösung selbst ist gehärtet und wird regelmäßig Penetrationstests unterzogen."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

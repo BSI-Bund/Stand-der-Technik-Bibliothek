@@ -1,0 +1,386 @@
+{
+  "component-definition": {
+    "uuid": "72d77560-f22b-4bec-82f8-e555d6be210e",
+    "metadata": {
+      "title": "SYS.2.6 Virtualisierungslösungen - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:59.343130+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "3f3e2518-fb50-47af-a37e-3cb1794564d1",
+        "type": "hardware",
+        "title": "SYS.2.6 Virtualisierungslösungen",
+        "description": "This component represents the implementation of all controls for Baustein SYS.2.6.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Eine Virtual Desktop Infrastructure (VDI) steuert und verwaltet standardisierte virtuelle Clients. Hierdurch können zentralisiert einzelne Anwendungen (z. B. Office-Programme) oder ganze Desktops zur Verfügung gestellt werden. Virtuelle Clients sind dabei virtualisierte IT-Systeme, auf die über Terminalserver-Protokolle zugegriffen werden kann. Die virtuellen Clients werden auf Virtualisierungsservern ausgeführt, die mit einem Managementsystem zu einer Virtualisierungsinfrastruktur zusammengefasst werden (siehe Bausteine SYS.1.5 Virtualisierung und SYS.2.5 Client-Virtualisierung).\nJe nachdem, welches Produkt eingesetzt wird, besteht eine VDI typischerweise aus Zugangs-, Steuerungs- und Managementkomponenten, die auf einem oder auf mehreren IT-Systemen verteilt betrieben werden. Diese zentralen VDI-Komponenten verwalten unter anderem die Virtualisierungsinfrastruktur und stellen die Verbindungen zwischen zugreifenden und virtuellen Clients her. Daher sind die Virtualisierungsinfrastruktur, die angebundenen Storage-Systeme sowie die virtuellen und zugreifenden Clients ebenfalls impliziter Teil der VDI. In diesem Baustein sind jedoch mit „VDI-Komponenten“ immer die folgenden drei zentralen Komponenten einer VDI gemeint:\n• Die VDI-Zugangskomponenten authentisieren die Benutzenden und entscheiden anhand ihrer Berechtigungen, ob Zugriffe erlaubt oder nicht erlaubt sowie für welchen Typ von virtuellem Client die Benutzenden autorisiert sind.\n• Die VDI-Steuerungskomponenten wählen für die erlaubten Zugänge die entsprechenden virtuellen Clients aus und stellen die Verbindung zwischen zugreifendem und virtuellem Client her.\n• Die VDI-Managementkomponenten verwalten die Regeln (z. B. die Zuordnung von Benutzenden zu Clienttypen) und Einstellungen (z. B. die zu nutzenden Protokolle). Außerdem verwalten sie die virtuellen Clients (gemäß SYS.2.5 Client-Virtualisierung). Dies umfasst auch die zugewiesenen Ressourcen und deren Provisionierung sowie die Terminalserver-spezifischen Einstellungen der virtuellen Clients.\nAußerdem kann es zusätzlich erforderlich sein, dass weitere Infrastrukturdienste angebunden werden, die nicht zur VDI-Lösung selbst gehören (z. B. Verzeichnisdienste, Namensauflösung oder IP-Adress-Management)."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, Informationen zu schützen, die beim Einsatz einer VDI gespeichert, verarbeitet und übertragen werden. Hierzu werden spezielle Anforderungen an die in der Einleitung beschriebenen Komponenten einer VDI gestellt."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.2.6 Virtual Desktop Infrastructure ist auf jedes IT-System anzuwenden, das als Teil einer VDI-Lösung eingesetzt wird.\nDieser Baustein behandelt die folgenden Inhalte:\nDer Baustein SYS.2.6 Virtual Desktop Infrastructure behandelt den sicheren Einsatz einer VDI. Dabei wird der Fokus auf die drei zentralen Komponenten einer VDI gelegt.\nDieser Baustein beinhaltet spezifische Anforderungen an die verwendeten Netze, um die Kommunikation zwischen zugreifendem Client und Virtualisierungsinfrastruktur abzusichern.\nFolgende Inhalte sind ebenfalls von Bedeutung und werden an anderer Stelle behandelt:\n• Die grundlegende Funktionalität der Kommunikation zwischen einem zugreifenden und einem virtuellen Client in einer VDI-Lösung wird mithilfe von Terminalserver-Techniken erfüllt. Daher ist der Baustein SYS.1.9 Terminalserver ebenfalls auf die VDI-Lösung anzuwenden, wobei die einzelnen virtuellen Clients die eigentlichen Terminalserver sind.\n• Ebenfalls sind die Bausteine SYS.2.5 Client-Virtualisierung und SYS.1.5 Virtualisierung für die einzelnen virtuellen Clients bzw. die Virtualisierungsinfrastruktur anzuwenden, speziell für die Isolation der virtuellen Clients über den Virtualisierungsserver.\n• Grundsätzliche Anforderungen an die einzelnen Server-Komponenten sowie die zugreifenden und virtuellen Clients sind dem Baustein SYS.1.1 Allgemeiner Server bzw. SYS.2.1 Allgemeiner Client zu entnehmen. Außerdem sind gegebenenfalls betriebssystemspezifische Bausteine anzuwenden.\n• Der Baustein NET.1.1 Netzarchitektur und -design muss angewendet werden, um die Netze abzusichern, die für die VDI genutzt werden.\nDieser Baustein behandelt nicht\n• diejenigen IT-Systeme, die im Kontext der VDI zusätzlich zu den oben beschriebenen VDI-Komponenten verwendet werden (z. B. Storage Systeme) sowie\n• die Techniken, die bei der Virtualisierung oder für die Kommunikation zwischen zugreifenden und virtuellen Clients eingesetzt werden."
+          },
+          {
+            "name": "2.1. Qualitätsverlust der Bereitstellung virtueller Clients",
+            "value": "Eine VDI wird in vielen Fällen dazu eingesetzt, um Ressourcen zu optimieren. Werden jedoch viele virtuelle Clients auf einzelnen Virtualisierungsservern platziert, können die verfügbaren Ressourcen überbucht werden. Auch wenn die geplante Anzahl der Benutzenden unzutreffend eingeschätzt wurde, können die Ressourcen überbucht werden.\nHierdurch können virtuelle Clients in der VDI stark um Ressourcen konkurrieren und die Leistung kann unvorhersehbar einbrechen. Das kann dazu führen, dass die virtuellen Clients temporär nicht mehr verfügbar sind.\nDie Leistungseinbrüche sind für die Benutzenden meist intransparent, so dass Daten verloren gehen oder ungewollt geändert werden."
+          },
+          {
+            "name": "2.2. Falsche Zuweisung von virtuellen Clients zu Benutzenden",
+            "value": "Den Benutzenden werden virtuelle Clients und deren Ressourcen anhand von Profilen von der VDI zentralisiert zugewiesen. Sollte eine solche Zuweisung fehlerhaft sein, können hierdurch\n• hohe Kosten entstehen, wenn leistungsstarke virtuelle Clients an Benutzende ohne großen Ressourcenbedarf zugewiesen werden,\n• virtuelle Clients mit geringer Leistung an Benutzende mit hohem Ressourcenbedarf oder besonderen Hardwareanforderungen, z. B. für CAD-Aufgaben, zugewiesen werden,\n• Benutzende auf IT-Systeme und Informationen unberechtigt zugreifen oder\n• externe USB-Geräte angebunden und Informationen an nicht dafür vorgesehene virtuelle Clients übertragen werden."
+          },
+          {
+            "name": "2.3. Unzureichende Netztrennung durch Fehlkonfiguration in der VDI",
+            "value": "Typischerweise werden in einer VDI-Lösung unterschiedliche virtuelle Clients betrieben, die sich stark in ihren Anwendungsbereichen unterscheiden und entsprechend auch unterschiedlichen Netzen zugeordnet sein können. Die VDI-Managementkomponente verwaltet alle diese Clients. Ist die VDI-Managementkomponente fehlerhaft konfiguriert, kann eine notwendige Netztrennung aufgehoben werden. Unter Umständen können hierdurch virtuelle Clients unerlaubt miteinander kommunizieren.\nDiese Situation ergibt sich beispielsweise, wenn die virtuellen Clients den Benutzenden auf Basis von Eigenschaften wie Gruppenzugehörigkeiten zugewiesen und falsch zugeordnet werden. In diesem Fall kann eine Netztrennung umgangen werden, die eigentlich zwischen Clients verschiedener Gruppen bestehen sollte."
+          },
+          {
+            "name": "2.4. Verlust von virtuellen Clients durch Fehlkonfiguration in der VDI",
+            "value": "Eine Stärke von VDI ist es, dass viele verschiedene virtuelle Clients über wenige Vorlagen (Templates) einfach verwaltet werden können. Damit können neue Desktops schnell provisioniert sowie fehlerhafte Desktops repariert oder ausgetauscht werden.\nDurch diese zentralisierte Verwaltung können aber durch gelöschte oder korrumpierte Templates virtuelle Clients verloren gehen. Werden bestimmte Daten von Benutzenden ausschließlich auf dem Speicher der virtuellen Clients abgelegt, führt der Verlust eines virtuellen Clients auch zu einem Verlust dieser Daten.\nAuch von den Benutzenden geänderte Konfigurationen werden unwiederbringlich gelöscht, wenn der virtuelle Client zurückgesetzt wird."
+          },
+          {
+            "name": "2.5. Ausfall von VDI-Komponenten",
+            "value": "Eine VDI besteht typischerweise aus mehreren Komponenten, die voneinander abhängen. Fällt auch nur eine dieser Komponenten aus, beispielsweise aufgrund von Hard- oder Software-Fehlern oder aufgrund von Fehlkonfigurationen, kann dies die Verfügbarkeit der gesamten VDI-Lösung und damit die Arbeitsfähigkeit der Benutzenden beeinträchtigen.\nEin Ausfall einer oder mehrerer Komponenten kann sehr unterschiedliche Auswirkungen haben. Beispielsweise ist beim Ausfall der VDI-Managementkomponente prinzipiell ein normaler Arbeitsbetrieb möglich, aber es können keine Anpassungen vorgenommen werden. Dies kann unter anderem dazu führen, dass\n• neue virtuelle Clients nicht bereitgestellt werden können,\n• virtuelle Clients nach Fehlern nicht in einen funktionsfähigen Basiszustand zurückgesetzt werden können,\n• das Troubleshooting erschwert wird, da die gesammelten Informationen der Managementfunktionen nicht verfügbar sind oder\n• die Ressourcen eines virtuellen Clients nicht angepasst werden können, falls diese für Einzelne nicht ausreichen.\nDie Zugangs- oder Steuerungskomponenten mancher VDI-Produkte bieten ohne die Managementkomponente nicht ihren vollen Funktionsumfang."
+          },
+          {
+            "name": "2.6. Unberechtigter Zugriff auf virtuelle Clients",
+            "value": "Eine VDI-Managementkomponente verwaltet alle zugehörigen Clients. Wird die VDI-Managementkomponente kompromittiert (beispielsweise aufgrund ausgenutzter Schwachstellen oder Fehlkonfiguration), kann von dort aus auf die virtuellen Clients zugegriffen werden. In diesem Fall können Verfügbarkeit, Vertraulichkeit oder Integrität der virtuellen Clients beeinträchtigt werden.\nEinige VDI-Lösungen bringen eine Agentensoftware mit sich, die innerhalb der virtuellen Clients genutzt und für bestimmte VDI-Funktionen (z. B. Verbindungsaufbau, 3D-Beschleunigung, Optimierung des Speicherverbrauchs) benötigt wird. Wirkt sich eine Fehlkonfiguration auf diese Agentensoftware aus, können die virtuellen Clients gefährdet sein.\nDie Agentensoftware und die Managementkomponente der VDI steuern je nach Größe der Umgebung viele Clients. In diesen Fällen kann auf viele verschiedene virtuelle Clients zugegriffen werden."
+          },
+          {
+            "name": "2.7. Nutzung von Templates mit Software-Schwachstellen",
+            "value": "In einer VDI können schnell und zentralisiert virtuelle Clients aus einer definierten Menge von Templates erzeugt werden. Wenn diese Templates erzeugt werden, sind sie in der Regel auf einem aktuellen Software-Stand ohne bekannte Schwachstellen.\nOhne eine regelmäßige Aktualisierung dieser Templates ist es jedoch möglich, dass ein neu erzeugter virtueller Client Schwachstellen aufweist, die bekannt wurden, nachdem das Template erzeugt wurde. Können andere IT-Systeme auf diesen virtuellen Client zugreifen, kann die bekannte Schwachstelle ausgenutzt werden und somit der virtuelle Client kompromittiert werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "0b6d88ed-7781-4de2-8062-6a778aa9c84c",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/virtualisierungslsungen_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.2.6",
+            "implemented-requirements": [
+              {
+                "uuid": "130ab317-e1c7-4dd3-a3a7-0e40656229cf",
+                "control-id": "ARCH.7.1",
+                "description": "Implementation for ARCH.7.1 based on BSI SYS.2.6.A6",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a6-m3",
+                    "uuid": "e6e4ba06-ae55-44fb-a9ba-23b32a577dce",
+                    "description": "Falls die VDI-Komponenten virtualisiert betrieben werden, SOLLTEN sie auf einer dedizierten Virtualisierungsinfrastruktur betrieben werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a6-m4",
+                    "uuid": "849b7450-fcc1-46ab-8491-7b3bf3f6cab9",
+                    "description": "Nicht nur die Hypervisoren, sondern auch die zugrundeliegende Storage- und Netzwerkinfrastruktur für die VDI-Managementkomponenten sind physisch oder logisch strikt von der Infrastruktur getrennt, die die virtuellen Clients und andere Anwendungen versorgt."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a6-m5",
+                    "uuid": "74d43cb6-d641-4372-ab38-236c9a0046da",
+                    "description": "Die VDI-Management-Ebene wird in einer dedizierten Hochsicherheitszone betrieben, idealerweise auf dedizierter physischer Hardware, mit strikten physischen und logischen Zugangskontrollen und intensiver Überwachung. Sie wird als kritische Infrastruktur behandelt."
+                  }
+                ]
+              },
+              {
+                "uuid": "8b5dd862-5059-486e-92cf-b077d7cc1b27",
+                "control-id": "ARCH.8.3",
+                "description": "Implementation for ARCH.8.3 based on BSI SYS.2.6.A15",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a15-m3",
+                    "uuid": "bd75c245-3381-4308-856f-bf9ecade1421",
+                    "description": "Die VDI-Komponenten SOLLTEN redundant ausgelegt werden. Jede Komponente SOLLTE darüber hinaus redundant an die relevanten Netze angeschlossen werden. Falls die VDI-Komponenten auf physischen IT-Systemen betrieben werden, SOLLTEN diese IT-Systeme über redundante Stromversorgung und Datenspeicher verfügen. Falls die VDI-Komponenten virtualisiert betrieben werden, SOLLTEN Mechanismen der Virtualisierungsinfrastruktur für die Hochverfügbarkeit eingesetzt werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a15-m4",
+                    "uuid": "dab8bf29-0504-42c4-80fb-ec60562cde08",
+                    "description": "Die VDI-Lösung ist auf zwei physisch getrennte Rechenzentren in einer Stretched-Cluster-Konfiguration verteilt, was eine standortbezogene Ausfallsicherheit bietet. Der Failover-Prozess wird im Rahmen eines formalen Disaster-Recovery-Plans regelmäßig (z.B. halbjährlich) getestet."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a15-m5",
+                    "uuid": "e0ea95e9-58d2-470f-acde-2e7b4894660b",
+                    "description": "Eine standortübergreifende Aktiv-Aktiv-Architektur mit Global Server Load Balancing (GSLB) ist implementiert. Benutzer werden automatisch und transparent zum nächstgelegenen oder leistungsfähigsten Rechenzentrum geleitet. Das System kann den Totalausfall eines Standorts ohne Datenverlust und mit nur minimaler oder keiner Serviceunterbrechung für die Benutzer verkraften."
+                  }
+                ]
+              },
+              {
+                "uuid": "28ed0a9d-e7a6-4b9b-a101-8eeb9a7a8b1e",
+                "control-id": "BES.2.1.3",
+                "description": "Implementation for BES.2.1.3 based on BSI SYS.2.6.A1",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a1-m1",
+                    "uuid": "ea9a816b-59d7-482d-8543-52196457cd14",
+                    "description": "Die Planung für den VDI-Einsatz erfolgt ad-hoc und konzentriert sich nur auf einen unmittelbaren, begrenzten Anwendungsfall, wie z. B. ein Pilotprojekt. Eine langfristige Strategie oder die Anforderungen der gesamten Benutzerbasis werden nicht berücksichtigt. Leistungsanforderungen werden nur grob geschätzt."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m2",
+                    "uuid": "8787225b-26d1-48d9-a00d-0cbbbcb2b405",
+                    "description": "Eine grundlegende Planung für den VDI-Einsatz ist vorhanden. Die Anzahl der zu versorgenden virtuellen Clients und deren generelle Leistungsanforderungen (z.B. für Office-Arbeitsplätze) sind identifiziert. Die Planung ist jedoch nicht detailliert und berücksichtigt Aspekte wie zukünftiges Wachstum oder den Support-Lebenszyklus der Lösung nur am Rande."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m3",
+                    "uuid": "6c5e3f51-4c10-4626-b3bd-7c51fbce4e21",
+                    "description": "Die Leistungsanforderungen und Anzahl der benötigten virtuellen Clients sowie die daraus resultierenden Anforderungen an die Dimensionierung der VDI MÜSSEN identifiziert werden. Die VDI-Komponenten MÜSSEN anhand dieser Dimensionierungsanforderungen bedarfsgerecht geplant werden. Die VDI-Komponenten und die genutzte Virtualisierungsinfrastruktur MÜSSEN aufeinander abgestimmt geplant werden. Der Support MUSS für den gesamten geplanten Einsatzzeitraum der VDI-Lösung bei der Planung mitberücksichtigt werden. Die Anzahl virtueller Clients und deren benötigte Leistung pro Virtualisierungsserver MUSS festgelegt werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m4",
+                    "uuid": "eceb39e7-0621-4613-bbb6-1561de329342",
+                    "description": "Die Planung umfasst ein detailliertes Kapazitätsmanagement, das Prognosen für Benutzerwachstum und sich ändernde Anwendungsanforderungen über den gesamten Lebenszyklus der VDI-Lösung beinhaltet. Ein formaler Kapazitätsplan wird erstellt und periodisch (z. B. jährlich) überprüft und angepasst, um sicherzustellen, dass die Ressourcen auch zukünftig ausreichen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m5",
+                    "uuid": "b5c91724-e68d-40c0-b1ff-bb89f1ef2cff",
+                    "description": "Die VDI-Planung ist vollständig in die strategische IT-Planung und das Finanzcontrolling integriert. Es werden automatisierte Werkzeuge zur Kapazitätsprognose eingesetzt, die auf Echtzeit-Nutzungsdaten und Trendanalysen basieren. Der Planungsprozess beinhaltet die Simulation von \"Was-wäre-wenn\"-Szenarien, um die Auswirkungen größerer Geschäftsveränderungen (z. B. Firmenzukäufe) proaktiv zu bewerten."
+                  }
+                ]
+              },
+              {
+                "uuid": "98c7f698-645e-4a72-81bd-98d0f1503afe",
+                "control-id": "DET.3.1.12",
+                "description": "Implementation for DET.3.1.12 based on BSI SYS.2.6.A11",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a11-m3",
+                    "uuid": "09eea4c6-27b4-4591-80e4-095047a59027",
+                    "description": "Für die VDI-Komponenten SOLLTEN mindestens die folgenden Ereignisse an ein zentrales Monitoring weitergeleitet werden: erfolgreiche und fehlgeschlagene Anmeldeversuche, Konfigurationsänderungen an VDI-Komponenten oder virtuellen Clients, erfolgreiche und fehlgeschlagene Updates an VDI-Komponenten, fehlgeschlagene Updates an virtuellen Clients. Die VDI-Komponenten SOLLTEN regelmäßig auf Schwachstellen überprüft werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a11-m4",
+                    "uuid": "302b8bec-0e1e-46bc-ab7e-d38f96cd239b",
+                    "description": "Die gesammelten Protokolldaten werden in einem Security Information and Event Management (SIEM) System mit anderen Datenquellen (z. B. Firewall-Logs, Active Directory-Logs) korreliert. Es sind grundlegende Alarmierungsregeln konfiguriert, um auf verdächtige Ereignisse (z. B. übermäßig viele fehlgeschlagene Anmeldungen von einer IP-Adresse, Konfigurationsänderung außerhalb eines Wartungsfensters) hinzuweisen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a11-m5",
+                    "uuid": "309f32d2-8784-44bb-8246-345ea9b8859c",
+                    "description": "Es werden User and Entity Behavior Analytics (UEBA) auf die VDI-Protokolldaten angewendet, um anomale Aktivitäten zu erkennen, die von regelbasierten Systemen nicht erfasst werden. Die Ergebnisse von Schwachstellen-Scans werden automatisch in ein Ticketing-System eingespeist, um die Behebung nachzuverfolgen und zu eskalieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "73c8ecf7-9abf-49a8-a8f8-ec56440b2f70",
+                "control-id": "DET.4.15",
+                "description": "Implementation for DET.4.15 based on BSI SYS.2.6.A10",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a10-m3",
+                    "uuid": "f3d85941-379c-4147-bbb3-d80c0ccb3b79",
+                    "description": "Der Zustand der VDI-Komponenten SOLLTE zentral überwacht werden. Es SOLLTEN mindestens folgende Parameter für jede VDI-Komponente überwacht werden: Erreichbarkeit der benötigten Netzschnittstellen, Verfügbarkeit der von der VDI-Komponente bereitgestellten Dienste, Auslastung der CPU und des Arbeitsspeichers."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a10-m4",
+                    "uuid": "4a6ce51d-73b3-4fbc-96ad-bbb3c682167f",
+                    "description": "Das Monitoring umfasst anwendungsspezifische Gesundheitsprüfungen (Health Checks) für die VDI-Dienste. Es sind detaillierte Schwellenwerte für Leistungskennzahlen (z.B. Anmeldedauer, Protokolllatenz) definiert, bei deren Überschreitung automatisch Alarme ausgelöst werden. Ein zentrales Dashboard bietet eine Echtzeit-Übersicht über den Gesundheitszustand der gesamten VDI-Umgebung."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a10-m5",
+                    "uuid": "cae4db6f-0930-4e59-8f24-28da9cca44c2",
+                    "description": "Es wird prädiktives Monitoring eingesetzt. Das System analysiert Trends in der Ressourcennutzung, um potenzielle Engpässe vorauszusagen, bevor sie die Benutzer beeinträchtigen. Synthetische Benutzeranmeldungen werden kontinuierlich von verschiedenen Standorten aus durchgeführt, um die End-to-End-Leistung und -Verfügbarkeit proaktiv zu überwachen."
+                  }
+                ]
+              },
+              {
+                "uuid": "94e09141-64ce-43bb-8732-2b02082293e6",
+                "control-id": "DEV.4.9",
+                "description": "Implementation for DEV.4.9 based on BSI SYS.2.6.A7",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a7-m3",
+                    "uuid": "bc097d61-3a80-421d-8365-56ec2c53bb5d",
+                    "description": "Die Möglichkeiten der VDI-Lösung SOLLTEN für die Härtung der virtuellen Clients entsprechend den Anforderungen des Bausteins SYS.2.5 Client-Virtualisierung genutzt werden. Die Betriebssysteme der Clients SOLLTEN ausschließlich über die Managementkomponente der VDI-Lösung konfiguriert werden. Eine individuelle Konfiguration bestehender virtueller Clients über die Virtualisierungsinfrastruktur SOLLTE mit technischen Mitteln unterbunden werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a7-m4",
+                    "uuid": "e6176855-5548-472f-8547-99fa86d3cda9",
+                    "description": "Die Härtungsrichtlinien innerhalb der VDI-Lösung sind umfassend, basieren auf anerkannten Benchmarks (z. B. CIS Benchmarks, DISA STIGs) und werden versioniert. Es werden regelmäßige, automatisierte Audits durchgeführt, um die Konformität der virtuellen Clients mit diesen Richtlinien zu überprüfen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a7-m5",
+                    "uuid": "fccc7ebf-d9f7-405e-b64a-1d5ce2c58190",
+                    "description": "Es wird ein Desired State Configuration (DSC) Management verwendet. Die Härtung der virtuellen Clients wird kontinuierlich durchgesetzt. Jede unautorisierte Änderung an der Konfiguration eines virtuellen Clients wird automatisch erkannt, protokolliert und sofort auf den definierten Soll-Zustand zurückgesetzt."
+                  }
+                ]
+              },
+              {
+                "uuid": "86999541-55cf-4308-bd6f-0072f35fff30",
+                "control-id": "KONF.10.1",
+                "description": "Implementation for KONF.10.1 based on BSI SYS.2.6.A2",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a2-m1",
+                    "uuid": "830fa2b4-d1ec-4d36-8f10-cd758bc72e13",
+                    "description": "Die Installation der VDI-Komponenten erfolgt mit den Standardeinstellungen des Herstellers („Next, Next, Finish“). Sicherheitsaspekte werden nur minimal oder gar nicht berücksichtigt. Eine Dokumentation der Konfiguration ist lückenhaft oder nicht vorhanden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m2",
+                    "uuid": "6a3867e8-c9c2-46c9-9190-72e2dc53b07f",
+                    "description": "Die Installation der VDI-Komponenten folgt den grundlegenden Installationsanleitungen des Herstellers. Einige offensichtliche Sicherheitseinstellungen, wie das Ändern von Standardpasswörtern, werden vorgenommen. Die Konfiguration ist jedoch nicht systematisch gehärtet oder auf das Notwendige beschränkt. Eine grundlegende Dokumentation der Installation ist vorhanden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m3",
+                    "uuid": "b97df7b6-6ddf-49b3-abd7-9b75d5023ae9",
+                    "description": "Wenn die VDI-Komponenten installiert und konfiguriert werden, MUSS mindestens berücksichtigt werden, wie auf betrieblich und technisch notwendige Funktionen beschränkt wird, die Kommunikation zwischen VDI-Komponenten abgesichert wird sowie virtuelle Clients sicher den Benutzenden oder Gruppen hiervon zugewiesen werden. Empfehlungen von dem herstellenden Unternehmen der VDI-Lösung für die sichere Konfiguration MÜSSEN berücksichtigt werden. Die Konfigurationen der VDI-Komponenten MÜSSEN geeignet dokumentiert werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m4",
+                    "uuid": "27855225-6597-4b76-b96a-ccd52b458ef1",
+                    "description": "Es wurde ein formeller Härtungsleitfaden für die VDI-Komponenten entwickelt, der über die Herstellerempfehlungen hinausgeht und auf etablierten Benchmarks (z. B. CIS) basiert. Die Konfigurationen werden zentral in einem Konfigurationsmanagementsystem (z. B. Ansible, Puppet) verwaltet und versioniert. Automatisierte Skripte werden verwendet, um die konsistente Anwendung der Sicherheitseinstellungen sicherzustellen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m5",
+                    "uuid": "f3b62e8c-6c7f-4d67-82c0-5f1e120dbd56",
+                    "description": "Der gesamte Installations- und Konfigurationsprozess ist vollständig automatisiert (Zero-Touch-Provisioning). Sicherheitskonfigurationen werden kontinuierlich mit Policy-as-Code-Werkzeugen überwacht und durchgesetzt. Jede Abweichung von der definierten Sicherheitsbaseline löst sofort einen Alarm und eine automatisierte Wiederherstellung des Soll-Zustands aus."
+                  }
+                ]
+              },
+              {
+                "uuid": "cd97bc5e-d176-40c2-b96c-a15de899856d",
+                "control-id": "KONF.10.3",
+                "description": "Implementation for KONF.10.3 based on BSI SYS.2.6.A8",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a8-m3",
+                    "uuid": "e9123ffc-e517-456c-946e-b69bd254fcb5",
+                    "description": "Eine automatische Anmeldung an der VDI SOLLTE nicht möglich sein. Die Authentisierung SOLLTE nur erfolgen, nachdem die Benutzenden mit der VDI interagiert haben."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a8-m4",
+                    "uuid": "50947f5c-7d17-439f-95e8-1acef425e9be",
+                    "description": "Die VDI-Lösung ist so konfiguriert, dass für jede neue Sitzung eine erneute Authentifizierung erforderlich ist, selbst wenn der Benutzer bereits an seinem Endgerät angemeldet ist und eine gültige Single-Sign-On-Sitzung hat. Single-Sign-On wird nur so konfiguriert, dass der Benutzername vorausgefüllt wird, aber das Passwort oder ein zweiter Faktor aktiv eingegeben werden muss."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a8-m5",
+                    "uuid": "ee5b0f40-6c0a-48f2-96a0-ca43db318bb7",
+                    "description": "Für jeden Anmeldeversuch am VDI-Gateway wird eine Multi-Faktor-Authentifizierung (MFA) erzwungen. Das System ist zusätzlich gegen Angriffe wie Session Hijacking und Replay-Angriffe gehärtet, beispielsweise durch die Verwendung von kryptografisch gebundenen Tokens."
+                  }
+                ]
+              },
+              {
+                "uuid": "fe872205-26f3-4192-a880-0a7366ea7df7",
+                "control-id": "KONF.10.4",
+                "description": "Implementation for KONF.10.4 based on BSI SYS.2.6.A3",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a3-m1",
+                    "uuid": "1adb27b2-6562-4110-8da9-e910d4272ac0",
+                    "description": "Die VDI-Lösung wird zwar für die Bereitstellung einiger virtueller Clients genutzt, aber viele Clients werden weiterhin manuell direkt im Hypervisor erstellt und konfiguriert. Dies führt zu inkonsistenten Konfigurationen und Sicherheitslücken."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m2",
+                    "uuid": "d45a4fa7-d615-41b2-a023-f45b7aeef977",
+                    "description": "Die VDI-Lösung ist das bevorzugte Werkzeug zur Installation und Konfiguration virtueller Clients. Es gibt jedoch keine technischen Kontrollen, die Administratoren daran hindern, bei Bedarf VMs direkt im Hypervisor zu erstellen oder manuell in die VDI-Lösung zu importieren."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m3",
+                    "uuid": "81942cc4-7b50-4f54-b0d5-428f47039a0b",
+                    "description": "Die VDI-Lösung SOLLTE genutzt werden, um die virtuellen Clients zu installieren und zu konfigurieren. Virtuelle Clients SOLLTEN NICHT manuell in die VDI-Lösung integriert werden. In der für die VDI verwendeten Virtualisierungsinfrastruktur SOLLTEN virtuelle Clients NICHT unabhängig von der VDI erzeugt werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m4",
+                    "uuid": "16e879ee-71f5-4c48-840d-91f2969d8ddc",
+                    "description": "Es sind technische Kontrollen implementiert, die Administratoren strikt daran hindern, VDI-verwaltete virtuelle Clients außerhalb der VDI-Managementkonsole zu erstellen oder zu ändern. Dies wird durch eine granulare rollenbasierte Zugriffskontrolle (RBAC) auf der Ebene des Hypervisors durchgesetzt."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m5",
+                    "uuid": "85afa046-3db4-4e2a-bff0-b5d61ac6fa8a",
+                    "description": "Der API-Zugriff auf die Virtualisierungsplattform ist auf das dedizierte Dienstkonto der VDI-Lösung beschränkt. Das gesamte Lebenszyklusmanagement von virtuellen Clients ist vollständig automatisiert und wird lückenlos über die Protokolle der VDI-Lösung auditiert, welche in ein SIEM-System eingespeist werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "7089d15a-ece6-4e03-8e5b-244286b53814",
+                "control-id": "KONF.10.5",
+                "description": "Implementation for KONF.10.5 based on BSI SYS.2.6.A14",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a14-m3",
+                    "uuid": "8eddc559-b112-49eb-a873-73da928c2e64",
+                    "description": "Nachdem sie benutzt wurden oder zu einem definierten Zeitpunkt SOLLTEN die virtuellen Clients auf ihren Grundzustand, d. h. auf das zugrundeliegende Template, zurückgesetzt oder bei Bedarf neu provisioniert werden. Diese Zeitfenster SOLLTEN dokumentiert und an die Betroffenen kommuniziert werden. Nicht zurückgesetzte virtuelle Clients SOLLTEN NICHT von mehreren unterschiedlichen Benutzenden verwendet werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a14-m4",
+                    "uuid": "02ec7d7f-56d0-4481-b304-fa0bf2a8bf67",
+                    "description": "Die Clients werden nach jeder Abmeldung automatisch zurückgesetzt. Es sind robuste Mechanismen zur Umleitung von Benutzerprofilen und -daten (z. B. auf einen Netzwerkspeicher) implementiert, um eine nahtlose Benutzererfahrung zu gewährleisten und gleichzeitig die Zustandslosigkeit des Client-Betriebssystems beizubehalten."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a14-m5",
+                    "uuid": "e9581ac1-fa8a-4eb2-a7d3-a75d2985cfb0",
+                    "description": "Die gesamte Benutzersitzung, einschließlich der Anwendungen, wird containerisiert. Nach der Abmeldung wird der Container vollständig zerstört, wodurch keine Spuren der Sitzung auf dem virtuellen Client zurückbleiben. Dies wird mit einer erzwungenen täglichen Neuanmeldung kombiniert, um sicherzustellen, dass jeder Benutzer jeden Tag mit einer sauberen, neu bereitgestellten Umgebung beginnt."
+                  }
+                ]
+              },
+              {
+                "uuid": "02124352-7269-4f3d-a255-b2d97bc653ee",
+                "control-id": "KONF.11.1",
+                "description": "Implementation for KONF.11.1 based on BSI SYS.2.6.A5",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a5-m3",
+                    "uuid": "2b49a772-c20f-4e3a-9723-8ada5137f26e",
+                    "description": "Die Mechanismen und Dienste der VDI-Lösung SOLLTEN genutzt werden, um die Zugriffe auf die virtuellen Clients zu steuern und abzusichern. Falls eine zusätzliche Software für diese Zugriffe auf den zugreifenden Clients eingesetzt wird, SOLLTE diese Software standardisiert und zentralisiert bereitgestellt werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a5-m4",
+                    "uuid": "80058262-7007-4331-b3ff-8c987e8366a3",
+                    "description": "Die Verwendung des standardisierten VDI-Clients ist obligatorisch und wird technisch erzwungen. Seine Konfiguration wird zentral über Gruppenrichtlinien oder eine Endpoint-Management-Lösung verwaltet, um konsistente Sicherheitseinstellungen (z.B. Deaktivierung der Zwischenablage, keine Laufwerks- oder USB-Umleitung) auf allen Endgeräten sicherzustellen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a5-m5",
+                    "uuid": "9f2dfa82-2e01-40ff-9886-417a82cb44b6",
+                    "description": "Der Zugriff wird über ein sicheres Gateway gesteuert, das vor dem Verbindungsaufbau eine Multi-Faktor-Authentifizierung (MFA) und eine Überprüfung des Gerätezustands (Device Posture Check) erzwingt. Die VDI-Client-Software selbst wird auf dem Endgerät in einer containerisierten oder gehärteten, schreibgeschützten Umgebung ausgeführt, um Angriffe auf den Client zu verhindern."
+                  }
+                ]
+              },
+              {
+                "uuid": "bc5993b7-241b-4644-8323-237a1ccedbbe",
+                "control-id": "KONF.15.4",
+                "description": "Implementation for KONF.15.4 based on BSI SYS.2.6.A12",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a12-m3",
+                    "uuid": "745e6cd8-ae6d-41bd-8542-f7f4e29bb5f9",
+                    "description": "Pro Virtualisierungsserver SOLLTE die maximale Leistung festgelegt werden, die dieser für virtuelle Clients zur Verfügung stellen darf. Diese Grenzwerte SOLLTEN in der VDI-Managementkomponente genutzt werden, um bei hoher Auslastung die virtuellen Clients auf verschiedene Virtualisierungsserver zu verteilen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a12-m4",
+                    "uuid": "4e325bed-3d3f-4888-9001-69398b22205c",
+                    "description": "Der Lastverteilungsmechanismus wird basierend auf historischen Leistungsdaten feinjustiert. Bei Platzierungsentscheidungen werden nicht nur CPU und RAM, sondern auch weitere Metriken wie Storage-I/O und Netzwerkbandbreite berücksichtigt, um eine ausgewogenere Verteilung und bessere Performance zu erzielen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a12-m5",
+                    "uuid": "d1bd5cf0-45ce-49bb-b282-63712e983a64",
+                    "description": "Ein vollständig automatisierter, richtliniengesteuerter Ressourcenplaner (Scheduler) wird verwendet. Dieser migriert virtuelle Clients in Echtzeit dynamisch zwischen den Hosts, um die Leistung zu optimieren und die Servicequalität für alle Benutzer gemäß vordefinierten Service Level Agreements (SLAs) sicherzustellen."
+                  }
+                ]
+              },
+              {
+                "uuid": "eb2bc0b4-2629-4a07-8e80-1ad7045f5e09",
+                "control-id": "KONF.6.6.1",
+                "description": "Implementation for KONF.6.6.1 based on BSI SYS.2.6.A13",
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a13-m3",
+                    "uuid": "6dd57c67-7cbf-487c-a8fc-feaeda586d74",
+                    "description": "Es SOLLTE geprüft werden, ob es Benutzendengruppen gibt, die sich in ihren Berechtigungen so stark unterscheiden, dass die Nutzung einer gemeinsamen VDI-Lösung nicht sinnvoll ist. In diesem Fall SOLLTE jeweils eine eigene VDI-Lösung pro Benutzendengruppe verwendet werden."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a13-m4",
+                    "uuid": "310487e9-8490-4d8f-9ea4-da2937debb6a",
+                    "description": "Die separaten VDI-Umgebungen werden in vollständig isolierten Netzwerksegmenten bereitgestellt und von unterschiedlichen Administratorenteams verwaltet, um eine strikte Funktionstrennung (Separation of Duties) durchzusetzen."
+                  },
+                  {
+                    "statement-id": "sys.2.6.a13-m5",
+                    "uuid": "c018501a-bc1d-4b2e-a131-50db2b1dbd91",
+                    "description": "Die separaten VDI-Lösungen sind physisch getrennt (Air-Gapped) oder verwenden hardware-erzwungene Trennungsmechanismen (z. B. separate Hypervisor-Cluster, Storage-Systeme und Netzwerk-Hardware), um die höchstmögliche Sicherheitsgarantie zu bieten."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

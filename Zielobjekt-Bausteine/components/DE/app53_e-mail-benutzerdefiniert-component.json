@@ -1,0 +1,254 @@
+{
+  "component-definition": {
+    "uuid": "3f5e86e9-1ef7-462c-b786-aad3b5731e99",
+    "metadata": {
+      "title": "APP.5.3 E-Mail - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:58.954841+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "54f8385c-7ead-4a35-ac86-281c1f27e087",
+        "type": "software",
+        "title": "APP.5.3 E-Mail",
+        "description": "This component represents the implementation of all controls for Baustein APP.5.3.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "E-Mail ist eine der am häufigsten genutzten und ältesten Internetanwendungen. E-Mails werden dazu verwendet, Texte und angehängte Dateien zu versenden. Dazu wird eine E-Mail-Adresse benötigt.\nUm E-Mail nutzen zu können, werden E-Mail-Server benötigt, die elektronische Nachrichten empfangen und versenden. In der Regel rufen E-Mail-Clients, mit denen auf E-Mail-Dienste zugegriffen wird, Nachrichten, die für sie bestimmt sind, mittels der Protokolle POP3 oder IMAP vom E-Mail-Server ab und senden mit dem Protokoll SMTP selbst Nachrichten an den E-Mail-Server, der diese bei Bedarf an einen anderen E-Mail-Server weiterleitet.\nDa E-Mail insbesondere in Unternehmen und Behörden weit verbreitet ist, sind E-Mail-Server häufig das Ziel von Angriffen.\nAuch E-Mail-Clients stehen im Fokus von Angriffen. Sie werden angegriffen, indem beispielsweise Schadsoftware per E-Mail versendet wird. Zusätzlich werden E-Mails auch oft als Werkzeug für Social-Engineering-Angriffe eingesetzt.\nAus diesen Gründen kommt dem sicheren Betrieb und der sicheren Nutzung von E-Mail-Anwendungen eine besondere Bedeutung zu."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, die Informationen zu schützen, die mit E-Mail-Clients bzw. auf E-Mail-Servern verarbeitet werden."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.5.3 Allgemeiner E-Mail-Client und -Server ist auf jeden E-Mail-Client und -Server im Informationsverbund anzuwenden.\nDer Baustein enthält Anforderungen für allgemeine E-Mail-Clients und -Server. Anforderungen für Serverplattformen, Betriebssysteme und Clients sind nicht Bestandteil des Bausteins. Diese sind in den Bausteinen SYS.1.1 Allgemeiner Server sowie SYS.2.1 Allgemeiner Client und in den jeweiligen betriebssystemspezifischen Bausteinen zu finden.\nDer Baustein APP.5.3 Allgemeiner E-Mail-Client und -Server wird in einem Informationsverbund meist in Verbindung mit einem weiteren spezifischen Baustein der Schicht APP.5 E-Mail/Groupware/Kommunikation genutzt. Diese müssen ebenfalls separat umgesetzt werden. Zu diesen Bausteinen zählt unter anderem APP.5.2 Microsoft Exchange und Outlook.\nAnforderungen für die Protokollierung und Datensicherung finden sich in den Bausteinen OPS.1.1.5 Protokollierung und CON.3 Datensicherungskonzept.\nNicht in diesem Baustein behandelt werden Groupware-Funktionen, die neben E-Mail auch noch weitere Funktionen wie die Verwaltung von Kontaktdaten und Kalendern bieten. Ebenso werden keine reinen Cloud-Lösungen behandelt, wie sie etwa als Teil von Microsoft 365 oder Google G Suite zu finden sind. Allgemeine Anforderungen dazu sind im Baustein OPS.2.2 Cloud-Nutzung zu finden. Ebenfalls nicht betrachtet werden Webbrowser, mit denen über Webseiten auf Webmail-Dienste zugegriffen wird. Anforderungen an Webbrowser sind im Baustein APP.1.2 Webbrowser zu finden."
+          },
+          {
+            "name": "2.1. Unzureichende Planung der E-Mail-Nutzung",
+            "value": "E-Mail-Anwendungen können ohne entsprechend dokumentierte Regelungen und ein definiertes Sicherheitsverfahren in der Institution nicht sicher genutzt werden. Falls in der Planung der E-Mail-Systeme die prozessualen, organisatorischen und technischen Regelungen vernachlässigt werden, könnte dies interne sowie externe Angriffe zur Folge haben.\nBeispielsweise kann ein zu klein dimensionierter E-Mail-Server durch eine große Zahl von eingehenden E-Mails ausfallen. Werden keine ausreichenden Sicherheitsmaßnahmen geplant, ist es auch möglich, dass die E-Mail-Clients anfälliger für E-Mails sind, die Schadsoftware enthalten."
+          },
+          {
+            "name": "2.2. Fehlerhafte Einstellung von E-Mail-Clients und -Servern",
+            "value": "Da eine E-Mail-Infrastruktur sehr komplex sein kann, können durch die vielen möglichen Einstellungen und durch die sich gegenseitig beeinflussenden Parameter zahlreiche Sicherheitsprobleme entstehen.\nBeispielsweise kann ein E-Mail-Server durch eine fehlerhafte Konfiguration legitime E-Mails von anderen Servern ablehnen. Zusätzlich wäre es möglich, dass essenzielle Einstellungen ignoriert oder missachtet werden, z. B. die Transportverschlüsselung von E-Mails.\nAußerdem kann eine falsche Konfiguration in E-Mail-Clients dazu führen, dass diese Schadcode in E-Mails ausführen. Diese Sicherheitslücken können zu einem signifikanten Verlust der Verfügbarkeit, Integrität und Vertraulichkeit von Informationen führen.\nViele Institutionen setzen keine Sicherheitsmechanismen ein, die es anderen E-Mail-Servern ermöglichen, zu überprüfen, ob eine E-Mail tatsächlich von der angegebenen Absendeadresse stammt. Außerdem kann ein falsch eingestellter E-Mail-Server dazu missbraucht werden, um Spam-E-Mails zu versenden."
+          },
+          {
+            "name": "2.3. Unzuverlässigkeit von E-Mail",
+            "value": "Über E-Mail-Anwendungen lassen sich schnell und komfortabel Daten austauschen. Das ist jedoch nicht immer zuverlässig. Zum Beispiel können durch fehlerhafte E-Mail-Server oder gestörte Übertragungswege Nachrichten verloren gehen. Ursachen dafür sind beispielsweise Spam-Filter, die legitime Nachrichten herausfiltern und verwerfen. E-Mails können auch verloren gehen, wenn die Zieladresse nicht korrekt angegeben wurde. Im schlimmsten Fall können vertrauliche Informationen an falsche Zieladressen gesendet worden sein."
+          },
+          {
+            "name": "2.4. Schadsoftware in E-Mails",
+            "value": "Es gibt verschiedene Wege, wie bei einem Angriff Schadsoftware mit Hilfe von E-Mails verbreitet werden kann. Einerseits kann schädlicher Code direkt in einer E-Mail enthalten sein. Ist der E-Mail-Client nicht richtig konfiguriert, wird der Code beim Öffnen der E-Mail ausgeführt.\nEine weitere Möglichkeit besteht darin, dass Dateien mit Schadsoftware als Anhang von E-Mails versendet werden. Falls solche E-Mails nicht durch Spam- oder Virenfilter aussortiert werden und die Anhänge geöffnet werden, wird die Schadsoftware ausgeführt. Diese kann zu weitreichenden Schäden auch für andere IT-Systeme führen, wenn beispielsweise Ransomware (oft als „Erpressungstrojaner“ bezeichnet) ausgeführt wird."
+          },
+          {
+            "name": "2.5. Social Engineering",
+            "value": "E-Mails werden oft bei Angriffen dazu eingesetzt, um vertrauliche Informationen zu erhalten oder Personal zu anderem schädlichen Verhalten zu verleiten. Beispielsweise kann bei einem Angriff eine E-Mail gesendet werden, die vermeintlich von Vorgesetzten stammt und Anweisungen enthält, die der Institution schaden (sogenannter CEO-Fraud). Häufig wird dabei angewiesen, dass Geld auf Konten im Ausland überwiesen werden soll.\nMöglich ist auch, dass eine gefälschte E-Mail einer eigentlich vertrauenswürdigen Quelle dazu auffordert, Zugangsdaten auf einer Webseite einzugeben (Phishing). Die so gewonnenen Zugangsdaten können dann bei einem Angriff für weitere Aktionen verwendet werden.\nVerstärkt wird die Gefahr von Social Engineering, wenn die Institution nicht regelmäßig zu diesen Gefährdungen schult und sensibilisiert."
+          },
+          {
+            "name": "2.6. Mitlesen und Manipulieren von E-Mails",
+            "value": "E-Mails werden in der Regel unverschlüsselt und ohne digitale Signatur versendet. Deswegen können bei einem Angriff E-Mails mitgelesen und sogar beliebig verändert werden. Auf diesem Weg können vertrauliche Informationen offengelegt oder falsche Informationen verteilt werden. Es ist auch möglich, dass auf diesem Weg Schadsoftware eingespielt wird."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "5aec6f8a-5c61-4683-8b55-db7fb009c48f",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/e-mail_profile.json",
+            "description": "Implementation for all controls in Baustein APP.5.3",
+            "implemented-requirements": [
+              {
+                "uuid": "b675636d-0de1-41cc-a9ed-7bb948ef140f",
+                "control-id": "ARCH.8.3",
+                "description": "Implementation for ARCH.8.3 based on BSI APP.5.3.A11",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a11-m3",
+                    "uuid": "a2c91ec1-6435-426e-a5d4-8164075633af",
+                    "description": "Die Institution verfügt über einen sekundären Mail-Exchanger (MX) mit niedrigerer Priorität bei einem externen Anbieter. Dieser nimmt E-Mails an, falls der primäre Server nicht erreichbar ist, und stellt sie später zu."
+                  },
+                  {
+                    "statement-id": "app.5.3-a11-m4",
+                    "uuid": "839d5a7c-7184-4357-bdcd-da02bf970d76",
+                    "description": "Die Institution SOLLTE redundante E-Mail-Server betreiben. Die redundanten E-Mail-Server SOLLTEN mit geeigneter Priorität in den MX-Records der betroffenen Domains hinterlegt werden. Es SOLLTE festgelegt werden, wie E-Mails zwischen den E-Mail-Servern synchronisiert werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "4a9b1754-080f-4bc6-8715-c663be8b4aac",
+                "control-id": "DET.4.17",
+                "description": "Implementation for DET.4.17 based on BSI APP.5.3.A12",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a12-m3",
+                    "uuid": "b3e30ca0-7f45-4c36-b5cf-e92d78eda70f",
+                    "description": "Der IT-Betrieb überprüft bei Problemen mit dem E-Mail-Versand manuell, ob die IP-Adressen der E-Mail-Server auf gängigen öffentlichen Block-Listen (RBLs) aufgeführt sind."
+                  },
+                  {
+                    "statement-id": "app.5.3-a12-m4",
+                    "uuid": "8e7b92ed-4965-483f-9a5a-5efc0a1f2af2",
+                    "description": "Der IT-Betrieb SOLLTE regelmäßig überprüfen, ob die E-Mail-Server der Institution auf öffentlichen Spam- oder Block-Listen aufgeführt sind."
+                  }
+                ]
+              },
+              {
+                "uuid": "013fddf5-8486-4034-bfc9-67a4ac6fe110",
+                "control-id": "KONF.10.1",
+                "description": "Implementation for KONF.10.1 based on BSI APP.5.3.A1",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a1-m1",
+                    "uuid": "57352294-543c-40f4-8c85-ac8886cfd8ae",
+                    "description": "Eine grundlegende Konfiguration für E-Mail-Clients ist nur für einzelne, als kritisch eingestufte Benutzer oder Systeme umgesetzt. Es gibt keine einheitliche Vorgabe für die gesamte Institution."
+                  },
+                  {
+                    "statement-id": "app.5.3-a1-m2",
+                    "uuid": "5ac88ac9-2b63-42a2-bb95-7d7c5342037c",
+                    "description": "Eine standardisierte Basiskonfiguration wird auf allen E-Mail-Clients ausgerollt. Diese Konfiguration kann jedoch von den Benutzern leicht geändert werden. Die Überprüfung von Anhängen auf Schadsoftware ist aktiviert, aber weitergehende Schutzmaßnahmen wie die Deaktivierung von aktiven Inhalten sind nicht konsequent umgesetzt."
+                  },
+                  {
+                    "statement-id": "app.5.3-a1-m3",
+                    "uuid": "d9dc6372-cd3d-40b9-bcf1-8bccd16089eb",
+                    "description": "Die Institution MUSS eine dokumentierte, sichere Konfiguration für die E-Mail-Clients vorgeben und diese vorkonfiguriert zur Verfügung stellen. Dateianhänge MÜSSEN vor dem Öffnen auf Schadsoftware überprüft werden. E-Mail-Clients MÜSSEN so konfiguriert sein, dass sie HTML-Code und andere aktive Inhalte nicht automatisch interpretieren. E-Mail-Filterregeln und automatische Weiterleitungen MÜSSEN auf notwendige Anwendungsfälle beschränkt werden. Für die Kommunikation mit E-Mail-Servern über nicht vertrauenswürdige Netze MUSS eine sichere Transportverschlüsselung eingesetzt werden."
+                  },
+                  {
+                    "statement-id": "app.5.3-a1-m4",
+                    "uuid": "0ec76e8a-3c8b-4f86-85a1-c697fd5d8c11",
+                    "description": "Die Institution SOLLTE sicherstellen, dass sicherheitsrelevante Teile der Konfiguration nicht von Benutzenden geändert werden können. Ist dies technisch nicht umsetzbar, MUSS die Institution die Benutzer explizit und nachweislich darauf hinweisen, dass die Konfiguration nicht geändert werden darf. Vorschaufunktionen für Dateianhänge sind so konfiguriert, dass sie Dateien unter keinen Umständen automatisch interpretieren oder ausführen."
+                  },
+                  {
+                    "statement-id": "app.5.3-a1-m5",
+                    "uuid": "b5ac4a85-fb8c-4c37-b4a0-695c1e610700",
+                    "description": "Die Konfiguration der E-Mail-Clients wird durch ein zentrales Managementsystem nicht nur erzwungen, sondern auch kontinuierlich überwacht. Jede Abweichung von der definierten Sicherheitsbaseline führt zu einem automatisierten Alarm und, falls möglich, zu einer sofortigen automatischen Korrektur der Konfiguration. Die Sicherheitsrichtlinien für E-Mail-Clients sind in das allgemeine Endpoint-Security-Konzept integriert."
+                  }
+                ]
+              },
+              {
+                "uuid": "8d442a67-4714-4b4a-b320-80bc39bf0b88",
+                "control-id": "KONF.13.1",
+                "description": "Implementation for KONF.13.1 based on BSI APP.5.3.A4",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a4-m3",
+                    "uuid": "113afce3-6e8b-4e5d-8b45-b9761a441de1",
+                    "description": "Der IT-Betrieb MUSS sicherstellen, dass auf E-Mail-Servern eingehende und ausgehende E-Mails, insbesondere deren Anhänge, auf Spam-Merkmale und schädliche Inhalte überprüft werden. Die Einführung und Nutzung von E-Mail-Filterprogrammen MUSS mit den Datenschutzbeauftragten und der Personalvertretung abgestimmt sein. Die Institution MUSS festlegen, wie mit verschlüsselten E-Mails zu verfahren ist, wenn diese nicht durch das Virenschutzprogramm entschlüsselt werden können."
+                  },
+                  {
+                    "statement-id": "app.5.3-a4-m4",
+                    "uuid": "1001fbb6-071d-47d4-8490-98596637f50d",
+                    "description": "Der Spam- und Virenschutz wird um fortschrittliche Funktionen wie Sandboxing und URL-Umschreibung erweitert. Anhänge mit unbekanntem oder potenziell gefährlichem Inhalt werden in einer isolierten Umgebung ausgeführt und analysiert, bevor sie zugestellt werden. Links in E-Mails werden zur Klickzeit auf Bösartigkeit überprüft."
+                  }
+                ]
+              },
+              {
+                "uuid": "ac633806-c9da-4a30-b357-b72dc65cc083",
+                "control-id": "KONF.13.2",
+                "description": "Implementation for KONF.13.2 based on BSI APP.5.3.A9",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a9-m3",
+                    "uuid": "dd2d3984-f88e-434f-a2e8-ec8aca0877d1",
+                    "description": "Die E-Mail-Server der Institution SOLLTEN eingehende E-Mails mittels Sender Policy Framework (SPF) und DomainKeys Identified Mail (DKIM) überprüfen. Die Institution SOLLTE selbst DKIM und SPF einsetzen, um von ihr versendete E-Mails zu authentisieren. Der SPF-Eintrag SOLLTE den Softfail-Parameter (~all) nur zu Testzwecken verwenden."
+                  },
+                  {
+                    "statement-id": "app.5.3-a9-m4",
+                    "uuid": "0784e1c2-b528-4710-b893-052c3e192157",
+                    "description": "Der SPF-Eintrag SOLLTE den \"-all\" (Hardfail) Parameter enthalten. Die Institution SOLLTE DMARC nutzen. DMARC-Einträge SOLLTEN vorgeben, dass E-Mails im Fehlerfall abgewiesen werden (`p=reject`). DMARC-Reporte SOLLTEN regelmäßig ausgewertet werden. Die E-Mail-Kommunikation SOLLTE über MTA-STS abgesichert werden."
+                  },
+                  {
+                    "statement-id": "app.5.3-a9-m5",
+                    "uuid": "cf69b0be-aadd-4f4e-98d3-428124ec29ca",
+                    "description": "Die Institution SOLLTE zusätzlich zu SPF, DKIM, DMARC und MTA-STS die E-Mail-Kommunikation über DANE absichern, um die Authentizität des TLS-Zertifikats des Zielservers zu validieren. Die Auswertung von DMARC-Berichten ist automatisiert, um Spoofing-Angriffe in Echtzeit zu erkennen und darauf zu reagieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "ce833e13-03b6-4307-b650-70437f25dbc3",
+                "control-id": "KONF.13.7",
+                "description": "Implementation for KONF.13.7 based on BSI APP.5.3.A13",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a13-m4",
+                    "uuid": "3afc54bf-ace0-49c4-886f-c2245e5d7894",
+                    "description": "Die Institution SOLLTE TLS-Reporting einsetzen, um Berichte über die erfolgreiche oder fehlgeschlagene TLS-Verschlüsselung bei der E-Mail-Zustellung zu erhalten. Es SOLLTE festgelegt werden, ob TLS-Reports an andere Institutionen versendet werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "3de636b4-258f-4b16-b512-0f71ad450a87",
+                "control-id": "KONF.14.1",
+                "description": "Implementation for KONF.14.1 based on BSI APP.5.3.A2",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a2-m1",
+                    "uuid": "2d5d1770-9193-495d-9386-8b7cdc5b9226",
+                    "description": "Der E-Mail-Server ist mit den Standardeinstellungen installiert. Es gibt keine spezifische Härtung oder Konfiguration, um ihn als Open Relay zu verhindern oder DoS-Angriffe abzuwehren."
+                  },
+                  {
+                    "statement-id": "app.5.3-a2-m2",
+                    "uuid": "05c7a37a-f4ae-40c5-9b03-cdd4790cae59",
+                    "description": "Der E-Mail-Server bietet eine sichere Transportverschlüsselung (TLS) an, erzwingt diese jedoch nicht. Unverschlüsselte Verbindungen sind weiterhin möglich. Der Server ist grundlegend so konfiguriert, dass er nicht als Open Relay fungiert."
+                  },
+                  {
+                    "statement-id": "app.5.3-a2-m3",
+                    "uuid": "67452e3a-a3ae-494b-a9f9-848307dc0121",
+                    "description": "Für den E-Mail-Empfang über nicht vertrauenswürdige Netze MUSS der E-Mail-Server eine sichere Transportverschlüsselung anbieten. Der IT-Betrieb MUSS den Server so konfigurieren, dass E-Mail-Clients nur über eine sichere Transportverschlüsselung auf Postfächer zugreifen können. Der IT-Betrieb MUSS den Server so einstellen, dass er nicht als Spam-Relay missbraucht werden kann. Es MUSS eine geeignete Größenbeschränkung für Postfächer eingerichtet und dokumentiert werden, und der IT-Betrieb MUSS Schutzmechanismen gegen DoS-Attacken ergreifen."
+                  },
+                  {
+                    "statement-id": "app.5.3-a2-m4",
+                    "uuid": "17265db3-1f85-4f4a-8e90-1c576d902608",
+                    "description": "Der Empfang von E-Mails über unverschlüsselte Verbindungen SOLLTE deaktiviert werden. Beim Versand von E-Mails an andere Server SOLLTE eine sichere Transportverschlüsselung genutzt werden, und der Versand über unsichere Verbindungen SOLLTE deaktiviert werden (opportunistic TLS mit erzwungener Verschlüsselung, wo möglich)."
+                  },
+                  {
+                    "statement-id": "app.5.3-a2-m5",
+                    "uuid": "5085367b-53f4-4d46-8b97-192f58cc85cb",
+                    "description": "Die E-Mail-Kommunikation wird durch den Einsatz von DANE und MTA-STS umfassend abgesichert. Dies verhindert Man-in-the-Middle-Angriffe durch Downgrading der Verschlüsselung. Es werden nur aktuelle und starke Verschlüsselungsprotokolle und Cipher-Suiten zugelassen. Die Serverkonfiguration wird regelmäßig automatisiert auf Einhaltung der Sicherheitsrichtlinie überprüft."
+                  }
+                ]
+              },
+              {
+                "uuid": "205531d8-0802-466f-9105-0656061fc28d",
+                "control-id": "KONF.14.1.2",
+                "description": "Implementation for KONF.14.1.2 based on BSI APP.5.3.A10",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a10-m3",
+                    "uuid": "46a7b45d-eea4-4ad4-be57-c65d1fa673e5",
+                    "description": "Für den Austausch von E-Mails mit besonders hohem Schutzbedarf werden Ende-zu-Ende-Verschlüsselung (E2EE) und digitale Signaturen auf individueller Basis eingesetzt. Die Benutzer sind geschult, die entsprechenden Werkzeuge (z.B. S/MIME, PGP) zu verwenden, wenn dies erforderlich ist."
+                  },
+                  {
+                    "statement-id": "app.5.3-a10-m4",
+                    "uuid": "6b5bf2c5-dadc-4a6f-88e1-7233a460104f",
+                    "description": "Die Institution SOLLTE eine Ende-zu-Ende-Verschlüsselung sowie digitale Signaturen für E-Mails einsetzen. Es SOLLTEN nur Protokolle (z.B. S/MIME, OpenPGP) genutzt werden, die dem aktuellen Stand der Technik entsprechen. Die Schlüssel- und Zertifikatsverwaltung wird zentralisiert."
+                  },
+                  {
+                    "statement-id": "app.5.3-a10-m5",
+                    "uuid": "2fd4f7ad-2f4e-4a8a-b5b8-b730c9466bec",
+                    "description": "Die Nutzung von Ende-zu-Ende-Verschlüsselung und digitalen Signaturen wird basierend auf Inhalts- oder Empfängerrichtlinien automatisch erzwungen. E-Mails, die bestimmte Kriterien erfüllen (z.B. Versand an externe Partner, enthaltene Schlüsselwörter), werden automatisch signiert und verschlüsselt, ohne dass ein Benutzereingriff erforderlich ist."
+                  }
+                ]
+              },
+              {
+                "uuid": "15cf709c-d16f-4ede-9b39-f2f21fd8c485",
+                "control-id": "NOT.4.3",
+                "description": "Implementation for NOT.4.3 based on BSI APP.5.3.A3",
+                "statements": [
+                  {
+                    "statement-id": "app.5.3-a3-m3",
+                    "uuid": "3e158fd5-691a-4c20-bee2-1fab000a9be3",
+                    "description": "Der IT-Betrieb MUSS die Daten der E-Mail-Server und -Clients regelmäßig sichern. Dafür MUSS die Institution regeln, wie die gesendeten und empfangenen E-Mails der E-Mail-Clients sowie die E-Mails auf den Servern gesichert werden."
+                  },
+                  {
+                    "statement-id": "app.5.3-a3-m4",
+                    "uuid": "c9651802-71eb-4440-8175-17e12dd21243",
+                    "description": "Die Institution SOLLTE bei der Archivierung beachten, dass E-Mails möglicherweise nur lokal auf Clients gespeichert sind. Das Datensicherungskonzept wird um ein Archivierungskonzept erweitert, das gesetzliche und regulatorische Aufbewahrungsfristen berücksichtigt. Es werden regelmäßig Wiederherstellungstests durchgeführt, um die Integrität der Sicherungen zu überprüfen."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

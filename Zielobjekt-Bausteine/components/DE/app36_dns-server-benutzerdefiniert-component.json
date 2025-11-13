@@ -1,0 +1,447 @@
+{
+  "component-definition": {
+    "uuid": "931116ad-0cb5-4a0c-bab3-022b1c2ea824",
+    "metadata": {
+      "title": "APP.3.6 DNS-Server - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:58.767122+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "29d3b2ac-a104-4953-bb73-914a5020b6c3",
+        "type": "software",
+        "title": "APP.3.6 DNS-Server",
+        "description": "This component represents the implementation of all controls for Baustein APP.3.6.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Domain Name System (DNS) ist ein Netzdienst, der dazu eingesetzt wird, Hostnamen von IT-Systemen in IP-Adressen umzuwandeln. DNS kann mit einem Telefonbuch verglichen werden, das Namen nicht in Telefonnummern, sondern in IP-Adressen auflöst. Üblicherweise wird über DNS zu einem Hostnamen die entsprechende IP-Adresse gesucht (Vorwärtsauflösung). Ist hingegen die IP-Adresse bekannt und der Hostname wird gesucht, wird dies als Rückwärtsauflösung bezeichnet.\nWelche Hostnamen zu welchen IP-Adressen gehören, wird im Domain-Namensraum verwaltet. Dieser ist hierarchisch aufgebaut und wird von DNS-Servern zur Verfügung gestellt. Die Bezeichnung DNS-Server steht im eigentlichen Sinne für die verwendete Software, wird jedoch meist auch als Synonym für das IT-System benutzt, auf dem diese Software betrieben wird.\nDNS-Server verwalten den Domain-Namensraum im Internet, werden aber auch häufig im internen Netz einer Institution eingesetzt. Auf den IT-Systemen der Benutzenden sind standardmäßig sogenannte Resolver installiert. Über den Resolver werden die Anfragen an DNS-Server gestellt. Als Antwort liefern die DNS-Server Informationen über den Domain-Namensraum zurück.\nDNS-Server können nach ihren Aufgaben unterschieden werden. Dabei gibt es grundsätzlich zwei verschiedenen Typen: Advertising DNS-Server und Resolving DNS-Server. Advertising DNS-Server sind üblicherweise dafür zuständig, Anfragen aus dem Internet zu verarbeiten. Resolving DNS-Server hingegen verarbeiten Anfragen aus dem internen Netz einer Institution.\nDer Ausfall eines DNS-Servers kann sich gravierend auf den Betrieb einer IT-Infrastruktur auswirken. Dabei ist nicht das ausgefallene DNS-System an sich problematisch, sondern die DNS-basierten Dienste, die daraus eingeschränkt werden. Unter Umständen sind Webserver oder E-Mail-Server nicht mehr erreichbar oder die Fernwartung funktioniert nicht mehr. Da DNS von sehr vielen Netzanwendungen benötigt wird, müssen laut Spezifikation (RFC 1034) mindestens zwei autoritative DNS-Server (Advertising DNS-Server) für jede Zone betrieben werden."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "In diesem Baustein werden die für einen DNS-Server spezifischen Gefährdungen und die sich daraus ergebenden Anforderungen für einen sicheren Einsatz beschrieben."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.3.6 DNS-Server ist auf jeden im Informationsverbund eingesetzten DNS-Server anzuwenden.\nDer vorliegende Baustein enthält grundsätzliche Anforderungen, die zu beachten und zu erfüllen sind, wenn eine Institution DNS-Server einsetzt. Der Fokus liegt dabei auf der Verfügbarkeit von DNS-Servern und der Integrität der übertragenen Informationen. Außerdem werden Probleme behandelt, die auftreten können, wenn DNS-Server eingesetzt werden.\nAllgemeine und betriebssystemspezifische Aspekte eines Servers sind nicht Gegenstand dieses Bausteins. Diese werden im Baustein SYS1.1 Allgemeiner Server und in den entsprechenden betriebssystemspezifischen Bausteinen der Schicht SYS IT-Systeme behandelt, z. B. SYS.1.3 Server unter Linux und Unix oder SYS.1.2.3 Windows Server."
+          },
+          {
+            "name": "2.1. Ausfall des DNS-Servers",
+            "value": "Fällt ein DNS-Server aus, kann der gesamte IT-Betrieb davon betroffen sein. Da Clients und andere Server der Institution dann nicht mehr in der Lage sind, interne und externe Adressen auf Basis der Hostnamen aufzulösen, können keine Datenverbindungen mehr aufgebaut werden. Auch externe IT-Systeme, z. B. von mobilen Mitarbeitenden, der Kundschaft sowie Geschäftspartnern und Geschäftspartnerinnen, können nicht auf die Server der Institution zugreifen. Dadurch sind in der Regel essenzielle Geschäftsprozesse gestört."
+          },
+          {
+            "name": "2.2. Unzureichende Leitungskapazitäten",
+            "value": "Reichen die Leitungskapazitäten für einen DNS-Server nicht aus, können sich die Zugriffszeiten auf interne und externe Dienste erhöhen. Dadurch sind diese eventuell nur eingeschränkt oder gar nicht mehr nutzbar. Auch kann der DNS-Server dann leichter durch einen Denial-of-Service-(DoS)-Angriff überlastet werden."
+          },
+          {
+            "name": "2.3. Fehlende oder unzureichende Planung des DNS-Einsatzes",
+            "value": "Fehler in der Planung stellen sich oft als besonders schwerwiegend heraus, da leicht flächendeckende Sicherheitslücken geschaffen werden können. Wird der DNS-Einsatz nicht oder nur unzureichend geplant, kann dies zu Problemen und Sicherheitslücken im laufenden Betrieb führen. Sind beispielsweise die Firewall-Regeln, die den DNS-Verkehr steuern, zu freizügig definiert, kann dies unter Umständen einen Angriff zur Folge haben. Sind die Regeln jedoch zu restriktiv formuliert, können legitime Clients keine Anfragen an die DNS-Server stellen und werden beeinträchtigt, wenn sie etwa Dienste wie E-Mail oder FTP benutzen."
+          },
+          {
+            "name": "2.4. Fehlerhafte Domain-Informationen",
+            "value": "Selbst wenn der DNS-Einsatz sorgfältig geplant und somit alle sicherheitsrelevanten Punkte berücksichtigt wurden, ist das nicht ausreichend, wenn semantisch sowie syntaktisch fehlerhafte Domain-Informationen erstellt werden. Dies gilt beispielsweise dann, wenn einem Hostnamen eine falsche IP-Adresse zugeordnet wird, Daten fehlen, nicht erlaubte Zeichen verwendet werden oder die Vorwärts- und Rückwärtsauflösung inkonsistent sind. Enthalten Domain-Informationen Fehler, funktionieren Dienste, die diese Informationen benutzen, aufgrund der Falschinformationen nur eingeschränkt."
+          },
+          {
+            "name": "2.5. Fehlerhafte Konfiguration eines DNS-Servers",
+            "value": "Sicherheitskritische Standardeinstellungen, selbst konfigurierte sicherheitskritische Einstellungen oder fehlerhafte Konfigurationen können dazu führen, dass ein DNS-Server nicht ordnungsgemäß funktioniert. Ist beispielsweise ein Resolving DNS-Server so konfiguriert, dass er rekursive Anfragen uneingeschränkt entgegennimmt, also sowohl aus dem internen Datennetz als auch aus dem Internet, kann aufgrund der erhöhten Last die Verfügbarkeit des Servers stark beeinträchtigt sein. Zusätzlich könnte er dadurch anfällig für DNS-Reflection-Angriffe werden.\nEbenso besteht bei fehlerhaft konfigurierten DNS-Servern die Gefahr, dass die Zonentransfers nicht auf berechtigte DNS-Server beschränkt sind. Damit kann jeder Host, der die Möglichkeit hat, eine Anfrage an die DNS-Server zu stellen, die gesamten Domain-Informationen dieser Server auslesen. Die so gewonnenen Daten können spätere Angriffe erleichtern."
+          },
+          {
+            "name": "2.6. DNS-Manipulation",
+            "value": "Mit einem DNS-Cache-Poisoning-Angriff wird das Ziel verfolgt, dass das angegriffene IT-System falsche Zuordnungen von IP-Adressen und Namen speichert. Dabei wird ausgenutzt, dass DNS-Server erhaltene Domain-Informationen für einen gewissen Zeitraum im Cache zwischenspeichern. So können sich gefälschte Daten weiträumig verbreiten. Werden dann entsprechende Anfragen an den manipulierten DNS-Server gestellt, liefert dieser als Antwort die gefälschten Daten. Das IT-System, das diese Antwort empfängt, speichert diese zwischen und sein Cache ist somit ebenfalls „vergiftet\". Die gespeicherten Daten haben eine definierte Haltbarkeit (Time-To-Live, TTL). Wird der Resolving DNS-Server nach einer manipulierten Adresse gefragt, so wird er erst dann wieder einen anderen DNS-Server anfragen, wenn die Haltbarkeit abgelaufen ist. So können sich manipulierte DNS-Informationen lange halten, obwohl sie auf dem ursprünglich angegriffenen DNS-Server bereits wieder korrigiert sind. Gelingt es Angreifenden beispielsweise, die Namensauflösung für eine Domain zu übernehmen, indem sie die Einträge so manipulieren, dass ihre DNS-Server befragt werden, sind alle Subdomains automatisch mitbetroffen. DNS-Cache-Poisoning-Angriffe werden oft mit dem Ziel geführt, Anfragen auf bösartige Server umzuleiten."
+          },
+          {
+            "name": "2.7. DNS-Hijacking",
+            "value": "DNS-Hijacking ist eine Angriffsmethode, die verwendet wird, um die Kommunikation zwischen Advertising DNS-Servern und Resolvern über das IT-System der Angreifenden zu leiten. Den Angreifenden ist es mit dieser Man-in-the-Middle-Attacke möglich, die Kommunikation zwischen den Servern abzuhören und aufzuzeichnen. Die weitaus größere Gefahr besteht jedoch darin, dass bei einem erfolgreichen Angriff jeglicher Datenverkehr zwischen den beiden IT-Systemen beliebig verändert werden kann. Wird nach einem erfolgreichen DNS-Hijacking-Angriff vom Resolver eines Clients eine Anfrage an einen DNS-Server gesendet, können Angreifende beispielsweise die Zuordnung von Namen und IP-Adresse ändern. DNS-Hijacking lässt sich auch mit anderen Angriffen kombinieren, zum Beispiel mit Phishing."
+          },
+          {
+            "name": "2.8. DNS-DoS",
+            "value": "Bei einem DoS-Angriff auf einen DNS-Server werden so viele Anfragen an ihn gesendet, dass die Netzverbindung zum DNS-Server bzw. der DNS-Server selbst überlastet wird. In der Regel werden die Anfragen über Botnetze versendet, um die notwendige Datenrate zu erreichen. Ein auf diese Weise überlasteter DNS-Server kann keine legitimen Anfragen mehr beantworten."
+          },
+          {
+            "name": "2.9. DNS-Reflection",
+            "value": "Bei einem DNS-Reflection-Angriff handelt es sich um einen DoS-Angriff, bei dem nicht der DNS-Server, an den die Anfragen gestellt werden, das Ziel ist, sondern das IT-System, das die Antworten empfängt. Dabei wird ausgenutzt, dass bestimmte Anfragen eine verhältnismäßig große Antwortdatenmenge erzeugen. Es ist dabei möglich, einen Verstärkungsfaktor von 100 und mehr zu erreichen. Das bedeutet, dass die Antwort, gemessen in Bytes, mindestens einhundert Mal größer ist als die Anfrage. Durch die Anzahl und Größe der Antworten wird die Netzbandbreite bzw. das empfangende IT-System selbst über seine Leistungskapazität hinaus überlastet. Somit kann jede beliebige technische IT-Komponente das Angriffsziel sein. DNS-Reflection-Angriffe werden durch Open Resolver begünstigt."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "edfbfa4c-9970-44f5-a92a-bfe53da8f119",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/dns-server_profile.json",
+            "description": "Implementation for all controls in Baustein APP.3.6",
+            "implemented-requirements": [
+              {
+                "uuid": "6315c32c-77f3-4b5f-bf4d-1066595c96ca",
+                "control-id": "ARCH.7.1",
+                "description": "Implementation for ARCH.7.1 based on BSI APP.3.6.A11",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a11-m3",
+                    "uuid": "7b3ef839-15e6-4597-aeb8-0728a0fb8a2f",
+                    "description": "Die Hardware des DNS-Servers SOLLTE ausreichend dimensioniert sein. Die Hardware des DNS-Servers SOLLTE ausschließlich für den Betrieb dieses DNS-Servers benutzt werden. Die Netzanbindungen sämtlicher DNS-Server im Informationsverbund SOLLTEN ausreichend bemessen sein."
+                  },
+                  {
+                    "statement-id": "app.3.6-a11-m4",
+                    "uuid": "1956934b-9749-4cdb-a4b8-7a962e60f789",
+                    "description": "Die Dimensionierung der DNS-Server basiert auf einer systematischen Kapazitätsplanung. Die Leistungsdaten werden über einen längeren Zeitraum analysiert, um Wachstumstrends zu erkennen. Die Server sind so dimensioniert, dass sie auch einen moderaten DDoS-Angriff (z.B. eine DNS-Amplification-Attacke) ohne signifikante Leistungseinbußen bewältigen können."
+                  }
+                ]
+              },
+              {
+                "uuid": "c07bafa6-beea-46dc-aac6-47f23c45c4f5",
+                "control-id": "ARCH.8.3",
+                "description": "Implementation for ARCH.8.3 based on BSI APP.3.6.A2",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a2-m1",
+                    "uuid": "c855f12a-97fb-439c-b41a-b3edf3250ead",
+                    "description": "Nur für die als absolut kritisch eingestufte Hauptdomain der Institution existiert ein sekundärer Advertising DNS-Server. Andere wichtige Domains werden nicht redundant vorgehalten."
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m2",
+                    "uuid": "d0acda15-a890-4459-8cdf-c6209b37f189",
+                    "description": "Für jeden primären Advertising DNS-Server existiert ein sekundärer Server. Beide Server befinden sich jedoch im selben Rechenzentrum oder sogar im selben Rack."
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m3",
+                    "uuid": "97ab0d15-a2f6-4c61-93e1-c405a07cfc5c",
+                    "description": "Advertising DNS-Server MÜSSEN redundant ausgelegt werden. Für jeden Advertising DNS-Server MUSS es mindestens einen zusätzlichen Secondary DNS-Server geben."
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m4",
+                    "uuid": "81b0dcc7-9e4f-4090-9167-39df89b0f4b0",
+                    "description": "Die sekundären Advertising DNS-Server sind geografisch und topologisch getrennt vom primären Server platziert (z.B. in einem anderen Rechenzentrum oder bei einem externen Provider). Zonentransfers werden aktiv überwacht, und es gibt automatisierte Alarme bei Fehlern."
+                  },
+                  {
+                    "statement-id": "app.3.6-a2-m5",
+                    "uuid": "68ece8bc-8d21-4e66-b828-9b7d6a084da8",
+                    "description": "Die autoritativen DNS-Dienste werden über eine Anycast-Infrastruktur mit mehreren Knotenpunkten bei einem oder mehreren spezialisierten DNS-Providern bereitgestellt. Dies gewährleistet höchste Verfügbarkeit, Lastverteilung und Schutz vor DDoS-Angriffen. Die Systemgesundheit wird kontinuierlich überwacht, und der Datenverkehr wird automatisch umgeleitet."
+                  }
+                ]
+              },
+              {
+                "uuid": "7d534a15-1e28-401f-9977-7cbbc99929de",
+                "control-id": "ASST.7.1",
+                "description": "Implementation for ASST.7.1 based on BSI APP.3.6.A19",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a19-m3",
+                    "uuid": "368a0686-beae-4fdc-a93e-bceefb5e2a59",
+                    "description": "Der DNS-Server SOLLTE sowohl aus dem Domain-Namensraum als auch aus dem Netzverbund gelöscht werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "feecb7d2-4863-4ff2-8fe4-928aeca62637",
+                "control-id": "BES.2.1.3",
+                "description": "Implementation for BES.2.1.3 based on BSI APP.3.6.A10",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a10-m3",
+                    "uuid": "0f4ea1ce-3b6a-47d1-9b7e-bacbdde938b7",
+                    "description": "Wird ein DNS-Server-Produkt beschafft, dann SOLLTE darauf geachtet werden, dass es sich in der Praxis ausreichend bewährt hat. Das DNS-Server-Produkt SOLLTE die aktuellen RFC-Standards unterstützen. Das DNS-Server-Produkt SOLLTE die Zuständigen dabei unterstützen, syntaktisch korrekte Master Files zu erstellen."
+                  },
+                  {
+                    "statement-id": "app.3.6-a10-m4",
+                    "uuid": "defa7831-e77f-40a1-95df-d7d8436840b8",
+                    "description": "Bei der Auswahl des DNS-Server-Produkts wird gezielt auf erweiterte Sicherheitsfunktionen geachtet. Dazu gehören eine robuste Implementierung von DNSSEC, Unterstützung für Response Rate Limiting (RRL), DNS-Cookies und DNS-over-TLS (DoT) oder DNS-over-HTTPS (DoH). Die Auswahl wird dokumentiert und begründet."
+                  }
+                ]
+              },
+              {
+                "uuid": "7e22b118-1fe5-4ba1-a40d-f37abb5ef340",
+                "control-id": "BES.2.1.5",
+                "description": "Implementation for BES.2.1.5 based on BSI APP.3.6.A8",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a8-m2",
+                    "uuid": "39db469a-9f85-4870-9f68-19bd91125df2",
+                    "description": "Es ist eine Person aus der IT-Abteilung benannt, die für die Verwaltung der Domainnamen zuständig ist. Die Verlängerung der Domains wird manuell durchgeführt, wenn die Benachrichtigungs-E-Mail vom Registrar eintrifft. Es gibt keine zentrale Liste aller Domains."
+                  },
+                  {
+                    "statement-id": "app.3.6-a8-m3",
+                    "uuid": "f1f7b72d-9cbe-4a51-aff2-d868d7ae4ca1",
+                    "description": "Es MUSS sichergestellt sein, dass die Registrierungen für alle Domains, die von einer Institution benutzt werden, regelmäßig und rechtzeitig verlängert werden. Eine Person MUSS bestimmt werden, die dafür zuständig ist, die Internet-Domainnamen zu verwalten. Diese Aufgabe kann auch durch die Zentrale Verwaltung wahrgenommen werden. Falls Dienstleistende mit der Domainverwaltung beauftragt werden, MUSS darauf geachtet werden, dass die Institution die Kontrolle über die Domains behält."
+                  },
+                  {
+                    "statement-id": "app.3.6-a8-m4",
+                    "uuid": "670b895f-4f3c-4e85-a522-17c312835604",
+                    "description": "Alle kritischen Domains sind beim Registrar gegen unautorisierte Transfers und Änderungen mit einer Transfersperre (Registry Lock) geschützt. Der Zugriff auf das Verwaltungskonto beim Registrar ist durch Zwei-Faktor-Authentisierung (2FA) abgesichert. Die Ablaufdaten der Domains werden durch ein automatisiertes System überwacht."
+                  }
+                ]
+              },
+              {
+                "uuid": "aeef2fff-362a-414f-b77c-733c69f7dfb5",
+                "control-id": "DET.4.15",
+                "description": "Implementation for DET.4.15 based on BSI APP.3.6.A7",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a7-m2",
+                    "uuid": "4ab908b0-7a87-4531-956b-fc66662138a6",
+                    "description": "Die grundlegende Verfügbarkeit der DNS-Server (Erreichbarkeit via Ping) und der Zustand des DNS-Dienstes werden von einem zentralen Monitoring-System überwacht. Die Protokolldateien werden gespeichert, aber nicht systematisch ausgewertet."
+                  },
+                  {
+                    "statement-id": "app.3.6-a7-m3",
+                    "uuid": "f9c44e1e-194a-4fc8-85e1-b861e68703ab",
+                    "description": "DNS-Server MÜSSEN laufend überwacht werden. Es MUSS überwacht werden, wie ausgelastet die DNS-Server sind, um rechtzeitig die Leistungskapazität der Hardware anpassen zu können. DNS-Server MÜSSEN so konfiguriert werden, dass mindestens die folgenden sicherheitsrelevanten Ereignisse protokolliert werden: Anzahl der DNS-Anfragen, Anzahl der Fehler bei DNS-Anfragen, EDNS-Fehler, auslaufende Zonen sowie fehlgeschlagene Zonentransfers."
+                  },
+                  {
+                    "statement-id": "app.3.6-a7-m4",
+                    "uuid": "76e4d8e7-b523-4360-8729-0742c610ef9a",
+                    "description": "Die protokollierten Daten werden regelmäßig und automatisiert ausgewertet, um Anomalien zu erkennen. Es werden Dashboards zur Visualisierung der DNS-Aktivität und -Leistung erstellt. Alarme werden bei signifikanten Abweichungen vom Normalverhalten ausgelöst, z.B. bei einem plötzlichen Anstieg von NXDOMAIN-Antworten oder SERVFAIL-Fehlern."
+                  },
+                  {
+                    "statement-id": "app.3.6-a7-m5",
+                    "uuid": "78941b68-b48f-4a4b-bb42-21a9b9ea17cc",
+                    "description": "Die DNS-Überwachung nutzt maschinelles Lernen, um Baseline-Profile des normalen DNS-Verkehrs zu erstellen und komplexe, niedrigschwellige Angriffe wie DNS-Tunneling oder Slow-Drip-Datenexfiltration zu erkennen. Die Analyse erfolgt in Echtzeit und kann automatisch Abwehrmaßnahmen auslösen, wie z.B. das Blockieren von verdächtigen Quell-IPs."
+                  }
+                ]
+              },
+              {
+                "uuid": "4ae7ec49-37ba-43f2-ad21-91d6d4d6e900",
+                "control-id": "DET.4.5",
+                "description": "Implementation for DET.4.5 based on BSI APP.3.6.A15",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a15-m3",
+                    "uuid": "99229cec-12ff-4aa5-bb44-b2de5263f9ad",
+                    "description": "Die Logdateien des DNS-Servers SOLLTEN regelmäßig überprüft werden. Die Logdateien des DNS-Servers SOLLTEN regelmäßig ausgewertet werden. Mindestens die folgenden sicherheitsrelevanten Ereignisse SOLLTEN ausgewertet werden: Anzahl der DNS-Anfragen, Anzahl der Fehler bei DNS-Anfragen, EDNS-Fehler, auslaufende Zonen, fehlgeschlagene Zonentransfers sowie Veränderungen im Verhältnis von Fehlern zu DNS-Anfragen."
+                  },
+                  {
+                    "statement-id": "app.3.6-a15-m4",
+                    "uuid": "4b756dbf-4de9-461f-af35-6abdae97fa1d",
+                    "description": "Die Auswertung der DNS-Logdaten erfolgt automatisiert durch ein zentrales Log-Management- oder SIEM-System. Es sind Regeln und Schwellenwerte definiert, die bei signifikanten Abweichungen (z.B. sprunghafter Anstieg von Fehlern, fehlgeschlagene Zonentransfers) automatisch Alarme auslösen. Die Ergebnisse werden in Dashboards visualisiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "938f0330-7280-402c-8c66-9f629812c1d5",
+                "control-id": "DEV.2.2",
+                "description": "Implementation for DEV.2.2 based on BSI APP.3.6.A1",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a1-m1",
+                    "uuid": "8cb2f196-9a0b-4f7c-970b-39c77c0128b9",
+                    "description": "Eine rudimentäre Planung für den DNS-Einsatz existiert, konzentriert sich jedoch nur auf die grundlegende Namensauflösung für kritische externe Dienste. Sicherheitsaspekte und interne Auflösung werden nicht systematisch berücksichtigt. Es gibt keine formelle Dokumentation."
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m2",
+                    "uuid": "72061fed-3744-4552-8695-7f0171004f72",
+                    "description": "Ein grundlegender Plan für den DNS-Einsatz ist vorhanden und dokumentiert. Er legt fest, wie der DNS-Dienst grundsätzlich aufgebaut ist (z.B. welche Server als primäre und sekundäre Server dienen). Die Planung deckt die wichtigsten Domains ab, geht aber nicht auf detaillierte Sicherheitskonfigurationen ein."
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m3",
+                    "uuid": "e4b1023d-555a-44b2-8401-3348899327e0",
+                    "description": "Der Einsatz von DNS-Servern MUSS sorgfältig geplant werden. Es MUSS zuerst festgelegt werden, wie der Netzdienst DNS aufgebaut werden soll. Es MUSS festgelegt werden, welche Domain-Informationen schützenswert sind. Es MUSS geplant werden, wie DNS-Server in das Netz des Informationsverbunds eingebunden werden sollen. Die getroffenen Entscheidungen MÜSSEN geeignet dokumentiert werden."
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m4",
+                    "uuid": "3c7a1575-57a5-4077-a1f7-9696245928de",
+                    "description": "Die DNS-Planung wird regelmäßig, mindestens jährlich, überprüft und bei Bedarf an neue Bedrohungen und Anforderungen angepasst. Die Planung umfasst detaillierte Sicherheitsaspekte wie DNSSEC-Deployment-Strategien, Logging-Anforderungen und Response Rate Limiting (RRL). Die Dokumentation ist in einer zentralen CMDB hinterlegt."
+                  },
+                  {
+                    "statement-id": "app.3.6-a1-m5",
+                    "uuid": "03239c93-c388-4092-af94-86fa708dab05",
+                    "description": "Die DNS-Planung ist vollständig in die IT-Architektur- und Risikomanagementprozesse integriert. Änderungen an der DNS-Architektur basieren auf proaktiven Bedrohungsanalysen (Threat Modeling). Automatisierte Konfigurations-Checks stellen sicher, dass alle DNS-Server-Deployments und -Änderungen konform zur Planung sind."
+                  }
+                ]
+              },
+              {
+                "uuid": "c0065302-33eb-41d3-bc98-b7586dd089cd",
+                "control-id": "KONF.10.1",
+                "description": "Implementation for KONF.10.1 based on BSI APP.3.6.A4",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a4-m2",
+                    "uuid": "65a2c159-0823-4615-928d-903246fb5aea",
+                    "description": "Die DNS-Server werden mit den Standardeinstellungen der Distribution betrieben. Kritische Schwachstellen wie offene Rekursion werden durch grundlegende ACLs auf dem Server selbst verhindert. Die Softwareversion wird nicht aktiv verborgen."
+                  },
+                  {
+                    "statement-id": "app.3.6-a4-m3",
+                    "uuid": "f72f2a50-39a2-46a3-a2e2-4b833f8932a1",
+                    "description": "Ein Resolving DNS-Server MUSS so konfiguriert werden, dass er ausschließlich Anfragen aus dem internen Netz akzeptiert. Wenn ein Resolving DNS-Server Anfragen versendet, MUSS er zufällige Source Ports benutzen. Sind DNS-Server bekannt, die falsche Domain-Informationen liefern, MUSS der Resolving DNS-Server daran gehindert werden, Anfragen dorthin zu senden. Ein Advertising DNS-Server MUSS so konfiguriert werden, dass er Anfragen aus dem Internet immer iterativ behandelt. Es MUSS sichergestellt werden, dass DNS-Zonentransfers zwischen Primary und Secondary DNS-Servern funktionieren. Zonentransfers MÜSSEN auf bestimmte IP-Adressen beschränkt werden. Die Version des verwendeten DNS-Server-Produktes MUSS verborgen werden."
+                  },
+                  {
+                    "statement-id": "app.3.6-a4-m4",
+                    "uuid": "0ff2a59a-a965-47f5-bec7-03250c9a620c",
+                    "description": "Zusätzliche Härtungsmaßnahmen werden umgesetzt. Response Rate Limiting (RRL) wird auf autoritativen Servern aktiviert, um ihre Nutzung für Amplification-Angriffe zu erschweren. Auf Resolvern werden DNS-Cookies verwendet, um die Authentizität von Anfragen und Antworten zu verbessern und Spoofing zu erschweren."
+                  },
+                  {
+                    "statement-id": "app.3.6-a4-m5",
+                    "uuid": "531f2a14-6fdd-4e34-9f06-196d4ba9ba8f",
+                    "description": "Alle DNS-Server laufen in einer stark eingeschränkten Umgebung, z.B. in einem minimalen Container-Image oder mit strikten Mandatory Access Control (MAC) Profilen wie AppArmor oder SELinux. Der ausgehende Verkehr von Resolvern wird über einen validierenden DNS-Proxy (z.B. DNSCrypt-Proxy) geleitet, der die Authentizität und Vertraulichkeit der Anfragen sicherstellt. Alle Konfigurationen werden über ein automatisiertes System (IaC) verwaltet und auf Konformität überwacht."
+                  }
+                ]
+              },
+              {
+                "uuid": "bf532180-b888-42eb-b4f8-630f8bc4185e",
+                "control-id": "KONF.11.1.2",
+                "description": "Implementation for KONF.11.1.2 based on BSI APP.3.6.A18",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a18-m3",
+                    "uuid": "109c401c-3064-43c3-98b7-b45eb1d1056f",
+                    "description": "Um Zonentransfers stärker abzusichern, SOLLTEN zusätzlich Transaction Signatures (TSIG) eingesetzt werden."
+                  },
+                  {
+                    "statement-id": "app.3.6-a18-m4",
+                    "uuid": "c00e3545-435b-4f32-9ef9-33a23634554c",
+                    "description": "Für jeden sekundären Server wird ein eigener, einzigartiger TSIG-Schlüssel verwendet. Die TSIG-Schlüssel werden regelmäßig, mindestens jährlich, gewechselt. Der Prozess zum Schlüsselwechsel ist dokumentiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "873afe4f-25e0-41a7-a6ba-257cb3ff05c2",
+                "control-id": "KONF.11.4",
+                "description": "Implementation for KONF.11.4 based on BSI APP.3.6.A13",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a13-m3",
+                    "uuid": "3352863e-99f9-4bd9-aeb8-645ee5e34d5a",
+                    "description": "Der Namensraum eines Informationsverbunds SOLLTE in einen öffentlichen und einen institutionsinternen Bereich aufgeteilt werden (Split DNS). Im öffentlichen Teil SOLLTEN nur solche Domain-Informationen enthalten sein, die von Diensten benötigt werden, die von extern erreichbar sein sollen. IT-Systeme im internen Netz SOLLTEN selbst dann keinen von außen auflösbaren DNS-Namen erhalten, wenn sie eine öffentliche IP-Adresse besitzen."
+                  },
+                  {
+                    "statement-id": "app.3.6-a13-m4",
+                    "uuid": "ae72157f-c1f9-4270-ac5e-e9d601113c52",
+                    "description": "Die Verwaltung der internen und externen Zonen wird durch technische Mittel strikt getrennt, um ein versehentliches Veröffentlichen interner Informationen zu verhindern. Zonentransfers (AXFR/IXFR) aus dem Internet werden auf allen autoritativen Servern blockiert. Stattdessen werden alternative, sicherere Methoden zur Abfrage von Zoneninhalten (z.B. DNS Catalog Zones) für administrative Zwecke verwendet."
+                  }
+                ]
+              },
+              {
+                "uuid": "1e926926-c160-4ba4-857b-0b4c70ebdec3",
+                "control-id": "KONF.11.8",
+                "description": "Implementation for KONF.11.8 based on BSI APP.3.6.A21",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a21-m3",
+                    "uuid": "f4a72fd6-0f86-4172-80e7-b8002dcd8841",
+                    "description": "Der primäre Advertising DNS-Server (Master) wird wie die sekundären Server in den öffentlichen NS-Records der Zone aufgeführt und ist aus dem Internet erreichbar."
+                  },
+                  {
+                    "statement-id": "app.3.6-a21-m5",
+                    "uuid": "cace12f4-34a6-4bab-97a1-fabe3198ec9a",
+                    "description": "Um Angriffe auf den primären Advertising DNS-Server zu erschweren, SOLLTE eine sogenannte Hidden-Master-Anordnung vorgenommen werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "d1183c20-db04-4147-a88b-1ab91cf3e979",
+                "control-id": "KONF.12.14",
+                "description": "Implementation for KONF.12.14 based on BSI APP.3.6.A17",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a17-m3",
+                    "uuid": "4adf4817-fe26-4d66-8057-5f5d12482bc0",
+                    "description": "Die DNS-Protokollerweiterung DNSSEC SOLLTE sowohl auf Resolving DNS-Servern als auch auf Advertising DNS-Servern aktiviert werden. Die dabei verwendeten Schlüssel Key-Signing-Keys (KSK) und Zone-Signing-Keys (ZSK) SOLLTEN regelmäßig gewechselt werden."
+                  },
+                  {
+                    "statement-id": "app.3.6-a17-m4",
+                    "uuid": "d0d56b23-7f18-47b6-91a1-2c56bd4a3e2c",
+                    "description": "Der DNSSEC-Schlüssel-Rollover-Prozess ist weitgehend automatisiert. Die DNSSEC-Validierung wird auf den Resolvern erzwungen. Es gibt ein aktives Monitoring, das bei Validierungsfehlern oder Problemen mit der Signaturkette (z.B. ablaufende Signaturen) alarmiert."
+                  },
+                  {
+                    "statement-id": "app.3.6-a17-m5",
+                    "uuid": "75ead0c4-aa6c-43fc-aa2b-cb25d7303c2b",
+                    "description": "Die privaten Anteile der DNSSEC-Schlüssel (insbesondere des KSK) werden in einem Hardware Security Module (HSM) gespeichert und verwendet. Dies bietet den höchstmöglichen Schutz gegen Kompromittierung des Schlüsselmaterials. Die gesamte DNSSEC-Management-Infrastruktur ist hochverfügbar ausgelegt."
+                  }
+                ]
+              },
+              {
+                "uuid": "222cf5b9-49bc-40f6-a02f-f667d92ae6e2",
+                "control-id": "KONF.6.6",
+                "description": "Implementation for KONF.6.6 based on BSI APP.3.6.A3",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a3-m1",
+                    "uuid": "6c9f2a2d-ce86-418a-bc20-90f684e307a6",
+                    "description": "Ein einziger DNS-Server wird für alle Aufgaben eingesetzt (internes Caching/Resolving und externes Advertising). Eine Trennung wird versucht, durch einfache Access Control Lists (ACLs) zu erreichen, die jedoch unvollständig sind."
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m2",
+                    "uuid": "4eb1ac3c-5fb3-4700-9e0b-9c8937b88eee",
+                    "description": "Auf derselben Hardware werden getrennte DNS-Server-Prozesse oder virtuelle Maschinen für die Rollen Advertising und Resolving betrieben. Die Clients sind so konfiguriert, dass sie den korrekten Prozess für ihre Anfragen nutzen."
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m3",
+                    "uuid": "5342e4d7-8d22-40cf-92b1-3bbb24a75d90",
+                    "description": "Advertising DNS-Server und Resolving DNS-Server MÜSSEN serverseitig getrennt sein. Die Resolver der internen IT-Systeme DÜRFEN NUR die internen Resolving DNS-Server verwenden."
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m4",
+                    "uuid": "2490f28e-ad2b-4081-8ac1-81d881efced4",
+                    "description": "Die Trennung von Advertising- und Resolving-Funktionen wird durch den Einsatz unterschiedlicher DNS-Softwareprodukte für die jeweilige Aufgabe weiter gehärtet (z.B. NSD für Advertising, Unbound für Resolving). Die Kommunikation zwischen den internen Resolvern und dem Internet wird durch einen dedizierten DNS-Proxy oder eine Firewall mit DNS-Inspektion kontrolliert."
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m5",
+                    "uuid": "c5ce1f70-8511-4409-ad0c-545e8ec02fda",
+                    "description": "Die interne Resolving-Infrastruktur ist mit einer DNS-Firewall (auch als Response Policy Zone, RPZ, bekannt) ausgestattet, die Anfragen an bekannte bösartige, Phishing- oder Command&Control-Domains proaktiv blockiert oder umleitet. Die Bedrohungsinformationen werden automatisiert und in Echtzeit aktualisiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "d543dc85-e37a-403f-a912-46f2da1907a3",
+                "control-id": "KONF.6.7",
+                "description": "Implementation for KONF.6.7 based on BSI APP.3.6.A6",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a6-m1",
+                    "uuid": "3f5fda38-0857-442c-bbc7-2fd5a031c28a",
+                    "description": "Dynamische DNS-Updates sind für eine interne Zone aktiviert, die Absicherung erfolgt jedoch nur über eine IP-basierte ACL, die z.B. dem DHCP-Server Updates erlaubt. Es gibt keine kryptographische Authentifizierung."
+                  },
+                  {
+                    "statement-id": "app.3.6-a6-m3",
+                    "uuid": "653bcba0-8b29-4e50-8d78-7ef23c80fd33",
+                    "description": "Es MUSS sichergestellt werden, dass nur legitimierte IT-Systeme Domain-Informationen ändern dürfen. Es MUSS festgelegt werden, welche Domain-Informationen die IT-Systeme ändern dürfen."
+                  },
+                  {
+                    "statement-id": "app.3.6-a6-m4",
+                    "uuid": "984af1bf-8865-4217-8eda-20c4f03a6591",
+                    "description": "Die Authentifizierung für dynamische DNS-Updates wird in eine zentrale Verzeichnisdienst-Infrastruktur integriert (z.B. GSS-TSIG mit Kerberos in einer Active Directory-Umgebung). Die Berechtigungen zur Durchführung von Updates werden über Gruppenrichtlinien oder ähnliche zentrale Mechanismen verwaltet."
+                  }
+                ]
+              },
+              {
+                "uuid": "a58d0ee9-7c21-4489-8382-f9bc49537256",
+                "control-id": "NOT.4.17",
+                "description": "Implementation for NOT.4.17 based on BSI APP.3.6.A20",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a20-m3",
+                    "uuid": "fd20585f-a6ef-4288-993a-0053aef58279",
+                    "description": "Der Notfallplan für DNS-Server wird im Rahmen von allgemeinen IT-Notfallübungen theoretisch durchgesprochen (Tabletop-Übung). Die Erkenntnisse werden dokumentiert."
+                  },
+                  {
+                    "statement-id": "app.3.6-a20-m5",
+                    "uuid": "e7f00804-b757-4556-a581-673d7db26537",
+                    "description": "Es SOLLTE regelmäßig überprüft werden, ob der Notfallplan für DNS-Server durchführbar ist. Dies geschieht durch praktische Übungen, bei denen der Ausfall eines DNS-Servers simuliert und der Wiederanlaufprozess real durchgeführt wird."
+                  }
+                ]
+              },
+              {
+                "uuid": "380447db-f4f1-4553-9e6b-50583ac664cb",
+                "control-id": "NOT.4.3",
+                "description": "Implementation for NOT.4.3 based on BSI APP.3.6.A9",
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a9-m2",
+                    "uuid": "8b30f726-697c-4557-a179-03d31e557df8",
+                    "description": "Es existiert ein allgemeiner IT-Notfallplan, der den Ausfall von DNS als mögliches Szenario erwähnt. Es gibt jedoch keine spezifischen Handlungsanweisungen oder Wiederanlaufpläne für den DNS-Dienst. Die Konfigurationsdateien werden unregelmäßig im Rahmen von System-Backups gesichert."
+                  },
+                  {
+                    "statement-id": "app.3.6-a9-m3",
+                    "uuid": "175731ac-2029-44c2-b472-e369e057b3dc",
+                    "description": "Ein Notfallplan für DNS-Server MUSS erstellt werden. Der Notfallplan für DNS-Server MUSS in die bereits vorhandenen Notfallpläne der Institution integriert werden. Im Notfallplan für DNS-Server MUSS ein Datensicherungskonzept für die Zonen- und Konfigurationsdateien beschrieben sein. Das Datensicherungskonzept für die Zonen- und Konfigurationsdateien MUSS in das existierende Datensicherungskonzept der Institution integriert werden. Der Notfallplan für DNS-Server MUSS einen Wiederanlaufplan für alle DNS-Server im Informationsverbund enthalten."
+                  },
+                  {
+                    "statement-id": "app.3.6-a9-m4",
+                    "uuid": "0e19d5e8-f2b2-431a-abc0-3bb116902f6c",
+                    "description": "Der DNS-Notfallplan enthält detaillierte, schrittweise Anleitungen (Runbooks) für verschiedene Ausfallszenarien (z.B. Ausfall des primären Servers, Ausfall eines Resolvers, DNS-Cache-Poisoning-Vorfall). Die Konfigurations- und Zonendateien werden in einem versionierten Repository (z.B. Git) gespeichert, was eine schnelle Wiederherstellung eines bekannten guten Zustands ermöglicht."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

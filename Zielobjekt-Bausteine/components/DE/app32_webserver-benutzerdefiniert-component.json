@@ -1,0 +1,386 @@
+{
+  "component-definition": {
+    "uuid": "8c750372-fc37-4dba-b7e0-2e72c671280e",
+    "metadata": {
+      "title": "APP.3.2 Webserver - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:58.670156+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "1faeb1b7-2206-4442-b091-0fcc0575f48f",
+        "type": "software",
+        "title": "APP.3.2 Webserver",
+        "description": "This component represents the implementation of all controls for Baustein APP.3.2.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Ein Webserver ist die Kernkomponente jedes Webangebotes, er nimmt Anfragen der Clients entgegen und liefert die entsprechenden Inhalte zurück. Die Daten werden in der Regel über das Hypertext Transfer Protocol (HTTP) oder dessen mit Transport Layer Security (TLS) verschlüsselte Variante HTTP Secure (HTTPS) transportiert. Da Webserver eine einfache Schnittstelle zwischen Serveranwendungen und Clients bieten, werden sie auch häufig für interne Informationen und Anwendungen in Institutionsnetzen, wie dem Intranet, eingesetzt.\nWebserver sind in der Regel direkt im Internet verfügbar und bieten somit eine exponierte Angriffsfläche. Deswegen müssen sie durch geeignete Schutzmaßnahmen abgesichert werden."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist der Schutz des Webservers und der Informationen, die durch den Webserver bereitgestellt oder damit verarbeitet werden."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein muss auf alle Webserver des Informationsverbunds angewendet werden.\nDie Bezeichnung Webserver wird sowohl für die Software verwendet, welche die HTTP-Anfragen beantwortet, als auch für die IT-Systeme, auf denen diese Software ausgeführt wird. In diesem Baustein wird vorrangig die Webserver-Software betrachtet. Sicherheitsaspekte des IT-Systems, auf dem die Webserver-Software installiert ist, werden im Baustein SYS.1.1 Allgemeiner Server sowie den jeweiligen betriebssystemspezifischen Bausteinen betrachtet.\nEmpfehlungen, wie Webserver in die Netzarchitektur zu integrieren und mit Firewalls abzusichern sind, finden sich in den Bausteinen NET.1.1 Netzarchitektur und -design bzw. NET.3.2 Firewall.\nDer Baustein behandelt grundsätzliche Aspekte, die für die Bereitstellung von Webinhalten wichtig sind. Dynamische Inhalte, die durch Webanwendungen bereitgestellt werden, sind nicht Gegenstand des vorliegenden Bausteins. Diese werden im Baustein APP.3.1 Webanwendungen und Webservices behandelt. Ebenso werden hier keine Webservices betrachtet.\nWebbrowser werden in diesem Baustein nicht betrachtet. Anforderungen dazu sind im Baustein APP.1.2 Webbrowser zu finden."
+          },
+          {
+            "name": "2.1. Reputationsverlust",
+            "value": "Gelingt es bei einem Angriff mit administrativen Rechten auf einen Webserver zuzugreifen, kann darüber eine manipulierte Webseite ausgeliefert werden (Defacement). So kann die Reputation der Institution geschädigt werden. Ebenso kann die Veröffentlichung falscher Informationen, wie zum Beispiel fehlerhafter Produktbeschreibungen, dazu führen, dass die Reputation der Institution in der Öffentlichkeit leidet. Auch kann die Institution abgemahnt werden, wenn auf ihrer Webseite Inhalte veröffentlicht werden, die gegen gesetzliche Vorschriften verstoßen. Ein Schaden kann auch entstehen, wenn die Webseite nicht verfügbar ist und potenzielle Kunden und Kundinnen deshalb zu Mitbewerbern wechseln."
+          },
+          {
+            "name": "2.2. Manipulation des Webservers",
+            "value": "Bei einem Angriff könnten sich unberechtigte Personen Zugriff auf einen Webserver verschaffen und dessen Dateien manipulieren. Es könnte beispielsweise die Konfiguration der Webserver-Software geändert werden, Schadsoftware verbreitet oder Webinhalte modifiziert werden."
+          },
+          {
+            "name": "2.3. Denial of Service (DoS)",
+            "value": "Durch DoS-Angriffe lässt sich die Verfügbarkeit eines Webangebotes gezielt beeinträchtigen, indem beispielsweise einzelne Accounts durch fehlerhafte Anmeldungen gesperrt werden.\nDurch DDoS (Distributed Denial of Service)-Angriffe kann ein Webserver teilweise oder auch ganz ausfallen. Für Clients ist das Webangebot dann nur noch sehr langsam oder gar nicht mehr verfügbar. Für viele Institutionen kann ein solcher Ausfall schnell geschäftskritisch werden, z. B. für Online-Shops."
+          },
+          {
+            "name": "2.4. Verlust vertraulicher Daten",
+            "value": "Viele Webserver verwenden noch veraltete kryptografische Verfahren wie RC4 oder SSL. Eine unzureichende Authentisierung bzw. eine ungeeignete Verschlüsselung kann dazu führen, dass die Kommunikation zwischen den Clients und den Webservern mitgelesen oder manipuliert werden kann. Das gleiche gilt für die Kommunikation zwischen dem Webserver und anderen Servern, wie z. B. Load Balancern."
+          },
+          {
+            "name": "2.5. Verstoß gegen Gesetze oder Regelungen",
+            "value": "Für die Veröffentlichung von Webinhalten gibt es verschiedene regulatorische Anforderungen. Neben den Regelungen der Telemedien- und Datenschutzgesetze, sind auch die Regeln des Urheberrechts zu beachten. Verstöße gegen diese Gesetze können rechtliche Konsequenzen nach sich ziehen."
+          },
+          {
+            "name": "2.6. Fehlende oder mangelhafte Fehlerbehebung",
+            "value": "Treten während des Betriebs eines Webservers Fehler auf, kann sich das z. B. auf dessen Verfügbarkeit auswirken. Auch werden eventuell Inhalte unvollständig dargestellt oder Sicherheitsmechanismen fallen aus. Werden Fehler nicht korrekt behandelt, sind sowohl der Betrieb als auch der Schutz der Funktionen und Daten eines Webservers nicht mehr gewährleistet."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "47fb8a51-2be3-4be6-810d-c91659fd5014",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/webserver_profile.json",
+            "description": "Implementation for all controls in Baustein APP.3.2",
+            "implemented-requirements": [
+              {
+                "uuid": "e0f9abb7-3c2a-45d9-9620-917dc461d0f6",
+                "control-id": "ARCH.8.3",
+                "description": "Implementation for ARCH.8.3 based on BSI APP.3.2.A15",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a15-m1",
+                    "uuid": "8fe660e4-4c8f-41ff-940b-760ebb8dddf3",
+                    "description": "Es existiert ein einzelner Webserver ohne jegliche Redundanz. Es werden zwar Backups erstellt, die Wiederherstellung ist jedoch ein manueller und zeitaufwändiger Prozess."
+                  },
+                  {
+                    "statement-id": "app.3.2.a15-m2",
+                    "uuid": "1a728823-cdcc-4e08-855b-adad475521a0",
+                    "description": "Ein Cold-Standby-Server ist vorhanden. Im Fehlerfall muss das DNS manuell umgeschaltet und die neuesten Daten aus dem Backup wiederhergestellt werden, was zu einer spürbaren Ausfallzeit führt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a15-m3",
+                    "uuid": "9935dd4c-dd0f-47f3-85d8-6bb81a8c8f09",
+                    "description": "Webserver SOLLTEN redundant ausgelegt werden. Dies wird durch den Einsatz von mindestens zwei Servern in einem Load-Balancer-Cluster (aktiv-passiv oder aktiv-aktiv) realisiert, um eine grundlegende Hochverfügbarkeit zu gewährleisten. Die Redundanz weiterer Systeme wie der Internetanbindung ist noch nicht umgesetzt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a15-m4",
+                    "uuid": "327c8b57-a324-4106-9c73-8a8dcf9d4877",
+                    "description": "Die gesamte Bereitstellungskette ist redundant ausgelegt, wie in der Anforderung gefordert. Dies umfasst redundante Webserver, redundante Load Balancer, redundante Internetanbindungen von verschiedenen Providern und ein redundantes Backend (z.B. geclusterte Anwendungsserver, replizierte Datenbanken). Das System kann den Ausfall jeder einzelnen Komponente ohne Serviceunterbrechung überstehen."
+                  },
+                  {
+                    "statement-id": "app.3.2.a15-m5",
+                    "uuid": "bdc3e41c-2875-4193-83bf-ac7a1b02bf29",
+                    "description": "Die Anwendung wird über mehrere, geografisch getrennte Rechenzentren oder Cloud-Verfügbarkeitszonen hinweg in einer Aktiv-Aktiv-Konfiguration mit automatischem Failover betrieben. Ein Global Server Load Balancing (GSLB) wird verwendet, um den Verkehr zum nächstgelegenen oder leistungsfähigsten Rechenzentrum zu leiten und eine maximale Verfügbarkeit und Disaster-Recovery-Fähigkeit zu gewährleisten."
+                  }
+                ]
+              },
+              {
+                "uuid": "2feeeb5c-dbc5-42ad-8f34-85a453081273",
+                "control-id": "DET.3.1.10",
+                "description": "Implementation for DET.3.1.10 based on BSI APP.3.2.A4",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a4-m1",
+                    "uuid": "23b86f23-1494-4447-b7fa-e2405a99b426",
+                    "description": "Die Standard-Protokollierung des Webservers ist aktiviert, zeichnet aber nur erfolgreiche Zugriffe (Access Log) auf. Fehlerprotokolle werden nicht oder nur auf einem sehr niedrigen Level geschrieben. Die Logs werden lokal gespeichert und selten ausgewertet."
+                  },
+                  {
+                    "statement-id": "app.3.2.a4-m2",
+                    "uuid": "302c6d6f-8eab-4135-bd6b-cc837e6bfbf1",
+                    "description": "Der Webserver ist so konfiguriert, dass er alle geforderten Ereignisse protokolliert: erfolgreiche Zugriffe, fehlgeschlagene Zugriffe aufgrund von Berechtigungsfehlern oder nicht vorhandenen Ressourcen sowie Server-Fehler. Die Log-Dateien werden lokal gespeichert und rotiert."
+                  },
+                  {
+                    "statement-id": "app.3.2.a4-m3",
+                    "uuid": "7c275beb-cf12-4e2c-ad99-f7ab54b4e89b",
+                    "description": "Der Webserver MUSS mindestens erfolgreiche Zugriffe, fehlgeschlagene Zugriffe (aufgrund mangelnder Berechtigung, nicht vorhandener Ressourcen und Server-Fehlern) sowie allgemeine Fehlermeldungen protokollieren. Die Protokollierungsdaten SOLLTEN regelmäßig ausgewertet werden. Um die Logs vor Manipulation zu schützen, werden sie an einen zentralen Log-Server gesendet."
+                  },
+                  {
+                    "statement-id": "app.3.2.a4-m4",
+                    "uuid": "146a90c4-8f62-48a0-811f-e2e3007eaf83",
+                    "description": "Die zentral gesammelten Protokolldaten werden durch automatisierte Regeln und Dashboards überwacht. Bei kritischen Ereignissen, wie einer Häufung von 403-Fehlern oder serverseitigen 5xx-Fehlern, werden automatisch Alerts an das zuständige Team gesendet. Die Auswertung der Logs wird dokumentiert."
+                  },
+                  {
+                    "statement-id": "app.3.2.a4-m5",
+                    "uuid": "8d3366b5-5107-4e68-b384-b59f7611516b",
+                    "description": "Alle Webserver-Logs werden in Echtzeit in ein Security Information and Event Management (SIEM) System eingespeist. Das SIEM verwendet fortgeschrittene Korrelationsregeln und Machine-Learning-Modelle, um komplexe Angriffsmuster (z.B. Slow-Brute-Force-Angriffe, Web-Scanning-Aktivitäten) zu erkennen und hochzuverlässige Alarme für das Security Operations Center (SOC) zu generieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "bb526adc-cbf6-4f92-8f80-9d269df0ead3",
+                "control-id": "DET.4.13",
+                "description": "Implementation for DET.4.13 based on BSI APP.3.2.A18",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a18-m1",
+                    "uuid": "25ff2b2a-5630-42d9-91e2-16613e706c36",
+                    "description": "Grundlegende Serverleistungsmetriken wie CPU- und Speicherauslastung werden überwacht. Es sind keine spezifischen Schutzmaßnahmen gegen DoS-Angriffe vorhanden."
+                  },
+                  {
+                    "statement-id": "app.3.2.a18-m2",
+                    "uuid": "50d94275-51a0-4a07-93a2-d804de46de8b",
+                    "description": "Der Webserver und die Firewall sind mit grundlegendem Rate-Limiting konfiguriert, um einfache DoS-Angriffe abzuschwächen. Die Gesundheit und Verfügbarkeit des Servers werden überwacht."
+                  },
+                  {
+                    "statement-id": "app.3.2.a18-m3",
+                    "uuid": "f76fe9a5-4707-4f1f-b9d6-b521f23f48fd",
+                    "description": "Der Webserver SOLLTE ständig auf Leistung und Verfügbarkeit überwacht werden. Es SOLLTEN Maßnahmen definiert und umgesetzt werden, die DDoS-Angriffe verhindern oder zumindest abschwächen. Dies wird durch eine Kombination aus lokaler Härtung und einem reaktiven (on-demand) DDoS-Schutzdienst realisiert."
+                  },
+                  {
+                    "statement-id": "app.3.2.a18-m4",
+                    "uuid": "a9e0f149-a165-4e0c-9497-5b90d4e15f52",
+                    "description": "Ein 'Always-on'-DDoS-Schutzdienst wird eingesetzt, der volumetrische und protokollbasierte Angriffe automatisch am Netzwerkrand erkennt und abwehrt, bevor sie die Infrastruktur der Organisation erreichen. Eine Web Application Firewall (WAF) wird zum Schutz vor Application-Layer-DoS-Angriffen (Layer 7) eingesetzt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a18-m5",
+                    "uuid": "b5d21a55-e5eb-498b-8b52-1a69d341d6c5",
+                    "description": "Ein hybrides DDoS-Schutzmodell wird verwendet, das On-Premise-Appliances zur sofortigen Abwehr von kleineren Angriffen mit einem Cloud-basierten Scrubbing-Dienst für großvolumige Angriffe kombiniert. Das System nutzt Machine Learning, um eine Baseline des normalen Traffics zu erstellen und kann so Zero-Day-Application-Layer-DoS-Angriffe automatisch erkennen und abwehren. Die Wirksamkeit der Abwehrmaßnahmen wird regelmäßig durch DDoS-Angriffssimulationen getestet."
+                  }
+                ]
+              },
+              {
+                "uuid": "03dbc6c8-264f-49a8-aaca-275bd4123dc8",
+                "control-id": "DEV.3.3",
+                "description": "Implementation for DEV.3.3 based on BSI APP.3.2.A12",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a12-m1",
+                    "uuid": "57a50625-f3ae-4988-98e8-b07d4d6d8773",
+                    "description": "Es werden die Standard-Fehlerseiten des Webservers oder des Anwendungsframeworks verwendet. Diese geben oft detaillierte Fehlermeldungen, Stack-Traces und Versionsinformationen an den Benutzer aus."
+                  },
+                  {
+                    "statement-id": "app.3.2.a12-m2",
+                    "uuid": "edbd8d94-87f7-4bbb-b223-27df444ddf13",
+                    "description": "Benutzerdefinierte Fehlerseiten sind konfiguriert, um die Anzeige von Stack-Traces zu verhindern. Die Server-Versions-Banner im HTTP-Header werden jedoch noch gesendet."
+                  },
+                  {
+                    "statement-id": "app.3.2.a12-m3",
+                    "uuid": "c95724dd-6d10-48b8-996b-90364472ad32",
+                    "description": "Aus den HTTP-Informationen und den angezeigten Fehlermeldungen SOLLTEN weder der Produktname noch die verwendete Version des Webservers ersichtlich sein. Es SOLLTEN nur allgemeine Fehlermeldungen ausgegeben werden, die keine Details zu Systeminformationen enthalten. Die Fehlermeldung SOLLTE ein eindeutiges Merkmal (z.B. eine Korrelations-ID) enthalten, das dem IT-Betrieb die Nachvollziehbarkeit des Fehlers ermöglicht. Es SOLLTE sichergestellt sein, dass der Server nach einem unerwarteten Fehler nicht in einem anfälligen Zustand verbleibt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a12-m4",
+                    "uuid": "9568a134-7889-4018-a404-9b9fdfd3e51b",
+                    "description": "Ein zentrales Fehlerbehandlungs-Framework in der Anwendung stellt sicher, dass alle Ausnahmen (Exceptions) korrekt abgefangen werden und der Anwendungsprozess nach einem Absturz ordnungsgemäß beendet und neu gestartet wird. Eine Web Application Firewall (WAF) wird zusätzlich eingesetzt, um ausgehende Antworten zu filtern und eventuell doch durchgerutschte sensible Informationen zu entfernen."
+                  },
+                  {
+                    "statement-id": "app.3.2.a12-m5",
+                    "uuid": "a761d021-4743-4633-b3d7-e0888d3eb936",
+                    "description": "Ein umfassendes Exception-Handling-Framework ist im gesamten Anwendungsstack etabliert. Das Verhalten des Systems unter verschiedenen Fehlerbedingungen (z.B. Datenbank nicht erreichbar, Dateisystem voll) wird aktiv mittels Chaos-Engineering-Prinzipien getestet, um die Widerstandsfähigkeit und Sicherheit zu gewährleisten und Informationslecks unter allen Umständen zu verhindern."
+                  }
+                ]
+              },
+              {
+                "uuid": "e02fa61c-dc06-4882-b9c4-6f6871475bb3",
+                "control-id": "DEV.3.4",
+                "description": "Implementation for DEV.3.4 based on BSI APP.3.2.A5",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a5-m1",
+                    "uuid": "5e876ad1-027f-4842-84e5-bb19955290db",
+                    "description": "Passwörter werden auf dem Webserver gespeichert, aber sie werden nur mit einem veralteten oder unsicheren Hashing-Algorithmus wie MD5 oder SHA1 ohne Salt gespeichert."
+                  },
+                  {
+                    "statement-id": "app.3.2.a5-m2",
+                    "uuid": "3cab6c56-ef5a-42d4-ad9a-caea5b476e48",
+                    "description": "Passwörter werden unter Verwendung eines Standard-Hashing-Algorithmus wie SHA-256 mit einem benutzerspezifischen Salt gespeichert. Die Passwortdatei ist vor unbefugtem Lesen geschützt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a5-m3",
+                    "uuid": "5066bc28-4e6d-4800-8927-28c1bdf915c9",
+                    "description": "Wenn sich Clients mit Hilfe von Passwörtern am Webserver authentisieren, MÜSSEN diese kryptografisch gesichert gespeichert werden. Hierfür MUSS eine moderne, adaptive Passwort-Hashing-Funktion wie Argon2, scrypt oder bcrypt verwendet werden. Die Passwort-Hashes MÜSSEN vor unbefugtem Zugriff geschützt gespeichert werden."
+                  },
+                  {
+                    "statement-id": "app.3.2.a5-m4",
+                    "uuid": "6b091245-0e3e-4b17-aa76-02659612319c",
+                    "description": "Zusätzlich zur sicheren Speicherung der Passwörter werden serverseitige Mechanismen zum Schutz vor Brute-Force-Angriffen implementiert. Dazu gehören eine fehlgeschlagene Anmeldeversuchserkennung mit anschließender Account-Sperrung oder Verzögerung."
+                  },
+                  {
+                    "statement-id": "app.3.2.a5-m5",
+                    "uuid": "1b7ba2fe-0759-4d30-b6e9-38ec58e083f1",
+                    "description": "Die Authentisierung wird vollständig an eine zentrale, gehärtete Identity and Access Management (IAM) Lösung ausgelagert, die standardmäßig Multi-Faktor-Authentisierung (MFA) erzwingt. Passwörter werden auf dem Webserver selbst nicht mehr verarbeitet oder gespeichert."
+                  }
+                ]
+              },
+              {
+                "uuid": "52c4b97a-0d66-411b-b0ad-67a3c7c3be79",
+                "control-id": "KONF.10.1",
+                "description": "Implementation for KONF.10.1 based on BSI APP.3.2.A1",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a1-m1",
+                    "uuid": "4b23ad59-a841-4be3-858f-e512db3aa0ba",
+                    "description": "Der Webserver ist installiert, aber es werden nur vereinzelte Sicherheitseinstellungen vorgenommen, wie z.B. die Deaktivierung offensichtlich unnötiger Module. Die Konfiguration ist weitgehend im Standardzustand und die Prozessrechte sind nicht minimal."
+                  },
+                  {
+                    "statement-id": "app.3.2.a1-m2",
+                    "uuid": "c8459274-f37b-473b-84e9-409f540fce09",
+                    "description": "Der Webserver-Prozess wird grundsätzlich unter einem Konto mit minimalen Rechten ausgeführt. Alle offensichtlich nicht benötigten Module und Funktionen werden manuell deaktiviert. Die Schreibberechtigungen im Web-Verzeichnis sind auf das Notwendigste reduziert."
+                  },
+                  {
+                    "statement-id": "app.3.2.a1-m3",
+                    "uuid": "2c3eb682-471a-45ba-a433-5275a1e90b77",
+                    "description": "Es MUSS eine dokumentierte, sichere Grundkonfiguration für den Webserver geben, die systematisch angewendet wird. Der Webserver-Prozess MUSS einem Konto mit minimalen Rechten zugewiesen werden. Alle nicht benötigten Module, Funktionen und Schreibberechtigungen MÜSSEN deaktiviert bzw. entzogen werden. Der Webserver SOLLTE in einer gekapselten Umgebung oder auf einem dedizierten System ausgeführt werden."
+                  },
+                  {
+                    "statement-id": "app.3.2.a1-m4",
+                    "uuid": "4e51a716-868b-45ca-b120-2bb872e5d669",
+                    "description": "Die sichere Konfiguration wird durch ein Konfigurationsmanagementsystem erzwungen und überwacht. Der Webserver wird standardmäßig in einer gekapselten Umgebung (z.B. Container oder chroot-Jail) ausgeführt. Die Konformität der Konfiguration wird regelmäßig automatisiert überprüft."
+                  },
+                  {
+                    "statement-id": "app.3.2.a1-m5",
+                    "uuid": "6517011f-05bb-4701-8a1f-5bb9f9341d0d",
+                    "description": "Die sichere Konfiguration wird durch ein vollautomatisches Konfigurationsmanagementsystem durchgesetzt. Die Webserver werden in minimalen, schreibgeschützten Containern ausgeführt, die durch strikte Mandatory Access Control (MAC) Profile wie SELinux oder AppArmor zusätzlich abgesichert sind. Jegliche Konfigurationsabweichung führt zu einem automatisierten Alert und ggf. zur Neuinstanziierung des Dienstes aus einem sauberen Image."
+                  }
+                ]
+              },
+              {
+                "uuid": "ffb8893a-8d04-4903-9ace-a56d469c88e3",
+                "control-id": "KONF.10.5",
+                "description": "Implementation for KONF.10.5 based on BSI APP.3.2.A14",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a14-m1",
+                    "uuid": "3598e0fa-74ca-4105-b87b-a36f72df33b3",
+                    "description": "Die Integrität von Web-Dateien wird nur manuell und bei Verdacht auf eine Kompromittierung geprüft. Ein Virenscan auf dem Server wird unregelmäßig durchgeführt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a14-m2",
+                    "uuid": "0295efde-71c0-4461-8195-ca5649da3a86",
+                    "description": "Ein geplanter Task führt wöchentlich einen Virenscanner über das Web-Verzeichnis aus. Konfigurationsdateien werden sporadisch manuell auf Änderungen überprüft."
+                  },
+                  {
+                    "statement-id": "app.3.2.a14-m3",
+                    "uuid": "a2030f28-e768-4e94-8a3e-0b382cc36c24",
+                    "description": "Der IT-Betrieb SOLLTE regelmäßig prüfen, ob die Konfigurationen des Webservers und die von ihm bereitgestellten Dateien noch integer sind und nicht durch Angriffe verändert wurden. Die zur Veröffentlichung vorgesehenen Dateien SOLLTEN regelmäßig auf Schadsoftware geprüft werden. Dies wird durch den Einsatz eines File Integrity Monitoring (FIM) Werkzeugs und regelmäßige, geplante Virenscans umgesetzt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a14-m4",
+                    "uuid": "d7777869-7d54-4407-b483-97a198700fd7",
+                    "description": "Das FIM-Tool ist so konfiguriert, dass es bei Erkennung einer unautorisierten Änderung an kritischen Dateien eine Echtzeit-Alarmierung an das Sicherheitsteam sendet. Der Virenscan wird in die CI/CD-Pipeline integriert, sodass Inhalte automatisch vor dem Deployment in die Produktionsumgebung gescannt werden."
+                  },
+                  {
+                    "statement-id": "app.3.2.a14-m5",
+                    "uuid": "a35a8c4c-1c0b-483c-89b8-2269bb609b53",
+                    "description": "Das FIM-System ist vollständig in ein SIEM und ein SOAR-System integriert. Kritische Dateiänderungen lösen eine automatisierte Reaktion aus, wie z.B. das Zurücksetzen der Datei aus der Versionskontrolle oder das automatische Isolieren des Servers. Zusätzlich zu statischen Scans überwacht eine Endpoint Detection and Response (EDR) Lösung den Server auf bösartige Prozesse und Verhaltensweisen in Echtzeit."
+                  }
+                ]
+              },
+              {
+                "uuid": "3f557b56-beaf-411e-95f8-b4a1c6615a84",
+                "control-id": "KONF.14.1.1",
+                "description": "Implementation for KONF.14.1.1 based on BSI APP.3.2.A11",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a11-m1",
+                    "uuid": "7cb99daa-2950-4a92-9137-dc790271b1b0",
+                    "description": "HTTPS ist auf dem Webserver aktiviert, aber die Konfiguration ist schwach. Es werden veraltete Protokolle wie SSLv3 oder TLS 1.0/1.1 sowie unsichere Cipher Suites (z.B. solche mit RC4) noch unterstützt. Auf einigen Seiten tritt Mixed Content auf."
+                  },
+                  {
+                    "statement-id": "app.3.2.a11-m2",
+                    "uuid": "64267340-c148-47aa-bf9c-6b097251e74d",
+                    "description": "Der Webserver ist so konfiguriert, dass er HTTPS mit mindestens TLS 1.2 und einer Reihe sicherer Cipher Suites anbietet. Veraltete Protokolle sind deaktiviert. Ein manueller Prozess stellt sicher, dass auf neuen Seiten kein Mixed Content entsteht."
+                  },
+                  {
+                    "statement-id": "app.3.2.a11-m3",
+                    "uuid": "6f694ff5-5288-4ec1-8269-00dfe524e988",
+                    "description": "Der Webserver MUSS für alle Verbindungen durch nicht vertrauenswürdige Netze eine sichere Verschlüsselung über TLS anbieten (HTTPS) und nur starke Protokolle (TLS 1.2, TLS 1.3) und Cipher Suites gemäß aktuellen Empfehlungen (z.B. BSI TR-02102-2) unterstützen. Wenn eine HTTPS-Verbindung genutzt wird, MÜSSEN alle Inhalte über HTTPS ausgeliefert werden; sogenannter Mixed Content DARF NICHT verwendet werden. HTTP-Anfragen werden automatisch auf HTTPS umgeleitet."
+                  },
+                  {
+                    "statement-id": "app.3.2.a11-m4",
+                    "uuid": "eafa4017-c655-4ab9-a32b-a849455f4d73",
+                    "description": "Zusätzlich zur starken TLS-Konfiguration wird der HTTP Strict Transport Security (HSTS) Header mit einer langen `max-age` und der `includeSubDomains` Direktive verwendet, um den Browser anzuweisen, ausschließlich über HTTPS zu kommunizieren. OCSP Stapling ist aktiviert, um die Performance und den Datenschutz beim Abruf des Zertifikatstatus zu verbessern."
+                  },
+                  {
+                    "statement-id": "app.3.2.a11-m5",
+                    "uuid": "308754e9-6a20-4cd4-9326-68a3c3a6bb29",
+                    "description": "Die HSTS-Richtlinie wird in die Preload-Listen der gängigen Browser eingetragen, um maximalen Schutz zu gewährleisten. Zusätzlich werden DNS Certification Authority Authorization (CAA) Records genutzt, um festzulegen, welche Zertifizierungsstellen Zertifikate für die Domain ausstellen dürfen. Die Einhaltung von Certificate Transparency (CT) wird aktiv überwacht."
+                  }
+                ]
+              },
+              {
+                "uuid": "ad597c39-4ff5-4913-9cbb-e5aed12eab72",
+                "control-id": "KONF.6.11",
+                "description": "Implementation for KONF.6.11 based on BSI APP.3.2.A3",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a3-m1",
+                    "uuid": "d74035cf-a398-4ddf-8b89-903123adfff9",
+                    "description": "Eine maximale Dateigröße für Uploads ist in der Webserver-Konfiguration festgelegt. Ein Virenscan von zum Download angebotenen Dateien wird nur sporadisch oder bei Verdacht durchgeführt."
+                  },
+                  {
+                    "statement-id": "app.3.2.a3-m2",
+                    "uuid": "9dd6f7da-e578-4a90-a29d-cf00eadc813f",
+                    "description": "Alle Dateien, die zum Download bereitgestellt werden, werden vor der Veröffentlichung manuell mit einer Antiviren-Software gescannt. Für Uploads ist eine Maximalgröße und ein ausreichendes Speicherkontingent konfiguriert."
+                  },
+                  {
+                    "statement-id": "app.3.2.a3-m3",
+                    "uuid": "3adeb40e-7f9d-4874-9aca-6ecdb969be56",
+                    "description": "Es MUSS ein definierter Prozess existieren, bei dem alle hochgeladenen Dateien serverseitig auf Schadsoftware geprüft werden. Für alle zum Download bereitgestellten Dateien MUSS vor der Veröffentlichung ebenfalls ein Virenscan durchgeführt werden. Eine Maximalgröße für Datei-Uploads MUSS spezifiziert sein und es MUSS genügend Speicherplatz reserviert werden."
+                  },
+                  {
+                    "statement-id": "app.3.2.a3-m4",
+                    "uuid": "ddeabe1c-8141-484e-89ca-d1fa9d1052bb",
+                    "description": "Zusätzlich zum Virenscan werden hochgeladene Dateien auf ihren Dateityp überprüft (Whitelist-Ansatz, Prüfung von Magic Bytes, nicht nur der Endung) und in einer isolierten Sandbox-Umgebung auf verdächtiges Verhalten analysiert, bevor sie freigegeben werden."
+                  },
+                  {
+                    "statement-id": "app.3.2.a3-m5",
+                    "uuid": "0448b81d-b737-4256-899a-abf7e2646e6c",
+                    "description": "Es wird eine Multi-Engine-Scanning-Lösung verwendet, um die Erkennungsrate zu maximieren. Zusätzlich wird für unterstützte Dateitypen eine Content Disarm and Reconstruction (CDR) Technologie eingesetzt. Diese entfernt proaktiv alle aktiven Inhalte (z.B. Makros, Skripte) aus den Dateien und stellt eine bereinigte, sichere Version der Datei zur Verfügung."
+                  }
+                ]
+              },
+              {
+                "uuid": "a21d5e02-f878-473c-a028-b27d9f18ed1f",
+                "control-id": "KONF.6.8",
+                "description": "Implementation for KONF.6.8 based on BSI APP.3.2.A2",
+                "statements": [
+                  {
+                    "statement-id": "app.3.2.a2-m1",
+                    "uuid": "c701b28b-edf6-4c47-8c86-9de50a942faf",
+                    "description": "Die Berechtigungen für die Haupt-Web-Inhalte sind gesetzt, aber Konfigurationsdateien, Skripte oder Log-Dateien sind teilweise für unbefugte Benutzer lesbar. Das Auflisten von Verzeichnissen ist eventuell noch aktiviert."
+                  },
+                  {
+                    "statement-id": "app.3.2.a2-m2",
+                    "uuid": "da6f3278-e9f8-4876-9213-7fc6f09e5d7c",
+                    "description": "Die Dateiberechtigungen für alle Web-Inhalte, Skripte und Konfigurationsdateien sind manuell korrekt gesetzt, um unbefugtes Lesen und Schreiben zu verhindern. Das Auflisten von Verzeichnissen ist global deaktiviert. Es gibt einen manuellen Prozess, um regelmäßig zu prüfen, ob versehentlich vertrauliche Dateien im Web-Root liegen."
+                  },
+                  {
+                    "statement-id": "app.3.2.a2-m3",
+                    "uuid": "d39f4512-b2c2-49eb-914a-cea4a2ddbaad",
+                    "description": "Es MUSS sichergestellt sein, dass alle Dateien auf dem Webserver vor unbefugtem Zugriff geschützt sind. Der Webserver MUSS so konfiguriert sein, dass Webanwendungen nur auf das definierte WWW-Wurzelverzeichnis zugreifen und keine Dateien außerhalb davon ausliefern können. Funktionen zum Auflisten von Verzeichnissen MÜSSEN deaktiviert sein. Es MUSS ein regelmäßiger Prozess zur Überprüfung auf fälschlicherweise veröffentlichte vertrauliche Dateien etabliert sein."
+                  },
+                  {
+                    "statement-id": "app.3.2.a2-m4",
+                    "uuid": "0a4f8b2d-25d6-4418-b284-36cb75c275e2",
+                    "description": "Ein File Integrity Monitoring (FIM) System wird eingesetzt, um unautorisierte Änderungen an Konfigurations- und Inhaltsdateien zeitnah zu erkennen und zu melden. Die Suche nach fälschlicherweise veröffentlichten vertraulichen Dateien wird durch automatisierte Skripts unterstützt, die nach bestimmten Mustern (z.B. 'private_key', 'password') suchen."
+                  },
+                  {
+                    "statement-id": "app.3.2.a2-m5",
+                    "uuid": "f14d4e68-2cb9-496a-8bc2-80dcac666ca2",
+                    "description": "Das FIM-System ist in ein zentrales SIEM integriert und löst automatisierte Reaktionen aus (z.B. Alarmierung des SOC, Quarantäne der Datei). Zusätzlich werden automatisierte Data Loss Prevention (DLP) Werkzeuge eingesetzt, die kontinuierlich den öffentlichen Web-Content auf sensible Informationsmuster (z.B. Kreditkartennummern, Personendaten) scannen und bei Fund sofort alarmieren."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,540 @@
+{
+  "component-definition": {
+    "uuid": "df9cfa16-7f2d-4a2f-ab85-72bde1e067c1",
+    "metadata": {
+      "title": "NET.3.1 IT-Systeme - Benutzerdefiniert",
+      "last-modified": "2025-11-13T20:07:59.875978+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "f93b5e9d-3622-4701-a883-28ac7347d5e5",
+        "type": "interconnection",
+        "title": "NET.3.1 IT-Systeme",
+        "description": "This component represents the implementation of all controls for Baustein NET.3.1.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Router und Switches bilden das Rückgrat heutiger Datennetze. Ein Ausfall eines oder mehrerer dieser Geräte kann zum kompletten Stillstand der gesamten IT-Infrastruktur führen. Sie müssen daher besonders abgesichert werden.\nRouter arbeiten auf der OSI-Schicht 3 (Netzschicht) und vermitteln Datenpakete anhand der Ziel-IP-Adresse im IP-Header. Router sind in der Lage, Netze mit unterschiedlichen Topographien zu verbinden. Sie werden verwendet, um lokale Netze zu segmentieren oder um lokale Netze über Weitverkehrsnetze zu verbinden. Ein Router identifiziert eine geeignete Verbindung zwischen dem Quellsystem bzw. Quellnetz und dem Zielsystem bzw. Zielnetz. In den meisten Fällen geschieht dies, indem er die Datenpakete an den nächsten Router weitergibt.\nSwitches arbeiteten ursprünglich auf der OSI-Schicht 2, mittlerweile sind sie jedoch mit unterschiedlichen Funktionen erhältlich. Firmen kennzeichnen die Geräte meist mit dem OSI-Layer, der unterstützt wird. Dadurch entstanden die Begriffe Layer-2-, Layer-3- und Layer-4-Switch, wobei es sich bei Layer-3- und Layer-4-Switches eigentlich funktional bereits um Router handelt. Die ursprünglich unterschiedlichen Funktionen von Switches und Routern werden somit heute oft auf einem Gerät vereint."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Der Baustein beschreibt, wie Router und Switches sicher eingesetzt werden können."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein NET.3.1 Router und Switches ist auf jeden im Informationsverbund eingesetzten Router und Switch anzuwenden.\nEs ist eine große Auswahl von unterschiedlichen Routern und Switches von verschiedenen Firmen am Markt verfügbar. Der Baustein beschreibt keine spezifischen Anforderungen für bestimmte Produkte. Er ist so weit wie möglich unabhängig von einzelnen Produkten gehalten.\nDurch die Verschmelzung der Funktionen von Routern und Switches kann der Großteil der Anforderungen sowohl auf Router als auch auf Switches angewendet werden. Der vorliegende Baustein unterscheidet hier weitgehend nicht zwischen den Gerätearten."
+          },
+          {
+            "name": "2.1. Distributed Denial of Service (DDoS)",
+            "value": "Bei einem DDoS-Angriff auf ein geschütztes Netz, beispielsweise per TCP SYN Flooding oder UDP Packet Storm, kann aufgrund der vielen Netzverbindungen, die verarbeitet werden müssen, der Router ausfallen. Das kann dazu führen, dass bestimmte Dienste im Local Area Network (LAN) nicht mehr verfügbar sind oder das gesamte LAN ausfällt."
+          },
+          {
+            "name": "2.2. Manipulation",
+            "value": "Gelingt es Angreifenden, unberechtigt auf einen Router oder Switch zuzugreifen, können sie die Geräte neu konfigurieren oder auch zusätzliche Dienste starten. Die Konfiguration lässt sich beispielsweise so verändern, dass Dienste, Clients oder ganze Netzsegmente geblockt werden. Gleichzeitig kann so Netzverkehr am Switch abgefangen, gelesen oder manipuliert werden."
+          },
+          {
+            "name": "2.3. Fehlerhafte Konfiguration eines Routers oder Switches",
+            "value": "Router und Switches werden mit einer Standardkonfiguration ausgeliefert, in der viele Dienste aktiviert sind. Auch verraten Login-Banner beispielsweise die Modell- und Versionsnummer des Gerätes. Werden Router und Switches mit unsicheren Werkseinstellungen produktiv eingesetzt, kann einfacher unberechtigt auf sie zugegriffen werden. Im schlimmsten Fall sind dadurch interne Dienste für Angreifende erreichbar."
+          },
+          {
+            "name": "2.4. Fehlerhafte Planung und Konzeption",
+            "value": "Viele Institutionen planen und konzipieren den Einsatz von Routern und Switches fehlerhaft. So werden unter anderem Geräte beschafft, die nicht ausreichend dimensioniert sind, z. B. hinsichtlich der Port-Anzahl oder der Leistung. In der Folge kann ein Router oder Switch bereits überlastet sein, wenn er zum ersten Mal eingesetzt wird. Dadurch sind eventuell Dienste oder ganze Netze nicht erreichbar und der Fehler muss aufwendig korrigiert werden."
+          },
+          {
+            "name": "2.5. Inkompatible aktive Netzkomponenten",
+            "value": "Kompatibilitätsprobleme können insbesondere dann entstehen, wenn bestehende Netze um aktive Netzkomponenten anderer Firmen ergänzt oder wenn Netze mit Netzkomponenten unterschiedlicher Firmen betrieben werden. Werden aktive Netzkomponenten mit unterschiedlichen Implementierungen desselben Kommunikationsverfahrens gemeinsam in einem Netz betrieben, können einzelne Teilbereiche des Netzes, bestimmte Dienste oder sogar das gesamte Netz ausfallen."
+          },
+          {
+            "name": "2.6. MAC-Flooding",
+            "value": "Beim MAC-Flooding schicken Angreifende viele Anfragen mit wechselnden Quell-MAC-Adressen an einen Switch. Sobald der Switch dann die Limits der MAC-Adressen, die er speichern kann, erreicht hat, fängt er an, sämtliche Anfragen an alle IT-Systeme im Netz zu schicken. Dadurch können Angreifende den Netzverkehr einsehen."
+          },
+          {
+            "name": "2.7. Spanning-Tree-Angriffe",
+            "value": "Bei Spanning-Tree-Angriffen versenden Angreifende sogenannte Bridge Protocol Data Units (BPDUs) mit dem Ziel, die Switches dazu zu bringen, einen eigenen (bösartigen) Switch als Root Bridge anzusehen. Dadurch wird der Netzverkehr über den Switch der Angreifenden umgeleitet, sodass sie alle über ihn versendeten Informationen mitschneiden können. In der Folge können sie DDoS-Attacken initiieren und durch falsche BPDUs das Netz dazu zwingen, die Spanning-Tree-Topologie neu aufzubauen, wodurch das Netz ausfallen kann."
+          },
+          {
+            "name": "2.8. GARP-Attacken",
+            "value": "Bei Gratuitous-ARP (GARP)-Attacken senden Angreifende unaufgeforderte ARP-Antworten an bestimmte Opfer oder an alle IT-Systeme im selben Subnetz. In dieser gefälschten ARP-Antwort tragend die Angreifenden ihre MAC-Adresse als Zuordnung zu einer fremden IP-Adresse ein und bringt das Opfer dazu, seine ARP-Tabelle so zu verändern, dass der Netzverkehr nun zu den Angreifenden, anstatt zum validen Ziel gesendet wird. Dadurch können sie die Kommunikation zwischen den Opfern mitschneiden oder sie manipulieren."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "19c05ded-5ecf-4ddb-9a1a-1e5b4642e49c",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/it-systeme_profile.json",
+            "description": "Implementation for all controls in Baustein NET.3.1",
+            "implemented-requirements": [
+              {
+                "uuid": "c6a3a5a6-617e-4d9e-86be-7b1a92fbd8c4",
+                "control-id": "ARCH.2.2.11",
+                "description": "Implementation for ARCH.2.2.11 based on BSI NET.3.1.A13",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a13-m3",
+                    "uuid": "461fc7f9-961a-4d3d-8cd8-391b38b97aec",
+                    "description": "Router und Switches SOLLTEN ausschließlich über ein separates Managementnetz (Out-of-Band-Management) administriert werden. Die verfügbaren Sicherheitsmechanismen der eingesetzten Managementprotokolle zur Authentisierung, Integritätssicherung und Verschlüsselung SOLLTEN aktiviert werden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a13-m4",
+                    "uuid": "d260cfc9-3e16-408a-9f6d-4007dcdcbd57",
+                    "description": "Eine eventuell vorhandene Administrationsschnittstelle über das eigentliche Datennetz (In-Band) SOLLTE deaktiviert werden. Alle unsicheren Managementprotokolle SOLLTEN deaktiviert werden. Das Out-of-Band Netz ist nicht nur logisch (VLAN), sondern physisch von den Produktionsnetzen getrennt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a13-m5",
+                    "uuid": "ba4c9f7b-e8e2-46f5-be47-404065a0fe0a",
+                    "description": "Der gesamte administrative Verkehr im Out-of-Band Netzwerk wird zusätzlich durch eine Ende-zu-Ende-Verschlüsselung auf der Übertragungsschicht geschützt, beispielsweise durch die Implementierung von MACsec (IEEE 802.1AE). Der Zugriff auf das OOB-Netz ist nur von dedizierten, gehärteten Bastion Hosts aus möglich, die MFA erfordern."
+                  }
+                ]
+              },
+              {
+                "uuid": "c149f83e-08a8-405e-ac3c-0f40243fc9c0",
+                "control-id": "ASST.5.1",
+                "description": "Implementation for ASST.5.1 based on BSI NET.3.1.A9",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a9-m1",
+                    "uuid": "68489ff6-b765-4516-b583-700f9d321136",
+                    "description": "Es existieren lediglich veraltete Netzwerkpläne. Wichtige betriebliche Informationen wie IP-Adressvergabe, VLAN-Konfiguration oder Standardprozeduren sind nicht schriftlich festgehalten und existieren nur als 'Wissen in den Köpfen' der Administratoren."
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m2",
+                    "uuid": "66922b63-f6e9-4cca-ae65-cc1c1e3e6215",
+                    "description": "Die grundlegenden Konfigurationsparameter wie IP-Adressen, VLANs und Portbelegungen werden in einer zentralen Datei oder einem Wiki dokumentiert. Es fehlen jedoch Anleitungen für wiederkehrende betriebliche Aufgaben."
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m3",
+                    "uuid": "a76cb4af-1ab5-4b9b-aee0-661e8a7406f3",
+                    "description": "Die wichtigsten betrieblichen Aufgaben eines Routers oder Switches MÜSSEN geeignet dokumentiert werden. Dies umfasst Standard Operating Procedures (SOPs) für wiederkehrende Tätigkeiten wie die Inbetriebnahme neuer Geräte, die Konfiguration von Ports oder die Durchführung von Updates."
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m4",
+                    "uuid": "43b9e376-b4f8-4ad6-8ac8-8c20a66e6a6e",
+                    "description": "Es SOLLTEN alle Konfigurationsänderungen sowie sicherheitsrelevante Aufgaben dokumentiert werden. Die Dokumentation SOLLTE vor unbefugten Zugriffen geschützt werden. Die Aktualisierung der Dokumentation ist ein fester Bestandteil des Change-Management-Prozesses."
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m5",
+                    "uuid": "fe7c4cfe-246a-4213-ba3a-87f294d8a508",
+                    "description": "Ein signifikanter Teil der Betriebsdokumentation wird automatisch generiert und aktuell gehalten ('Documentation as Code'). Tools zur Netzwerk- und Konfigurationsüberwachung erzeugen dynamisch aktuelle Netzpläne, Portbelegungen und Konfigurationsübersichten. Manuell erstellte Dokumentation und automatisch generierte Daten werden in einem zentralen Portal zusammengeführt."
+                  }
+                ]
+              },
+              {
+                "uuid": "e9cc398f-7c45-49d6-ac55-4d43c332e2f8",
+                "control-id": "DET.3.1.9",
+                "description": "Implementation for DET.3.1.9 based on BSI NET.3.1.A7",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a7-m1",
+                    "uuid": "958a133c-4018-498a-9d2d-d18bf2524293",
+                    "description": "Die Protokollierung ist auf den Geräten aktiviert, aber die Log-Nachrichten werden nur im lokalen, flüchtigen Speicher (RAM-Puffer) mit begrenzter Größe gehalten. Bei einem Neustart gehen alle Protokolldaten verloren."
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m2",
+                    "uuid": "87b49afb-645c-465b-9bc4-9b58d340e9be",
+                    "description": "Alle Router und Switches sind so konfiguriert, dass sie ihre Protokolldaten an einen zentralen Syslog-Server senden. Es werden jedoch nur Standardereignisse (Severity-Level 'warnings' oder höher) protokolliert, nicht alle geforderten Ereignistypen."
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m3",
+                    "uuid": "e4f4ae94-44c9-4d0a-9b0d-71c4413abfba",
+                    "description": "Ein Router oder Switch MUSS so konfiguriert werden, dass er unter anderem folgende Ereignisse protokolliert: Konfigurationsänderungen (möglichst automatisch), Reboot, Systemfehler, Statusänderungen pro Interface, System und Netzsegment sowie Login-Fehler."
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m4",
+                    "uuid": "ad14f20f-aa47-41b8-8516-9a26c682fa51",
+                    "description": "Die Protokolldaten werden an einen redundanten Cluster von Syslog-Servern gesendet, um den Verlust von Logdaten zu minimieren. Die übertragenen Daten werden über TLS gesichert (Secure Syslog). Auf dem zentralen System sind grundlegende Korrelationsregeln und Alarme für kritische Ereignisse (z.B. mehr als 5 fehlgeschlagene Logins in einer Minute) eingerichtet."
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m5",
+                    "uuid": "2913879d-13fe-4cca-8d38-2187a8fbce88",
+                    "description": "Alle Protokolldaten von Routern und Switches werden in ein zentrales Security Information and Event Management (SIEM) System eingespeist. Dort werden sie mit anderen Datenquellen (z.B. von Firewalls, Servern, Clients) korreliert, um komplexe, mehrstufige Angriffe zu erkennen. Die Integrität der Logdaten wird durch digitale Signaturen oder Blockchain-basierte Mechanismen sichergestellt."
+                  }
+                ]
+              },
+              {
+                "uuid": "635fb07e-f45f-4c34-9d57-6c65d9a99aa9",
+                "control-id": "DET.4.2",
+                "description": "Implementation for DET.4.2 based on BSI NET.3.1.A17",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a17-m3",
+                    "uuid": "d42ff170-772a-4580-b009-c2db226e019e",
+                    "description": "Es SOLLTEN Mechanismen eingesetzt werden, die hochvolumige Angriffe sowie TCP-State-Exhaustion-Angriffe erkennen und abwehren. Dies umfasst Ratenbegrenzungen und die Konfiguration von TCP Intercept oder SYN-Cookies."
+                  },
+                  {
+                    "statement-id": "net.3.1.a17-m4",
+                    "uuid": "f54fca64-f5be-4832-baa9-9dbdf5b0d664",
+                    "description": "Die DoS-Schutzmechanismen sind in der Lage, Angriffe nicht nur zu erkennen, sondern auch gezielte Gegenmaßnahmen einzuleiten, wie z.B. das automatische Null-Routen der Angriffsziele (Remotely Triggered Black Holing, RTBH) oder die Benachrichtigung eines externen DDoS-Mitigation-Dienstleisters."
+                  },
+                  {
+                    "statement-id": "net.3.1.a17-m5",
+                    "uuid": "09a57bb9-208e-4f22-8e83-9b23b6dc90e9",
+                    "description": "Ein hybrider DDoS-Schutz wird eingesetzt, der eine On-Premise-Lösung zur Abwehr von volumenschwachen, Applikations-Layer-Angriffen mit einem Cloud-basierten Scrubbing-Dienst für hochvolumige Angriffe kombiniert. Die Umschaltung erfolgt automatisch und in Sekundenschnelle basierend auf Verkehrsanalysen."
+                  }
+                ]
+              },
+              {
+                "uuid": "60fe5233-4d0b-4733-b003-a19cde2ec7e2",
+                "control-id": "KONF.2.1",
+                "description": "Implementation for KONF.2.1 based on BSI NET.3.1.A1",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a1-m1",
+                    "uuid": "7cc8cf8f-4019-45a0-b30b-c529041ffea7",
+                    "description": "Nur für kritische oder exponierte Router und Switches, wie z. B. am Internetübergang, werden grundlegende Härtungsmaßnahmen umgesetzt. Interne Geräte werden weitgehend in der Standardkonfiguration des Herstellers betrieben, was die Deaktivierung nicht benötigter Dienste oder Ports nicht einschließt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m2",
+                    "uuid": "4349eacf-9889-4b85-b5e4-19f2c83134fd",
+                    "description": "Alle Router und Switches werden nach einer grundlegenden, einheitlichen Checkliste konfiguriert. Dies umfasst das Ändern von Standardpasswörtern und das Deaktivieren bekannter unsicherer Dienste. Nicht benutzte Ports werden administrativ heruntergefahren (shutdown)."
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m3",
+                    "uuid": "f29002d1-0d68-4438-8907-aef39401bba9",
+                    "description": "Bevor ein Router oder Switch eingesetzt wird, MUSS er sicher konfiguriert werden. Die Integrität der Konfigurationsdateien MUSS in geeigneter Weise geschützt werden. Router und Switches MÜSSEN so konfiguriert sein, dass nur zwingend erforderliche Dienste, Protokolle und funktionale Erweiterungen genutzt werden. Nicht benötigte Dienste, Protokolle und funktionale Erweiterungen MÜSSEN deaktiviert oder ganz deinstalliert werden. Unbenutzte Netzports MÜSSEN nach Möglichkeit deaktiviert werden. Informationen über den internen Konfigurations- und Betriebszustand MÜSSEN nach außen verborgen und unnötige Auskunftsdienste deaktiviert werden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m4",
+                    "uuid": "84e55dd9-0b0a-4b4f-b47c-b9448be3b10c",
+                    "description": "Alle Konfigurationsänderungen SOLLTEN nachvollziehbar dokumentiert werden. Bevor Zugangspasswörter abgespeichert werden, MÜSSEN sie mithilfe eines zeitgemäßen kryptografischen Verfahrens abgesichert werden. Unbenutzte Netzports werden nicht nur deaktiviert, sondern SOLLTEN einem dafür eingerichteten Unassigned-VLAN zugeordnet werden. Wenn funktionale Erweiterungen benutzt werden, SOLLTE begründet und dokumentiert werden, warum solche Erweiterungen eingesetzt werden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m5",
+                    "uuid": "6ed57f3e-231f-4340-ba45-b49231417ad7",
+                    "description": "Die sichere Grundkonfiguration wird durch Konfigurationsmanagement-Werkzeuge (z.B. Ansible, Salt) automatisiert auf alle Geräte ausgerollt und überwacht. Abweichungen von der Soll-Konfiguration werden automatisch erkannt und gemeldet oder korrigiert. Die Integrität der Konfigurationsdateien wird durch eine File Integrity Monitoring (FIM) Lösung in Echtzeit überwacht."
+                  }
+                ]
+              },
+              {
+                "uuid": "17a3ca30-2182-4a3a-949d-8e5e28c24907",
+                "control-id": "KONF.2.2",
+                "description": "Implementation for KONF.2.2 based on BSI NET.3.1.A20",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a20-m3",
+                    "uuid": "d1d15db6-c07b-46b3-9cb1-8d32c43c76a7",
+                    "description": "Router SOLLTEN sich authentisieren, wenn sie Routing-Informationen austauschen oder Updates für Routing-Tabellen verschicken. Es SOLLTEN ausschließlich Routing-Protokolle eingesetzt werden, die dies unterstützen. Dynamische Routing-Protokolle DÜRFEN NICHT in demilitarisierten Zonen (DMZs) eingesetzt werden. In DMZs SOLLTEN stattdessen statische Routen eingetragen werden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a20-m4",
+                    "uuid": "7900e01e-9762-48ca-9080-cde1688c6168",
+                    "description": "Die Verteilung von Routen wird durch Routenfilter (distribute lists, prefix lists, route maps) streng kontrolliert. Es werden nur die explizit benötigten Routen von einem Routing-Nachbarn akzeptiert und weitergegeben. Dies verhindert die Injektion unerwünschter Routen und die unkontrollierte Ausbreitung von Routing-Informationen."
+                  },
+                  {
+                    "statement-id": "net.3.1.a20-m5",
+                    "uuid": "9774a3ec-ff82-4f5d-9b8f-477b2e0f1153",
+                    "description": "Für das externe Routing-Protokoll BGP werden erweiterte Sicherheitsmechanismen wie RPKI (Resource Public Key Infrastructure) zur Validierung der Routen-Herkunft und BGPsec zur Sicherung des Pfades eingesetzt, um Routen-Hijacking zu verhindern. Die Authentifizierungsschlüssel für interne Routing-Protokolle werden regelmäßig und automatisiert rotiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "9d829a88-87b7-4767-814d-6f2dd0ff93d9",
+                "control-id": "KONF.2.5",
+                "description": "Implementation for KONF.2.5 based on BSI NET.3.1.A23",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a23-m3",
+                    "uuid": "1768384b-6239-4223-9e5b-4db5318b9112",
+                    "description": "Router und Switches SOLLTEN regelmäßig auf bekannte Sicherheitsprobleme hin überprüft werden. Auch SOLLTEN regelmäßig Revisionen durchgeführt werden. Dabei SOLLTE unter anderem geprüft werden, ob der Ist-Zustand der festgelegten sicheren Grundkonfiguration entspricht."
+                  },
+                  {
+                    "statement-id": "net.3.1.a23-m4",
+                    "uuid": "6d5b26f4-ec60-4527-951a-205de8152da0",
+                    "description": "Die Ergebnisse der Revisionen SOLLTEN nachvollziehbar dokumentiert und mit dem Soll-Zustand abgeglichen werden. Abweichungen SOLLTE nachgegangen werden. Die Überprüfung wird durch automatisierte Konfigurations-Compliance-Scanner unterstützt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a23-m5",
+                    "uuid": "8b46dc20-aa71-432b-8996-b9d64cbeb643",
+                    "description": "Zusätzlich zu den internen Revisionen werden regelmäßig (z.B. jährlich) externe Penetrationstests durchgeführt, die speziell die Sicherheit der Netzinfrastruktur zum Ziel haben. Die dabei gewonnenen Erkenntnisse fließen in die Verbesserung der Sicherheitsrichtlinien und Konfigurationen ein."
+                  }
+                ]
+              },
+              {
+                "uuid": "83316814-ffce-4076-b8de-8e9416dc9603",
+                "control-id": "KONF.2.6",
+                "description": "Implementation for KONF.2.6 based on BSI NET.3.1.A28",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a28-m3",
+                    "uuid": "29b9ebba-8b4a-4f9f-b5dd-e05a6712bd87",
+                    "description": "Bei der Beschaffung von Routern und Switches wird darauf geachtet, dass die Produkte von namhaften Herstellern stammen, die einen transparenten Prozess für das Management von Sicherheitsschwachstellen (z.B. ein PSIRT) haben."
+                  },
+                  {
+                    "statement-id": "net.3.1.a28-m4",
+                    "uuid": "63589be6-ba57-4df3-9cd1-70bdcb472abe",
+                    "description": "Es SOLLTEN Router und Switches mit einer Sicherheitsevaluierung nach Common Criteria (CC) eingesetzt werden, mindestens mit der Stufe EAL2 oder einer äquivalenten, durch ein Schutzprofil nachgewiesenen Evaluierung."
+                  },
+                  {
+                    "statement-id": "net.3.1.a28-m5",
+                    "uuid": "a3407bf5-0739-405e-96b9-fc6e4dbc05eb",
+                    "description": "Für den Einsatz in Hochsicherheitsumgebungen werden Router und Switches mit einer Sicherheitsevaluierung nach Common Criteria (CC) der Stufe EAL4 oder höher eingesetzt. Die Konfiguration der Geräte wird exakt so vorgenommen, wie es in der zugehörigen Anleitung für den zertifizierungskonformen Betrieb (Guidance-Dokumentation) beschrieben ist."
+                  }
+                ]
+              },
+              {
+                "uuid": "0d05fc41-af8b-4ad5-9dab-29b49b68d86d",
+                "control-id": "KONF.2.7",
+                "description": "Implementation for KONF.2.7 based on BSI NET.3.1.A6",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a6-m1",
+                    "uuid": "c7adbd7c-047f-4541-967f-cf8b00241481",
+                    "description": "Ein lokaler Zugriff über den Konsolenport ist physisch möglich, aber die dafür notwendigen Passwörter sind nicht dokumentiert oder nur einer einzigen Person bekannt. Im Notfall kann es zu erheblichen Verzögerungen kommen."
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m2",
+                    "uuid": "c13d29e1-66dd-49ca-82b6-99582c75a7ef",
+                    "description": "Im Rechenzentrum ist ein 'Crash Cart' mit Laptop und diversen Konsolenkabeln vorhanden. Die Passwörter für den Konsolenzugriff sind in einem Passwort-Manager hinterlegt, auf den mehrere Administratoren Zugriff haben."
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m3",
+                    "uuid": "6b7c1278-e0e1-45bc-be24-b9ae954e4577",
+                    "description": "Es MUSS für die Administrierenden immer möglich sein, direkt auf Router und Switches zuzugreifen, sodass diese weiterhin lokal administriert werden können, auch wenn das gesamte Netz ausfällt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m4",
+                    "uuid": "e83a00ed-f46b-4bac-bdad-e0cf66f48f54",
+                    "description": "Ein dedizierter Out-of-Band (OOB) Konsolenserver wird eingesetzt, der über ein separates Netzwerk (z.B. LTE-Modem oder separate DSL-Leitung) erreichbar ist. Dies ermöglicht den Fernzugriff auf die Konsolenports, ohne physisch vor Ort sein zu müssen. Der Zugriff auf den Konsolenserver ist durch starke Authentifizierung geschützt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m5",
+                    "uuid": "2666cecb-def7-48df-aef8-368e192c9931",
+                    "description": "Der Out-of-Band Konsolenserver ist vollständig in die zentrale PAM-Lösung (Privileged Access Management) integriert. Der Zugriff erfordert MFA, und alle Konsolensitzungen werden aufgezeichnet und protokolliert. Die Lösung bietet eine redundante Auslegung, um die Verfügbarkeit des Notfallzugriffs selbst sicherzustellen."
+                  }
+                ]
+              },
+              {
+                "uuid": "9480c47d-45f5-45d8-8ea7-6df86b2165bf",
+                "control-id": "KONF.2.8",
+                "description": "Implementation for KONF.2.8 based on BSI NET.3.1.A25",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a25-m3",
+                    "uuid": "340108e2-4b63-4f5e-8e3e-e7320626ee0f",
+                    "description": "Stürzt ein Router oder Switch ab, SOLLTE sichergestellt werden, dass bei der Wiederherstellung bzw. beim Neustart keine alten oder fehlerhaften Konfigurationen (unter anderem ACLs) benutzt werden. Die 'startup-config' wird als die alleinige Quelle der Wahrheit nach einem Neustart definiert und geschützt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a25-m4",
+                    "uuid": "f140b08f-fea3-4bea-8d31-ebb03204a544",
+                    "description": "Die Integrität der Konfigurationsdatei, die beim Booten geladen wird, wird durch einen Hashwert oder eine digitale Signatur geschützt. Der Bootloader des Geräts überprüft diese Signatur vor dem Laden der Konfiguration."
+                  },
+                  {
+                    "statement-id": "net.3.1.a25-m5",
+                    "uuid": "f6eda8a5-8636-4f81-950a-4e7c7744d6b8",
+                    "description": "Eine umfassende 'Secure Boot'-Kette wird implementiert. Diese stellt sicher, dass von der Hardware über den Bootloader bis zum Betriebssystem und der Konfigurationsdatei jede Komponente kryptographisch verifiziert wird, bevor sie geladen wird. Manipulationen an jeder Stelle des Boot-Prozesses werden erkannt und verhindern den Start des Geräts."
+                  }
+                ]
+              },
+              {
+                "uuid": "c9c5e65f-6b49-4411-a6b2-b51712425129",
+                "control-id": "KONF.4.1",
+                "description": "Implementation for KONF.4.1 based on BSI NET.3.1.A21",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a21-m3",
+                    "uuid": "add44eb2-22e6-4fa2-a2eb-4eceeeec5cfe",
+                    "description": "Router und Switches SOLLTEN an ein zentrales Identitäts- und Berechtigungsmanagement angebunden werden. Für jeden Administrator wird ein persönlicher Account verwendet. Gruppen- oder Funktionsaccounts werden vermieden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a21-m4",
+                    "uuid": "cf189cd2-cd70-4d36-822c-e5250db8fe58",
+                    "description": "Das zentrale System wird nicht nur zur Authentifizierung, sondern auch zur Autorisierung und zum Accounting genutzt. Es werden verschiedene Berechtigungslevel (Rollen) definiert, die den Benutzern zugewiesen werden. Dadurch können die erlaubten Befehle pro Benutzer oder Gruppe eingeschränkt werden (Command Authorization)."
+                  },
+                  {
+                    "statement-id": "net.3.1.a21-m5",
+                    "uuid": "f4c4495f-36d8-4c71-bdb9-f68869e43c1c",
+                    "description": "Das zentrale Identitäts- und Berechtigungsmanagement für die Netzinfrastruktur ist vollständig in den übergeordneten Identity and Access Management (IAM) Prozess der Organisation integriert. Die Anmeldung am zentralen Authentifizierungsserver (z.B. TACACS+) erfordert Multi-Faktor-Authentifizierung (MFA)."
+                  }
+                ]
+              },
+              {
+                "uuid": "6dad5f24-0484-4b9a-b928-642fec151b95",
+                "control-id": "KONF.4.4",
+                "description": "Implementation for KONF.4.4 based on BSI NET.3.1.A4",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a4-m1",
+                    "uuid": "4cfd4bd2-3fb7-403a-8473-8df132971d5f",
+                    "description": "Nur die Administrationsschnittstellen von Routern am Internetübergang sind durch Quell-IP-Filter eingeschränkt. Der administrative Zugriff auf interne Switches und Router ist aus dem gesamten internen Netz ohne Einschränkungen möglich."
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m2",
+                    "uuid": "d6b1923a-4668-43e5-bbd6-e5ae161f5d1c",
+                    "description": "Der administrative Zugriff auf alle Router und Switches ist durch Access-Control-Listen (ACLs) eingeschränkt. Diese erlauben jedoch den Zugriff vom gesamten Subnetz der Administratoren, nicht von einzelnen IP-Adressen. Unverschlüsselte Protokolle wie Telnet oder HTTP sind teilweise noch als Fallback aktiv."
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m3",
+                    "uuid": "23a29461-c472-4da8-a5e3-762d84098610",
+                    "description": "Alle Administrations- und Managementzugänge der Router und Switches MÜSSEN auf einzelne Quell-IP-Adressen bzw. -Adressbereiche eingeschränkt werden. Es MUSS sichergestellt sein, dass aus nicht vertrauenswürdigen Netzen heraus nicht direkt auf die Administrationsschnittstellen zugegriffen werden kann. Alle für das Management-Interface nicht benötigten Dienste MÜSSEN deaktiviert werden. Verfügt eine Netzkomponente über eine dedizierte Hardwareschnittstelle, MUSS der unberechtigte Zugriff darauf in geeigneter Weise unterbunden werden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m4",
+                    "uuid": "76c7c13c-85a4-4fa7-8ef1-6199461f3366",
+                    "description": "Um Router und Switches zu administrieren, SOLLTEN ausschließlich geeignet verschlüsselte Protokolle wie SSHv2 oder HTTPS eingesetzt werden. Die Managementschnittstellen und die Administrationsverbindungen MÜSSEN durch eine separate Firewall geschützt werden. Für die Schnittstellen MÜSSEN geeignete Zeitbeschränkungen für z. B. Timeouts vorgegeben werden. Falls auf unverschlüsselte Protokolle zurückgegriffen werden muss, MUSS ein separates Administrationsnetz (Out-of-Band-Management) genutzt werden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m5",
+                    "uuid": "c25ac839-6b56-43e5-ad76-a1fdbf684c5b",
+                    "description": "Jeglicher administrativer Zugriff erfolgt ausschließlich über eine zentrale Privileged Access Management (PAM) Lösung (Bastion Host). Die PAM-Lösung erzwingt Multi-Faktor-Authentifizierung (MFA), führt eine detaillierte Protokollierung aller Befehle durch und kann Sitzungen aufzeichnen. Die direkten Anmeldeinformationen für die Netzwerkgeräte sind den Administratoren nicht bekannt und werden von der PAM-Lösung verwaltet und rotiert."
+                  }
+                ]
+              },
+              {
+                "uuid": "e0a3b0b0-8033-4938-98ea-26847dc1bed4",
+                "control-id": "KONF.5.1",
+                "description": "Implementation for KONF.5.1 based on BSI NET.3.1.A19",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a19-m3",
+                    "uuid": "47c26f50-5a8b-41d6-a1de-11c9d8610cf1",
+                    "description": "Die Ports eines Switches SOLLTEN vor unberechtigten Zugriffen geschützt werden. Dies wird durch die Implementierung von Port-Security erreicht, die die Anzahl der erlaubten MAC-Adressen pro Port begrenzt und auf Verstöße mit einer definierten Aktion reagiert."
+                  },
+                  {
+                    "statement-id": "net.3.1.a19-m4",
+                    "uuid": "19e89589-0502-49d6-89ca-a2aeaecc3688",
+                    "description": "Zusätzlich zu Port-Security werden weitere Schutzmechanismen auf Layer 2 implementiert, um Angriffe wie DHCP-Spoofing und ARP-Spoofing zu verhindern. Dazu gehören DHCP Snooping und Dynamic ARP Inspection (DAI)."
+                  },
+                  {
+                    "statement-id": "net.3.1.a19-m5",
+                    "uuid": "daef8e01-0cf1-4c33-80ca-806d1451000c",
+                    "description": "Alle Layer-2-Schutzmechanismen werden durch die Implementierung von portbasierter Netzwerkzugangskontrolle (IEEE 802.1X) ergänzt. Ein Gerät erhält erst nach erfolgreicher Authentifizierung (z.B. über ein Zertifikat) überhaupt Zugriff auf das Netzwerk. Nicht authentifizierte Geräte werden in ein Quarantäne-VLAN verschoben."
+                  }
+                ]
+              },
+              {
+                "uuid": "e2e4bf4e-6eb0-4396-90f4-01081bc3cc8a",
+                "control-id": "KONF.6.5",
+                "description": "Implementation for KONF.6.5 based on BSI NET.3.1.A24",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a24-m3",
+                    "uuid": "90132aab-c011-4cf4-9199-9e34fbf30a09",
+                    "description": "Eine Port-based Access Control SOLLTE nach IEEE 802.1x implementiert werden. Dabei wird ein sicheres Authentifizierungsprotokoll wie EAP-TLS verwendet. Es SOLLTE KEINE Implementierung nach den veralteten und unsicheren Standards IEEE 802.1x-2001 und IEEE 802.1x-2004 erfolgen."
+                  },
+                  {
+                    "statement-id": "net.3.1.a24-m4",
+                    "uuid": "a25a2d89-1e03-4e40-a00d-543f4ac55526",
+                    "description": "Die NAC-Lösung wird für die dynamische Zuweisung von Netzwerkressourcen genutzt. Basierend auf der Identität des Benutzers und/oder des Geräts werden authentifizierte Clients automatisch dem richtigen VLAN zugewiesen. Für Gäste oder nicht-konforme Geräte werden separate VLANs mit eingeschränktem Zugriff bereitgestellt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a24-m5",
+                    "uuid": "209987ba-81a0-4157-92e2-75e609e5f9ba",
+                    "description": "Die NAC-Lösung führt vor der Gewährung des Netzwerkzugriffs eine umfassende Überprüfung des Sicherheitszustands (Posture Assessment) des Endgeräts durch. Es wird geprüft, ob das Betriebssystem aktuell ist, ein Antivirus-Programm läuft und die Festplattenverschlüsselung aktiv ist. Geräte, die die Prüfung nicht bestehen, erhalten nur eingeschränkten Zugriff auf ein Remediation-VLAN."
+                  }
+                ]
+              },
+              {
+                "uuid": "7e8e7eaa-1722-4f3a-8178-10094255d2cd",
+                "control-id": "KONF.7.15",
+                "description": "Implementation for KONF.7.15 based on BSI NET.3.1.A18",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a18-m3",
+                    "uuid": "e064fbbe-2e8a-4875-8828-9541ffadb106",
+                    "description": "Der Zugriff auf Router und Switches SOLLTE mithilfe von Access Control Lists (ACLs) definiert werden. In der ACL SOLLTE anhand der Sicherheitsrichtlinie der Institution festgelegt werden, über welche IT-Systeme oder Netze mit welcher Methode auf einen Router oder Switch zugegriffen werden darf. Für den Fall, dass keine spezifischen Regeln existieren, SOLLTE generell der restriktivere Allowlist-Ansatz bevorzugt werden."
+                  },
+                  {
+                    "statement-id": "net.3.1.a18-m4",
+                    "uuid": "9757124c-0427-42b2-9261-6fe0afcbc724",
+                    "description": "ACLs werden regelmäßig überprüft, um veraltete oder nicht mehr benötigte Regeln zu identifizieren und zu entfernen. Es werden Werkzeuge eingesetzt, die die Auswirkungen von ACL-Änderungen simulieren, bevor sie produktiv geschaltet werden. Blockierte Pakete werden protokolliert, um Fehlkonfigurationen zu erkennen."
+                  },
+                  {
+                    "statement-id": "net.3.1.a18-m5",
+                    "uuid": "5935ed7e-cb85-474b-8789-40aa2df43fcf",
+                    "description": "ACLs werden zentral über eine 'Single Source of Truth' verwaltet und automatisiert auf die Geräte ausgerollt. Die Richtlinien werden nicht auf Basis von IP-Adressen, sondern auf Basis von Identitäten oder Tags definiert (Policy as Code). Ein zentrales Tool analysiert und visualisiert die resultierenden Datenflüsse und kann redundante oder überschattete Regeln automatisch erkennen."
+                  }
+                ]
+              },
+              {
+                "uuid": "85546a7a-0d87-49b8-98de-809e49a91b11",
+                "control-id": "KONF.7.16",
+                "description": "Implementation for KONF.7.16 based on BSI NET.3.1.A5",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a5-m1",
+                    "uuid": "7444ed90-94d2-419f-8037-33c97f89a541",
+                    "description": "Schutzmechanismen gegen Fragmentierungsangriffe sind nur auf Routern am Internetübergang aktiviert. Auf internen Layer-3-Switches, die ebenfalls Routing-Aufgaben übernehmen, sind diese Schutzfunktionen nicht konfiguriert."
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m2",
+                    "uuid": "3df11280-421e-47f1-bb40-39a93593a1d9",
+                    "description": "Auf allen Routern und Layer-3-Switches sind die grundlegenden Schutzmechanismen gegen Fragmentierungsangriffe mit den Standardeinstellungen des Herstellers aktiviert."
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m3",
+                    "uuid": "c7b1a15c-ae32-4e1f-aedc-54563c9b5d8f",
+                    "description": "Am Router und Layer-3-Switch MÜSSEN Schutzmechanismen aktiviert sein, um IPv4- sowie IPv6-Fragmentierungsangriffe abzuwehren."
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m4",
+                    "uuid": "d7aa23f1-2bc0-43e5-bec1-2fb898cf47ab",
+                    "description": "Die Parameter der Schutzmechanismen gegen Fragmentierungsangriffe, wie maximale Anzahl gleichzeitiger Wiederzusammensetzungen, Puffergrößen und Timeouts, werden an die spezifischen Anforderungen des Netzwerks angepasst, um sowohl Sicherheit als auch Performance zu gewährleisten. Das Auftreten von Fragmentierungsangriffen wird protokolliert und überwacht."
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m5",
+                    "uuid": "59faf6c8-f19e-4cd0-b422-b69bf3e90513",
+                    "description": "Ein dediziertes Intrusion Prevention System (IPS) wird eingesetzt, das den Netzwerkverkehr in Echtzeit analysiert. Es erkennt und blockiert aktiv komplexe und evasive Fragmentierungsangriffe basierend auf Signaturen und anomaliebasierten Heuristiken, die über die Fähigkeiten von Standard-Routern hinausgehen."
+                  }
+                ]
+              },
+              {
+                "uuid": "3621cf41-dabd-4f80-8cb6-4bff1db1fcc0",
+                "control-id": "KONF.9.3",
+                "description": "Implementation for KONF.9.3 based on BSI NET.3.1.A26",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a26-m3",
+                    "uuid": "0900c391-e137-4b15-bca0-02d2649e5d4c",
+                    "description": "Router und Switches SOLLTEN redundant ausgelegt werden. Dabei SOLLTE darauf geachtet werden, dass die Sicherheitsrichtlinie der Institution eingehalten wird. Die Realisierung einer Hochverfügbarkeitslösung SOLLTE den Betrieb der Router und Switches bzw. deren Sicherheitsfunktionen NICHT behindern oder das Sicherheitsniveau senken."
+                  },
+                  {
+                    "statement-id": "net.3.1.a26-m4",
+                    "uuid": "6af70c88-1968-4f2f-8e0b-5625008ea1d1",
+                    "description": "Die redundante Auslegung umfasst nicht nur die Geräte selbst, sondern auch deren Stromversorgung und Netzwerkanbindungen. Jedes Gerät eines redundanten Paares wird an separate Stromkreise (idealerweise USV A/B) angeschlossen. Uplinks werden auf verschiedene Line-Cards oder Module verteilt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a26-m5",
+                    "uuid": "c656cfcf-e7cb-4296-b12b-a665fcd62ada",
+                    "description": "Die Hochverfügbarkeitsarchitektur ist vollständig standortredundant ausgelegt. Kritische Netzwerkfunktionen werden parallel in zwei geografisch getrennten Rechenzentren betrieben. Der Failover-Prozess zwischen den Standorten wird regelmäßig und automatisiert getestet."
+                  }
+                ]
+              },
+              {
+                "uuid": "d97a7c72-690e-4435-8ba3-e6dcfd6e2d0b",
+                "control-id": "NOT.4.2",
+                "description": "Implementation for NOT.4.2 based on BSI NET.3.1.A8",
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a8-m1",
+                    "uuid": "125dfd8b-15dc-4754-85cb-05e56fc7911d",
+                    "description": "Konfigurations-Backups werden nur manuell und unregelmäßig vor größeren geplanten Änderungen erstellt. Es gibt keinen automatisierten oder regelmäßigen Prozess."
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m2",
+                    "uuid": "60231a0c-5b64-47b1-9938-6619bd2d0cdc",
+                    "description": "Ein automatisiertes Skript sichert die Konfigurationen aller Geräte nächtlich auf einen zentralen Dateiserver. Es findet jedoch keine Überprüfung der erfolgreichen Sicherung und keine Versionierung statt."
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m3",
+                    "uuid": "d1277c33-e0d0-4283-86c0-e358fd3624f5",
+                    "description": "Die Konfigurationsdateien von Routern und Switches MÜSSEN regelmäßig gesichert werden. Die Sicherungskopien MÜSSEN so abgelegt werden, dass im Notfall darauf zugegriffen werden kann."
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m4",
+                    "uuid": "f17cfae5-8e9e-4934-aefc-ec8912d92618",
+                    "description": "Ein dediziertes Network Configuration Management (NCM) Tool wird eingesetzt. Dieses sichert Konfigurationen nicht nur zeitgesteuert, sondern auch ereignisgesteuert, d.h. unmittelbar nach jeder erkannten Änderung. Das Tool bietet eine grafische Oberfläche zum Vergleich von Konfigurationsversionen (Diff)."
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m5",
+                    "uuid": "7b1e34df-affe-4416-8fcf-31987e7b5a61",
+                    "description": "Das NCM-Tool ist vollständig in das Change-Management-System (ITSM) und das SIEM integriert. Gesicherte Konfigurationen werden automatisch auf Konformität mit den Sicherheitsrichtlinien geprüft (Compliance Checking). Der Prozess zur Wiederherstellung einer Konfiguration aus dem Backup wird regelmäßig im Rahmen von Notfallübungen getestet und ist automatisiert."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
