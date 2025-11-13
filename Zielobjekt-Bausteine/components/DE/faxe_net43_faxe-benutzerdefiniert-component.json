@@ -1,0 +1,661 @@
+{
+  "component-definition": {
+    "uuid": "a584e42a-f90d-4f74-8939-1d05f5ffe05c",
+    "metadata": {
+      "title": "NET.4.3 Faxe - Benutzerdefiniert",
+      "last-modified": "2025-11-13T21:19:03.563551+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "59f2e355-52c7-468c-9337-ec6679f89937",
+        "type": "interconnection",
+        "title": "NET.4.3 Faxe",
+        "description": "This component represents the implementation of all controls for Baustein NET.4.3.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "In diesem Baustein werden die Sicherheitsaspekte der Informationsübermittlung über marktübliche Faxgeräte sowie Faxserver betrachtet. Die übermittelten Informationen werden als Fax (Kurzform von Telefax) oder seltener auch als Telefaksimile oder Fernkopie bezeichnet. Bei einem herkömmlichen Faxgerät werden von einer Vorlage die darauf aufgezeichneten Inhalte vom Sendegerät Punkt für Punkt abgetastet und zu den Empfangsgeräten übertragen. Das Empfangsgerät baut diese Inhalte wieder Punkt für Punkt auf und gibt sie in der Regel direkt auf Papier aus.<BR>Ein Faxserver hingegen ist ein Dienst, der auf einem Server installiert wird und so anderen IT-Systemen in einem Datennetz ermöglicht, Faxe zu versenden und zu empfangen. Faxserver werden häufig in bereits bestehende E-Mail- oder Groupware-Systeme integriert. So ist es möglich, dass eingehende Fax-Dokumente durch den Faxserver per E-Mail an die Benutzenden zugestellt werden. Abzusendende Dokumente werden entweder über eine Druckerwarteschlange oder per E-Mail an den Faxserver übergeben. In der Regel wird das Dokument zwischen Faxserver und den Clients im Datennetz als Bild-Datei gesendet oder empfangen. Die übermittelte Bild-Datei kann nicht unmittelbar in Textverarbeitungssystemen weiterverarbeitet werden. Hierzu ist in der Regel zunächst eine Texterkennung (OCR, Optical Character Recognition) erforderlich. Von einem Faxserver empfangene und verarbeitete Dokumente lassen sich für gewöhnlich einfach archivieren, beispielsweise durch den Faxserver-Dienst selber, durch Dokumentenmanagementsysteme oder durch die Groupware, die direkt an den Faxserver-Dienst angebunden sind."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ein Ziel dieses Bausteins ist der Schutz der Informationen, die mithilfe von Faxsendungen übermittelt und verarbeitet werden. Ein weiteres Ziel ist der Schutz der Faxgeräte und Faxserver vor Manipulationen durch Unbefugte. Das Übertragungsmedium spielt bei der Anwendung des Bausteins keine Rolle, sodass die Anforderungen des Bausteins auch für Fax over IP (FoIP) umgesetzt werden sollten."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein NET.4.3 Faxgeräte und Faxserver ist für jedes Faxgerät und jeden Faxserver im Informationsverbund anzuwenden."
+          },
+          {
+            "name": "2.1. Unzureichende oder falsche Versorgung mit Verbrauchsgütern",
+            "value": "Faxgeräte empfangen Dokumente und drucken diese in der Regel direkt auf Papier aus. Für einen reibungslosen und unterbrechungsfreien Betrieb eines Faxgerätes müssen Verbrauchsgüter wie Papier und Toner in ausreichender Menge vorhanden sein. Ist dies nicht gegeben, können oft keine Fax-Dokumente empfangen werden. Außerdem können keine Sendebestätigungen ausgedruckt werden, die eventuell zwingend benötigt werden."
+          },
+          {
+            "name": "2.2. Fehlerhafte Faxübertragung",
+            "value": "Auf dem Übertragungsweg zwischen Sendegerät und Empfangsgerät eines Fax-Dokuments können zahlreiche Störungen auftreten. Dies kann dazu führen, dass die zu übermittelnden Fax-Dokumente unvollständig oder unlesbar sind oder gar nicht bei den Empfangenden ankommen. Entscheidungen, die von diesen Informationen abhängig sind, können fehlerhaft sein und somit hohe Schäden verursachen.<BR>Zeitverzögerungen, die entstehen, weil die Probleme erst erkannt werden müssen und das Dokument neu gesendet werden muss, können zu weiteren Komplikationen führen. Oft haben die Sendenden oder Empfangenden gar keine Möglichkeiten, den Übertragungsweg zu beeinflussen, sodass sie warten müssen, bis die Störung durch Dritte behoben wurde. Häufig glauben die Absendenden sogar, dass das Fax-Dokument ordnungsgemäß an die gewünschten Adressaten übermittelt wurden und die hierdurch entstehenden Probleme werden erst sehr spät erkannt.<BR>Zusätzlich kann nicht ausgeschlossen werden, dass ein Fax-Dokument an das falsche Empfangsgerät übermittelt wurde, beispielsweise weil eine Fehlschaltung im öffentlichen Telekommunikationsnetz vorliegt. Ebenso ist denkbar, dass bei Faxgeräten Rufnummern falsch gewählt oder Zielwahltasten falsch programmiert werden. Wird ein Faxserver verwendet, können die Rufnummern ebenfalls falsch eingegeben oder falsch im Adressbuch abgespeichert werden. Dadurch können unter Umständen vertrauliche Informationen an unbefugte Personen übermittelt werden."
+          },
+          {
+            "name": "2.3. Manipulation von Adressbüchern und Verteilerlisten",
+            "value": "In Faxgeräten können häufig Adressbücher und Verteilerlisten geführt werden. Wird ein Faxserver genutzt, können in der Regel über die Groupware ähnliche Adressbücher und Verteilerlisten an einer zentralen Stelle geführt werden, die von mehreren Benutzenden verwendet werden können. In den Adressbüchern können Nummern von Empfangenden gespeichert werden, sodass diese nicht bei jedem Faxversand neu eingegeben werden müssen. Zudem ist es möglich, über Verteilerlisten eine Gruppe von Empfangenden anzulegen und so Faxsendungen an mehrere Personen gleichzeitig zu verschicken.<BR>Häufig werden einmal programmierte Nummern von Empfangenden oder Verteilerlisten nicht mehr kontrolliert, wenn ein Fax-Dokument versendet werden soll. Wenn Unbefugte die Adressbücher oder die Verteilerlisten am Faxgerät oder in der Groupware ändern, können so vertrauliche Informationen an die falschen Empfangenden gelangen. Außerdem kann es passieren, dass die vorgesehenen Empfangenden dringend benötigte Informationen nicht erhalten. Beispielsweise könnte eine Faxnummer im Adressbuch ausgetauscht oder weitere Empfangende in die Verteilerliste aufgenommen werden, ohne dass dies von den Verantwortlichen in der jeweiligen Institution bemerkt wird."
+          },
+          {
+            "name": "2.4. Unbefugtes Lesen von Faxsendungen",
+            "value": "In fast allen Fällen ist es am wirtschaftlichsten, wenn sich mehrere Benutzende ein Faxgerät teilen. Daher werden diese in der Regel in Räumen aufgestellt, die alle Mitarbeitenden einer Institution betreten können, wie beispielsweise in Druckerräumen. Da hierdurch die Faxgeräte für alle Mitarbeitenden frei zugänglich sind, können auch alle Mitarbeitenden die empfangenen Faxsendungen lesen und so an vertrauliche Informationen gelangen."
+          },
+          {
+            "name": "2.5. Auswertung von Restinformationen in Faxgeräten und Faxservern",
+            "value": "Abhängig vom technischen Verfahren, mit dem Faxgeräte Informationen speichern, weiterverarbeiten oder drucken, können nach dem Faxversand und -empfang Restinformationen unterschiedlichen Umfangs im Faxgerät verbleiben. Unbefugte, die in den Besitz des Gerätes oder der entsprechenden Bauteile kommen, können diese Informationen unter Umständen wiederherstellen.<BR>Auf der Festplatte eines Faxservers werden Faxsendungen mindestens so lange gespeichert, bis sie an das Ziel zugestellt werden können. Weiterhin arbeiten moderne Betriebssysteme mit Auslagerungsdateien, die auch Restinformationen enthalten können. Diese Informationen könnten beim Zugriff auf diesen Faxserver unerlaubt ausgewertet werden."
+          },
+          {
+            "name": "2.6. Vortäuschen eines falschen Absendenden bei Faxsendungen",
+            "value": "Faxsendungen sind ein beliebtes Medium, um Dokumente, die nur mit einer Unterschrift gültig sind, zu übertragen. Doch auf die gleiche Weise, wie mit einem falschen Namen und einem falschen Briefkopf falsche Absendende vorgetäuscht werden kann, kann auch eine Faxsendung manipuliert werden. So können beispielsweise Unterschriften von anderen Schriftstücken eingescannt und auf das Fax-Dokument kopiert werden. Ein Unterschied, ob es sich um eine tatsächlich getätigte Unterschrift oder um eine reproduzierte Grafikdatei handelt, ist generell nicht zu erkennen. Schäden entstehen dann, wenn Empfangende die darin enthaltenen Informationen als authentisch oder sogar als rechtsverbindlich ansehen."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "e7bbf302-a633-46d1-853a-8441608e3744",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/faxe_profile.json",
+            "description": "Implementation for all controls in Baustein NET.4.3",
+            "implemented-requirements": [
+              {
+                "uuid": "8cd98eb3-fd3b-4c87-9382-f9da5c96ed73",
+                "control-id": "ARCH.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "REAL",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.4.3.A3-m2",
+                    "uuid": "6a12527c-5c7a-4b21-bee7-443684e68769",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Faxserver wird installiert und die Grundfunktionen werden manuell geprüft. Nicht benötigte Dienste werden bei der Installation manuell gestoppt, aber nicht dauerhaft deaktiviert, sodass sie nach einem Neustart wieder laufen könnten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Installation erfolgt nach der Standardanleitung des Herstellers. Eine manuelle Prüfung der laufenden Dienste wird einmalig bei der Installation durchgeführt. Es gibt keine regelmäßige Überprüfung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft, ob der Faxserver grundsätzlich funktioniert. Eine Prüfung der laufenden Dienste (z.B. mit 'netstat -an') zum Zeitpunkt des Audits wird durchgeführt, um festzustellen, ob unnötige Dienste aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A3-m3",
+                    "uuid": "eeabce90-2622-4a03-9d33-2648c5e0a166",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS sichergestellt werden, dass der Faxserver ausschließlich Fax-Dienste anbietet und nicht für weitere Dienste genutzt wird. Alle nicht benötigten Leistungsmerkmale und Zugänge der eingesetzten Kommunikationsschnittstellen MÜSSEN deaktiviert werden. Außerdem MUSS regelmäßig die Verbindung vom Faxserver zur TK-Anlage beziehungsweise zum öffentlichen Telefonnetz auf ihre Funktion geprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Faxserver wird auf einem dedizierten System (physisch oder virtuell) nach einem dokumentierten Härtungsverfahren installiert. Dieses Verfahren deaktiviert alle nicht benötigten Ports, Dienste und Protokolle dauerhaft. Ein Wartungsplan schreibt eine monatliche Funktionsprüfung der Verbindung vor, die protokolliert wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration des Faxservers (z.B. mittels `systemctl list-units --all` oder `Get-Service`), um zu verifizieren, dass nur Fax-relevante Dienste aktiviert sind. Die Dokumentation des Härtungsprozesses wird eingesehen. Die Protokolle der regelmäßigen Funktionsprüfungen werden geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A3-m4",
+                    "uuid": "bd63950c-2bfe-4bd9-b845-56d78a1a825f",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu den definierten Maßnahmen SOLLTE vor der Inbetriebnahme eine Testphase erfolgen. Konfigurationsparameter sowie alle Änderungen an der Konfiguration eines Faxservers SOLLTEN dokumentiert werden. Die Archivierung und Löschung von Faxdaten SOLLTE geregelt sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor dem produktiven Einsatz wird der Faxserver in einer abgetrennten Testumgebung betrieben. Alle Konfigurationsänderungen werden in einem Konfigurationsmanagementsystem (z.B. Git) versioniert. Eine Datenaufbewahrungsrichtlinie regelt explizit die Behandlung und Löschfristen von Faxdaten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Dokumentation der Testphase. Das Konfigurationsmanagementsystem wird eingesehen, um die Nachvollziehbarkeit von Änderungen zu prüfen. Die Richtlinie zur Datenaufbewahrung wird geprüft und es wird stichprobenartig verifiziert, dass alte Faxdaten gemäß der Richtlinie gelöscht wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A3-m5",
+                    "uuid": "f8735463-6b92-418a-8077-bbce69ca82f3",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Faxserver wird durch ein automatisiertes Konfigurationsmanagement-Tool verwaltet, das die Einhaltung des gehärteten Zustands kontinuierlich überwacht und bei Abweichungen automatisch korrigiert oder alarmiert. Die Funktionsprüfung der Verbindung erfolgt automatisiert durch regelmäßiges Senden und Empfangen von Test-Faxen an einen Kontrolldienst, wobei die Ergebnisse zentral protokolliert und überwacht werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools wie Ansible, Puppet oder Chef werden eingesetzt, um den gewünschten Konfigurationszustand zu deklarieren und durchzusetzen. Ein Monitoring-System wie Nagios oder Zabbix wird mit einem Skript erweitert, das minütlich die Fax-Konnektivität durch einen End-to-End-Test überprüft und bei Fehlern alarmiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfigurations-Playbooks/Manifeste des Konfigurationsmanagement-Tools. Die Konfiguration und die Protokolle des Monitoring-Systems werden eingesehen, um die kontinuierliche, automatisierte Überwachung der Faxserver-Funktionalität und -Konfiguration zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "111ad0bb-41dd-4f87-882d-e39d22a801c5",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BES",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.4.3.A6-m2",
+                    "uuid": "94178f0b-6e11-4b6c-b8ee-53e5549e1701",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei der Beschaffung werden primär funktionale Anforderungen und der Preis berücksichtigt. Sicherheitsaspekte werden nicht systematisch als Kriterium herangezogen, können aber zufällig durch die Auswahl eines Markenprodukts abgedeckt sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Beschaffung erfolgt auf Basis einer einfachen Anforderung wie 'Wir brauchen ein neues Faxgerät'. Es wird ein Standardmodell aus dem Katalog des Büromateriallieferanten bestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Beschaffungsunterlagen und stellt fest, dass keine expliziten Sicherheitsanforderungen formal definiert und bewertet wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A6-m3",
+                    "uuid": "7c6a69d1-8372-40fe-86a9-1bbec815c8f3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bevor Faxgeräte oder Faxserver beschafft werden, SOLLTE eine Anforderungsliste erstellt werden. Anhand dieser Liste SOLLTEN die infrage kommenden Systeme oder Komponenten bewertet werden. Die Anforderungsliste für Faxgeräte SOLLTE auch sicherheitsrelevante Aspekte umfassen, wie den Austausch einer Teilnehmererkennung, die Ausgabe von Sendeberichten sowie eine Fehlerprotokollierung und Journalführung. Bei einem Faxserver SOLLTEN alle Anforderungen an das IT-System einschließlich Betriebssystem, Kommunikationskomponenten und Applikationssoftware erhoben und berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Beschaffungsstelle verwendet eine standardisierte Checkliste für die Beschaffung von Fax-Systemen. Diese Checkliste enthält einen dedizierten Abschnitt zu Sicherheitsanforderungen, der vor jeder Beschaffung vom Informationssicherheitsbeauftragten (ISB) oder einem Fachexperten geprüft wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor lässt sich die Anforderungslisten und Beschaffungsdokumente für kürzlich angeschaffte Faxgeräte oder -server vorlegen. Es wird geprüft, ob sicherheitsrelevante Aspekte (Teilnehmererkennung, Sendeberichte, Protokollierung) systematisch berücksichtigt wurden. Die Einbindung des ISB in den Prozess wird verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A6-m4",
+                    "uuid": "a9224d83-bfc8-4d45-aa5c-89c98ed1f1db",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu den definierten Anforderungen SOLLTEN angemessene zusätzliche Sicherheitsfunktionen anhand des Schutzbedarfs berücksichtigt werden. Die Möglichkeit, dass ein Faxserver in ein bestehendes Datennetz und in ein Groupware-System integriert werden kann, SOLLTE bei Bedarf berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Beschaffungsprozess beinhaltet eine formale Schutzbedarfsfeststellung für den Einsatzzweck. Basierend darauf werden erweiterte Sicherheitsfunktionen wie z.B. die Verschlüsselung des internen Speichers oder die Anbindung an ein zentrales SIEM-System als Anforderung definiert. Die Integrationsfähigkeit in die bestehende Infrastruktur wird durch einen Proof-of-Concept vor der finalen Kaufentscheidung verifiziert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Dokumentation der Schutzbedarfsfeststellung im Kontext der Fax-Beschaffung. Es wird verifiziert, dass die Auswahlentscheidung die Ergebnisse der Schutzbedarfsfeststellung und die Anforderungen an erweiterte Sicherheitsfunktionen nachvollziehbar berücksichtigt. Falls zutreffend, werden die Protokolle des Proof-of-Concept geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "758a6da4-637a-40e5-86fb-9fcc998cfc65",
+                "control-id": "DET.4.16",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.4.3.A11-m3",
+                    "uuid": "db6c56d6-f36a-4071-b09a-47252f82b7c8",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN ausreichend Kommunikationsleitungen bzw. -kanäle verfügbar sein. Bei einem Faxserver SOLLTE das voraussichtliche Faxvolumen abgeschätzt werden. Es SOLLTEN entsprechend leistungsfähige Komponenten ausgewählt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei der Beschaffung und Einrichtung wird eine Schätzung des zu erwartenden Faxaufkommens (Anzahl Faxe pro Tag, durchschnittliche Seitenzahl) durchgeführt. Basierend darauf wird die Anzahl der benötigten ISDN-Kanäle oder die Bandbreite des FoIP-Anschlusses sowie die Leistungsfähigkeit des Faxservers (CPU, RAM, Speicher) dimensioniert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Dokumentation der Kapazitätsplanung und -abschätzung. Es wird die Konfiguration der Telefonanlage und des Faxservers eingesehen, um die tatsächlich bereitgestellten Ressourcen mit der Planung abzugleichen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A11-m4",
+                    "uuid": "bd190890-ac16-4a53-b192-89cd125703cc",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Protokolle von Faxservern SOLLTEN regelmäßig kontrolliert werden, um Engpässen durch Überlastungen rechtzeitig entgegenzuwirken. Nicht mehr benötigte Faxdaten SOLLTEN zeitnah vom Faxserver gelöscht werden, um Speicherüberlastung zu vermeiden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Administrator überprüft monatlich die Leistungsprotokolle des Faxservers (z.B. CPU-Auslastung, Warteschlangenlänge, Speicherbelegung). Es ist eine automatisierte Routine eingerichtet, die erfolgreich zugestellte Faxe nach 30 Tagen aus dem aktiven Speicher des Servers in ein Archiv verschiebt oder löscht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Protokolle der monatlichen Leistungskontrollen. Die Konfiguration der automatisierten Lösch- oder Archivierungsroutine wird verifiziert und es wird stichprobenartig geprüft, ob alte Faxdaten tatsächlich entfernt wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A11-m5",
+                    "uuid": "f99f003a-6ab2-41ad-86d1-5b6a77ea8baf",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Auslastung des Faxservers und der Kommunikationskanäle wird durch ein Monitoring-System kontinuierlich überwacht. Bei Erreichen von vordefinierten Schwellenwerten (z.B. 80% Kanalauslastung über 10 Minuten) wird automatisch eine Warnung an die Administratoren gesendet. Für kritische Anwendungen wird eine hochverfügbare Faxserver-Lösung mit Lastverteilung eingesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Monitoring-System (z.B. Zabbix, PRTG) ist so konfiguriert, dass es die relevanten Leistungsparameter des Faxservers und der TK-Anlage in Echtzeit abfragt. Es sind Eskalationsketten für die Alarmierung definiert. Ein Faxserver-Cluster mit einem vorgeschalteten Load Balancer wird betrieben, um die Last auf mehrere Instanzen zu verteilen und Ausfallsicherheit zu gewährleisten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration des Monitoring-Systems, inklusive der Schwellenwerte und Alarmierungsregeln. Die Architektur des hochverfügbaren Faxserver-Setups wird anhand von Netzwerk- und Systemplänen verifiziert. Die Wirksamkeit der Lastverteilung und des Failovers wird (falls möglich) getestet."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "dc1f3bf9-bcde-45a5-98a5-ab1a5b6c1fe0",
+                "control-id": "KONF.10.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.4.3.A10-m2",
+                    "uuid": "d9fb7cad-fa17-401c-b2c0-0ca33e12c2a5",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zieladressen und Verteilerlisten werden bei der Einrichtung einmalig einprogrammiert. Eine regelmäßige Überprüfung oder das Löschen nicht mehr benötigter Nummern findet nicht statt. Änderungen werden nur vorgenommen, wenn ein Fehler auffällt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Kurzwahltasten und Adressbücher wachsen über die Zeit organisch, ohne dass alte oder falsche Einträge entfernt werden. Es gibt keinen verantwortlichen 'Gärtner' für die Daten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor lässt sich das Adressbuch oder die Kurzwahlliste des Faxgeräts anzeigen und stellt durch Befragung der Mitarbeitenden fest, dass einige Einträge veraltet oder unbekannt sind und kein Prozess zur Überprüfung existiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A10-m3",
+                    "uuid": "ed16760e-ee6f-4eb6-85ea-404138d23999",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Programmierbare Kurzwahltasten oder gespeicherte Zieladressen SOLLTEN regelmäßig daraufhin überprüft werden, ob die gewünschte Faxnummer mit der einprogrammierten Nummer übereinstimmt. Nicht mehr benötige Faxnummern SOLLTEN gelöscht werden. Es SOLLTE in geeigneter Weise dokumentiert werden, wenn ein neuer Eintrag aufgenommen oder eine Zielnummer geändert wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist ein Prozess etabliert, bei dem halbjährlich ein autorisierter Mitarbeiter (z.B. ein Key-User oder Administrator) alle gespeicherten Zieladressen und Verteilerlisten überprüft. Die Überprüfung wird anhand einer ausgedruckten Liste durchgeführt und abgezeichnet. Alle Änderungen werden in einem Logbuch am Gerät oder in einer zentralen Datei dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor fordert die Protokolle der letzten Überprüfungen der Zieladressen an. Es wird stichprobenartig geprüft, ob die gespeicherten Nummern korrekt sind und ob Änderungen nachvollziehbar dokumentiert wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A10-m4",
+                    "uuid": "858c3a8f-d54e-4b59-bbe4-639b92dd3f56",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur regelmäßigen Überprüfung wird die Möglichkeit, Zieladressen und Verteilerlisten zu ändern, auf einen sehr kleinen, autorisierten Personenkreis beschränkt. Bei Faxservern, die an Groupware angebunden sind, wird das zentrale Adressbuch der Groupware verwendet und dessen Pflegeprozesse gelten auch für die Faxnummern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration des Faxgeräts oder -servers ist passwortgeschützt, sodass nur Administratoren Adressbucheinträge ändern können. Änderungen können von Benutzern über ein Ticketsystem beantragt werden. Faxnummern werden als Attribut im zentralen Active Directory oder Groupware-Adressbuch gepflegt, wodurch der allgemeine Pflegeprozess für Benutzerkonten auch die Faxnummern umfasst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Zugriffsberechtigungen für die Konfiguration des Adressbuchs. Es wird der Prozess zur Beantragung und Durchführung von Änderungen (z.B. über das Ticketsystem) verifiziert. Falls ein zentrales Adressbuch genutzt wird, wird dessen Pflegeprozess und die Integration mit dem Faxserver geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "7aed4711-7b88-4f6e-b7a8-653bfbbb9f69",
+                "control-id": "KONF.12.13",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.4.3.A9-m2",
+                    "uuid": "5d66aec9-c6de-44ce-9cbe-8a6659a97974",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Protokollierungsfunktionen des Faxgeräts oder -servers sind aktiviert, da dies die Standardeinstellung ist. Die Protokolle werden jedoch nicht regelmäßig ausgewertet oder archiviert und bei Bedarf manuell zur Fehlersuche herangezogen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Protokolle verbleiben auf dem Gerät, bis der Speicher voll ist und sie überschrieben werden. Eine Auswertung findet nur reaktiv statt, wenn ein Benutzer ein Problem meldet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft an der Gerätekonfiguration, ob die Protokollierung aktiv ist. Durch Befragung der Administratoren wird festgestellt, dass keine regelmäßige oder proaktive Auswertung stattfindet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A9-m3",
+                    "uuid": "04d3c5e2-9200-4d5e-a4d1-50e90b056fb4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Übertragungsvorgänge ein- und ausgehender Faxsendungen SOLLTEN protokolliert werden. Dazu SOLLTEN die Kommunikationsjournale marktüblicher Faxgeräte genutzt werden. Verfügen die Faxgeräte über Protokollierungsfunktionen, SOLLTEN diese aktiviert werden. Bei einem Faxserver SOLLTE die Protokollierung ebenso aktiviert werden. Die Kommunikationsjournale und Protokolldateien SOLLTEN regelmäßig ausgewertet und archiviert werden. Unbefugte SOLLTEN nicht auf die Kommunikationsjournale sowie die protokollierten Informationen zugreifen können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Protokollierungsfunktionen aller Fax-Systeme sind aktiviert. Es ist in einem Betriebskonzept definiert, welche Informationen protokolliert werden. Die Protokolle werden wöchentlich auf einem zentralen Log-Server gesammelt und gemäß den gesetzlichen und betrieblichen Anforderungen archiviert. Der Zugriff auf die Protokolle ist auf wenige Administratoren beschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration der Fax-Systeme auf aktive Protokollierung. Das Betriebskonzept wird auf die Regelungen zur Protokollierung geprüft. Der Auditor verifiziert auf dem Log-Server die zentrale Sammlung und die Zugriffsberechtigungen auf die Protokolldateien. Die Archivierungsprozesse werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A9-m4",
+                    "uuid": "62f51e40-79e0-4eeb-ba1d-a2837fe7a121",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur definierten Protokollierung SOLLTEN die Protokolle stichprobenartig auf Unregelmäßigkeiten geprüft werden. Es SOLLTE entschieden werden, welche Informationen genau protokolliert werden sollen, um Datenschutzanforderungen (Datenminimierung) zu erfüllen und gleichzeitig eine ausreichende Nachvollziehbarkeit zu gewährleisten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist ein Prozess definiert, nach dem die Faxprotokolle monatlich durch einen IT-Administrator stichprobenartig auf Anomalien (z.B. ungewöhnlich viele Fehlversuche, Faxe an unbekannte Nummern) geprüft werden. Die Ergebnisse werden protokolliert. Die Protokollierung ist so konfiguriert, dass nur Metadaten (Zeit, Quelle, Ziel, Status) und keine Inhalte erfasst werden, falls nicht zwingend erforderlich."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Protokolle der monatlichen stichprobenartigen Auswertungen. Es wird die Konfiguration der Protokollierung verifiziert, um sicherzustellen, dass sie dem Prinzip der Datenminimierung entspricht. Der definierte Prozess zur Auswertung wird auf seine Angemessenheit geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A9-m5",
+                    "uuid": "4f5641f9-0ef1-4535-96ce-e358edb46013",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Faxprotokolle werden in Echtzeit an ein zentrales Security Information and Event Management (SIEM) System weitergeleitet. Das SIEM-System korreliert die Fax-Ereignisse mit anderen Systemlogs und alarmiert bei vordefinierten verdächtigen Mustern (z.B. Fax-Spam-Versuche, Übertragung zu Hochrisiko-Nummern, unautorisierte Konfigurationsänderungen) automatisch das Sicherheitsteam."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Faxserver sind als Log-Quelle im SIEM (z.B. Splunk, ELK Stack, QRadar) konfiguriert. Es sind spezifische Korrelationsregeln und Dashboards für Fax-Ereignisse erstellt worden, die eine proaktive Überwachung und schnelle Reaktion auf Sicherheitsvorfälle ermöglichen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration der Log-Weiterleitung vom Faxserver zum SIEM. Im SIEM-System werden die Korrelationsregeln, Dashboards und generierten Alarme für Fax-Ereignisse eingesehen, um die Wirksamkeit der automatisierten Überwachung zu beurteilen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "fe76f806-ddd0-4e6e-a091-ba203475e309",
+                "control-id": "KONF.6.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.4.3.A13-m3",
+                    "uuid": "92213575-f131-40c4-a7af-d62522f642ec",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN nur wenige Mitarbeitende ausgewählt werden, die auf das Faxgerät zugreifen dürfen. Diese Mitarbeitenden SOLLTEN ankommende Faxsendungen an die Empfangenden verteilen. Den Mitarbeitenden SOLLTE vermittelt werden, wie sie mit dem Gerät umgehen und wie sie die erforderlichen Sicherheitsmaßnahmen umsetzen können. Jeder berechtigte Benutzende SOLLTE darüber unterrichtet werden, wer das Faxgerät bedienen darf und wer für das Gerät zuständig ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jedes Faxgerät mit erhöhtem Schutzbedarf wird eine Liste der berechtigten Bedienenden erstellt und gepflegt. Diese Personen erhalten eine nachweisliche Einweisung in die Bedienung und die Sicherheitsverfahren (z.B. Verteilung von vertraulichen Faxen in verschlossenen Umschlägen). Die Zuständigkeiten sind klar dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor fordert die Liste der berechtigten Bedienenden und die zugehörigen Schulungs- und Unterweisungsnachweise an. Durch Interviews wird geprüft, ob die berechtigten Personen ihre Aufgaben und die zuständigen Ansprechpartner kennen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.4.3.A13-m4",
+                    "uuid": "6197095f-06e0-4c1a-9c9a-8e6efe383ba8",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zugriff auf das Faxgerät oder die Faxserver-Funktionen wird technisch erzwungen. Nur berechtigte Benutzer können sich am Gerät (z.B. per PIN oder Karte) authentisieren, um Faxe zu senden oder zu empfangen. Die Verteilung ankommender Faxe erfolgt über einen nachvollziehbaren Prozess."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Faxgerät ist so konfiguriert, dass eine Authentisierung per PIN, Mitarbeiterausweis oder durch Anbindung an das Active Directory erforderlich ist, bevor Faxfunktionen genutzt werden können (Secure Fax Release). Bei einem Faxserver wird der Zugriff auf die Fax-Sende-Funktion über Berechtigungsgruppen in der Groupware gesteuert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration der Zugriffskontrolle am Faxgerät oder auf dem Faxserver. Es wird versucht, ohne Berechtigung eine Faxfunktion zu nutzen. Die Zuweisung von Berechtigungen wird anhand der Berechtigungsgruppen und der Liste der autorisierten Personen verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

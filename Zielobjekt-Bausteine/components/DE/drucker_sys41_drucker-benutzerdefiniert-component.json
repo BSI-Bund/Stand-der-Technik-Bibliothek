@@ -1,0 +1,976 @@
+{
+  "component-definition": {
+    "uuid": "c51703a6-b338-47d9-ad47-05974fabadcf",
+    "metadata": {
+      "title": "SYS.4.1 Drucker - Benutzerdefiniert",
+      "last-modified": "2025-11-13T21:19:02.846283+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "f6a686c2-f6db-416d-b82d-7f41d0a18dea",
+        "type": "hardware",
+        "title": "SYS.4.1 Drucker",
+        "description": "This component represents the implementation of all controls for Baustein SYS.4.1.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Moderne Drucker, Kopierer und Multifunktionsgeräte sind komplexe Geräte, die neben mechanischen Komponenten eigene Betriebssysteme enthalten und Serverdienste und -funktionen bereitstellen. Da die Geräte oft vertrauliche Informationen verarbeiten, müssen sie bzw. die gesamte Druck- und Scan-Infrastruktur geschützt werden.<BR>Als Multifunktionsgeräte werden Geräte bezeichnet, die mehrere papierverarbeitende Funktionen bieten, etwa Drucken, Kopieren, Scannen sowie auch Versenden und Empfangen von Fax-Dokumenten.<BR>Für viele Geschäftsprozesse und Fachaufgaben wird auch heute noch Papier als Informationsträger benutzt. Damit sind Drucker, Kopierer oder Multifunktionsgeräte wichtige Komponenten in der IT-Infrastruktur. Fallen die Geräte aus oder werden verfälschte Dokumente ausgedruckt, kann sich das mitunter auf kritische Prozesse auswirken und zu erheblichen wirtschaftlichen Schäden führen."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Dieser Baustein beschreibt, wie sich Drucker, Kopierer und Multifunktionsgeräte sicher betreiben lassen, sodass weder Informationen über diese Geräte abfließen können noch durch sie die Sicherheit der übrigen internen IT-Infrastruktur beeinträchtigt wird."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.4.1 Drucker, Kopierer und Multifunktionsgeräte ist für jeden Drucker, Kopierer oder jedes Multifunktionsgerät im Informationsverbund anzuwenden.<BR>Der Baustein behandelt die Sicherheit von Druckern, Kopierern und Multifunktionsgeräten. Vernetzte oder lokal an IT-Systemen angeschlossene Dokumentenscanner werden nicht explizit berücksichtigt. Die Risiken und Anforderungen lassen sich jedoch aus denen für Multifunktionsgeräte ableiten. Ebenso werden vernetzte Faxgeräte nicht gesondert betrachtet. Die in diesem Baustein aufgeführten Risiken und Anforderungen für die Faxfunktion gelten deshalb auch für diese Art von Geräten. Ergänzend sind die Anforderungen des Bausteins NET.4.3 Faxgeräte und Faxserver zu berücksichtigen.<BR>Drucker, Kopierer und Multifunktionsgeräte werden oft an Datennetze angeschlossen. Neben kabelgebundenen Anschlüssen können einige Geräte auch direkt mit einem WLAN verbunden werden. Empfehlungen hierzu sind in den Bausteinen der Teilschicht NET Netze und Kommunikation zu finden, wie z. B. im Baustein NET.2.2 WLAN-Nutzung.<BR>Auf Druckern, Kopierern und Multifunktionsgeräten sind oft vertrauliche Informationen gespeichert, die nach der Außerbetriebnahme auf den Geräten verbleiben. Geleaste Geräte werden häufig, je nach Vertrag, nach einer vorher festgelegten Nutzungsdauer oder -häufigkeit ausgetauscht. Sie werden spätestens nach Ablauf des Leasingvertrags zurückgegeben. Auch Papier und andere Betriebsmittel können vertrauliche Informationen beinhalten. Bevor diese Geräte und Betriebsmittel ausgesondert, getauscht, instandgesetzt oder zurückgegeben werden, müssen alle sensiblen Informationen von ihnen gelöscht werden. Empfehlungen hierzu sind nicht Gegenstand des vorliegenden Bausteins, sondern sind im Baustein CON.6 Löschen und Vernichten zu finden.<BR>Bei Druckservern handelt es sich um IT-Systeme mit Druckwarteschlangen, Druckjobverwaltung und möglichen weiteren Funktionen, z. B. Treiberverteilung oder gesichertes Drucken. Für jeden Druckserver müssen die generellen und betriebssystemspezifischen Sicherheitsanforderungen für Server erfüllt werden. Diese werden nicht in diesem Baustein, sondern in den Bausteinen SYS.1.1 Allgemeiner Server und den jeweiligen betriebssystemspezifischen Server-Bausteinen beschrieben.<BR>Ein essentieller Schwerpunkt bei der Absicherung von Druckern, Kopierern und Multifunktionsgeräten ist es, die auf den Geräten installierte Software regelmäßig zu aktualisieren und dadurch Softwareschwachstellen zu schließen. Der vorliegende Baustein behandelt diesen Aspekt allerdings nicht. Anforderungen hierzu sind im Baustein OPS.1.1.3 Patch- und Änderungsmanagement zu finden."
+          },
+          {
+            "name": "2.1. Unerlaubte Einsicht in ausgedruckte Dokumente",
+            "value": "Ausgedruckte Dokumente verbleiben oft für eine längere Zeit im Ausgabefach von zentralen Druckern und Multifunktionsgeräten, weil beispielsweise erst mehrere Dateien ausgedruckt und später alle zusammen abgeholt werden. Auch kann es sein, dass am Client ein falscher Drucker ausgewählt wurde und sich die Dokumente nicht am erwarteten Ort befinden. Da Etagen- oder Abteilungsdrucker von vielen Benutzenden verwendet werden, können so auch unberechtigte Personen schützenswerte Informationen einsehen oder mitnehmen.<BR>Auch liegengebliebene Ausdrucke in den Ausgabefächern dezentraler Arbeitsplatzdrucker, die sich in unmittelbarer Nähe in den Büroräumen befinden, sind ein Risiko. Denn Personen, die Zutritt zu diesen Räumen haben, könnten die Ausdrucke ebenso einsehen oder entnehmen.<BR>Eine weitere Gefahr sind im Ausgabefach befindliche Faxdokumente und ausgedruckte Sendeprotokolle, auf denen neben Faxnummer, Datum, Uhrzeit und Seitenzahl mitunter ein verkleinertes Abbild der ersten Seite zu sehen ist. Da solche Protokolle erst ausgegeben werden, nachdem ein Fax verschickt wurde oder ein Sendefehler aufgetreten ist, könnten sie auch über einen längeren Zeitraum im Gerät liegen bleiben oder gar nicht abgeholt werden. Dadurch befinden sich unter Umständen vertrauliche Informationen unbeaufsichtigt im Ausgabefach und können im schlimmsten Fall gestohlen werden.<BR>Zudem werden nicht abgeholte Dokumente irgendwann entsorgt. Das geschieht oft, indem die Ausdrucke wahllos in nahegelegene Papierkörbe geworfen werden, statt Ausdrucke mit schützenswerten Informationen sicher zu vernichten. Dadurch können diese Informationen in die öffentliche Müllentsorgung und so in die Hände Dritter gelangen.<BR>Auch viele Telearbeitsplätze werden mit einem eigenen Drucker oder Multifunktionsgerät ausgestattet. Hierdurch können ebenfalls schützenswerte Informationen offengelegt werden."
+          },
+          {
+            "name": "2.2. Sichtbarkeit von Metadaten",
+            "value": "Zusammen mit einem Druckauftrag werden Metadaten gesendet, die in der Regel die Kennung der Benutzenden, Datum, Uhrzeit und den Namen des Druckauftrages enthalten. Diese Daten werden im Bedienfeld und im Webserver vieler Drucker und Multifunktionsgeräte angezeigt. Der Name des Druckauftrages ergibt sich oft aus dem Namen des digitalen Dokumentes. Falls der Drucker über einen integrierten Webserver verfügt, können über einen Browser oft vertrauliche Vorgänge eingesehen werden. Ebenso sind die Metadaten auf den Druckservern im Klartext sichtbar, sofern sie nicht anonymisiert werden. Damit können Dritte an vertrauliche Informationen gelangen. Viele Geräte erlauben es zudem, Druckaufträge abzuspeichern, um sie später nach Authentisierung über eine PIN auszudrucken. Auch in diesem Fall wird der Name aller vorhandenen Dokumente im Bedienfeld eines Ausgabegerätes angezeigt.<BR>Bestimmte Drucker und Kopierer drucken sogenannte „Yellow Dots“ (auch „Machine Identification Code“, „Tracking Dots“, „Secret Dots“) auf das Papier. Diese oft undokumentierten Wasserzeichen können das Datum und die Uhrzeit sowie die Seriennummer des Druckers beinhalten und sind mit dem bloßen Auge kaum zu erkennen. Auf diese Weise kann ein Ausdruck einer Institution oder einer bestimmten Person direkt zugewiesen und so zu der Person zurückverfolgt werden, die den Text verfasst hat. Neben datenschutzrechtlichen Auswirkungen könnten so ungewollt Informationen die Institution verlassen.<BR>Auch Faxprotokolle können bei vielen Multifunktionsgeräten ohne Zugriffsschutz ausgedruckt werden. Selbst wenn nur Telefonnummer, Datum, Uhrzeit und Seitenzahl aufgelistet werden, können damit schon Rückschlüsse auf personenbezogene Daten oder geschäftliche Vorgänge ermöglicht werden."
+          },
+          {
+            "name": "2.3. Ungenügender Schutz gespeicherter Informationen",
+            "value": "Drucker, Kopierer und Multifunktionsgeräte sind oft mit nichtflüchtigen Speichern ausgestattet, auf denen Informationen temporär oder auch längerfristig abgelegt werden. So werden dort z. B. Adressbücher, Dokumente, Fax-Dateien und Druckaufträge abgespeichert. Sind diese Informationen unzureichend geschützt, können Dritte darauf zugreifen und sie auslesen. Unter Umständen können sogar bereits gelöschte Informationen rekonstruiert werden, wenn unsichere Löschmethoden angewendet wurden.<BR>Über Netzprotokolle können Daten im Gerät gespeichert und gelesen werden. Drucker und Multifunktionsgeräte mit Datenträgern sind, wenn diese nicht gesichert werden, oft als nicht autorisierte Fileserver nutzbar. Auf diese Weise können unkontrolliert Informationen dezentral abgespeichert werden, die nicht im Datensicherungskonzept berücksichtigt werden."
+          },
+          {
+            "name": "2.4. Unverschlüsselte Kommunikation",
+            "value": "Druck- und Scandaten werden oft unverschlüsselt über das Netz übertragen. Dadurch können die gesendeten Dokumente mitgelesen werden. Ebenso lassen sich in Druckservern temporär gespeicherte Druckdateien auslesen. Das gilt auch für zentrale Scan- und Dokumentenverarbeitungssysteme.<BR>Weitere Gefahrenquellen sind unverschlüsselte Kommunikationsschnittstellen zur Administration der Geräte. Wird beispielsweise über HTTP, SNMPv2 oder Telnet auf Drucker zugegriffen, werden die Informationen dabei ungeschützt transportiert. Dadurch sind die Zugriffsinformationen inklusive Gerätepasswörter gefährdet."
+          },
+          {
+            "name": "2.5. Unberechtigter Versand von Informationen",
+            "value": "Viele Multifunktionsgeräte können digitalisierte Papierdokumente per E-Mail und Fax verschicken. Ohne besondere Schutzmaßnahmen können dadurch Informationen bewusst oder auch versehentlich an nicht autorisierte Empfänger oder Empfängerinnen gelangen. Benutzende könnten beispielsweise Adressen oder Telefonnummern falsch eingeben. Als Folge werden eventuell schutzbedürftige Daten unbeabsichtigt an falsche Empfänger oder Empfängerinnen gesendet. Außerdem können mithilfe der E-Mail- oder Fax-Funktion vertrauliche Unterlagen schnell nach außen gelangen.<BR>Viele vernetzte Drucker lassen sich so konfigurieren, dass Druckaufträge aus dem Internet per E-Mail empfangen und gescannte Dokumente als E-Mail-Anhang versendet werden können. Dabei lässt sich die freie Eingabe der Absendendenadresse missbrauchen, um E-Mails unter fremden Namen an interne und externe Personen zu versenden."
+          },
+          {
+            "name": "2.6. Unkontrollierter Datenaustausch über Speicherschnittstellen bei Druckern, Kopierern und Multifunktionsgeräten",
+            "value": "Dokumente auf Papier können mithilfe von Multifunktionsgeräten schnell kopiert werden. Durch vorhandene USB- oder SD-Anschlüsse ist es zudem möglich, selbst große Mengen an Papierunterlagen direkt und ohne jegliche Kontrolle zu digitalisieren und auf USB-Sticks oder SD-Karten zu speichern. Auch können über die Speicherschnittstellen hierauf abgelegte Dokumente direkt ausgedruckt werden.<BR>Sind die Drucker, Kopierer und Multifunktionsgeräte an ein Datennetz oder direkt an Clients angeschlossen, können IT-Systeme oft auch direkt auf die an Drucker, Kopierer und Multifunktionsgeräte angeschlossenen Speichermedien zugreifen. Auch wenn die Einbindung von Speichermedien an IT-Systeme selbst technisch verhindert wird, können über diesen Umweg unkontrolliert Informationen über die Speicherschnittstellen kopiert werden.<BR>Auf diese Weise kann zum einen über die Speicherschnittstellen (Schad-)Software über die Multifunktionsgeräte auf den hieran angeschlossen Clients oder in das Datennetz der Institution gelangen. Zum anderen können auch vertrauliche (Papier-)Dokumente unbemerkt digitalisiert und unnachvollziehbar gestohlen werden."
+          },
+          {
+            "name": "2.7. Ungenügend abgesicherte Netzzugänge von Druckern, Kopierern und Multifunktionsgeräten",
+            "value": "Firewalls zwischen LAN und Internet werden häufig so konfiguriert, dass ganze Subnetze auf das Internet zugreifen können. Zudem werden Drucker, Kopierer und Multifunktionsgeräte oft dem gleichen Subnetz zugeordnet wie die Clients. Dadurch können z. B. auch die Netzdrucker auf Informationen im Internet zugreifen. Auch wenn die IT-Systeme der Institution nur über einen Proxy auf das Internet zugreifen, können Drucker, Kopierer und Multifunktionsgeräte diesen ebenfalls nutzen. Wenn die Verbindungen von und zu den Druckern aus dem Internet nicht von der Firewall abgewiesen werden, können unter Umständen schützenswerte Informationen unerwünscht das eigene Datennetz verlassen. Umgekehrt könnte ein netzfähiges Gerät unerwünscht Daten aus dem Internet empfangen und weiter verteilen. Ein Netzdrucker kann dadurch z. B. zu einem Einfallstor für Angriffe aus dem Internet werden."
+          },
+          {
+            "name": "2.8. Mangelhafter Zugriffsschutz zur Geräteadministration",
+            "value": "Vernetzte Drucker, Kopierer und Multifunktionsgeräte können über das Bedienfeld und den eingebauten Webserver verwaltet werden. Bei Auslieferung der Geräte haben diese in der Regel kein oder nur ein Standardpasswort. Wird das Passwort nicht gesetzt oder nicht geändert, kann sehr leicht auf die Geräte zugegriffen werden.<BR>In vielen Institutionen werden zudem einheitliche Passwörter für alle Drucker und Multifunktionsgeräte benutzt, die nur selten geändert werden. Dadurch sind sie oft vielen internen und externen Personen bekannt und unbefugte Dritte können somit einfach auf die Geräte zugreifen.<BR>Weiter lassen sich über Bootmenüs Drucker und Multifunktionsgeräte in den Werkszustand zurücksetzen. Davon betroffen sind auch die Sicherheitseinstellungen. So ist beispielsweise das Gerätepasswort oft nicht mehr vorhanden, nachdem der Drucker oder das Multifunktionsgerät auf die Werkseinstellungen zurückgesetzt wurde. Ungesicherte Bootmenüs erleichtern zwar die Administration, verringern aber gleichzeitig die Sicherheit.<BR>Drucker, Kopierer und Multifunktionsgeräte sind mit zahlreichen Netzprotokollen ausgerüstet. Bei Auslieferung sind meistens alle Protokolle aktiviert. Dadurch könnten Angreifende z. B. auf die Geräteeinstellungen zugreifen und diese so verändern, dass schützenswerte Informationen aus dem Netz abfließen.<BR>Viele Geräte können ihr Bedienfeld über das Netz an den Support übertragen. Damit können jedoch auch vertrauliche Eingaben der Benutzenden am Bedienfeld des Gerätes mitgelesen werden.<BR>In größeren Institutionen gibt es meistens sehr viele Drucker, Kopierer und Multifunktionsgeräte. Um diese noch effizient verwalten und überwachen zu können, wird oft eine Gerätemanagementsoftware eingesetzt. Viele Institutionen schützen diese Software jedoch nicht ausreichend vor unberechtigten Zugriffen, da sie als weniger kritisches System wahrgenommen wird. Dadurch können einzelne oder auch alle Geräte unbeabsichtigt oder bewusst verändert werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "43bb778f-16e1-4860-b211-0abd9b65de6f",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Zielobjekt-Bausteine/profiles/drucker_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.4.1",
+            "implemented-requirements": [
+              {
+                "uuid": "20297ab1-fedb-43fb-8b66-d288f7f52ebf",
+                "control-id": "ARCH.2.2.10",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a11-m3",
+                    "uuid": "9ffb9764-22c6-46eb-a036-b3361b2edb57",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb SOLLTE sicherstellen, dass netzfähige Drucker, Kopierer und Multifunktionsgeräte nicht aus Fremdnetzen erreichbar sind. Wenn Multifunktionsgeräte an das Telefonnetz angeschlossen werden, SOLLTE sichergestellt werden, dass keine unkontrollierten Datenverbindungen zwischen dem Datennetz und dem Telefonnetz aufgebaut werden können. Netzdrucker und Multifunktionsgeräte SOLLTEN in einem eigenen Netzsegment, das von den Clients und Servern der Institution getrennt ist, betrieben werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein separates VLAN für alle Drucker und Multifunktionsgeräte wird eingerichtet. Die Firewall-Regeln werden so konfiguriert, dass eingehende Verbindungen aus dem Internet in dieses VLAN blockiert werden. Verbindungen aus dem Client-VLAN in das Drucker-VLAN sind nur für die benötigten Druckprotokolle (z.B. IPP, LPD) erlaubt. Die Fax-Funktion wird, falls möglich, über einen zentralen Fax-Server angebunden, anstatt die Geräte direkt mit dem Telefonnetz zu verbinden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Netzwerktopologie und die VLAN-Konfiguration. Die Firewall-Regeln zwischen dem Internet, dem Client-Netz und dem Drucker-Netz werden geprüft. Es wird verifiziert, dass keine direkten Verbindungen von Multifunktionsgeräten zwischen Daten- und Telefonnetz bestehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a11-m4",
+                    "uuid": "e73c9154-e839-4842-bc22-4d37db8b9d7c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Firewall-Regeln für das Drucker-Segment werden nach dem Prinzip der geringsten Rechte (Least Privilege) konfiguriert. Es wird explizit definiert, welche Clients mit welchen Druckern kommunizieren dürfen. Jeglicher ausgehender Internetverkehr aus dem Drucker-VLAN wird standardmäßig blockiert und nur für explizit genehmigte Dienste (z.B. Abruf von Firmware-Updates von Hersteller-Servern) freigegeben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf der Firewall werden granulare Regeln erstellt, die z.B. nur den Druck-Servern oder bestimmten Client-Subnetzen erlauben, auf das Drucker-VLAN zuzugreifen. Eine „Default Deny“-Regel für ausgehenden Verkehr aus dem Drucker-VLAN wird implementiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt eine detaillierte Analyse der Firewall-Regelsätze durch und prüft deren Spezifität. Es werden Penetrationstests oder Port-Scans aus dem Drucker-VLAN heraus durchgeführt, um die Wirksamkeit der Blockade von ausgehendem Verkehr zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a11-m5",
+                    "uuid": "2d0f8cab-ff30-46ea-9d08-35b4c5158814",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Im Drucker-Segment wird Network Access Control (NAC) nach IEEE 802.1X eingesetzt. Nur authentifizierte und autorisierte Drucker dürfen auf das Netzwerk zugreifen. Der gesamte Netzwerkverkehr zum und vom Drucker-Segment wird auf Anomalien überwacht. Mikrosegmentierung wird verwendet, um die Kommunikation zwischen den Druckern selbst zu unterbinden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein NAC-System wird implementiert, das die Drucker anhand ihres Zertifikats oder ihrer MAC-Adresse authentifiziert. Nicht autorisierte Geräte erhalten keinen Netzwerkzugriff. Die Firewall-Regeln werden so konfiguriert, dass Drucker untereinander nicht kommunizieren können (Client Isolation). Ein Intrusion Detection System (IDS) überwacht den Verkehr des Drucker-VLANs."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des NAC-Systems (z.B. RADIUS-Server und Switch-Konfiguration). Es wird versucht, ein nicht autorisiertes Gerät im Drucker-VLAN anzuschließen, um die Wirksamkeit der NAC-Lösung zu testen. Die IDS-Regeln und -Logs für das Drucker-Segment werden analysiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d3d4b47d-c474-4854-87f0-4593ef3bf857",
+                "control-id": "GEB.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "GEB",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a2-m1",
+                    "uuid": "554b8155-5d02-4c67-bd85-47bc8b5a8c3c",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur einige zentrale Drucker, die bekanntermaßen für vertrauliche Ausdrucke genutzt werden, sind in abschließbaren Räumen aufgestellt. Für die meisten Geräte gibt es keine spezifischen Aufstellungs- oder Zugriffsregeln."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Aufstellung erfolgt nach praktischen Erwägungen wie der Nähe zu Arbeitsgruppen. Physische Sicherheit und Zugriffskontrolle werden nicht systematisch berücksichtigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt eine Begehung durch und stellt fest, dass viele Drucker in frei zugänglichen Bereichen stehen. Es gibt keine dokumentierten Regeln für den physischen Zugriff auf die Geräte."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a2-m2",
+                    "uuid": "02646bcb-0944-40f0-ba5b-96156318420e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Drucker sind in von der Institution kontrollierten Bereichen aufgestellt, sodass Unbefugte von außen keinen direkten Zugang haben. Es werden Standard-Gerätepasswörter für die Administration gesetzt, diese sind aber oft einheitlich und werden selten geändert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Drucker werden in allgemeinen Bürobereichen platziert. Die Standardpasswörter der Hersteller werden durch ein einheitliches institutionelles Passwort ersetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, dass die Drucker nicht in öffentlichen Bereichen stehen. Stichprobenartig wird versucht, sich mit bekannten Standardpasswörtern an den Geräten anzumelden, um zu prüfen, ob diese geändert wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a2-m3",
+                    "uuid": "152f3af0-8d34-47f2-ad34-92af263b2cef",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb MUSS Drucker, Kopierer und Multifunktionsgeräte so aufstellen und absichern, dass nur befugte Personen die Geräte verwenden und auf verarbeitete Informationen zugreifen können. Es MUSS sichergestellt sein, dass nur berechtigte Personen die Geräte administrieren, warten und reparieren können. Mit Dienstleistenden MÜSSEN schriftliche Vertraulichkeitsvereinbarungen getroffen werden. Die Geräte MÜSSEN mit Passwörtern versehen sein, die den Vorgaben des Identitäts- und Berechtigungsmanagements entsprechen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existiert ein Aufstellungskonzept, das Drucker je nach Schutzbedarf des Standorts platziert (z. B. keine zentralen Drucker in Eingangshallen). Der administrative Zugriff ist auf eine definierte Gruppe im Active Directory beschränkt. Für alle externen Dienstleister liegen unterzeichnete Vertraulichkeitserklärungen vor. Die Gerätepasswörter sind individuell, ausreichend komplex und werden dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer gleicht die tatsächlichen Aufstellungsorte mit dem Konzept ab. Die Zugriffsberechtigungen für die Administration werden im Managementsystem (z. B. Active Directory) überprüft. Es werden die Vertraulichkeitsvereinbarungen mit Dienstleistern eingesehen. Stichprobenartig wird die Konfiguration der Gerätepasswörter geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a2-m4",
+                    "uuid": "041d4f27-980a-4c5b-9279-f1eeb9056fe3",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der physische Zugriff auf Geräte wird durch organisatorische Maßnahmen (z. B. Platzierung in nicht frei zugänglichen Büros) und bei hohem Schutzbedarf durch technische Maßnahmen (z. B. Gehäuseschlösser) weiter eingeschränkt. Die Gerätepasswörter werden zentral verwaltet und regelmäßig rotiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zentrale Abteilungsdrucker werden in separaten, abschließbaren Druckerräumen aufgestellt. Ein Passwort-Manager wird zur Verwaltung der Gerätepasswörter eingesetzt. Die Passwörter werden halbjährlich geändert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer besichtigt die Druckerräume und prüft die Zugangskontrollen. Die Prozesse zur Passwortverwaltung und -rotation werden anhand der Dokumentation im Passwort-Manager und der Gerätekonfiguration verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a2-m5",
+                    "uuid": "be244c3c-7bf1-4769-a2ed-9896eb249453",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der physische und administrative Zugriff auf Drucker wird durch ein zentrales IAM-System gesteuert und überwacht. Jeder Zugriffsversuch wird protokolliert und Anomalien (z. B. wiederholte fehlgeschlagene Anmeldeversuche) lösen automatisch einen Alarm aus. Physische Sicherungsmaßnahmen werden durch Videoüberwachung an kritischen Standorten ergänzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "RADIUS oder TACACS+ wird zur Authentisierung des administrativen Zugriffs verwendet. Die Druckerlogs werden an ein zentrales SIEM-System gesendet und dort korreliert. Die Aufstellungsorte sind Teil des physischen Sicherheitskonzepts der Institution."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der zentralen Authentisierung (z. B. RADIUS-Server-Einstellungen). Im SIEM-System werden die Druckerlogs und die konfigurierten Alarmierungsregeln geprüft. Es wird die Konformität mit dem übergeordneten physischen Sicherheitskonzept bestätigt."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e00608d3-02fb-4e18-9236-89f0b112ce43",
+                "control-id": "KONF.2.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a18-m3",
+                    "uuid": "ea91f8a9-f195-4841-b59f-dba973bed8b0",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Drucker und Multifunktionsgeräte SOLLTEN nur vom IT-Betrieb konfiguriert werden können. Nicht benötigte Gerätefunktionen und Datenschnittstellen SOLLTEN abgeschaltet werden. Die Geräte SOLLTEN ausschließlich über verschlüsselte Protokolle wie HTTPS und SNMPv3 verwaltet werden. Sämtliche Protokolle, mit denen unverschlüsselt zugegriffen wird (insbesondere zur Konfigurationsänderung wie SNMP, Telnet, PJL), SOLLTEN ersetzt oder abgeschaltet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein gehärtetes Konfigurationsprofil wird definiert. Dieses beinhaltet die Deaktivierung aller nicht benötigten Funktionen (z.B. FTP-Server, Apple AirPrint, Wi-Fi Direct) und physischen Schnittstellen (z.B. USB-Ports). In den Netzwerkeinstellungen werden unsichere Verwaltungsprotokolle wie Telnet, HTTP und SNMPv1/v2c deaktiviert und stattdessen HTTPS und SNMPv3 (mit Authentifizierung und Verschlüsselung) aktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert stichprobenartig die Konfiguration von mehreren Geräten und vergleicht sie mit dem definierten Härtungsprofil. Es wird geprüft, ob unsichere Verwaltungsprotokolle aktiv sind, z.B. durch einen Port-Scan des Geräts oder die Überprüfung der Weboberfläche."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a18-m4",
+                    "uuid": "d2631939-9ff9-4ccc-807d-7d198784403d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gehärtete Konfigurationsbaseline wird zentral über eine Verwaltungssoftware auf alle Geräte ausgerollt. Die Konfiguration der Geräteflotte wird regelmäßig automatisiert auf Abweichungen von dieser Baseline überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die zentrale Geräteverwaltungssoftware des Herstellers oder eines Drittanbieters wird genutzt, um Konfigurationsvorlagen zu erstellen und auf alle Geräte anzuwenden. Ein Skript wird erstellt, das wöchentlich die Konfiguration aller Drucker ausliest und mit der Baseline vergleicht. Abweichungen werden protokolliert und an die Administratoren gemeldet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfigurationsvorlagen in der Verwaltungssoftware. Die Skripte zur Konformitätsprüfung und die Protokolle der letzten Läufe werden analysiert, um die Wirksamkeit der Überwachung zu bewerten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a18-m5",
+                    "uuid": "71101df0-4739-498d-8d09-389d76ddf21e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfigurationsbaseline wird als „Infrastructure as Code“ (IaC) in einem Versionierungssystem verwaltet. Eine Security Configuration Management (SCM) Lösung überwacht die Konformität kontinuierlich in Echtzeit und ist in der Lage, Abweichungen automatisch zu korrigieren (Selbstheilung)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Konfigurationsdateien oder Skripte (z.B. mit Ansible oder PowerShell) werden in einem Git-Repository verwaltet. Ein SCM-Tool wie Ansible Tower, Puppet oder eine spezialisierte Drucker-Management-Software mit dieser Fähigkeit stellt sicher, dass alle Geräte dauerhaft dem gewünschten Zustand entsprechen. Jede manuelle Änderung an einem Gerät wird automatisch erkannt und zurückgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die als Code verwalteten Konfigurationsdateien im Repository. Die Konfiguration des SCM-Tools und dessen Protokolle werden geprüft, um die kontinuierliche Überwachung und automatische Korrektur zu verifizieren. Es wird versucht, an einem Testgerät eine Konfigurationsänderung manuell vorzunehmen, um die Selbstheilungsfunktion zu testen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "0e848836-d6a5-433e-bdb6-a48a716c2208",
+                "control-id": "KONF.2.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a21-m3",
+                    "uuid": "7c9fd98c-d877-4c1d-bf5a-ec88a338e092",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb SOLLTE die Sicherheitseinstellungen von Druckern regelmäßig kontrollieren und korrigieren, ggf. durch ein automatisiertes System. Es SOLLTE eingeschränkt werden, dass die Geräte über das Bootmenü auf Werkseinstellungen zurückgesetzt werden können. Es SOLLTE sichergestellt sein, dass keine nicht vom Hersteller verifizierte und freigegebene Firmware oder Zusatzsoftware installiert werden kann."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mindestens einmal pro Quartal werden die Sicherheitseinstellungen wichtiger Drucker manuell anhand einer Checkliste überprüft. Der Zugriff auf das erweiterte Boot- oder Service-Menü wird durch ein separates Passwort geschützt. Firmware-Updates werden ausschließlich von der offiziellen Hersteller-Website bezogen und installiert. Die Möglichkeit, Apps oder Zusatzsoftware von Drittanbietern zu installieren, wird im Admin-Menü deaktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Protokolle der manuellen Konfigurationsprüfungen. Es wird versucht, ohne Passwort auf das Bootmenü zuzugreifen. Die installierte Firmware-Version wird mit der vom Hersteller freigegebenen Version abgeglichen. Es wird geprüft, ob die Installationsfunktion für Zusatzsoftware deaktiviert ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a21-m4",
+                    "uuid": "193c6b53-c63e-4695-bf0c-441331e195cd",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Security Configuration Management (SCM)-Tool überwacht kontinuierlich alle Geräte auf Konformität mit einer gehärteten Baseline und meldet Abweichungen automatisch. Alle Firmware-Updates werden vor dem Rollout in einer Testumgebung auf Sicherheit und Kompatibilität geprüft. Die Integrität der Firmware wird beim Update-Prozess durch digitale Signaturen überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die zentrale Verwaltungssoftware wird für die kontinuierliche Konformitätsüberwachung genutzt. Eine dedizierte Testumgebung mit repräsentativen Gerätemodellen wird betrieben. Beim Hochladen von Firmware wird sichergestellt, dass die Option zur Überprüfung der digitalen Signatur aktiviert ist."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration und die Berichte des SCM-Tools. Der Prozess für Firmware-Tests wird anhand der Testdokumentation überprüft. Es wird verifiziert, dass die Geräte so konfiguriert sind, dass sie nur signierte Firmware akzeptieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a21-m5",
+                    "uuid": "cb7de50c-37eb-474a-9c1f-7ecfc6a011a6",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Integrität der Geräte wird durch Secure Boot und eine kontinuierliche Laufzeit-Integritätsprüfung (Runtime Integrity Monitoring) sichergestellt, die bei jeder Manipulation an der Firmware oder kritischen Konfigurationsdateien Alarm schlägt. Jeglicher Versuch, unsignierte Firmware oder Software zu installieren, wird nicht nur blockiert, sondern löst einen hochprioren Sicherheitsvorfall aus. Alle Konfigurationsänderungen werden in einem zentralen SIEM mit den Aufzeichnungen aus dem Change-Management-System korreliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden nur Geräte beschafft, die Secure Boot und Laufzeit-Integritätsüberwachung unterstützen. Diese Funktionen werden aktiviert und ihre Log-Ausgaben an das SIEM gesendet. Im SIEM wird eine Regel erstellt, die einen Alarm auslöst, wenn eine Konfigurationsänderung am Drucker erkannt wird, für die kein genehmigtes Change-Ticket im ITSM-System existiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert in den Geräteeinstellungen die Aktivierung von Secure Boot und Integritätsüberwachung. Im SIEM werden die Korrelationsregeln zwischen Drucker-Logs und dem Change-Management-System geprüft. Es wird ein Test-Change-Request erstellt und der gesamte Prozess bis zur Alarmierung (bzw. Nicht-Alarmierung bei korrektem Prozess) nachvollzogen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "275190aa-cb78-4b39-8579-29e56e6c29a9",
+                "control-id": "KONF.3.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a15-m3",
+                    "uuid": "3a5717bf-0686-46e9-b0d2-e691c53ef23f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn möglich, SOLLTEN alle auf geräteinternen, nichtflüchtigen Speichermedien (z.B. Festplatten) abgelegten Informationen verschlüsselt werden. Auch Druckaufträge SOLLTEN möglichst verschlüsselt übertragen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei allen Geräten mit integrierter Festplatte wird die Festplattenverschlüsselungs-Funktion in den Geräteeinstellungen aktiviert. Für die Übertragung von Druckaufträgen werden die Druckertreiber auf den Clients so konfiguriert, dass sie das Protokoll IPPS (IPP over TLS) verwenden, sofern vom Gerät unterstützt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer prüft stichprobenartig die Konfiguration von Geräten mit Festplatte, um die Aktivierung der Verschlüsselung zu verifizieren. Auf den Client-Systemen bzw. dem Druckserver wird die Konfiguration der Druckerwarteschlangen geprüft, um die Verwendung von IPPS festzustellen. Ein Netzwerk-Sniffer kann zur Verifizierung der verschlüsselten Übertragung eingesetzt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a15-m4",
+                    "uuid": "ea99bfe0-07a9-4751-ba5b-af14f725e1bf",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verschlüsselung des internen Speichers ist eine obligatorische Anforderung bei der Beschaffung neuer Geräte. Die Verschlüsselung der Druckdatenübertragung mittels IPPS wird für alle kompatiblen Geräte per Richtlinie erzwungen und zentral konfiguriert. Die verwendeten Verschlüsselungsalgorithmen entsprechen den aktuellen Empfehlungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anforderung zur Speicherverschlüsselung ist in der Beschaffungsrichtlinie verankert. Die Konfiguration der Druckserver und Clients zur Nutzung von IPPS erfolgt automatisiert über Gruppenrichtlinien oder Skripte. In den Geräteeinstellungen wird TLS 1.2 oder höher als Mindeststandard für die Kommunikation konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Beschaffungsrichtlinie. Die Konfiguration in den Gruppenrichtlinien wird geprüft. Die TLS-Konfiguration der Geräte wird stichprobenartig kontrolliert, um sicherzustellen, dass keine veralteten und unsicheren Protokolle oder Algorithmen verwendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a15-m5",
+                    "uuid": "400b0d40-bf35-476e-90ec-773683b34500",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es werden ausschließlich Geräte mit hardwarebasierter Speicherverschlüsselung (z.B. FIPS 140-2 zertifizierte Self-Encrypting Drives) eingesetzt. Die Ende-zu-Ende-Verschlüsselung von Druckaufträgen vom Client bis zum Drucker ist durchgängig implementiert. Die für die Verschlüsselung verwendeten Zertifikate werden über eine interne PKI verwaltet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei der Beschaffung wird auf die Zertifizierung des Verschlüsselungsmoduls geachtet. Die Druckserver und Clients werden so konfiguriert, dass die Druckdaten bereits vor dem Versand verschlüsselt werden. Die Drucker erhalten Gerätezertifikate aus der internen PKI, um eine sichere TLS-Kommunikation mit den Clients und Servern zu gewährleisten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer prüft die technischen Datenblätter und Zertifizierungen der eingesetzten Geräte. Die Konfiguration der End-zu-Ende-Verschlüsselung wird analysiert. Die Verwaltung der Gerätezertifikate in der PKI wird verifiziert. Die Gültigkeit und Vertrauenswürdigkeit der auf den Druckern installierten Zertifikate wird geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "5365ee8a-0483-40f6-9724-77434005715d",
+                "control-id": "KONF.3.8",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a20-m3",
+                    "uuid": "c33b4f4b-ac1d-4655-b23e-6bd24f3a8f05",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN auf dem Druckserver die Namen der Druckaufträge nur anonymisiert angezeigt werden. Alle Schnittstellen für externe Speichermedien SOLLTEN gesperrt werden. Geräteinterne Adressbücher SOLLTEN deaktiviert und alternative Adressierungsverfahren (z.B. LDAP) angeboten werden. Bei der E-Mail-Funktion SOLLTE sichergestellt sein, dass E-Mails nur mit der Adresse des authentisierten Benutzers und nur an interne Adressen versendet werden können. Eingehende Fax-Dokumente und Sendeberichte SOLLTEN nur autorisierten Personen zugänglich sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Druckserver wird so konfiguriert, dass Auftragsnamen nicht angezeigt werden. Die USB- und SD-Karten-Schnittstellen an den Geräten werden im Admin-Menü deaktiviert. Die Funktion für lokale Adressbücher wird abgeschaltet und stattdessen eine Anbindung an das zentrale LDAP/Active Directory zur Adresssuche konfiguriert. Die Scan-to-Email-Funktion wird so eingestellt, dass das „Von“-Feld nicht frei editierbar ist und E-Mails nur an interne Domains (@institution.de) zugestellt werden. Faxe werden an eine zentrale Mailbox geleitet, auf die nur wenige autorisierte Mitarbeiter Zugriff haben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Druckserver-Konfiguration. An den Geräten wird die Deaktivierung der externen Schnittstellen und lokalen Adressbücher geprüft. Es wird getestet, ob die Scan-to-Email-Funktion E-Mails an externe Adressen versenden kann. Der Zugriff auf eingehende Faxe wird überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a20-m4",
+                    "uuid": "64e8bc8e-8601-47df-bec6-48023b17af50",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Funktion „Scan-to-Email“ ist in eine Data Loss Prevention (DLP)-Lösung integriert, die den Inhalt gescannter Dokumente auf sensible Informationen überprüft und den Versand bei Regelverstößen blockieren kann. Alle Fax-Kommunikationen (ein- und ausgehend) werden zentral protokolliert. Die LDAP-Abfragen zur Adresssuche erfolgen ausschließlich über eine verschlüsselte Verbindung (LDAPS)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der E-Mail-Verkehr von den Multifunktionsgeräten wird über ein zentrales E-Mail-Gateway geleitet, das mit einer DLP-Lösung ausgestattet ist. Diese prüft Anhänge auf Schlüsselwörter oder Muster (z.B. Kreditkartennummern). Der Fax-Server protokolliert alle Aktivitäten in einer Log-Datei. Die LDAP-Anbindung in den Geräteeinstellungen wird auf LDAPS (Port 636) mit Zertifikatsprüfung umgestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration und die Regeln der DLP-Lösung. Die Protokolle des Fax-Servers werden analysiert. Die Konfiguration der LDAPS-Anbindung auf den Geräten wird verifiziert, einschließlich der Vertrauenswürdigkeit des verwendeten Zertifikats."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a20-m5",
+                    "uuid": "38af400b-7e21-486f-bddb-207fe6fb6147",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Datenflüsse (Drucken, Scannen, Kopieren, Faxen) unterliegen einer Inhaltsprüfung durch eine umfassende DLP-Lösung, die auch OCR (Texterkennung) auf Bilddateien anwendet. Die Nutzung der Fax-Funktion ist stark eingeschränkt und erfordert eine Genehmigung. Versuche, blockierte Schnittstellen zu nutzen, werden protokolliert und lösen einen Sicherheitsalarm aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Host- und Netzwerk-basierte DLP-Lösung analysiert Druckaufträge und gescannte Dokumente. Die Fax-Funktion ist standardmäßig deaktiviert und wird nur für bestimmte Benutzer nach einem Genehmigungsworkflow freigeschaltet. Die Geräte-Logs, die Zugriffsversuche auf gesperrte USB-Ports protokollieren, werden an das SIEM gesendet und dort mit Alarmen versehen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer testet die DLP-Lösung, indem er versucht, ein Dokument mit Test-sensiblen Daten zu scannen und zu versenden. Der Genehmigungsworkflow für die Fax-Funktion wird überprüft. Im SIEM wird kontrolliert, ob Alarme bei versuchter Nutzung gesperrter Schnittstellen generiert werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d5610e39-130c-4af4-9268-413b250bb54f",
+                "control-id": "KONF.4.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a7-m3",
+                    "uuid": "16c8e1e2-f515-4aa1-9094-e2226a61959f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb SOLLTE sicherstellen, dass der administrative Fernzugriff auf Drucker, Kopierer und Multifunktionsgeräte nur einer klar definierten Gruppe des Administrations- und Servicepersonals ermöglicht wird. Dies SOLLTE auch dann gewährleistet sein, wenn eine zentrale Geräteverwaltungssoftware eingesetzt wird. Es SOLLTE festgelegt werden, ob die Anzeige des Bedienfelds über ein Datennetz eingesehen werden darf, und wenn ja, dies auf den IT-Betrieb beschränkt und mit den Benutzenden abgestimmt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Active Directory wird eine dedizierte Gruppe „Drucker-Admins“ erstellt. Nur Mitglieder dieser Gruppe haben über die zentrale Verwaltungssoftware oder direkten Gerätezugriff administrative Rechte. Die Nutzung der Remote-Bedienfeld-Funktion wird standardmäßig deaktiviert und nur bei Bedarf für Support-Fälle temporär freigeschaltet. Diese Regelung ist in der Sicherheitsrichtlinie festgehalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Mitgliedschaft der Gruppe „Drucker-Admins“ im Active Directory. Es wird die Konfiguration der Verwaltungssoftware verifiziert, um sicherzustellen, dass die Rechtevergabe über diese Gruppe erfolgt. Stichprobenartig wird an Geräten geprüft, ob die Remote-Bedienfeld-Funktion deaktiviert ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a7-m4",
+                    "uuid": "336105d8-ae89-4e8e-a1c7-2e1b98724ed6",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der administrative Fernzugriff wird über ein dediziertes Verwaltungsnetz oder eine Bastion Host-Lösung weiter abgesichert. Alle administrativen Sitzungen werden protokolliert, um nachvollziehen zu können, wer wann welche Änderungen vorgenommen hat. Es werden separate, nicht-personalisierte Admin-Konten verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Administratoren müssen sich zuerst per VPN in ein separates Management-VLAN einwählen, von dem aus der Zugriff auf die Drucker-Interfaces erst möglich ist. Die Geräte und die zentrale Verwaltungssoftware sind so konfiguriert, dass alle administrativen Aktionen in einem zentralen Log-Server gespeichert werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Netzwerkkonfiguration (Firewall-Regeln, VLANs) für das Verwaltungsnetz. Die Konfiguration der Log-Weiterleitung wird auf den Geräten und in der Verwaltungssoftware geprüft. Die zentralen Logs werden stichprobenartig auf Vollständigkeit und Inhalt kontrolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a7-m5",
+                    "uuid": "a6ae51c8-556c-4553-bec7-8d94b0e211ad",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Jeglicher administrativer Fernzugriff erfolgt ausschließlich über eine Privileged Access Management (PAM)-Lösung. Diese erzwingt Multi-Faktor-Authentifizierung, zeichnet die gesamte Sitzung auf (Video- und Befehlsprotokollierung) und ermöglicht eine Just-in-Time-Rechtevergabe."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine PAM-Lösung wird implementiert. Administratoren authentisieren sich an der PAM-Lösung, die dann eine gesicherte und aufgezeichnete Verbindung zum Drucker oder zur Verwaltungssoftware herstellt. Die direkten Gerätepasswörter sind den Administratoren nicht bekannt, da sie vom PAM-System verwaltet und rotiert werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Architektur und Konfiguration der PAM-Lösung. Es wird geprüft, ob alle administrativen Zugriffswege ausschließlich über die PAM-Lösung führen. Stichprobenartig werden Sitzungsaufzeichnungen und Zugriffsprotokolle im PAM-System eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "1bdb42a7-8ee0-4220-8ab1-a5c4f51eaacd",
+                "control-id": "KONF.5.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a14-m3",
+                    "uuid": "06dca51e-fabf-49f9-bfff-ec562061cd64",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur berechtigte Personen SOLLTEN auf die ausgedruckten oder kopierten Dokumente zugreifen können. Es SOLLTEN möglichst nur zentrale Drucker, Kopierer und Multifunktionsgeräte eingesetzt werden, bei denen sich die Benutzenden am Gerät authentisieren, bevor der Druckauftrag startet („Secure-Print“). Nachdem sich die Benutzenden authentisiert haben, SOLLTEN ausschließlich nur die eigenen Druckaufträge sichtbar sein. Nur die für die jeweiligen Benutzenden notwendigen Funktionen SOLLTEN freigeschaltet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Follow-Me-Printing-Lösung wird implementiert. Benutzer schicken ihre Druckaufträge an eine zentrale Warteschlange. Um den Auftrag auszudrucken, müssen sie zu einem beliebigen Drucker gehen und sich dort mit Benutzername und Passwort oder einer PIN authentisieren. Nach der Anmeldung sehen sie nur ihre eigene Auftragsliste und können die benötigten Dokumente freigeben. Die Geräte werden so konfiguriert, dass Funktionen wie Kopieren oder Scannen ebenfalls erst nach einer Anmeldung verfügbar sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der Follow-Me-Printing-Lösung. Es wird getestet, ob ein Benutzer A sich anmelden und versehentlich Aufträge von Benutzer B sehen oder drucken kann. Es wird geprüft, ob der Zugriff auf Funktionen wie Kopieren wirksam eine Authentifizierung erfordert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a14-m4",
+                    "uuid": "4b29c007-1812-40f3-b742-f05746ad232b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Authentisierung am Drucker ist in das zentrale Verzeichnisdienst-System (z.B. Active Directory) integriert und erfolgt komfortabel und sicher über Mitarbeiterausweise mit RFID/NFC oder Smartcards. Die Autorisierung (d.h. die Freigabe von Funktionen wie Farbdruck, Scannen, Faxen) wird rollenbasiert über Gruppen im Verzeichnisdienst gesteuert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle Drucker werden mit Kartenlesern ausgestattet. Die Druckmanagement-Software wird mit dem Active Directory gekoppelt. Basierend auf der Mitgliedschaft in AD-Gruppen (z.B. „Druck-Farbe-Erlaubt“, „Scannen-Erlaubt“) werden den Benutzern nach der Anmeldung am Drucker die entsprechenden Funktionen freigeschaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der Anbindung an den Verzeichnisdienst. Es wird getestet, ob die Authentisierung per Karte funktioniert. Die rollenbasierte Funktionsfreigabe wird überprüft, indem Testbenutzer mit unterschiedlichen Gruppenmitgliedschaften angelegt und deren Berechtigungen am Drucker getestet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a14-m5",
+                    "uuid": "21bf16b6-a05a-48e7-a3d6-5d8e4b32dea9",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die Freigabe von besonders schutzbedürftigen Druckaufträgen oder den Zugriff auf kritische Funktionen wird eine Multi-Faktor-Authentifizierung (MFA) am Gerät erzwungen. Alle Authentisierungs- und Autorisierungsereignisse werden zentral protokolliert und auf Anomalien überwacht. Das Berechtigungsmodell ist dynamisch und kann auf der Klassifizierung des Dokuments basieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Drucklösung wird so konfiguriert, dass Benutzer nach dem Scannen ihrer Karte zusätzlich eine PIN eingeben oder eine Bestätigung auf ihrem Smartphone (via MFA-App) geben müssen. Wenn ein Dokument im ERP-System als „streng vertraulich“ klassifiziert wird, kann es nur von einem Manager mit erweiterten Rechten freigegeben werden. Alle Anmeldeversuche (erfolgreich und fehlgeschlagen) werden an das SIEM-System zur Analyse weitergeleitet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der MFA am Drucksystem. Es wird der Prozess zur Freigabe von klassifizierten Dokumenten getestet. Im SIEM werden die eingehenden Drucker-Logs und die konfigurierten Korrelationsregeln für verdächtiges Verhalten (z.B. Brute-Force-Angriffe auf PINs) geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "589f41dc-ac8b-4216-89cf-ee2400fd9d57",
+                "control-id": "KONF.9.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.4.1-a16-m3",
+                    "uuid": "c6e98bb5-9aca-48d9-8659-410a6d797f72",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Um die Ausfallzeiten von Druckern, Kopierern und Multifunktionsgeräten so gering wie möglich zu halten, SOLLTEN unter anderem Ersatzgeräte bereitstehen, in Wartungsverträgen auf eine angemessene Reaktionszeit geachtet werden, eine Liste mit Fachhandlungen geführt werden, um schnell Ersatzgeräte oder -teile beschaffen zu können und falls erforderlich, häufig benötigte Ersatzteile gelagert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Pool an vorkonfigurierten Ersatzgeräten wird bereitgehalten. Wartungsverträge mit dem Dienstleister definieren eine maximale Reaktionszeit von 8 Arbeitsstunden. Eine Liste von Standard-Verbrauchsmaterialien (Toner, Trommeln) und häufig benötigten Ersatzteilen wird geführt und ein Mindestbestand im Lager gehalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer inspiziert das Lager, um die Existenz von Ersatzgeräten und -teilen zu verifizieren. Die Wartungsverträge werden eingesehen und die vereinbarten Reaktionszeiten (SLAs) geprüft. Die Liste der Fachhandlungen und der Lagerbestände wird kontrolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a16-m4",
+                    "uuid": "f80955c8-1549-4297-a4c0-ce3038fcd12e",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein detaillierter Notfallplan für den Ausfall der Druckdienste ist Teil des allgemeinen Business Continuity Managements (BCM). Die Wartungsverträge beinhalten garantierte Wiederherstellungszeiten. Ein proaktives Monitoring-System überwacht den Zustand der Geräte (z.B. Tonerstand, Fehlercodes, Bauteilverschleiß) und meldet potenzielle Probleme, bevor sie zu einem Ausfall führen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das BCM-Handbuch enthält ein spezifisches Kapitel für den Ausfall der zentralen Druckinfrastruktur. Die SLAs in den Wartungsverträgen garantieren eine Wiederherstellung innerhalb von 24 Stunden. Die zentrale Verwaltungssoftware wird genutzt, um Statusmeldungen der Drucker zu sammeln und bei kritischen Werten (z.B. Toner < 10%) automatisch ein Ticket im Service-Desk-System zu erstellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet das BCM-Handbuch. Die SLAs in den Verträgen werden auf garantierte Wiederherstellungszeiten geprüft. Die Konfiguration des Monitoring-Systems und der automatischen Ticketerstellung wird verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.4.1-a16-m5",
+                    "uuid": "17995116-5aad-4bdf-a777-5002aceca062",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine hohe Verfügbarkeit der Druckdienste wird durch technische Redundanz, wie geclusterte Druckserver und eine ausreichende Anzahl an Geräten pro Standort, sichergestellt. Der gesamte Prozess von der Störungsmeldung bis zur Behebung ist im ITSM-Tool automatisiert, einschließlich Eskalationsmechanismen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die zentralen Druckserver sind als Failover-Cluster konfiguriert. An kritischen Standorten wird sichergestellt, dass bei Ausfall eines Gerätes die Drucklast nahtlos von anderen Geräten übernommen werden kann (Load-Balancing). Das ITSM-Tool automatisiert die Zuweisung von Störungstickets an Techniker und eskaliert bei Überschreitung der SLA an das Management."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des Server-Clusters. Die Standortkonzepte werden auf ausreichende Geräteredundanz geprüft. Die Workflows und Eskalationsregeln im ITSM-Tool werden analysiert. Es kann ein kontrollierter Ausfalltest eines Druckservers oder Geräts durchgeführt werden, um die Funktionsfähigkeit des Failovers zu testen."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
