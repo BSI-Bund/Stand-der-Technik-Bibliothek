@@ -1,0 +1,330 @@
+{
+  "component-definition": {
+    "uuid": "3b23e5c8-06b9-4d27-88e9-5ad40fbd1039",
+    "metadata": {
+      "title": "NET.2.2 Endgeräte - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:37.746620+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "55bec05d-c932-43fb-8182-347af431b878",
+        "type": "interconnection",
+        "title": "NET.2.2 Endgeräte",
+        "description": "This component represents the implementation of all controls for Baustein NET.2.2.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Über Wireless LANs (WLANs) können drahtlose lokale Netze aufgebaut oder bestehende drahtgebundene Netze erweitert werden. Bis heute basieren fast alle am Markt verfügbaren WLAN-Komponenten auf dem Standard IEEE 802.11 und seinen Ergänzungen. Eine besondere Rolle nimmt dabei das Firmenkonsortium „Wi-Fi Alliance“ ein, das basierend auf dem Standard IEEE 802.11 mit „Wi-Fi“ einen Industriestandard geschaffen hat. Dabei bestätigt die Wi-Fi Alliance mit dem Wi-Fi-Gütesiegel, dass ein Gerät gewisse Interoperabilitäts- und Konformitätstests bestanden hat.<BR>WLANs bieten einen Gewinn an Komfort und Mobilität. Jedoch birgt die Nutzung auch zusätzliches Gefährdungspotenzial für die Sicherheit der Informationen, da drahtlos kommuniziert wird. Daher ist es wichtig, dass neben dem IT-Betrieb auch die Benutzenden für die möglichen Gefahren sensibilisiert werden, die entstehen können, wenn WLANs unsachgemäß verwendet werden. So müssen die Benutzenden über die erforderlichen Kenntnisse verfügen, um Sicherheitsmaßnahmen richtig verstehen und anwenden zu können. Insbesondere müssen sie wissen, was von ihnen in Hinblick auf Informationssicherheit erwartet wird und wie sie in bestimmten Situationen reagieren sollten, wenn sie WLANs nutzen."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "In diesem Baustein soll aufgezeigt werden, wie WLANs sicher genutzt werden können."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein NET.2.2 WLAN-Nutzung ist auf alle IT-Systeme (WLAN-Clients) anzuwenden, die WLANs nutzen.<BR>Der Baustein enthält grundsätzliche Anforderungen, die bei der Nutzung von WLANs zu beachten und zu erfüllen sind, um den spezifischen Gefährdungen entgegenwirken zu können. Anforderungen, mit deren Hilfe WLANs sicher betrieben werden können, sind dagegen nicht Gegenstand dieses Bausteins, sondern sind im Baustein NET.2.1 WLAN-Betrieb beschrieben. Darüber hinaus geht der Baustein nicht auf allgemeine Aspekte von Clients ein. Solche Aspekte werden im Baustein SYS2.1 Allgemeiner Client sowie in den betriebssystemspezifischen Bausteinen der Schicht SYS IT-Systeme behandelt. Der Baustein NET.2.2 WLAN-Nutzung sollte grundsätzlich mit berücksichtigt werden, wenn die Bausteine ORP.3 Sensibilisierung und Schulung zur Informationssicherheit und DER.2.1 Behandlung von Sicherheitsvorfällen umgesetzt werden."
+          },
+          {
+            "name": "2.1. Unzureichende Kenntnis über Regelungen",
+            "value": "Kennen die Benutzenden die Regelungen für den korrekten Umgang mit WLANs nicht oder nicht gut genug, können sie sich auch nicht daran halten. Werden Clients zum Beispiel gedankenlos mit fremden drahtlosen Netzen verbunden, können darüber unverschlüsselt übertragenen Informationen abgehört werden. Außerdem können durch den Betreibenden des drahtlosen Netzes Informationen über die Benutzenden wie zum Beispiel besuchte Webseiten, gesammelt werden."
+          },
+          {
+            "name": "2.2. Nichtbeachtung von Sicherheitsmaßnahmen",
+            "value": "Durch Nachlässigkeit und fehlende Kontrollen kommt es immer wieder vor, dass Personen die ihnen empfohlenen oder angeordneten Sicherheitsmaßnahmen nicht oder nur teilweise umsetzen. Wird beispielsweise ein WLAN-Client im Ad-hoc-Modus genutzt, obwohl dies in der Nutzungsrichtlinie ausdrücklich verboten ist, kann ein anderer Client direkt mit dem WLAN-Client kommunizieren. So kann er z. B. unberechtigt auf vertrauliche Dokumente zugreifen, die eventuell auf dem Client freigegeben sind."
+          },
+          {
+            "name": "2.3. Abhören der WLAN-Kommunikation",
+            "value": "Da es sich bei Funk um ein Medium handelt, das sich mehrere Benutzende teilen können („Shared Medium“), können die über WLANs übertragenen Daten problemlos mitgehört und aufgezeichnet werden. Werden die Daten nicht oder nur unzureichend verschlüsselt, können die übertragenen Nutzdaten leicht mitgelesen werden. Zudem überschreiten Funknetze bzw. die ausgesendeten Funkwellen nicht selten die Grenzen der genutzten Räumlichkeiten. So werden Daten auch noch in Bereiche ausgestrahlt, die nicht von den Benutzenden oder der Institution kontrolliert und gesichert werden können."
+          },
+          {
+            "name": "2.4. Auswertung von Verbindungsdaten bei der drahtlosen Kommunikation",
+            "value": "Bei WLANs auf Basis von IEEE 802.11 wird die MAC-Adresse einer WLAN-Karte bei jeder Datenübertragung mit versendet. Da sie unverschlüsselt übertragen wird, können Bewegungsprofile über mobile Benutzende erstellt werden, z. B. wenn diese sich in öffentliche Hotspots einbuchen."
+          },
+          {
+            "name": "2.5. Vortäuschung eines gültigen Access Points (Rogue Access Point)",
+            "value": "Angreifende können sich als Teil der WLAN-Infrastruktur ausgeben, indem sie einen eigenen Access Point mit einem geeignet gewählten WLAN-Namen (SSID) in der Nähe eines WLAN-Clients installieren. Dieser vorgetäuschte Access Point wird als „Rogue Access Point“ bezeichnet. Bietet dieser dem WLAN-Client eine stärkere Sendeleistung als der echte Access Point, wird der Client diesen als Basisstation nutzen, falls diese sich nicht gegenseitig authentisieren. Zusätzlich könnte auch der echte Access Point durch einen Denial-of-Service-Angriff ausgeschaltet werden. Die Benutzenden melden sich an einem Netz an, das nur vorgibt, das Zielnetz zu sein. Dadurch ist es den Angreifenden möglich, die Kommunikation abzuhören. Auch durch Poisoning- oder Spoofing-Methoden können Angreifende eine falsche Identität vortäuschen bzw. den Netzverkehr zu ihren IT-Systemen umlenken. So können sie die Kommunikation belauschen und kontrollieren. Besonders in öffentlichen Funknetzen (sogenannten Hotspots) ist ein Rogue Access Point ein beliebtes Angriffsmittel."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "72ebab6c-54f4-4c90-bfbf-86a382f4367d",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/endgerte_profile.json",
+            "description": "Implementation for all controls in Baustein NET.2.2",
+            "implemented-requirements": [
+              {
+                "uuid": "60b7f686-2970-4620-b4fd-756b84645c9b",
+                "control-id": "ARCH.5.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SENS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.2.2.A3-m1",
+                    "uuid": "35e14796-8db0-4bf5-bee2-7488cd517b52",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Nutzung von öffentlichen Hotspots ist weder explizit erlaubt noch verboten und wird nicht durch technische oder organisatorische Maßnahmen reguliert. Mitarbeitende nutzen Hotspots nach eigenem Ermessen, oft ohne VPN-Verbindung für den Zugriff auf Unternehmensdaten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mitarbeitende verbinden sich beispielsweise im Hotel oder am Flughafen direkt mit dem öffentlichen WLAN, um E-Mails abzurufen oder auf Cloud-Dienste zuzugreifen, wobei die Daten ungeschützt übertragen werden können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE durch Interviews mit reisenden Mitarbeitenden deren Vorgehensweise bei der Nutzung öffentlicher WLANs erfragen. Es SOLLTE geprüft werden, ob es eine klare Regelung und eine technische Erzwingung (z.B. Always-On-VPN) für die Nutzung von Hotspots gibt. Das Fehlen von beidem deutet auf diesen Reifegrad hin."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m2",
+                    "uuid": "00bc4826-c2bc-4f87-97f6-b4f752c9d6ac",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert die grundlegende Anweisung, für den Zugriff auf interne Ressourcen aus öffentlichen WLANs ein VPN zu verwenden. Andere Aspekte der Hotspot-Sicherheit, wie die Deaktivierung der automatischen Anmeldung oder das Löschen bekannter Netzwerke, werden nicht adressiert. Die Einhaltung der VPN-Nutzung wird nicht kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein VPN-Client ist auf den Laptops installiert, aber die Benutzer entscheiden selbst, wann sie ihn aktivieren. Oft wird er nur für den Zugriff auf das Intranet, nicht aber für den allgemeinen Internetverkehr oder Cloud-Dienste genutzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die VPN-Client-Konfiguration auf Split-Tunneling überprüfen. Es SOLLTE durch Befragung und Einsicht in die WLAN-Richtlinie geprüft werden, ob weitere Sicherheitsmaßnahmen für Hotspots (außer VPN) definiert und kommuniziert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m3",
+                    "uuid": "1e97e1e3-06e2-452c-878f-8c7d5cb83efb",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn die Nutzung von Hotspots erlaubt ist, MUSS sichergestellt werden, dass jede(r) Benutzende seine/ihre Sicherheitsanforderungen kennt und entsprechend handelt. Sensible Daten DÜRFEN NUR übertragen werden, wenn eine geeignete Verschlüsselung auf dem Client aktiviert ist. Der Zugriff auf interne Ressourcen der Institution über öffentlich zugängliche WLANs DÜRFEN die Benutzenden NUR über ein Virtual Private Network (VPN) durchführen. Wird die WLAN-Schnittstelle längere Zeit nicht genutzt, MUSS sie deaktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Organisation stellt allen Mitarbeitenden, die Hotspots nutzen dürfen, eine VPN-Lösung zur Verfügung und schult sie in deren Anwendung. Die Anforderungen sind klar in der WLAN-Nutzungsrichtlinie (siehe A1) definiert. Die Deaktivierung der Schnittstelle kann durch die Benutzer manuell erfolgen, unterstützt durch regelmäßige Erinnerungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Konfiguration von Clients stichprobenartig überprüfen, die für die Hotspot-Nutzung vorgesehen sind. Es ist zu verifizieren, ob ein VPN-Client installiert und konfiguriert ist. Durch Befragung der Nutzenden SOLLTE deren Kenntnis der Sicherheitsregeln für Hotspots ermittelt werden. Es SOLLTE geprüft werden, ob die VPN-Verbindung so konfiguriert ist, dass der gesamte Verkehr getunnelt wird (kein Split-Tunneling)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m4",
+                    "uuid": "9b694fce-65ea-496b-829d-f35ed7cd9364",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Aufbauend auf der definierten Basisabsicherung (Level 3) SOLLTE die Verbindung zwischen Hotspot und Client kryptografisch nach Stand der Technik (z.B. mittels WPA3, falls vom Hotspot unterstützt, ansonsten durch das VPN abgedeckt) abgesichert sein. Die automatische Anmeldung an WLANs SOLLTE deaktiviert werden. WLANs, die nur sporadisch genutzt werden, SOLLTEN aus der Historie bekannter Netzwerke gelöscht werden. Es SOLLTE sichergestellt sein, dass sich keine Benutzenden mit administrativen Berechtigungen von ihren Clients aus an externen WLANs anmelden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Deaktivierung der automatischen Anmeldung wird über eine Konfigurationsrichtlinie (z.B. GPO oder MDM-Profil) auf den Clients durchgesetzt. Die Benutzenden werden angeleitet und regelmäßig daran erinnert, nicht mehr benötigte WLAN-Profile zu entfernen. Die Nutzung von administrativen Konten in unsicheren Netzen wird durch Richtlinien verboten und stichprobenartig kontrolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Client-Konfiguration überprüfen, um sicherzustellen, dass die automatische Verbindung zu WLANs deaktiviert ist. Auf Windows kann dies mit `netsh wlan show profile name=\"PROFILE_NAME\"` geprüft werden, wo der 'Connection mode' auf 'Manual' stehen sollte. Es SOLLTE die Liste der bekannten Netzwerke auf veraltete Hotspot-Einträge geprüft werden. Es SOLLTE durch Interviews und Log-Analyse (falls möglich) verifiziert werden, dass keine administrativen Anmeldungen aus externen Netzen erfolgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m5",
+                    "uuid": "949a56d1-7cc0-4527-9d3d-3bd6d3acc1f3",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Absicherung der Hotspot-Nutzung ist vollständig automatisiert. Eine 'Always-On' VPN-Verbindung wird technisch erzwungen, sobald der Client eine Netzwerkverbindung außerhalb definierter, vertrauenswürdiger Unternehmensnetze aufbaut. Die Client-Firewall ist so konfiguriert, dass sie jeglichen nicht-VPN-getunnelten Verkehr blockiert. Die Nutzung von Konten mit separaten, restriktiven Berechtigungen für die Nutzung in externen Netzen wird technisch durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine moderne VPN-Lösung mit 'Always-On' und 'Trusted Network Detection' wird eingesetzt. Diese erkennt automatisch, ob sich der Client in einem sicheren (Unternehmens-) oder unsicheren (Hotspot-) Netz befindet und baut den Tunnel entsprechend auf. Die Client-Konfiguration wird über ein MDM-System zentral verwaltet und kann nicht vom Benutzer geändert werden. Separate Benutzerkonten mit stark eingeschränkten Rechten werden für die Arbeit unterwegs verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Konfiguration der 'Always-On' VPN-Lösung und der zugehörigen Firewall-Regeln auf einem Client verifizieren. Es SOLLTE versucht werden, bei aktiver Verbindung zu einem externen Test-WLAN eine Verbindung zu einem Internetdienst aufzubauen, ohne dass der VPN-Tunnel aktiv ist; dies muss fehlschlagen. Es SOLLTE geprüft werden, welche Benutzerkonten auf den mobilen Geräten eingerichtet sind und welche Rechte diese besitzen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "fb02e61f-2d83-4d43-93f7-65b827b2fb49",
+                "control-id": "KONF.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "GOV",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.2.2.A1-m1",
+                    "uuid": "72b58c30-0c19-44a6-8ddd-88e362238c36",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existieren rudimentäre, möglicherweise nur mündlich kommunizierte oder unvollständig dokumentierte Regelungen zur WLAN-Nutzung. Diese decken nur einzelne Aspekte, wie z. B. das Passwort für das Gäste-WLAN, ab und sind nicht systematisch durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Häufig wird dieser Zustand in Organisationen angetroffen, in denen WLAN 'organisch' gewachsen ist, ohne dass eine zentrale Sicherheitskonzeption stattgefunden hat. Die Regeln sind oft nur einem kleinen Kreis von IT-Mitarbeitenden bekannt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE durch Interviews mit Mitarbeitenden und IT-Personal feststellen, ob Regelungen zur WLAN-Nutzung bekannt sind. Es SOLLTE geprüft werden, ob eine schriftliche Richtlinie existiert. Das Fehlen einer umfassenden, verschriftlichten und kommunizierten Richtlinie deutet auf diesen Reifegrad hin."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m2",
+                    "uuid": "fd5c4d15-8981-4d62-bb1b-9ad778b26290",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende WLAN-Nutzungsrichtlinie ist vorhanden und dokumentiert. Sie enthält die wichtigsten Verbote (z.B. keine privaten Geräte im produktiven WLAN), aber es fehlen detaillierte Vorgaben zu Aspekten wie der Nutzung externer Hotspots oder der Datenklassifizierung. Eine regelmäßige Überprüfung der Einhaltung findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Richtlinie wird typischerweise bei der Einführung von WLAN erstellt, aber danach nicht mehr aktiv gepflegt oder an neue Bedrohungen angepasst. Die Kommunikation an die Mitarbeitenden erfolgt einmalig, z.B. bei der Einstellung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Existenz der WLAN-Nutzungsrichtlinie verifizieren. Es SOLLTE der Inhalt auf Vollständigkeit gemäß den Basis-Anforderungen (NET.2.2.A1) geprüft werden. Es SOLLTE festgestellt werden, ob es einen Prozess zur regelmäßigen Überprüfung und Aktualisierung der Richtlinie gibt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m3",
+                    "uuid": "a00570c2-f16c-44fc-8d4b-6a9c6e5e10d3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS eine WLAN-Nutzungsrichtlinie erstellt werden, die die wesentlichen Kernaspekte für eine sichere WLAN-Nutzung konkretisiert. Die Richtlinie MUSS die Besonderheiten bei der WLAN-Nutzung beschreiben (z. B. ob, wie und mit welchen Geräten Hotspots genutzt werden dürfen), Angaben zu erlaubten/verbotenen Datenarten enthalten, den Umgang mit clientseitigen Sicherheitslösungen festlegen und ein klares Verbot für ungenehmigte Access Points enthalten. Es MUSS auch darauf hingewiesen werden, die WLAN-Schnittstelle bei Nichtnutzung zu deaktivieren. Die Umsetzung der Richtlinie MUSS regelmäßig überprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Richtlinie sollte als offizielles Dokument im Informationssicherheits-Managementsystem (ISMS) verankert und für alle Mitarbeitenden zugänglich gemacht werden, z.B. im Intranet. Die Überprüfung kann durch stichprobenartige Audits von Client-Konfigurationen und Befragungen der Benutzenden erfolgen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE sich die WLAN-Nutzungsrichtlinie vorlegen lassen. Es SOLLTE geprüft werden, ob alle geforderten Aspekte (Hotspot-Nutzung, Datenklassifizierung, Client-Sicherheit, Verbot von Rogue APs, Deaktivierung der Schnittstelle) enthalten sind. Es SOLLTEN Nachweise für die regelmäßige Überprüfung der Einhaltung der Richtlinie (z. B. Auditberichte) eingesehen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m4",
+                    "uuid": "b8f3d594-e9fc-46d1-99a2-20bbd70b2e6f",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Aufbauend auf der definierten Richtlinie (Level 3) werden die Ergebnisse der regelmäßigen Überprüfungen systematisch dokumentiert und zur Verbesserung der Richtlinie und der technischen Maßnahmen genutzt. Die Richtlinie wird proaktiv an neue Technologien (z.B. WPA3) und bekannte Bedrohungsszenarien angepasst. Sie enthält zudem spezifische Vorgaben für unterschiedliche Benutzergruppen (z.B. Administratoren, Gäste)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Dokumentation der Überprüfungsergebnisse erfolgt in einem Ticketsystem oder einem dedizierten ISMS-Tool. Die Anpassungen an der Richtlinie werden über einen formalen Change-Management-Prozess gesteuert. Für verschiedene Rollen existieren möglicherweise Anhänge oder separate, aber aufeinander abgestimmte Richtliniendokumente."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Dokumentation der letzten Überprüfungen der Richtlinieneinhaltung einsehen (z.B. Auditberichte, Protokolle). Es SOLLTE verifiziert werden, dass die Erkenntnisse aus diesen Überprüfungen zu konkreten Verbesserungsmaßnahmen geführt haben. Es SOLLTE geprüft werden, ob die Richtlinie aktuell ist und auf neue technische Entwicklungen und Bedrohungen eingeht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m5",
+                    "uuid": "f162483b-57ec-41a6-be19-34cb70465df8",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Einhaltung der WLAN-Nutzungsrichtlinie wird weitgehend automatisiert überwacht. Technische Systeme wie Network Access Control (NAC) setzen die Vorgaben der Richtlinie (z.B. erlaubte Geräte, Konfigurations-Baselines) in Echtzeit durch. Abweichungen führen zu automatisierten Reaktionen, wie der Quarantäne des betroffenen Clients. Die Richtlinie ist vollständig in den ISMS-Prozess integriert und wird bei jeder wesentlichen Änderung der IT-Infrastruktur oder Bedrohungslage dynamisch angepasst."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine NAC-Lösung wird eingesetzt, die den Zustand von Clients (z.B. Patch-Level, aktivierte Firewall) prüft, bevor der Netzwerkzugriff gewährt wird. Verstöße gegen die Richtlinie werden an ein SIEM-System gemeldet, das automatisierte Reaktions-Workflows anstößt. Die Richtlinie selbst wird in einem GRC-Tool (Governance, Risk, Compliance) verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Konfiguration der NAC-Lösung überprüfen, um sicherzustellen, dass sie die Vorgaben der WLAN-Richtlinie korrekt umsetzt. Es SOLLTEN die Protokolle des NAC- und SIEM-Systems analysiert werden, um die Wirksamkeit der automatisierten Überwachung und Reaktion zu verifizieren. Es kann versucht werden, mit einem nicht-konformen Client eine Verbindung herzustellen, um die Reaktion des Systems zu testen."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

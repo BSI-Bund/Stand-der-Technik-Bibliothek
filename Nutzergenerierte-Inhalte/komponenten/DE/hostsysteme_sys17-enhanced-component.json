@@ -1,0 +1,2517 @@
+{
+  "component-definition": {
+    "uuid": "012491df-ca27-4520-903a-e3b0dbcce2ad",
+    "metadata": {
+      "title": "SYS.1.7 Hostsysteme - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:34.865814+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "04aa82cb-6612-4938-8981-e1af7df53696",
+        "type": "hardware",
+        "title": "SYS.1.7 Hostsysteme",
+        "description": "This component represents the implementation of all controls for Baustein SYS.1.7.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Systeme vom Typ „IBM Z“ gehören zu den Server-Systemen, die allgemein als Großrechner („Mainframes\") bezeichnet werden. Großrechner haben sich von klassischen Einzelsystemen mit Stapelverarbeitung hin zu modernen Client-Server-Systemen entwickelt. Die Z-Architektur ist der Nachfolger der 1964 eingeführten S/360-Architektur und wird bei heutigen Großrechner-Installationen häufig eingesetzt."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist der Schutz von Informationen, die auf Z-Systemen verarbeitet, angeboten oder darüber übertragen werden."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.1.7 IBM Z ist auf jeden Server anzuwenden, der auf der Z-Architektur von IBM basiert.<BR><BR>Der Baustein SYS.1.1 Allgemeiner Server bildet die Grundlage für die Absicherung von Servern. Für Z-Systeme müssen sowohl die dort aufgeführten allgemeinen Anforderungen als auch die konkreten Anforderungen im vorliegenden Baustein erfüllt werden.<BR><BR>Für die Z-Hardware sind verschiedene Betriebssysteme verfügbar (z. B. z/OS, z/VM, KVM oder Linux on Z). Die Auswahl erfolgt in der Regel anhand der Parameter Rechnergröße und Einsatzzweck. Die Empfehlungen dieses Bausteins beschränken sich im Wesentlichen auf das Betriebssystem z/OS. Ausgewählte Sicherheitsaspekte von z/VM werden ebenfalls angesprochen. Für das Betriebssystem Linux on Z wird auf den Baustein SYS.1.3 Server unter Linux und Unix verwiesen.<BR><BR>Weitere für IBM Z besonders relevante Anforderungen finden sich im Baustein ORP.4 Identitäts- und Berechtigungsmanagement sowie in OPS.1.2.5 Fernwartung.<BR><BR>Ein wichtiger Bestandteil der Sicherheitskonzeption von Z-Systemen auf technischer Ebene ist das eingesetzte Sicherheitssystem, beispielsweise TopSecret, ACF2 (Access Control Facility) oder RACF (Resource Access Control Facility). Um die Darstellung zu vereinfachen, wird im Folgenden nur auf RACF eingegangen. Die Empfehlungen sind entsprechend anzupassen, wenn ein anderes Sicherheitssystem eingesetzt wird."
+          },
+          {
+            "name": "2.1. Unzureichende oder fehlerhafte Konfiguration der Hardware oder des z/OS-Betriebssystems",
+            "value": "Die Konfiguration eines z/OS-Betriebssystems ist sehr komplex und erfordert an vielen Stellen den Eingriff durch Systemadministrierende. Durch falsche oder unzureichende Konfiguration können Schwachstellen entstehen, die zu entsprechenden Sicherheitsproblemen führen können. SuperVisor Calls (SVCs) sind beispielsweise Aufrufe zu speziellen z/OS-Dienstprogrammen, die im hoch autorisierten Kernel-Modus laufen. Unsichere SVC-Programme können unter Umständen benutzt werden, um z/OS-Sicherheitsmechanismen zu umgehen."
+          },
+          {
+            "name": "2.2. Fehlerhafte Konfiguration des z/OS-Sicherheitssystems RACF",
+            "value": "In einem z/OS-Betriebssystem ist für die Authentisierung von Benutzenden und deren Autorisierung auf Ressourcen ein spezielles Sicherheitssystem zuständig. Hierfür wird häufig RACF eingesetzt. Die Konfiguration von RACF im Auslieferungszustand entspricht in der Regel nicht den Sicherheitsanforderungen im jeweiligen Einsatzszenario. Die Ressourcen und z/OS-System-Kommandos werden beispielsweise über spezielle Klassen im RACF geschützt. Durch unzureichende Definitionen dieser Klassen ist es möglich, dass Benutzende Systembefehle absetzen können, die unter Umständen den stabilen Systembetrieb beeinträchtigen."
+          },
+          {
+            "name": "2.3. Fehlbedienung der z/OS-Systemfunktionen",
+            "value": "Aufgrund der Komplexität eines z/OS-Betriebssystems und seiner Komponenten können Fehlbedienungen nicht vollständig ausgeschlossen werden. Je nach Art der Fehlbedienung können in der Folge einzelne Komponenten oder das gesamte System ausfallen. Verriegeln sich zum Beispiel Ressourcen gegenseitig (Contention), können bestimmte Funktionen so lange nicht verfügbar sein, bis die Verriegelung wieder gelöst wird. Oft sind eine Reihe von Systemabfragen (Displays) und viel Betriebserfahrung notwendig, um gegenseitige Verriegelungen mithilfe der richtigen z/OS-Kommandos wieder aufzulösen."
+          },
+          {
+            "name": "2.4. Manipulation der z/OS-Systemsteuerung",
+            "value": "z/OS-Systeme lassen sich über vielfältige Schnittstellen beeinflussen, zum Beispiel über die Hardware Management Console, lokale sowie entfernte MCS-Konsolen, Automationsverfahren und Fernwartungszugänge. Wenn beispielsweise der physische oder der logische Zugang zu entfernten MCS-Konsolen unzureichend geschützt ist, können die z/OS-Systeme unter Umständen von dort aus unbefugt manipuliert werden."
+          },
+          {
+            "name": "2.5. Angriffe über TCP/IP auf z/OS-Systeme",
+            "value": "Um ein z/OS-System über die Netzanbindung anzugreifen, sind häufig keine Spezialkenntnisse der Netzarchitektur oder von z/OS erforderlich. Durch die TCP/IP-Anbindung an (unter Umständen öffentliche) Netze und die Unix System Services sind viele z/OS-Systeme über Standardprotokolle und Dienste, wie z. B. HTTP oder FTP, für interne bzw. externe Angriffe erreichbar. Bei externen Angriffen können unter Umständen über die TCP/IP-Anbindung an öffentliche Netze Denial-of-Service-Angriffe gegen die angebotenen Dienste durchgeführt oder übertragene Daten unbefugt gelesen oder manipuliert werden. Interne Angreifende können über die TCP/IP-Anbindung an interne Netze versuchen, ihre Berechtigungen zu erhöhen, indem sie etwa Kennung und Passwort von Benutzenden mit SPECIAL-Rechten ausspähen."
+          },
+          {
+            "name": "2.6. Fehlerhafte Zeichensatzkonvertierung beim Einsatz von z/OS",
+            "value": "EBCDIC, ASCII und Unicode sind Zeichensätze, die festlegen, wie Buchstaben, Ziffern und andere Zeichen mithilfe von Bits dargestellt werden. z/OS-Systeme arbeiten mit EBCDIC-Code. Lediglich HFS- und zFS-Dateisysteme, die unter Unix System Services (USS) eingesetzt werden, lassen sowohl ASCII- als auch EBCDIC-Speicherung zu. Beim Datenaustausch zwischen z/OS-Systemen und IT-Systemen, die mit ASCII oder Unicode arbeiten (z. B. auch von USS nach z/OS), besteht die Gefahr, dass Informationen verfälscht werden, wenn fehlerhafte Übersetzungstabellen (Code Page Translation) eingesetzt werden. Besonders häufig betroffen ist dabei die Übersetzung von Sonderzeichen."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "1bfb969a-5cfc-412b-85f4-f26328f447f5",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/hostsysteme_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.1.7",
+            "implemented-requirements": [
+              {
+                "uuid": "afc7c9be-99c7-4fa0-8a7e-7607a0395d83",
+                "control-id": "ARCH.2.2.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "TEST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a33-m2",
+                    "uuid": "4b586b56-ce09-4928-ba6d-908adfe9d93a",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Test- und Produktionsumgebungen laufen auf demselben physischen System, getrennt durch Namenskonventionen. Es gibt keine strikte technische Trennung, sodass Testanwendungen potenziell auf Produktionsdaten zugreifen könnten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Produktionsdatasets heißen `PROD.**` und Testdatasets `TEST.**`. RACF-Regeln zur Trennung sind jedoch unvollständig oder fehlen, sodass ein Entwickler mit seinen Berechtigungen versehentlich oder absichtlich auf `PROD.**` zugreifen kann."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der RACF-Profile, ob sie eine strikte Trennung zwischen Test- und Produktions-Datasets erzwingen. Versuch, von einer Test-User-ID auf Produktionsressourcen zuzugreifen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a33-m3",
+                    "uuid": "883bd090-0830-4029-bc64-5c7605a0251a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN technische Maßnahmen ergriffen werden, um Entwicklungs- und Testsysteme von Produktionssystemen unter z/OS zu trennen. Dabei SOLLTEN eventuelle Zugriffsmöglichkeiten über gemeinsame Festplatten und den Parallel Sysplex beachtet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Trennung erfolgt durch separate logische Partitionen (LPARs) für Test und Produktion. Die RACF-Datenbanken für Test und Produktion sind getrennt. Es wird sichergestellt, dass keine DASD-Volumes von beiden Umgebungen gleichzeitig im Schreibmodus genutzt werden (außer bei expliziten Datenübertragungsprozessen). Im Parallel Sysplex wird darauf geachtet, dass Test- und Produktions-LPARs nicht auf dieselben Anwendungsressourcen zugreifen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der LPAR-Konfiguration und der Systemkonfiguration (z.B. `GRS` für Ressourcen-Serialisierung), um die Trennung zu verifizieren. Analyse der RACF-Einstellungen, um sicherzustellen, dass Test-User-IDs keinen Zugriff auf Produktionsressourcen haben und umgekehrt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a33-m4",
+                    "uuid": "b6195184-06f6-4118-911c-b4bc4b7929ed",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur LPAR-Trennung wird der Netzwerkverkehr zwischen Test- und Produktions-LPARs durch eine Firewall streng kontrolliert. Datenübertragungen von Produktion nach Test sind nur über einen kontrollierten, dokumentierten und genehmigten Prozess möglich, bei dem sensible Daten anonymisiert oder pseudonymisiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Mainframe-Firewall oder VLANs werden genutzt, um die Kommunikation zwischen den LPARs auf das Nötigste zu beschränken. Ein formaler Prozess für den 'Prod-to-Test-Refresh' wird etabliert, der Tools zur Datenmaskierung einsetzt, bevor die Daten in der Testumgebung eingespielt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Firewall-Regeln zwischen den LPARs. Analyse der Prozessdokumentation und der Protokolle für den Datentransfer von Produktion nach Test. Überprüfung von Testdatenbanken auf das Vorhandensein von unmaskierten Produktionsdaten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a33-m5",
+                    "uuid": "fe06cb46-1259-4b49-a0c7-2757af5c0c9b",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Test- und Produktionsumgebungen laufen auf komplett getrennter physischer Hardware (unterschiedliche Central Processor Complexes). Jegliche Verbindung zwischen den Umgebungen ist nur über eine streng kontrollierte und überwachte Demilitarisierte Zone (DMZ) möglich."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für Entwicklung und Test wird eine separate Mainframe-Maschine betrieben. Datentransfers zwischen den Maschinen erfolgen ausschließlich über dedizierte, gesicherte FTP-Server in einer DMZ. Direkte Channel-to-Channel- oder Netzwerkverbindungen existieren nicht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung des physischen Hardware-Inventars und der Netzwerkdiagramme, um die vollständige physische Trennung zu verifizieren. Audit der Konfiguration und der Protokolle der DMZ-Komponenten, die den Datenaustausch steuern."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "cd1f2cd3-a428-4baf-9c7d-86ae43f6c659",
+                "control-id": "ASST.2.3.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a19-m1",
+                    "uuid": "5ef3c9cb-c84c-4994-9287-1f75649bd1e2",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Subsysteme wie CICS oder IMS nutzen ihre eigene, interne Sicherheitsfunktion (z.B. CICS-interne Transaktionssicherheit). Diese ist nicht mit RACF integriert, was zu einer separaten und inkonsistenten Benutzerverwaltung führt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Sicherheitseinstellungen in CICS (`SEC=YES`) sind aktiv, aber die Systemschnittstelle zu einem externen Sicherheitsmanager (`XTRAN`) ist nicht für RACF konfiguriert. Benutzer und Berechtigungen werden direkt in CICS-Tabellen gepflegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Systeminitialisierungsparameter von CICS oder IMS. Vergleich der Benutzerlisten in CICS/IMS mit denen in RACF auf Inkonsistenzen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m2",
+                    "uuid": "1a16ffa8-2d85-447a-9950-a6ab01e1b36e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Subsystem ist über RACF abgesichert, aber die Berechtigungen werden sehr breit vergeben (z.B. erhalten alle Benutzer einer Abteilung Zugriff auf die gleichen CICS-Transaktionen), ohne das Prinzip der geringsten Rechte (PoLP) zu befolgen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Subsysteme sind mit RACF verbunden. Es werden RACF-Gruppen verwendet, um den Zugriff auf Transaktionen zu steuern, aber diese Gruppen sind sehr grob und nicht aufgabenspezifisch."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse der RACF-Profile und Gruppen, die den Zugriff auf CICS-, IMS- oder Db2-Ressourcen steuern. Befragung der Anwendungsverantwortlichen, ob die Berechtigungen dem PoLP entsprechen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m3",
+                    "uuid": "50103e83-d77d-4810-8859-4862dc04b88b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls Transaktionsmonitore oder Datenbanken (z.B. IMS, CICS, Db2) unter z/OS eingesetzt werden, SOLLTEN diese mittels RACF abgesichert werden. Dies gilt auch für die zugehörigen System-Kommandos und -Dateien. Interne Sicherheitsmechanismen der Transaktionsmonitore und Datenbanken SOLLTEN hingegen nur dort angewandt werden, wo es keine entsprechenden RACF-Funktionen gibt. Benutzende und Administrierende SOLLTEN nur die Zugriffsrechte erhalten, die sie für ihre jeweilige Tätigkeit benötigen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle relevanten Ressourcenklassen der Subsysteme (z.B. `TCICSTRN` für CICS-Transaktionen, `DBSUB` für Db2-Befehle) werden in RACF aktiviert und mit Profilen geschützt. Das Berechtigungskonzept definiert aufgabenspezifische Rollen und weist diesen die benötigten Zugriffsrechte in RACF zu. Die Nutzung interner Sicherheitsfunktionen wird auf ein Minimum reduziert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der aktiven RACF-Klassen (`SETROPTS LIST`). Verifizierung, dass die relevanten Subsystem-Ressourcen durch RACF geschützt sind. Stichprobenartige Prüfung der Berechtigungen von Benutzern gegen das Berechtigungskonzept."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m4",
+                    "uuid": "b8eef8fd-ba1e-45bb-8291-a153f00536f1",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zugriff auf Transaktionen und Daten innerhalb des Subsystems wird durch feingranulare RACF-Profile gesteuert. Sicherheits-Exits in den Subsystemen werden verwendet, um zusätzliche, anwendungsspezifische Sicherheitslogik durchzusetzen. Deren Einsatz ist dokumentiert und kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Statt generischer Profile werden spezifische Profile für einzelne Transaktionen oder Tabellen verwendet. Ein CICS-Security-Exit wird beispielsweise implementiert, um eine kontextabhängige Prüfung durchzuführen (z.B. darf eine Transaktion nur zu bestimmten Tageszeiten ausgeführt werden). Der Quellcode der Exits ist versioniert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse der Granularität der RACF-Profile. Überprüfung der Dokumentation und des Quellcodes der eingesetzten Sicherheits-Exits."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a19-m5",
+                    "uuid": "0155fc33-b58f-4f5b-baf0-1a4d85617e34",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle sicherheitsrelevanten Ereignisse aus den Subsystemen (z.B. Transaktionsausführung, Datenbankabfragen, fehlgeschlagene Zugriffe) werden in SMF protokolliert und zur Echtzeitüberwachung und Bedrohungserkennung in ein SIEM integriert. Database Activity Monitoring (DAM) Tools werden eingesetzt, um den Zugriff auf sensible Daten in Db2 zu analysieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Audit-Optionen in CICS, IMS und Db2 werden so konfiguriert, dass alle relevanten Ereignisse SMF-Datensätze schreiben. Diese werden in Echtzeit an das SIEM gesendet. Ein DAM-Tool (z.B. IBM Guardium) überwacht den SQL-Verkehr zu Db2."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Audit-Konfiguration der Subsysteme. Verifizierung des Datenflusses von SMF zum SIEM. Analyse der im SIEM und DAM-Tool konfigurierten Regeln und Berichte für die Subsystem-Überwachung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "11d3aadc-ba38-4edf-8fbe-3e1bebb51358",
+                "control-id": "ASST.5.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "REAL",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a3-m1",
+                    "uuid": "44d10c5a-1aba-472a-b889-5579e3dbecd6",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Patches und Updates werden reaktiv eingespielt, typischerweise erst nach dem Auftreten eines Problems oder Fehlers. Es gibt keinen formalen Wartungsplan."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Administratoren verlassen sich auf Herstellerbenachrichtigungen oder aufgetretene Systemfehler als Auslöser für Wartungsaktivitäten. Die Integration in ein Change-Management ist nicht gegeben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen des Patch-Levels des Systems und Vergleich mit den aktuell empfohlenen Ständen. Befragen der Administratoren zum Prozess der Patch-Installation."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m2",
+                    "uuid": "f1f83518-19ca-4844-879f-33159b4797f3",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert ein grundlegender Wartungsplan, der regelmäßige Wartungsfenster vorsieht. Updates werden eingespielt, aber der Prozess zur Kontrolle von Hersteller-Updates (insbesondere remote) ist nicht formalisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Kalender sind Wartungsfenster eingetragen. Patches werden in diesen Fenstern installiert. Remote-Zugriffe durch den Hersteller werden zugelassen, aber nicht aktiv überwacht oder explizit pro Sitzung freigegeben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung des Wartungsplans und Vergleich mit den durchgeführten Aktivitäten. Befragung zum Umgang mit Remote-Wartungszugriffen durch den Hersteller."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m3",
+                    "uuid": "ac1d2a31-6d15-4b1e-857c-319e60ca127e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Z-Hardware und -Firmware, das Betriebssystem sowie die verschiedenen Programme MÜSSEN regelmäßig und bei Bedarf gepflegt werden. Die hierfür notwendigen Wartungsaktivitäten MÜSSEN geplant und in das Änderungsmanagement integriert werden. Insbesondere DÜRFEN Updates durch das herstellende Unternehmen NUR unter Kontrolle der Betreibenden durchgeführt werden, lokal über SE/HMC oder remote über die RSF."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein detaillierter Wartungsplan wird erstellt und gepflegt. Jede Wartungsaktivität wird als Change Request im ITSM-Tool erfasst, genehmigt und dokumentiert. Remote-Zugriffe durch den Hersteller werden von den Betreibern explizit initiiert und überwacht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Change-Management-Protokolle für Wartungsaktivitäten. Verifizierung, dass für Remote-Wartungen durch den Hersteller eine explizite Freigabe und Kontrolle durch das Personal erfolgt ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m4",
+                    "uuid": "e69426f6-b275-4c25-b85e-c23b924f9681",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Wartungsplan ist proaktiv und basiert auf Herstellerankündigungen und abonnierten Schwachstellen-Feeds. Alle signifikanten Updates werden vor dem produktiven Einsatz in einer dedizierten Testumgebung validiert. Remote-Wartungssitzungen werden protokolliert und stichprobenartig überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Test-LPAR unterhalten, der der Produktionsumgebung möglichst nahekommt. Vor der Installation von Patches (PTFs) werden diese im Test-LPAR auf Kompatibilität und Funktionalität geprüft. Remote-Sitzungen (z.B. über RSF) werden aufgezeichnet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Existenz und Nutzung der Testumgebung. Analyse der Testprotokolle vor dem produktiven Rollout von Patches. Überprüfung der Protokolle von Remote-Wartungssitzungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a3-m5",
+                    "uuid": "6a3bdcee-a43f-4d23-9c49-ec238c4d57c4",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Patch- und Wartungsprozess ist hochgradig automatisiert. Das System scannt automatisiert nach verfügbaren und notwendigen Updates, testet diese in einer Sandbox-Umgebung und spielt sie gemäß einer risikobasierten Richtlinie automatisiert ein. Alle Wartungsaktivitäten werden zentral protokolliert und mit dem Systemverhalten korreliert, um Anomalien zu erkennen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden moderne Software-Management-Tools (z.B. z/OSMF) eingesetzt, um den gesamten Patch-Lebenszyklus zu automatisieren. Automatisierte Testszenarien validieren die Funktionalität nach dem Patching. Die Protokolle werden in ein SIEM eingespeist, das auf Abweichungen während oder nach der Wartung überwacht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration und der Workflows des automatisierten Patch-Management-Systems. Analyse der SIEM-Regeln und -Dashboards zur Überwachung von Wartungsaktivitäten. Verifizierung der automatisierten Testabdeckung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "1252a0b8-6db7-4ff6-be8b-b9f39cd26042",
+                "control-id": "ASST.5.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a22-m1",
+                    "uuid": "6d05d526-5628-4639-9a3e-435677dd3d01",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamische Änderungen werden häufig direkt am Produktionssystem ohne formellen Change-Request vorgenommen. Der Zugriff auf SDSF ist nicht granular kontrolliert, sodass viele Benutzer weitreichende Berechtigungen haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Änderungen werden 'auf dem kleinen Dienstweg' durchgeführt. Der Schutz von SDSF-Funktionen über RACF wird nicht genutzt, stattdessen werden die Standardeinstellungen verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Vergleich der Systemprotokolle mit den Change-Management-Tickets auf nicht dokumentierte Änderungen. Überprüfung der SDSF-bezogenen RACF-Profile in der `ISFPARMS`-Klasse auf fehlende Einschränkungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m2",
+                    "uuid": "0a3dc987-17a0-4aab-8d62-4ba55b110442",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Change-Management-Prozess wird zwar genutzt, aber Notfall-Änderungen umgehen diesen Prozess oft ohne nachträgliche Dokumentation. Operator-Kommandos sind geschützt, aber nicht mit feingranularen Kontrollen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für geplante Änderungen werden Tickets erstellt. Bei Störungen werden Kommandos direkt abgesetzt, um das Problem schnell zu lösen. Der Zugriff auf Operator-Kommandos ist über RACF geschützt, aber die Berechtigungen sind breit gefasst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse von Notfall-Änderungen und deren Dokumentation. Überprüfung der RACF-Profile für Operator-Kommandos auf zu weitreichende Berechtigungen (z.B. Nutzung von Wildcards)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m3",
+                    "uuid": "366857b2-f78e-4a9d-990f-9f004ae745a9",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle die Produktion beeinflussenden Wartungsarbeiten sowie dynamische und sonstige Änderungen SOLLTEN nur im Rahmen des Änderungsmanagements durchgeführt werden. SDSF und ähnliche Funktionen sowie die Prioritäten-Steuerung für Jobs SOLLTEN mittels RACF vor unberechtigtem Zugriff geschützt werden. z/OS-System-Kommandos und besonders sicherheitsrelevante Befehle für dynamische Änderungen SOLLTEN über RACF geschützt werden. Bei der dynamischen Definition von Hardware SOLLTE sichergestellt werden, dass eine Ressource im Wirkbetrieb nicht mehreren Einzelsystemen außerhalb eines Parallel Sysplex zugeordnet wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jede Änderung, die die Produktion beeinflusst, erfordert ein genehmigtes Change-Ticket. Der Zugriff auf SDSF-Paneele und -Befehle wird über RACF-Profile in den Klassen `SDSF` und `ISFPARMS` granular gesteuert. Kritische Operator-Kommandos werden über die Klasse `OPERCMDS` geschützt. Prozesse zur dynamischen Hardware-Konfiguration (Dynamic I/O) werden dokumentiert und kontrolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Change-Management-Protokolle. Überprüfung der RACF-Konfiguration für SDSF und OPERCMDS. Verifizierung der Prozesse für dynamische Hardware-Änderungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m4",
+                    "uuid": "fcb6ff99-7415-4b8b-a329-1521c3eaccd7",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Operator-Kommandos werden protokolliert. Ein Automatisierungstool wird verwendet, um die Parameter einzuschränken, die mit mächtigen Kommandos verwendet werden können. Der Change-Management-Prozess beinhaltet automatisierte Pre-Deployment-Checks zur Validierung der Änderung gegen Systemrichtlinien."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Protokollierung von Kommandos wird in RACF aktiviert. Ein Automatisierungsprodukt (z.B. NetView) fängt Kommandos ab und prüft deren Parameter, bevor sie ausgeführt werden. Vor der Umsetzung eines Changes wird ein Skript ausgeführt, das die Konfiguration auf Konformität prüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse der Protokolle der ausgeführten Operator-Kommandos. Überprüfung der Konfiguration des Automatisierungstools zur Kommando-Filterung. Prüfung der Pre-Deployment-Check-Skripte und ihrer Ergebnisse."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a22-m5",
+                    "uuid": "56e6ddde-7379-4828-aff6-98fceab84bc9",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein 'Least Privilege'-Modell wird auf Operator-Kommandos angewendet, bei dem Operatoren nur die Kommandos ausführen können, die für ihre spezifische Rolle auf einer Whitelist stehen. Alle dynamischen Konfigurationsänderungen werden über automatisierte, getestete und auditierte Skripte anstelle von manuellen Kommandos durchgeführt. Hardware-Konfigurationsänderungen werden gegen eine zentrale Configuration Management Database (CMDB) validiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die RACF-Klasse `OPERCMDS` wird genutzt, um den Zugriff auf Kommandos sehr granular zu steuern (Whitelisting). Änderungen werden über Ansible-Playbooks oder REXX-Skripte ausgerollt, die versioniert und getestet sind. Die CMDB (z.B. in ServiceNow) wird als 'Source of Truth' für die Hardware-Konfiguration verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der `OPERCMDS`-Profile auf die Umsetzung des Whitelisting-Prinzips. Audit der Automatisierungsskripte für Konfigurationsänderungen. Verifizierung der Konsistenz zwischen der realen Systemkonfiguration und den Daten in der CMDB."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "8eba80a9-ff77-4551-8b2e-6d4c5c9d91fc",
+                "control-id": "ASST.6.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Improvement",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a20-m1",
+                    "uuid": "1d31ac67-24b5-4771-b8a2-7f1aa365bbb1",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das System wird abgeschaltet, aber Referenzen von anderen Systemen (z.B. in Sysplex-Definitionen oder Netzwerkkonfigurationen) werden nicht entfernt, was zu Fehlern im laufenden Betrieb führt. Die Datenträger werden nicht sicher gelöscht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Fokus liegt nur auf dem Herunterfahren des einen Systems. Die Auswirkungen auf die verbleibende Landschaft werden nicht analysiert. Festplatten werden ausgebaut und gelagert, ohne ihren Inhalt zu löschen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Konfigurationen von verbliebenen Systemen auf verwaiste Referenzen. Befragung zum Prozess der Datenträgerentsorgung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m2",
+                    "uuid": "bfe7bcaf-545d-4e81-8a6d-d726b8e969f8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das System wird ordnungsgemäß aus dem Verbund entfernt. Die Datenträger werden mit Standard-Software-Utilities (z.B. `ICKDSF`) gelöscht. Es gibt keine vertragliche Vereinbarung über die Vernichtung von Datenträgern, die vom Hersteller ausgetauscht werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor dem Abschalten werden die Definitionen in den anderen Systemen angepasst. Ein `ICKDSF` Job wird ausgeführt, um die Platten zu initialisieren, was die Daten überschreibt. Defekte Platten werden dem Hersteller ohne weitere Auflagen zurückgegeben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Systemdefinitionen auf verwaiste Einträge. Prüfung der Job-Protokolle der Datenträgerlöschung. Einsicht in die Wartungsverträge bezüglich des Umgangs mit defekten Medien."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m3",
+                    "uuid": "38077e08-d6ec-4f1a-984c-74a1fead5502",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei der Stilllegung von z/OS-Systemen SOLLTEN andere z/OS-Systeme, Verbünde und Verwaltungssysteme so angepasst werden, dass sie nicht mehr auf das stillgelegte System verweisen. Auswirkungen auf Lizenzen SOLLTEN berücksichtigt werden. Datenträger mit vertraulichen Daten SOLLTEN so gelöscht werden, dass ihr Inhalt nicht mehr reproduziert werden kann. Für defekte Datenträger, die vom Hersteller getauscht werden, SOLLTE vertraglich vereinbart sein, dass diese sicher vernichtet oder gelöscht werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Stilllegungsprozess wird definiert. Er beinhaltet die technische Entkopplung, eine Überprüfung der Lizenzsituation und die sichere Datenlöschung. Für die Datenlöschung wird ein Standardverfahren (z.B. mehrfaches Überschreiben) festgelegt. In Wartungsverträgen wird eine Klausel zur zertifizierten Löschung oder Vernichtung von ausgetauschten Datenträgern aufgenommen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des dokumentierten Stilllegungsprozesses. Verifizierung der durchgeführten Lösch-Protokolle. Überprüfung der Wartungsverträge auf entsprechende Klauseln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m4",
+                    "uuid": "159cad4b-3bd2-4657-96d5-5c2ed94e9956",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine formale Stilllegungs-Checkliste wird verwendet. Die Datenlöschung folgt einem anerkannten Standard (z.B. NIST SP 800-88). Für alle entsorgten oder ausgetauschten Datenträger wird ein Vernichtungs- oder Löschzertifikat eingeholt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Checkliste stellt sicher, dass alle Aspekte (Technik, Lizenzen, Daten, Entsorgung) berücksichtigt werden. Es werden Tools eingesetzt, die eine Löschung nach NIST-Standards durchführen und ein Zertifikat ausstellen. Von Dienstleistern oder dem Hersteller werden ebenfalls Zertifikate angefordert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der ausgefüllten Checklisten für vergangene Stilllegungen. Einsicht in die gesammelten Lösch- und Vernichtungszertifikate."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a20-m5",
+                    "uuid": "1b0d3a9f-1012-4b8b-9070-357bd009b31a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der gesamte Stilllegungsprozess ist, wo möglich, automatisiert. Für höchste Sicherheitsanforderungen werden Datenträger vor der Entsorgung vor Ort physisch zerstört (z.B. geschreddert oder degausst). Der Prozess wird mit einem vollständigen Audit-Trail dokumentiert, der die Seriennummern der zerstörten Medien enthält."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein eigener Degausser oder Schredder für Festplatten wird vor Ort betrieben. Der gesamte Prozess von der Identifizierung der Platte bis zur Zerstörung wird in einer Datenbank protokolliert, inklusive Fotos und Zeugen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung des Audit-Trails der Datenträgervernichtung. Beobachtung einer physischen Zerstörung vor Ort. Verifizierung, dass die Seriennummern im Protokoll mit den ausgebauten Geräten übereinstimmen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "82eb2083-b124-4d80-9151-86f24ea54ce1",
+                "control-id": "DET.4.14",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a16-m1",
+                    "uuid": "e2754441-58ad-45a0-93ee-31388b9c2f92",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Überwachung beschränkt sich auf das Beobachten der Master-Konsole auf kritische WTOR-Nachrichten (Write To Operator with Reply). Andere Datenquellen wie SYSLOG oder SMF werden nicht aktiv überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Operationsteam hat die Aufgabe, die Konsole im Auge zu behalten. Es gibt keine Automatisierung oder Filterung von Nachrichten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragung der Operatoren, wie sie Systemprobleme erkennen. Überprüfung, ob es Prozesse zur Analyse von SYSLOG oder anderen Protokolldaten gibt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m2",
+                    "uuid": "5b370112-879b-476d-895a-aaac17b7e196",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Automatisierungsprodukt wird zur Filterung von Konsolennachrichten eingesetzt, behandelt aber nur einige wenige grundlegende Ereignisse. Schwellenwerte für Kapazität und Auslastung sind nicht definiert oder werden nicht überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Produkt wie z.B. NetView oder ein anderes Automatisierungstool wird genutzt, um die Nachrichtenflut auf der Konsole zu reduzieren und bekannte, wiederkehrende Meldungen automatisch zu beantworten. Performance- und Kapazitätsüberwachung findet nicht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des Automatisierungsprodukts. Befragung, wie Performance-Engpässe oder Kapazitätsprobleme erkannt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m3",
+                    "uuid": "f1255a1a-5dc5-4567-9a07-cd174434a0b8",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Während des Betriebs SOLLTE das z/OS-System auf wichtige Meldungen, Ereignisse und die Einhaltung von Grenzwerten überwacht werden. Insbesondere Fehlermeldungen auf der HMC-Konsole, WTOR- und wichtige WTO-Nachrichten, System Tasks, Sicherheitsverletzungen, Kapazitätsgrenzen sowie die Systemauslastung SOLLTEN berücksichtigt werden. Für die Überwachung SOLLTEN außerdem mindestens die MCS-Konsole, die System Management Facility, das SYSLOG und die relevanten Protokolldaten der Anwendungen herangezogen werden. Es SOLLTE gewährleistet sein, dass alle wichtigen Meldungen zeitnah erkannt und, falls notwendig, darauf reagiert wird. Systemnachrichten SOLLTEN dabei so gefiltert werden, dass nur die wichtigen Nachrichten dargestellt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein zentrales Monitoring-Tool (z.B. ein Automatisierungsprodukt) wird konfiguriert, um alle genannten Datenquellen zu überwachen. Schwellenwerte für CPU-Auslastung, Speicherverbrauch und DASD-Speicherplatz werden definiert. Wichtige Meldungen werden hervorgehoben oder lösen eine Benachrichtigung an das Operationsteam aus."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des Monitoring-Tools. Verifizierung der definierten Schwellenwerte. Analyse der Protokolle des Tools, um die Erkennung und Reaktion auf Ereignisse nachzuvollziehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m4",
+                    "uuid": "8b130cdb-6969-4721-b7da-a14723bbc125",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Überwachung ist zentralisiert und automatisiert. Eine dedizierte Monitoring-Lösung bietet Dashboards für alle wichtigen Metriken. Schwellenwerte werden dynamisch basierend auf Workload-Mustern angepasst. Das System öffnet bei bestimmten Ereignissen automatisch Tickets in einem ITSM-System."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein spezialisiertes Performance-Monitoring-Tool (z.B. von BMC, Broadcom) wird eingesetzt. Es wird eine Integration mit dem Ticketsystem (z.B. ServiceNow) hergestellt, sodass z.B. ein `D SN,DASD,V,-,GT,90` (Dataset-Belegung über 90%) automatisch ein Incident-Ticket für das Speichermanagement-Team erzeugt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Monitoring-Dashboards. Analyse der Konfiguration der dynamischen Schwellenwerte. Überprüfung der Integration mit dem ITSM-System und der erzeugten Tickets."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a16-m5",
+                    "uuid": "88779146-1e43-4473-b369-86915daf00df",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Prädiktive Analysen werden eingesetzt, um potenzielle Probleme (z.B. Kapazitätsengpässe, Leistungsabfall) vorherzusagen, bevor sie den Service beeinträchtigen. Das Überwachungssystem ist in der Lage, für häufige Probleme eine automatisierte Abhilfe durchzuführen (z.B. Erweitern eines Datasets, Neustart einer fehlgeschlagenen Task)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "AIOps (AI for IT Operations) Tools werden eingesetzt, um historische Performancedaten zu analysieren und zukünftige Engpässe zu prognostizieren. Automatisierungs-Playbooks sind implementiert, die auf bestimmte Alarme mit korrigierenden Maßnahmen reagieren, ohne dass ein menschlicher Eingriff erforderlich ist."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration und der Modelle des AIOps-Tools. Analyse der Automatisierungs-Playbooks und ihrer Ausführungsprotokolle. Verifizierung, dass die prädiktiven Warnungen zu proaktiven Maßnahmen führen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "fea247b0-630b-479f-9574-a07e378ed0f6",
+                "control-id": "DET.4.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Audit",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "PERF",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a14-m1",
+                    "uuid": "982b8f30-4456-4ca8-bc13-ce30b8568901",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sicherheitsrelevante Protokolldaten (SMF) werden zwar gesammelt, aber nur selten und meist nur reaktiv nach einem Sicherheitsvorfall analysiert. Es gibt kein regelmäßiges Berichtswesen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "SMF-Daten werden auf Band oder in Datasets archiviert, aber es gibt keine Tools oder Prozesse zur proaktiven Auswertung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragung der Administratoren zum Umgang mit SMF-Daten. Suchen nach Nachweisen für eine regelmäßige Analyse oder Berichterstellung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m2",
+                    "uuid": "4684213c-e0b3-4bdc-8bb2-b1fa8e8c78e1",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vordefinierte Berichte werden mit einem Sicherheitstool (z.B. zSecure, RACF-Report-Writer) erstellt, aber es gibt keinen formalen Prozess für deren Überprüfung oder die Behandlung von festgestellten Abweichungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Batch-Job erzeugt wöchentlich Standardberichte (z.B. über alle Benutzer mit SPECIAL-Attribut), die Berichte werden aber nicht systematisch geprüft oder weiterverfolgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Anfordern der generierten Berichte. Befragung, wer die Berichte prüft und was bei Auffälligkeiten passiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m3",
+                    "uuid": "af4abd1b-63ce-4096-b440-dc98705af7d9",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zur Überwachung aller sicherheitsrelevanten Tätigkeiten unter z/OS SOLLTE ein Prozess eingerichtet werden. In diesem SOLLTE festgelegt sein, welche Sicherheitsreports regelmäßig erstellt werden, welche Tools und Datenquellen dabei herangezogen werden (z. B. System Management Facility) und wie mit Abweichungen von den Vorgaben umgegangen wird. Die Sicherheitsreports SOLLTEN bei Überprüfungen als Information verwendet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein dokumentierter Prozess legt fest, wer (z.B. das Sicherheitsteam) welche Berichte (z.B. fehlgeschlagene Logins, Änderungen an kritischen Datasets, neue privilegierte Benutzer) in welchem Intervall (z.B. wöchentlich) erstellt und prüft. Abweichungen werden als Tickets erfasst und nachverfolgt. Die Berichte werden für interne und externe Audits aufbewahrt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des etablierten Berichtsprozesses. Einsicht in die Berichte der letzten Monate und der dazugehörigen Tickets für Abweichungen. Verifizierung, dass die Berichte bei der letzten internen oder externen Prüfung verwendet wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m4",
+                    "uuid": "e69d5c8d-9bb8-4903-9e71-39f6e50016aa",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Berichtsprozess ist halbautomatisiert. Ein Security Information and Event Management (SIEM) System sammelt und korreliert SMF- und andere Protokolldaten von z/OS. Dashboards bieten eine nahezu echtzeitnahe Übersicht über den Sicherheitsstatus. Definierte Abweichungen lösen automatische Alarme an das Sicherheitsteam aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein SMF-Feed wird in das zentrale SIEM (z.B. Splunk, QRadar) integriert. Im SIEM werden spezifische Korrelationsregeln und Dashboards für z/OS-Sicherheitsereignisse erstellt. Schwellenwerte für Alarme (z.B. mehr als 10 fehlgeschlagene Logins pro Minute für einen Benutzer) werden definiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der SIEM-Konfiguration für die z/OS-Datenquelle. Analyse der Dashboards und Korrelationsregeln. Prüfung der Alarmierungsprotokolle und der Reaktion auf Alarme."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a14-m5",
+                    "uuid": "639723a1-bf2b-4aa6-94c7-2a8c62633285",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das SIEM nutzt User and Entity Behavior Analytics (UEBA), um proaktiv Bedrohungen und Anomalien in der z/OS-Umgebung zu identifizieren. Der Berichtsprozess ist vollständig in den Workflow des Security Operations Center (SOC) integriert, mit automatisierten Incident-Response-Playbooks für z/OS-spezifische Vorfälle."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das UEBA-Modul des SIEM wird mit z/OS-Daten trainiert, um Normalverhalten zu lernen und Abweichungen zu erkennen (z.B. ein Benutzer greift auf Daten zu, mit denen er noch nie gearbeitet hat). Für kritische Alarme werden SOAR-Playbooks (Security Orchestration, Automation, and Response) ausgeführt, die z.B. einen Benutzer in RACF automatisch sperren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration und Wirksamkeit des UEBA-Moduls für z/OS. Analyse der SOAR-Playbooks und ihrer Ausführungsprotokolle. Simulation eines Angriffs, um die automatisierte Erkennung und Reaktion zu testen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "09513125-30f3-4fd7-bf65-81648299dda5",
+                "control-id": "GEB.7.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a5-m1",
+                    "uuid": "754a315b-e36d-4efb-966e-836730437a1a",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur der physische Zugang zu den Konsolen (HMC, SE) ist eingeschränkt. Logische Sicherheitsmaßnahmen wie das Ändern von Standardpasswörtern werden nicht konsequent umgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konsolen stehen in einem verschlossenen Rechenzentrum, aber die Standard-Logins (z.B. auf der HMC) sind weiterhin aktiv."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch, sich mit bekannten Standardpasswörtern an den Konsolen anzumelden. Überprüfung der Konfiguration auf aktive Standard-Benutzerkonten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m2",
+                    "uuid": "ddea9a81-8802-4637-bc25-9f4ea38719e8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der physische Zugang ist geschützt und alle Standardpasswörter auf den Konsolen wurden geändert. Nicht benötigte Dienste werden jedoch nicht deaktiviert und die Verschlüsselung für Fernzugriffe wird nicht durchgängig erzwungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nach der Installation werden die Passwörter geändert. Die Konfiguration der Dienste (z.B. Webserver auf der HMC) bleibt jedoch im Auslieferungszustand."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Port-Scan der HMC- und SE-Interfaces zur Identifizierung aktiver Dienste. Überprüfung der Konfiguration der Fernzugriffsdienste auf die Nutzung von Verschlüsselung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m3",
+                    "uuid": "5dc17d5d-1c00-43ca-9d7a-fc43d19ef78a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Systemnahe z/OS-Terminals (Support-Elemente, HMC-, MCS-, SMCS-Konsolen etc.) MÜSSEN physisch gegen unbefugten Zutritt und logisch gegen unbefugten Zugang geschützt werden. Voreingestellte Passwörter MÜSSEN geändert werden. Zugänge über Webserver und andere Fernzugänge MÜSSEN durch Verschlüsselung geschützt werden. Nicht benötigte Webserver und Fernzugänge MÜSSEN deaktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Härtungskonzept für HMC und SE erstellt und umgesetzt. Dieses beinhaltet Passwortrichtlinien, die Deaktivierung nicht benötigter Dienste und die Konfiguration von TLS für alle Web-basierten Zugänge. Der physische Schutz wird durch die Zutrittskontrolle zum Rechenzentrum gewährleistet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfigurationsdateien von HMC und SE gegen das Härtungskonzept. Verifizierung der Passwortrichtlinien. Prüfung, ob Fernzugriffe TLS verwenden und ob nicht benötigte Ports geschlossen sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m4",
+                    "uuid": "7b3f36d6-9101-43f1-9e9c-07f661291ae5",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu den definierten Maßnahmen wird eine Multi-Faktor-Authentisierung (MFA) für alle Konsolenzugriffe, insbesondere für Fernzugriffe, erzwungen. Alle Zugriffe werden protokolliert und aktiv auf verdächtige Aktivitäten überwacht. Das Management-Netzwerk ist durch Netzwerksegmentierung vom restlichen Netz isoliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die HMC wird mit einem RADIUS- oder LDAP-Server integriert, um MFA zu ermöglichen. Die Syslogs der HMC werden an ein zentrales SIEM gesendet, wo sie überwacht werden. Firewall-Regeln trennen das HMC-Netzwerk von anderen Netzsegmenten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der MFA-Konfiguration. Analyse der SIEM-Protokolle auf Konsolenzugriffe. Überprüfung der Firewall-Regeln für das Management-Netzwerk."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a5-m5",
+                    "uuid": "4802583d-163e-4ca7-ba79-6e7e4031894e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein 'Zero Trust' Zugriffsmodell wird auf alle Konsolen angewendet. Der Zugriff ist nur von dedizierten, gehärteten administrativen Workstations (PAWs) aus möglich. Alle Sitzungen werden aufgezeichnet und unterliegen einer Echtzeitanalyse. Hardware-Sicherheitsmodule (HSMs) werden zum Schutz der kryptographischen Schlüssel auf der HMC verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der HMC-Zugriff wird über einen Bastion-Host oder ein PAM-System gesteuert, das die Quell-IP-Adressen auf PAWs einschränkt und eine Sitzungsaufzeichnung durchführt. Die HMC wird mit einem Enterprise-HSM zur Schlüsselspeicherung konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des Bastion-Hosts/PAM-Systems und der PAW-Richtlinien. Verifizierung der Integration und Nutzung des HSM. Stichprobenartige Überprüfung von Sitzungsaufzeichnungen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "4ac4983c-6f72-4def-ae65-00492222fcde",
+                "control-id": "KONF.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a32-m2",
+                    "uuid": "247d8a56-b651-431c-8600-b8b4c96a3345",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existieren informelle Namenskonventionen, die jedoch nicht dokumentiert oder durchgesetzt werden. Dies führt zu Inkonsistenzen bei der Benennung von Datasets, Jobs und anderen Objekten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Teams einigen sich auf bestimmte Präfixe, aber neue Mitarbeiter oder andere Teams halten sich nicht immer daran. Es gibt keine schriftliche Vorgabe."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Durchsuchen des Systemkatalogs nach Objekten mit inkonsistenten Namen. Befragen der Mitarbeiter nach den geltenden Namenskonventionen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a32-m3",
+                    "uuid": "fc8bc560-6a27-40ae-81b9-c896ef5332fd",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN Standards und Namenskonventionen für z/OS-Systemdefinitionen festgelegt und dokumentiert werden. Die Dokumentationen SOLLTEN den Administrierenden zur Verfügung stehen. Die Einhaltung der Standards SOLLTE regelmäßig überprüft werden. Standards SOLLTEN insbesondere für Datei-, Datenbank-, Job- und Volume-Namen sowie für Application-, System- und User-IDs definiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Dokument 'z/OS Namens- und Definitionsstandards' wird erstellt und im Intranet veröffentlicht. Es definiert die Struktur für Dataset-Namen (z.B. `<HLQ>.<APPL>.<TYPE>.<NAME>`), Job-Namen, User-ID-Formate etc. Die Einhaltung wird im Rahmen von Code-Reviews oder manuellen Audits überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Standard-Dokuments auf Vollständigkeit und Verständlichkeit. Stichprobenartige Überprüfung von Objekten im System (Datasets, Jobs, User-IDs) auf Konformität mit den Standards."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a32-m4",
+                    "uuid": "9e6329a3-ba1c-4607-94be-64e555a675e0",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Einhaltung der Namens- und Definitionsstandards wird durch automatisierte Prüfungen erzwungen. Beispielsweise verhindern System-Exits oder Pre-Submission-Checks das Anlegen von Objekten oder das Starten von Jobs mit nicht-konformen Namen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein RACF-Exit (`ICHRDX01`) wird implementiert, um die Namen neuer Datasets oder User-IDs zu validieren. Ein JES-Exit wird verwendet, um Job-Namen vor der Ausführung zu prüfen. Verstöße werden abgewiesen und protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung des Quellcodes und der Konfiguration der System-Exits. Versuch, ein Objekt mit einem nicht-konformen Namen anzulegen, muss fehlschlagen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "7d0bc6a4-8b1b-4a72-8aad-7c209d3a41af",
+                "control-id": "KONF.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a11-m1",
+                    "uuid": "347ba1b1-a2e9-4404-a8bf-dfecdcddf80c",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verschlüsselung für Terminalsitzungen ist zwar verfügbar, wird aber nicht erzwungen. Administratoren und Benutzer verwenden aus Bequemlichkeit oder Unwissenheit häufig unverschlüsselte Protokolle wie Standard-TN3270."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der TN3270-Server ist so konfiguriert, dass er sowohl verschlüsselte als auch unverschlüsselte Verbindungen akzeptiert. Es gibt keine Richtlinie, die die Nutzung der Verschlüsselung vorschreibt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des TN3270-Servers. Durchführung eines Netzwerk-Sniffings, um unverschlüsselten Datenverkehr zu identifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m2",
+                    "uuid": "14753799-be3c-4c00-b89c-d988c50c7fec",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Sitzungsdaten für RACF-Administratoren werden durch die Nutzung von TN3270E (TLS) verschlüsselt. Die Sitzungen anderer Benutzer bleiben jedoch unverschlüsselt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden separate Ports oder Richtlinien für Administratoren und reguläre Benutzer konfiguriert, wobei nur für die Administratoren Verschlüsselung erzwungen wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des TN3270-Servers auf port- oder benutzerbasierte Verschlüsselungsregeln. Verifizierung, dass Administratoren sich nicht unverschlüsselt anmelden können."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m3",
+                    "uuid": "3cf8b10d-855b-4b17-8b27-23a2de24988d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Session-Daten für die Verbindungen der RACF-Administrierenden MÜSSEN verschlüsselt übertragen werden. Für die Verbindungen der anderen Mitarbeitenden SOLLTE dies ebenfalls umgesetzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Richtlinie definiert, welche Verbindungsarten verschlüsselt werden müssen. Mittels TN3270E oder eines vorgeschalteten TLS-Proxys wird die Verschlüsselung für administrative Verbindungen erzwungen. Die Verschlüsselung für reguläre Benutzer wird empfohlen und konfiguriert, aber nicht zwingend blockierend durchgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Richtlinie zum Schutz von Sitzungsdaten. Überprüfung der technischen Konfiguration (z.B. TN3270-Server), um die Umsetzung der Richtlinie zu verifizieren, insbesondere für administrative Zugänge."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m4",
+                    "uuid": "f4b61dab-46b0-4730-a4b4-9ada2fc4bc53",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle interaktiven Benutzersitzungen (sowohl von Administratoren als auch von regulären Benutzern) mit dem Mainframe werden unter Verwendung moderner, starker TLS-Protokolle und Cipher-Suiten verschlüsselt. Eine zentrale Richtlinie erzwingt die Verschlüsselung für alle Verbindungen, und nicht konforme Verbindungsversuche werden blockiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration des z/OS Communications Server erzwingt TLS für alle TN3270-Ports. Schwache Protokolle (z.B. SSLv3, frühes TLS) und Cipher-Suiten sind deaktiviert. Dies wird über die AT-TLS-Funktionalität zentral gesteuert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der AT-TLS-Richtlinien auf die erzwungene Nutzung von starkem TLS (z.B. TLS 1.2 oder höher) und die Abwesenheit schwacher Cipher. Versuch, eine unverschlüsselte oder schwach verschlüsselte Verbindung herzustellen, muss fehlschlagen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a11-m5",
+                    "uuid": "f403771f-461d-436b-afe9-f16b33eef2eb",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Datenübertragungen, einschließlich interaktiver Sitzungen, Batch-Jobs (z.B. FTP) und System-zu-System-Kommunikation, werden transparent durch AT-TLS (Application Transparent TLS) verschlüsselt. Die Richtlinie wird zentral verwaltet und automatisch bereitgestellt. Ein Intrusion-Detection-System überwacht Versuche, die Verschlüsselung herunterzustufen oder zu umgehen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Umfassende AT-TLS-Regeln werden für alle relevanten Anwendungen und Protokolle (TN3270, FTP, CICS Web Services etc.) definiert. Ein Network Intrusion Detection System (NIDS) ist mit Regeln für TLS-Downgrade-Angriffe konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der AT-TLS-Richtlinien auf ihre Vollständigkeit und korrekte Anwendung für alle Kommunikationspfade. Überprüfung der NIDS-Protokolle auf Alarme im Zusammenhang mit Verschlüsselungsangriffen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "1063217a-5c0c-49c8-8228-a9dda020bd9d",
+                "control-id": "KONF.2.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a23-m2",
+                    "uuid": "40858fd9-4e84-42a5-9f5a-d2730ab10ed7",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "z/VM wird eingesetzt und Standardpasswörter werden geändert. Die Sicherheitsadministration erfolgt jedoch über die internen Mechanismen von z/VM (CP-Befehle) und nicht über einen externen Sicherheitsmanager wie RACF. Virtuelle Maschinen sind nicht strikt voneinander getrennt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Standardpasswörter der Service-Maschinen werden nach der Installation geändert. Die Administration der Benutzerrechte erfolgt über `CP DEFINE` und `CP SET` Kommandos. Es gibt keine strikte Trennung der virtuellen Switche oder anderer Ressourcen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung, ob z/VM mit einem externen Sicherheitsmanager verbunden ist. Analyse des User Directory auf Berechtigungen und Ressourcen-Sharing zwischen virtuellen Maschinen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a23-m3",
+                    "uuid": "af14d5b8-a38c-46f2-b8c4-070d82571107",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls z/VM eingesetzt wird, SOLLTE das Produkt in das Patch-Management integriert und voreingestellte Passwörter geändert werden. Die Rolle des z/VM-Systemadministrierenden SOLLTE restriktiv vergeben werden. Die Sicherheitsadministration SOLLTE über RACF für z/VM erfolgen. Passwörter von realen und Guest-Usern SOLLTEN mittels RACF verschlüsselt werden. Sicherheitskritische Systemkommandos von z/VM SOLLTEN über RACF geschützt werden. Virtuelle Maschinen SOLLTEN nur die benötigten Ressourcen erhalten und strikt voneinander getrennt sein. Nur benötigte Dienste SOLLTEN gestartet werden. Bei Überprüfungen SOLLTEN die Journaling-Funktion von z/VM und die Audit-Funktionen von RACF eingesetzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "z/VM wird mit RACF/VM (oder dem z/VM RACF Security Server) integriert. Ein Patch- und Service-Prozess für z/VM wird etabliert. Ein Berechtigungskonzept definiert die z/VM-Admin-Rolle und schützt kritische CP- und Diagnose-Kommandos über RACF. Virtuelle Maschinen werden im User Directory so definiert, dass sie getrennte Ressourcen (Speicher, CPU, Netzwerk über VSWITCH) nutzen. Die Journaling- und Audit-Daten werden regelmäßig ausgewertet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Integration von z/VM mit RACF. Überprüfung des z/VM User Directory auf die Einhaltung des PoLP und der Ressourcentrennung. Analyse der RACF-Profile für z/VM-Kommandos. Überprüfung der Journaling- und Audit-Protokolle."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a23-m4",
+                    "uuid": "f51d516d-c5e5-4bb0-aca7-5041e40470e9",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu den definierten Maßnahmen wird die Trennung der virtuellen Maschinen durch dedizierte VSWITCHes mit VLAN-Tagging durchgesetzt. Die Integrität des z/VM-Systems selbst wird durch regelmäßige Überprüfungen kritischer Systemdateien sichergestellt. Alle sicherheitsrelevanten Protokolle werden an ein zentrales SIEM weitergeleitet und überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für unterschiedliche Sicherheitszonen werden separate virtuelle Switche mit IEEE 802.1Q VLAN-Unterstützung konfiguriert, um den Netzwerkverkehr zu trennen. Ein Tool wie zSecure Audit für z/VM wird zur Integritätsprüfung verwendet. Ein SIEM-Agent oder Syslog-Forwarder wird auf einer Service-Maschine installiert, um Audit-Daten zu exportieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der VSWITCH- und VLAN-Konfiguration. Analyse der Berichte der Integritätsüberprüfung. Verifizierung des Datenflusses von z/VM zum SIEM und der dortigen Korrelationsregeln."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "738df414-97b9-404d-9b5a-73a3fe7933d9",
+                "control-id": "KONF.2.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a17-m1",
+                    "uuid": "c0aa27ec-7b41-4955-a1c0-0e4be55ff7e4",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Synchronisationsmechanismus wird verwendet, aber er synchronisiert auch die Sperrung von Kennungen nach Fehleingaben. Dies führt dazu, dass ein Benutzer auf allen Systemen gleichzeitig gesperrt wird, was zu Denial-of-Service-Problemen führen kann."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Standardkonfiguration des Synchronisationstools wird verwendet, ohne die Option zur Unterdrückung der `REVOKE`-Status-Synchronisation zu aktivieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des Synchronisationstools. Testen des Verhaltens, indem ein Passwort auf einem System absichtlich falsch eingegeben wird und der Status des Benutzers auf den anderen Systemen geprüft wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m2",
+                    "uuid": "6ca028f9-8ff7-405b-89fe-dfff1d993da8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Synchronisation ist korrekt konfiguriert, um Sperrungen nicht zu synchronisieren. Die beteiligten z/OS-Systeme sind jedoch nicht standardisiert, was zu gelegentlichen Synchronisationsfehlern führt. Die Verwaltungsfunktion des Tools ist nicht angemessen geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Systeme haben unterschiedliche RACF-Einstellungen oder Exit-Routinen, die die Kommandosynchronisation beeinträchtigen. Der Zugriff auf die Admin-Schnittstelle des Sync-Tools ist nicht auf wenige Administratoren beschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Vergleich der Systemkonfigurationen auf relevante Unterschiede. Überprüfung der Berechtigungen für die administrative Schnittstelle des Synchronisationstools."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m3",
+                    "uuid": "6f734aa3-85f6-4769-874c-ba5ecaab434a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls z/OS-Passwörter oder RACF-Kommandos über mehrere z/OS-Systeme automatisch synchronisiert werden sollen, SOLLTEN die jeweiligen Systeme möglichst weitgehend standardisiert sein. Die Sperrung von Kennungen durch Fehleingaben von Passwörtern SOLLTE NICHT synchronisiert werden. Das Risiko durch Synchronisation sicherheitskritischer RACF-Kommandos SOLLTE berücksichtigt werden. Die Verwaltungsfunktion des Synchronisationsprogramms SOLLTE nur autorisierten Mitarbeitenden zur Verfügung stehen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Konzept zur Systemstandardisierung wird umgesetzt. Das Synchronisationstool wird so konfiguriert, dass der `REVOKE`-Status bei Passwortfehlern nicht propagiert wird. Eine Risikoanalyse bewertet, welche RACF-Kommandos (z.B. `DELUSER`, `DELGROUP`) nicht oder nur nach manueller Bestätigung synchronisiert werden dürfen. Der Zugriff auf die Admin-Funktionen des Tools wird über RACF-Profile geschützt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des Synchronisationstools und der Dokumentation zur Systemstandardisierung. Prüfung der Risikoanalyse für kritische Kommandos. Verifizierung der RACF-Profile zum Schutz der Admin-Funktion."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m4",
+                    "uuid": "e9894448-6df2-4688-86fb-1d71cd6f2dde",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Synchronisationsprozess wird protokolliert und überwacht. Es wird ein 'Dry-Run'-Modus verwendet, um die Auswirkungen der Synchronisation kritischer Befehle vor der eigentlichen Ausführung zu testen. Ein zentrales, hochverfügbares System ist für die Synchronisation verantwortlich, um Split-Brain-Szenarien zu vermeiden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Protokolle des Synchronisationstools werden an ein SIEM gesendet und auf Fehler überwacht. Vor der Synchronisation eines kritischen Befehls wird eine Simulation ausgeführt, deren Ergebnis von einem Administrator geprüft werden muss. Das Tool läuft auf einer hochverfügbaren LPAR."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse der Protokolle und Alarme des Synchronisationsprozesses im SIEM. Überprüfung des Prozesses für den 'Dry-Run'-Modus. Verifizierung der Hochverfügbarkeitskonfiguration des Synchronisationssystems."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a17-m5",
+                    "uuid": "85810a2e-cc31-45f1-909b-a063167934ea",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Anstelle der Kommandosynchronisation wird ein Parallel Sysplex mit einer gemeinsam genutzten RACF-Datenbank verwendet. Dies bietet eine konsistente und hochverfügbare Sicherheitsdomäne über alle Systeme des Sysplex und eliminiert die Risiken, die mit Befehlsweiterleitung und Synchronisationsverzögerungen verbunden sind."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Parallel Sysplex wird implementiert. Die RACF-Datenbank wird in einer Coupling Facility gehalten oder als gemeinsam genutzter DASD konfiguriert, sodass alle LPARs im Sysplex dieselbe physische Datenbank verwenden. Die Kommandosynchronisation wird abgeschaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Sysplex-Konfiguration. Verifizierung, dass alle Systeme im Sysplex auf dieselbe RACF-Datenbank zugreifen und dass die Synchronisation von RACF-Datenbankkopien (falls vorhanden) korrekt funktioniert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "fe406beb-0ec3-4e28-8086-ed1cdd495989",
+                "control-id": "KONF.2.8",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a21-m1",
+                    "uuid": "5d41b8b5-5793-4272-81f9-76cc03937f5f",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das System kann gestartet werden, aber die dafür notwendigen Parameter sind nicht dokumentiert und basieren auf dem Wissen einzelner Mitarbeiter. Eine Checkliste zur Überprüfung nach dem Start (IPL) existiert nicht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Startvorgang (IPL) wird manuell durchgeführt, wobei die Operatoren die notwendigen Antworten aus dem Gedächtnis eingeben. Ob das System danach korrekt läuft, wird nur oberflächlich geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragen der Operatoren zum IPL-Prozess. Suchen nach Dokumentationen wie einem Betriebshandbuch oder IPL-Anweisungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m2",
+                    "uuid": "517f7a54-cd32-42d6-b2f2-e7b95da085c7",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Startvorgang ist dokumentiert, aber es gibt keine definierte Fallback-Konfiguration, mit der das System nach einer fehlerhaften Änderung sicher gestartet werden kann. Die Überprüfungen nach dem IPL sind informell."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt eine schriftliche Anleitung für den IPL. Nach dem IPL prüfen die Operatoren, ob die wichtigsten Anwendungen (z.B. CICS) gestartet sind, aber es gibt keine strukturierte Checkliste."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der IPL-Dokumentation. Befragung zum Vorgehen, wenn das System nach einer Änderung nicht mehr startet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m3",
+                    "uuid": "41f67f5f-4de2-4c55-a48e-6a5500d03c06",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die für den Startvorgang (IPL) eines z/OS-Systems notwendigen Parameter SOLLTEN dokumentiert und dem Operating-Personal bekannt sein. Die erforderlichen Hardware-Konfigurationen (IOCDS, LPARs) SOLLTEN vorliegen. Eine z/OS-Master-Konsole und eine Backup-Konsole SOLLTEN definiert sein. Nach dem Startvorgang SOLLTE anhand einer Prüfliste kontrolliert werden, ob der Systemstatus den Soll-Vorgaben entspricht. Darüber hinaus SOLLTE eine Fallback-Konfiguration vorgehalten werden, mit der das System vor der letzten Änderung erfolgreich gestartet worden ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Betriebshandbuch dokumentiert alle IPL-Parameter (z.B. in `IEASYSxx`) und die zugehörigen Hardware-Profile. Eine schriftliche Checkliste wird nach jedem IPL abgearbeitet. Vor jeder größeren Änderung wird die aktuelle lauffähige Konfiguration (z.B. Parmlib-Member) gesichert, um als Fallback zu dienen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Betriebshandbuchs und der IPL-Dokumentation. Einsicht in die ausgefüllten Checklisten der letzten IPLs. Überprüfung des Prozesses zur Sicherung und Wiederherstellung der Fallback-Konfiguration."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m4",
+                    "uuid": "ddba8a85-aca7-47be-a5b7-95cb5e16756d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Startparameter (z.B. Parmlib-Member) unterliegen der Versionskontrolle. Die Überprüfung nach dem IPL ist automatisiert, wobei ein Skript die wichtigsten Systemeinstellungen und Dienste verifiziert. Der Prozess zur Aktivierung der Fallback-Konfiguration ist dokumentiert und wird regelmäßig getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle Parmlib-Member werden in einem Versionskontrollsystem wie Git oder Endevor verwaltet. Nach dem IPL wird automatisch ein REXX- oder Ansible-Skript ausgeführt, das den Status von Subsystemen, die Verfügbarkeit von Ressourcen und kritische Systemeinstellungen prüft und einen Bericht erstellt. Fallback-Tests werden halbjährlich durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung des Versionskontrollsystems und der Änderungshistorie der Parmlib. Analyse des automatisierten Prüfskripts und seiner Ergebnisprotokolle. Prüfung der Protokolle der letzten Fallback-Tests."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a21-m5",
+                    "uuid": "2927f964-c25d-4491-a82a-85ce7b62ee8c",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das System nutzt die Secure-Boot-Fähigkeiten der Z-Hardware, um die Integrität des IPL-Codes und wichtiger Betriebssystemkomponenten kryptographisch sicherzustellen. Jede Abweichung von der 'Golden Image'-Startkonfiguration löst einen Alarm aus und verhindert, dass das System in einen produktiven Zustand übergeht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Funktion 'IBM Z Trusted Key Entry (TKE)' wird zur Verwaltung der Schlüssel für Secure Boot verwendet. Die System-Firmware wird so konfiguriert, dass sie nur signierten Code während des IPL-Prozesses lädt. Die Integrität der Parmlib-Member wird vor der Verwendung ebenfalls kryptographisch überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Secure-Boot-Konfiguration in der System-Firmware und der HMC. Verifizierung des Schlüsselmanagement-Prozesses mit TKE. Versuch, eine unsignierte oder manipulierte Komponente zu laden, muss fehlschlagen und protokolliert werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "36aa2541-169e-4006-bbe3-6677a71db2ba",
+                "control-id": "KONF.4.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a6-m1",
+                    "uuid": "cf33c598-c4bb-46eb-8dc2-2637627c9c5f",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Remote Support Facility (RSF) wird genutzt, aber der Zugang ist nicht für jede Sitzung explizit freigegeben und gesperrt, sondern bleibt dauerhaft offen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Firewall-Regeln für RSF sind permanent aktiv, um den Support im Bedarfsfall nicht zu verzögern. Es gibt keinen Prozess zur expliziten Freischaltung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Firewall-Konfiguration und der HMC-Einstellungen für RSF, um festzustellen, ob die Verbindung dauerhaft offen ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m2",
+                    "uuid": "7e50bd40-6a88-45eb-be05-7a6946e4f5f8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der RSF-Zugang wird für jede Wartungssitzung explizit freigegeben und danach wieder deaktiviert. Die Kommunikation läuft jedoch nicht über einen dedizierten Proxy-Server und die Sicherheit der Verbindung wird nicht aktiv überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Administratoren aktivieren und deaktivieren die RSF-Verbindung auf der HMC manuell pro Wartungsfall. Es wird davon ausgegangen, dass die Verbindung vom Hersteller aus sicher ist."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragung der Administratoren zum Prozess der Freigabe und Deaktivierung. Überprüfung der Netzwerkkonfiguration auf das Fehlen eines Proxys für die RSF-Verbindung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m3",
+                    "uuid": "c1f876ed-f25a-42c0-9627-43dfae95687d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS entschieden werden, ob und wie RSF eingesetzt wird. Der Einsatz MUSS im Wartungsvertrag vorgesehen sein. Die RSF-Konfiguration darf nur von autorisierten Personen geändert werden. Wartungszugriffe durch den Hersteller MÜSSEN von Betreibenden explizit freigegeben und nach Beendigung wieder deaktiviert werden. Die RSF-Kommunikation MUSS über Proxy-Server und zusätzlich über gesicherte Verbindungen (wie TLS) stattfinden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Entscheidung zur RSF-Nutzung wird dokumentiert. Der Prozess zur Freigabe/Deaktivierung wird im Betriebshandbuch festgelegt. Ein dedizierter, ausgehender Proxy wird für die RSF-Verbindung konfiguriert. Die Berechtigung zur Änderung der RSF-Konfiguration auf der HMC wird auf einen kleinen Personenkreis beschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Vertragsunterlagen und der internen Dokumentation zur RSF-Nutzung. Überprüfung der Proxy-Konfiguration im Netzwerk und auf der HMC. Verifizierung der Berechtigungen zur Konfigurationsänderung auf der HMC."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m4",
+                    "uuid": "64f20bf7-098b-4193-8007-541ebebc4b6d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle RSF-Sitzungen werden detailliert protokolliert (z.B. ausgeführte Befehle). Ein lokaler Operator überwacht die Remote-Sitzung in Echtzeit. Zugriffe außerhalb der geplanten Wartungsfenster lösen automatisch einen Alarm aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Monitoring-Funktionen der HMC werden genutzt, um die Remote-Sitzung zu spiegeln. Die Protokolle des Proxys und der HMC werden an ein SIEM weitergeleitet, das auf Zugriffszeiten und verdächtige Aktivitäten überwacht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration der Sitzungsüberwachung. Analyse der SIEM-Protokolle und -Alarme im Zusammenhang mit RSF-Aktivitäten. Befragung der Operatoren zur Durchführung der Echtzeit-Überwachung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a6-m5",
+                    "uuid": "290e4619-dd21-484f-91ec-4cfd6ec2828f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der RSF-Zugriff ist nur über einen Bastion-Host/Jump-Server möglich, der MFA und eine vollständige Sitzungsaufzeichnung erzwingt. Die erlaubten Befehle für den Remote-Hersteller werden durch einen Command-Filtering-Proxy eingeschränkt. Alle Sitzungsprotokolle werden automatisch in ein SIEM zur Analyse und Korrelation eingespeist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein PAM-System wird als Gateway für den RSF-Zugriff implementiert. Es wird eine Whitelist der erlaubten Befehle für den IBM-Support definiert und im Proxy durchgesetzt. Die Videoaufzeichnungen der Sitzungen werden revisionssicher archiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des PAM-Systems und des Command-Filtering-Proxys. Verifizierung der MFA- und Aufzeichnungsfunktion. Stichprobenartige Prüfung der archivierten Sitzungsaufzeichnungen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "363d4166-d99d-457f-bb52-77d3a66323a5",
+                "control-id": "KONF.6.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a7-m1",
+                    "uuid": "e1a8fbaa-d32c-417d-b9cd-e858f0cf79fa",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Prinzip der geringsten Rechte (PoLP) wird nur auf Benutzer-Datasets angewendet. Systemressourcen wie APF-autorisierte Bibliotheken oder Parmlib-Member sind nicht granular geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Administratoren fokussieren sich auf den Schutz von Anwendungs- und Benutzerdaten, während System-Datasets oft breit zugänglich bleiben, z.B. über `UACC(READ)`."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der RACF-Profile kritischer Systembibliotheken (z.B. `SYS1.PARMLIB`, `SYS1.PROCLIB`) auf zu weitreichende Berechtigungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m2",
+                    "uuid": "ae89978f-f348-49d4-a800-b269fedfc234",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das PoLP-Prinzip wird generell angewendet, aber die Rollendefinitionen sind grob, was dazu führt, dass Benutzer mehr Berechtigungen als nötig haben. Regelmäßige Überprüfungen der Berechtigungen finden nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "RACF-Gruppen werden zur Rechtevergabe genutzt, aber die Gruppen sind sehr breit definiert (z.B. 'Alle Entwickler', 'Alle Operatoren')."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse der RACF-Gruppenstruktur und der darin gebündelten Berechtigungen. Befragung, ob und wie oft Berechtigungen überprüft werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m3",
+                    "uuid": "deea6db8-bafe-475e-b995-b334b98eb4e0",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Im Rahmen der Grundkonfiguration MÜSSEN die Autorisierungsmechanismen so konfiguriert werden, dass alle Personen (definierte User-IDs in Gruppen gemäß Rolle) nur die Zugriffsmöglichkeiten erhalten, die sie für ihre jeweiligen Tätigkeiten benötigen. Hierfür MÜSSEN insbesondere APF-Autorisierungen, SVCs, Ressourcen des z/OS-Betriebssystems, IPL-Parameter, Parmlib-Definitionen, Started Tasks und JES2/3-Definitionen berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein detailliertes Rollen- und Berechtigungskonzept wird erstellt. Der Zugriff auf alle kritischen Systemressourcen wird über RACF-Profile gesteuert. APF-Listen, SVC-Tabellen und Parmlib-Member werden als kritische Ressourcen behandelt und ihr Schreibschutz wird durch RACF erzwungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Rollen- und Berechtigungskonzepts. Verifizierung der RACF-Profile für APF-Bibliotheken, Parmlib, Proclib und andere Systemressourcen. Überprüfung, ob der Zugriff auf SVCs und Started Tasks dem PoLP-Prinzip folgt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m4",
+                    "uuid": "2e025afb-7686-46da-966c-645dcebc32f7",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein formales rollenbasiertes Zugriffskontrollmodell (RBAC) ist definiert und umgesetzt. Zugriffsrechte werden regelmäßig (z.B. quartalsweise) halbautomatisch überprüft. Ein formalisierter Prozess zur Beantragung und Genehmigung von Ausnahmen ist etabliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Rollen werden in einer Matrix dokumentiert. Mit Tools wie zSecure werden regelmäßige Berichte zur Überprüfung der Berechtigungen erstellt. Ausnahmeanträge werden über ein ITSM-System abgewickelt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der RBAC-Dokumentation. Analyse der Berichte der letzten Berechtigungs-Reviews und der umgesetzten Korrekturen. Überprüfung von Tickets für Ausnahmeanträge."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a7-m5",
+                    "uuid": "29c8de46-f113-4a54-bfdd-92ceb6f118af",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein automatisiertes Identity and Access Management (IAM) System verwaltet den gesamten Lebenszyklus von Rollen und Berechtigungen. Berechtigungs-Reviews sind automatisiert und erfordern eine regelmäßige Re-Zertifizierung durch die Vorgesetzten. Anomalieerkennung wird eingesetzt, um Rechteausweitungen oder ungewöhnliche Zugriffsmuster zu identifizieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein IAM-Tool (z.B. von Broadcom, IBM) wird mit RACF integriert. Das IAM-Tool steuert den Workflow für Anträge, Genehmigungen und Rezertifizierungen. SIEM- oder UEBA-Tools analysieren SMF-Daten, um Anomalien wie den Zugriff auf selten genutzte, aber kritische Ressourcen zu erkennen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des IAM-Systems und der Rezertifizierungs-Workflows. Analyse der Berichte und Alarme des Anomalieerkennungssystems. Verifizierung, dass die Rezertifizierungen fristgerecht durchgeführt werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d7d2158e-e5f9-4383-82a8-1542db83d134",
+                "control-id": "KONF.6.1.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a9-m1",
+                    "uuid": "62daf27a-e5ac-4715-bde7-5f0421794719",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Trennung von Mandanten beruht hauptsächlich auf Namenskonventionen und organisatorischen Regelungen. Eine strikte technische Trennung durch RACF ist nicht durchgängig umgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Datasets werden beispielsweise mit einem Mandantenkürzel als Präfix benannt (`MANDANT1.PROD.DATA`), aber es gibt keine RACF-Profile, die den Zugriff anderer Mandanten aktiv verhindern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch, als Benutzer eines Mandanten auf die Daten eines anderen zuzugreifen. Überprüfung der RACF-Profile auf fehlende mandantenspezifische Einschränkungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m2",
+                    "uuid": "7f163b75-d17d-4ab9-81d0-ac640b913f4b",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zur Trennung der Mandanten werden RACF-Profile verwendet. Hohe Systemprivilegien (SPECIAL, OPERATIONS) sind jedoch nicht strikt auf den zentralen Betreiber beschränkt, sodass Mandantenadministratoren einige systemweite Rechte besitzen. Wartungsfenster werden angekündigt, aber nicht aktiv mit den Mandanten koordiniert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Generische RACF-Profile (`MANDANT1.**`) schützen die Daten. Einige Mandanten-Admins erhalten jedoch z.B. das OPERATIONS-Attribut, um eigene Jobs zu verwalten. Wartungsfenster werden per E-Mail angekündigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Vergabe von Systemprivilegien an mandantenspezifische Benutzer. Befragung der Mandanten zur Koordination von Wartungsfenstern."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m3",
+                    "uuid": "9fb594d5-f392-4f89-9f61-b4552564fc60",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls ein z/OS-System von Mandanten genutzt wird, MUSS ein RACF-Konzept zur Mandantentrennung erstellt werden. Die Daten und Anwendungen der Mandanten MÜSSEN durch RACF-Profile getrennt werden. Hohe Berechtigungen (SPECIAL, OPERATIONS, AUDITOR) und ändernder Zugriff auf Dateien des z/OS-Betriebssystems DÜRFEN NUR Mitarbeitende der Betreibenden haben. Die Wartungsfenster MÜSSEN mit allen Mandanten abgestimmt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Mandantenkonzept wird erstellt, das die Trennung auf Ebene von Datasets, Jobs, Started Tasks und anderen Ressourcen mittels RACF-Profilen und -Gruppen beschreibt. Die Vergabe von Systemprivilegien ist streng auf das Betreiberpersonal beschränkt. Wartungsfenster werden in Abstimmung mit den Mandanten über ein gemeinsames Ticketsystem geplant."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Mandantenkonzepts. Überprüfung der RACF-Datenbank auf die korrekte Umsetzung der Trennung. Verifizierung, dass keine Mandanten-User Systemprivilegien besitzen. Einsicht in die Planungsprotokolle der Wartungsfenster."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m4",
+                    "uuid": "612ca145-dcda-4b42-8a02-f54f5224ed99",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zur stärkeren Isolation zwischen den Mandanten werden logische Partitionen (LPARs) verwendet. Der Netzwerkverkehr zwischen den Mandanten-LPARs wird durch eine Mainframe-Firewall kontrolliert. Regelmäßige Audits werden durchgeführt, um die Wirksamkeit der Trennung zu überprüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jeder Mandant oder jede Mandantengruppe erhält eine eigene LPAR. Eine Software-Firewall auf z/OS (z.B. als Teil von z/OS Communications Server) oder eine externe Firewall wird konfiguriert, um den Datenverkehr zwischen den LPARs zu filtern. Audits werden durch interne oder externe Prüfer durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der LPAR-Konfiguration und der Netzwerk-Firewall-Regeln. Analyse der Berichte der letzten Mandantentrennungs-Audits."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a9-m5",
+                    "uuid": "691f686f-306d-44ee-982e-a9ff08bc6375",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Jeder Mandant läuft in einer vollständig separaten LPAR oder, falls die Sicherheitsanforderungen dies erfordern, auf separater physischer Hardware (in unterschiedlichen Central Processor Complexes). Alle potenziellen verdeckten Kanäle zwischen den Mandantenumgebungen sind identifiziert und mitigiert. Die Trennungsmechanismen sind durch einen unabhängigen Dritten zertifiziert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für Hochsicherheitsmandanten werden dedizierte Maschinen bereitgestellt. Es wird eine Analyse der verdeckten Kanäle (Covert Channel Analysis) durchgeführt, z.B. bezüglich gemeinsamer Ressourcen im Prozessor-Cache oder im I/O-Subsystem. Ein Zertifizierungsbericht (z.B. nach Common Criteria) liegt vor."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der physischen oder logischen Systemarchitektur. Analyse der Studie zu verdeckten Kanälen. Einsichtnahme in das externe Zertifikat zur Mandantentrennung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "76c4c20a-d7c8-49da-875d-498f2ee65f75",
+                "control-id": "KONF.6.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a1-m1",
+                    "uuid": "904c36f0-05ca-4178-bcb8-e89bdaf59591",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur einige hoch-privilegierte RACF-Attribute, wie SPECIAL, werden eingeschränkt. Die Kennung IBMUSER ist zwar nicht im produktiven Einsatz, aber nicht formal gesperrt. Ein Notfall-User-Konzept existiert nicht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Umsetzung konzentriert sich auf die offensichtlichsten Risiken. Gruppenattribute und die User-ID 0 unter USS werden oft übersehen. Das Sperren von IBMUSER wird als optional betrachtet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen, ob neben SPECIAL auch OPERATIONS, AUDITOR und die UID 0 uneingeschränkt vergeben werden. Überprüfen, ob die Kennung IBMUSER noch aktiv ist oder reaktiviert werden kann."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m2",
+                    "uuid": "85eb8d2b-b112-428b-824e-d6e8684a06ae",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle genannten hoch-privilegierten RACF-Attribute (SPECIAL, OPERATIONS, AUDITOR, UID 0) werden restriktiv gehandhabt. Die Kennung IBMUSER ist gesperrt. Ein Notfall-User existiert, aber der Prozess für dessen Nutzung ist informell und die Nachvollziehbarkeit der Vergabe erfolgt durch manuelle Log-Reviews."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die grundlegenden Anforderungen werden erfüllt. Die RACF-Kommandos zum Sperren von IBMUSER (z.B. `ALTUSER IBMUSER REVOKE`) werden einmalig ausgeführt. Die Nachvollziehbarkeit wird durch das Aufbewahren von SMF-Logs sichergestellt, die bei Bedarf manuell ausgewertet werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Verifizieren, dass alle hoch-privilegierten Attribute nur an definierte Rollen vergeben werden. Prüfen, ob der IBMUSER-Account den Status REVOKED hat. Befragen der Administratoren zum Notfall-Prozess und Einsehen der entsprechenden Logfiles."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m3",
+                    "uuid": "7f503dc8-de83-4191-be1f-7d4ac7cbd081",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Berechtigungen mit hoher Autorisierung (insbesondere die RACF-Attribute SPECIAL, OPERATIONS, AUDITOR und die entsprechenden GROUP-Attribute sowie die User-ID 0 unter USS) DÜRFEN NUR an Benutzende vergeben werden, die diese Rechte für ihre Tätigkeiten benötigen. Die Vergabe und der Einsatz MÜSSEN nachvollziehbar sein. Die Kennung IBMUSER DARF NUR bei der Neuinstallation genutzt und MUSS danach dauerhaft gesperrt werden. Es MUSS ein Notfall-User-Verfahren eingerichtet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Rollen- und Berechtigungskonzept definiert, welche Person welche Privilegien erhält. Die Nachvollziehbarkeit wird durch die Dokumentation im Change-Management-System sichergestellt. Der Notfall-User-Prozess ist dokumentiert und beschreibt, wer die Nutzung genehmigen darf und wie sie protokolliert wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Berechtigungskonzepts. Stichprobenartige Überprüfung der zugewiesenen Attribute gegen die dokumentierten Rollen. Verifizierung des Sperrstatus von IBMUSER. Überprüfung der Dokumentation und der Wirksamkeit des Notfall-User-Verfahrens."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m4",
+                    "uuid": "99f79858-1e21-4125-b1b5-820c9ff397c3",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu den definierten Prozessen wird ein regelmäßiger, halbautomatischer Review-Prozess für alle hoch-privilegierten Berechtigungen durchgeführt. Die Nutzung des Notfall-Users löst automatische Benachrichtigungen an das Sicherheitsteam aus. Die Vergabe von hohen Berechtigungen erfordert eine Zwei-Faktor-Genehmigung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Skripte oder Tools wie zSecure Audit eingesetzt, um Berichte über die Vergabe von SPECIAL, OPERATIONS etc. zu erstellen und mit den Soll-Vorgaben abzugleichen. Benachrichtigungen werden per E-Mail oder über ein Ticketsystem realisiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen der Berichte der letzten Review-Zyklen und der Bearbeitung von festgestellten Abweichungen. Testen des Alarmierungsmechanismus für den Notfall-User. Überprüfung der implementierten Zwei-Faktor-Genehmigung im Change-Management-Prozess."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a1-m5",
+                    "uuid": "ab6301ca-09dc-48cf-b8fb-a48933a4bb41",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Privileged Access Management (PAM) System wird für die Vergabe aller hoch-privilegierten Berechtigungen eingesetzt. Der Zugriff wird nur temporär und Just-in-Time (JIT) gewährt. Alle Aktionen mit diesen Berechtigungen werden in Echtzeit überwacht und durch ein SIEM analysiert. Der Notfall-User-Prozess ist vollautomatisiert und erfordert eine mehrstufige Genehmigung über das PAM-System."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine PAM-Lösung (z.B. von CyberArk, Broadcom) wird integriert, die RACF-Kommandos zur temporären Rechtevergabe (`ALTUSER ... RESUME`) und zum Entzug (`... REVOKE`) automatisiert ausführt. SIEM-Korrelationsregeln sind spezifisch für z/OS-Privilegien-Missbrauch konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des PAM-Systems und der JIT-Richtlinien. Analyse der SIEM-Protokolle auf die Überwachung privilegierter Sitzungen. Durchführung eines Tests des automatisierten Notfall-User-Prozesses, um die Einhaltung der Genehmigungskette zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "4a4b8b89-5981-4c40-a37b-86fb87de1c31",
+                "control-id": "KONF.6.4.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a18-m1",
+                    "uuid": "bef587c2-bf8d-453e-8067-3ffd28fcd6cb",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Rollen existieren nur informell und sind nicht dokumentiert oder technisch in RACF (z.B. durch Gruppen) abgebildet. Berechtigungen werden individuell pro Benutzer vergeben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Zugriffsrechte basieren auf mündlichen Absprachen oder zurufen. Es gibt keine RACF-Gruppen, die funktionale Rollen repräsentieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragen der Mitarbeiter nach ihren Rollen und Aufgaben. Überprüfung der RACF-Datenbank auf das Fehlen einer Gruppenstruktur und das Vorhandensein vieler benutzerspezifischer Berechtigungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m2",
+                    "uuid": "3efb571b-0a55-4a08-8d4e-34c4d0fb25c6",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Rollenkonzept ist dokumentiert und RACF-Gruppen werden verwendet. Die Funktionstrennung für die Attribute SPECIAL, OPERATIONS und AUDITOR ist jedoch nicht umgesetzt; eine Person kann mehrere dieser mächtigen Attribute innehaben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt ein Dokument, das Rollen wie 'Systemprogrammierer' oder 'Operator' beschreibt. Es existieren entsprechende RACF-Gruppen. Die Trennung der Top-Privilegien wird jedoch aus Personalmangel oder Bequemlichkeit nicht durchgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Vergleich der RACF-Datenbank mit dem Rollenkonzept. Überprüfung, ob es Benutzer gibt, die gleichzeitig SPECIAL und AUDITOR oder andere kritische Kombinationen von Attributen haben."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m3",
+                    "uuid": "b21a51e0-885f-4dc8-879e-0254b5612c3f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Mindestens für die Systemverwaltung von z/OS-Systemen SOLLTE ein Rollenkonzept eingeführt werden. Für alle wichtigen Rollen der Systemverwaltung SOLLTEN außerdem Stellvertretungsregelungen vorhanden sein. Die RACF-Attribute SPECIAL, OPERATIONS und AUDITOR SOLLTEN verschiedenen Personen zugeordnet werden (Rollentrennung)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein formales Rollenkonzept für die Administration wird erstellt und in RACF mittels Gruppen umgesetzt. In der Dokumentation wird für jede wichtige Rolle mindestens ein Stellvertreter benannt. Es wird sichergestellt, dass die Attribute SPECIAL, OPERATIONS und AUDITOR an unterschiedliche Personen vergeben sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Rollenkonzepts und der Dokumentation der Stellvertretungsregeln. Überprüfung der RACF-Datenbank, um sicherzustellen, dass SPECIAL, OPERATIONS und AUDITOR an verschiedene Benutzerkennungen vergeben sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m4",
+                    "uuid": "574a1736-f080-4496-af5b-daf823314c23",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Rollenkonzept umfasst nicht nur Administratoren, sondern auch Anwendungsentwickler und Endbenutzer. Die Zugriffsrechte für jede Rolle sind in einer Rollenmatrix dokumentiert. Ein regelmäßiger Rezertifizierungsprozess stellt sicher, dass die zugewiesenen Rollen noch angemessen sind."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Rollenkonzept wird auf alle Benutzer des Systems ausgeweitet. Eine Matrix (z.B. in einer Tabelle) listet alle Rollen und deren Berechtigungen auf. Jährlich müssen die Vorgesetzten die Rollenzugehörigkeit ihrer Mitarbeiter überprüfen und bestätigen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Vollständigkeit der Rollenmatrix. Analyse der Protokolle der letzten Rezertifizierungskampagne und der daraus resultierenden Anpassungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a18-m5",
+                    "uuid": "9fa36675-9ad9-467f-8347-1461c991f9fd",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das rollenbasierte Zugriffskontrollmodell (RBAC) wird von einer zentralen IAM-Lösung verwaltet. Die Rollendefinitionen sind feingranular und halten sich strikt an das Prinzip der geringsten Rechte. Das System kann toxische Berechtigungskombinationen, die gegen die Funktionstrennungsrichtlinien verstoßen, automatisch erkennen und melden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein IAM-Tool verwaltet die Rollen und deren Zuweisung zu Benutzern und synchronisiert dies mit RACF. Eine SoD-Matrix (Segregation of Duties) ist im IAM-Tool hinterlegt, die bei der Zuweisung von Rollen automatisch geprüft wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration des IAM-Tools und der SoD-Matrix. Analyse der Berichte über festgestellte SoD-Konflikte. Testen der Zuweisung einer konfliktbehafteten Rolle, um die korrekte Funktion der Erkennung zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "19d0e1cf-49ba-4e40-ae9e-5f3278755304",
+                "control-id": "KONF.7.10",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a2-m1",
+                    "uuid": "b94bcf7d-4ac7-4661-9c91-27db3d60229b",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur die bekanntesten sicherheitskritischen Programme sind durch RACF-Profile geschützt. Alias-Namen werden dabei oft nicht berücksichtigt. Die Installation von (Fremd-)Programmen wird nicht systematisch kontrolliert und erfolgt oft manuell."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden RACF-Profile für Programme wie `ICKDSF` oder `AMASPZAP` angelegt, aber Aliase oder weniger bekannte Tools bleiben ungeschützt. SMP/E wird nicht konsequent für alle Software-Installationen verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen, ob für bekannte sicherheitskritische Programme auch deren Aliase geschützt sind. Suchen nach Software in Systembibliotheken, die nicht über SMP/E verwaltet wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m2",
+                    "uuid": "d5c5b052-5431-4047-893f-1261782a47be",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle bekannten sicherheitskritischen Programme und deren Aliase sind durch RACF-Profile geschützt. Die Installation von Programmen erfolgt standardmäßig über SMP/E, jedoch wird die Herkunft der Installationspakete nicht systematisch verifiziert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Liste kritischer Programme und ihrer Aliase wird gepflegt und in RACF umgesetzt. SMP/E wird als Standardwerkzeug für die Softwareverteilung etabliert. Die Quellen der Software (z.B. von IBM oder Drittanbietern) werden als vertrauenswürdig angenommen, aber nicht kryptographisch geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der RACF-Profile für die Liste der kritischen Programme und Aliase. Verifizierung, dass neue Software über SMP/E installiert wurde. Befragung der Administratoren zum Prozess der Quellenverifikation."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m3",
+                    "uuid": "e6dc44da-77ce-47cf-b11d-315bd9555429",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sicherheitskritische (Dienst-)Programme und Kommandos sowie deren Alias-Namen MÜSSEN mit Rechten auf entsprechende RACF-Profile so geschützt werden, dass sie nur von den dafür vorgesehenen und autorisierten Personen benutzt werden können. Es MUSS sichergestellt sein, dass (Fremd-)Programme nicht unerlaubt installiert werden können. Außerdem DÜRFEN Programme NUR von gesicherten Quellen und über nachvollziehbare Methoden (z. B. SMP/E) installiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine umfassende Liste sicherheitskritischer Programme und ihrer Aliase gepflegt. Der Zugriff wird über die `PROGRAM` Klasse in RACF gesteuert. Alle Programminstallationen und -updates müssen über SMP/E erfolgen und im Change-Management-System dokumentiert werden. Gesicherte Quellen sind definierte, vertrauenswürdige Repositories."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der RACF-Konfiguration für die `PROGRAM` Klasse. Stichprobenartige Überprüfung von Installationen auf die Einhaltung des SMP/E-Prozesses und die Dokumentation im Change-Management. Überprüfung der Definition und Sicherung der Software-Quellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m4",
+                    "uuid": "d9d6a22f-33b8-4fac-8370-546cd9f4a8dc",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zum definierten Schutz wird ein Integritätsüberwachungssystem eingesetzt, das kritische Systembibliotheken (z.B. `SYS1.LPALIB`, `SYS1.LINKLIB`) regelmäßig auf unautorisierte Änderungen überprüft. Der SMP/E-Prozess ist fest in das Change-Management-System integriert und erfordert eine formale Genehmigung für jede Installation."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools wie Tripwire oder zSecure Alert/Audit werden konfiguriert, um die Integrität kritischer Datasets zu überwachen und bei Änderungen zu alarmieren. Der SMP/E-Prozess wird durch ein Workflow-Tool gesteuert, das die Freigabe dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration und der Protokolle des Integritätsüberwachungssystems. Analyse von Change-Tickets, um die Einhaltung des Genehmigungsworkflows für SMP/E-Aktivitäten zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a2-m5",
+                    "uuid": "3ed09d69-a4bf-43fe-8c87-d1c3133d236e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle sicherheitskritischen Bibliotheken sind durch kryptographische Signaturen geschützt. Das System verhindert automatisch die Ausführung von Programmen, die unautorisiert sind oder deren Signatur ungültig ist. Die Programminstallation ist vollständig über eine CI/CD-Pipeline automatisiert, die Sicherheitstests (z.B. Code-Scanning) und automatische Signierung integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Funktionen wie Programmkontrolle mit digitalen Signaturen genutzt. Die CI/CD-Pipeline (z.B. mit Jenkins oder GitLab) wird so konfiguriert, dass sie nach erfolgreichen Tests die Softwarepakete automatisch signiert und mittels SMP/E in einer kontrollierten Weise ausrollt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration der Programmkontrolle und der Signaturüberprüfung. Audit der CI/CD-Pipeline-Konfiguration, um die korrekte Implementierung der Sicherheits-Gates und des Signaturprozesses zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,1432 @@
+{
+  "component-definition": {
+    "uuid": "443c21a9-1202-4a5c-aa2a-2e8e4cfc7a2f",
+    "metadata": {
+      "title": "SYS.1.5 Virtualisierung - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:34.643771+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "47221eb5-7b62-451c-b32f-30faa13013b2",
+        "type": "hardware",
+        "title": "SYS.1.5 Virtualisierung",
+        "description": "This component represents the implementation of all controls for Baustein SYS.1.5.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Bei der Virtualisierung von IT-Systemen werden ein oder mehrere virtuelle IT-Systeme auf einem physischen IT-System ausgeführt. Ein solches physisches IT-System wird als „Virtualisierungsserver“ bezeichnet. Mehrere Virtualisierungsserver können zu einer virtuellen Infrastruktur zusammengefasst werden. Darin können die Virtualisierungsserver selbst und die auf ihnen betriebenen virtuellen IT-Systeme gemeinsam verwaltet werden.<BR>Die Virtualisierung von IT-Systemen bietet viele Vorteile für den IT-Betrieb in einem Informationsverbund. So können beispielsweise Kosten für Hardwarebeschaffung, Strom und Klimatisierung eingespart werden, wenn die Ressourcen der physischen IT-Systeme effizienter genutzt werden. Allerdings ist die Virtualisierung auch eine Herausforderung für den Betrieb des Informationsverbunds. Da durch die eingesetzte Virtualisierungstechnik unterschiedliche Bereiche und Arbeitsfelder im Informationsverbund berührt werden, müssen Wissen und Erfahrungen aus diesen Bereichen zusammengeführt werden. Zudem können sich Probleme auf einem Virtualisierungsserver auch auf alle anderen virtuellen IT-Systeme, die auf demselben Virtualisierungsserver betrieben werden, auswirken. Ebenso können sich virtuelle IT-Systeme gegenseitig in ihrem Betrieb stören."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Das Ziel dieses Bausteins ist es aufzuzeigen, wie Virtualisierungsserver im Informationsverbund sicher eingeführt und betrieben werden können."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.1.5 Virtualisierung ist auf jeden Virtualisierungsserver anzuwenden.<BR>Neben dem vorliegenden Baustein müssen auch die jeweils relevanten Server- oder Client-Bausteine der Schicht SYS IT-Systeme auf jeden Virtualisierungsserver angewandt werden. Neben den betriebssystemspezifischen Bausteinen müssen außerdem die Bausteine SYS.1.1 Allgemeiner Server bzw. SYS.2.1 Allgemeiner Client angewendet werden, da in diesen Bausteinen die plattformunabhängigen Sicherheitsaspekte für Server bzw. Clients zusammengefasst sind.<BR>In diesem Baustein wird nur die Virtualisierung vollständiger IT-Systeme behandelt. Andere Techniken, die teilweise ebenfalls mit dem Wort „Virtualisierung“ in Verbindung gebracht werden (z. B. Anwendungsvirtualisierung mittels Terminalservern, Storage-Virtualisierung und Container), sind nicht Gegenstand dieses Bausteins.<BR>Im Bereich der Software-Entwicklung werden die Begriffe „Virtuelle Maschine“ und „Virtueller-Maschinen-Monitor“ auch für Laufzeitumgebungen benutzt, z. B. wenn Java oder Microsoft .NET eingesetzt werden. Solche Laufzeitumgebungen werden in diesem Baustein ebenfalls nicht betrachtet.<BR>Virtuelle Infrastrukturen werden in der Regel mit speziellen Managementsystemen verwaltet. Da mit diesen IT-Systemen umfassend auf die Virtualisierungsinfrastruktur zugegriffen werden kann, ist es wichtig, diese ausreichend abzusichern. Das betrifft sowohl den physischen oder virtuellen Server, auf dem die Management-Software ausgeführt wird, als auch das Produkt selber.<BR>Virtualisierungsumgebungen werden meistens gemeinsam mit Speichernetzen (NAS oder SAN) eingesetzt. Die Anbindung und Absicherung dieser Systeme werden in diesem Baustein ebenfalls nicht betrachtet (siehe hierfür Baustein SYS.1.8 Speicherlösungen).<BR>Durch die Virtualisierung müssen die Netze der Institution anders strukturiert werden. Dieses Thema wird in diesem Baustein nicht umfassend behandelt. Dafür müssen die Anforderungen des Bausteins NET.1.1 Netzarchitektur und -design erfüllt werden. Auch die Netzvirtualisierung wird im vorliegenden Baustein nicht in der notwendigen Tiefe beleuchtet."
+          },
+          {
+            "name": "2.1. Fehlerhafte Planung der Virtualisierung",
+            "value": "Ein Virtualisierungsserver ermöglicht den Betrieb virtueller IT-Systeme, integriert die IT-Systeme in das Rechenzentrum und steuert dabei deren Anbindung an weitere Infrastrukturelemente, z. B. Netze (inklusive Speichernetze). Wird nicht geplant, wie die Virtualisierungsserver technisch und organisatorisch in die bestehende Infrastruktur zu integrieren sind, kann dies dazu führen, dass die Zuständigkeiten für unterschiedliche Bereiche womöglich nicht klar definiert sind, z. B. für Anwendungen, Betriebssysteme und Netzkomponenten. Weiterhin können sich die Zuständigkeiten verschiedener Bereiche überschneiden oder es ist keine passende Rechtestruktur vorhanden, um administrative Zugriffe für die unterschiedlichen Bereiche zu trennen."
+          },
+          {
+            "name": "2.2. Fehlerhafte Konfiguration der Virtualisierung",
+            "value": "Durch Virtualisierung ändert sich die Art und Weise, wie Server provisioniert werden. Ressourcen wie CPU, RAM, Netzanbindung und Speicher werden in der Regel zentral über ein Managementsystem konfiguriert und sind nicht mehr durch Hardware und Verkabelung vorgegeben. Dadurch können schnell Fehler in der Konfiguration entstehen. Wird beispielsweise ein hoch schutzbedürftiges virtuelles IT-System fälschlicherweise in einer externen Demilitarisierten Zone (DMZ) platziert, ist es folglich aus dem Internet erreichbar und somit einem erhöhten Risiko ausgesetzt."
+          },
+          {
+            "name": "2.3. Unzureichende Ressourcen für virtuelle IT-Systeme",
+            "value": "Virtualisierungsserver benötigen für den Betrieb der virtuellen IT-Systeme Speicherplatz, der entweder lokal im Virtualisierungsserver selbst oder in einem Speichernetz bereitgestellt wird. Werden die hierfür benötigten Speicherkapazitäten nicht ausreichend groß geplant, bestehen weitreichende Risiken für die Verfügbarkeit der virtuellen IT-Systeme und die Integrität der in ihnen verarbeiteten Informationen. Das gilt insbesondere dann, wenn spezielle Virtualisierungsfunktionen, wie Snapshots oder die Überbuchung von Speicherplatz, benutzt werden.<BR>Engpässe können nicht nur den Speicherplatz auf Festplatten oder in Speichernetzen betreffen, sondern auch die Prozessorleistung, den Arbeitsspeicher (RAM), oder die Netzanbindung. Außerdem könnten sich durch unzureichende Ressourcen auf dem Virtualisierungsserver die virtuellen Maschinen gegenseitig in ihrem Betrieb stören und letztlich nicht mehr korrekt arbeiten oder ganz ausfallen."
+          },
+          {
+            "name": "2.4. Informationsabfluss oder Ressourcen-Engpass durch Snapshots",
+            "value": "Durch einen Snapshot kann der Zustand einer virtuellen Maschine eingefroren und gesichert werden. Wird ein solcher Snapshot zu einem späteren Zeitpunkt wiederhergestellt, gehen alle in der Zwischenzeit vorgenommenen Änderungen verloren. Dadurch können auch bereits gepatchte Sicherheitslücken wieder offen sein. Weiterhin können durch offene Dateien, Dateitransfers oder Datenbanktransaktionen zum Zeitpunkt des Snapshots inkonsistente Daten entstehen.<BR>Außerdem können Snapshots bei Angriffen dazu missbraucht werden, um unberechtigt auf die Daten eines virtuellen IT-Systems zuzugreifen. Denn wenn der Snapshot im laufenden Betrieb erstellt wurde, ist auch der Inhalt des Hauptspeichers auf der Festplatte gesichert worden und kann auf einer virtuellen Umgebung außerhalb der ursprünglichen IT-Infrastruktur wiederhergestellt und analysiert werden. Ebenso können Snapshots sehr groß werden und dadurch kann die verfügbare Speicherkapazität knapp werden."
+          },
+          {
+            "name": "2.5. Ausfall des Verwaltungsservers für Virtualisierungssysteme",
+            "value": "Da über den Verwaltungsserver sämtliche Funktionen einer virtuellen Infrastruktur gesteuert und administriert werden, führt ein Ausfall dieses Verwaltungssystems dazu, dass keine Konfigurationsänderungen an der virtuellen Infrastruktur durchgeführt werden können. Der IT-Betrieb kann in dieser Zeit nicht auf auftretende Probleme wie Ressourcenengpässe oder den Ausfall einzelner Virtualisierungsserver reagieren und keine neuen Virtualisierungsserver in die Infrastruktur integrieren oder neue virtuelle IT-Systeme anlegen. Auch die Live-Migration und damit die dynamische Zuteilung von Ressourcen für einzelne Gast-Systeme ist ohne Verwaltungsserver nicht möglich."
+          },
+          {
+            "name": "2.6. Missbräuchliche Nutzung von Gastwerkzeugen",
+            "value": "Gastwerkzeuge werden in den virtuellen Maschinen häufig mit sehr hohen Berechtigungen ausgeführt. Dadurch lassen sie sich beispielsweise für Denial-of-Service-Angriffe missbrauchen oder Angreifende übernehmen mit ihnen gleich den ganzen Virtualisierungsserver."
+          },
+          {
+            "name": "2.7. Kompromittierung der Virtualisierungssoftware",
+            "value": "Die Virtualisierungssoftware (auch „Hypervisor“) ist die zentrale Komponente eines Virtualisierungsservers. Sie steuert alle auf diesem Server ausgeführten virtuellen Maschinen und teilt ihnen Prozessor- und Speicherressourcen zu. Wird diese Komponente erfolgreich angegriffen, führt dies auch dazu, dass alle virtuellen IT-Systeme, die auf dem Virtualisierungsserver ausgeführt werden, kompromittiert sind."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "78ed5632-f532-4b39-97c7-75884f6a52c8",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/virtualisierungslsungen_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.1.5",
+            "implemented-requirements": [
+              {
+                "uuid": "a24f6a54-722f-4507-bab2-38d5a47aac63",
+                "control-id": "ARCH.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a6-m3",
+                    "uuid": "26778857-e41e-460a-9966-d889d7e42d18",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls die VDI-Komponenten virtualisiert betrieben werden, SOLLTEN sie auf einer dedizierten Virtualisierungsinfrastruktur betrieben werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die virtuellen Maschinen, auf denen die VDI-Management-Komponenten (z. B. Connection Broker, Datenbank, Lizenzserver) laufen, werden auf einem separaten Cluster von Hypervisor-Hosts betrieben. Dieser Management-Cluster wird nicht für die Ausführung der regulären virtuellen Clients oder anderer Server-Workloads verwendet, um Ressourcenkonflikte und Sicherheitsrisiken durch Kompromittierung anderer Systeme zu vermeiden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert in der Managementkonsole der Virtualisierungsplattform, dass ein dedizierter Cluster für die VDI-Management-Komponenten existiert. Es wird geprüft, ob auf den Hosts dieses Clusters ausschließlich die vorgesehenen Management-VMs und keine anderen Workloads laufen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a6-m4",
+                    "uuid": "906d85f5-60e8-4f84-8649-26938cc93164",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nicht nur die Hypervisoren, sondern auch die zugrundeliegende Storage- und Netzwerkinfrastruktur für die VDI-Managementkomponenten sind physisch oder logisch strikt von der Infrastruktur getrennt, die die virtuellen Clients und andere Anwendungen versorgt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der VDI-Management-Cluster verwendet dedizierte Storage-LUNs oder -Volumes und ist an separate Switch-Ports angeschlossen. Der Netzwerkverkehr des Management-Clusters wird über dedizierte VLANs geleitet, die von den VLANs der virtuellen Client-Workloads getrennt sind. Dies verhindert Performance-Engpässe ('Noisy Neighbor'-Problem) und verbessert die Sicherheit."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht die Konfiguration der Storage- und Netzwerkinfrastruktur. Es wird verifiziert, ob dedizierte Ressourcen (LUNs, VLANs, Switch-Ports) für den VDI-Management-Cluster zugewiesen sind. Die Netzwerk- und Storage-Architekturdiagramme werden auf eine korrekte Trennung geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a6-m5",
+                    "uuid": "410f301b-e836-4e32-a239-32eaed02fc4e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Management-Ebene wird in einer dedizierten Hochsicherheitszone betrieben, idealerweise auf dedizierter physischer Hardware, mit strikten physischen und logischen Zugangskontrollen und intensiver Überwachung. Sie wird als kritische Infrastruktur behandelt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Server für die VDI-Management-Komponenten sind in einem separaten, zugangsgeschützten Rack im Rechenzentrum untergebracht. Der administrative Zugriff auf diese Systeme ist auf wenige, spezialisierte Administratoren beschränkt und erfordert Multi-Faktor-Authentifizierung und eine Privileged Access Management (PAM)-Lösung. Jegliche Aktivität auf diesen Systemen wird lückenlos protokolliert und analysiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die physischen Sicherheitsmaßnahmen für die VDI-Management-Hardware. Die Konfiguration der PAM-Lösung und die Zugriffsberechtigungen werden kontrolliert. Die Protokolle werden auf Vollständigkeit und auf die Analyse durch ein SIEM-System geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "4be0364e-3e51-41d6-ae6a-ae33bd4f3c59",
+                "control-id": "ARCH.8.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a15-m3",
+                    "uuid": "a5e2245d-c054-444c-bd94-4e04b15f292e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Komponenten SOLLTEN redundant ausgelegt werden. Jede Komponente SOLLTE darüber hinaus redundant an die relevanten Netze angeschlossen werden. Falls die VDI-Komponenten auf physischen IT-Systemen betrieben werden, SOLLTEN diese IT-Systeme über redundante Stromversorgung und Datenspeicher verfügen. Falls die VDI-Komponenten virtualisiert betrieben werden, SOLLTEN Mechanismen der Virtualisierungsinfrastruktur für die Hochverfügbarkeit eingesetzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Kritische VDI-Komponenten wie Connection Broker und Gateways werden als Cluster mit mindestens zwei Knoten betrieben. Diese werden entweder in einem Aktiv/Aktiv-Modus hinter einem Load Balancer oder in einem Aktiv/Passiv-Cluster mit automatischem Failover betrieben. Bei virtualisierten Komponenten wird die Hochverfügbarkeitsfunktion der Virtualisierungsplattform (z. B. VMware HA, Hyper-V Failover Clustering) genutzt, um die VMs bei einem Host-Ausfall automatisch auf einem anderen Host neu zu starten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Architektur der VDI-Umgebung und verifiziert, dass kritische Komponenten redundant ausgelegt sind. Die Konfiguration des Load Balancers oder des Failover-Clusters wird geprüft. Bei virtualisierten Umgebungen wird die Konfiguration der Hochverfügbarkeitsfunktion des Hypervisors kontrolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a15-m4",
+                    "uuid": "12c96e05-7199-4edb-a671-259081ed7ccc",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Lösung ist auf zwei physisch getrennte Rechenzentren in einer Stretched-Cluster-Konfiguration verteilt, was eine standortbezogene Ausfallsicherheit bietet. Der Failover-Prozess wird im Rahmen eines formalen Disaster-Recovery-Plans regelmäßig (z.B. halbjährlich) getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die VDI-Infrastruktur erstreckt sich über zwei Standorte mit einer synchronen Speicherspiegelung und einem ausfallsicheren Netzwerk. Im Falle des Ausfalls eines kompletten Standorts kann die VDI-Lösung am verbleibenden Standort weiterbetrieben werden. Die DR-Tests beinhalten einen kontrollierten Failover und Failback der gesamten Umgebung und werden protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert den Disaster-Recovery-Plan an und überprüft die Protokolle der letzten DR-Tests. Die Konfiguration der standortübergreifenden Cluster und der Speicherspiegelung wird analysiert. Es wird geprüft, ob die Tests erfolgreich waren und welche Lehren daraus gezogen wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a15-m5",
+                    "uuid": "a699f021-4dd2-41a9-835e-0f12fa0e93e0",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine standortübergreifende Aktiv-Aktiv-Architektur mit Global Server Load Balancing (GSLB) ist implementiert. Benutzer werden automatisch und transparent zum nächstgelegenen oder leistungsfähigsten Rechenzentrum geleitet. Das System kann den Totalausfall eines Standorts ohne Datenverlust und mit nur minimaler oder keiner Serviceunterbrechung für die Benutzer verkraften."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "An beiden Standorten läuft eine vollständige, aktive VDI-Umgebung. Ein GSLB-Dienst (z. B. F5 GTM, Cloudflare Load Balancing) verteilt die eingehenden Benutzeranfragen basierend auf geografischer Nähe, Latenz und Systemgesundheit auf die beiden Standorte. Die Benutzerdaten werden mittels asynchroner Replikation oder einer globalen Dateisystemtechnologie zwischen den Standorten aktuell gehalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des GSLB-Dienstes und die Routing-Richtlinien. Die Architektur wird auf eine echte Aktiv-Aktiv-Fähigkeit geprüft. Es wird ein simulierter Standortausfall durchgeführt (z. B. durch Deaktivieren des GSLB-Endpunkts für einen Standort), um zu beobachten, ob der Datenverkehr automatisch und nahtlos auf den verbleibenden Standort umgeleitet wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2edba61b-3934-4709-bb2c-a37156097de7",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a1-m1",
+                    "uuid": "507a3114-abf4-43dc-a88b-7eb0792409e9",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Planung für den VDI-Einsatz erfolgt ad-hoc und konzentriert sich nur auf einen unmittelbaren, begrenzten Anwendungsfall, wie z. B. ein Pilotprojekt. Eine langfristige Strategie oder die Anforderungen der gesamten Benutzerbasis werden nicht berücksichtigt. Leistungsanforderungen werden nur grob geschätzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In dieser Phase werden oft nur die Anzahl der initialen Benutzer und die benötigten Standardanwendungen erfasst. Die Planung wird typischerweise in einem einfachen Dokument oder einer Kalkulationstabelle festgehalten, ohne formale Analyse von Wachstumsraten oder Support-Lebenszyklen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, ob überhaupt Planungsdokumente existieren. Es wird geprüft, ob die Planung über eine einfache Auflistung von Benutzern und Software hinausgeht und ob grundlegende Aspekte wie Server-Dimensionierung, wenn auch nur oberflächlich, bedacht wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m2",
+                    "uuid": "6cadf103-1b5b-4823-89f0-988d74a13909",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Planung für den VDI-Einsatz ist vorhanden. Die Anzahl der zu versorgenden virtuellen Clients und deren generelle Leistungsanforderungen (z.B. für Office-Arbeitsplätze) sind identifiziert. Die Planung ist jedoch nicht detailliert und berücksichtigt Aspekte wie zukünftiges Wachstum oder den Support-Lebenszyklus der Lösung nur am Rande."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Planung umfasst eine initiale Dimensionierung für Server, Storage und Netzwerk basierend auf den aktuellen Benutzerzahlen. Es gibt eine grundlegende Abstimmung zwischen den VDI-Komponenten und der Virtualisierungsplattform, meist basierend auf den Standardempfehlungen des Herstellers."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz eines Planungsdokuments, das die Anzahl der Clients und die grundlegenden Leistungsanforderungen definiert. Es wird geprüft, ob eine initiale Dimensionierung der VDI-Komponenten vorgenommen wurde und ob der geplante Supportzeitraum erwähnt wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m3",
+                    "uuid": "7bce24b5-8d91-4e6a-836f-b66ff1278d36",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Leistungsanforderungen und Anzahl der benötigten virtuellen Clients sowie die daraus resultierenden Anforderungen an die Dimensionierung der VDI MÜSSEN identifiziert werden. Die VDI-Komponenten MÜSSEN anhand dieser Dimensionierungsanforderungen bedarfsgerecht geplant werden. Die VDI-Komponenten und die genutzte Virtualisierungsinfrastruktur MÜSSEN aufeinander abgestimmt geplant werden. Der Support MUSS für den gesamten geplanten Einsatzzeitraum der VDI-Lösung bei der Planung mitberücksichtigt werden. Die Anzahl virtueller Clients und deren benötigte Leistung pro Virtualisierungsserver MUSS festgelegt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein formales Dokument zur Kapazitätsplanung wird erstellt. Dieses Dokument listet die verschiedenen Benutzerprofile (z. B. Office, Power-User, Entwickler) und deren spezifische Anforderungen an CPU, RAM, GPU und Storage auf. Die Planung berücksichtigt auch die Anforderungen an die Netzwerkinfrastruktur, wie Bandbreite und Latenz. Die Supportverträge für Hard- und Software werden geprüft und auf den geplanten Einsatzzeitraum abgestimmt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert das Planungsdokument auf Vollständigkeit. Es wird verifiziert, ob die Leistungsanforderungen für verschiedene Client-Typen definiert sind, ob die VDI-Komponenten entsprechend dimensioniert sind und ob ein gültiger Supportvertrag für den geplanten Einsatzzeitraum existiert. Stichprobenartig wird geprüft, ob die Festlegung der maximalen Client-Anzahl pro Server auf nachvollziehbaren Kriterien beruht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m4",
+                    "uuid": "47883c57-296b-47d4-98aa-7ec1a360655a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Planung umfasst ein detailliertes Kapazitätsmanagement, das Prognosen für Benutzerwachstum und sich ändernde Anwendungsanforderungen über den gesamten Lebenszyklus der VDI-Lösung beinhaltet. Ein formaler Kapazitätsplan wird erstellt und periodisch (z. B. jährlich) überprüft und angepasst, um sicherzustellen, dass die Ressourcen auch zukünftig ausreichen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Kapazitätsplanung basiert nicht nur auf Schätzungen, sondern auch auf den Ergebnissen von Pilotphasen oder Messungen bestehender Systeme. Die Planung berücksichtigt auch Lastspitzen und definiert klare Schwellenwerte, bei deren Erreichen eine Erweiterung der Infrastruktur eingeleitet werden muss. Der Plan wird im Configuration Management Board (CMB) genehmigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz eines formalen und genehmigten Kapazitätsplans. Es wird geprüft, ob der Plan Prognosen für zukünftiges Wachstum enthält und ob es einen definierten Prozess zur regelmäßigen Überprüfung und Anpassung des Plans gibt. Protokolle von Überprüfungen werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a1-m5",
+                    "uuid": "cb74d206-1c5a-4442-8da8-35efda87332c",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Planung ist vollständig in die strategische IT-Planung und das Finanzcontrolling integriert. Es werden automatisierte Werkzeuge zur Kapazitätsprognose eingesetzt, die auf Echtzeit-Nutzungsdaten und Trendanalysen basieren. Der Planungsprozess beinhaltet die Simulation von \"Was-wäre-wenn\"-Szenarien, um die Auswirkungen größerer Geschäftsveränderungen (z. B. Firmenzukäufe) proaktiv zu bewerten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Spezialisierte Monitoring-Tools sammeln kontinuierlich Leistungs- und Nutzungsdaten der VDI-Umgebung. Diese Daten fließen in ein Prognose-Tool ein, das maschinelles Lernen verwendet, um den zukünftigen Ressourcenbedarf vorherzusagen. Die Ergebnisse werden in einem Management-Dashboard visualisiert und dienen als Grundlage für Investitionsentscheidungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht die Integration des VDI-Planungsprozesses in die übergeordneten Unternehmensprozesse. Es wird die Nutzung von automatisierten Prognose-Werkzeugen verifiziert und geprüft, ob die Ergebnisse der Simulation von Szenarien dokumentiert und bei strategischen Entscheidungen berücksichtigt werden. Ein Auditor kann die Ausführung eines automatisierten Berichts zur Kapazitätsprognose anfordern: `Show-VDIUsageForecast -Period 12Months`."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b3fa6420-1a05-4387-b362-bee6eeccd58d",
+                "control-id": "DET.3.1.12",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a11-m3",
+                    "uuid": "876d7d8b-4b69-457b-94fb-665d26df5296",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die VDI-Komponenten SOLLTEN mindestens die folgenden Ereignisse an ein zentrales Monitoring weitergeleitet werden: erfolgreiche und fehlgeschlagene Anmeldeversuche, Konfigurationsänderungen an VDI-Komponenten oder virtuellen Clients, erfolgreiche und fehlgeschlagene Updates an VDI-Komponenten, fehlgeschlagene Updates an virtuellen Clients. Die VDI-Komponenten SOLLTEN regelmäßig auf Schwachstellen überprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Audit-Protokollierung auf allen VDI-Komponenten wird aktiviert, um die geforderten Ereignisse zu erfassen. Ein Log-Forwarding-Agent (z. B. Winlogbeat, Syslog-ng) wird auf den Komponenten installiert, um diese Ereignisse an einen zentralen Log-Management-Server (z. B. ELK-Stack, Graylog) zu senden. Es werden regelmäßige, authentifizierte Schwachstellen-Scans gegen die VDI-Komponenten durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Logging-Konfiguration der VDI-Komponenten und des Log-Forwarding-Agenten. Im zentralen Log-Management-System wird stichprobenartig geprüft, ob die geforderten Ereignisse ankommen. Die Konfiguration und die Berichte der letzten Schwachstellen-Scans werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a11-m4",
+                    "uuid": "2144740c-8049-45a0-8006-2533652ff71b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesammelten Protokolldaten werden in einem Security Information and Event Management (SIEM) System mit anderen Datenquellen (z. B. Firewall-Logs, Active Directory-Logs) korreliert. Es sind grundlegende Alarmierungsregeln konfiguriert, um auf verdächtige Ereignisse (z. B. übermäßig viele fehlgeschlagene Anmeldungen von einer IP-Adresse, Konfigurationsänderung außerhalb eines Wartungsfensters) hinzuweisen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im SIEM (z. B. Splunk, QRadar) werden spezielle Parser für die VDI-Logs entwickelt oder importiert. Korrelationsregeln werden erstellt, um einfache Angriffsmuster zu erkennen, z. B. 'Brute-Force-Angriff: 10 fehlgeschlagene Anmeldungen für einen Benutzer innerhalb von 5 Minuten' oder 'Verdächtige Konfigurationsänderung: Administrator ändert eine Richtlinie außerhalb der Geschäftszeiten'."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht die Konfiguration des SIEM, insbesondere die Parser und Korrelationsregeln für die VDI-Umgebung. Die Alarmierungshistorie wird auf relevante Sicherheitsereignisse und deren Untersuchung durch das Sicherheitsteam geprüft. Es wird verifiziert, ob die Regeln dokumentiert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a11-m5",
+                    "uuid": "b151d03e-61ca-41de-b528-f725adbe4daf",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es werden User and Entity Behavior Analytics (UEBA) auf die VDI-Protokolldaten angewendet, um anomale Aktivitäten zu erkennen, die von regelbasierten Systemen nicht erfasst werden. Die Ergebnisse von Schwachstellen-Scans werden automatisch in ein Ticketing-System eingespeist, um die Behebung nachzuverfolgen und zu eskalieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein UEBA-Modul im SIEM oder ein eigenständiges Tool lernt das normale Verhalten von Benutzern und Systemen (z. B. übliche Anmeldezeiten, genutzte Anwendungen, Datenzugriffsmuster). Es alarmiert bei Abweichungen, wie z. B. einem Administrator, der sich nachts von einem ungewöhnlichen Ort aus anmeldet und große Datenmengen herunterlädt. Die Integration des Schwachstellen-Scanners mit dem ITSM-Tool (z. B. Jira, ServiceNow) erstellt automatisch Tickets für gefundene Schwachstellen und weist sie den zuständigen Teams zu."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration und Funktionsweise des UEBA-Systems. Es werden Beispiel-Alarme für anomales Verhalten analysiert. Die Integration zwischen Schwachstellen-Scanner und Ticketing-System wird geprüft, indem der Lebenszyklus eines Tickets von der Entdeckung einer Schwachstelle bis zu ihrer Behebung nachverfolgt wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "1b50eb30-1224-40cf-b8f6-8064ebe66868",
+                "control-id": "DET.4.15",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "PERF",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a10-m3",
+                    "uuid": "be07e8a9-a91f-4d9b-ac75-91b4599f1923",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zustand der VDI-Komponenten SOLLTE zentral überwacht werden. Es SOLLTEN mindestens folgende Parameter für jede VDI-Komponente überwacht werden: Erreichbarkeit der benötigten Netzschnittstellen, Verfügbarkeit der von der VDI-Komponente bereitgestellten Dienste, Auslastung der CPU und des Arbeitsspeichers."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein zentrales Monitoring-System (z. B. Nagios, Zabbix, Prometheus) wird verwendet, um die definierten Parameter zu überwachen. Für jede VDI-Komponente (Broker, Gateway, Datenbank etc.) werden Checks eingerichtet, die regelmäßig die Netzwerk-Erreichbarkeit (Ping), die Verfügbarkeit der spezifischen Dienste (z. B. Port-Check auf dem Broker-Port) und die Basisauslastung von CPU und RAM abfragen. Es sind grundlegende Schwellenwerte definiert, bei deren Überschreitung eine Benachrichtigung an die Administratoren erfolgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Konfiguration des Monitoring-Systems. Es wird verifiziert, ob alle VDI-Komponenten im Monitoring erfasst sind und ob die geforderten Parameter (Netzwerk, Dienste, CPU, RAM) überwacht werden. Es wird geprüft, ob Alarmierungsregeln konfiguriert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a10-m4",
+                    "uuid": "75420d7c-5c56-4d94-b422-013fb3001f2e",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Monitoring umfasst anwendungsspezifische Gesundheitsprüfungen (Health Checks) für die VDI-Dienste. Es sind detaillierte Schwellenwerte für Leistungskennzahlen (z.B. Anmeldedauer, Protokolllatenz) definiert, bei deren Überschreitung automatisch Alarme ausgelöst werden. Ein zentrales Dashboard bietet eine Echtzeit-Übersicht über den Gesundheitszustand der gesamten VDI-Umgebung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Spezielle Management-Packs oder Plugins für die VDI-Lösung werden im Monitoring-System eingesetzt. Diese führen tiefergehende Prüfungen durch, z. B. die Abfrage von Datenbank-Verbindungspools oder die Messung der Lizenzserver-Antwortzeit. Das Dashboard (z. B. in Grafana) visualisiert die wichtigsten Metriken und den Gesamtstatus der Umgebung auf einen Blick."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht das Monitoring-Dashboard und die Konfiguration der anwendungsspezifischen Checks. Es wird geprüft, ob die Schwellenwerte für Leistungskennzahlen sinnvoll und dokumentiert sind. Die Alarmierungshistorie wird auf relevante Ereignisse und deren Bearbeitung geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a10-m5",
+                    "uuid": "86719bb1-d28c-4403-a84c-d76302ef3bb3",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird prädiktives Monitoring eingesetzt. Das System analysiert Trends in der Ressourcennutzung, um potenzielle Engpässe vorauszusagen, bevor sie die Benutzer beeinträchtigen. Synthetische Benutzeranmeldungen werden kontinuierlich von verschiedenen Standorten aus durchgeführt, um die End-to-End-Leistung und -Verfügbarkeit proaktiv zu überwachen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Monitoring-Lösung mit AIOps-Funktionen (AI for IT Operations) wird verwendet. Diese analysiert historische Daten, um normale Verhaltensmuster zu lernen und Anomalien zu erkennen. Dedizierte Probes (z. B. LoginVSI, eG Innovations) simulieren rund um die Uhr Benutzeranmeldungen und Anwendungsstarts und messen die Performance. Bei Abweichungen wird proaktiv ein Ticket im ITSM-System erstellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der prädiktiven Analyse- und Synthetik-Monitoring-Tools. Es wird geprüft, ob die Trendanalysen und die Ergebnisse der synthetischen Tests für die Kapazitätsplanung und proaktive Fehlerbehebung genutzt werden. Die Protokolle der letzten simulierten Anmeldungen werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "0f70da01-ffb6-4c1c-a655-7b29b57f46ec",
+                "control-id": "DEV.4.9",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a7-m3",
+                    "uuid": "1a3f5f6c-422c-4909-852f-2c164f976dad",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Möglichkeiten der VDI-Lösung SOLLTEN für die Härtung der virtuellen Clients entsprechend den Anforderungen des Bausteins SYS.2.5 Client-Virtualisierung genutzt werden. Die Betriebssysteme der Clients SOLLTEN ausschließlich über die Managementkomponente der VDI-Lösung konfiguriert werden. Eine individuelle Konfiguration bestehender virtueller Clients über die Virtualisierungsinfrastruktur SOLLTE mit technischen Mitteln unterbunden werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Hardening-Richtlinien werden zentral in der VDI-Managementkonsole definiert und auf die Client-Pools angewendet. Dies umfasst beispielsweise das Deaktivieren von USB-Ports, das Einschränken von Systemeinstellungen oder das Konfigurieren der Windows-Firewall. Der direkte Zugriff auf die Konsole der virtuellen Maschinen über den Hypervisor-Client wird für Administratoren eingeschränkt, um manuelle Änderungen zu verhindern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die in der VDI-Lösung definierten Härtungsrichtlinien. Es wird stichprobenartig auf einem virtuellen Client geprüft, ob diese Richtlinien korrekt angewendet werden. Die Berechtigungen auf der Virtualisierungsplattform werden verifiziert, um sicherzustellen, dass manuelle Konfigurationsänderungen an den VMs unterbunden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a7-m4",
+                    "uuid": "60e23458-d3a7-4096-ad71-438c77fc72b3",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Härtungsrichtlinien innerhalb der VDI-Lösung sind umfassend, basieren auf anerkannten Benchmarks (z. B. CIS Benchmarks, DISA STIGs) und werden versioniert. Es werden regelmäßige, automatisierte Audits durchgeführt, um die Konformität der virtuellen Clients mit diesen Richtlinien zu überprüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Master-Images werden mit Skripten gehärtet, die auf CIS-Benchmarks basieren. Zusätzlich werden VDI-Richtlinien verwendet, um dynamische Einstellungen zu erzwingen. Ein Konformitäts-Scan-Tool prüft regelmäßig alle laufenden virtuellen Clients auf Abweichungen von der Baseline. Die Ergebnisse werden in einem Dashboard angezeigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die implementierten Härtungsrichtlinien mit dem gewählten externen Benchmark. Die Ergebnisse der automatisierten Konformitäts-Audits werden eingesehen und auf nicht behobene Abweichungen geprüft. Ein Auditor kann die Ausführung eines Konformitätsscans für eine zufällige VM anfordern: `Invoke-VMComplianceScan -VMName 'Finance-Client-05' -Benchmark 'CIS_Windows11_v1.0'`."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a7-m5",
+                    "uuid": "b7a297eb-6006-4236-b140-6196bcb1e7e1",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ein Desired State Configuration (DSC) Management verwendet. Die Härtung der virtuellen Clients wird kontinuierlich durchgesetzt. Jede unautorisierte Änderung an der Konfiguration eines virtuellen Clients wird automatisch erkannt, protokolliert und sofort auf den definierten Soll-Zustand zurückgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Technologien wie PowerShell DSC, Ansible oder Puppet werden eingesetzt, um den gewünschten Konfigurationszustand zu definieren. Ein Agent auf jedem virtuellen Client stellt sicher, dass dieser Zustand permanent beibehalten wird. Jeder Versuch einer manuellen Änderung (z. B. das Aktivieren eines Dienstes) wird innerhalb von Minuten automatisch korrigiert. Die Korrekturversuche werden an ein zentrales Logging-System gemeldet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht die Konfiguration des DSC-Management-Systems. Es wird testweise eine Konfigurationsänderung auf einem virtuellen Client vorgenommen, um zu verifizieren, dass diese automatisch zurückgesetzt wird. Die Protokolle werden geprüft, um festzustellen, ob der Korrekturvorgang korrekt gemeldet wurde."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "435cc859-d56a-47fd-9e9f-b8fbdd12fff8",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a2-m1",
+                    "uuid": "1c299ca6-e51b-4aa3-85cc-5fb2199680fc",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Installation der VDI-Komponenten erfolgt mit den Standardeinstellungen des Herstellers („Next, Next, Finish“). Sicherheitsaspekte werden nur minimal oder gar nicht berücksichtigt. Eine Dokumentation der Konfiguration ist lückenhaft oder nicht vorhanden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Administratoren installieren die Software oft unter Zeitdruck und ohne die Sicherheitsleitfäden des Herstellers zu lesen. Es werden Standard-Dienstkonten mit übermäßigen Berechtigungen verwendet und die Kommunikation zwischen den Komponenten erfolgt unverschlüsselt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, ob die Konfiguration der VDI-Komponenten von den unsicheren Standardeinstellungen abweicht. Es wird geprüft, ob eine Dokumentation der vorgenommenen Einstellungen existiert, selbst wenn sie unvollständig ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m2",
+                    "uuid": "fcc4e4b7-c546-45a3-a7f3-dca3ade0ea83",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Installation der VDI-Komponenten folgt den grundlegenden Installationsanleitungen des Herstellers. Einige offensichtliche Sicherheitseinstellungen, wie das Ändern von Standardpasswörtern, werden vorgenommen. Die Konfiguration ist jedoch nicht systematisch gehärtet oder auf das Notwendige beschränkt. Eine grundlegende Dokumentation der Installation ist vorhanden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Während der Installation werden die wichtigsten Sicherheitsempfehlungen aus der Schnellstart-Anleitung des Herstellers umgesetzt. Die Zuweisung von Clients an Benutzer erfolgt, aber die Absicherung der Kommunikationskanäle wird möglicherweise noch nicht konsequent umgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, ob die grundlegenden Sicherheitsempfehlungen des Herstellers (z. B. aus dem „Getting Started Guide“) umgesetzt wurden. Es wird geprüft, ob die Konfiguration dokumentiert ist und ob Standardpasswörter geändert wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m3",
+                    "uuid": "252bb88b-6776-429b-a5be-107d9823b74f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn die VDI-Komponenten installiert und konfiguriert werden, MUSS mindestens berücksichtigt werden, wie auf betrieblich und technisch notwendige Funktionen beschränkt wird, die Kommunikation zwischen VDI-Komponenten abgesichert wird sowie virtuelle Clients sicher den Benutzenden oder Gruppen hiervon zugewiesen werden. Empfehlungen von dem herstellenden Unternehmen der VDI-Lösung für die sichere Konfiguration MÜSSEN berücksichtigt werden. Die Konfigurationen der VDI-Komponenten MÜSSEN geeignet dokumentiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Installations-Checkliste verwendet, die auf den Härtungsempfehlungen des Herstellers basiert. Nicht benötigte Dienste und API-Endpunkte der VDI-Komponenten werden deaktiviert. Die Kommunikation zwischen den Komponenten wird durch TLS erzwungen. Die Zuweisungsregeln für virtuelle Clients werden sorgfältig konfiguriert und dokumentiert. Die Dokumentation erfolgt in einem zentralen System wie einem Wiki oder einer CMDB."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Konfiguration der VDI-Komponenten anhand der Härtungsleitfäden des Herstellers und der internen Dokumentation. Es wird geprüft, ob die Kommunikation verschlüsselt ist, ob der Funktionsumfang eingeschränkt wurde und ob die Zuweisungsregeln korrekt implementiert sind. Die Qualität und Aktualität der Dokumentation wird bewertet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m4",
+                    "uuid": "0e4beb7f-c475-410d-9d2b-16646a96ca52",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wurde ein formeller Härtungsleitfaden für die VDI-Komponenten entwickelt, der über die Herstellerempfehlungen hinausgeht und auf etablierten Benchmarks (z. B. CIS) basiert. Die Konfigurationen werden zentral in einem Konfigurationsmanagementsystem (z. B. Ansible, Puppet) verwaltet und versioniert. Automatisierte Skripte werden verwendet, um die konsistente Anwendung der Sicherheitseinstellungen sicherzustellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration der VDI-Komponenten wird als Code (Infrastructure as Code) behandelt. Jede Änderung an der Konfiguration erfordert einen Review- und Genehmigungsprozess. Die Automatisierungsskripte werden regelmäßig ausgeführt, um die Konfiguration zu überprüfen und Konfigurationsdrift zu korrigieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert den internen Härtungsleitfaden an und vergleicht ihn mit der implementierten Konfiguration. Die Code-Repositories für die Konfigurationsautomatisierung werden eingesehen. Es wird geprüft, ob ein Change-Management-Prozess für Konfigurationsänderungen etabliert ist. Ein Auditor kann die Ausführung eines Konformitätsprüfungs-Skripts anfordern: `Test-VDIComponentHardening -Profile 'CIS_Level_1'`."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a2-m5",
+                    "uuid": "a0593939-55c7-42a2-8511-be8a17bf0fd9",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der gesamte Installations- und Konfigurationsprozess ist vollständig automatisiert (Zero-Touch-Provisioning). Sicherheitskonfigurationen werden kontinuierlich mit Policy-as-Code-Werkzeugen überwacht und durchgesetzt. Jede Abweichung von der definierten Sicherheitsbaseline löst sofort einen Alarm und eine automatisierte Wiederherstellung des Soll-Zustands aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Werkzeug wie HashiCorp Terraform wird für die Bereitstellung der Infrastruktur und ein Werkzeug wie Open Policy Agent (OPA) für die kontinuierliche Validierung der Konfiguration verwendet. Die Sicherheitsrichtlinien (Policies) sind ebenfalls als Code definiert und versioniert. Die Ergebnisse der Konformitätsprüfungen werden in Echtzeit auf einem Sicherheits-Dashboard angezeigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Automatisierungs- und Policy-as-Code-Infrastruktur. Es wird verifiziert, dass der Prozess von der Bereitstellung bis zur Überwachung lückenlos ist. Der Prüfer führt testweise eine nicht autorisierte Konfigurationsänderung durch, um zu beobachten, ob diese automatisch erkannt und korrigiert wird und ob ein entsprechender Alarm ausgelöst wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "86384045-8297-4b17-be3c-a861c5129f84",
+                "control-id": "KONF.10.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a8-m3",
+                    "uuid": "87715d24-3e06-4f59-8fd2-842b5df1e4a9",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine automatische Anmeldung an der VDI SOLLTE nicht möglich sein. Die Authentisierung SOLLTE nur erfolgen, nachdem die Benutzenden mit der VDI interagiert haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Funktionen wie 'Pass-Through-Authentifizierung' vom Endgerät oder das Speichern von Anmeldeinformationen im VDI-Client werden deaktiviert. Der Benutzer muss bei jeder neuen Verbindung zum VDI-Gateway aktiv seine Anmeldeinformationen (z. B. Benutzername und Passwort) eingeben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Konfiguration des VDI-Gateways und der VDI-Client-Richtlinien. Es wird verifiziert, dass Optionen für die automatische Anmeldung oder das Speichern von Passwörtern deaktiviert sind. Testweise wird versucht, eine Sitzung zu starten, um zu bestätigen, dass eine manuelle Interaktion zur Authentisierung erforderlich ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a8-m4",
+                    "uuid": "16585b1d-2a35-42de-87f1-86c066f513ed",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Lösung ist so konfiguriert, dass für jede neue Sitzung eine erneute Authentifizierung erforderlich ist, selbst wenn der Benutzer bereits an seinem Endgerät angemeldet ist und eine gültige Single-Sign-On-Sitzung hat. Single-Sign-On wird nur so konfiguriert, dass der Benutzername vorausgefüllt wird, aber das Passwort oder ein zweiter Faktor aktiv eingegeben werden muss."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In den Richtlinien des VDI-Gateways wird die Anforderung zur erneuten Authentifizierung erzwungen. Die Lebensdauer von Authentifizierungs-Tokens für die VDI-Sitzung wird auf einen kurzen Zeitraum begrenzt, sodass auch bei einer erneuten Verbindung nach kurzer Inaktivität eine neue Anmeldung erforderlich ist."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Authentifizierungsrichtlinien des VDI-Systems. Es wird getestet, ob nach einer Abmeldung und sofortigen Neuanmeldung eine erneute Eingabe von Anmeldeinformationen verlangt wird. Die Konfiguration der Token-Lebensdauer wird kontrolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a8-m5",
+                    "uuid": "6516db17-5e70-4a21-9ac8-425d9e2d4c10",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für jeden Anmeldeversuch am VDI-Gateway wird eine Multi-Faktor-Authentifizierung (MFA) erzwungen. Das System ist zusätzlich gegen Angriffe wie Session Hijacking und Replay-Angriffe gehärtet, beispielsweise durch die Verwendung von kryptografisch gebundenen Tokens."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das VDI-Gateway ist mit einem modernen Identity Provider (z. B. Azure AD Conditional Access, Okta) integriert, der adaptive MFA erzwingt. Für die Sitzungsverwaltung werden Protokolle wie OpenID Connect mit Proof Key for Code Exchange (PKCE) verwendet, um Replay-Angriffe zu verhindern. Die Sitzungstoken werden an die IP-Adresse des Clients gebunden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die MFA-Konfiguration im Identity Provider und dessen Anbindung an das VDI-Gateway. Es wird geprüft, ob MFA für alle Benutzergruppen erzwungen wird. Die Konfiguration des Sitzungsmanagements wird auf den Einsatz moderner, sicherer Protokolle und Mechanismen wie Token Binding überprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "cff2087e-9317-4fcc-9dbc-3ab1bde470b9",
+                "control-id": "KONF.10.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a3-m1",
+                    "uuid": "a1a4d76b-f6a2-4741-8e4d-6596521f97ff",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Lösung wird zwar für die Bereitstellung einiger virtueller Clients genutzt, aber viele Clients werden weiterhin manuell direkt im Hypervisor erstellt und konfiguriert. Dies führt zu inkonsistenten Konfigurationen und Sicherheitslücken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Häufig werden manuelle VMs für 'dringende' oder 'spezielle' Anforderungen erstellt, da der Prozess über die VDI-Lösung als zu langsam oder zu restriktiv empfunden wird. Diese 'Schatten-VMs' sind oft nicht gehärtet und werden nicht zentral verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Liste der VMs im Hypervisor mit der Liste der verwalteten Clients in der VDI-Konsole. Diskrepanzen deuten auf manuell erstellte VMs hin. Es wird geprüft, ob es Richtlinien gibt, die die Erstellung von VMs regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m2",
+                    "uuid": "f5d48443-b3e4-40e0-ab21-b5a4cac113ed",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Lösung ist das bevorzugte Werkzeug zur Installation und Konfiguration virtueller Clients. Es gibt jedoch keine technischen Kontrollen, die Administratoren daran hindern, bei Bedarf VMs direkt im Hypervisor zu erstellen oder manuell in die VDI-Lösung zu importieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existiert eine organisatorische Anweisung, die VDI-Lösung zu verwenden. Die Umsetzung wird jedoch nicht technisch erzwungen, was zu Ausnahmen und Inkonsistenzen führt, insbesondere wenn es um die Konfiguration von importierten VMs geht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer prüft die Berechtigungen auf der Virtualisierungsinfrastruktur. Es wird untersucht, ob Administratoren, die VDI verwalten, auch die Berechtigung haben, VMs direkt zu erstellen. Protokolle des Hypervisors werden auf manuelle VM-Erstellungs- oder Importvorgänge überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m3",
+                    "uuid": "f83a178e-6174-4707-9ab2-9348e2e808d6",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VDI-Lösung SOLLTE genutzt werden, um die virtuellen Clients zu installieren und zu konfigurieren. Virtuelle Clients SOLLTEN NICHT manuell in die VDI-Lösung integriert werden. In der für die VDI verwendeten Virtualisierungsinfrastruktur SOLLTEN virtuelle Clients NICHT unabhängig von der VDI erzeugt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Bereitstellung und Konfiguration von virtuellen Clients erfolgt ausschließlich über die Managementkonsole oder die Automatisierungsschnittstellen der VDI-Lösung. Manuell erstellte VMs werden nicht unterstützt und nicht in die VDI-Umgebung aufgenommen. Dies wird durch entsprechende Prozessvorgaben und organisatorische Regelungen sichergestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert den dokumentierten Prozess zur Bereitstellung virtueller Clients. Es wird kontrolliert, ob der Prozess die ausschließliche Nutzung der VDI-Lösung vorschreibt. Die Inventarlisten von VDI-Lösung und Hypervisor werden abgeglichen, um nicht verwaltete VMs zu identifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m4",
+                    "uuid": "c06a55f1-71ca-4997-a231-9f77e4a30a54",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es sind technische Kontrollen implementiert, die Administratoren strikt daran hindern, VDI-verwaltete virtuelle Clients außerhalb der VDI-Managementkonsole zu erstellen oder zu ändern. Dies wird durch eine granulare rollenbasierte Zugriffskontrolle (RBAC) auf der Ebene des Hypervisors durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf der Virtualisierungsplattform (z. B. vSphere, Hyper-V) werden dedizierte Rollen für VDI-Administratoren erstellt. Diese Rollen gewähren nur die Berechtigungen, die für die VDI-Lösung erforderlich sind (z. B. Power-On/Off), entziehen aber die Berechtigung, neue VMs zu erstellen, zu klonen oder deren Konfiguration (vCPU, RAM) direkt zu ändern. Diese Aktionen sind nur dem VDI-Dienstkonto gestattet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die RBAC-Konfiguration auf der Virtualisierungsplattform. Es wird verifiziert, dass die Berechtigungen der VDI-Administratoren nach dem Prinzip der geringsten Rechte (Least Privilege) konfiguriert sind und die Erstellung von VMs außerhalb der VDI-Lösung technisch unterbunden wird. Ein Auditor kann versuchen, als VDI-Admin eine VM manuell zu erstellen: `New-VM -Name 'Test-VM'` sollte fehlschlagen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a3-m5",
+                    "uuid": "38e85508-1276-4234-a569-eade966aa09e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der API-Zugriff auf die Virtualisierungsplattform ist auf das dedizierte Dienstkonto der VDI-Lösung beschränkt. Das gesamte Lebenszyklusmanagement von virtuellen Clients ist vollständig automatisiert und wird lückenlos über die Protokolle der VDI-Lösung auditiert, welche in ein SIEM-System eingespeist werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Netzwerk-ACLs oder eine Firewall auf der Verwaltungsschnittstelle des Hypervisors schränken den API-Zugriff auf die IP-Adressen der VDI-Management-Server ein. Jegliche administrative Tätigkeit erfolgt ausschließlich über die VDI-Konsole. Die Audit-Logs der VDI-Lösung werden in Echtzeit an ein SIEM gesendet, wo Korrelationsregeln auf verdächtige Aktivitäten (z. B. Erstellung einer VM außerhalb der Geschäftszeiten) prüfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Netzwerkkontrollen, die den API-Zugriff auf die Hypervisoren einschränken. Es wird die Konfiguration der Log-Weiterleitung von der VDI-Lösung zum SIEM geprüft. Im SIEM wird kontrolliert, ob Alarme für anomale Lebenszyklus-Ereignisse von VMs konfiguriert sind und ob diese funktionieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "631e608c-d88a-4358-8f64-bb27ea967ec7",
+                "control-id": "KONF.10.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a14-m3",
+                    "uuid": "85eceec4-ac77-4822-8b93-0118e699eb41",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nachdem sie benutzt wurden oder zu einem definierten Zeitpunkt SOLLTEN die virtuellen Clients auf ihren Grundzustand, d. h. auf das zugrundeliegende Template, zurückgesetzt oder bei Bedarf neu provisioniert werden. Diese Zeitfenster SOLLTEN dokumentiert und an die Betroffenen kommuniziert werden. Nicht zurückgesetzte virtuelle Clients SOLLTEN NICHT von mehreren unterschiedlichen Benutzenden verwendet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für Anwendungsfälle, die keine persistenten Daten auf dem Client erfordern (z. B. Call-Center, Schulungsräume), werden nicht-persistente Desktop-Pools eingerichtet. Die VDI-Lösung ist so konfiguriert, dass die virtuellen Maschinen nach der Abmeldung des Benutzers automatisch zurückgesetzt oder gelöscht und neu aus dem Master-Template erstellt werden. Die Benutzer werden darüber informiert, dass alle auf dem Desktop gespeicherten Daten verloren gehen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Konfiguration der Desktop-Pools in der VDI-Managementkonsole. Es wird verifiziert, ob die Option zum Zurücksetzen/Löschen nach Abmeldung für die entsprechenden Pools aktiviert ist. Die Kommunikationsunterlagen für die Benutzer werden auf entsprechende Hinweise geprüft. Es wird kontrolliert, ob sichergestellt ist, dass nachfolgende Benutzer eine saubere VM erhalten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a14-m4",
+                    "uuid": "9dedd74e-055a-41e2-8ef9-381a44787709",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Clients werden nach jeder Abmeldung automatisch zurückgesetzt. Es sind robuste Mechanismen zur Umleitung von Benutzerprofilen und -daten (z. B. auf einen Netzwerkspeicher) implementiert, um eine nahtlose Benutzererfahrung zu gewährleisten und gleichzeitig die Zustandslosigkeit des Client-Betriebssystems beizubehalten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Technologien wie FSLogix Profile Containers oder VMware Dynamic Environment Manager werden verwendet, um das Benutzerprofil und benutzerspezifische Daten in eine virtuelle Festplattendatei (VHDX) auf einem schnellen Dateiserver auszulagern. Beim Anmelden wird diese Datei in den ansonsten zustandslosen Client eingehängt, sodass der Benutzer seine personalisierte Umgebung vorfindet. Nach der Abmeldung wird die Maschine dennoch zurückgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der Profilmanagement-Lösung. Es wird geprüft, ob die Zurücksetzungsrichtlinie für die Clients konsequent auf 'bei Abmeldung' gesetzt ist. Testweise wird eine Datei auf dem Desktop gespeichert, eine Ab- und Neuanmeldung durchgeführt und geprüft, ob die Datei im neuen Client wieder vorhanden ist (was die Profilpersistenz belegt) und der Client selbst zurückgesetzt wurde."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a14-m5",
+                    "uuid": "aee1e373-539c-46fd-b67f-1bccd1d5567c",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesamte Benutzersitzung, einschließlich der Anwendungen, wird containerisiert. Nach der Abmeldung wird der Container vollständig zerstört, wodurch keine Spuren der Sitzung auf dem virtuellen Client zurückbleiben. Dies wird mit einer erzwungenen täglichen Neuanmeldung kombiniert, um sicherzustellen, dass jeder Benutzer jeden Tag mit einer sauberen, neu bereitgestellten Umgebung beginnt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Anwendungs-Virtualisierungs- oder Layering-Technologien (z. B. VMware App Volumes, Citrix App Layering) werden verwendet, um Anwendungen zur Laufzeit dynamisch an einen Basis-Client anzuhängen, ohne sie zu installieren. Nach der Abmeldung werden diese Anwendungs-Layer wieder entfernt und die Basis-VM zurückgesetzt. Sitzungszeitlimits in der VDI-Richtlinie erzwingen die tägliche Abmeldung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht die Konfiguration der Anwendungs-Layering-Lösung und die Zuweisungsregeln. Es wird verifiziert, dass die Basis-VMs keine installierten Anwendungen enthalten. Die Konfiguration der Sitzungszeitlimits wird kontrolliert. Es wird geprüft, ob die Protokolle die Zerstörung und Neuerstellung der Sitzungs-Container nach jeder Abmeldung bestätigen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "fdd5a720-f49e-4300-9ac1-84b1e6a25fb9",
+                "control-id": "KONF.11.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a5-m3",
+                    "uuid": "13816b2b-3fa3-4224-85f2-b04cc3e55950",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Mechanismen und Dienste der VDI-Lösung SOLLTEN genutzt werden, um die Zugriffe auf die virtuellen Clients zu steuern und abzusichern. Falls eine zusätzliche Software für diese Zugriffe auf den zugreifenden Clients eingesetzt wird, SOLLTE diese Software standardisiert und zentralisiert bereitgestellt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Zugriff auf die virtuellen Desktops erfolgt ausschließlich über das vom VDI-Hersteller bereitgestellte Gateway und die zugehörige Client-Software. Die Client-Software wird über ein zentrales Softwareverteilungssystem an die Endgeräte der Benutzer verteilt. Direkte RDP- oder SSH-Verbindungen zu den virtuellen Clients werden auf Netzwerkebene blockiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, dass der Zugriff auf die VDI-Umgebung über einen definierten Zugriffspunkt (Gateway) erfolgt. Es wird geprüft, ob die Client-Software zentral bereitgestellt und verwaltet wird. Firewall-Regeln werden kontrolliert, um sicherzustellen, dass direkte Verbindungen zu den virtuellen Clients unterbunden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a5-m4",
+                    "uuid": "19775d62-5369-4c74-9058-dabfa92e6cc6",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verwendung des standardisierten VDI-Clients ist obligatorisch und wird technisch erzwungen. Seine Konfiguration wird zentral über Gruppenrichtlinien oder eine Endpoint-Management-Lösung verwaltet, um konsistente Sicherheitseinstellungen (z.B. Deaktivierung der Zwischenablage, keine Laufwerks- oder USB-Umleitung) auf allen Endgeräten sicherzustellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Gruppenrichtlinien (GPOs) oder Richtlinien in einer UEM-Lösung (Unified Endpoint Management) wie Intune oder Workspace ONE verwendet, um die Konfiguration der VDI-Client-Software vorzugeben. Benutzer können diese sicherheitsrelevanten Einstellungen nicht ändern. Je nach Benutzergruppe können unterschiedliche Richtlinien zur Anwendung kommen (z.B. Entwickler dürfen die Zwischenablage nutzen, Sachbearbeiter nicht)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die konfigurierten Gruppenrichtlinien oder UEM-Richtlinien für den VDI-Client. Auf einem Beispiel-Client wird verifiziert, dass die Einstellungen korrekt angewendet wurden und vom Benutzer nicht geändert werden können. Es wird geprüft, ob die Richtlinien dokumentiert und nach dem Prinzip der geringsten Rechte konzipiert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a5-m5",
+                    "uuid": "a1e023c6-cc00-4994-aef1-c4845678d3e5",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zugriff wird über ein sicheres Gateway gesteuert, das vor dem Verbindungsaufbau eine Multi-Faktor-Authentifizierung (MFA) und eine Überprüfung des Gerätezustands (Device Posture Check) erzwingt. Die VDI-Client-Software selbst wird auf dem Endgerät in einer containerisierten oder gehärteten, schreibgeschützten Umgebung ausgeführt, um Angriffe auf den Client zu verhindern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das VDI-Gateway ist mit einem Identity Provider (z.B. Azure AD, Okta) für MFA und einer Endpoint-Security-Lösung (z.B. CrowdStrike, Microsoft Defender for Endpoint) für Posture-Checks integriert. Ein Zugriff wird nur gewährt, wenn der Benutzer MFA bereitstellt UND das Endgerät als konform (z.B. Antivirus aktuell, Festplattenverschlüsselung aktiv) gemeldet wird. Die Client-Software wird als App-V-Paket oder in einem Docker-Container auf dem Endgerät bereitgestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des VDI-Gateways und dessen Integration mit dem IdP und der Endpoint-Security-Lösung. Es wird testweise versucht, eine Verbindung mit einem nicht-konformen Gerät oder ohne MFA herzustellen. Es wird geprüft, wie die VDI-Client-Software auf den Endgeräten isoliert wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "62d078a9-880f-4477-bedf-684449f5fc66",
+                "control-id": "KONF.15.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a12-m3",
+                    "uuid": "67cd147d-b06e-46dc-a4f7-cb4d49c0a4ef",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Pro Virtualisierungsserver SOLLTE die maximale Leistung festgelegt werden, die dieser für virtuelle Clients zur Verfügung stellen darf. Diese Grenzwerte SOLLTEN in der VDI-Managementkomponente genutzt werden, um bei hoher Auslastung die virtuellen Clients auf verschiedene Virtualisierungsserver zu verteilen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der VDI-Managementkonsole werden für jeden Host oder Cluster maximale Werte für die Anzahl der VMs, die CPU- oder die Speicherauslastung festgelegt. Diese Schwellenwerte basieren auf der Kapazitätsplanung und verhindern eine übermäßige Überbuchung der Ressourcen. Die VDI-Lösung verwendet diese Grenzwerte, um neue VMs auf dem am wenigsten ausgelasteten Host zu platzieren und so eine grundlegende Lastverteilung zu gewährleisten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert in der VDI-Managementkonsole, ob Grenzwerte für die Host-Auslastung oder die Anzahl der VMs pro Host definiert sind. Es wird geprüft, ob diese Werte mit der Kapazitätsplanung übereinstimmen und ob die Lastverteilungsfunktion aktiviert ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a12-m4",
+                    "uuid": "6f19d746-d17d-4ed7-a42b-02110b07cd15",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Lastverteilungsmechanismus wird basierend auf historischen Leistungsdaten feinjustiert. Bei Platzierungsentscheidungen werden nicht nur CPU und RAM, sondern auch weitere Metriken wie Storage-I/O und Netzwerkbandbreite berücksichtigt, um eine ausgewogenere Verteilung und bessere Performance zu erzielen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die VDI-Lösung oder ein integriertes Tool der Virtualisierungsplattform (z. B. VMware DRS) wird so konfiguriert, dass es bei seinen Entscheidungen auch die Auslastung der Datastores und der Netzwerkadapter berücksichtigt. Die Gewichtung der verschiedenen Metriken wird so angepasst, dass sie den spezifischen Anforderungen der Workloads entspricht (z. B. höhere Gewichtung von I/O für datenbankintensive Anwendungen)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht die erweiterte Konfiguration des Lastverteilungsmechanismus. Es wird verifiziert, dass Metriken über CPU/RAM hinaus (wie Storage I/O und Netzwerk) in die Entscheidungsfindung einbezogen werden. Die Konfiguration wird auf Plausibilität und Dokumentation geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a12-m5",
+                    "uuid": "482c0525-e5a6-47d1-b554-ac82d888cd63",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein vollständig automatisierter, richtliniengesteuerter Ressourcenplaner (Scheduler) wird verwendet. Dieser migriert virtuelle Clients in Echtzeit dynamisch zwischen den Hosts, um die Leistung zu optimieren und die Servicequalität für alle Benutzer gemäß vordefinierten Service Level Agreements (SLAs) sicherzustellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein fortschrittliches Ressourcenmanagement-Tool (z. B. VMware vRealize Operations, Turbonomic) ist mit der VDI- und Virtualisierungsplattform integriert. Es analysiert kontinuierlich die Auslastung und prognostiziert Engpässe. Basierend auf definierten SLAs (z. B. 'Finanzanwendungen müssen eine Latenz von <5ms haben') führt es proaktiv Live-Migrationen von VMs durch, um Leistungsabfälle zu verhindern, bevor sie auftreten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des automatisierten Ressourcenplaners. Es wird kontrolliert, ob SLAs für verschiedene Anwendungskategorien definiert sind. Die Protokolle des Tools werden eingesehen, um die durchgeführten Optimierungsaktionen (z. B. Live-Migrationen) und deren Begründung nachzuvollziehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b795dd6f-ab1d-4ed6-ad31-0137e5253bef",
+                "control-id": "KONF.6.6.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Risk Treatment",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.2.6.a13-m3",
+                    "uuid": "f79ff319-1732-4340-891c-ff8f1c1182e3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE geprüft werden, ob es Benutzendengruppen gibt, die sich in ihren Berechtigungen so stark unterscheiden, dass die Nutzung einer gemeinsamen VDI-Lösung nicht sinnvoll ist. In diesem Fall SOLLTE jeweils eine eigene VDI-Lösung pro Benutzendengruppe verwendet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Risikoanalyse identifiziert Benutzergruppen mit stark abweichenden Sicherheitsanforderungen, z. B. Standard-Büroanwender, privilegierte Administratoren und externe Entwickler. Basierend auf dieser Analyse wird die Entscheidung getroffen, für diese Gruppen separate VDI-Umgebungen (d. h. getrennte Sets von Brokern, Gateways, Datenbanken) aufzubauen, um eine logische Trennung zu gewährleisten und das Risiko einer Ausweitung von Kompromittierungen zu minimieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Risikoanalyse an und prüft, ob die Identifizierung von Benutzergruppen mit unterschiedlichen Schutzbedarfen stattgefunden hat. Es wird verifiziert, ob die dokumentierte Architektur separate VDI-Instanzen für diese Gruppen vorsieht. Die Konfiguration wird überprüft, um sicherzustellen, dass die Benutzer korrekt den jeweiligen VDI-Lösungen zugeordnet sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a13-m4",
+                    "uuid": "bdb455eb-9001-4d18-9c28-4384344483d1",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die separaten VDI-Umgebungen werden in vollständig isolierten Netzwerksegmenten bereitgestellt und von unterschiedlichen Administratorenteams verwaltet, um eine strikte Funktionstrennung (Separation of Duties) durchzusetzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jede VDI-Instanz hat ihre eigenen, dedizierten VLANs für Management, interne Kommunikation und Client-Zugriff. Der Netzwerkverkehr zwischen den VDI-Instanzen ist vollständig blockiert. Die administrativen Aufgaben für die hochsichere VDI-Umgebung (z. B. für Administratoren) werden von einem anderen Team wahrgenommen als die der Standard-VDI-Umgebung, was durch unterschiedliche Berechtigungen im Active Directory und auf den Systemen umgesetzt wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer untersucht die Netzwerkarchitektur und die Firewall-Regeln, um die vollständige Isolation der VDI-Instanzen zu verifizieren. Die administrativen Berechtigungen werden kontrolliert, um die Umsetzung der Funktionstrennung zu bestätigen. Es wird geprüft, ob unterschiedliche Administratorenkonten für die Verwaltung der verschiedenen Umgebungen verwendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.2.6.a13-m5",
+                    "uuid": "e15e60cc-9d9a-4810-8405-5bd0440af6dc",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die separaten VDI-Lösungen sind physisch getrennt (Air-Gapped) oder verwenden hardware-erzwungene Trennungsmechanismen (z. B. separate Hypervisor-Cluster, Storage-Systeme und Netzwerk-Hardware), um die höchstmögliche Sicherheitsgarantie zu bieten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die VDI-Umgebung für hochprivilegierte Benutzer läuft auf einem komplett eigenen Satz physischer Server, die in einem separaten, hochsicheren Bereich des Rechenzentrums stehen. Es gibt keine gemeinsamen Infrastrukturkomponenten (kein gemeinsamer Hypervisor, kein gemeinsames Storage-Array, keine gemeinsame Netzwerk-Core-Switch) mit der Standard-VDI-Umgebung. Der Zugriff erfolgt über eine separate, dedizierte Zugriffslösung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die physische Trennung der Hardware durch Einsichtnahme in die RZ-Dokumentation und Rack-Pläne. Die Inventarlisten der Hardware werden geprüft, um sicherzustellen, dass keine Komponenten zwischen den Umgebungen geteilt werden. Netzwerkdiagramme werden analysiert, um die physische Trennung der Kommunikationswege zu bestätigen."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

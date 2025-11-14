@@ -1,0 +1,809 @@
+{
+  "component-definition": {
+    "uuid": "a7074581-d570-457f-b010-7f99c923b64b",
+    "metadata": {
+      "title": "INF.13 Technisches Gebäudemanagement - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:39.074099+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "eb588972-ffbc-4cd1-af83-f48f19102cab",
+        "type": "physical",
+        "title": "INF.13 Technisches Gebäudemanagement",
+        "description": "This component represents the implementation of all controls for Baustein INF.13.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Das Gebäudemanagement (GM), auch Facility Management genannt, ist für alle Leistungen zuständig, die in der Planungs- und Nutzungsphase von Gebäuden, Gebäudekomplexen, Liegenschaften oder Liegenschaftsportfolios anfallen. Im Folgenden wird hierfür einheitlich der Begriff Gebäude genutzt. Ausnahmen hiervon werden explizit genannt. Das GM ist standort- sowie objektbezogen ausgerichtet. Es lässt sich in technisches, infrastrukturelles und kaufmännisches GM untergliedern. Das technische Gebäudemanagement (TGM) umfasst gemäß DIN 32736 alle Leistungen, die die technische Funktion und Verfügbarkeit eines Gebäudes erhalten. Zu diesen Leistungen gehören unter anderem: Betreiben, Dokumentieren, Energie- und Umweltmanagement, Informationsmanagement, Modernisieren, Sanieren, Umbauen, Verfolgen der technischen Gewährleistung. Wesentliche technische Funktionen eines Gebäudes werden durch die technische Gebäudeausrüstung (TGA) bereitgestellt, die durch das TGM betrieben, gepflegt und weiterentwickelt wird. Die TGA umfasst dabei gemäß VDI 4700 Blatt 1 alle im Bauwerk eingebauten und damit verbundenen technischen und nutzungsspezifischen Einrichtungen sowie technische Einrichtungen in Außenanlagen und Ausstattungen (siehe auch Kapitel 4.1 Genutzte TGM-spezifische Fachbegriffe). Falls die TGA automatisiert und gewerkübergreifend betrieben werden soll, wird zusätzliche technische Infrastruktur zur Gebäudeautomation (GA, engl. Building Automation and Control Systems, BACS) eingesetzt. Somit ist die GA ein zentrales Werkzeug des TGM. Ein Gebäude kann durch TGM auch ohne GA betrieben werden, GA hingegen ist immer durch TGM flankiert. Gewisse Komponenten der GA sind dabei auch der TGA zuzurechnen, wie z. B. echtzeitfähige Industrial Ethernet Switches. Während die TGA in der Vergangenheit meist unabhängig von der IT und der Prozessleit- und Automatisierungstechnik (Operational Technology, OT) betrieben wurde, werden heute zunehmend Netzübergänge zu diesen Bereichen etabliert. Hinzu kommt, dass Teile der TGA rund um die Uhr genutzt werden. Daher müssen Änderungen oft parallel zur produktiven Nutzung durchgeführt werden. Auch im TGM müssen die Grundwerte der Informationssicherheit berücksichtigt werden, denn der Verlust von Verfügbarkeit, Vertraulichkeit und Integrität von Systemen kann im TGM weitreichende Auswirkungen bis hin zur Gefährdung von Leib und Leben nach sich ziehen."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, die Informationssicherheit als integralen Bestandteil bei Planung, Umsetzung und Betrieb im Rahmen des TGM zu etablieren."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein INF.13 Technisches Gebäudemanagement ist auf das TGM einer Institution anzuwenden, sobald Gebäude mit TGA geplant, gebaut oder betrieben werden. Dieser Baustein behandelt das TGM, somit die Aufgaben und Prozesse, die für die Planung und den Betrieb der TGA-Anlagen (siehe Kapitel 4.1 Genutzte TGM-spezifische Fachbegriffe) eines Gebäudes erforderlich sind. Die technische Infrastruktur für den automatisierten Betrieb von Gebäuden wird im Baustein INF.14 Gebäudeautomation behandelt. Letzterer muss zusätzlich zum Baustein INF.13 Technisches Gebäudemanagement angewendet werden, wenn die zu betreibende TGA automatisiert und anlagenübergreifend gesteuert wird. In diesem Sinne umfasst das TGM auch die Prozesse der GA. Weiterhin ist es möglich, dass zu den zu verwaltenden Systemen auch solche gehören, die durch Bausteine aus den Schichten IND Industrielle IT und SYS IT-Systeme modelliert werden, z. B. IND.2.1 Allgemeine ICS-Komponente oder auch SYS.4.4 Allgemeines IoT-Gerät. Darüber hinaus müssen die für das TGM relevanten Aspekte der Schichten ORP und OPS beachtet werden, insbesondere die Teilschichten OPS.1 Eigener Betrieb und OPS.2 Betrieb von Dritten sowie die Bausteine ORP.2 Personal und ORP.4 Identitäts- und Berechtigungsmanagement. Werden für das TGM Cloud-Dienste eingesetzt, muss für die Auswahl dieser Dienste der Baustein OPS.2.2 Cloud-Nutzung berücksichtigt werden. Zur Absicherung von Fernzugängen im TGM sind die Bausteine OPS.1.2.5 Fernwartung und IND.3.2 Fernwartung im industriellen Umfeld anzuwenden. Der Baustein INF.13 Technisches Gebäudemanagement behandelt nicht die physische Sicherheit von Gebäuden, diese wird in dem Baustein INF.1 Allgemeines Gebäude behandelt. Ebenso spielt der Aspekt der Safety in diesem Baustein keine hervorgehobene Rolle, sondern wird im Baustein IND.2.7 Safety Instrumented Systems behandelt."
+          },
+          {
+            "name": "2.1. Fehlende Grundlagen für die Planung des TGM",
+            "value": "Wenn beim Bau eines Gebäudes die Nachfrageorganisationen (siehe Kapitel 4.1 Genutzte TGM-spezifische Fachbegriffe) noch nicht feststehen, fehlen Kontaktpersonen, Zielsetzung und Bedarfe für das TGM. Das kann dazu führen, dass das TGM im Betrieb nicht dem tatsächlichen Bedarf entspricht, weil dieser zum Zeitpunkt der Planung und Umsetzung nicht abgefragt werden konnte."
+          },
+          {
+            "name": "2.2. Mangelnde Dokumentation beim TGM",
+            "value": "In das TGM ist häufig eine Vielzahl von Dienstleistenden involviert. Ist die Dokumentation der Zuständigkeiten mit Kontaktpersonen und zugehörigen SLAs unvollständig oder nicht zugänglich, führt dies im Ernstfall, wenn wichtige Systeme ausfallen, zu vermeidbaren Verzögerungen, die gegebenenfalls sogar Personenschaden zur Folge haben können. Eine fehlende Dokumentation von Sicherheitszertifizierungen der TGA-Anlagen inklusive Terminen für notwendige Erneuerung kann dazu führen, dass abgelaufene Zertifizierungen nicht rechtzeitig erneuert werden. Dadurch kann gegen Gesetze verstoßen werden, je nach TGA-Anlage Gefahr für Leib und Leben entstehen und ein entstandener Schaden nicht über entsprechende Versicherungen abgewickelt werden."
+          },
+          {
+            "name": "2.3. Kompromittierung der Schnittstellen mit TGM",
+            "value": "Das TGM hat technische Schnittstellen zu besonders schützenswerten Bereichen, z. B. Safety Instrumented Systems (SIS), Sicherheitsdienst und Brandmeldeanlagen. Wenn diese Schnittstellen bewusst oder unbewusst durch Fehler im TGM kompromittiert werden, dann kann dies einen Verstoß gegen Gesetze sowie Gefahr für Leib und Leben zur Folge haben. Wird z. B. bei einem Feueralarm in einem Rechenzentrum die optische oder akustische Warnung außer Kraft gesetzt, können im Raum befindliche Personen diesen nicht rechtzeitig verlassen, bevor der Raum mit Löschgas geflutet wird. Ebenso kann ein vorgetäuschter Feueralarm dazu führen, dass Fluchttüren geöffnet werden und dadurch unberechtigter Zugang erlangt wird oder Türen geschlossen und gegebenenfalls Personen eingeschlossen werden."
+          },
+          {
+            "name": "2.4. Unzureichendes Monitoring der TGA",
+            "value": "Wenn die TGA nur unzureichend durch ein entsprechendes Monitoring überwacht wird, dann werden sicherheitsrelevante Ereignisse, wie z. B. relevante Fehlfunktionen in der TGA, unter Umständen nicht oder zu spät erkannt. Dies kann je nach Ereignis zu weiteren Schäden führen oder Gefahr für Leib und Leben bedeuten. Wird z. B. der Ausfall der Heizung bei Außentemperaturen im Minusbereich nicht gemeldet, kühlen die Räume erst stark aus, bevor der Ausfall bemerkt wird und eine Behebung eingeleitet werden kann."
+          },
+          {
+            "name": "2.5. Unzureichendes Rollen- und Berechtigungsmanagement",
+            "value": "Wenn das TGM oder einzelne seiner Teile von der restlichen IT der Institution physisch getrennt werden, dann wird in der Regel auch ein dediziertes Identitäts- und Berechtigungsmanagement eingerichtet. Wenn dieses unzureichend konzipiert und umgesetzt wird, dann kann nicht ausgeschlossen werden, dass mehrere Personen dasselbe Konto nutzen oder Berechtigungen von ausgeschiedenen internen oder externen Mitarbeitenden oder Dienstleistenden nicht gelöscht wurden. Als Folge kann auf das TGM unberechtigt zugegriffen werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "96506ba7-01fa-49d2-b2db-25e286299518",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/ot-systeme_profile.json",
+            "description": "Implementation for all controls in Baustein INF.13",
+            "implemented-requirements": [
+              {
+                "uuid": "f62cf570-9fc0-4106-9a3f-1b3b5142baad",
+                "control-id": "ARCH.2.2.11",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a10-m3",
+                    "uuid": "256cbdb6-22d9-4d23-8b9b-ddd7402a0cad",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "In der GA SOLLTEN GA-Bereiche derart geplant und umgesetzt werden, dass Abhängigkeiten zwischen den GA-Bereichen minimiert werden und GA-Bereiche unabhängig gesteuert werden können. Eine Störung in einem GA-Bereich SOLLTE keine oder nur geringe Auswirkungen auf andere GA-Bereiche haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die GA-Architektur wird modular nach GA-Bereichen (z.B. pro Etage, pro Brandabschnitt, pro Mieter) aufgebaut. Jeder Bereich hat eine eigene, autarke Steuerung (Controller). Die Kommunikation zwischen den Bereichen wird auf das absolute Minimum beschränkt und über definierte Schnittstellen abgewickelt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse der GA-Architekturpläne, um die Aufteilung in unabhängige Bereiche zu verifizieren. Prüfung der Konfiguration der Controller und Gateways, um die Kommunikationsbeschränkungen zwischen den Bereichen zu überprüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a10-m4",
+                    "uuid": "026a4a0a-aa68-4e81-b6e7-ec863684ab61",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Insbesondere SOLLTEN die Gebäude innerhalb eines Gebäudekomplexes oder einer Liegenschaft separat steuerbar sein. Die eingerichteten GA-Bereiche SOLLTEN auch im GA-Managementsystem entsprechend sichtbar sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jedes Gebäude einer Liegenschaft hat ein komplett eigenständiges GA-System, das ohne Verbindung zu den anderen Gebäuden funktioniert. Im zentralen GA-Managementsystem (Leitstand) wird die Bereichsstruktur klar abgebildet, und die Rechtevergabe erfolgt bereichsbezogen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der GA-Architektur auf Liegenschaftsebene. Prüfung der Visualisierung und der Benutzerberechtigungen im GA-Managementsystem, um die separate Steuerbarkeit zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a10-m5",
+                    "uuid": "c54bb4d6-76e3-48cb-ad6f-2357b87a05d3",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Unabhängigkeit der GA-Bereiche wird regelmäßig durch automatisierte Tests überprüft. Dabei wird der Ausfall eines Bereichscontrollers simuliert und verifiziert, dass die anderen Bereiche ungestört weiterfunktionieren. Die Ergebnisse dieser 'Chaos Engineering'-Tests werden zur kontinuierlichen Verbesserung der Architektur genutzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Testskripte entwickelt, die gezielt einzelne Controller oder Netzwerkverbindungen zwischen Bereichen deaktivieren. Monitoring-Systeme überwachen währenddessen die Funktion der übrigen Bereiche. Dieser Test wird quartalsweise in einem Wartungsfenster durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in die Planung, Skripte und Protokolle der Ausfallsimulationstests. Analyse der Testergebnisse und der daraus abgeleiteten Verbesserungsmaßnahmen. `test-command: /usr/local/bin/ga-chaos-test --fail-area 'floor-7' --verify-others`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e755884e-a94b-4498-a86c-d33c72288874",
+                "control-id": "ARCH.2.2.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a6-m1",
+                    "uuid": "17d567f2-744f-415b-8873-fc10d2a1d969",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze und Büro-Netze sind nicht voneinander getrennt. Komponenten der Gebäudeautomation befinden sich im selben Netzwerk wie Büro-PCs und Server."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Aus Bequemlichkeit oder Kostengründen werden GA-Komponenten einfach an den nächstgelegenen Switch des Büro-Netzes angeschlossen. Es gibt keine Segmentierung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse eines Netzwerkscans oder der IP-Adressbereiche, um festzustellen, ob GA-Komponenten und Büro-Geräte im selben Subnetz betrieben werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m2",
+                    "uuid": "957a2399-4b42-42ad-ab4e-a46a49a4d77e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze sind von Büro-Netzen durch eine einfache Firewall getrennt, deren Regelwerk jedoch sehr pauschal und freizügig ist ('any-any'). Eine Kontrolle der Kommunikation findet nur unzureichend statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein GA-VLAN wurde eingerichtet und eine Firewall dazwischen geschaltet. Die Firewall-Regeln erlauben jedoch fast jegliche Kommunikation vom Büro-Netz in das GA-Netz, um die Funktionalität nicht zu beeinträchtigen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Review des Firewall-Regelwerks zwischen dem GA-VLAN und dem Büro-Netz. Prüfung auf übermäßig freizügige Regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m3",
+                    "uuid": "3cc49e7a-4390-40fa-a5d7-19945b7abf9b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze MÜSSEN von Büro-Netzen und sonstigen Netzen der Institution mindestens logisch getrennt werden. Jegliche Kommunikation zwischen GA-Systemen und sonstigen IT-Systemen MUSS kontrolliert und reglementiert werden. Hierfür MÜSSEN an allen Übergängen einer solchen Segmentierung entsprechende Komponenten mit Sicherheitsfunktionen, mindestens mit Firewall-Funktion, vorgesehen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das GA-Netz wird in einem eigenen VLAN oder einer Gruppe von VLANs betrieben. An den Übergängen zum Büro-Netz werden Firewalls mit einem restriktiven 'Default-Deny'-Regelwerk eingesetzt. Nur explizit definierte und notwendige Kommunikationsbeziehungen werden freigeschaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Netzwerkarchitektur auf logische Trennung (VLAN-Konzept). Review des Firewall-Regelwerks, um sicherzustellen, dass es auf dem 'Default-Deny'-Prinzip basiert und nur minimal notwendige Ports und Protokolle erlaubt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m4",
+                    "uuid": "1e45e217-7942-48bd-b445-335c998f72eb",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wird die GA für einen Gebäudekomplex oder eine Liegenschaft zentral eingerichtet, so MUSS die gebäudeübergreifende GA-Kommunikation über LAN-, WLAN-, WAN-, Funknetz- oder Internet-Verbindungen auch auf Ebene des Netzes separiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für die gebäudeübergreifende Kommunikation werden dedizierte WAN-Verbindungen oder sichere VPN-Tunnel mit starken Verschlüsselungs- und Authentifizierungsmechanismen verwendet. Diese Verbindungen werden ebenfalls durch restriktive Firewall-Regeln geschützt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Konfiguration der WAN-Verbindungen oder VPN-Tunnel. Review der Firewall-Regeln, die den Datenverkehr zwischen den Gebäuden regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m5",
+                    "uuid": "5112e6a4-2403-4b07-a2bc-4e97f0ee105d",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze werden physisch von allen anderen Netzen getrennt betrieben. An den wenigen, notwendigen Kopplungspunkten werden Application Layer Gateways oder Datendioden eingesetzt, um die Kommunikation auf das absolut notwendige Minimum zu beschränken und eine Protokollvalidierung durchzuführen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das GA-Netz verwendet eine komplett eigene physische Infrastruktur (Switches, Kabel). Die Kopplung zum Büro-Netz erfolgt über eine demilitarisierte Zone (DMZ), in der ein Application Layer Gateway steht, das nur bestimmte Befehle des GA-Protokolls zulässt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physische Inspektion der Netzwerkinfrastruktur, um die physische Trennung zu verifizieren. Detailliertes Review der Konfiguration des Application Layer Gateways in der DMZ. Durchführung von Penetrationstests, um die Wirksamkeit der Trennung zu überprüfen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a7d27c66-56a5-4844-b075-2567fcc58be0",
+                "control-id": "KONF.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DOCS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a5-m1",
+                    "uuid": "c2ede09f-bd3c-46d4-853f-d05be3492473",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Dokumentation der GA ist nur für einzelne Komponenten oder Systeme vorhanden. Es gibt keinen Gesamtüberblick über alle Komponenten, Zugänge und deren Abhängigkeiten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Dokumentation besteht meist aus Herstellerhandbüchern und unvollständigen Netzwerkplänen. Änderungen werden nicht nachdokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Anforderung der GA-Dokumentation und Prüfung auf Vollständigkeit und Aktualität. Vergleich der Dokumentation mit der Realität an wenigen Stichproben."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m2",
+                    "uuid": "63b97ec5-f7bc-4888-8a6d-2a21455c5a7a",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt eine grundlegende Dokumentation, die die meisten Komponenten und Zugänge der GA erfasst. Diese wird jedoch nicht regelmäßig geprüft oder bei Änderungen zeitnah angepasst."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existiert ein zentraler Ordner mit der GA-Dokumentation, aber es gibt keinen festen Prozess, der sicherstellt, dass alle Änderungen (z.B. neue Geräte, geänderte Firewall-Regeln) dort eingepflegt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in die zentrale Dokumentation. Vergleich der Dokumentation mit dem Ist-Zustand an mehreren Stellen, um die Aktualität zu bewerten. Befragung der Mitarbeiter zum Prozess der Dokumentationspflege."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m3",
+                    "uuid": "2e42b08b-9a22-473d-9303-9e43bbeb8785",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die GA MUSS die Vielzahl unterschiedlicher Komponenten und Zugänge dokumentiert werden. Insbesondere MÜSSEN auch alle deaktivierten physischen Kommunikationsschnittstellen, Protokolle und Zugänge bzw. Zugriffsmöglichkeiten zur GA dokumentiert werden. Darüber hinaus MÜSSEN alle Wechselwirkungen und Abhängigkeiten von GA-relevanten Komponenten sowie von TGA-Anlagen dokumentiert werden. Die Dokumentation MUSS regelmäßig und bei Änderungen innerhalb der GA geprüft und angepasst werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein umfassendes GA-Dokumentationskonzept erstellt, das Vorlagen für Netzwerkpläne, Komponentenlisten, Schnittstellenbeschreibungen und Abhängigkeitsmatrizen enthält. Jede Änderung an der GA muss über einen Change-Management-Prozess laufen, der eine Aktualisierung der Dokumentation zwingend vorschreibt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des GA-Dokumentationskonzepts. Einsicht in die vollständige Dokumentation. Überprüfung von kürzlich durchgeführten Changes, um festzustellen, ob die dazugehörige Dokumentation angepasst wurde."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m4",
+                    "uuid": "4243bc12-a57d-4fa0-aeb8-8f4b470fc16b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die verfügbaren und genutzten Sicherheitseigenschaften der verwendeten Protokolle SOLLTEN dokumentiert werden. Die Dokumentation SOLLTE für alle GA-Systeme übergreifend hinsichtlich Inhalten und deren Datenstrukturen abgestimmt werden, um eine einfache, systemübergreifende Auswertung zu ermöglichen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Dokumentation wird in einer zentralen Datenbank (z.B. CMDB) oder einem Wiki mit standardisierten Vorlagen und Datenfeldern geführt. Für jedes Protokoll wird dokumentiert, welche Sicherheitsfunktionen (z.B. Verschlüsselung, Authentisierung) es bietet und ob diese aktiviert sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der CMDB oder des Wikis auf Konsistenz und Vollständigkeit. Stichprobenartige Überprüfung, ob die dokumentierten Sicherheitseigenschaften der Protokolle mit der tatsächlichen Konfiguration der Komponenten übereinstimmen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m5",
+                    "uuid": "0855e880-9f40-4eb5-8851-f0630c512603",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Dokumentation der GA wird durch automatisierte Inventarisierungs- und Scanning-Tools kontinuierlich erstellt und aktuell gehalten. Abweichungen zwischen der automatisch erfassten Realität und der Solldokumentation (z.B. aus dem BIM-Modell) werden automatisch gemeldet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine OT-Asset-Management-Lösung wird eingesetzt, die das GA-Netzwerk passiv scannt, alle Geräte und ihre Konfigurationen erfasst und in die CMDB schreibt. Diese Daten werden regelmäßig gegen die Planungsdaten aus dem BIM-System validiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Live-Demonstration des automatisierten Inventarisierungstools. Überprüfung des Prozesses zur Meldung und Bearbeitung von Abweichungen. `test-command: /usr/local/bin/ga-asset-scan --discover --diff-to-cmdb`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e59a9bfb-0c5d-4170-ab94-51c2c1c6037b",
+                "control-id": "KONF.3.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a11-m2",
+                    "uuid": "22352be8-b114-4ac0-b495-48838c85273f",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Frei zugängliche Ports (Ethernet, USB) an GA-Komponenten sind organisatorisch zur Deaktivierung vorgesehen, die Umsetzung wird aber nicht kontrolliert. Eine Netzzugangskontrolle ist nicht implementiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt eine Anweisung, ungenutzte Ports zu deaktivieren, aber es gibt keine technische Überprüfung. Temporär für Wartungszwecke aktivierte Ports werden oft vergessen und bleiben offen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physische Inspektion von frei zugänglichen GA-Komponenten (z.B. in Fluren, öffentlichen Bereichen) und Prüfung, ob ungenutzte Ports aktiv sind. Anschließen eines Testgeräts, um die Netzwerkverbindung zu prüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a11-m3",
+                    "uuid": "ae48a99d-0cd4-4752-b8f2-54c0bc239765",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Anschluss von Komponenten, speziell von unautorisierten, unbekannten Komponenten und Fremdgeräten, SOLLTE insbesondere an frei zugänglichen Ethernet-Ports, USB-Ports und anderen Schnittstellen der GA kontrolliert und eingeschränkt werden. Frei zugängliche Schnittstellen für temporäre Wartungszwecke, wie beispielsweise USB-Ports an GA-Komponenten, SOLLTEN nur bei Bedarf aktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle nicht benötigten physischen Ports an GA-Komponenten werden softwareseitig im Switch oder im Betriebssystem des Geräts deaktiviert. Temporäre Freischaltungen für Wartungseinsätze müssen beantragt werden und werden nach einer festgelegten Zeit automatisch wieder deaktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Switch-Konfigurationen, um die Deaktivierung ungenutzter Ports zu verifizieren. Einsicht in den Prozess zur temporären Freischaltung von Ports und Überprüfung der entsprechenden Tickets."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a11-m4",
+                    "uuid": "8336009b-9b2f-47f4-9171-47319abf82a6",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für frei zugängliche LAN- oder WLAN-Zugänge SOLLTE eine Netzzugangskontrolle gemäß IEEE 802.1X oder vergleichbare Sicherheitsmechanismen eingesetzt werden. Der Anschluss einer unautorisierten oder unbekannten Komponente SOLLTE in die Ereignisprotokollierung aufgenommen werden. Eine direkte IP-basierte Kommunikation von solchen Komponenten mit Systemen der GA SOLLTE unterbunden werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "An allen frei zugänglichen Netzwerkdosen wird 802.1X mit Zertifikats- oder MAC-Adressen-basierter Authentifizierung aktiviert. Geräte, die sich nicht authentifizieren können, werden in ein Quarantäne-VLAN verschoben, das keinen Zugriff auf das produktive GA-Netz hat. Jeder fehlgeschlagene Authentifizierungsversuch wird protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Konfiguration des RADIUS-Servers und der Switches für 802.1X. Durchführung eines Tests durch Anschluss eines nicht autorisierten Geräts an einen Port. Prüfung der Systemprotokolle auf entsprechende Einträge. `test-command: Connect-TestDevice -Port 42; Get-FirewallLog -Filter 'quarantine-vlan'`"
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a11-m5",
+                    "uuid": "f5c806f1-4521-437b-9669-7dd83e234c33",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Anschluss unautorisierter Geräte wird nicht nur verhindert, sondern löst auch einen automatisierten Sicherheitsvorfall aus. Der betroffene Port wird sofort physisch gesperrt und eine Benachrichtigung an das Sicherheitsteam gesendet, die den genauen Standort des Ports enthält. Die Kommunikation im Quarantäne-Netz wird aktiv überwacht, um Angriffsversuche zu erkennen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Netzzugangskontroll-Lösung ist mit dem SIEM und einem SOAR-System integriert. Bei einem 802.1X-Fehlschlag wird der Switch-Port via Skript auf 'shutdown' gesetzt und ein Ticket mit der Port-Bezeichnung aus der Dokumentation erstellt. Im Quarantäne-VLAN ist ein Intrusion Detection System (IDS) aktiv."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Live-Test des gesamten Prozesses durch Anschluss eines nicht autorisierten Laptops. Überprüfung, ob der Port gesperrt wird und ob ein entsprechender Alarm und ein Ticket im SIEM/Ticketsystem generiert werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "266d6f9f-836e-40dd-87f1-196b10c5662b",
+                "control-id": "KONF.6.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a3-m1",
+                    "uuid": "b66050e7-b46b-4007-9929-01dace0a6e1b",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Anbindung von TGA-Anlagen an GA-Systeme erfolgt ohne definierte Sicherheitsregeln. Es wird nicht systematisch festgelegt, welche Aktionen ausgelöst werden dürfen, was zu unvorhersehbarem Verhalten führen kann."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Systeme werden nach dem Prinzip 'was technisch funktioniert, wird verbunden' integriert. Eine Analyse der Ablauf- und Funktionsketten findet nicht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragung der Administratoren, nach welchen Regeln TGA-Anlagen angebunden werden. Prüfung, ob Dokumentationen über erlaubte Interaktionen zwischen Systemen existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m2",
+                    "uuid": "aeabc868-7a76-4a2c-ae6f-f115fec94c26",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt grundlegende Festlegungen, welche TGA-Anlagen mit GA-Systemen interagieren dürfen. Die Anbindung wird jedoch nicht durch technische Maßnahmen abgesichert und die Ablaufketten werden nicht umfassend geplant oder getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anbindung wird auf Netzwerkebene erlaubt, aber die erlaubten Aktionen auf Applikationsebene werden nicht eingeschränkt. Funktionstests beschränken sich auf den 'Happy Path'."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in die Dokumentation der erlaubten Anbindungen. Überprüfung der Konfiguration von Koppelelementen, um festzustellen, ob Sicherheitsregeln implementiert sind. Prüfung der Testdokumentation."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m3",
+                    "uuid": "1f4e3553-69d9-4626-a92a-e86bca1c7627",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für alle TGA-Anlagen, GA-Systeme und GA-relevanten Komponenten MUSS festgelegt werden, ob durch andere Systeme Aktionen ausgelöst werden dürfen. Sowohl die Integration von TGA-Anlagen in ein GA-System als auch die rückwirkungsfreie Kopplung von TGA-Anlagen an GA-Systeme MÜSSEN angemessen abgesichert sein. Ebenfalls MUSS die Anbindung von GA-Systemen untereinander angemessen abgesichert werden. Hierzu MÜSSEN insbesondere die Ablauf- und Funktionsketten innerhalb eines GA-Systems bzw. zwischen GA-Systemen angemessen geplant und getestet werden. Die Festlegungen MÜSSEN vollumfänglich dokumentiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jede Anbindung wird eine Interaktionsmatrix erstellt, die genau definiert, welches System welche Daten an welches andere System senden und welche Aktionen auslösen darf. Diese Regeln werden in den Koppelelementen (z.B. Gateways, Firewalls) technisch umgesetzt. Jede Anbindung durchläuft einen standardisierten Test- und Freigabeprozess."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Interaktionsmatrizen und der dazugehörigen Dokumentation. Überprüfung der Konfiguration der Koppelelemente, um die Umsetzung der definierten Regeln zu verifizieren. Einsicht in die Testprotokolle der Ablauf- und Funktionsketten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m4",
+                    "uuid": "2c469e07-6943-40de-90f8-ace181e50aca",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls eine Integration zulässig ist, SOLLTE reglementiert werden, welche automatisierten Aktionen durch welche Informationen eines GA-Systems ausgelöst werden dürfen. Die Ablauf- und Funktionsketten SOLLTEN umfassend getestet und bei Fehlverhalten nachjustiert werden. Die Dokumentation SOLLTE regelmäßig und ergänzend bei Bedarf geprüft werden, ob sie noch aktuell ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Regeln für automatisierte Aktionen werden detailliert spezifiziert, inklusive Schwellenwerten und Plausibilitätsprüfungen. Die Tests umfassen auch Fehlerszenarien (z.B. Ausfall einer Komponente, ungültige Daten). Die Dokumentation wird jährlich auf Aktualität geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Spezifikation der automatisierten Aktionen. Einsicht in die Testpläne und -protokolle, insbesondere für Fehlerszenarien. Prüfung der Protokolle der jährlichen Dokumentationsreviews."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m5",
+                    "uuid": "e194136b-416b-4c91-a35a-dab0845556e3",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesamte Kommunikation zwischen TGA-Anlagen und GA-Systemen wird in Echtzeit überwacht. Abweichungen von den definierten Ablauf- und Funktionsketten werden automatisch erkannt und gemeldet. Bei erkannten Abweichungen werden die betroffenen Interaktionen blockiert und ein Incident-Prozess ausgelöst. Die Testfälle werden automatisiert aus den Spezifikationen generiert und ausgeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine OT-Security-Monitoring-Lösung eingesetzt, die den Datenverkehr der GA analysiert und über Anomalieerkennung verfügt. Ein Security Orchestration, Automation and Response (SOAR)-System wird verwendet, um auf Alarme automatisiert zu reagieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Live-Demonstration des Monitoring-Systems und der automatischen Alarmierung. Prüfung eines simulierten Angriffs, um die Reaktion des SOAR-Systems zu verifizieren. `test-command: /usr/local/bin/ga-traffic-analyser --watch --alert-on-deviation`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "8e2453aa-9a61-4dd0-aa6c-64c1e4b9894a",
+                "control-id": "KONF.7.15",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a4-m1",
+                    "uuid": "dcf8eb30-95f2-4c7c-a632-90ce65210f41",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gefahrenmeldeanlagen sind teilweise in GA-Systeme integriert, ohne dass die Rückwirkungsfreiheit sichergestellt ist. Die netztechnische Anbindung erfolgt über das allgemeine GA-Netz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Beispielsweise wird eine Brandmeldeanlage direkt mit der Klimasteuerung verbunden, um diese abzuschalten. Eine Fehlfunktion in der Klimasteuerung könnte theoretisch die Brandmeldeanlage beeinflussen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Netzwerk- und Systemarchitekturpläne, um die Art der Anbindung von Gefahrenmeldeanlagen (GMA) an die GA zu ermitteln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m2",
+                    "uuid": "383b3aef-7457-4d12-81ba-0407fcd8a347",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gefahrenmeldeanlagen sind an GA-Systeme gekoppelt, aber die Rückwirkungsfreiheit ist nur konzeptionell vorgesehen und nicht technisch durchgesetzt. Die netztechnische Anbindung erfolgt logisch getrennt, aber nicht physisch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die GMA befindet sich in einem eigenen VLAN, aber es wird kein Gateway mit Diode-Funktionalität verwendet. Die Kopplung ist als unidirektional dokumentiert, aber nicht technisch erzwungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration der Netzwerkkomponenten (z. B. VLANs, Firewall-Regeln) zwischen GMA und GA."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m3",
+                    "uuid": "98755b45-bbbd-4253-99d9-b8206c3f4be5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gefahrenmeldeanlagen inklusive Sicherheitsanlagen MÜSSEN rückwirkungsfrei an GA-Systeme gekoppelt werden. Sie DÜRFEN NICHT in ein GA-System integriert werden. Für die netztechnische Anbindung MÜSSEN physisch getrennte Netzkomponenten und physisch getrennte Segmente genutzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anbindung der GMA an die GA erfolgt über ein dediziertes Gateway, das nur eine unidirektionale Kommunikation von der GMA zur GA zulässt (z.B. eine Datendiode). Die GMA und ihre Anbindungskomponenten befinden sich in einem eigenen, physisch vom GA-Netz getrennten Netzwerksegment mit eigenen Switches."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physische Inspektion der Netzwerkverkabelung und -komponenten zur Überprüfung der physischen Trennung. Überprüfung der Konfiguration und des Typs des verwendeten Gateways, um die Rückwirkungsfreiheit sicherzustellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m4",
+                    "uuid": "6efe1f1e-5411-4765-9f1f-49926ac39eda",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Werden Funknetze zur Kopplung genutzt, MÜSSEN solche TGA-Anlagen als Primärnutzende für die verwendeten Frequenzbereiche festgelegt werden. Für die Kommunikation über Funknetze SOLLTEN zertifizierte Mechanismen genutzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei Nutzung von Funk (z.B. für Rauchmelder) wird ein Frequenzband exklusiv für die GMA reserviert und bei der Bundesnetzagentur angemeldet. Es werden nur Funkprotokolle mit zertifizierter Sicherheit (z.B. nach VdS-Richtlinien) eingesetzt, die Verschlüsselung und Authentisierung bieten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Frequenzzuteilungsurkunde der Bundesnetzagentur. Einsicht in die Zertifikate der eingesetzten Funkkomponenten und -protokolle."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m5",
+                    "uuid": "b6dfa819-e776-4721-9516-62a341a4c381",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Kommunikation von der GMA zur GA wird zusätzlich auf Integrität und Authentizität auf Applikationsebene geprüft. Jeglicher Versuch einer Kommunikation von der GA zur GMA wird aktiv blockiert und als schwerwiegender Sicherheitsvorfall gemeldet. Die physikalische Trennung wird durch manipulationssichere Gehäuse und plombierte Ports ergänzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Gateway zwischen GMA und GA prüft kryptografische Signaturen der ankommenden Meldungen. Die Firewall-Regeln am Gateway sind so konfiguriert, dass jeder Verbindungsversuch von der GA-Seite geloggt und an ein SIEM gemeldet wird. Die Netzwerkkomponenten des GMA-Netzes sind in verschlossenen Schränken untergebracht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Durchführung eines Penetrationstests, der versucht, die Rückwirkungsfreiheit zu umgehen. Überprüfung der SIEM-Logs auf Alarmmeldungen bei einem simulierten Angriffsversuch. Physische Inspektion der Sicherheitsmaßnahmen an den Netzwerkkomponenten. `test-command: nmap -sS <GMA-Gateway-IP> --source-port 12345 --reason`"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,1276 @@
+{
+  "component-definition": {
+    "uuid": "6c2a4c45-a46d-451f-b644-2b84f43f1546",
+    "metadata": {
+      "title": "APP.2.1 Allgemeiner Verzeichnisdienst - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:31.427038+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "74f97025-66f7-4f91-a791-4211dc56cd68",
+        "type": "software",
+        "title": "APP.2.1 Allgemeiner Verzeichnisdienst",
+        "description": "This component represents the implementation of all controls for Baustein APP.2.1.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Ein Verzeichnisdienst stellt in einem Datennetz Informationen über beliebige Objekte in einer definierten Art zur Verfügung. In einem Objekt können zugehörige Attribute gespeichert werden, zum Beispiel können zu einer Kennung der Name und Vorname des oder der Benutzenden, die Personalnummer und der Name des IT-Systems abgelegt werden. Diese Daten können dann gleichermaßen von verschiedenen Applikationen verwendet werden. Der Verzeichnisdienst und seine Daten werden in der Regel von zentraler Stelle aus verwaltet.<BR>Einige typische Anwendungsgebiete von Verzeichnisdiensten sind:<BR>• Verwaltung von Adressbüchern, z. B. für Telefonnummern, E-Mail-Adressen und Zertifikate für elektronische Signaturen<BR>• Benutzendenverwaltung, z. B. zur Verwaltung von Konten und Berechtigungen<BR>• Bereitstellung eines Backend-Dienstes für Authentifizierungsfunktionen, z. B. zur Anmeldung an Betriebssystemen oder Anwendungen<BR>Verzeichnisdienste sind auf Lesezugriffe hin optimiert, da Daten aus dem Verzeichnisdienst typischerweise vorwiegend abgerufen werden. Schreibzugriffe, bei denen Einträge erstellt, geändert oder gelöscht werden, sind seltener notwendig.<BR>Wenn ein Verzeichnisdienst eingesetzt wird, können manche Verwaltungsaufgaben innerhalb des Netzes, wie z. B. Kontenerstellung, Passwortänderungen und Zuweisungen von Rollen und Gruppen, an zentraler Stelle durchgeführt werden."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, allgemeine Verzeichnisdienste sicher zu betreiben sowie die damit verarbeiteten Informationen angemessen zu schützen."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.2.1 Allgemeiner Verzeichnisdienst ist für alle verwendeten Verzeichnisdienste anzuwenden.<BR>Dieser Baustein betrachtet allgemeine Sicherheitsaspekte von Verzeichnisdiensten unabhängig vom eingesetzten Produkt. Für produktspezifische Sicherheitsaspekte gibt es im IT-Grundschutz-Kompendium weitere Bausteine, die zusätzlich auf den jeweiligen Verzeichnisdienst anzuwenden sind. Bausteine zu Server-Betriebssystemen, auf denen Verzeichnisdienste üblicherweise betrieben werden, sind in der Schicht SYS.1 Server des IT-Grundschutz-Kompendiums aufgeführt. Grundlegende Anforderungen an Software-Produkte finden sich in APP.6 Allgemeine Software und sind ebenfalls zu beachten.<BR>Verzeichnisdienste sollten grundsätzlich im Rahmen der Bausteine ORP.4 Identitäts- und Berechtigungsmanagement, OPS.1.1.3 Patch- und Änderungsmanagement, CON.3 Datensicherungskonzept, OPS.1.2.2 Archivierung, OPS.1.1.5 Protokollierung, OPS.1.2.5 Fernwartung sowie OPS.1.1.2 Ordnungsgemäße IT-Administration mitberücksichtigt werden."
+          },
+          {
+            "name": "2.1. Fehlende oder unzureichende Planung des Einsatzes von Verzeichnisdiensten",
+            "value": "Die Sicherheit von Verzeichnisdiensten stützt sich stark auf die Sicherheit des Basisbetriebssystems und dabei vor allem auf die Dateisystemsicherheit. Verzeichnisdienste lassen sich auf vielen Betriebssystemen installieren und betreiben, wodurch sich eine große Vielfalt der vorzunehmenden Sicherheitseinstellungen ergeben kann. Diese Vielfalt erhöht die Anforderungen an die Planung und setzt entsprechende Kenntnisse über das jeweilige Betriebssystem voraus. Sollte die entstehende Gesamtlösung sehr heterogen oder komplex sein, kann ein nicht ausreichend geplanter Einsatz des Verzeichnisdienstes im Wirkbetrieb zu Sicherheitslücken führen."
+          },
+          {
+            "name": "2.2. Fehlerhafte oder unzureichende Planung der Partitionierung und Replizierung im Verzeichnisdienst",
+            "value": "Durch eine Partitionierung können die Verzeichnisdaten eines Verzeichnisdienstes in einzelne Teilbereiche (Partitionen) aufgeteilt werden. Um für eine bessere Lastverteilung zu sorgen, werden Partitionen des Verzeichnisdienstes häufig auf weitere Instanzen repliziert. Außerdem wird durch die redundante Datenhaltung die Ausfallsicherheit verbessert und somit die Verfügbarkeit erhöht. Von entscheidender Bedeutung ist deshalb auch hier eine geeignete Planung, da Partitions- und Replikationseinstellungen zwar nachträglich geändert werden können, dies aber Probleme verursachen kann. Es kann etwa zu Datenverlusten sowie Inkonsistenzen in der Datenhaltung, zu einer mangelhaften Verfügbarkeit des Verzeichnisdienstes und zu einer insgesamt schlechten Systemperformance bis hin zu Ausfällen führen."
+          },
+          {
+            "name": "2.3. Fehlerhafte Administration von Zugangs- und Zugriffsrechten",
+            "value": "Zugangsrechte zu einem IT-System und Zugriffsrechte auf gespeicherte Daten und IT-Anwendungen dürfen nur in dem Umfang eingeräumt werden, wie sie für die durchzuführenden Aufgaben erforderlich sind. Dies gilt auch für die Berechtigungen, die über einen Verzeichnisdienst verwaltete Benutzende und Gruppen erhalten, auch wenn diese für die Informationen im Verzeichnisdienst selbst gelten. Werden diese Rechte fehlerhaft administriert, kann einerseits der Betrieb gestört werden, falls erforderliche Rechte nicht zugewiesen wurden. Andererseits können Sicherheitslücken entstehen, falls über die notwendigen Rechte hinaus weitere Rechte vergeben werden. Wenn die Zugriffsrechte im Verzeichnisdienst falsch oder inkonsistent vergeben werden, ist dadurch die Sicherheit des Gesamtsystems erheblich gefährdet. Ein besonders kritischer Punkt sind auch die Administrationsrechte. Werden diese Rechte falsch vergeben, kann das gesamte Administrationskonzept unterlaufen oder unter Umständen sogar die Administration des Verzeichnissystems selbst verhindert oder eine unberechtigte Nutzung ermöglicht werden."
+          },
+          {
+            "name": "2.4. Fehlerhafte Konfiguration des Zugriffs auf Verzeichnisdienste",
+            "value": "In vielen Fällen müssen weitere Applikationen wie Internet- oder Intranet-Anwendungen auf den Verzeichnisdienst zugreifen. Eine Fehlkonfiguration kann dazu führen, dass Zugriffsrechte falsch vergeben werden. Es kann auch passieren, dass unautorisiert auf den Verzeichnisdienst zugegriffen werden kann oder dass Daten zur Authentisierung im Klartext übermittelt werden. In diesem Fall können Informationen während der Übertragung ausgespäht werden."
+          },
+          {
+            "name": "2.5. Ausfall von Verzeichnisdiensten",
+            "value": "Durch technisches Versagen aufgrund von Hardware- oder Software-Problemen können Verzeichnisdienste oder Teile davon ausfallen. Als Folge sind die Daten im Verzeichnis temporär nicht mehr zugänglich. Im Extremfall können auch Daten verloren gehen oder Anmeldungen an vom Verzeichnisdienst bedienten IT-Systemen nicht mehr möglich sein. Dadurch können Geschäftsprozesse und interne Arbeitsabläufe behindert werden. Sind funktionsfähige Kopien der ausgefallenen Systemteile vorhanden, so ist der Zugriff zwar weiterhin möglich, jedoch je nach gewählter Netztopologie nur mit eingeschränkter Leistungsfähigkeit."
+          },
+          {
+            "name": "2.6. Kompromittierung von Verzeichnisdiensten durch unbefugten Zugriff",
+            "value": "Wenn es Angreifenden gelungen ist, eine notwendige Authentisierung gegenüber dem Verzeichnisdienst erfolgreich durchzuführen oder zu umgehen, können sie danach unbefugt auf eine Vielzahl von Daten zugreifen. Somit kann potentiell der gesamte Verzeichnisdienst kompromittiert werden. Dadurch könnte das gesamte betroffene System beeinträchtigt oder gar zerstört werden.<BR>Die Sicherheit eines Verzeichnisdienstes kann ebenfalls gefährdet werden, wenn anonyme Benutzende zugelassen werden. Dadurch, dass deren Identität nicht überprüft wird, können anonyme Benutzende zunächst beliebige Abfragen an den Verzeichnisdienst richten, durch die sie zumindest Teilinformationen über dessen Struktur und Inhalt erlangen. Wenn anonyme Zugriffe zugelassen werden, sind außerdem DoS-Attacken auf den Verzeichnisdienst leichter durchzuführen, da Angreifende mehr Zugriffsmöglichkeiten haben, die nur schlecht kontrollierbar sind."
+          },
+          {
+            "name": "2.7. Fehlerhafte Konfiguration von Verzeichnisdiensten",
+            "value": "Verzeichnisdienste verfügen über zahlreiche Funktionen, sodass der Verzeichnisdienst von Anwendenden mit sehr unterschiedlichen Bedürfnissen genutzt werden kann. Eine Fehlkonfiguration dieser zahlreichen Funktionen kann dazu führen, dass unautorisiert auf den Verzeichnisdienst zugegriffen werden kann. Wenn beispielsweise die Standardkonfiguration nicht ausreichend geprüft und angepasst wird, können die Informationen zur Authentisierung im Klartext oder unzureichend abgesichert übermittelt und damit ausgespäht werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "ccb06ae5-c6d1-48db-8130-4ee923417844",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/verzeichnisdienste_profile.json",
+            "description": "Implementation for all controls in Baustein APP.2.1",
+            "implemented-requirements": [
+              {
+                "uuid": "49354e18-e77e-4dd6-b24f-cd2aea7c376d",
+                "control-id": "ARCH.8.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A9-m1",
+                    "uuid": "75c6a6d1-9d61-4665-9b3c-acceee596801",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein einzelner Replikat-Server ist für ein grundlegendes Failover eingerichtet, aber der Replikationsmodus wird nicht basierend auf den Anforderungen an Netzwerk oder Verfügbarkeit ausgewählt. Die Partitionierung wird nicht genutzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein zweiter OpenLDAP-Server wird aufgesetzt und als einfacher Consumer konfiguriert (`olcSyncrepl`), oft im `refreshOnly`-Modus."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz des zweiten Servers und seiner `olcSyncrepl`-Konfiguration. Es wird festgestellt, dass die Konfiguration nicht für hohe Verfügbarkeit optimiert ist und keine Partitionierung zum Einsatz kommt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A9-m2",
+                    "uuid": "e71cc82f-99c8-4bab-bda8-45e1535bbe85",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Multi-Provider-Replikation ist für hohe Verfügbarkeit eingerichtet. Der Replikationsmodus (z.B. sync, refreshAndPersist) wird ausgewählt, jedoch ohne eine tiefgehende Analyse seiner Auswirkungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mindestens zwei Server sind als Provider in einer Multi-Provider-Konfiguration eingerichtet, sodass jeder Server Schreibvorgänge akzeptieren kann. Der `refreshAndPersist`-Modus wird für die Replikation verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration auf allen Replikat-Servern und stellt sicher, dass eine Multi-Provider-Replikation korrekt eingerichtet ist. Es wird getestet, ob eine auf einem Server vorgenommene Änderung korrekt auf den anderen repliziert wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A9-m3",
+                    "uuid": "33857dd2-bccc-4730-8c85-083e0574aac6",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei einer Partitionierung oder Replikation von OpenLDAP SOLLTE die Aufteilung geeignet für die Sicherheitsziele ausgewählt werden. Dabei SOLLTEN Veränderungen an den Daten durch Replikation zwischen den Servern ausgetauscht werden. Ein Replikationsmodus SOLLTE in Abhängigkeit von Netzverbindungen und Verfügbarkeitsanforderungen gewählt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Entscheidung für eine bestimmte Replikationstopologie (z.B. Multi-Provider vs. Provider/Consumer) und den Replikationsmodus (`olcSyncrepl`-Parameter) wird dokumentiert und basiert auf den Anforderungen an Ausfallsicherheit und Schreiblatenz. Wenn unterschiedliche Sicherheitsanforderungen an Daten bestehen, werden separate Datenbank-Backends (Partitionen) mit unterschiedlichen Replikationseinstellungen und ACLs verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Dokumentation zur Replikations- und Partitionierungsstrategie. Es wird geprüft, ob die gewählte Konfiguration den dokumentierten Zielen entspricht. Beispielsweise wird bei geografisch verteilten Standorten geprüft, ob ein Modus gewählt wurde, der mit höheren Netzwerklatenzen umgehen kann."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A9-m4",
+                    "uuid": "46ee4128-64a2-4f6f-b6ff-6740a305cb09",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Replikationstopologie ist zur Optimierung von Leistung und Verfügbarkeit konzipiert (z.B. geografisch verteilte Replikate). Der Replikationsverkehr wird verschlüsselt und auf Latenz und Fehler überwacht. Ein dokumentierter Notfallwiederherstellungsplan, der die Replikation nutzt, existiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Replikation zwischen den Servern erfolgt über TLS-gesicherte Verbindungen. Monitoring-Tools (z.B. Prometheus mit einem OpenLDAP-Exporter) überwachen den Replikationsstatus (`contextCSN`) auf allen Replikaten und alarmieren bei zu großer Abweichung (Lag). Der DR-Plan beschreibt die Schritte, um den Dienst nach dem Ausfall eines gesamten Rechenzentrums wiederherzustellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die TLS-Konfiguration für die Replikation. Die Konfiguration und die Daten des Monitoring-Systems werden analysiert. Der Notfallwiederherstellungsplan wird auf Vollständigkeit und Plausibilität geprüft. Idealerweise wird die Durchführung einer DR-Übung nachgewiesen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A9-m5",
+                    "uuid": "759f3048-151f-4384-b2b0-6f226c456e95",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein vollständig automatisierter Failover-Mechanismus ist implementiert. Das System kann die Anzahl der Replikate dynamisch an die Last anpassen. Der Replikationsstatus wird kontinuierlich überwacht, und jede Verzögerung oder Inkonsistenz löst eine automatisierte Warnung und potenziell eine Korrekturmaßnahme aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Load Balancer mit Health Checks leitet Anfragen automatisch von ausgefallenen Servern weg. In einer Cloud- oder containerisierten Umgebung wird ein Autoscaling-Mechanismus verwendet, um bei hoher Last zusätzliche schreibgeschützte Replikate zu starten. Ein Skript prüft kontinuierlich die `contextCSN` aller Server und versucht bei Inkonsistenzen, die Replikation auf dem betroffenen Knoten neu zu initialisieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer testet den Failover-Mechanismus, indem er einen OpenLDAP-Server gezielt stoppt und beobachtet, ob der Dienst ohne Unterbrechung weiterläuft. Die Konfiguration des Autoscalings und der automatisierten Korrekturmaßnahmen wird überprüft. Die Protokolle dieser Systeme werden auf ihre Wirksamkeit hin analysiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "0245d2aa-d050-43db-8c00-33fa389a615f",
+                "control-id": "DEV.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A1-m1",
+                    "uuid": "55faf2ab-f948-41d3-a8d6-32623eb13dd0",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Planung für den OpenLDAP-Einsatz ist rudimentär und konzentriert sich nur auf die grundlegende Funktionalität für eine einzelne Anwendung. Die Auswahl von Backends und Overlays erfolgt ad-hoc, ohne Berücksichtigung von Kompatibilität oder der korrekten Reihenfolge der Overlays."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Regel wird das Standard-Backend der Distribution ohne weitere Anpassungen verwendet. Overlays werden, wenn überhaupt, nur für einzelne, offensichtliche Anforderungen wie das Setzen von Passwortrichtlinien genutzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, ob überhaupt ein Planungsdokument existiert. Es wird geprüft, ob die Konfiguration des OpenLDAP-Servers auf Standardwerten beruht und ob die Auswahl der Komponenten dokumentiert wurde."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A1-m2",
+                    "uuid": "977815e9-84eb-41ad-97dd-dbdc1f6bd8b4",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Planung für den OpenLDAP-Einsatz liegt vor. Backends und Overlays werden bewusst ausgewählt, und die Kompatibilität der Datenbankversion wird sichergestellt. Die Reihenfolge der Overlays wird berücksichtigt, jedoch ohne tiefgehende Analyse der Wechselwirkungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein einfaches Planungsdokument wird erstellt, das die Auswahl des Backends (z. B. MDB) und der wichtigsten Overlays (z. B. `ppolicy`, `auditlog`) begründet. Die Kompatibilität mit den primären Client-Anwendungen wird überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet das Planungsdokument. Es wird verifiziert, dass die Version der Datenbank kompatibel ist und dass die wichtigsten Overlays in einer logischen Reihenfolge konfiguriert sind. Es wird stichprobenartig geprüft, ob die Client-Anwendungen funktionieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A1-m3",
+                    "uuid": "86c00720-665d-4c4a-878c-be3ec8d1c0d7",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Einsatz von OpenLDAP in einer Institution MUSS sorgfältig geplant werden. Soll OpenLDAP gemeinsam mit anderen Anwendungen verwendet werden, so MÜSSEN die Planung, Konfiguration und Installation der Anwendungen mit OpenLDAP aufeinander abgestimmt werden. Für die zur Datenhaltung verwendete Datenbank MUSS sichergestellt werden, dass die verwendete Version kompatibel ist. Backends und Overlays für OpenLDAP MÜSSEN restriktiv selektiert werden. Dazu MUSS sichergestellt werden, dass die OpenLDAP-Overlays in der korrekten Reihenfolge eingesetzt werden. Bei der Planung von OpenLDAP MÜSSEN die auszuwählenden und unterstützten Client-Anwendungen berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein detailliertes Konzeptdokument wird erstellt, das die Architektur, das gewählte Backend (z.B. MDB), alle verwendeten Overlays in ihrer exakten Reihenfolge und deren Konfiguration beschreibt. Es enthält eine Liste der kompatiblen und unterstützten Client-Anwendungen und deren Versionen. Die Auswahl wird durch Anforderungen an Sicherheit, Performance und Funktionalität begründet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Live-Konfiguration des OpenLDAP-Servers mit dem Konzeptdokument. Es wird geprüft, ob alle MUSS-Anforderungen erfüllt sind: die Abstimmung mit angebundenen Anwendungen, die Kompatibilität der Datenbankversion, die restriktive Auswahl von Backends/Overlays, die korrekte Reihenfolge der Overlays und die Berücksichtigung der Client-Anwendungen. Dies kann durch Auslesen der Konfiguration (`cn=config`) erfolgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A1-m4",
+                    "uuid": "3c41057c-0e55-44ae-911b-b3a16660d7b0",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Planungsprozess ist formalisiert und wird regelmäßig überprüft. Die Auswahl von Backends und Overlays basiert auf Leistungs- und Skalierbarkeitstests, die in einer Testumgebung durchgeführt werden. Es wird ein Katalog der genehmigten Client-Anwendungen und -Versionen gepflegt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor der Einführung neuer Overlays oder einer Änderung des Backends werden Lasttests mit Werkzeugen wie `slapd-slapadd` oder `slap-bench` durchgeführt, um die Auswirkungen auf die Performance zu bewerten. Die Ergebnisse fließen in die Planungsdokumentation ein."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Dokumentation der durchgeführten Leistungs- und Kompatibilitätstests an. Es wird geprüft, ob ein formaler Prozess zur Genehmigung und Aufnahme von Client-Anwendungen in den Katalog existiert und eingehalten wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A1-m5",
+                    "uuid": "b8bc4cc3-679e-4a62-980a-12b6890fb29d",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der gesamte Planungs- und Auswahlprozess ist in das zentrale Change-Management-System integriert. Automatisierte Tests verifizieren die Client-Kompatibilität und die korrekte Funktionalität der Overlay-Kette vor jeder Bereitstellung. Die Auswahl von Backends und Overlays basiert auf einer formalen Risikobewertung und kontinuierlichen Leistungsbenchmarks im Produktivbetrieb."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine CI/CD-Pipeline wird für die OpenLDAP-Konfiguration genutzt. Jede Änderung am Konfigurations-Backend (`cn=config`) löst eine Reihe automatisierter Tests aus, die die Funktionalität, Sicherheit und Leistung verifizieren, bevor die Änderung in die Produktion übernommen wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Protokolle des Change-Management-Systems und der CI/CD-Pipeline. Es wird verifiziert, dass keine Konfigurationsänderung ohne erfolgreiche automatisierte Tests und formale Freigabe in die Produktion gelangt ist. Anhand von Monitoring-Daten wird die Einhaltung der Leistungs-SLAs überprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d47febed-0e02-40bf-babb-01932d32364a",
+                "control-id": "DEV.2.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A11-m1",
+                    "uuid": "58a207ed-22d8-46f6-8b7c-8ce763ee7d85",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der slapd-Server läuft als nicht-privilegierter Benutzer, es werden jedoch keine weiteren Einschränkungen auf die Laufzeitumgebung angewendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der `slapd`-Prozess wird als Benutzer `ldap` gestartet, hat aber ansonsten vollen Zugriff auf das Dateisystem und die Netzwerkressourcen des Hosts, soweit es die Benutzerrechte zulassen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert mit `ps aux | grep slapd`, dass der Prozess als nicht-privilegierter Benutzer läuft. Es wird festgestellt, dass keine weiteren Sicherheitsmechanismen wie chroot oder AppArmor aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m2",
+                    "uuid": "87aa034e-7efe-4ff2-a46f-3f1dc25c0fb5",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der slapd-Server wird in einem einfachen Container oder auf einem dedizierten Server mit Standard-Betriebssystemhärtung betrieben. Es werden grundlegende Einschränkungen angewendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "OpenLDAP wird in einem Standard-Docker-Container betrieben oder auf einem Server installiert, auf dem ein grundlegendes Härtungsskript für das Betriebssystem ausgeführt wurde. Es werden keine speziellen Profile für den Container oder den Dienst erstellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, dass der Dienst containerisiert ist oder auf einem gehärteten System läuft. Es wird jedoch verifiziert, dass keine spezifischen Sicherheitsprofile (z.B. seccomp, AppArmor) für den OpenLDAP-Prozess selbst konfiguriert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m3",
+                    "uuid": "cce39b33-3c64-4a73-a37b-7f494484910f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Laufzeitumgebung des slapd-Servers SOLLTE, möglichst mit Mitteln des Betriebssystems, auf die minimal benötigten Dateien, Verzeichnisse und vom Betriebssystem bereitgestellten Funktionen eingeschränkt werden. Werden hierfür Containerisierungstechniken eingesetzt, SOLLTEN diese unter Berücksichtigung von SYS.1.6 Containerisierung genutzt werden. Wird der slapd-Server als exklusiver Dienst auf einem dedizierten Server betrieben, SOLLTE dieser ausreichend gehärtet sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein spezifisches Sicherheits-Profil für den slapd-Prozess erstellt und angewendet, z.B. mittels AppArmor oder SELinux. Dieses Profil beschränkt den Dateisystemzugriff auf die benötigten Verzeichnisse (`/etc/ldap`, `/var/lib/ldap`) und verbietet die Ausführung von externen Programmen. Bei Einsatz von Containern wird ein gehärtetes Basis-Image verwendet und die Container-Funktionen gemäß den Empfehlungen aus SYS.1.6 eingeschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Aktivität und den Inhalt des AppArmor-/SELinux-Profils für slapd (z.B. mit `aa-status`). Es wird verifiziert, dass das Profil den Zugriff auf das Notwendigste beschränkt. Bei Containern wird die Konfiguration (`docker inspect`) auf Sicherheitseinstellungen wie `security_opt` oder `cap_drop` geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m4",
+                    "uuid": "128a1358-fbdc-4a8a-9564-f09615322f5c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ein gehärtetes Container-Image verwendet, aus dem alle unnötigen Binärdateien und Bibliotheken entfernt wurden. Ein striktes Sicherheitsprofil (z.B. AppArmor, seccomp) wird durchgesetzt, das die Systemaufrufe (syscalls) auf das absolut notwendige Minimum beschränkt. Der Netzwerkzugriff wird über Firewall-Regeln strikt kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein benutzerdefiniertes, minimalistisches Container-Image erstellt. Ein `seccomp`-Profil wird generiert (z.B. mit `strace`), das nur die von slapd tatsächlich genutzten Systemaufrufe erlaubt. Host-basierte Firewall-Regeln (iptables, nftables) erlauben nur eingehende Verbindungen auf den LDAP(S)-Ports von definierten IP-Adressbereichen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert das Dockerfile des verwendeten Images auf seine Minimalität. Das `seccomp`-Profil wird auf Vollständigkeit und Korrektheit geprüft. Die Firewall-Regeln, die den slapd-Prozess oder Container betreffen, werden analysiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m5",
+                    "uuid": "1aac5bc8-38d4-43f8-9fe1-704d220200f3",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der slapd-Server läuft in einem minimalen, 'distroless' Container. Alle Interaktionen mit dem Host-Betriebssystem werden protokolliert und auf Anomalien überwacht. Die Integrität des Containers wird zur Laufzeit überprüft. Die gesamte Umgebung ist als Code definiert und wird automatisch bereitgestellt und auditiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das OpenLDAP-Binary wird in ein 'distroless' oder Scratch-Image kopiert, das keine Shell oder andere Werkzeuge enthält. Ein Laufzeit-Sicherheitstool (z.B. Falco, Sysdig) überwacht die Systemaufrufe des Containers in Echtzeit und meldet verdächtige Aktivitäten. Die gesamte Umgebungsdefinition (Container, Netzwerk, Profile) wird in einem Git-Repository verwaltet und über eine CI/CD-Pipeline bereitgestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Verwendung eines 'distroless' Images. Die Konfiguration und die Alarmierungsregeln des Laufzeit-Sicherheitstools werden analysiert. Es wird geprüft, ob ein Versuch, eine Shell im Container zu starten, erkannt und gemeldet wird. Die CI/CD-Pipeline und die zugehörigen Konfigurationsdateien werden auditiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "8e82e632-e740-4779-b4e5-113fd2192b22",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A3-m1",
+                    "uuid": "c82dacb2-0fac-428e-a521-4f922880a4f6",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur der slapd-Server selbst wird mit einigen grundlegenden Sicherheitseinstellungen konfiguriert. Konfigurationen von Client-Anwendungen oder Berechtigungen auf Betriebssystemebene werden ignoriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Typischerweise werden nur die offensichtlichsten Konfigurationsparameter wie der Servername angepasst. Zeit- und Größenbeschränkungen für Suchen werden nicht gesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer prüft stichprobenartig die slapd-Konfiguration auf grundlegende Einstellungen. Es wird festgestellt, dass keine Konfigurationsrichtlinien für Clients oder das Betriebssystem existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A3-m2",
+                    "uuid": "e381dd9d-0b12-44f9-8bd5-f86f1ab49821",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der slapd-Server und die Client-Anwendungen werden gemäß den Herstellerempfehlungen (Standardwerte) konfiguriert. Die Berechtigungen im Betriebssystem werden gesetzt, aber nicht auf Minimalprinzip überprüft. Die Konfiguration wird nur bei der Ersteinrichtung geprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration erfolgt nach dem Prinzip 'installieren und starten'. Die Standardvorgabewerte für Limits (`sizelimit`, `timelimit`) werden beibehalten. Die Dateiberechtigungen werden so belassen, wie sie vom Paketmanager gesetzt wurden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Konfiguration mit den dokumentierten Standardwerten des Herstellers. Es wird geprüft, ob die Betriebssystemberechtigungen den Standardvorgaben entsprechen. Es wird festgestellt, dass keine regelmäßigen Konfigurationsprüfungen stattfinden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A3-m3",
+                    "uuid": "8c3290d8-3eaf-4588-b107-24aa2083afb4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die sichere Konfiguration von OpenLDAP MUSS der slapd-Server korrekt konfiguriert werden. Es MÜSSEN auch die verwendeten Client-Anwendungen sicher konfiguriert werden. Bei der Konfiguration von OpenLDAP MUSS darauf geachtet werden, dass im Betriebssystem die Berechtigungen korrekt gesetzt sind. Die Vorgabewerte aller relevanten Konfigurationsdirektiven von OpenLDAP MÜSSEN geprüft und gegebenenfalls angepasst werden. Die Backends und Overlays von OpenLDAP MÜSSEN in die Konfiguration einbezogen werden. Für die Suche innerhalb von OpenLDAP MÜSSEN angemessene Zeit- und Größenbeschränkungen festgelegt werden. Die Konfiguration am slapd-Server MUSS nach jeder Änderung geprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Konfigurationsrichtlinie erstellt, die sichere Werte für `sizelimit`, `timelimit` und andere sicherheitsrelevante Direktiven festlegt. Die Dateiberechtigungen im Betriebssystem werden explizit so gesetzt, dass nur der OpenLDAP-Dienstbenutzer Lese- und Schreibzugriff auf die Datenbank- und Konfigurationsdateien hat. Nach jeder Änderung wird die Konfiguration mittels `slaptest` auf syntaktische Korrektheit geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des slapd-Servers (`cn=config`) und vergleicht sie mit den dokumentierten Richtlinien. Insbesondere werden die Werte für `olcSizeLimit` und `olcTimeLimit` geprüft. Die Berechtigungen des Datenbankverzeichnisses werden mit `ls -l` kontrolliert. Es wird geprüft, ob Protokolle von Konfigurationsänderungen und den darauf folgenden Tests vorliegen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A3-m4",
+                    "uuid": "0f9eb2e7-762c-4fa0-9390-60c5a1993019",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird eine dokumentierte Konfigurations-Baseline (Härtungsstandard) für OpenLDAP erstellt und konsequent angewendet. Konfigurationsänderungen werden über einen Change-Control-Prozess gesteuert. Automatisierte Skripte werden eingesetzt, um die Konfiguration regelmäßig mit der Baseline abzugleichen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Konfigurationsmanagement-Tool (z.B. Ansible, Puppet) wird verwendet, um die OpenLDAP-Konfiguration basierend auf einer Vorlage (Template) konsistent auf allen Servern auszurollen. Ein Cron-Job führt wöchentlich ein Skript aus, das die aktuelle Konfiguration ausliest und mit der definierten Baseline vergleicht, und meldet Abweichungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet das Härtungsdokument und die Berichte der automatisierten Konfigurationsprüfungen. Es wird geprüft, ob ein Change-Management-Prozess für Konfigurationsänderungen existiert und eingehalten wird, z.B. durch Einsicht in die entsprechenden Tickets."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A3-m5",
+                    "uuid": "c25b34f3-31be-44e0-8a62-248cb7b1eb08",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfiguration wird vollständig als Configuration-as-Code verwaltet und versioniert. Jede Abweichung vom definierten Zustand wird automatisch erkannt und entweder gemeldet oder korrigiert. Die Konfiguration wird kontinuierlich überwacht, und Compliance-Berichte werden automatisch generiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die gesamte OpenLDAP-Konfiguration wird in einem Git-Repository als LDIF-Dateien gespeichert. Ein CI/CD-System wendet Änderungen automatisch an, nachdem sie einen Review- und Testprozess durchlaufen haben. Ein Intrusion Detection System oder ein Konfigurations-Monitoring-Tool überwacht die Konfiguration (`cn=config`) in Echtzeit auf unerlaubte Änderungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Git-Historie der Konfigurationsdateien und die Protokolle der CI/CD-Pipeline. Es wird geprüft, ob der Prozess der automatischen Korrektur (Self-Healing) funktioniert, indem eine manuelle, nicht autorisierte Änderung vorgenommen und deren Rückgängigmachung beobachtet wird. Die automatisch generierten Compliance-Berichte werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e27e68d1-6187-42c3-94a5-855491625ee2",
+                "control-id": "KONF.11.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A6-m1",
+                    "uuid": "4d3e8d3b-1594-4d2d-ba7c-9bc19463c806",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Authentisierung ist zwar erforderlich, aber die Kommunikation erfolgt möglicherweise unverschlüsselt (Simple Bind über Klartext-LDAP). Passwörter werden als Hashes gespeichert, jedoch mit einem veralteten Algorithmus wie MD5."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Clients verbinden sich über `ldap://` (Port 389) und senden Passwörter im Klartext oder als Teil eines ungeschützten Simple Binds. Das Attribut `userPassword` enthält Hashes im `{MD5}`-Format."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Serverkonfiguration auf aktive unverschlüsselte Listener. Mittels `ldapsearch` wird geprüft, welche Passwort-Hashing-Algorithmen verwendet werden. Ein Netzwerkmitschnitt würde die unverschlüsselte Übertragung von Anmeldedaten zeigen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A6-m2",
+                    "uuid": "37c173fa-4fc2-4fd7-b7d2-9d287a6b11e4",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesamte Authentisierungskommunikation ist verschlüsselt (LDAPS oder STARTTLS). Es wird ein moderner Hashing-Algorithmus verwendet, der jedoch möglicherweise nicht der stärkste empfohlene ist (z.B. SSHA-1)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Server ist so konfiguriert, dass er Verbindungen über `ldaps://` (Port 636) oder über STARTTLS auf dem Standardport akzeptiert. Passwörter werden mindestens als `{SSHA}` (salted SHA-1) gespeichert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der TLS-Zertifikate und -Protokolle des Servers. Es wird mittels `ldapsearch` geprüft, dass ausschließlich moderne, gesalzene Hashing-Algorithmen für Passwörter verwendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A6-m3",
+                    "uuid": "fa5654d5-2d34-4b8a-ae51-59b3c09d92b5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn der Verzeichnisdienst zwischen verschiedenen Benutzenden unterscheiden soll, MÜSSEN sich diese geeignet authentisieren. Die Authentisierung zwischen dem slapd-Server und den Kommunikationsbeteiligten MUSS verschlüsselt werden. Es SOLLTEN NUR die Hashwerte von Passwörtern auf den Clients und Servern abgespeichert werden. Es MUSS ein geeigneter Hashing-Algorithmus verwendet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Serverkonfiguration erzwingt TLS für alle Verbindungen, die eine Authentifizierung erfordern. Als Hashing-Algorithmus wird ein starker, aus der SHA-2-Familie stammender Algorithmus (z.B. `{SSHA256}` oder `{SSHA512}`) konfiguriert und für alle neuen Passwörter verwendet. Es wird sichergestellt, dass keine Klartextpasswörter im Verzeichnis oder in Protokolldateien gespeichert werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert durch Auslesen der Konfiguration (`olcSecurity`), dass eine Verschlüsselung erzwungen wird. Mittels `ldapsearch` wird stichprobenartig geprüft, dass alle `userPassword`-Attribute einen Hash-Präfix wie `{SSHA256}` aufweisen. Es wird geprüft, ob es eine Richtlinie gibt, die das Speichern von Klartextpasswörtern verbietet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A6-m4",
+                    "uuid": "eb874435-61bf-4b5b-b35f-382afde5e4ba",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verwendung von starken, passwortbasierten Schlüsselableitungsfunktionen (z.B. Argon2, scrypt, PBKDF2) wird als Hashing-Algorithmus durchgesetzt. Simple Binds werden zugunsten von SASL-Mechanismen (z.B. DIGEST-MD5, GSSAPI) nach Möglichkeit vermieden. Serverzertifikate werden ordnungsgemäß von den Clients validiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das `argon2`-Modul wird in OpenLDAP geladen und als Standard-Hashing-Mechanismus konfiguriert. Clients werden angewiesen, sich über SASL/GSSAPI (Kerberos) zu authentifizieren, falls eine entsprechende Infrastruktur vorhanden ist. Die TLS-Konfiguration des Servers wird gehärtet (z.B. nur TLS 1.2+ mit starken Cipher-Suiten)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, dass das `argon2` oder ein vergleichbares Modul geladen und konfiguriert ist. Die `olcAuthzRegexp`-Direktiven werden überprüft, um festzustellen, ob sie SASL-Mechanismen erzwingen. Die TLS-Konfiguration des Servers wird mit Tools wie `testssl.sh` auf Schwachstellen geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A6-m5",
+                    "uuid": "e307adeb-5573-4c37-9531-61193fc09745",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für privilegierte Benutzer wird eine Multi-Faktor-Authentifizierung (MFA) erzwungen. Für die Kommunikation zwischen Diensten wird eine zertifikatsbasierte Client-Authentifizierung (SASL EXTERNAL) verwendet. Anonyme Binds sind vollständig deaktiviert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine MFA-Lösung wird integriert, z. B. über ein RADIUS-Backend oder ein benutzerdefiniertes Overlay, das Einmalpasswörter (TOTP) prüft. Service-Accounts erhalten Client-Zertifikate, mit denen sie sich über SASL EXTERNAL authentifizieren. Die globale ACL wird so konfiguriert, dass anonyme Zugriffe vollständig unterbunden werden (`access to * by anonymous auth`)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer testet den Anmeldevorgang für einen privilegierten Account und verifiziert, dass ein zweiter Faktor abgefragt wird. Es wird die Konfiguration für SASL EXTERNAL und die zugehörigen ACLs geprüft. Es wird verifiziert, dass ein anonymer `ldapsearch`-Befehl fehlschlägt."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f270c8e2-732f-47f5-b6c8-a6f2ada22365",
+                "control-id": "KONF.11.9",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A4-m1",
+                    "uuid": "987435c8-2759-4899-918c-e63de7145224",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Berechtigungen für Datenbankdateien werden bei der Installation gesetzt, aber nicht speziell auf den slapd-Benutzer beschränkt. Interne Datenbankeinstellungen werden nicht angepasst."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Datenbankdateien haben oft die Standardberechtigungen, die vom Betriebssystem oder dem Installationspaket vorgegeben werden, was möglicherweise zu weitreichenden Leseberechtigungen führt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Dateiberechtigungen des OpenLDAP-Datenbankverzeichnisses und stellt fest, dass sie nicht dem Prinzip der geringsten Rechte folgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A4-m2",
+                    "uuid": "e06fc3e7-34e4-40e1-a719-2fef303d313c",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Zugriffsrechte auf die Datenbankdateien sind auf das Dienstkonto des slapd-Servers beschränkt. Es werden die Standardeinstellungen der Datenbank verwendet, ohne spezifische Anpassungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mittels `chown` und `chmod` werden die Eigentümerschaft und die Zugriffsrechte des Datenbankverzeichnisses korrekt auf den `slapd`-Benutzer (z.B. `ldap:ldap`) und die entsprechenden Berechtigungen (z.B. `700`) gesetzt. Die Datenbankkonfiguration selbst (`olcDbConfig`) bleibt unberührt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert mit `ls -ld` die Berechtigungen des Datenbankverzeichnisses. Es wird geprüft, ob die Datenbank-internen Einstellungen den Standardwerten entsprechen, indem die `olcDbConfig`-Attribute ausgelesen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A4-m3",
+                    "uuid": "e0b56a58-ad4a-44a0-872d-884e661418b9",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Zugriffsrechte für neu angelegte Datenbankdateien MÜSSEN auf die Kennung beschränkt werden, in deren Kontext der slapd-Server betrieben wird. Die Standard-Einstellungen der von OpenLDAP genutzten Datenbank MÜSSEN angepasst werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Betriebssystem-Dateiberechtigungen für das Verzeichnis, das die MDB-Datenbank enthält, werden strikt auf den Dienstbenutzer beschränkt. Zusätzlich werden Datenbank-interne Parameter wie die Cache-Größe (`olcDbCacheSize`) und die Konfiguration für Lazy-Commits (`olcDbCheckpoint`) an die erwartete Last und die Hardware angepasst, um die Leistung und Stabilität zu verbessern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Dateiberechtigungen des Datenbankverzeichnisses und stellt sicher, dass nur der `slapd`-Dienstbenutzer darauf zugreifen kann. Zusätzlich werden die Datenbank-internen Konfigurationsparameter (`olcDb*`) ausgelesen und auf sinnvolle, von den Standardwerten abweichende Werte geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A4-m4",
+                    "uuid": "2147a3bd-64ba-4e08-9f89-f92c68c2fe88",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Datenbankeinstellungen werden basierend auf dokumentierten Best Practices für Leistung und Sicherheit optimiert. Die Dateisystemberechtigungen werden regelmäßig auf ihre Konformität hin überprüft. Es werden automatische und regelmäßige Integritätsprüfungen der Datenbank durchgeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Konfigurationsmanagement-Tool stellt sicher, dass die optimierten Datenbankparameter (z.B. `olcDbCacheSize`, Indizes) und Dateiberechtigungen konsistent angewendet werden. Ein nächtlicher Cron-Job führt `mdb_cv` oder ein ähnliches Werkzeug aus, um die Integrität der Datenbank zu überprüfen und meldet Fehler."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Dokumentation zu den Best Practices und vergleicht sie mit der implementierten Konfiguration. Die Protokolle der automatisierten Integritätsprüfungen werden eingesehen. Die Konfiguration des Konfigurationsmanagement-Tools wird geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A4-m5",
+                    "uuid": "676fafe9-0b03-4d02-b2b6-6a786c02d1f5",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Datenbank wird im Ruhezustand (at rest) mittels Dateisystem- oder datenbanknativer Verschlüsselung verschlüsselt. Der Zugriff auf die Datenbankdateien wird von einem File Integrity Monitoring (FIM)-Tool in Echtzeit überwacht. Alle Konfigurationsparameter werden über ein Konfigurationsmanagementsystem verwaltet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Dateisystem, auf dem die OpenLDAP-Datenbank liegt, wird mit LUKS verschlüsselt. Ein FIM-Tool wie AIDE oder Wazuh ist so konfiguriert, dass es jegliche Lese- oder Schreibzugriffe auf die Datenbankdateien, die nicht vom `slapd`-Prozess stammen, sofort meldet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert den Status der Dateisystemverschlüsselung (z.B. mit `cryptsetup status`). Die Konfiguration und die Alarmierungsprotokolle des FIM-Tools werden analysiert. Es wird geprüft, ob ein unautorisierter Zugriff (z.B. mit `cat` durch root) einen Alarm auslöst."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "92556cc1-375e-4692-a752-d8f10e0a5751",
+                "control-id": "KONF.12.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A8-m1",
+                    "uuid": "2a2dfd94-599a-4360-81e3-aedd8931dc55",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es werden nur für ein einzelnes, kritisches Attribut Einschränkungen implementiert, z. B. die Sicherstellung, dass die Benutzer-ID (`uid`) eindeutig ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das `unique`-Overlay wird für das `uid`-Attribut konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer versucht, einen Benutzer mit einer bereits vorhandenen `uid` anzulegen, und erwartet, dass die Operation fehlschlägt. Es wird festgestellt, dass keine weiteren Einschränkungen existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A8-m2",
+                    "uuid": "73ea5a9c-3a77-4256-9275-65b2c79aa0ee",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das `constraint`-Overlay wird verwendet, um die Eindeutigkeit und das Format der Werte für mehrere wichtige Attribute (z.B. `uid`, `mail`) durchzusetzen. Die Einschränkungen gelten für alle Objekttypen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das `constraint`-Overlay wird mit einfachen regulären Ausdrücken für E-Mail-Adressen und Regeln für die Eindeutigkeit von `uid` und `mail` konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des `constraint`-Overlays (`olcConstraintAttribute`). Es wird versucht, Objekte mit ungültigen oder doppelten Attributwerten anzulegen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A8-m3",
+                    "uuid": "75f369df-13ab-4998-be56-152587f99389",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Anhand von Overlays SOLLTEN die Attribute in OpenLDAP eingeschränkt werden. OpenLDAP SOLLTE so angepasst werden, dass Werte im Verzeichnisdienst nur einem bestimmten regulären Ausdruck entsprechen. Zudem SOLLTE mit Hilfe von Overlays sichergestellt werden, dass ausgesuchte Werte nur einmal im Verzeichnisbaum vorhanden sind. Solche Restriktionen SOLLTEN ausschließlich auf Daten von Nutzenden angewendet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das `constraint`-Overlay wird gezielt eingesetzt, um Datenqualität sicherzustellen. Es werden URI-basierte Einschränkungen (`olcConstraintURI`) verwendet, um die Regeln nur auf bestimmte Teile des Verzeichnisbaums (z.B. die `ou=people`) und bestimmte Objekttypen (`objectClass=inetOrgPerson`) anzuwenden. Dies verhindert, dass die Einschränkungen versehentlich auf Dienst- oder Konfigurationskonten wirken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des `constraint`-Overlays und verifiziert, dass die `olcConstraintURI`-Direktiven korrekt gesetzt sind, um den Geltungsbereich der Einschränkungen wie gefordert auf Benutzerdaten zu begrenzen. Es wird getestet, ob das Anlegen eines Benutzers mit einer ungültigen E-Mail-Adresse fehlschlägt, während ein Dienstkonto mit einem anders formatierten Attribut angelegt werden kann."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A8-m4",
+                    "uuid": "6d1dfc9d-15fd-44ee-8836-b63165d1ac93",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verwendung von Attributbeschränkungen ist ein Standardbestandteil des Schema-Designs. Reguläre Ausdrücke zur Wertvalidierung sind komplex und decken alle relevanten Datenformate ab. Eine Richtlinie legt fest, welche Attribute eindeutig sein oder bestimmten Formaten entsprechen müssen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jedes neue Attribut im Schema wird im Rahmen des Designprozesses geprüft, ob eine Beschränkung (Eindeutigkeit, Format, Wertebereich) erforderlich ist. Diese Anforderungen werden in einer zentralen Richtlinie dokumentiert und im `constraint`-Overlay umgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Schema- und Attribut-Richtlinie. Es wird stichprobenartig geprüft, ob die in der Richtlinie definierten Einschränkungen korrekt im `constraint`-Overlay implementiert sind und wirksam greifen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A8-m5",
+                    "uuid": "186f611b-13c3-4bb5-8c86-f80233dfaad0",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Attributbeschränkungen werden dynamisch durchgesetzt und überwacht. Ein automatisierter Prozess validiert das gesamte Verzeichnis regelmäßig gegen die Beschränkungsrichtlinien und meldet alle Verstöße. Das `constraint`-Overlay wird mit anderen Overlays (z.B. `ppolicy`) für eine umfassende Durchsetzung von Datenqualität und Sicherheit kombiniert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Skript durchläuft nächtlich das gesamte LDAP-Verzeichnis und prüft jeden Eintrag gegen die im `constraint`-Overlay definierten Regeln. Dies dient dazu, eventuell vor der Einführung der Regeln erstellte inkonsistente Daten zu finden. Verstöße werden in einem Bericht erfasst und einem Dateneigner zur Korrektur zugewiesen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Berichte des automatisierten Validierungsprozesses. Es wird geprüft, ob ein Prozess zur Behebung der gemeldeten Inkonsistenzen existiert und befolgt wird. Die Kombination der Overlays wird auf logische Korrektheit und Vollständigkeit geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2cc08e7a-7ed2-41f6-b8f1-057277f2e619",
+                "control-id": "KONF.6.13",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A5-m1",
+                    "uuid": "bc7362a7-33c8-45fc-b34e-58b1f3b83e7f",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es ist nur eine einfache globale Zugriffssteuerungsliste (ACL) definiert, die oft breiten Lesezugriff für anonyme oder authentifizierte Benutzer gewährt. Spezifische Zugriffsrechte werden nicht umgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine typische ACL wäre `access to * by * read`, die jedem alles zum Lesen freigibt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer liest die globale `olcAccess`-Direktive aus und stellt fest, dass sie zu permissiv ist und keine differenzierten Regeln enthält."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A5-m2",
+                    "uuid": "31fc5449-a468-426b-9e57-d164cff05c5e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es werden sowohl globale als auch datenbankspezifische ACLs verwendet, diese sind jedoch möglicherweise noch zu freizügig. Die Vorrangregel (datenbankspezifisch vor global) ist bekannt, wird aber nicht gezielt zur Erstellung granularer Richtlinien genutzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt eine globale ACL und eine zusätzliche ACL für die Hauptdatenbank, die einige Schreibzugriffe regelt. Oft werden Berechtigungen aber breiter als nötig vergeben, z.B. Schreibzugriff auf den gesamten eigenen Eintrag anstatt nur auf bestimmte Attribute."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert sowohl die globalen (`olcAccess`) als auch die datenbankspezifischen (`olcDbAccess`) ACLs und identifiziert übermäßig freizügige Regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A5-m3",
+                    "uuid": "1f7a510f-68d9-455c-bee0-a2c5fd6d5377",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die in OpenLDAP geführten globalen und datenbankspezifischen Zugriffskontrolllisten (Access Control Lists) MÜSSEN beim Einsatz von OpenLDAP korrekt berücksichtigt werden. Datenbank-Direktiven MÜSSEN Vorrang vor globalen Direktiven haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine standardmäßige, restriktive globale ACL definiert (z.B. nur Authentifizierung und Selbstleserecht). Spezifische Berechtigungen für Anwendungen oder Administratoren werden gezielt in den jeweiligen Datenbank-ACLs (`olcDbAccess`) vergeben. Dadurch wird sichergestellt, dass die spezifischen Regeln die globalen überschreiben und das Prinzip der geringsten Rechte umgesetzt wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, dass die globalen ACLs eine restriktive Basis bilden und spezifische, benötigte Zugriffsrechte ausschließlich in den datenbankspezifischen ACLs definiert sind. Es wird durch Testabfragen geprüft, ob die ACL-Hierarchie wie erwartet funktioniert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A5-m4",
+                    "uuid": "efb15afe-ac3e-46f8-8a3e-2e379c0a7d81",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "ACLs werden regelmäßig überprüft und auditiert. Es existiert eine dokumentierte Richtlinie für Zugriffsrechte. Komplexe ACLs, die Funktionen wie Gruppenmitgliedschaft, Attributwerte oder Verbindungseigenschaften nutzen, werden zur Durchsetzung von fein-granularem Zugriff verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "ACLs verwenden fortgeschrittene Klauseln wie `group.exact` oder `val.exact`, um Zugriffsrechte sehr spezifisch zu gestalten. Zum Beispiel darf ein Benutzer nur das `telephoneNumber`-Attribut ändern, aber nicht das `userPassword`. Diese Richtlinien werden in einem Dokument festgehalten und jährlich überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Zugriffsrechterichtlinie und vergleicht sie mit den implementierten ACLs. Es wird geprüft, ob die regelmäßigen Reviews der ACLs stattgefunden haben und dokumentiert sind. Es werden komplexe Testabfragen durchgeführt, um die Wirksamkeit der granularen Regeln zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A5-m5",
+                    "uuid": "b03a1fa9-a8c4-4f93-bb59-dfc2b4653c44",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "ACLs werden als Code verwaltet und versioniert. Automatisierte Werkzeuge werden verwendet, um die ACLs gegen einen Satz vordefinierter Sicherheitsrichtlinien zu testen. Jede Änderung an den ACLs löst einen automatisierten Überprüfungs- und Genehmigungsworkflow aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die `olcAccess`-Attribute werden in LDIF-Dateien in einem Git-Repository gespeichert. Eine CI/CD-Pipeline führt bei jeder Änderung ein Test-Framework aus, das eine Reihe von LDAP-Abfragen durchführt und prüft, ob die Zugriffe dem erwarteten Ergebnis (erlaubt/verboten) entsprechen. Nur nach erfolgreichen Tests kann die Änderung ausgerollt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Git-Historie der ACL-Dateien und die Protokolle der CI/CD-Pipeline. Es wird geprüft, ob das Test-Framework eine umfassende Abdeckung der Sicherheitsrichtlinien bietet. Der Genehmigungsworkflow wird auf seine Wirksamkeit hin überprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ebea7a20-15be-4010-9471-ec081a8ef0f8",
+                "control-id": "KONF.8.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A10-m1",
+                    "uuid": "bf03c354-3876-40cc-b5d8-a76a2ac90572",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Updates werden sporadisch angewendet, ohne auf Kompatibilitätsprobleme mit Backends, Overlays oder benutzerdefinierten Skripten zu prüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Updates werden nur dann durchgeführt, wenn ein Problem auftritt oder eine neue Funktion benötigt wird. Die Release Notes werden nicht gelesen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, dass auf dem System eine veraltete, potenziell verwundbare Version von OpenLDAP läuft. Es gibt keine Dokumentation über durchgeführte Updates."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A10-m2",
+                    "uuid": "b1577bc4-3b09-4324-826d-27a7daf8312b",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Updates werden regelmäßig angewendet. Eine manuelle Prüfung auf größere Kompatibilitätsprobleme (z.B. veraltete Overlays) wird durch das Lesen der Release Notes durchgeführt. Die Konfiguration wird nach dem Update manuell geprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Rahmen des regulären Patch-Managements wird OpenLDAP aktualisiert. Der Administrator liest die Release Notes, um festzustellen, ob verwendete Funktionen entfernt wurden. Nach dem Update wird der Dienst neu gestartet und eine einfache Testabfrage durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert anhand der Systemprotokolle oder des Patch-Management-Systems, dass Updates regelmäßig angewendet werden. Es wird geprüft, ob ein Prozess existiert, bei dem die Release Notes vor einem Update geprüft werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A10-m3",
+                    "uuid": "921655b9-888e-4631-9410-6541b89bb681",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei Updates SOLLTE darauf geachtet werden, ob die Änderungen eingesetzte Backends oder Overlays sowie Softwareabhängigkeiten betreffen. Beim Update auf neue Releases SOLLTE geprüft werden, ob die verwendeten Overlays und Backends in der neuen Version weiterhin zur Verfügung stehen. Ist dies nicht der Fall, SOLLTEN geeignete Migrationspfade ausgewählt werden. Setzen Administrierende eigene Skripte ein, SOLLTEN sie daraufhin überprüft werden, ob sie mit der aktualisierten Version von OpenLDAP problemlos zusammenarbeiten. Die Konfiguration und die Zugriffsrechte SOLLTEN nach einer Aktualisierung sorgfältig geprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor einem Update wird eine Checkliste abgearbeitet. Diese beinhaltet die Prüfung der Release Notes auf Änderungen bei verwendeten Backends und Overlays, die Überprüfung der Kompatibilität von angebundenen Anwendungen und eigenen Administrationsskripten. Nach dem Update wird die Konfiguration explizit geprüft (`slaptest`) und die Funktionsfähigkeit durch eine Reihe definierter Testfälle verifiziert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Checkliste und die Dokumentation der letzten Updates an. Es wird geprüft, ob alle in der Anforderung genannten Punkte (Backends, Overlays, Skripte, Konfiguration, Zugriffsrechte) berücksichtigt wurden. Die Ergebnisse der Tests nach dem Update werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A10-m4",
+                    "uuid": "88305faa-bb67-40bf-add5-19b2d8081ada",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Updates werden zuerst in einer dedizierten Testumgebung, die die Produktionsumgebung spiegelt, getestet. Für jedes Update wird ein dokumentierter Rollback-Plan erstellt. Benutzerdefinierte Skripte werden mit einer automatisierten Testsuite überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor dem Rollout in der Produktion wird das Update auf einem Staging-System installiert, das eine aktuelle Kopie der Produktionsdatenbank und -konfiguration enthält. Eine automatisierte Testsuite, die typische Lese- und Schreiboperationen durchführt, wird ausgeführt. Der Rollback-Plan beschreibt, wie die alte Version der Software und der Datenbank aus einem Backup wiederhergestellt werden kann."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz und den Zustand der Testumgebung. Die Dokumentation der Testläufe und der Rollback-Pläne für die letzten Updates wird eingesehen. Es wird geprüft, ob die automatisierte Testsuite eine angemessene Testabdeckung bietet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A10-m5",
+                    "uuid": "38a20f70-0d3d-40c4-8101-7c066e82a08f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der gesamte Aktualisierungsprozess ist automatisiert. Es wird eine Canary-Deployment-Strategie verwendet, um das Update zunächst auf eine Teilmenge der Replikate auszurollen. Automatisierte Gesundheits- und Funktionstests werden nach dem Update ausgeführt, um die Integrität des Systems zu überprüfen, bevor die Einführung abgeschlossen wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine CI/CD-Pipeline holt neue OpenLDAP-Versionen, baut ein neues Container-Image und rollt dieses zuerst auf einem Replikat aus (Canary). Der Load Balancer leitet nur einen kleinen Teil des Traffics auf dieses Replikat. Automatisierte End-to-End-Tests und das Monitoring von Fehlerraten entscheiden automatisch, ob das Update auf alle anderen Replikate ausgeweitet oder zurückgerollt wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration und die Protokolle der CI/CD-Pipeline. Es wird die Konfiguration des Canary-Deployments und der automatisierten Tests überprüft. Die Metriken und Dashboards des Monitorings werden eingesehen, um die Wirksamkeit der automatisierten Gesundheitschecks zu bewerten."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,821 @@
+{
+  "component-definition": {
+    "uuid": "576fc9c6-6aff-4918-85f4-3386b48ee0fc",
+    "metadata": {
+      "title": "IND.3.2 Fernwartung im industriellen Umfeld - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:37.355426+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "1e5cee5c-7937-41b7-a08b-3d6482ceedba",
+        "type": "software",
+        "title": "IND.3.2 Fernwartung im industriellen Umfeld",
+        "description": "This component represents the implementation of all controls for Baustein IND.3.2.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Die Betriebstechnik (OT) einer Institution besitzt häufig eine dezentrale Infrastruktur. Verschiedene Bereiche der OT können räumlich weit auseinanderliegen. Zudem bestehen Industrial-Control-Systeme (ICS) meist aus einer Vielzahl von Produkten verschiedener herstellenden Unternehmen, d. h. aus unterschiedlichen ICS-Komponenten und IT-Systemen für OT-Anwendungen. Daher benötigt die Betriebstechnik einer Institution in der Regel zahlreiche Fernwartungszugänge.<BR>Diese Fernwartungszugänge sind häufig Einzellösungen in Form individuell zusammengestellter Hard- und Softwarekomponenten. Infolgedessen wird eine Vielzahl unterschiedlicher Techniken für die OT-Fernwartung eingesetzt. Die Lebenszyklen der Fernwartungslösungen entsprechen dabei meist denjenigen der Produkte, auf die zugegriffen wird, d. h. die Fernwartungslösungen für OT werden unter Umständen wesentlich länger eingesetzt als dies in der IT üblich ist. Verschiedenste Zugänge, Dienste und Schnittstellen sind parallel vorhanden. Die Schnittstellen kommunizieren mittels unterschiedlichster Protokolle.<BR>Manche Anlagenteile in der OT werden auch als geschlossene Einheit von den herstellenden Unternehmen realisiert (sogenannte Package Units). Diese Anlagenteile enthalten häufig mehrere dezentrale Zugänge für die Fernwartung, die die herstellenden Unternehmen von vornherein für ihren eigenen Zugriff betriebsbereit integriert haben.<BR>Fernwartungszugänge im industriellen Umfeld werden in der Regel vom OT-Betrieb und Wartungspersonal genutzt, um OT-Komponenten zu konfigurieren, zu kontrollieren, zu warten und zu reparieren. Nur in Ausnahmefällen, z. B. bei Störungen, nutzen auch weitere Mitarbeitende OT-Fernwartungszugänge.<BR>Auf OT-Komponenten wird via Fernwartung von verschiedenen Institutionen aus zugegriffen. Nicht nur das interne Personal des Betreibenden, sondern auch externes Personal von herstellenden Unternehmen, Integratoren und Dienstleistenden nutzt Fernwartungszugänge.<BR>Grundsätzlich erfolgt ein Fernwartungszugriff in dasjenige Sicherheitssegment eines OT-Netzes, in dem der Fernwartungsdienst bereitgestellt wird. Der Fernwartungsdienst kommuniziert dann aus diesem Segment heraus mit dem zu wartenden Zielsystem, z. B. mit einer ICS-Komponente."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, die Informationssicherheit der Fernwartung im industriellen Umfeld zu gewährleisten."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein IND.3.2 Fernwartung im industriellen Umfeld ist einmal auf die gesamte OT einer Institution anzuwenden, sobald diese Möglichkeiten zur Fernwartung enthält. Von den jeweiligen Einsatzgebieten der ICS ist abhängig, ob weitere Anforderungen an die Fernwartung im industriellen Umfeld definiert werden müssen, die in diesem Baustein nicht allgemeingültig aufgeführt werden können. Je nach Einsatzgebiet können auch die Maßnahmen unterschiedlich sein, die umgesetzt werden sollten, um die Anforderungen zu erfüllen.<BR>Um ein IT-Grundschutz-Modell für einen konkreten Informationsverbund zu erstellen, muss grundsätzlich die Gesamtheit aller Bausteine betrachtet werden. In der Regel sind mehrere Bausteine auf das Thema bzw. Zielobjekt anzuwenden.<BR>Dieser Baustein behandelt<BR>• die spezifischen Aspekte der OT-Fernwartung, die über die allgemeine Verwaltung von Netzkomponenten und IT-Systemen per Fernwartung hinausgehen sowie<BR>• die spezifischen Aspekte der OT-Fernwartung, die von der allgemeinen Verwaltung von Netzkomponenten und IT-Systemen per Fernwartung abweichen.<BR>Folgende Inhalte sind ebenfalls von Bedeutung und werden an anderer Stelle behandelt:<BR>• die allgemeine Verwaltung von Netzkomponenten und IT-Systemen per Fernwartung durch den IT-Betrieb in der Büro- und Gebäude-IT (siehe OPS.1.2.5 Fernwartung) (Die diesbezüglichen Anforderungen sind grundsätzlich auch in der OT zu erfüllen.)<BR>• die allgemeinen Aspekte zu Netzarchitektur und -design, sowie zu der Segmentierung (siehe NET.1.1 Netzarchitektur und -design)<BR>• die individuellen Aspekte der Hard- und Software-Komponenten, aus denen die jeweilige Fernwartungslösung besteht, z. B. Netzkomponenten, Server- und Clientsysteme, OT-Anwendungen (Hier sind die jeweils zutreffenden Bausteine zu modellieren.)<BR>• die allgemeinen Aspekte der Protokollierung (siehe OPS.1.1.5 Protokollierung)<BR>• die allgemeinen Aspekte des Outsourcings (siehe OPS.2.3 Nutzung von Outsourcing)<BR>• die allgemeinen Aspekte cloudbasierter Fernwartungslösungen (siehe OPS.2.2 Cloud-Nutzung)<BR>• die allgemeinen Aspekte webbasierter Fernwartungslösungen (siehe APP.3.1 Webanwendungen und Webservices)<BR>• die allgemeinen Aspekte der Absicherung von ICS auf Bedienebene (siehe IND.1 Prozessleit- und Automatisierungstechnik und IND.2.7 Safety Instrumented Systems)<BR>Dieser Baustein behandelt nicht<BR>• die Beobachtung und Bedienung von ICS auf Prozessebene sowie<BR>• steuernde Zugriffe per Fernwartung auf ICS, z. B. Anlaufen oder Stoppen von Anlagen. Solche Zugriffe können grundsätzlich Personen- und Sachschäden vor Ort verursachen!"
+          },
+          {
+            "name": "2.1. Unvollständig dokumentierte Fernwartungszugänge in der OT",
+            "value": "Die Fernwartungszugänge in der OT einer Institution sind in der Regel zahlreich und vielfältig. Darüber hinaus greift eine große Anzahl von internen und externen Personen darauf zu. Die Verwaltung von Fernwartungszugängen im industriellen Umfeld ist daher grundsätzlich unübersichtlich und fehleranfällig. Es besteht eine größere Gefahr als in der Büro- und Gebäude-IT, dass die diversen Zugänge unzureichend erfasst und dokumentiert werden, d. h. nicht überprüfbar sind.<BR>Wenn unbekannte, offene OT-Fernwartungszugänge nicht dokumentiert sind, können die Betreibenden Zugriffe nicht unterbinden. In der Folge können unautorisierte Benutzende die physischen Abläufe eines ICS direkt beeinflussen, was z. B. zu Fehlverhalten einzelner Komponenten, zum Stillstand einer ganzen Produktionsanlage bis hin zu Gefahren für Leib und Leben von Mitarbeitenden vor Ort führen kann. Werden z. B. Anlagen inklusive dezentraler Komponenten für die Fernwartung als Gesamtsystem (Package Unit) vom herstellenden Unternehmen realisiert, unterliegen diese zunächst keiner ausreichenden Kontrolle durch die Betreibenden. Diese müssen jede OT-Fernwartungskomponente einzeln erfassen und häufig aktiv umkonfigurieren.<BR>Wenn einige OT-Fernwartungszugänge z. B. nur dezentral erfasst und dokumentiert werden, dann besteht auch die Gefahr, dass notwendige Änderungen an einzelnen Zugängen unterbleiben oder durchgeführte Änderungen nicht nachvollziehbar sind."
+          },
+          {
+            "name": "2.2. Unzureichende Verfügbarkeit durch Abhängigkeiten von der Büro- und Gebäude-IT",
+            "value": "ICS sind in Teilen auf einen vollständig unterbrechungsfreien Informationsfluss angewiesen. Dies gilt insbesondere für sämtliche Echtzeit-Datenströme. Bereits sehr kurze Unterbrechungen der Verfügbarkeit von Daten, die in der Büro- und Gebäude-IT toleriert werden können, können in einem ICS kritisch sein. Darüber hinaus können durch Abhängigkeiten von Netzen, Diensten oder IT-Systemen Sicherheitslücken entstehen. Dies wird häufig bei der Planung übersehen, wenn die OT und die Büro- und Gebäude-IT einer Institution miteinander kommunizieren.<BR>Wenn Abhängigkeiten zwischen OT und Büro- und Gebäude-IT nicht beachtet und infolgedessen Sicherheitslücken nicht geschlossen werden, dann können Sicherheitsvorfälle schnell auf die gesamte OT übergreifen.<BR>Wenn zentrale Komponenten und Dienste der Büro- und Gebäude-IT für die Fernwartung der OT genutzt werden (übergreifende Administration), dann kann es auch zu Abstimmungsfehlern zwischen Büro- und Gebäude-IT sowie OT kommen. In der Folge kann die Behebung kritischer Fehler in den ICS der OT verzögert werden. Ein Beispiel ist ein zentrales VPN-Gateway für den Fernzugriff, das durch eine Organisationseinheit außerhalb der OT bereitgestellt und nicht entsprechend abgestimmt betrieben wird, sodass es bei Bedarf nicht schnell genug zur Verfügung steht. Der Stillstand einer Anlage kann sich dann erheblich verlängern."
+          },
+          {
+            "name": "2.3. Unzureichende Regelungen für die Nutzung von OT-Fernwartungszugängen",
+            "value": "OT-Fernwartungszugänge haben einen sehr großen potentiellen Benutzendenkreis außerhalb der betreibenden Institution. Gleichzeitig ist die lückenlose Verfügbarkeit von Echtzeitdaten in einem ICS unerlässlich, während die Verfügbarkeit von Daten der Büro- und Gebäude-IT in der Regel etwas weniger zeitkritisch ist. Allgemeine Regelungen, wie Fernwartungszugänge für die Büro- und Gebäude-IT genutzt werden, sind für die OT häufig unpassend oder lassen zu viel Spielraum.<BR>Wenn die Nutzung von OT-Fernwartungszugängen nur unzureichend vertraglich geregelt ist, dann fehlen klare Vorgaben, wie der Benutzendenkreis jedes einzelnen Zugangs einzuschränken ist. Die Betreibenden können dann nicht kontrollieren, wer ihre OT-Fernwartungszugänge nutzt. So können z. B. Zugangsdaten bei Integratoren, Herstellenden und Wartungsdienstleistenden an Benutzende weitergegeben werden, die den Betreibenden unbekannt sind. Dies ist für ein ICS nicht tolerierbar.<BR>Wenn restriktive Nutzungsregelungen speziell für die OT fehlen, dann können die Betreibenden auch nicht angemessen kontrollieren, wie OT-Fernwartungszugänge genutzt werden. Im Falle eines (Sicherheits-)Vorfalls wird dann z. B. die (forensische) Analyse erschwert, weil Ursachen nicht schnell genug erkannt werden können. Dies kann kostenintensive Produktionsstillstände verlängern.<BR>Wenn OT-Fernwartungszugänge gemeinsam mit oder von der Büro- und Gebäude-IT bereitgestellt und betrieben werden und diese gemeinsame Nutzung der Hard- oder Software des Zugangs nicht eindeutig geregelt ist, dann können inkonsistente Konfigurationen auftreten. Diese erfüllen dann nur die Sicherheitsanforderungen der Büro- und Gebäude-IT, nicht jedoch abweichende oder zusätzliche Sicherheitsanforderungen der OT."
+          },
+          {
+            "name": "2.4. Unzureichende menschliche Kontrolle über OT-Fernwartungssitzungen",
+            "value": "Die Daten und Konfigurationseinstellungen innerhalb eines ICS sowie Personen, Sachen und Produktionsprozesse vor Ort können durch sämtliche Zugriffe aus anderen Zonen gefährdet sein, die nicht oder nur unzureichend durch internes Personal vor Ort kontrolliert werden. Insbesondere das Personal externer Wartungsdienstleistenden, Integratoren und herstellenden Unternehmen verfügt zwar über die notwendige Spezialkenntnis der zu wartenden Anlage, Maschine oder Komponente, weiß jedoch nicht, welche schädlichen Auswirkungen die konkrete Fernwartungssitzung im Gesamtsystem haben kann.<BR>Wenn die Verläufe und Inhalte von OT-Fernwartungssitzungen von den Betreibenden nicht angemessen kontrolliert werden können, dann können Konfigurationsfehler mit hohem Gefährdungspotential sowie unabsichtliches oder absichtliches Fehlverhalten des Wartungspersonals nicht schnell genug erkannt und nachvollzogen werden. Dann sind Ausfälle oder Manipulationen von Echtzeit-Datenströmen möglich oder Schadsoftware kann sich unbemerkt in der gesamten OT ausbreiten. Schäden an Leib und Leben des Bedienungspersonals vor Ort oder hohe finanzielle Schäden durch Produktionsausfälle bis zur Zerstörung ganzer Anlagen können dann die Folge sein. Auch die Offenlegung von Betriebsgeheimnissen ist möglich. Zudem kann die Integrität der hergestellten Produkte beeinträchtigt werden, z. B. durch Manipulation von Rezepten, sodass Ausschuss produziert wird, der unter Umständen schwer zu erkennen ist. Wenn mangelhafte Produkte nicht als solche erkannt werden, dann kann dies die Reputation der Institution schädigen.<BR>Ein Beispiel sind dezentrale OT-Fernwartungskomponenten innerhalb von Anlagen, die als Gesamtsystem von herstellenden Unternehmen realisiert werden (Package Units). Diese Fernwartungszugänge sind häufig so konstruiert, dass die herstellenden Unternehmen zu jeder Zeit auf die Anlage zugreifen können. Geschieht dies ohne Abstimmung mit dem Personal des oder der Betreibenden, dann können z. B. Gefahrensituationen im aktuellen Produktionsablauf entstehen."
+          },
+          {
+            "name": "2.5. Direkte IP-basierte Zugriffsmöglichkeiten auf ICS aus unsicheren Zonen",
+            "value": "Die Daten innerhalb eines ICS sowie Personen, Sachen und Produktionsprozesse vor Ort sind grundsätzlich durch direkte IP-basierte Zugriffsmöglichkeiten aus anderen Zonen und Netzen gefährdet. Dies gilt z. B. aufgrund der besonderen Patch-Zyklen in der OT, die wesentlich länger sein können als z. B. in der Büro-IT. Gleichzeitig erfolgen Fernwartungszugriffe auf ein ICS in der Regel aus nur eingeschränkt vertrauenswürdigen Netzen. Solche Netze sind nicht nur private Netze fremder Institutionen, sondern auch andere Zonen des eigenen Netzes. Nur eingeschränkt vertrauenswürdige Zonen in der eigenen Institution sind z. B. solche der internen Büro- und Gebäude-IT oder auch weitere Zonen des OT-Netzes (z. B. zur Betriebs- und Produktionsführung mit MES, ERP).<BR>Direktzugriffe aus anderen Zonen und Netzen auf ein ICS, z. B. über eine lokale Verbindung oder über VPN, können Schadprogramme einschleusen und gezielte Angriffe begünstigen. In der Folge können in den zu schützenden OT-Zonen Gefahren für Leib und Leben bestehen, hohe finanzielle Schäden durch Ausfallzeiten drohen oder vertrauliche Informationen wie z. B. Betriebsgeheimnisse in falsche Hände gelangen."
+          },
+          {
+            "name": "2.6. Unsichere alternative OT-Fernwartungszugänge für Störungen",
+            "value": "Insbesondere bei Störungen müssen OT-Fernwartungszugänge zuverlässiger und leistungsfähiger sein als in der Büro- und Gebäude-IT. Im industriellen Umfeld werden daher eigens alternative Fernwartungszugänge für schnelle Zugriffe eingerichtet. Diese stellen die Betriebsfähigkeit des ICS auch dann sicher, wenn der jeweilige primäre Zugang ausfällt oder nicht ausreichend performant ist, um z. B. kritische Fehlerzustände an entfernten Anlagen schnell genug beheben zu können. Solche alternativen Fernwartungszugänge können jedoch besonders verwundbar bei einem Angriff sein.<BR>Wenn ein schneller alternativer Fernwartungszugang, z. B. über Mobilfunk, geschaffen wird, dieser jedoch die Sicherheitsanforderungen der Institution nicht vollständig erfüllt, dann können Angreifende leichter in das OT-Netz eindringen."
+          },
+          {
+            "name": "2.7. Unsichere Konzeption von OT-Fernwartungszugängen",
+            "value": "Häufig besitzt ein ICS eine dezentrale Infrastruktur mit zahlreichen OT-Fernwartungszugängen unterschiedlicher herstellender Unternehmen. Sowohl die unübersichtliche weiträumige Verteilung der Zugänge als auch die vielfältigen proprietären Fernwartungslösungen erschweren eine angemessene zentrale Absicherung sämtlicher OT-Fernwartungszugänge durch die Betreibenden.<BR>Wenn sich OT-Fernwartungszugänge in offen zugänglichen Bereichen befinden, dann können Angreifende über diese Zugänge leicht in OT-Netze eindringen und Manipulationen vornehmen.<BR>Auch wenn OT-Fernwartungszugänge nur durch herstellungsseitig vorgesehene Sicherheitskomponenten geschützt werden und diese die Sicherheitsvorgaben der Institution nicht erfüllen, können Angreifende über diese Zugänge leicht in OT-Netze eindringen und Manipulationen vornehmen."
+          },
+          {
+            "name": "2.8. Veraltete technische Konzeption von OT-Fernwartungszugängen",
+            "value": "Aufgrund der langen Lebenszyklen im industriellen Umfeld gibt es nicht selten OT-Fernwartungslösungen, die zehn Jahre und länger eingesetzt werden und aufgrund ihres Alters Sicherheitslücken aufweisen. Darüber hinaus liegen oft historisch gewachsene spezielle Umgebungsbedingungen vor wie z. B. die Installation von Fernwartungszugängen in offen zugänglichen Bereichen.<BR>Wenn OT-Fernwartungszugänge aufgrund langer Lebenszyklen nicht geeignet abgesichert sind, dann erleichtert dies einen unautorisierten Zugriff in ein ICS und auch in weitere Netze und Systeme innerhalb und außerhalb der OT. So werden Manipulationen möglich, die bis zu Gefährdungen von Leib und Leben führen können.<BR>Darüber hinaus können integrierte Fernwartungszugänge in Anlagen seit vielen Jahren unbekannt sein. Infolge zunehmender Abhängigkeiten von anderen Netzen und Systemen durch jüngere technische Veränderungen können unautorisierte Zugriffe mit kritischen Folgen dann immer wahrscheinlicher werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "bdc7cbd5-ee6c-437d-8a8d-8956a4b10939",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/ot-systeme_profile.json",
+            "description": "Implementation for all controls in Baustein IND.3.2",
+            "implemented-requirements": [
+              {
+                "uuid": "3c887199-1791-4268-b859-c5f0ddb94a53",
+                "control-id": "ARCH.2.2.11",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a10-m3",
+                    "uuid": "20682a88-9597-4372-8f7c-ced0ca650c17",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "In der GA SOLLTEN GA-Bereiche derart geplant und umgesetzt werden, dass Abhängigkeiten zwischen den GA-Bereichen minimiert werden und GA-Bereiche unabhängig gesteuert werden können. Eine Störung in einem GA-Bereich SOLLTE keine oder nur geringe Auswirkungen auf andere GA-Bereiche haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die GA-Architektur wird modular nach GA-Bereichen (z.B. pro Etage, pro Brandabschnitt, pro Mieter) aufgebaut. Jeder Bereich hat eine eigene, autarke Steuerung (Controller). Die Kommunikation zwischen den Bereichen wird auf das absolute Minimum beschränkt und über definierte Schnittstellen abgewickelt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse der GA-Architekturpläne, um die Aufteilung in unabhängige Bereiche zu verifizieren. Prüfung der Konfiguration der Controller und Gateways, um die Kommunikationsbeschränkungen zwischen den Bereichen zu überprüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a10-m4",
+                    "uuid": "5e592fea-e8de-4f0e-9b02-97797cdc36bc",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Insbesondere SOLLTEN die Gebäude innerhalb eines Gebäudekomplexes oder einer Liegenschaft separat steuerbar sein. Die eingerichteten GA-Bereiche SOLLTEN auch im GA-Managementsystem entsprechend sichtbar sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jedes Gebäude einer Liegenschaft hat ein komplett eigenständiges GA-System, das ohne Verbindung zu den anderen Gebäuden funktioniert. Im zentralen GA-Managementsystem (Leitstand) wird die Bereichsstruktur klar abgebildet, und die Rechtevergabe erfolgt bereichsbezogen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der GA-Architektur auf Liegenschaftsebene. Prüfung der Visualisierung und der Benutzerberechtigungen im GA-Managementsystem, um die separate Steuerbarkeit zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a10-m5",
+                    "uuid": "d9ec282d-b6a8-4f34-86a6-263c11bd4e60",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Unabhängigkeit der GA-Bereiche wird regelmäßig durch automatisierte Tests überprüft. Dabei wird der Ausfall eines Bereichscontrollers simuliert und verifiziert, dass die anderen Bereiche ungestört weiterfunktionieren. Die Ergebnisse dieser 'Chaos Engineering'-Tests werden zur kontinuierlichen Verbesserung der Architektur genutzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Testskripte entwickelt, die gezielt einzelne Controller oder Netzwerkverbindungen zwischen Bereichen deaktivieren. Monitoring-Systeme überwachen währenddessen die Funktion der übrigen Bereiche. Dieser Test wird quartalsweise in einem Wartungsfenster durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in die Planung, Skripte und Protokolle der Ausfallsimulationstests. Analyse der Testergebnisse und der daraus abgeleiteten Verbesserungsmaßnahmen. `test-command: /usr/local/bin/ga-chaos-test --fail-area 'floor-7' --verify-others`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b0ecb0b2-0633-4b32-976a-c324554a3b9d",
+                "control-id": "ARCH.2.2.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a6-m1",
+                    "uuid": "4eb40a75-42f7-4dd7-a9af-265ca49c89d3",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze und Büro-Netze sind nicht voneinander getrennt. Komponenten der Gebäudeautomation befinden sich im selben Netzwerk wie Büro-PCs und Server."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Aus Bequemlichkeit oder Kostengründen werden GA-Komponenten einfach an den nächstgelegenen Switch des Büro-Netzes angeschlossen. Es gibt keine Segmentierung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Analyse eines Netzwerkscans oder der IP-Adressbereiche, um festzustellen, ob GA-Komponenten und Büro-Geräte im selben Subnetz betrieben werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m2",
+                    "uuid": "30f9c275-b080-4e64-a018-cde58f7bde05",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze sind von Büro-Netzen durch eine einfache Firewall getrennt, deren Regelwerk jedoch sehr pauschal und freizügig ist ('any-any'). Eine Kontrolle der Kommunikation findet nur unzureichend statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein GA-VLAN wurde eingerichtet und eine Firewall dazwischen geschaltet. Die Firewall-Regeln erlauben jedoch fast jegliche Kommunikation vom Büro-Netz in das GA-Netz, um die Funktionalität nicht zu beeinträchtigen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Review des Firewall-Regelwerks zwischen dem GA-VLAN und dem Büro-Netz. Prüfung auf übermäßig freizügige Regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m3",
+                    "uuid": "4f2518da-d51c-43ac-9251-165a99b8c941",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze MÜSSEN von Büro-Netzen und sonstigen Netzen der Institution mindestens logisch getrennt werden. Jegliche Kommunikation zwischen GA-Systemen und sonstigen IT-Systemen MUSS kontrolliert und reglementiert werden. Hierfür MÜSSEN an allen Übergängen einer solchen Segmentierung entsprechende Komponenten mit Sicherheitsfunktionen, mindestens mit Firewall-Funktion, vorgesehen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das GA-Netz wird in einem eigenen VLAN oder einer Gruppe von VLANs betrieben. An den Übergängen zum Büro-Netz werden Firewalls mit einem restriktiven 'Default-Deny'-Regelwerk eingesetzt. Nur explizit definierte und notwendige Kommunikationsbeziehungen werden freigeschaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Netzwerkarchitektur auf logische Trennung (VLAN-Konzept). Review des Firewall-Regelwerks, um sicherzustellen, dass es auf dem 'Default-Deny'-Prinzip basiert und nur minimal notwendige Ports und Protokolle erlaubt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m4",
+                    "uuid": "083bd2b4-d792-4c67-a405-a277c8f13ebb",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wird die GA für einen Gebäudekomplex oder eine Liegenschaft zentral eingerichtet, so MUSS die gebäudeübergreifende GA-Kommunikation über LAN-, WLAN-, WAN-, Funknetz- oder Internet-Verbindungen auch auf Ebene des Netzes separiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für die gebäudeübergreifende Kommunikation werden dedizierte WAN-Verbindungen oder sichere VPN-Tunnel mit starken Verschlüsselungs- und Authentifizierungsmechanismen verwendet. Diese Verbindungen werden ebenfalls durch restriktive Firewall-Regeln geschützt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Konfiguration der WAN-Verbindungen oder VPN-Tunnel. Review der Firewall-Regeln, die den Datenverkehr zwischen den Gebäuden regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a6-m5",
+                    "uuid": "aa503636-4eca-47ed-b68c-8390fd362e21",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "GA-Netze werden physisch von allen anderen Netzen getrennt betrieben. An den wenigen, notwendigen Kopplungspunkten werden Application Layer Gateways oder Datendioden eingesetzt, um die Kommunikation auf das absolut notwendige Minimum zu beschränken und eine Protokollvalidierung durchzuführen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das GA-Netz verwendet eine komplett eigene physische Infrastruktur (Switches, Kabel). Die Kopplung zum Büro-Netz erfolgt über eine demilitarisierte Zone (DMZ), in der ein Application Layer Gateway steht, das nur bestimmte Befehle des GA-Protokolls zulässt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physische Inspektion der Netzwerkinfrastruktur, um die physische Trennung zu verifizieren. Detailliertes Review der Konfiguration des Application Layer Gateways in der DMZ. Durchführung von Penetrationstests, um die Wirksamkeit der Trennung zu überprüfen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ae16a83f-56e0-4cf8-80c7-89ca160fe645",
+                "control-id": "KONF.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DOCS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a5-m1",
+                    "uuid": "04e072c9-05b9-4204-b45c-c43a56024f13",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Dokumentation der GA ist nur für einzelne Komponenten oder Systeme vorhanden. Es gibt keinen Gesamtüberblick über alle Komponenten, Zugänge und deren Abhängigkeiten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Dokumentation besteht meist aus Herstellerhandbüchern und unvollständigen Netzwerkplänen. Änderungen werden nicht nachdokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Anforderung der GA-Dokumentation und Prüfung auf Vollständigkeit und Aktualität. Vergleich der Dokumentation mit der Realität an wenigen Stichproben."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m2",
+                    "uuid": "12add30c-6949-46c5-ae7a-2dce7e8e2649",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt eine grundlegende Dokumentation, die die meisten Komponenten und Zugänge der GA erfasst. Diese wird jedoch nicht regelmäßig geprüft oder bei Änderungen zeitnah angepasst."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existiert ein zentraler Ordner mit der GA-Dokumentation, aber es gibt keinen festen Prozess, der sicherstellt, dass alle Änderungen (z.B. neue Geräte, geänderte Firewall-Regeln) dort eingepflegt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in die zentrale Dokumentation. Vergleich der Dokumentation mit dem Ist-Zustand an mehreren Stellen, um die Aktualität zu bewerten. Befragung der Mitarbeiter zum Prozess der Dokumentationspflege."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m3",
+                    "uuid": "75054473-70b3-402f-bd55-906c2759a570",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die GA MUSS die Vielzahl unterschiedlicher Komponenten und Zugänge dokumentiert werden. Insbesondere MÜSSEN auch alle deaktivierten physischen Kommunikationsschnittstellen, Protokolle und Zugänge bzw. Zugriffsmöglichkeiten zur GA dokumentiert werden. Darüber hinaus MÜSSEN alle Wechselwirkungen und Abhängigkeiten von GA-relevanten Komponenten sowie von TGA-Anlagen dokumentiert werden. Die Dokumentation MUSS regelmäßig und bei Änderungen innerhalb der GA geprüft und angepasst werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein umfassendes GA-Dokumentationskonzept erstellt, das Vorlagen für Netzwerkpläne, Komponentenlisten, Schnittstellenbeschreibungen und Abhängigkeitsmatrizen enthält. Jede Änderung an der GA muss über einen Change-Management-Prozess laufen, der eine Aktualisierung der Dokumentation zwingend vorschreibt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des GA-Dokumentationskonzepts. Einsicht in die vollständige Dokumentation. Überprüfung von kürzlich durchgeführten Changes, um festzustellen, ob die dazugehörige Dokumentation angepasst wurde."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m4",
+                    "uuid": "9be7f4d9-93e1-4528-b2d1-1ecf7f79fd86",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die verfügbaren und genutzten Sicherheitseigenschaften der verwendeten Protokolle SOLLTEN dokumentiert werden. Die Dokumentation SOLLTE für alle GA-Systeme übergreifend hinsichtlich Inhalten und deren Datenstrukturen abgestimmt werden, um eine einfache, systemübergreifende Auswertung zu ermöglichen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Dokumentation wird in einer zentralen Datenbank (z.B. CMDB) oder einem Wiki mit standardisierten Vorlagen und Datenfeldern geführt. Für jedes Protokoll wird dokumentiert, welche Sicherheitsfunktionen (z.B. Verschlüsselung, Authentisierung) es bietet und ob diese aktiviert sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der CMDB oder des Wikis auf Konsistenz und Vollständigkeit. Stichprobenartige Überprüfung, ob die dokumentierten Sicherheitseigenschaften der Protokolle mit der tatsächlichen Konfiguration der Komponenten übereinstimmen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a5-m5",
+                    "uuid": "a4f855f3-7d7d-43d5-b22d-ac7f5330af74",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Dokumentation der GA wird durch automatisierte Inventarisierungs- und Scanning-Tools kontinuierlich erstellt und aktuell gehalten. Abweichungen zwischen der automatisch erfassten Realität und der Solldokumentation (z.B. aus dem BIM-Modell) werden automatisch gemeldet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine OT-Asset-Management-Lösung wird eingesetzt, die das GA-Netzwerk passiv scannt, alle Geräte und ihre Konfigurationen erfasst und in die CMDB schreibt. Diese Daten werden regelmäßig gegen die Planungsdaten aus dem BIM-System validiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Live-Demonstration des automatisierten Inventarisierungstools. Überprüfung des Prozesses zur Meldung und Bearbeitung von Abweichungen. `test-command: /usr/local/bin/ga-asset-scan --discover --diff-to-cmdb`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "13d9b4b7-7339-4d47-a20e-21a6bd13f82b",
+                "control-id": "KONF.3.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a11-m2",
+                    "uuid": "4b2dd7f4-bd3f-4d3b-a583-c89aaa970b41",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Frei zugängliche Ports (Ethernet, USB) an GA-Komponenten sind organisatorisch zur Deaktivierung vorgesehen, die Umsetzung wird aber nicht kontrolliert. Eine Netzzugangskontrolle ist nicht implementiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt eine Anweisung, ungenutzte Ports zu deaktivieren, aber es gibt keine technische Überprüfung. Temporär für Wartungszwecke aktivierte Ports werden oft vergessen und bleiben offen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physische Inspektion von frei zugänglichen GA-Komponenten (z.B. in Fluren, öffentlichen Bereichen) und Prüfung, ob ungenutzte Ports aktiv sind. Anschließen eines Testgeräts, um die Netzwerkverbindung zu prüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a11-m3",
+                    "uuid": "c5da1d09-54fa-4e5a-a25d-a07031b40052",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Anschluss von Komponenten, speziell von unautorisierten, unbekannten Komponenten und Fremdgeräten, SOLLTE insbesondere an frei zugänglichen Ethernet-Ports, USB-Ports und anderen Schnittstellen der GA kontrolliert und eingeschränkt werden. Frei zugängliche Schnittstellen für temporäre Wartungszwecke, wie beispielsweise USB-Ports an GA-Komponenten, SOLLTEN nur bei Bedarf aktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle nicht benötigten physischen Ports an GA-Komponenten werden softwareseitig im Switch oder im Betriebssystem des Geräts deaktiviert. Temporäre Freischaltungen für Wartungseinsätze müssen beantragt werden und werden nach einer festgelegten Zeit automatisch wieder deaktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Switch-Konfigurationen, um die Deaktivierung ungenutzter Ports zu verifizieren. Einsicht in den Prozess zur temporären Freischaltung von Ports und Überprüfung der entsprechenden Tickets."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a11-m4",
+                    "uuid": "b8803f22-ec91-44ae-88fc-c7cded951324",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für frei zugängliche LAN- oder WLAN-Zugänge SOLLTE eine Netzzugangskontrolle gemäß IEEE 802.1X oder vergleichbare Sicherheitsmechanismen eingesetzt werden. Der Anschluss einer unautorisierten oder unbekannten Komponente SOLLTE in die Ereignisprotokollierung aufgenommen werden. Eine direkte IP-basierte Kommunikation von solchen Komponenten mit Systemen der GA SOLLTE unterbunden werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "An allen frei zugänglichen Netzwerkdosen wird 802.1X mit Zertifikats- oder MAC-Adressen-basierter Authentifizierung aktiviert. Geräte, die sich nicht authentifizieren können, werden in ein Quarantäne-VLAN verschoben, das keinen Zugriff auf das produktive GA-Netz hat. Jeder fehlgeschlagene Authentifizierungsversuch wird protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Konfiguration des RADIUS-Servers und der Switches für 802.1X. Durchführung eines Tests durch Anschluss eines nicht autorisierten Geräts an einen Port. Prüfung der Systemprotokolle auf entsprechende Einträge. `test-command: Connect-TestDevice -Port 42; Get-FirewallLog -Filter 'quarantine-vlan'`"
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a11-m5",
+                    "uuid": "27625861-0a0e-4b56-9f8f-b5819f6eb4e8",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Anschluss unautorisierter Geräte wird nicht nur verhindert, sondern löst auch einen automatisierten Sicherheitsvorfall aus. Der betroffene Port wird sofort physisch gesperrt und eine Benachrichtigung an das Sicherheitsteam gesendet, die den genauen Standort des Ports enthält. Die Kommunikation im Quarantäne-Netz wird aktiv überwacht, um Angriffsversuche zu erkennen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Netzzugangskontroll-Lösung ist mit dem SIEM und einem SOAR-System integriert. Bei einem 802.1X-Fehlschlag wird der Switch-Port via Skript auf 'shutdown' gesetzt und ein Ticket mit der Port-Bezeichnung aus der Dokumentation erstellt. Im Quarantäne-VLAN ist ein Intrusion Detection System (IDS) aktiv."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Live-Test des gesamten Prozesses durch Anschluss eines nicht autorisierten Laptops. Überprüfung, ob der Port gesperrt wird und ob ein entsprechender Alarm und ein Ticket im SIEM/Ticketsystem generiert werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a840d937-915b-4405-9f14-2823ed83d920",
+                "control-id": "KONF.6.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a3-m1",
+                    "uuid": "6bf6eeb2-93fd-4345-95bc-4fe807f29f64",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Anbindung von TGA-Anlagen an GA-Systeme erfolgt ohne definierte Sicherheitsregeln. Es wird nicht systematisch festgelegt, welche Aktionen ausgelöst werden dürfen, was zu unvorhersehbarem Verhalten führen kann."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Systeme werden nach dem Prinzip 'was technisch funktioniert, wird verbunden' integriert. Eine Analyse der Ablauf- und Funktionsketten findet nicht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragung der Administratoren, nach welchen Regeln TGA-Anlagen angebunden werden. Prüfung, ob Dokumentationen über erlaubte Interaktionen zwischen Systemen existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m2",
+                    "uuid": "fded25d1-ba9c-4323-b04b-b7a5f8bfb933",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt grundlegende Festlegungen, welche TGA-Anlagen mit GA-Systemen interagieren dürfen. Die Anbindung wird jedoch nicht durch technische Maßnahmen abgesichert und die Ablaufketten werden nicht umfassend geplant oder getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anbindung wird auf Netzwerkebene erlaubt, aber die erlaubten Aktionen auf Applikationsebene werden nicht eingeschränkt. Funktionstests beschränken sich auf den 'Happy Path'."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in die Dokumentation der erlaubten Anbindungen. Überprüfung der Konfiguration von Koppelelementen, um festzustellen, ob Sicherheitsregeln implementiert sind. Prüfung der Testdokumentation."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m3",
+                    "uuid": "812c3f7c-975d-4275-a4f4-f9d30cc4df3a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für alle TGA-Anlagen, GA-Systeme und GA-relevanten Komponenten MUSS festgelegt werden, ob durch andere Systeme Aktionen ausgelöst werden dürfen. Sowohl die Integration von TGA-Anlagen in ein GA-System als auch die rückwirkungsfreie Kopplung von TGA-Anlagen an GA-Systeme MÜSSEN angemessen abgesichert sein. Ebenfalls MUSS die Anbindung von GA-Systemen untereinander angemessen abgesichert werden. Hierzu MÜSSEN insbesondere die Ablauf- und Funktionsketten innerhalb eines GA-Systems bzw. zwischen GA-Systemen angemessen geplant und getestet werden. Die Festlegungen MÜSSEN vollumfänglich dokumentiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jede Anbindung wird eine Interaktionsmatrix erstellt, die genau definiert, welches System welche Daten an welches andere System senden und welche Aktionen auslösen darf. Diese Regeln werden in den Koppelelementen (z.B. Gateways, Firewalls) technisch umgesetzt. Jede Anbindung durchläuft einen standardisierten Test- und Freigabeprozess."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Interaktionsmatrizen und der dazugehörigen Dokumentation. Überprüfung der Konfiguration der Koppelelemente, um die Umsetzung der definierten Regeln zu verifizieren. Einsicht in die Testprotokolle der Ablauf- und Funktionsketten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m4",
+                    "uuid": "7b38283a-bc49-4e00-9405-026dc8d5f04d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls eine Integration zulässig ist, SOLLTE reglementiert werden, welche automatisierten Aktionen durch welche Informationen eines GA-Systems ausgelöst werden dürfen. Die Ablauf- und Funktionsketten SOLLTEN umfassend getestet und bei Fehlverhalten nachjustiert werden. Die Dokumentation SOLLTE regelmäßig und ergänzend bei Bedarf geprüft werden, ob sie noch aktuell ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Regeln für automatisierte Aktionen werden detailliert spezifiziert, inklusive Schwellenwerten und Plausibilitätsprüfungen. Die Tests umfassen auch Fehlerszenarien (z.B. Ausfall einer Komponente, ungültige Daten). Die Dokumentation wird jährlich auf Aktualität geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Spezifikation der automatisierten Aktionen. Einsicht in die Testpläne und -protokolle, insbesondere für Fehlerszenarien. Prüfung der Protokolle der jährlichen Dokumentationsreviews."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a3-m5",
+                    "uuid": "baed182b-6973-42be-a60b-aee5c175cd8d",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesamte Kommunikation zwischen TGA-Anlagen und GA-Systemen wird in Echtzeit überwacht. Abweichungen von den definierten Ablauf- und Funktionsketten werden automatisch erkannt und gemeldet. Bei erkannten Abweichungen werden die betroffenen Interaktionen blockiert und ein Incident-Prozess ausgelöst. Die Testfälle werden automatisiert aus den Spezifikationen generiert und ausgeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine OT-Security-Monitoring-Lösung eingesetzt, die den Datenverkehr der GA analysiert und über Anomalieerkennung verfügt. Ein Security Orchestration, Automation and Response (SOAR)-System wird verwendet, um auf Alarme automatisiert zu reagieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Live-Demonstration des Monitoring-Systems und der automatischen Alarmierung. Prüfung eines simulierten Angriffs, um die Reaktion des SOAR-Systems zu verifizieren. `test-command: /usr/local/bin/ga-traffic-analyser --watch --alert-on-deviation`"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f1a93b85-800b-4485-b889-26a4aa981cfe",
+                "control-id": "KONF.7.15",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "inf.14.a4-m1",
+                    "uuid": "b6bade00-0479-488c-98c3-153110a8a156",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gefahrenmeldeanlagen sind teilweise in GA-Systeme integriert, ohne dass die Rückwirkungsfreiheit sichergestellt ist. Die netztechnische Anbindung erfolgt über das allgemeine GA-Netz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Beispielsweise wird eine Brandmeldeanlage direkt mit der Klimasteuerung verbunden, um diese abzuschalten. Eine Fehlfunktion in der Klimasteuerung könnte theoretisch die Brandmeldeanlage beeinflussen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Netzwerk- und Systemarchitekturpläne, um die Art der Anbindung von Gefahrenmeldeanlagen (GMA) an die GA zu ermitteln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m2",
+                    "uuid": "bdf5d496-8978-4940-adda-6aac6e8d8b7c",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gefahrenmeldeanlagen sind an GA-Systeme gekoppelt, aber die Rückwirkungsfreiheit ist nur konzeptionell vorgesehen und nicht technisch durchgesetzt. Die netztechnische Anbindung erfolgt logisch getrennt, aber nicht physisch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die GMA befindet sich in einem eigenen VLAN, aber es wird kein Gateway mit Diode-Funktionalität verwendet. Die Kopplung ist als unidirektional dokumentiert, aber nicht technisch erzwungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Konfiguration der Netzwerkkomponenten (z. B. VLANs, Firewall-Regeln) zwischen GMA und GA."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m3",
+                    "uuid": "9775f8e1-5b98-4f29-912f-ccb3cfc9447e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gefahrenmeldeanlagen inklusive Sicherheitsanlagen MÜSSEN rückwirkungsfrei an GA-Systeme gekoppelt werden. Sie DÜRFEN NICHT in ein GA-System integriert werden. Für die netztechnische Anbindung MÜSSEN physisch getrennte Netzkomponenten und physisch getrennte Segmente genutzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anbindung der GMA an die GA erfolgt über ein dediziertes Gateway, das nur eine unidirektionale Kommunikation von der GMA zur GA zulässt (z.B. eine Datendiode). Die GMA und ihre Anbindungskomponenten befinden sich in einem eigenen, physisch vom GA-Netz getrennten Netzwerksegment mit eigenen Switches."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physische Inspektion der Netzwerkverkabelung und -komponenten zur Überprüfung der physischen Trennung. Überprüfung der Konfiguration und des Typs des verwendeten Gateways, um die Rückwirkungsfreiheit sicherzustellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m4",
+                    "uuid": "5a5baa84-5e11-4682-914d-1a01e33142c6",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Werden Funknetze zur Kopplung genutzt, MÜSSEN solche TGA-Anlagen als Primärnutzende für die verwendeten Frequenzbereiche festgelegt werden. Für die Kommunikation über Funknetze SOLLTEN zertifizierte Mechanismen genutzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei Nutzung von Funk (z.B. für Rauchmelder) wird ein Frequenzband exklusiv für die GMA reserviert und bei der Bundesnetzagentur angemeldet. Es werden nur Funkprotokolle mit zertifizierter Sicherheit (z.B. nach VdS-Richtlinien) eingesetzt, die Verschlüsselung und Authentisierung bieten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Frequenzzuteilungsurkunde der Bundesnetzagentur. Einsicht in die Zertifikate der eingesetzten Funkkomponenten und -protokolle."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "inf.14.a4-m5",
+                    "uuid": "81b8b114-0949-4f2a-829b-56e470c6e0ba",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Kommunikation von der GMA zur GA wird zusätzlich auf Integrität und Authentizität auf Applikationsebene geprüft. Jeglicher Versuch einer Kommunikation von der GA zur GMA wird aktiv blockiert und als schwerwiegender Sicherheitsvorfall gemeldet. Die physikalische Trennung wird durch manipulationssichere Gehäuse und plombierte Ports ergänzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Gateway zwischen GMA und GA prüft kryptografische Signaturen der ankommenden Meldungen. Die Firewall-Regeln am Gateway sind so konfiguriert, dass jeder Verbindungsversuch von der GA-Seite geloggt und an ein SIEM gemeldet wird. Die Netzwerkkomponenten des GMA-Netzes sind in verschlossenen Schränken untergebracht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Durchführung eines Penetrationstests, der versucht, die Rückwirkungsfreiheit zu umgehen. Überprüfung der SIEM-Logs auf Alarmmeldungen bei einem simulierten Angriffsversuch. Physische Inspektion der Sicherheitsmaßnahmen an den Netzwerkkomponenten. `test-command: nmap -sS <GMA-Gateway-IP> --source-port 12345 --reason`"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

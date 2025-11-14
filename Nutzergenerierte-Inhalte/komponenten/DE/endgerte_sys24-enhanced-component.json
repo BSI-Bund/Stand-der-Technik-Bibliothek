@@ -1,0 +1,330 @@
+{
+  "component-definition": {
+    "uuid": "92ad58ac-e1b9-4c4c-9d58-0b8817265245",
+    "metadata": {
+      "title": "SYS.2.4 Clients unter macOS - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:35.405220+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "8f67cfa1-3990-4a55-a626-55b904909e39",
+        "type": "hardware",
+        "title": "SYS.2.4 Clients unter macOS",
+        "description": "This component represents the implementation of all controls for Baustein SYS.2.4.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "macOS ist ein Client-Betriebssystem der Firma Apple. macOS basiert auf Darwin, dem frei verfügbaren Unix-Betriebssystem von Apple, das wiederum auf dem Open-Source-Betriebssystem FreeBSD aufbaut. macOS setzt sich im Wesentlichen aus Darwin sowie der proprietären grafischen Bedienoberfläche „Aqua“ und weiteren Anwendungen und Diensten zusammen. Gemäß den Lizenzbedingungen von Apple darf macOS nur auf IT-Systemen („Macs“) von Apple installiert werden. Aus diesem Grund sind Eigenheiten dieser Systeme ebenfalls Bestandteil dieses Bausteins."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Das Ziel dieses Bausteins ist der Schutz von Informationen, die auf IT-Systemen unter macOS verarbeitet oder mit diesen übertragen werden. Dazu müssen IT-Systeme unter macOS angemessen abgesichert werden."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.2.4 Clients unter macOS ist für alle Client-Systeme anzuwenden, auf denen das Betriebssystem Apple macOS eingesetzt wird.<BR><BR>Der Schwerpunkt liegt in diesem Baustein auf der Absicherung eines Macs mit macOS, der als Stand-alone-System oder als Client in einem Client-Server-Netz betrieben wird. Damit ergänzt der Baustein die allgemeinen Aspekte aus dem zusätzlich anzuwendenden Baustein SYS.2.1 Allgemeiner Client. Ein möglicher Einsatz von macOS als Server-Betriebssystem wird im Baustein nicht betrachtet. Im professionellen Einsatz besteht mit dem sogenannten Profilmanager und Mobile Device Management die Möglichkeit, die verwendeten Macs zentral zu verwalten. Diese Lösungen bieten erweiterte Konfigurations- und Verwaltungsfunktionen, werden in diesem Baustein jedoch nicht betrachtet. Entsprechende Sicherheitsaspekte werden im Baustein SYS.3.2.2 Mobile Device Management (MDM) behandelt. Außerdem ist zu beachten, dass die beiden Apple-Betriebssysteme macOS (für Macs) und iOS (für iPhones) bzw. iPadOS (für iPads) eng miteinander verzahnt sind. Daher sollte zusätzlich der Baustein SYS.3.2.3 iOS (for Enterprise) berücksichtigt werden, wenn neben macOS auch Geräte mit iOS oder iPadOS eingesetzt werden."
+          },
+          {
+            "name": "Unkontrollierbarer Zugriff auf ausgelagerte Daten",
+            "value": "macOS bietet eine Reihe von Funktionen, die auf zentralen, von Apple betriebenen Servern ausgeführt werden. Beispielsweise kann Apples iCloud für die Speicherung und für die Synchronisierung von Daten zwischen verschiedenen macOS- und iOS-Geräten verwendet werden. Da hierbei Daten auf Servern Dritter zwischengespeichert werden und damit nicht mehr unter der eigenen Kontrolle stehen, könnten prinzipiell auch Unbefugte auf diese Server zugreifen und die dort gespeicherten oder übertragenen Daten einsehen und für ihre Zwecke missbrauchen."
+          },
+          {
+            "name": "Missbrauch der Apple-ID als zentrale Zugangsinformation für Apple-Dienste",
+            "value": "Für die Nutzung einiger macOS-Funktionen wird eine eindeutige Apple-ID als Zugangsinformation benötigt. Mit der Apple-ID kann zentral auf verschiedene Apple-Dienste zugegriffen werden, wie beispielsweise auf iCloud, iMessage und den App Store. Falls Unbefugte an die Zugangsinformationen der Apple-ID gelangen, können sie diese Dienste unter Umständen unter einer falschen Identität nutzen und auf Informationen in iCloud zugreifen."
+          },
+          {
+            "name": "Angriffe auf Funkschnittstellen",
+            "value": "Ein Mac verfügt in der Regel über drahtlose Schnittstellen wie WLAN oder Bluetooth, die zudem von vielen Diensten genutzt werden und entsprechend aktiviert sind. Beispielsweise können damit Dateien unmittelbar zwischen Apple-Geräten ausgetauscht werden (AirDrop). Des Weiteren kann die WLAN- und Bluetooth-Funktion genutzt werden, um macOS- und iOS-Geräte zu synchronisieren (Continuity). Mit AirPlay ist es möglich, Video- und Audiodaten an kompatible Wiedergabegeräte zu senden. Angreifende könnten versuchen, diese Funkschnittstellen für Angriffe zu missbrauchen, um vertrauliche Informationen zwischen Mac, iPhone, iPad und anderen Geräten abzufangen oder die Geräte zu kompromittieren."
+          },
+          {
+            "name": "Angriffe auf Anwendungen mit Vorschau-Funktion",
+            "value": "Einige der in macOS integrierten Anwendungen unterstützen eine Vorschaufunktion für bestimmte Dateiformate (z. B. Bilddateien). Dazu gehören der Finder, der Browser „Safari“ und das in macOS integrierte E-Mail-Programm. Die Vorschaufunktion stellt beispielsweise automatisch den Anhang einer E-Mail auszugsweise dar, wenn das Dateiformat bekannt ist. Angreifende könnte somit versuchen, Schadcode im Anhang einer E-Mail zu verstecken. Die Vorschaufunktion würde den E-Mail-Anhang anzeigen und möglicherweise den Schadcode ausführen, der wiederum den Mac kompromittieren könnte."
+          },
+          {
+            "name": "Unsichere Protokolle in macOS oder macOS-Anwendungen",
+            "value": "macOS und seine Anwendungen unterstützen verschiedene, zum Teil Apple-eigene Protokolle (z. B. AFP) zur Kommunikation mit zentralen Servern oder anderen Endgeräten. Wenn diese Kommunikationsprotokolle keine ausreichenden Sicherheitsmechanismen aufweisen oder unsicher konfiguriert werden, könnten die darüber übertragenen Daten unerlaubt mitgelesen, verfälscht oder anderweitig missbraucht werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "fcb7d1b8-cda9-44bc-9695-280fb2f52270",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/endgerte_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.2.4",
+            "implemented-requirements": [
+              {
+                "uuid": "650b041f-5be3-4e8d-be9c-742dd7b12b5c",
+                "control-id": "ARCH.5.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SENS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.2.2.A3-m1",
+                    "uuid": "275506ef-3c78-4bd8-b67c-7914ad7e3b23",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Nutzung von öffentlichen Hotspots ist weder explizit erlaubt noch verboten und wird nicht durch technische oder organisatorische Maßnahmen reguliert. Mitarbeitende nutzen Hotspots nach eigenem Ermessen, oft ohne VPN-Verbindung für den Zugriff auf Unternehmensdaten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mitarbeitende verbinden sich beispielsweise im Hotel oder am Flughafen direkt mit dem öffentlichen WLAN, um E-Mails abzurufen oder auf Cloud-Dienste zuzugreifen, wobei die Daten ungeschützt übertragen werden können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE durch Interviews mit reisenden Mitarbeitenden deren Vorgehensweise bei der Nutzung öffentlicher WLANs erfragen. Es SOLLTE geprüft werden, ob es eine klare Regelung und eine technische Erzwingung (z.B. Always-On-VPN) für die Nutzung von Hotspots gibt. Das Fehlen von beidem deutet auf diesen Reifegrad hin."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m2",
+                    "uuid": "e4239af9-b5a7-4ce1-8cef-44781b2cad29",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert die grundlegende Anweisung, für den Zugriff auf interne Ressourcen aus öffentlichen WLANs ein VPN zu verwenden. Andere Aspekte der Hotspot-Sicherheit, wie die Deaktivierung der automatischen Anmeldung oder das Löschen bekannter Netzwerke, werden nicht adressiert. Die Einhaltung der VPN-Nutzung wird nicht kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein VPN-Client ist auf den Laptops installiert, aber die Benutzer entscheiden selbst, wann sie ihn aktivieren. Oft wird er nur für den Zugriff auf das Intranet, nicht aber für den allgemeinen Internetverkehr oder Cloud-Dienste genutzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die VPN-Client-Konfiguration auf Split-Tunneling überprüfen. Es SOLLTE durch Befragung und Einsicht in die WLAN-Richtlinie geprüft werden, ob weitere Sicherheitsmaßnahmen für Hotspots (außer VPN) definiert und kommuniziert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m3",
+                    "uuid": "d8a5a20c-0819-4661-97cb-66f5c612aee5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn die Nutzung von Hotspots erlaubt ist, MUSS sichergestellt werden, dass jede(r) Benutzende seine/ihre Sicherheitsanforderungen kennt und entsprechend handelt. Sensible Daten DÜRFEN NUR übertragen werden, wenn eine geeignete Verschlüsselung auf dem Client aktiviert ist. Der Zugriff auf interne Ressourcen der Institution über öffentlich zugängliche WLANs DÜRFEN die Benutzenden NUR über ein Virtual Private Network (VPN) durchführen. Wird die WLAN-Schnittstelle längere Zeit nicht genutzt, MUSS sie deaktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Organisation stellt allen Mitarbeitenden, die Hotspots nutzen dürfen, eine VPN-Lösung zur Verfügung und schult sie in deren Anwendung. Die Anforderungen sind klar in der WLAN-Nutzungsrichtlinie (siehe A1) definiert. Die Deaktivierung der Schnittstelle kann durch die Benutzer manuell erfolgen, unterstützt durch regelmäßige Erinnerungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Konfiguration von Clients stichprobenartig überprüfen, die für die Hotspot-Nutzung vorgesehen sind. Es ist zu verifizieren, ob ein VPN-Client installiert und konfiguriert ist. Durch Befragung der Nutzenden SOLLTE deren Kenntnis der Sicherheitsregeln für Hotspots ermittelt werden. Es SOLLTE geprüft werden, ob die VPN-Verbindung so konfiguriert ist, dass der gesamte Verkehr getunnelt wird (kein Split-Tunneling)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m4",
+                    "uuid": "c4dee2ac-83ae-4f90-97a6-b2e0daf3599c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Aufbauend auf der definierten Basisabsicherung (Level 3) SOLLTE die Verbindung zwischen Hotspot und Client kryptografisch nach Stand der Technik (z.B. mittels WPA3, falls vom Hotspot unterstützt, ansonsten durch das VPN abgedeckt) abgesichert sein. Die automatische Anmeldung an WLANs SOLLTE deaktiviert werden. WLANs, die nur sporadisch genutzt werden, SOLLTEN aus der Historie bekannter Netzwerke gelöscht werden. Es SOLLTE sichergestellt sein, dass sich keine Benutzenden mit administrativen Berechtigungen von ihren Clients aus an externen WLANs anmelden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Deaktivierung der automatischen Anmeldung wird über eine Konfigurationsrichtlinie (z.B. GPO oder MDM-Profil) auf den Clients durchgesetzt. Die Benutzenden werden angeleitet und regelmäßig daran erinnert, nicht mehr benötigte WLAN-Profile zu entfernen. Die Nutzung von administrativen Konten in unsicheren Netzen wird durch Richtlinien verboten und stichprobenartig kontrolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Client-Konfiguration überprüfen, um sicherzustellen, dass die automatische Verbindung zu WLANs deaktiviert ist. Auf Windows kann dies mit `netsh wlan show profile name=\"PROFILE_NAME\"` geprüft werden, wo der 'Connection mode' auf 'Manual' stehen sollte. Es SOLLTE die Liste der bekannten Netzwerke auf veraltete Hotspot-Einträge geprüft werden. Es SOLLTE durch Interviews und Log-Analyse (falls möglich) verifiziert werden, dass keine administrativen Anmeldungen aus externen Netzen erfolgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A3-m5",
+                    "uuid": "0610a1b1-6016-4b46-a0d2-35f551dee5ee",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Absicherung der Hotspot-Nutzung ist vollständig automatisiert. Eine 'Always-On' VPN-Verbindung wird technisch erzwungen, sobald der Client eine Netzwerkverbindung außerhalb definierter, vertrauenswürdiger Unternehmensnetze aufbaut. Die Client-Firewall ist so konfiguriert, dass sie jeglichen nicht-VPN-getunnelten Verkehr blockiert. Die Nutzung von Konten mit separaten, restriktiven Berechtigungen für die Nutzung in externen Netzen wird technisch durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine moderne VPN-Lösung mit 'Always-On' und 'Trusted Network Detection' wird eingesetzt. Diese erkennt automatisch, ob sich der Client in einem sicheren (Unternehmens-) oder unsicheren (Hotspot-) Netz befindet und baut den Tunnel entsprechend auf. Die Client-Konfiguration wird über ein MDM-System zentral verwaltet und kann nicht vom Benutzer geändert werden. Separate Benutzerkonten mit stark eingeschränkten Rechten werden für die Arbeit unterwegs verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Konfiguration der 'Always-On' VPN-Lösung und der zugehörigen Firewall-Regeln auf einem Client verifizieren. Es SOLLTE versucht werden, bei aktiver Verbindung zu einem externen Test-WLAN eine Verbindung zu einem Internetdienst aufzubauen, ohne dass der VPN-Tunnel aktiv ist; dies muss fehlschlagen. Es SOLLTE geprüft werden, welche Benutzerkonten auf den mobilen Geräten eingerichtet sind und welche Rechte diese besitzen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2575fafd-397d-497a-b97a-df85a6a56378",
+                "control-id": "KONF.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "GOV",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.2.2.A1-m1",
+                    "uuid": "eebdc8df-0144-4557-8a0c-df7998d07dd8",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existieren rudimentäre, möglicherweise nur mündlich kommunizierte oder unvollständig dokumentierte Regelungen zur WLAN-Nutzung. Diese decken nur einzelne Aspekte, wie z. B. das Passwort für das Gäste-WLAN, ab und sind nicht systematisch durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Häufig wird dieser Zustand in Organisationen angetroffen, in denen WLAN 'organisch' gewachsen ist, ohne dass eine zentrale Sicherheitskonzeption stattgefunden hat. Die Regeln sind oft nur einem kleinen Kreis von IT-Mitarbeitenden bekannt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE durch Interviews mit Mitarbeitenden und IT-Personal feststellen, ob Regelungen zur WLAN-Nutzung bekannt sind. Es SOLLTE geprüft werden, ob eine schriftliche Richtlinie existiert. Das Fehlen einer umfassenden, verschriftlichten und kommunizierten Richtlinie deutet auf diesen Reifegrad hin."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m2",
+                    "uuid": "fa2897ad-d633-4ec5-822d-3438db35b644",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende WLAN-Nutzungsrichtlinie ist vorhanden und dokumentiert. Sie enthält die wichtigsten Verbote (z.B. keine privaten Geräte im produktiven WLAN), aber es fehlen detaillierte Vorgaben zu Aspekten wie der Nutzung externer Hotspots oder der Datenklassifizierung. Eine regelmäßige Überprüfung der Einhaltung findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Richtlinie wird typischerweise bei der Einführung von WLAN erstellt, aber danach nicht mehr aktiv gepflegt oder an neue Bedrohungen angepasst. Die Kommunikation an die Mitarbeitenden erfolgt einmalig, z.B. bei der Einstellung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Existenz der WLAN-Nutzungsrichtlinie verifizieren. Es SOLLTE der Inhalt auf Vollständigkeit gemäß den Basis-Anforderungen (NET.2.2.A1) geprüft werden. Es SOLLTE festgestellt werden, ob es einen Prozess zur regelmäßigen Überprüfung und Aktualisierung der Richtlinie gibt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m3",
+                    "uuid": "dd2a405b-b954-49b1-b05a-9acc2de95f5c",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS eine WLAN-Nutzungsrichtlinie erstellt werden, die die wesentlichen Kernaspekte für eine sichere WLAN-Nutzung konkretisiert. Die Richtlinie MUSS die Besonderheiten bei der WLAN-Nutzung beschreiben (z. B. ob, wie und mit welchen Geräten Hotspots genutzt werden dürfen), Angaben zu erlaubten/verbotenen Datenarten enthalten, den Umgang mit clientseitigen Sicherheitslösungen festlegen und ein klares Verbot für ungenehmigte Access Points enthalten. Es MUSS auch darauf hingewiesen werden, die WLAN-Schnittstelle bei Nichtnutzung zu deaktivieren. Die Umsetzung der Richtlinie MUSS regelmäßig überprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Richtlinie sollte als offizielles Dokument im Informationssicherheits-Managementsystem (ISMS) verankert und für alle Mitarbeitenden zugänglich gemacht werden, z.B. im Intranet. Die Überprüfung kann durch stichprobenartige Audits von Client-Konfigurationen und Befragungen der Benutzenden erfolgen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE sich die WLAN-Nutzungsrichtlinie vorlegen lassen. Es SOLLTE geprüft werden, ob alle geforderten Aspekte (Hotspot-Nutzung, Datenklassifizierung, Client-Sicherheit, Verbot von Rogue APs, Deaktivierung der Schnittstelle) enthalten sind. Es SOLLTEN Nachweise für die regelmäßige Überprüfung der Einhaltung der Richtlinie (z. B. Auditberichte) eingesehen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m4",
+                    "uuid": "2b0d14f3-df13-43ee-bcc4-746ea31f27e5",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Aufbauend auf der definierten Richtlinie (Level 3) werden die Ergebnisse der regelmäßigen Überprüfungen systematisch dokumentiert und zur Verbesserung der Richtlinie und der technischen Maßnahmen genutzt. Die Richtlinie wird proaktiv an neue Technologien (z.B. WPA3) und bekannte Bedrohungsszenarien angepasst. Sie enthält zudem spezifische Vorgaben für unterschiedliche Benutzergruppen (z.B. Administratoren, Gäste)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Dokumentation der Überprüfungsergebnisse erfolgt in einem Ticketsystem oder einem dedizierten ISMS-Tool. Die Anpassungen an der Richtlinie werden über einen formalen Change-Management-Prozess gesteuert. Für verschiedene Rollen existieren möglicherweise Anhänge oder separate, aber aufeinander abgestimmte Richtliniendokumente."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Dokumentation der letzten Überprüfungen der Richtlinieneinhaltung einsehen (z.B. Auditberichte, Protokolle). Es SOLLTE verifiziert werden, dass die Erkenntnisse aus diesen Überprüfungen zu konkreten Verbesserungsmaßnahmen geführt haben. Es SOLLTE geprüft werden, ob die Richtlinie aktuell ist und auf neue technische Entwicklungen und Bedrohungen eingeht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.2.A1-m5",
+                    "uuid": "52fb71db-697d-4f9b-9ca5-dad053a6b51f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Einhaltung der WLAN-Nutzungsrichtlinie wird weitgehend automatisiert überwacht. Technische Systeme wie Network Access Control (NAC) setzen die Vorgaben der Richtlinie (z.B. erlaubte Geräte, Konfigurations-Baselines) in Echtzeit durch. Abweichungen führen zu automatisierten Reaktionen, wie der Quarantäne des betroffenen Clients. Die Richtlinie ist vollständig in den ISMS-Prozess integriert und wird bei jeder wesentlichen Änderung der IT-Infrastruktur oder Bedrohungslage dynamisch angepasst."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine NAC-Lösung wird eingesetzt, die den Zustand von Clients (z.B. Patch-Level, aktivierte Firewall) prüft, bevor der Netzwerkzugriff gewährt wird. Verstöße gegen die Richtlinie werden an ein SIEM-System gemeldet, das automatisierte Reaktions-Workflows anstößt. Die Richtlinie selbst wird in einem GRC-Tool (Governance, Risk, Compliance) verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer SOLLTE die Konfiguration der NAC-Lösung überprüfen, um sicherzustellen, dass sie die Vorgaben der WLAN-Richtlinie korrekt umsetzt. Es SOLLTEN die Protokolle des NAC- und SIEM-Systems analysiert werden, um die Wirksamkeit der automatisierten Überwachung und Reaktion zu verifizieren. Es kann versucht werden, mit einem nicht-konformen Client eine Verbindung herzustellen, um die Reaktion des Systems zu testen."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

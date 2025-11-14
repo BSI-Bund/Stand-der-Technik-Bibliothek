@@ -1,0 +1,676 @@
+{
+  "component-definition": {
+    "uuid": "fb91830a-d809-44eb-9706-0aced186cf14",
+    "metadata": {
+      "title": "APP.4.9 Cloud-Dienste - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:33.062257+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "522bd205-80cf-4f41-b92f-1dd938dae00f",
+        "type": "software",
+        "title": "APP.4.9 Cloud-Dienste",
+        "description": "This component represents the implementation of all controls for Baustein APP.4.9.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Objektbasierte Speicherlösungen (Object Storage) sind ein zentraler Baustein moderner IT-Architekturen, insbesondere in Cloud-Umgebungen (z. B. S3-kompatible Dienste) und in großen On-Premises-Infrastrukturen (z. B. mit Ceph oder OpenStack Swift). Im Gegensatz zu traditionellen Datei- oder Blockspeichern organisieren sie Daten als einzelne Objekte in flachen Hierarchien, sogenannten Buckets. Jedes Objekt besteht aus den eigentlichen Daten, einer eindeutigen ID und Metadaten.<BR>Der Zugriff auf Objektspeicher erfolgt ausschließlich über programmatische Schnittstellen (APIs), typischerweise über HTTP. Diese API-zentrierte Natur und ein sehr flexibles Berechtigungsmodell sind Stärken, aber auch die Quelle spezifischer Risiken. Eine einzige Fehlkonfiguration in einer Bucket-Richtlinie kann dazu führen, dass Terabytes an sensiblen Daten ungeschützt im Internet stehen. Die Sicherheit von Objektspeichern hängt daher entscheidend von der korrekten Konfiguration der Zugriffsrichtlinien und der Absicherung der API-Endpunkte ab."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Dieser Baustein zeigt einen systematischen Weg auf, um objektbasierte Speicherlösungen sicher zu konfigurieren und zu betreiben. Ziel ist es, die Vertraulichkeit, Integrität und Verfügbarkeit der gespeicherten Objekte zu gewährleisten. Schwerpunkte sind die rigorose Kontrolle von Zugriffsberechtigungen auf Bucket- und Objektebene, die durchgängige Verschlüsselung der Daten, die Absicherung der API-Kommunikation und das lückenlose Logging aller Zugriffe."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.4.9 ist auf alle eingesetzten objektbasierten Speicherlösungen anzuwenden.<BR>Dieser Baustein konkretisiert die allgemeinen Anforderungen aus APP.4.4 Speicherlösungen für den spezifischen Fall des Objektspeichers. Er behandelt nicht die Absicherung der zugrundeliegenden Server-Infrastruktur bei On-Premises-Lösungen (siehe OPS.1.1-Bausteine). Bei der Nutzung von Cloud-Diensten sind zusätzlich die Anforderungen aus OPS.2.3 Nutzung von Cloud-Diensten zu beachten."
+          },
+          {
+            "name": "Unbeabsichtigte Veröffentlichung von Daten durch öffentliche Buckets",
+            "value": "Dies ist eine der häufigsten und schwerwiegendsten Schwachstellen bei Objektspeichern. Durch eine fehlerhafte Konfiguration der Zugriffsrichtlinien (ACLs oder Bucket Policies) wird ein Bucket für die gesamte Welt lesbar oder sogar beschreibbar. Dies führt zur vollständigen Offenlegung aller darin enthaltenen Daten."
+          },
+          {
+            "name": "Kompromittierung von API-Zugangsdaten",
+            "value": "Der Zugriff auf Objektspeicher erfolgt über API-Schlüssel (Access Keys). Werden diese Schlüssel kompromittiert, beispielsweise weil sie in öffentlich zugänglichem Quellcode hinterlegt wurden, erlangt ein Angreifer die gleichen Rechte wie der legitime Besitzer der Schlüssel und kann Daten unbemerkt auslesen, manipulieren oder löschen."
+          },
+          {
+            "name": "Unzureichende Zugriffskontrolle auf Objektebene",
+            "value": "Selbst wenn ein Bucket nicht vollständig öffentlich ist, können zu weitreichende interne Berechtigungen zu Datenlecks führen. Erlaubt eine Richtlinie beispielsweise allen authentifizierten Benutzern einer Organisation den Lesezugriff auf alle Objekte, können Daten über die Abteilungsgrenzen hinweg unautorisiert eingesehen werden."
+          },
+          {
+            "name": "Verlust oder Manipulation von Daten ohne Versionierung",
+            "value": "Ist die Objekt-Versionierung nicht aktiviert, wird bei einer Überschreibung eines Objekts die alte Version unwiederbringlich gelöscht. Dies kann durch Angreifer, aber auch durch fehlerhafte Skripte oder menschliches Versagen zum permanenten Datenverlust oder zur unbemerkten Manipulation von Daten führen."
+          },
+          {
+            "name": "Ausspähen von Daten während der Übertragung",
+            "value": "Erfolgt die Kommunikation mit den API-Endpunkten des Objektspeichers unverschlüsselt über HTTP, können sowohl die übertragenen Daten als auch die zur Authentifizierung genutzten API-Schlüssel im Netzwerk mitgelesen werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "45dd4314-953a-4e39-a582-90d2589d9993",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/dateiserver_profile.json",
+            "description": "Implementation for all controls in Baustein APP.4.9",
+            "implemented-requirements": [
+              {
+                "uuid": "8316e702-c38d-44ee-8b43-50ce5a5222a5",
+                "control-id": "ARCH.8.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.3-a13-m3",
+                    "uuid": "e6723fa8-09c4-4b30-b119-dfbd5e39bfef",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für hochverfügbare Fileserver SOLLTE eine angemessene Replikation der Daten auf mehreren Massenspeichern stattfinden. Daten SOLLTEN zudem zwischen unabhängigen Fileservern repliziert werden, die sich an unabhängigen Standorten befinden. Dafür SOLLTE vom IT-Betrieb ein geeigneter Replikationsmechanismus ausgewählt werden. Damit die Replikation wie vorgesehen funktionieren kann, SOLLTEN hinreichend genaue Zeitdienste genutzt und betrieben werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine asynchrone Replikationstechnologie (z.B. DFS-R unter Windows, rsync-Skripte oder ZFS send/receive unter Linux) eingerichtet, um die Daten von einem primären Fileserver an einem Standort zu einem sekundären Fileserver an einem anderen Standort zu spiegeln. Beide Server werden mit einer verlässlichen, synchronisierten Zeitquelle (z.B. interne NTP-Server) konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des Replikationsmechanismus auf dem primären und sekundären Server. Es wird der Status der Replikation und der Zeitstempel der zuletzt replizierten Dateien geprüft. Die Konfiguration der Zeitdienste auf beiden Servern wird verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a13-m4",
+                    "uuid": "c2b23d5b-4ae8-4d00-a6de-83275a2e0247",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine synchrone oder quasi-synchrone Replikation ist zwischen zwei geografisch getrennten Rechenzentren konfiguriert, um einen minimalen Datenverlust (RPO nahe Null) zu gewährleisten. Der Zustand der Replikation und die verfügbare Bandbreite werden kontinuierlich überwacht. Ein dokumentierter Desaster-Recovery-Plan, der den Failover-Prozess beschreibt, existiert und wird regelmäßig (z. B. jährlich) getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Storage-basierte synchrone Replikation oder eine Lösung wie Storage Replica in Windows Server Datacenter Edition eingesetzt. Das Monitoring-System überwacht den Replikationsstatus ('Healthy', 'Degraded') und die Replikationslatenz. Ein detaillierter DR-Plan wird im Notfallhandbuch hinterlegt. Einmal im Jahr wird ein geplanter Failover auf den zweiten Standort durchgeführt, um den Prozess und die Funktionalität zu validieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der synchronen Replikation und die Monitoring-Dashboards für den Replikationsstatus. Der Desaster-Recovery-Plan wird angefordert. Es werden die Protokolle und Ergebnisberichte der letzten DR-Tests eingesehen, um die regelmäßige Übung und die dabei erzielten RTO/RPO-Werte zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a13-m5",
+                    "uuid": "b74ce022-efe0-4afd-b4a5-1165a867082f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine vollständig automatisierte Failover- und Failback-Lösung (z. B. ein geografisch erweiterter Cluster oder 'stretched cluster') ist über mehrere Standorte hinweg implementiert. Die Lösung bietet kontinuierliche Verfügbarkeit mit keinem oder minimalem Datenverlust (RPO=0) und einer sehr schnellen Wiederanlaufzeit (RTO in Minuten). Die gesamte Lösung, einschließlich der redundanten Netzwerkpfade und der hochgenauen Zeitdienste, ist hochverfügbar ausgelegt und wird kontinuierlich überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Windows Server Failover Cluster oder ein vergleichbarer Linux-Cluster wird über zwei oder mehr Standorte erweitert. Die darunterliegende Speicherinfrastruktur unterstützt die synchrone Replikation und präsentiert den Speicher an beiden Standorten aktiv. Das Failover bei Ausfall eines Standortes erfolgt automatisch und ohne manuellen Eingriff. Die Netzwerkanbindung zwischen den Standorten ist redundant (z.B. über zwei verschiedene Carrier) ausgelegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Architektur des gestreckten Clusters und die Konfiguration der Cluster-Dienste. Die Konfiguration der automatischen Failover-Richtlinien wird überprüft. Es wird das Netzwerkdiagramm eingesehen, um die Redundanz der Verbindungen zu verifizieren. Protokolle von vergangenen (realen oder simulierten) Failover-Ereignissen werden ausgewertet, um die automatische Funktionsweise und die Einhaltung der RTO/RPO-Ziele zu bestätigen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "9a8fcd98-3566-4c3d-a276-20b22ec63ee2",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.3-a15-m1",
+                    "uuid": "7868211b-4da1-4273-ac13-46416afdd59d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Fileserver werden ad-hoc und reaktiv aufgesetzt, meist wenn ein akuter Bedarf an Speicherplatz entsteht. Eine formale Planung findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Abteilungsleiter fordert Speicherplatz an und ein Administrator setzt schnell einen Server mit den Standardeinstellungen auf, ohne die Art der Daten, die Zugriffsmuster oder zukünftiges Wachstum zu berücksichtigen. Manchmal werden leistungsstarke Arbeitsplatzrechner zu inoffiziellen Fileservern umfunktioniert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer befragt die Administratoren zum Prozess der Inbetriebnahme eines neuen Fileservers. Es wird erwartet, dass kein formales Planungsdokument oder Anforderungsdokument existiert. Eine Überprüfung der Server-Hardware könnte ergeben, dass nicht für den Dauerbetrieb ausgelegte Komponenten (z.B. Desktop-Festplatten, Arbeitsplatzrechner) verwendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a15-m2",
+                    "uuid": "259c7e6e-29de-4f03-8e6d-bd8a12fa9cc9",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Planung findet statt, die sich hauptsächlich auf die Abschätzung der initialen Speicherkapazität konzentriert. Sicherheitsaspekte und die Auswahl der Hardware werden nur oberflächlich betrachtet. Der Einsatz von Arbeitsplatzrechnern als Fileserver wird zwar vermieden, aber es gibt keine strikte Regel dagegen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor der Einrichtung eines Fileservers wird eine grobe Schätzung des benötigten Speicherplatzes vorgenommen. Es wird Server-Hardware beschafft, aber nicht unbedingt Modelle, die für den spezifischen Einsatzzweck (z.B. hohe I/O-Last) optimiert sind. Die Planung von Speicherreserven ist unstrukturiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fragt nach Planungsunterlagen für kürzlich eingerichtete Fileserver. Es wird erwartet, dass diese sich auf die Kapazität beschränken. Der Prüfer verifiziert, ob als Fileserver deklarierte Systeme tatsächlich Server-Hardware sind und nicht als Arbeitsplatzrechner klassifizierte Geräte."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a15-m3",
+                    "uuid": "d3326575-82fb-4210-b3f8-9c30c84b018c",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bevor eine Institution einen oder mehrere Fileserver einführt, SOLLTE sie entscheiden, wofür die Fileserver genutzt und welche Informationen darauf verarbeitet werden. Die Institution SOLLTE jede benutzte Funktion eines Fileservers einschließlich deren Sicherheitsaspekte planen. Arbeitsplatzrechner DÜRFEN NICHT als Fileserver eingesetzt werden. Der Speicherplatz des Fileservers MUSS ausreichend dimensioniert sein und ausreichende Speicherreserven SOLLTEN vorgehalten werden. Es SOLLTE ausschließlich Massenspeicher verwendet werden, der für einen Dauerbetrieb ausgelegt ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jeden neuen Fileserver wird ein kurzes Konzeptdokument erstellt, das den Zweck (z.B. 'Home-Verzeichnisse', 'Projektablage Marketing'), die Art der Daten, die erwartete Nutzerzahl und die benötigten Dienste (z.B. SMB, NFS) beschreibt. Die Kapazitätsplanung berücksichtigt das initiale Volumen plus einen Puffer von 30% für zukünftiges Wachstum. Es wird eine Regel etabliert und kommuniziert, die den Einsatz von Nicht-Server-Hardware für Fileserver-Dienste verbietet. Es werden ausschließlich Server-Festplatten (z.B. SAS oder Enterprise SATA) beschafft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Planungsdokumente für eine Auswahl von Fileservern an und prüft, ob Zweck, Funktionen und Sicherheitsaspekte berücksichtigt wurden. Die Auslastung der Speicher wird geprüft, um die Angemessenheit der Dimensionierung und Reserven zu bewerten. Es wird geprüft, ob eine verbindliche Regel zum Verbot von Arbeitsplatzrechnern als Fileserver existiert und ob die eingesetzte Hardware den Spezifikationen für den Dauerbetrieb entspricht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a15-m4",
+                    "uuid": "6d1807aa-0523-4231-9440-1ee46371a5e4",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Planung umfasst ein formales Kapazitäts- und Performancemanagement mit Trendanalysen auf Basis historischer Daten. Es existiert ein dokumentierter Standard für die Hardware- und Softwarekonfiguration von Fileservern, der bei jeder Neuinstallation angewendet wird, um Konsistenz sicherzustellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Auslastung (Speicherplatz, CPU, I/O) der Fileserver wird kontinuierlich überwacht und die Daten werden gespeichert. Anhand dieser Daten wird das zukünftige Wachstum prognostiziert, um Erweiterungen rechtzeitig zu planen. Ein 'Golden Image' oder ein Konfigurationsmanagement-Skript (z.B. mit Ansible) wird verwendet, um neue Fileserver standardisiert und reproduzierbar aufzusetzen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Berichte des Kapazitäts- und Performancemanagements zeigen und prüft die Prognosemodelle. Es wird das Dokument mit den Konfigurationsstandards für Fileserver angefordert. Der Prüfer vergleicht die Konfiguration mehrerer Fileserver, um die Einhaltung des Standards zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a15-m5",
+                    "uuid": "d5d84a71-adce-4bf0-b1ce-21f0f26f264b",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Fileserver-Planung ist ein integraler Bestandteil der übergeordneten IT-Architektur- und Kapazitätsmanagement-Strategie. Entscheidungen über Neuanschaffungen, Erweiterungen und Technologieauswahl sind datengesteuert und basieren auf langfristigen Überwachungs- und Prognosemodellen. Der gesamte Lebenszyklus eines Fileservers, von der Beschaffung über den Betrieb bis zur sicheren Außerbetriebnahme, ist vollständig geplant und dokumentiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Fileserver-Ressourcen werden als Service im IT-Servicekatalog geführt. Die Planung ist mit dem Budgetierungsprozess verknüpft. Die Auswahl neuer Technologien (z.B. Umstieg auf ein anderes Dateisystem oder eine Scale-Out-Architektur) wird durch Proof-of-Concept-Tests und eine formale Bewertung gegen die Geschäfts- und IT-Ziele untermauert. Für die Außerbetriebnahme existiert ein standardisierter Prozess, der die Datenmigration und die zertifizierte Löschung der Datenträger umfasst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die IT-Strategie- und Architektur-Dokumente, um die Integration der Fileserver-Planung zu verifizieren. Es werden die Protokolle von Technologiebewertungen und PoC-Tests eingesehen. Der Prozess zur Außerbetriebnahme wird überprüft, einschließlich der Nachweise über erfolgte Datenlöschungen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "14400043-b99c-471c-a6fd-ced5fb2e1c20",
+                "control-id": "DET.4.16",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.3-a11-m3",
+                    "uuid": "1c2dd6be-7419-4aab-a4a3-2e0fb6ec9020",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb SOLLTE bei mehreren Benutzenden auf dem Fileserver prüfen, Beschränkungen des Speicherplatzes für einzelne Benutzende (Quotas) einzurichten. Alternativ SOLLTEN Mechanismen des verwendeten Datei- oder Betriebssystems genutzt werden, um die Benutzenden bei einem bestimmten Füllstand der Festplatte zu warnen oder in diesem Fall nur noch dem IT-Betrieb Schreibrechte einzuräumen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine grundlegende Quota-Richtlinie definiert. Entweder werden Soft-Quotas (nur Warnungen) oder Hard-Quotas (Schreibvorgang wird blockiert) für Benutzer-Home-Verzeichnisse eingerichtet (z.B. via FSRM unter Windows oder `quota` unter Linux). Die Entscheidung und die Höhe der Quotas werden dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fragt nach der Quota-Richtlinie. Die Konfiguration des Quota-Managements auf dem Fileserver wird eingesehen, um zu überprüfen, ob und wie Quotas für Benutzerverzeichnisse eingerichtet sind. Es wird geprüft, ob die Konfiguration der dokumentierten Richtlinie entspricht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a11-m4",
+                    "uuid": "4c4b31b6-2b15-4315-b500-e882d55ebd9d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es werden konsequent Hard-Quotas für alle Benutzer- oder Gruppenverzeichnisse implementiert und durchgesetzt. Zusätzlich wird File Screening eingesetzt, um das Speichern von unerwünschten oder richtlinienwidrigen Dateitypen (z. B. persönliche Multimediadateien, ausführbare Dateien) auf den Shares zu unterbinden. Die Richtlinien sind dokumentiert und den Benutzern kommuniziert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Über den File Server Resource Manager (FSRM) oder ein äquivalentes Tool werden Quota-Vorlagen für verschiedene Benutzergruppen (z.B. 'Standard-User': 10 GB, 'Power-User': 50 GB) erstellt und zugewiesen. Es werden Dateifilter definiert, die das Speichern von Dateiendungen wie .mp3, .avi, .exe blockieren und den Benutzer sowie den Administrator bei einem Versuch benachrichtigen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der Quota-Vorlagen und der Dateifilter im FSRM oder dem entsprechenden Tool. Es wird getestet, ob das Speichern einer blockierten Datei tatsächlich verhindert wird. Der Prüfer verifiziert, dass die Richtlinien im Intranet oder einem anderen zentralen Ort für die Benutzer einsehbar sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a11-m5",
+                    "uuid": "89133d0c-d2a7-49c5-ac41-72333d987e75",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Quota- und File-Screening-Management ist dynamisch und automatisiert. Quotas werden automatisch basierend auf der Rolle oder Projektzugehörigkeit des Benutzers im Identity-Management-System zugewiesen. Benutzer können temporäre Quota-Erhöhungen über einen formalen, auditierten Workflow in einem Self-Service-Portal beantragen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Provisioning-Skript wird entwickelt, das bei der Erstellung eines neuen Benutzers im Active Directory automatisch das Home-Verzeichnis mit der richtigen Quota-Vorlage anlegt, basierend auf der Abteilung des Benutzers. Ein IT-Self-Service-Portal (z.B. auf Basis von ServiceNow oder einem anderen ITSM-Tool) wird mit einem Workflow für Quota-Anträge erweitert, der die Genehmigung durch den Vorgesetzten erfordert und die Erhöhung nach Genehmigung automatisch durchführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert das Provisioning-Skript oder den Workflow im IdM-System. Der Workflow für Quota-Anträge im Self-Service-Portal wird vorgeführt. Die Audit-Logs des Systems werden eingesehen, um die Nachvollziehbarkeit der genehmigten Quota-Änderungen zu überprüfen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "5f1c97b5-de1a-46dc-9681-c500cf077fab",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.3-a8-m3",
+                    "uuid": "5a473411-cbdb-4756-8818-543962ba2aaa",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE eine Struktur festgelegt werden, nach der Daten abzulegen sind. Die Benutzenden SOLLTEN regelmäßig über die geforderte strukturierte Datenhaltung informiert werden. Die Dateien SOLLTEN ausschließlich strukturiert auf den Fileserver abgelegt werden. Es SOLLTE schriftlich festgelegt werden, welche Daten lokal und welche auf dem Fileserver gespeichert werden dürfen. Programm- und Arbeitsdaten SOLLTEN in getrennten Verzeichnissen gespeichert werden. Die Institution SOLLTE regelmäßig überprüfen, ob die Vorgaben eingehalten werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Richtlinie zur Datenablage wird erstellt und im Intranet veröffentlicht. Sie definiert die Top-Level-Ordnerstruktur (z.B. /Abteilungen, /Projekte, /Archiv) und gibt Namenskonventionen vor. In regelmäßigen Abteilungsbesprechungen werden die Mitarbeiter an die Einhaltung der Struktur erinnert. Stichprobenartige manuelle Überprüfungen der Verzeichnisstrukturen werden durch IT-Mitarbeiter durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Richtlinie zur Datenablage an. Es wird geprüft, ob die Benutzer nachweislich (z.B. durch Protokolle von Schulungen oder E-Mail-Verteiler) informiert wurden. Der Prüfer führt eine stichprobenartige Sichtprüfung der Verzeichnisstruktur auf dem Fileserver durch, um die Einhaltung der Vorgaben zu bewerten und nach Protokollen der internen Überprüfungen zu fragen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a8-m4",
+                    "uuid": "c8e191c1-ed4c-429d-a321-be25a8411476",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die definierte Datenstruktur wird wo möglich durch technische Mittel unterstützt und teilweise erzwungen. Beispielsweise werden durch ein ausgefeiltes Berechtigungskonzept Benutzer in die korrekten Ablageorte gelenkt. Regelmäßige, automatisierte Berichte identifizieren Daten, die außerhalb der vorgesehenen Struktur abgelegt wurden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Berechtigungen sind so gesetzt, dass Benutzer nur in den für sie vorgesehenen Bereichen schreiben können. Vorlagen für Projektordner werden automatisch mit einer vordefinierten Unterordnerstruktur (z.B. /Angebot, /Rechnungen, /Dokumentation) erstellt. Ein Skript wird wöchentlich ausgeführt, das verwaiste Dateien oder Ordner an der falschen Stelle findet und an die IT-Abteilung meldet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert das Berechtigungskonzept auf dem Fileserver, um festzustellen, inwieweit es die Datenstruktur unterstützt. Es werden die automatisierten Berichte über Strukturverstöße der letzten Monate angefordert und eingesehen. Der Prozess zur Erstellung von neuen Projektordnern wird auf die Verwendung von Vorlagen geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a8-m5",
+                    "uuid": "145e04d9-1e7f-497b-9efc-bedd984d2deb",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine formale Datenklassifizierungsrichtlinie ist mit der Speicherstruktur verknüpft. Automatisierte Werkzeuge (z.B. File Server Resource Manager - FSRM, Data Loss Prevention - DLP) erzwingen die Ablagestruktur, klassifizieren Daten beim Speichern anhand ihres Inhalts und verwalten den Datenlebenszyklus, indem sie beispielsweise veraltete Daten automatisch in ein Archiv verschieben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine DLP-Lösung oder FSRM mit Klassifizierungsregeln wird implementiert. Regeln werden erstellt, die Dokumente anhand von Schlüsselwörtern oder Mustern (z.B. 'vertraulich', IBANs) automatisch als 'intern' oder 'vertraulich' klassifizieren. Eine weitere Regel verschiebt alle Dateien, auf die seit über zwei Jahren nicht mehr zugegriffen wurde, in einen speziellen Archiv-Bereich mit Read-Only-Zugriff."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Datenklassifizierungsrichtlinie an und überprüft die Konfiguration der automatisierten Werkzeuge (DLP/FSRM). Es wird anhand von Beispieldokumenten getestet, ob die Klassifizierung und die daraus abgeleiteten Aktionen (z.B. Blockieren, Verschieben) korrekt funktionieren. Die Protokolle der Lifecycle-Management-Aufgaben werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "9a51ab12-1829-454f-8f9f-3925d206ff62",
+                "control-id": "KONF.11.9",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.3-a12-m3",
+                    "uuid": "4c2dbc09-8c72-41fd-820a-8d21bd004b0f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Massenspeicher des Fileservers SOLLTEN auf Dateisystem- oder Hardwareebene verschlüsselt werden. Falls Hardwareverschlüsselung eingesetzt wird, SOLLTEN Produkte verwendet werden, deren Verschlüsselungsfunktion zertifiziert wurde. Es SOLLTE sichergestellt werden, dass der Virenschutz die verschlüsselten Daten auf Schadsoftware prüfen kann."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Standardlösung zur Festplattenverschlüsselung wie BitLocker unter Windows Server oder LUKS unter Linux implementiert, um alle Daten-Volumes zu verschlüsseln. Bei der Auswahl von selbstverschlüsselnden Laufwerken (SEDs) wird auf eine Zertifizierung (z.B. FIPS 140-2) geachtet. Da die Entschlüsselung auf Betriebssystemebene transparent erfolgt, ist die Kompatibilität mit dem Virenschutz gegeben und wird stichprobenartig verifiziert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert den Verschlüsselungsstatus der Daten-Volumes auf dem Fileserver (z.B. mit `manage-bde -status` oder `cryptsetup status`). Bei Verwendung von SEDs werden die Zertifikate des Herstellers angefordert. Es wird geprüft, ob der Virenscanner aktiv ist und funktioniert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a12-m4",
+                    "uuid": "ec0ed115-9f12-4f34-9599-736e108b8628",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Management der Verschlüsselungsschlüssel ist vom Fileserver getrennt und wird über einen dedizierten Key Management Server (KMS) oder ein Hardware Security Module (HSM) abgewickelt. Die Entscheidung zwischen dateisystembasierter und hardwarebasierter Verschlüsselung basiert auf einer dokumentierten Risikoanalyse, die Aspekte wie Leistung, Kosten und Sicherheit abwägt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein zentraler KMS (z.B. ein Key Management Interoperability Protocol (KMIP) kompatibler Server) wird eingerichtet, um die Schlüssel für die BitLocker- oder LUKS-Verschlüsselung zu speichern und freizugeben. Der Zugriff des Fileservers auf den KMS ist durch Zertifikate oder andere starke Authentifizierungsmethoden geschützt. Eine Risikoanalyse wird erstellt, die die Vor- und Nachteile von Software- vs. Hardwareverschlüsselung im spezifischen Kontext der Organisation beleuchtet und als Basis für die getroffene Entscheidung dient."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration der Verschlüsselungslösung und verifiziert die Anbindung an den externen KMS. Die Sicherheitskonfiguration des KMS selbst wird überprüft. Die Risikoanalyse zur Auswahl der Verschlüsselungstechnologie wird angefordert und auf Nachvollziehbarkeit geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a12-m5",
+                    "uuid": "ee8e27ca-6f22-4857-ae04-252bdb626625",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine umfassende Data-at-Rest-Verschlüsselungsstrategie ist implementiert. Diese umfasst den Einsatz von zertifizierter Hardwareverschlüsselung (z.B. FIPS 140-2 validierte SEDs), ein robustes Schlüsselmanagement mit einem HSM und zusätzlich eine granulare, dateibasierte Verschlüsselung (z.B. mit Azure Information Protection oder Vormetric) für Daten, die als besonders schützenswert klassifiziert sind. Der Zugriff auf die Schlüssel ist strengstens kontrolliert und wird auditiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Standardkonfiguration für kritische Fileserver sieht FIPS-validierte SEDs vor, deren Schlüssel in einem netzwerkbasierten HSM gespeichert sind. Zusätzlich wird eine Data-Centric-Security-Lösung ausgerollt, die Dokumente basierend auf ihrer Klassifizierung (ermittelt durch eine DLP-Lösung) automatisch verschlüsselt. Nur autorisierte Benutzer können diese Dateien entschlüsseln, unabhängig vom Speicherort. Alle Schlüsselzugriffe im HSM werden protokolliert und an ein SIEM zur Überwachung gesendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der SEDs und des HSM sowie die Anbindung. Die Richtlinien der dateibasierten Verschlüsselungslösung werden geprüft. Es wird getestet, ob ein unautorisierter Benutzer eine klassifizierte Datei öffnen kann. Die Audit-Logs des HSM und des SIEM bezüglich der Schlüsselzugriffe werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d7b30894-b099-4052-830f-c1fbeed05d08",
+                "control-id": "KONF.12.1.9",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.3-a14-m3",
+                    "uuid": "024d5efc-6616-4b86-93b9-e5347a40d43f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb SOLLTE ein fehlererkennendes bzw. fehlerkorrigierendes Dateisystem einsetzen. Hierfür SOLLTE genügend Speicherplatz vorgehalten werden. Der IT-Betrieb SOLLTE beachten, dass, je nach eingesetztem Verfahren, Fehler nur mit einer gewissen Wahrscheinlichkeit erkannt und auch nur in begrenzter Größenordnung behoben werden können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei der Einrichtung des Fileservers wird bewusst ein Dateisystem gewählt, das Datenintegrität unterstützt (z.B. ZFS, Btrfs, ReFS). Die Entscheidung wird dokumentiert. Es wird berücksichtigt, dass die Speicherung von Checksummen zusätzlichen Speicherplatz benötigt. Die Administratoren sind sich der Grenzen des Systems bewusst (z.B. dass es keine Bit-Flips im RAM erkennt, wenn kein ECC-RAM verwendet wird)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Dokumentation zur Auswahl des Dateisystems an. Es wird auf dem Server verifiziert, welches Dateisystem im Einsatz ist und ob es sich um ein System mit Fehlerkorrekturfunktionen handelt. Der Prüfer befragt die Administratoren zu den ihnen bekannten Grenzen des eingesetzten Verfahrens."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a14-m4",
+                    "uuid": "55c4bce8-2b03-4d6b-8126-dd0fda52d15c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Dateisystem mit starken Datenintegritätsfunktionen (z.B. ZFS, ReFS) wird verwendet. Es werden regelmäßige, automatisierte 'Scrubbing'-Vorgänge geplant und durchgeführt, um proaktiv die gesamte Datenmenge auf latente Datenkorruption (Silent Data Corruption) zu prüfen und, falls möglich, zu korrigieren. Bei nicht korrigierbaren Fehlern werden automatisch Alarme generiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf dem ZFS- oder ReFS-basierten Fileserver wird ein monatlicher 'Scrub'-Job per Cron oder Task-Scheduler eingerichtet. Das System-Monitoring wird so konfiguriert, dass es die Scrub-Berichte auswertet und bei Fehlermeldungen eine Benachrichtigung an das IT-Team sendet. Der Status des letzten Scrubs wird im Monitoring-Dashboard angezeigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des automatisierten Scrub-Jobs auf dem Server. Es werden die Protokolle der letzten Scrub-Vorgänge eingesehen, um deren regelmäßige und erfolgreiche Ausführung zu bestätigen. Die Konfiguration der Alarmierung für Scrub-Fehler wird im Monitoring-System überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.3-a14-m5",
+                    "uuid": "a70b919b-af23-4030-af32-9cf2cdb4b726",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der gesamte Datenpfad ist durchgängig mit Checksummen geschützt ('End-to-End Data Integrity'), von der Applikation über das Netzwerkprotokoll (falls unterstützt) bis zur Speicherung auf der Festplatte. Das Dateisystem zur Fehlerkorrektur ist mit weiterer fehlertoleranter Hardware wie ECC-RAM und Enterprise-SSDs mit Power-Loss-Protection kombiniert, um ein Höchstmaß an Datensicherheit zu gewährleisten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Kombination aus ZFS/ReFS, ECC-RAM und einem SMB-Dialekt verwendet, der die Integritätsprüfung unterstützt (SMB 3.1.1 mit 'SMB Signing'). Die Hardware-Spezifikationen für Fileserver schreiben den Einsatz von ECC-RAM und Datenträgern mit Schutz vor Schreibverlusten bei Stromausfall (PLP) zwingend vor. Diese Architektur wird als Standard für alle kritischen Fileserver durchgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Hardwarespezifikationen des Servers (z.B. über `dmidecode` für ECC-RAM). Die Konfiguration des Netzwerkprotokolls (z.B. SMB-Einstellungen per PowerShell `Get-SmbServerConfiguration`) wird auf die Aktivierung der Integritätsfunktionen geprüft. Das Architektur-Dokument für Fileserver wird eingesehen, um die ganzheitliche Planung zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

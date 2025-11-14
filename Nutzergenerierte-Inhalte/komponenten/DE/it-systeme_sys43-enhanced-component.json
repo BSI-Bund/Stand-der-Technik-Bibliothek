@@ -1,0 +1,2068 @@
+{
+  "component-definition": {
+    "uuid": "86722acf-deb7-4080-864f-239ac1a83375",
+    "metadata": {
+      "title": "SYS.4.3 Eingebettete Systeme - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:36.402501+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "5e288cef-7136-4f80-bf5f-3fafb180a052",
+        "type": "hardware",
+        "title": "SYS.4.3 Eingebettete Systeme",
+        "description": "This component represents the implementation of all controls for Baustein SYS.4.3.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Eingebettete Systeme sind informationsverarbeitende Systeme, die in ein größeres System oder Produkt integriert sind. Sie übernehmen Steuerungs-, Regelungs- und Datenverarbeitungsaufgaben und werden dabei oft nicht direkt von den Benutzenden wahrgenommen. Eingebettete Systeme finden sich sowohl im Bereich der Hochtechnologie wie z. B. der Luft- und Raumfahrt, der Medizintechnik, der Telekommunikation und der Automobiltechnik als auch im Consumer- und Haushaltsgerätebereich.<BR><BR>Ein eingebettetes System bildet aus Soft- und Hardware eine funktionale Einheit, die nur eine definierte Aufgabe erfüllt. Die Software eingebetteter Systeme wird als Firmware bezeichnet und ist zumeist in einem Flash-Speicher, einem EPROM, EEPROM oder ROM gespeichert und durch Anwendende nicht oder nur mit speziellen Mitteln oder Funktionen austauschbar. Sie besteht im Wesentlichen aus dem Bootloader, dem Betriebssystem und der Anwendung. Spezialisierte Systeme können auch auf ein Betriebssystem verzichten. Eingebettete Systeme sind zwar spezialisierte Geräte, aber im Gegensatz zur reinen Hardwareimplementierung (ASIC) universelle Rechner. Als Plattformen kommen unterschiedliche CPU-Architekturen oder flexible hochintegrierte Field-Programmable-Gate-Array-Bausteine (FPGA) infrage.<BR><BR>Eingebettete Systeme haben entweder keine Bedienschnittstelle oder nutzen Spezialperipherie wie z. B. funktionelle Tasten, Drehschalter und auf den jeweiligen Einsatzzweck hin konzipierte Anzeigen. Das Spektrum an Ausgabeeinheiten reicht von einer einfachen Signallampe über LCDs bis hin zu komplexen Cockpit-Anzeigen. Eingebettete Systeme kommunizieren häufig über Datenbusse, die in komplexen Systemen heterogen vernetzt sind. Zusätzlich können über mehrere unterschiedliche und mehrkanalige Ein-/Ausgabeports auch zusätzlich Peripheriekomponenten wie Sensoren und Aktoren angebunden sein. Einige Arten eingebetteter Systeme verfügen darüber hinaus auch über ein Webinterface, über das sie per Browser konfiguriert werden können."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, über typische Gefährdungen für eingebettete Systeme zu informieren sowie aufzuzeigen, wie diese Systeme sicher in Institutionen eingesetzt werden können."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.4.3 Eingebettete Systeme ist auf jedes eingebettete System im Informationsverbund einmal anzuwenden.<BR><BR>Dieser Baustein beschäftigt sich allgemein mit eingebetteten Systemen. Er ist für ein großes Spektrum unterschiedlicher eingebetteter Systeme anwendbar. Auf dedizierte Sicherheitseigenschaften, etwa von Bedien- und Anzeigesystemen oder spezifische Hard- und Software-Architekturen, wird nicht näher eingegangen. Ebenso wird nicht speziell auf Sicherheitsaspekte von eingebetteten Systemen eingegangen, die in der industriellen Steuerung eingesetzt werden. Hierfür sind zusätzlich die Bausteine der Schicht IND Industrielle IT heranzuziehen. Spezifische Sicherheitsaspekte von IoT-Geräten sind ebenfalls nicht Gegenstand des vorliegenden Bausteins. Als vernetzte Geräte oder Gegenstände mit zusätzlichen smarten Funktionen werden IoT-Geräte im Gegensatz zu eingebetteten Systemen nicht in ein größeres System oder Produkt integriert. Auf Grund ihrer drahtlosen Verbindung zu Datennetzen bestehen hier andere Sicherheitsanforderungen. Sie werden in SYS.4.4 Allgemeines IoT-Gerät behandelt.<BR><BR>Eine besondere Anwendung eines eingebetteten Systems sind Chipkarten. Die Karten besitzen in der Regel einen Prozessor, Arbeitsspeicher und I/O-Interfaces. Auch für Chipkarten gilt, dass zwar grundsätzliche Sicherheitsaspekte in diesem Baustein angesprochen werden, allerdings keine spezifischen Aspekte betrachtet werden."
+          },
+          {
+            "name": "Unzureichende Sicherheitsanforderungen bei der Entwicklung von eingebetteten Systemen",
+            "value": "Aus Kostengründen spielt die Informationssicherheit bei der Entwicklung von eingebetteten Systemen häufig eine weniger wichtige Rolle als z. B. die Performance oder Zuverlässigkeit. Werden jedoch Sicherheitsanforderungen in einer oder mehreren Entwicklungsphasen nicht ausreichend berücksichtigt, können die eingebetteten Systeme schwerwiegende Schwachstellen aufweisen."
+          },
+          {
+            "name": "Ungesicherte Ein- und Ausgabe-Schnittstellen bei eingebetteten Systemen",
+            "value": "Die Schnittstellen eingebetteter Systeme sind potenzielle Angriffspunkte. Das betrifft Schnittstellen auf allen Ebenen des OSI-Schichtenmodells und alle eingesetzten Übertragungsmedien. Wird der Zugang über die Schnittstellen nicht kontrolliert oder sind die Kontrollmechanismen zu schwach, könnte bei einem Angriff in das System eingedrungen werden, unbefugt Daten gelesen und manipuliert sowie Folgeangriffe eingeleitet werden. So könnten unbemerkt Spionage- oder Sabotagegeräte angeschlossen werden, z. B. miniaturisierte Steuerungen oder Datenlogger.<BR><BR>Auf Mikrocontroller-Ebene könnten bei Anschluss der Systeme an die I/O-Ports über die I/O-Leitungen Signale in die I/O-Register eingespielt werden oder es könnten Ausgangssignale aufgezeichnet werden.<BR><BR>Ist ein Reset-Eingang vorhanden, könnten Angreifende diesen ansteuern und temporär das System außer Betrieb setzen."
+          },
+          {
+            "name": "Unzureichende physische Absicherung bei eingebetteten Systemen",
+            "value": "Sind eingebettete Systeme physisch leicht zugänglich, könnten Angreifende die Systeme zerstören oder beschädigen, z. B. durch mechanische Gewalt, Kurzschlüsse oder Überspannungen. Auch könnten sie auf die elektronischen Komponenten zugreifen, z. B. IC-Pins oder Kontaktierungen, und so die elektrischen Signale mit entsprechenden Mess- und Analysewerkzeugen unbemerkt aufzeichnen sowie selbst Signale einspeisen. Gelangen sie in den Besitz eines eingebetteten Systems, können sie mittels physischer Verfahren Daten lesen und manipulieren oder auf nicht sicher gelöschte Daten zugreifen. Das kann dann dazu führen, dass die Vertraulichkeit, Integrität und Verfügbarkeit der auf dem eingebetteten System gespeicherten Informationen verletzt werden."
+          },
+          {
+            "name": "Hardwareausfall und Hardwarefehler bei eingebetteten Systemen",
+            "value": "Umgebungseinflüsse wie elektromagnetische Interferenz, Temperaturschwankungen, eine instabile Spannungsversorgung, herstellungsbedingte Materialfehler und Fertigungsstreuung können dazu führen, dass eingebettete Systeme ausfallen. Auch ein normaler oder vorzeitiger Verschleiß, der z. B. durch raue Umgebungseinflüsse wie Staub, Sand oder Verschmutzungen entstehen kann, kann einen Ausfall der Systeme zur Folge haben. Auch könnten hierdurch die umgebenden Systeme stark beeinträchtigen werden."
+          },
+          {
+            "name": "Einspielen (Flashen) von manipulierten Software-Updates bei eingebetteten Systemen",
+            "value": "Viele eingebettete Systeme speichern ihre Software auf Flash-Speichern und EEPROMs und bieten die Möglichkeit, ihre Firmware mit einem Programmiergerät zu aktualisieren, das über eine Datenschnittstelle oder über eine Netzverbindung angeschlossen wird. Darüber können allerdings auch Angreifende manipulierte Software-Updates einspielen und so die Funktion des Systems modifizieren. In der Folge können die ursprünglichen Aufgaben des Systems unterbrochen oder manipuliert werden."
+          },
+          {
+            "name": "Seitenkanalangriffe auf eingebettete Kryptosysteme",
+            "value": "Angreifende könnten mittels eines Seitenkanalangriffs Verschlüsselungen oder Signaturen brechen, indem sie dazu beobachtbare Eigenschaften der physischen Implementierung eines Kryptosystems ausnutzen. So könnten sie beispielsweise aus dem Energieverbrauch eines Mikroprozessors während kryptographischer Berechnungen Rückschlüsse auf ausgeführte Operationen und auf Schlüssel ziehen. Auch könnten sie Rechenzeitangriffe, mikroarchitekturelle Angriffe oder (semi-) invasive Angriffe durchführen. So konnten Forschende in der Vergangenheit den geheimen Schlüssel eines TLS/SSL-Servers ermitteln, der den Digital Signature Algorithm (DSA) mit Elliptischer Kurven-Kryptografie verwendet. Der Angriff beruhte auf der Tatsache, dass die benötigte Zeit für eine Multiplikation Rückschlüsse auf deren Operanden zulässt."
+          },
+          {
+            "name": "Eindringen und Manipulation über die Kommunikationsschnittstelle von eingebetteten Systemen",
+            "value": "Eingebettete Systeme sind oft hinsichtlich Codegröße, Zeitverhalten, Energieverbrauch, Kosten sowie Größe und Gewicht eingeschränkt. Sie sind daher häufig nicht mit ausreichenden Sicherheitsfunktionen, wie z. B. starker Kryptografie, ausgestattet. Moderne eingebettete Systeme sind zunehmend durch weitverbreitete Techniken und Protokolle vernetzt und somit potenziell angreifbar.<BR><BR>Bei einem Angriff könnte versucht werden, Daten oder Software auf einem eingebetteten System zu manipulieren, indem versucht wird, die standardmäßig vorgesehenen Kommunikationsschnittstellen und -protokolle für eigene Zwecke zu missbrauchen. Sind z. B. die IP-Kommunikation oder Ethernet-, WLAN-, Bluetooth- und Mobil- oder Digitalfunk-Schnittstellen nicht ausreichend gesichert, können Angreifende Verbindungen übernehmen, Nachrichten fälschen oder in ein System eindringen und Folgeangriffe durchführen. Weiterhin kann ebenso versucht werden, mittels anderer verfügbarer Kommunikationsschnittstellen, z. B. USB-Ports, in das System einzudringen."
+          },
+          {
+            "name": "Einsatz gefälschter Komponenten",
+            "value": "Im Produktionsprozess oder wenn im Servicefall Komponenten ausgetauscht werden, kann es passieren, dass gefälschte Komponenten in eingebettete Systeme eingebaut werden. Da für viele Bauteile Fälschungen im Umlauf sind, kann dies auch unabsichtlich geschehen. Gefälschte Bauteile arbeiten oft unzuverlässiger als die originalen Bauteile. Hierdurch könnten Funktionen ausfallen oder nur fehlerhaft arbeiten. Angreifende können auch gezielt ein Gerät oder Bauteil entwickeln, das genauso aussieht wie das Original, aber dessen Funktion manipuliert ist. Durch eine derartige Komponente könnten beispielsweise Hintertüren eingebaut, einzelne Funktionen manipuliert oder die Verfügbarkeit eingeschränkt werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "ecfeae1f-8eb7-4c2f-91c0-d5e5244d6b62",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/it-systeme_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.4.3",
+            "implemented-requirements": [
+              {
+                "uuid": "8b6361ee-9ae3-4da4-af09-d58404d56a33",
+                "control-id": "ARCH.2.2.11",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a13-m3",
+                    "uuid": "e5fecc58-0678-449f-a1f0-ee95c543160a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Router und Switches SOLLTEN ausschließlich über ein separates Managementnetz (Out-of-Band-Management) administriert werden. Die verfügbaren Sicherheitsmechanismen der eingesetzten Managementprotokolle zur Authentisierung, Integritätssicherung und Verschlüsselung SOLLTEN aktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein dediziertes Management-VLAN wird im gesamten Netzwerk eingerichtet. Jedes Netzwerkgerät erhält eine IP-Adresse in diesem VLAN, die ausschließlich für die Administration verwendet wird. Der Zugriff auf dieses VLAN wird durch ACLs stark eingeschränkt. Auf den Geräten werden nur sichere Protokolle wie SSHv2 und HTTPS für die Administration erlaubt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Netzwerkkonfiguration, um die Existenz und korrekte Segmentierung des Management-VLANs zu verifizieren. Es wird geprüft, ob die ACLs den Zugriff auf das Management-VLAN wirksam einschränken. Portscans auf die Management-IPs der Geräte werden durchgeführt, um sicherzustellen, dass nur verschlüsselte Administrationsdienste aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a13-m4",
+                    "uuid": "2bb6775c-2083-4448-88e3-7db6cb894a36",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine eventuell vorhandene Administrationsschnittstelle über das eigentliche Datennetz (In-Band) SOLLTE deaktiviert werden. Alle unsicheren Managementprotokolle SOLLTEN deaktiviert werden. Das Out-of-Band Netz ist nicht nur logisch (VLAN), sondern physisch von den Produktionsnetzen getrennt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für das Management wird eine komplett separate physische Infrastruktur mit eigenen Switches aufgebaut. Die Management-Ports der produktiven Geräte werden ausschließlich mit diesem OOB-Netzwerk verbunden. In-Band Management wird durch Entfernen der IP-Adresse von produktiven SVIs oder durch strikte ACLs, die jeglichen Management-Zugriff blockieren, unterbunden. Protokolle wie Telnet, SNMPv1/v2c oder HTTP werden vollständig deinstalliert oder deaktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt eine physische Inspektion der Verkabelung im Rechenzentrum durch, um die physische Trennung des OOB-Netzes zu verifizieren. Es wird versucht, über ein produktives VLAN auf die Management-Schnittstelle eines Gerätes zuzugreifen. Die Konfiguration wird auf Reste von unsicheren Protokollen untersucht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a13-m5",
+                    "uuid": "1847ecce-53c0-4225-897f-a62e2188ba54",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der gesamte administrative Verkehr im Out-of-Band Netzwerk wird zusätzlich durch eine Ende-zu-Ende-Verschlüsselung auf der Übertragungsschicht geschützt, beispielsweise durch die Implementierung von MACsec (IEEE 802.1AE). Der Zugriff auf das OOB-Netz ist nur von dedizierten, gehärteten Bastion Hosts aus möglich, die MFA erfordern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf allen Switches im OOB-Netzwerk wird MACsec konfiguriert, um den gesamten Datenverkehr auf Layer 2 zu verschlüsseln und zu authentifizieren. Dies verhindert Angriffe wie ARP-Spoofing innerhalb des Management-Netzes. Der einzige erlaubte Zugriff in das OOB-Netz erfolgt über einen PAM-Gateway, der als einziger Host durch die OOB-Firewall kommunizieren darf."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die MACsec-Konfiguration auf den OOB-Switches. Die Firewall-Regeln, die den Zugriff auf das OOB-Netz regeln, werden analysiert, um sicherzustellen, dass nur der Bastion Host erlaubt ist. Der Prüfer versucht, von einem nicht autorisierten System aus auf das OOB-Netz zuzugreifen. Ein `show macsec summary` kann den Status der MACsec-Verbindungen anzeigen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "8bc4ad8d-8dd6-4c41-baa4-c80edce9dc77",
+                "control-id": "ASST.5.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DOCS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a9-m1",
+                    "uuid": "c08fc617-f9a7-4398-90d7-51f39e024d65",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existieren lediglich veraltete Netzwerkpläne. Wichtige betriebliche Informationen wie IP-Adressvergabe, VLAN-Konfiguration oder Standardprozeduren sind nicht schriftlich festgehalten und existieren nur als 'Wissen in den Köpfen' der Administratoren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Dokumentation wird als lästige Pflicht angesehen und nur bei der initialen Einrichtung erstellt, aber nie aktualisiert. Dies führt zu einem hohen personellen Abhängigkeitsrisiko."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer bittet um die Dokumentation für ein bestimmtes Gerät oder einen bestimmten Dienst. Er vergleicht die Dokumentation mit der Live-Konfiguration. Große Abweichungen oder das Fehlen der Dokumentation deuten auf eine mangelhafte Umsetzung hin."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m2",
+                    "uuid": "a5d3068b-0600-4f42-9478-ed514490b913",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die grundlegenden Konfigurationsparameter wie IP-Adressen, VLANs und Portbelegungen werden in einer zentralen Datei oder einem Wiki dokumentiert. Es fehlen jedoch Anleitungen für wiederkehrende betriebliche Aufgaben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Excel-Tabelle oder eine einfache Wiki-Seite wird zur Dokumentation der Netzwerkkonfiguration verwendet. Die Aktualisierung erfolgt manuell und ist oft nicht Teil des Standardprozesses bei Änderungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die zentrale Dokumentationsquelle auf Vollständigkeit und Aktualität. Er fragt nach der Dokumentation für eine Standard-Betriebsaufgabe (z.B. 'Einrichten eines neuen Switch-Ports für einen Client'). Ist diese nicht vorhanden, ist die Kontrolle nur grundlegend umgesetzt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m3",
+                    "uuid": "91cac907-8ad1-498c-9c2b-9c8d57768b08",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die wichtigsten betrieblichen Aufgaben eines Routers oder Switches MÜSSEN geeignet dokumentiert werden. Dies umfasst Standard Operating Procedures (SOPs) für wiederkehrende Tätigkeiten wie die Inbetriebnahme neuer Geräte, die Konfiguration von Ports oder die Durchführung von Updates."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In einem zentralen, versionierten System (z.B. Confluence, SharePoint) werden neben den Netzwerktopologie- und Konfigurationsdaten auch SOPs für alle wichtigen Betriebsaufgaben gepflegt. Neue Teammitglieder können sich anhand dieser Dokumentation einarbeiten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Betriebsdokumentation an, die Netzwerktopologiepläne, Konfigurationsdetails und SOPs für Aufgaben wie 'Austausch eines defekten Switches' oder 'Firmware-Update' umfassen sollte. Die Dokumentation wird auf Verständlichkeit, Vollständigkeit und Aktualität geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m4",
+                    "uuid": "8ba78c1c-b129-4734-857e-75b78a9deb6b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN alle Konfigurationsänderungen sowie sicherheitsrelevante Aufgaben dokumentiert werden. Die Dokumentation SOLLTE vor unbefugten Zugriffen geschützt werden. Die Aktualisierung der Dokumentation ist ein fester Bestandteil des Change-Management-Prozesses."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Betriebsdokumentation wird auf einer Plattform mit feingranularer Zugriffsteuerung abgelegt. Jede Konfigurationsänderung im ITSM-System (Change Request) muss einen Verweis auf die aktualisierte Dokumentation enthalten, bevor der Change geschlossen werden kann. Sicherheitsrelevante Aufgaben (z.B. Reaktion auf einen Sicherheitsvorfall) werden in Playbooks dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Zugriffsberechtigungen auf die Dokumentationsplattform. Anhand mehrerer abgeschlossener Change-Tickets wird verifiziert, ob die Dokumentation tatsächlich als Teil des Prozesses aktualisiert wurde. Die Existenz und Qualität von Sicherheits-Playbooks wird geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a9-m5",
+                    "uuid": "244f4890-4b7d-4474-876d-1753702ede3a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein signifikanter Teil der Betriebsdokumentation wird automatisch generiert und aktuell gehalten ('Documentation as Code'). Tools zur Netzwerk- und Konfigurationsüberwachung erzeugen dynamisch aktuelle Netzpläne, Portbelegungen und Konfigurationsübersichten. Manuell erstellte Dokumentation und automatisch generierte Daten werden in einem zentralen Portal zusammengeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools wie NetBox werden als 'Source of Truth' für die Netzwerkdokumentation etabliert. Es wird von anderen Systemen (Monitoring, Automatisierung) per API genutzt. Automatisierungsskripte (z.B. Ansible) nutzen die Daten aus NetBox, um Geräte zu konfigurieren, und aktualisieren im Gegenzug den Status in NetBox. Topologiekarten werden dynamisch aus LLDP/CDP-Daten von Überwachungssystemen wie LibreNMS oder PRTG erzeugt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Architektur der 'Documentation as Code'-Toolchain. Es wird die Konsistenz der Daten zwischen der 'Source of Truth' (z.B. NetBox) und den Live-Geräten stichprobenartig geprüft. Ein automatisierter Audit kann die API von NetBox abfragen und mit der Ausgabe von `show`-Befehlen auf den Geräten vergleichen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "4cccd69d-4a2b-42c0-88bb-054adaca63d4",
+                "control-id": "DET.3.1.9",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a7-m1",
+                    "uuid": "cd463b2e-b0e5-4892-8885-3f3f0131970c",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Protokollierung ist auf den Geräten aktiviert, aber die Log-Nachrichten werden nur im lokalen, flüchtigen Speicher (RAM-Puffer) mit begrenzter Größe gehalten. Bei einem Neustart gehen alle Protokolldaten verloren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Befehl `logging on` ist aktiv, aber es ist kein `logging host` oder `logging buffer` mit ausreichender Größe konfiguriert. Die Standardeinstellungen des Herstellers werden verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer meldet sich auf einem Gerät an und führt den Befehl `show logging` aus. Es wird geprüft, ob die Protokolle nur im lokalen Puffer gespeichert werden und wie alt die ältesten Einträge sind. Nach einem (geplanten) Neustart wird geprüft, ob die Protokolle noch vorhanden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m2",
+                    "uuid": "6c1b2f14-3e1c-4b74-b331-cb9059aa1def",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Router und Switches sind so konfiguriert, dass sie ihre Protokolldaten an einen zentralen Syslog-Server senden. Es werden jedoch nur Standardereignisse (Severity-Level 'warnings' oder höher) protokolliert, nicht alle geforderten Ereignistypen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf allen Geräten ist ein `logging host <server-ip>` konfiguriert. Der `logging trap`-Level ist jedoch auf dem Standardwert belassen, der oft keine informativen Ereignisse wie Konfigurationsänderungen umfasst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Logging-Konfiguration auf einem Gerät und vergleicht sie mit den eingehenden Logs auf dem Syslog-Server. Es wird geprüft, ob eine manuell durchgeführte Konfigurationsänderung auf dem Syslog-Server protokolliert wird. Ist dies nicht der Fall, ist die Konfiguration unzureichend."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m3",
+                    "uuid": "2667a716-27d6-49c4-a8d2-e9436a1028c9",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Router oder Switch MUSS so konfiguriert werden, dass er unter anderem folgende Ereignisse protokolliert: Konfigurationsänderungen (möglichst automatisch), Reboot, Systemfehler, Statusänderungen pro Interface, System und Netzsegment sowie Login-Fehler."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Geräte werden so konfiguriert, dass sie Protokolle mit einem ausreichenden Detailgrad (z.B. Level 'informational' oder 'notifications') an einen zentralen Syslog-Server senden. Dies stellt sicher, dass alle geforderten Ereignisse erfasst werden. Die Uhren der Geräte werden per NTP synchronisiert, um korrelierbare Zeitstempel zu gewährleisten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Logging-Konfigurationsrichtlinie an. Anhand einer Stichprobe von Geräten wird verifiziert, ob der konfigurierte Logging-Level ausreicht, um die geforderten Ereignisse zu erfassen. Auf dem Syslog-Server wird geprüft, ob Events wie Interface-Statusänderungen (up/down) und fehlgeschlagene Login-Versuche ankommen. Die NTP-Konfiguration wird mittels `show ntp status` oder äquivalent überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m4",
+                    "uuid": "d32b82e9-8fd3-499c-8cfd-5983565f9762",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Protokolldaten werden an einen redundanten Cluster von Syslog-Servern gesendet, um den Verlust von Logdaten zu minimieren. Die übertragenen Daten werden über TLS gesichert (Secure Syslog). Auf dem zentralen System sind grundlegende Korrelationsregeln und Alarme für kritische Ereignisse (z.B. mehr als 5 fehlgeschlagene Logins in einer Minute) eingerichtet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zwei oder mehr Syslog-ng oder rsyslog Server werden als Ziel konfiguriert. Die `logging host` Konfiguration auf den Netzwerkgeräten wird so angepasst, dass sie TCP und den entsprechenden Port für Secure Syslog verwendet. Im Log-Management-Tool werden einfache Regeln erstellt, die bei bestimmten Ereignismustern eine E-Mail-Benachrichtigung auslösen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Logging-Konfiguration auf den Endgeräten und den Syslog-Servern, um die redundante und sichere Übertragung zu verifizieren. Die Alarmierungsregeln werden auf ihre Sinnhaftigkeit und Funktion geprüft. Es wird ein fehlgeschlagener Login provoziert, um zu sehen, ob ein Alarm ausgelöst wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a7-m5",
+                    "uuid": "17f87247-8876-4a1a-8b8b-f67819a8544d",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Protokolldaten von Routern und Switches werden in ein zentrales Security Information and Event Management (SIEM) System eingespeist. Dort werden sie mit anderen Datenquellen (z.B. von Firewalls, Servern, Clients) korreliert, um komplexe, mehrstufige Angriffe zu erkennen. Die Integrität der Logdaten wird durch digitale Signaturen oder Blockchain-basierte Mechanismen sichergestellt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Syslog-Daten werden von einem Log-Aggregator (z.B. Logstash) entgegengenommen, geparst und an das SIEM (z.B. Splunk, ELK Stack, QRadar) weitergeleitet. Im SIEM werden komplexe Anwendungsfälle und Dashboards für die Netzwerksicherheit implementiert (z.B. Erkennung von Port-Scanning, das über mehrere Switches verteilt ist)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Datenflüsse in das SIEM-System und analysiert die implementierten Korrelationsregeln und Dashboards. Es wird geprüft, ob der gesamte Prozess von der Erfassung bis zur Alarmierung für einen simulierten Sicherheitsvorfall funktioniert. Die Mechanismen zur Sicherung der Log-Integrität werden verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "7572cf96-76c0-4022-a211-15c8b1fefe9e",
+                "control-id": "DET.4.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a17-m3",
+                    "uuid": "2fae8fe4-f68b-4dfd-83a5-b1aaaed0c51d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN Mechanismen eingesetzt werden, die hochvolumige Angriffe sowie TCP-State-Exhaustion-Angriffe erkennen und abwehren. Dies umfasst Ratenbegrenzungen und die Konfiguration von TCP Intercept oder SYN-Cookies."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf dem Grenzrouter oder einer vorgeschalteten Firewall werden DoS-Schutzprofile aktiviert. Diese beinhalten typischerweise Schwellenwerte für SYN-Floods, UDP-Floods und ICMP-Floods. TCP SYN-Cookies oder ein TCP-Intercept-Mechanismus werden konfiguriert, um die State-Table des Geräts vor Überlastung zu schützen. Control Plane Policing (CoPP) wird zur Priorisierung von legitimem Management-Traffic eingesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des DoS-Schutzes auf dem Perimetergerät, einschließlich der Schwellenwerte und der aktivierten Schutzmechanismen (z.B. `ip tcp intercept mode watch`). Die CoPP-Konfiguration wird auf ihre Wirksamkeit hin bewertet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a17-m4",
+                    "uuid": "3daff786-6567-42eb-8c05-3d917ff2cc31",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die DoS-Schutzmechanismen sind in der Lage, Angriffe nicht nur zu erkennen, sondern auch gezielte Gegenmaßnahmen einzuleiten, wie z.B. das automatische Null-Routen der Angriffsziele (Remotely Triggered Black Holing, RTBH) oder die Benachrichtigung eines externen DDoS-Mitigation-Dienstleisters."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Router wird so konfiguriert, dass er bei Erkennung eines massiven Angriffs auf eine bestimmte Ziel-IP eine BGP-Nachricht an den Upstream-Provider sendet, um den Verkehr zu diesem Ziel bereits im Netz des Providers zu verwerfen (RTBH). Alternativ wird der Verkehrsfluss per NetFlow oder sFlow permanent überwacht, und bei Anomalien wird automatisch ein externer Scrubbing-Dienst aktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die BGP- und NetFlow-Konfigurationen sowie die Verträge und Aktivierungsprozeduren mit dem externen DDoS-Schutzanbieter. Im Rahmen einer geplanten Übung wird der Prozess zur Aktivierung der externen Mitigation getestet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a17-m5",
+                    "uuid": "105cf9b5-482c-41db-8846-ce79d47fa593",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein hybrider DDoS-Schutz wird eingesetzt, der eine On-Premise-Lösung zur Abwehr von volumenschwachen, Applikations-Layer-Angriffen mit einem Cloud-basierten Scrubbing-Dienst für hochvolumige Angriffe kombiniert. Die Umschaltung erfolgt automatisch und in Sekundenschnelle basierend auf Verkehrsanalysen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine spezialisierte On-Premise-DDoS-Appliance (z.B. von Arbor, Radware) wird installiert. Diese analysiert den Verkehr und mitigiert Angriffe bis zu einer bestimmten Schwelle. Überschreitet der Angriff die Kapazität der Appliance oder der Internetanbindung, wird der Verkehr automatisch über BGP oder DNS zum Cloud-Scrubbing-Dienst umgeleitet. Die Lösung nutzt maschinelles Lernen, um normale Verkehrsmuster zu erlernen und Anomalien präzise zu erkennen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Architektur der hybriden DDoS-Lösung und die Konfiguration der On-Premise-Appliance. Die Schwellenwerte und Prozeduren für die automatische Umschaltung in die Cloud werden überprüft. Die Protokolle vergangener Angriffe werden analysiert, um die Effektivität und Reaktionszeit der Lösung zu bewerten."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "aae4a59d-d815-453b-bc27-ef33425fed7a",
+                "control-id": "KONF.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a1-m1",
+                    "uuid": "5ba6ea9b-602e-4a6b-bc68-636d6793fc77",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur für kritische oder exponierte Router und Switches, wie z. B. am Internetübergang, werden grundlegende Härtungsmaßnahmen umgesetzt. Interne Geräte werden weitgehend in der Standardkonfiguration des Herstellers betrieben, was die Deaktivierung nicht benötigter Dienste oder Ports nicht einschließt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In dieser Phase konzentriert sich die Administration darauf, die offensichtlichsten Schwachstellen an den wichtigsten Geräten zu beheben. Es existiert kein systematischer Prozess zur Härtung aller Netzwerkkomponenten. Oft werden nur Standardpasswörter geändert, aber unsichere Protokolle bleiben aktiv."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer wählt stichprobenartig mehrere interne Switches und Router aus und vergleicht deren Konfiguration mit der Konfiguration eines externen Routers. Es wird geprüft, ob bei internen Geräten unsichere Standardeinstellungen (z.B. aktive unsichere Dienste, Standardpasswörter) vorhanden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m2",
+                    "uuid": "b98d06cb-49f7-43f0-adad-2d623355b7c7",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Router und Switches werden nach einer grundlegenden, einheitlichen Checkliste konfiguriert. Dies umfasst das Ändern von Standardpasswörtern und das Deaktivieren bekannter unsicherer Dienste. Nicht benutzte Ports werden administrativ heruntergefahren (shutdown)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine einfache Konfigurationsvorlage oder Checkliste wird für alle neuen Geräte verwendet. Die Dokumentation der Konfigurationsänderungen erfolgt jedoch noch unregelmäßig. Die Zuweisung ungenutzter Ports zu einem dedizierten 'Unassigned-VLAN' erfolgt noch nicht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Konfigurations-Checkliste an und vergleicht sie stichprobenartig mit den Konfigurationen mehrerer Geräte. Es wird verifiziert, ob alle Ports, die nicht in Gebrauch sind, den Status 'administratively down' aufweisen. Es wird geprüft, ob grundlegende unsichere Dienste wie Telnet deaktiviert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m3",
+                    "uuid": "65ff314c-ca75-40a4-bb6f-9be3217a808b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bevor ein Router oder Switch eingesetzt wird, MUSS er sicher konfiguriert werden. Die Integrität der Konfigurationsdateien MUSS in geeigneter Weise geschützt werden. Router und Switches MÜSSEN so konfiguriert sein, dass nur zwingend erforderliche Dienste, Protokolle und funktionale Erweiterungen genutzt werden. Nicht benötigte Dienste, Protokolle und funktionale Erweiterungen MÜSSEN deaktiviert oder ganz deinstalliert werden. Unbenutzte Netzports MÜSSEN nach Möglichkeit deaktiviert werden. Informationen über den internen Konfigurations- und Betriebszustand MÜSSEN nach außen verborgen und unnötige Auskunftsdienste deaktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein definierter und dokumentierter Härtungsprozess wird auf alle Router und Switches angewendet. Zugangspasswörter werden mittels eines starken Hash-Verfahrens gespeichert. Konfigurationsdateien werden auf einem zentralen, zugriffsgeschützten Server gespeichert. Ungenutzte physische Ports werden deaktiviert. Dieser Prozess ist wiederholbar und wird für jedes neue Gerät angewendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft das dokumentierte Härtungsverfahren. Anhand einer Stichprobe von Geräten wird verifiziert, ob die Konfigurationen dem Verfahren entsprechen. Insbesondere wird geprüft, ob nur die explizit benötigten Dienste aktiv sind, ob ungenutzte Ports deaktiviert sind und ob Auskunftsdienste (z. B. SNMP mit public Community String, CDP/LLDP an externen Schnittstellen) abgeschaltet wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m4",
+                    "uuid": "3ca98bea-7200-431c-a062-4b9a748565b9",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Konfigurationsänderungen SOLLTEN nachvollziehbar dokumentiert werden. Bevor Zugangspasswörter abgespeichert werden, MÜSSEN sie mithilfe eines zeitgemäßen kryptografischen Verfahrens abgesichert werden. Unbenutzte Netzports werden nicht nur deaktiviert, sondern SOLLTEN einem dafür eingerichteten Unassigned-VLAN zugeordnet werden. Wenn funktionale Erweiterungen benutzt werden, SOLLTE begründet und dokumentiert werden, warum solche Erweiterungen eingesetzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Change-Management-Prozess wird für alle Konfigurationsänderungen etabliert und in einem Ticketsystem dokumentiert. Für ungenutzte Ports wird ein dediziertes 'Totes VLAN' ohne Routing und Dienste konfiguriert, dem alle ungenutzten, aber aktiven Ports zugewiesen werden. Die Entscheidung für den Einsatz von Erweiterungen wird im Rahmen eines Architektur-Boards getroffen und dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet das Change-Management-System auf kürzliche Konfigurationsänderungen an Netzwerkkomponenten und prüft die Vollständigkeit der Dokumentation. Es wird die Konfiguration der Switches geprüft, um sicherzustellen, dass ungenutzte Ports einem isolierten Unassigned-VLAN zugewiesen sind. Der Prüfer befragt die Administratoren nach dem Prozess zur Genehmigung und Dokumentation funktionaler Erweiterungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a1-m5",
+                    "uuid": "6cc9877a-58a2-47b7-a4e3-98e61d63c499",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die sichere Grundkonfiguration wird durch Konfigurationsmanagement-Werkzeuge (z.B. Ansible, Salt) automatisiert auf alle Geräte ausgerollt und überwacht. Abweichungen von der Soll-Konfiguration werden automatisch erkannt und gemeldet oder korrigiert. Die Integrität der Konfigurationsdateien wird durch eine File Integrity Monitoring (FIM) Lösung in Echtzeit überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ansible-Playbooks oder äquivalente Automatisierungsskripte definieren den 'Golden Image' für jede Geräteklasse. Ein zentrales Tool wie Oxidized oder Git wird zur Versionierung und Überwachung aller Konfigurationsänderungen eingesetzt. Eine FIM-Lösung, die Syslog-Nachrichten der Geräte auswertet, alarmiert bei unautorisierten Änderungen im 'running-config'."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Automatisierungsskripte und die Konfiguration des Konfigurationsmanagement-Werkzeugs. Es wird geprüft, ob ein Compliance-Bericht des Werkzeugs vorliegt und wie mit gemeldeten Abweichungen umgegangen wird. Die Konfiguration und die Alarmierungsprotokolle des FIM-Systems werden auf ihre Wirksamkeit hin überprüft. Ein automatisierter Audit kann durch `show running-config | compare golden_config.txt` simuliert werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "63388426-f853-4e15-abdc-d07e1f8a0a96",
+                "control-id": "KONF.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a20-m3",
+                    "uuid": "7e23559b-79b4-4579-aa1b-bd5508499e67",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Router SOLLTEN sich authentisieren, wenn sie Routing-Informationen austauschen oder Updates für Routing-Tabellen verschicken. Es SOLLTEN ausschließlich Routing-Protokolle eingesetzt werden, die dies unterstützen. Dynamische Routing-Protokolle DÜRFEN NICHT in demilitarisierten Zonen (DMZs) eingesetzt werden. In DMZs SOLLTEN stattdessen statische Routen eingetragen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für interne Routing-Protokolle wie OSPF oder EIGRP wird die Nachbar-Authentifizierung mittels eines Pre-Shared Keys und eines Hashing-Algorithmus (z.B. MD5, idealerweise SHA) konfiguriert. Passive Schnittstellen werden definiert, um das Senden von Routing-Updates in Endbenutzer-VLANs zu unterbinden. In der DMZ werden ausschließlich statische Routen zu den benötigten Systemen und eine Default-Route zum Internet-Gateway konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Routing-Protokoll-Konfigurationen auf allen Routern. Es wird geprüft, ob die Authentifizierung für alle Nachbarschaften aktiviert ist (`show ip ospf interface`). Die Konfiguration der DMZ-Router wird auf die ausschließliche Verwendung von statischen Routen überprüft (`show ip route`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a20-m4",
+                    "uuid": "5d76fac5-9fe9-48db-81a4-57a3de853919",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verteilung von Routen wird durch Routenfilter (distribute lists, prefix lists, route maps) streng kontrolliert. Es werden nur die explizit benötigten Routen von einem Routing-Nachbarn akzeptiert und weitergegeben. Dies verhindert die Injektion unerwünschter Routen und die unkontrollierte Ausbreitung von Routing-Informationen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jede BGP- oder OSPF-Nachbarschaft werden Prefix-Listen definiert, die genau die erwarteten Subnetze enthalten. Diese Listen werden in Route-Maps eingebunden und auf eingehende und ausgehende Routen-Updates angewendet. Dies ist besonders wichtig an den Grenzen zwischen verschiedenen Routing-Domänen oder Sicherheitszonen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die konfigurierten Routenfilter und bewertet deren Strenge und Korrektheit. Es wird geprüft, ob ein Router eine unerwartete, spezifischere Route von einem Nachbarn lernen würde, oder ob der Filter dies verhindert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a20-m5",
+                    "uuid": "ed4b5367-0443-4d0b-bbe7-b66772fe5c99",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für das externe Routing-Protokoll BGP werden erweiterte Sicherheitsmechanismen wie RPKI (Resource Public Key Infrastructure) zur Validierung der Routen-Herkunft und BGPsec zur Sicherung des Pfades eingesetzt, um Routen-Hijacking zu verhindern. Die Authentifizierungsschlüssel für interne Routing-Protokolle werden regelmäßig und automatisiert rotiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Grenzrouter wird so konfiguriert, dass er die von BGP-Nachbarn empfangenen Routen gegen eine RPKI-Validierungsdatenbank prüft und invalide Routen verwirft. Die Schlüssel für die OSPF/EIGRP-Authentifizierung werden in einem zentralen Key-Management-System verwaltet und über Automatisierungsskripte regelmäßig auf allen Routern aktualisiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die BGP-Konfiguration auf die Aktivierung von RPKI-Validierung (`show bgp rpki summary`). Der Prozess zur Schlüsselrotation wird analysiert. Es wird geprüft, wie die Organisation auf RPKI 'invalid' Routen reagiert, die von ihren Upstream-Providern angekündigt werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "0828ff9c-b062-451f-acc4-75ad1d8c63a6",
+                "control-id": "KONF.2.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Audit",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "TEST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a23-m3",
+                    "uuid": "de689bce-63dd-4030-be3e-2865fd3567b8",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Router und Switches SOLLTEN regelmäßig auf bekannte Sicherheitsprobleme hin überprüft werden. Auch SOLLTEN regelmäßig Revisionen durchgeführt werden. Dabei SOLLTE unter anderem geprüft werden, ob der Ist-Zustand der festgelegten sicheren Grundkonfiguration entspricht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Regelmäßig (z.B. vierteljährlich) wird eine interne Revision durchgeführt. Diese umfasst einen Abgleich der laufenden Konfigurationen mit den Härtungsrichtlinien und Checklisten. Zusätzlich werden die Security Advisories der Hersteller abonniert und regelmäßig daraufhin geprüft, ob die eingesetzten Produkte von neuen Schwachstellen betroffen sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Berichte der letzten internen Revisionen an. Er prüft den Prozess zur Überwachung von Hersteller-Schwachstellenmeldungen und wie darauf reagiert wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a23-m4",
+                    "uuid": "a0994706-5bf3-455e-8da8-91a7c4d7f034",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Ergebnisse der Revisionen SOLLTEN nachvollziehbar dokumentiert und mit dem Soll-Zustand abgeglichen werden. Abweichungen SOLLTE nachgegangen werden. Die Überprüfung wird durch automatisierte Konfigurations-Compliance-Scanner unterstützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Ergebnisse jeder Revision werden in einem formalen Bericht festgehalten. Festgestellte Abweichungen werden als Findings in einem Ticketsystem erfasst, priorisiert und deren Behebung nachverfolgt. Ein NCM-Tool oder ein Automatisierungsskript wird verwendet, um die Konfigurationen automatisiert gegen eine 'Golden Configuration' zu prüfen und einen Compliance-Bericht zu erstellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Revisionsberichte und den Umgang mit den darin festgestellten Mängeln. Die Konfiguration und die Berichte des Compliance-Scanners werden ausgewertet. Es wird geprüft, ob für alle identifizierten Abweichungen ein Behebungsplan existiert und umgesetzt wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a23-m5",
+                    "uuid": "2008f509-9444-44b8-b79f-dcd965aa9642",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu den internen Revisionen werden regelmäßig (z.B. jährlich) externe Penetrationstests durchgeführt, die speziell die Sicherheit der Netzinfrastruktur zum Ziel haben. Die dabei gewonnenen Erkenntnisse fließen in die Verbesserung der Sicherheitsrichtlinien und Konfigurationen ein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein spezialisierter externer Dienstleister wird beauftragt, einen Penetrationstest durchzuführen. Der Testumfang umfasst Angriffsversuche auf die Management-Schnittstellen, Umgehungsversuche von ACLs und Layer-2-Schutzmechanismen sowie die Überprüfung der Netzwerksegmentierung. Die Ergebnisse werden vom Management bewertet und führen zu konkreten Verbesserungsprojekten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert den Management Summary und den technischen Bericht des letzten externen Penetrationstests an. Es wird analysiert, wie die festgestellten Schwachstellen bewertet und behoben wurden. Es wird geprüft, ob die 'Lessons Learned' zu einer Anpassung der Sicherheitsrichtlinien geführt haben."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "c9be6a16-14c3-4dd1-a5a5-fe4d723ee6a7",
+                "control-id": "KONF.2.6",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BES",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a28-m3",
+                    "uuid": "c9237047-d964-44e0-8b50-5fbd4480b387",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei der Beschaffung von Routern und Switches wird darauf geachtet, dass die Produkte von namhaften Herstellern stammen, die einen transparenten Prozess für das Management von Sicherheitsschwachstellen (z.B. ein PSIRT) haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Beschaffungsprozess wird die Existenz und die Qualität des Product Security Incident Response Teams (PSIRT) des Herstellers als ein Bewertungskriterium herangezogen. Es wird geprüft, ob der Hersteller regelmäßig und zeitnah Sicherheits-Advisories veröffentlicht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Beschaffungsrichtlinien und -prozesse. Es wird geprüft, ob und wie die Sicherheitspraktiken der Hersteller in die Kaufentscheidung einfließen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a28-m4",
+                    "uuid": "0b522622-8bca-4a35-9d9f-8c85826bc987",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTEN Router und Switches mit einer Sicherheitsevaluierung nach Common Criteria (CC) eingesetzt werden, mindestens mit der Stufe EAL2 oder einer äquivalenten, durch ein Schutzprofil nachgewiesenen Evaluierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In den Ausschreibungs- und Beschaffungsunterlagen wird eine Zertifizierung nach Common Criteria als Anforderung formuliert. Es werden gezielt Produkte ausgewählt, die über ein gültiges CC-Zertifikat verfügen. Die Zertifikate werden auf ihre Gültigkeit und den genauen Evaluationsgegenstand (Target of Evaluation, TOE) geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Beschaffungsunterlagen auf die Anforderung einer CC-Zertifizierung. Es wird verifiziert, ob die eingesetzten Produkte tatsächlich über die geforderten Zertifikate verfügen, indem die Zertifizierungsberichte (z.B. auf der Webseite des BSI oder des CC-Portals) eingesehen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a28-m5",
+                    "uuid": "d9e294ce-3f7c-46fb-a40a-725303efcd0b",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für den Einsatz in Hochsicherheitsumgebungen werden Router und Switches mit einer Sicherheitsevaluierung nach Common Criteria (CC) der Stufe EAL4 oder höher eingesetzt. Die Konfiguration der Geräte wird exakt so vorgenommen, wie es in der zugehörigen Anleitung für den zertifizierungskonformen Betrieb (Guidance-Dokumentation) beschrieben ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anforderung 'CC EAL4+' wird als zwingendes Kriterium in der Ausschreibung festgelegt. Nach der Beschaffung wird die Konfiguration des Geräts streng nach den Vorgaben der Administrator-Guidance des Zertifizierungsreports vorgenommen, um sicherzustellen, dass der evaluierte Sicherheitszustand auch im Betrieb erreicht wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Live-Konfiguration des Geräts detailliert mit den Vorgaben aus der Guidance-Dokumentation des CC-Zertifikats. Jede Abweichung wird dokumentiert und bewertet, da sie dazu führen kann, dass der zertifizierte Zustand nicht mehr gegeben ist."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "4eeff12a-c4d5-4210-a2c1-1562ff3f6bd7",
+                "control-id": "KONF.2.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a6-m1",
+                    "uuid": "1ce72812-46fd-4760-aa6b-b10f65e6dba0",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein lokaler Zugriff über den Konsolenport ist physisch möglich, aber die dafür notwendigen Passwörter sind nicht dokumentiert oder nur einer einzigen Person bekannt. Im Notfall kann es zu erheblichen Verzögerungen kommen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Konsolenport ist nicht explizit konfiguriert oder geschützt. Die Zugangsdaten sind möglicherweise die Standardeinstellungen des Herstellers oder wurden einmalig gesetzt und nicht sicher hinterlegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer bittet im Rahmen einer simulierten Notfallübung darum, den Zugriff auf ein Gerät über die Konsole herzustellen. Dabei wird die Zeit gemessen, die benötigt wird, um die notwendigen Zugangsdaten und das Equipment (Kabel, Laptop) bereitzustellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m2",
+                    "uuid": "11b1e6f1-0e74-496e-b106-36b7cbdf3a84",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Im Rechenzentrum ist ein 'Crash Cart' mit Laptop und diversen Konsolenkabeln vorhanden. Die Passwörter für den Konsolenzugriff sind in einem Passwort-Manager hinterlegt, auf den mehrere Administratoren Zugriff haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für den Konsolenport (`line con 0`) ist ein Passwort gesetzt und eine grundlegende Konfiguration (z.B. Timeout) vorhanden. Der Prozess ist jedoch rein manuell und erfordert die physische Anwesenheit eines Administrators im Rechenzentrum."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz und Funktionsfähigkeit des Crash Carts. Es wird überprüft, ob die Konsolenpasswörter für eine Stichprobe von Geräten im zentralen Passwort-Manager aktuell und korrekt hinterlegt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m3",
+                    "uuid": "3e8ce850-2837-428d-a9fb-a9b7f2bdf7fb",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS für die Administrierenden immer möglich sein, direkt auf Router und Switches zuzugreifen, sodass diese weiterhin lokal administriert werden können, auch wenn das gesamte Netz ausfällt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein definierter und dokumentierter Prozess für den Notfallzugriff existiert. Dieser stellt sicher, dass über den physischen Konsolenport (z.B. mit einem Laptop und einem seriellen Kabel) jederzeit ein Zugriff möglich ist. Die dafür notwendigen Passwörter sind sicher hinterlegt und für das diensthabende Personal zugänglich. Das Verfahren wird regelmäßig geübt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Dokumentation zum Notfallzugriff an. Im Rahmen einer Übung wird ein Administrator aufgefordert, den Zugriff auf ein abgeschottetes Gerät (vom Netzwerk getrennt) gemäß der Dokumentation herzustellen. Die für den Prozess benötigte Zeit und eventuelle Schwierigkeiten werden protokolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m4",
+                    "uuid": "be04abcf-4d03-4b13-9754-e9617a8a571a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein dedizierter Out-of-Band (OOB) Konsolenserver wird eingesetzt, der über ein separates Netzwerk (z.B. LTE-Modem oder separate DSL-Leitung) erreichbar ist. Dies ermöglicht den Fernzugriff auf die Konsolenports, ohne physisch vor Ort sein zu müssen. Der Zugriff auf den Konsolenserver ist durch starke Authentifizierung geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Konsolenserver (z.B. von Raritan, Vertiv, Opengear) wird installiert und alle Konsolenports der kritischen Netzwerkgeräte werden damit verbunden. Der Konsolenserver wird mit einer eigenen, vom Produktionsnetz unabhängigen Internetverbindung ausgestattet. Der Zugriff wird über RADIUS oder TACACS+ authentifiziert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Architektur des OOB-Netzwerks und die Konfiguration des Konsolenservers. Es wird getestet, ob nach dem Trennen eines Gerätes vom Produktionsnetzwerk ein Zugriff über den Konsolenserver weiterhin möglich ist. Die Authentifizierungs- und Logging-Konfiguration des Konsolenservers wird analysiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a6-m5",
+                    "uuid": "30b62b18-ceb1-42ba-9b74-72b36c02562a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Out-of-Band Konsolenserver ist vollständig in die zentrale PAM-Lösung (Privileged Access Management) integriert. Der Zugriff erfordert MFA, und alle Konsolensitzungen werden aufgezeichnet und protokolliert. Die Lösung bietet eine redundante Auslegung, um die Verfügbarkeit des Notfallzugriffs selbst sicherzustellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Konsolenserver wird als Ressource in der PAM-Lösung konfiguriert. Administratoren verbinden sich nicht direkt mit dem Konsolenserver, sondern über das PAM-Portal, das die Verbindung tunnelt und überwacht. Redundanz wird durch einen zweiten Konsolenserver an einem anderen Standort mit separater Konnektivität erreicht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Integration des Konsolenservers in die PAM-Lösung und prüft die MFA-Anforderungen. Es wird eine Sitzungsaufzeichnung stichprobenartig eingesehen. Die Failover-Funktionalität der redundanten OOB-Lösung wird im Rahmen eines Tests überprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ec9b1335-0ae4-48b4-9186-99c161b1731a",
+                "control-id": "KONF.2.8",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a25-m3",
+                    "uuid": "ebc0068f-b69e-4e64-a7f4-f9a4c4a2976f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Stürzt ein Router oder Switch ab, SOLLTE sichergestellt werden, dass bei der Wiederherstellung bzw. beim Neustart keine alten oder fehlerhaften Konfigurationen (unter anderem ACLs) benutzt werden. Die 'startup-config' wird als die alleinige Quelle der Wahrheit nach einem Neustart definiert und geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Prozess zum Speichern von Konfigurationsänderungen (`copy running-config startup-config`) wird strikt durchgesetzt und ist Teil des Change-Management-Prozesses. Die 'startup-config' wird regelmäßig gesichert (siehe A8) und die Sicherungen werden auf ihre Integrität geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die 'running-config' mit der 'startup-config' auf mehreren Geräten. Große Abweichungen deuten auf einen mangelhaften Prozess hin. Die Backup-Prozeduren für die 'startup-config' werden überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a25-m4",
+                    "uuid": "ca5c7afb-abc4-4e98-916c-5f82dd656719",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Integrität der Konfigurationsdatei, die beim Booten geladen wird, wird durch einen Hashwert oder eine digitale Signatur geschützt. Der Bootloader des Geräts überprüft diese Signatur vor dem Laden der Konfiguration."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Moderne Netzwerkbetriebssysteme bieten Funktionen zum Signieren von Konfigurationsdateien. Diese Funktion wird aktiviert. Der private Schlüssel zur Signierung wird sicher in einem Hardware Security Module (HSM) oder einem Key Management System verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des Geräts, um zu verifizieren, dass die Funktion zum Schutz der Konfigurationsdatei aktiviert ist. Es wird der Prozess zur Verwaltung des Signaturschlüssels überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a25-m5",
+                    "uuid": "66b5bbac-172d-4930-9b67-b98d16cb8680",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine umfassende 'Secure Boot'-Kette wird implementiert. Diese stellt sicher, dass von der Hardware über den Bootloader bis zum Betriebssystem und der Konfigurationsdatei jede Komponente kryptographisch verifiziert wird, bevor sie geladen wird. Manipulationen an jeder Stelle des Boot-Prozesses werden erkannt und verhindern den Start des Geräts."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden ausschließlich Geräte beschafft, die über einen Hardware 'Root of Trust' (z.B. ein TPM-Chip) und eine vollständige Secure-Boot-Implementierung verfügen. Diese Funktion wird aktiviert und konfiguriert. Der Zustand der Secure-Boot-Kette wird regelmäßig per Fernattestierung überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Gerätedokumentation und die Konfiguration, um die Aktivierung von Secure Boot zu verifizieren. Es wird geprüft, wie die Organisation auf einen fehlgeschlagenen Secure-Boot-Prozess reagiert. Die Ergebnisse der Fernattestierungs-Checks werden analysiert. Der Befehl `show platform integrity` oder ein Äquivalent kann den Status anzeigen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "293669c8-2af3-436c-bfae-30db5aa800a2",
+                "control-id": "KONF.4.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a21-m3",
+                    "uuid": "0feb54cf-96b7-4b8a-913c-29af2ffb913a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Router und Switches SOLLTEN an ein zentrales Identitäts- und Berechtigungsmanagement angebunden werden. Für jeden Administrator wird ein persönlicher Account verwendet. Gruppen- oder Funktionsaccounts werden vermieden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein zentraler Authentifizierungsserver (z.B. TACACS+ oder RADIUS) wird implementiert. Alle Router und Switches werden so konfiguriert, dass sie Authentifizierungsanfragen an diesen Server senden (AAA-Konfiguration). Auf dem zentralen Server wird für jeden Administrator ein individuelles Benutzerkonto angelegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die AAA-Konfiguration auf den Netzwerkgeräten und die Benutzerkonten auf dem zentralen Authentifizierungsserver. Es wird geprüft, ob die Verwendung lokaler Datenbanken auf den Geräten auf einen Notfall-Account beschränkt ist. Es wird kontrolliert, ob geteilte Accounts existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a21-m4",
+                    "uuid": "4242b648-ff11-47fb-9d62-2a562f0a4139",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das zentrale System wird nicht nur zur Authentifizierung, sondern auch zur Autorisierung und zum Accounting genutzt. Es werden verschiedene Berechtigungslevel (Rollen) definiert, die den Benutzern zugewiesen werden. Dadurch können die erlaubten Befehle pro Benutzer oder Gruppe eingeschränkt werden (Command Authorization)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf dem TACACS+-Server werden Rollen wie 'Netzwerk-Operator' (nur `show`-Befehle) und 'Netzwerk-Administrator' (volle Rechte) definiert. Diese Rollen werden den Benutzerkonten zugewiesen. Die Netzwerkgeräte werden so konfiguriert, dass sie jeden ausgeführten Befehl zur Autorisierung und Protokollierung (Accounting) an den TACACS+-Server senden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Rollen- und Berechtigungskonfiguration auf dem TACACS+-Server. Mit einem Test-Account, der der Operator-Rolle zugewiesen ist, wird versucht, einen Konfigurationsbefehl auszuführen. Die Accounting-Logs auf dem Server werden auf Vollständigkeit und Detailgrad überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a21-m5",
+                    "uuid": "d7f07679-37e9-4e82-bfdb-1f0e216e8a7b",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das zentrale Identitäts- und Berechtigungsmanagement für die Netzinfrastruktur ist vollständig in den übergeordneten Identity and Access Management (IAM) Prozess der Organisation integriert. Die Anmeldung am zentralen Authentifizierungsserver (z.B. TACACS+) erfordert Multi-Faktor-Authentifizierung (MFA)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der TACACS+-Server wird an das zentrale Verzeichnisdienst (z.B. Active Directory) und die MFA-Lösung der Organisation angebunden. Ein Joiner-Mover-Leaver-Prozess stellt sicher, dass Benutzerkonten und Berechtigungen automatisch angelegt, geändert und bei Austritt eines Mitarbeiters sofort deaktiviert werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Integration des TACACS+-Systems mit dem AD und der MFA-Lösung. Es wird getestet, ob eine Anmeldung ohne zweiten Faktor möglich ist. Der Prozess zur Deaktivierung eines Benutzerkontos wird durch die Deaktivierung eines Test-Accounts im AD und die sofortige Überprüfung des Zugriffs auf ein Netzwerkgerät nachvollzogen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "64a2e180-25e9-4d45-be92-67d6f080836c",
+                "control-id": "KONF.4.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a4-m1",
+                    "uuid": "edb51e26-24df-44c2-a327-756c9f64399d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur die Administrationsschnittstellen von Routern am Internetübergang sind durch Quell-IP-Filter eingeschränkt. Der administrative Zugriff auf interne Switches und Router ist aus dem gesamten internen Netz ohne Einschränkungen möglich."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Fokus liegt ausschließlich auf dem Schutz der externen Angriffsoberfläche. Interne Bedrohungen durch kompromittierte Clients oder böswillige Insider werden bei diesem Ansatz nicht berücksichtigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer versucht, von einem Standard-Client-Netzwerk aus eine Verbindung (z.B. per Telnet, SSH, HTTP) zu den Management-IPs interner Core-Switches oder Router aufzubauen. Gelingt dies, ist die Kontrolle nicht ausreichend umgesetzt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m2",
+                    "uuid": "d287b3ed-a45e-42d4-8c96-6b7c07d8fbea",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der administrative Zugriff auf alle Router und Switches ist durch Access-Control-Listen (ACLs) eingeschränkt. Diese erlauben jedoch den Zugriff vom gesamten Subnetz der Administratoren, nicht von einzelnen IP-Adressen. Unverschlüsselte Protokolle wie Telnet oder HTTP sind teilweise noch als Fallback aktiv."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine 'management access-class' auf den VTY-Lines konfiguriert, die auf eine ACL verweist. Diese ACL enthält typischerweise eine einzelne 'permit'-Anweisung für ein gesamtes /24-Netzwerk."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der Management-ACLs auf den Geräten. Es wird verifiziert, ob die erlaubten Quell-Adressbereiche möglichst restriktiv sind. Mittels eines Portscans von einer erlaubten IP-Adresse wird geprüft, ob unsichere Administrationsprotokolle aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m3",
+                    "uuid": "09462ffe-4321-4d5b-8098-c12180c2526a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Administrations- und Managementzugänge der Router und Switches MÜSSEN auf einzelne Quell-IP-Adressen bzw. -Adressbereiche eingeschränkt werden. Es MUSS sichergestellt sein, dass aus nicht vertrauenswürdigen Netzen heraus nicht direkt auf die Administrationsschnittstellen zugegriffen werden kann. Alle für das Management-Interface nicht benötigten Dienste MÜSSEN deaktiviert werden. Verfügt eine Netzkomponente über eine dedizierte Hardwareschnittstelle, MUSS der unberechtigte Zugriff darauf in geeigneter Weise unterbunden werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Management-ACLs werden so konfiguriert, dass sie nur die IPs von dedizierten Admin-Workstations oder Jump-Servern erlauben. Nicht benötigte Dienste wie HTTP-Server, SNMP (falls nicht für Monitoring genutzt) oder Telnet werden global auf den Geräten deaktiviert. Der physische Zugriff auf Konsolenports wird durch verschlossene Serverschränke gewährleistet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Management-ACLs und vergleicht die Einträge mit der Liste der autorisierten Admin-Systeme. Es wird per `show control-plane host open-ports` oder äquivalenten Befehlen geprüft, welche Dienste auf den Geräten lauschen und ob diese alle benötigt werden. Der physische Schutz der Geräte wird durch eine Begehung des Rechenzentrums überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m4",
+                    "uuid": "f7753bea-e4b2-4714-930b-a4a6848666f1",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Um Router und Switches zu administrieren, SOLLTEN ausschließlich geeignet verschlüsselte Protokolle wie SSHv2 oder HTTPS eingesetzt werden. Die Managementschnittstellen und die Administrationsverbindungen MÜSSEN durch eine separate Firewall geschützt werden. Für die Schnittstellen MÜSSEN geeignete Zeitbeschränkungen für z. B. Timeouts vorgegeben werden. Falls auf unverschlüsselte Protokolle zurückgegriffen werden muss, MUSS ein separates Administrationsnetz (Out-of-Band-Management) genutzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "SSH wird so konfiguriert, dass nur Version 2 erlaubt ist und starke Cipher-Suiten verwendet werden. Der gesamte Management-Verkehr wird in ein separates Management-VLAN oder ein physisch getrenntes Out-of-Band-Netzwerk verlagert. Der Übergang von den Admin-Workstations in dieses Netz wird durch eine Firewall mit restriktiven Regeln kontrolliert. VTY- und Konsolen-Sitzungen werden mit einem kurzen Inaktivitäts-Timeout (z.B. 15 Minuten) konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die SSH-Konfiguration der Geräte auf die Protokollversion und die erlaubten Algorithmen. Die Firewall-Regeln für das Management-Netzwerk werden analysiert. Die Konfiguration der VTY- und Console-Lines wird auf die Existenz und den Wert von `exec-timeout` geprüft. Ein `ssh -v <device-ip>` von einem Client zeigt die ausgehandelte Protokollversion und Cipher."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a4-m5",
+                    "uuid": "a2cb091f-af30-4808-99d6-47e7019a0d8b",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Jeglicher administrativer Zugriff erfolgt ausschließlich über eine zentrale Privileged Access Management (PAM) Lösung (Bastion Host). Die PAM-Lösung erzwingt Multi-Faktor-Authentifizierung (MFA), führt eine detaillierte Protokollierung aller Befehle durch und kann Sitzungen aufzeichnen. Die direkten Anmeldeinformationen für die Netzwerkgeräte sind den Administratoren nicht bekannt und werden von der PAM-Lösung verwaltet und rotiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine PAM-Lösung wie CyberArk, Teleport oder eine Open-Source-Alternative wird implementiert. Die Management-ACLs auf den Netzwerkgeräten werden so konfiguriert, dass sie ausschließlich Verbindungen von der PAM-Lösung erlauben. Die Authentifizierung der Geräte wird über TACACS+ oder RADIUS abgewickelt, wobei die PAM-Lösung als Proxy fungiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Konfiguration der PAM-Lösung, insbesondere die MFA-Anforderungen und die Logging-Einstellungen. Es wird geprüft, ob die ACLs auf den Netzwerkgeräten ausschließlich die PAM-Server als Quelle zulassen. Die Audit-Protokolle der PAM-Lösung werden stichprobenartig auf verdächtige Aktivitäten hin überprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "46216d8c-b3f1-49b9-becc-3a5e5475a372",
+                "control-id": "KONF.5.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a19-m3",
+                    "uuid": "8b89b279-e6eb-42b0-bb23-076aabb9acba",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Ports eines Switches SOLLTEN vor unberechtigten Zugriffen geschützt werden. Dies wird durch die Implementierung von Port-Security erreicht, die die Anzahl der erlaubten MAC-Adressen pro Port begrenzt und auf Verstöße mit einer definierten Aktion reagiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf allen Access-Ports, an denen Endgeräte angeschlossen sind, wird Port-Security konfiguriert. Typischerweise wird die maximale Anzahl der MAC-Adressen auf 1 oder 2 gesetzt. Bei einem Verstoß (`violation`) wird der Port in den `shutdown`- oder `restrict`-Modus versetzt. Die MAC-Adressen werden dynamisch gelernt und in der Konfiguration gespeichert (sticky MAC)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft stichprobenartig die Konfiguration von Access-Ports auf die Aktivierung und korrekte Konfiguration von Port-Security. Mit einem Testgerät wird versucht, ein zweites Gerät an einen gesicherten Port anzuschließen, um die Reaktion des Switches zu testen. Der Befehl `show port-security interface <interface-id>` zeigt den Status."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a19-m4",
+                    "uuid": "75894a07-071c-421b-8a85-6fc4bfec6345",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zu Port-Security werden weitere Schutzmechanismen auf Layer 2 implementiert, um Angriffe wie DHCP-Spoofing und ARP-Spoofing zu verhindern. Dazu gehören DHCP Snooping und Dynamic ARP Inspection (DAI)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "DHCP Snooping wird auf allen Access-Switches aktiviert. Die Ports, die zu legitimen DHCP-Servern führen, werden als 'trusted' konfiguriert. Basierend auf der von DHCP Snooping aufgebauten Binding-Tabelle wird Dynamic ARP Inspection (DAI) aktiviert, um ARP-Pakete mit inkonsistenten IP-MAC-Zuordnungen zu verwerfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die globale und schnittstellenspezifische Konfiguration von DHCP Snooping und DAI. Es wird kontrolliert, ob die Trust-Einstellungen korrekt sind. Im Rahmen eines Tests wird versucht, einen bösartigen DHCP-Server zu betreiben oder ARP-Pakete zu fälschen. Ein `show ip dhcp snooping binding` kann zur Überprüfung der gelernten Zuordnungen verwendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a19-m5",
+                    "uuid": "7fe88eab-5758-40fd-9037-71cad02e4793",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Layer-2-Schutzmechanismen werden durch die Implementierung von portbasierter Netzwerkzugangskontrolle (IEEE 802.1X) ergänzt. Ein Gerät erhält erst nach erfolgreicher Authentifizierung (z.B. über ein Zertifikat) überhaupt Zugriff auf das Netzwerk. Nicht authentifizierte Geräte werden in ein Quarantäne-VLAN verschoben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein RADIUS-Server (z.B. FreeRADIUS, Cisco ISE) wird als Authentifizierungsserver eingerichtet. Auf den Switches wird 802.1X für alle Access-Ports aktiviert. Die Endgeräte werden mit Client-Zertifikaten ausgestattet und für die Authentifizierung per EAP-TLS konfiguriert. Die RADIUS-Richtlinien definieren, welches Gerät bei erfolgreicher Authentifizierung in welches VLAN platziert wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des RADIUS-Servers und der Switches. Es wird geprüft, ob sich ein nicht konfiguriertes Gerät mit dem Netzwerk verbinden kann und ob es korrekt in das Quarantäne-VLAN verschoben wird. Der Authentifizierungsprozess eines legitimen Clients wird mitgeschnitten und analysiert. Ein `show authentication sessions` auf dem Switch gibt Auskunft über den Status."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "05c6514c-79cb-4aa4-9374-4f86e083050e",
+                "control-id": "KONF.6.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a24-m3",
+                    "uuid": "b9c123dc-e3b8-4ca1-be6a-b89e91b1a805",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Port-based Access Control SOLLTE nach IEEE 802.1x implementiert werden. Dabei wird ein sicheres Authentifizierungsprotokoll wie EAP-TLS verwendet. Es SOLLTE KEINE Implementierung nach den veralteten und unsicheren Standards IEEE 802.1x-2001 und IEEE 802.1x-2004 erfolgen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Network Access Control (NAC)-Lösung wird implementiert. Diese besteht aus einem RADIUS-Server (Policy Server), den Switches als Supplicants und den Endgeräten als Clients. Auf den Switches wird 802.1X pro Port aktiviert. Die Authentifizierung erfolgt über EAP-TLS, wofür sowohl der RADIUS-Server als auch die Clients Zertifikate benötigen, die von einer internen PKI ausgestellt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des RADIUS-Servers, der Switches und eines Beispiel-Clients. Es wird verifiziert, dass EAP-TLS als Authentifizierungsmethode erzwungen wird. Es wird geprüft, ob die Switches die modernen 802.1X-Versionen unterstützen und konfiguriert haben. Ein `show authentication sessions` auf dem Switch zeigt die Details der aktiven Sitzungen an."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a24-m4",
+                    "uuid": "a0765dac-e614-4110-a061-75a345ad4d2a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die NAC-Lösung wird für die dynamische Zuweisung von Netzwerkressourcen genutzt. Basierend auf der Identität des Benutzers und/oder des Geräts werden authentifizierte Clients automatisch dem richtigen VLAN zugewiesen. Für Gäste oder nicht-konforme Geräte werden separate VLANs mit eingeschränktem Zugriff bereitgestellt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf dem RADIUS-Server werden Richtlinien erstellt, die basierend auf Attributen (z.B. AD-Gruppenmitgliedschaft des Benutzers) dynamisch VLAN-IDs oder herunterladbare ACLs (dACLs) an den Switch zurückgeben. Es wird ein Gast-VLAN (mit Captive Portal) und ein Quarantäne-VLAN (ohne externen Zugriff) konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Richtlinien auf dem RADIUS-Server. Es wird getestet, ob ein Benutzer aus der Marketing-Abteilung korrekt in das Marketing-VLAN und ein Benutzer aus der Entwicklung in das Entwicklungs-VLAN platziert wird. Es wird das Verhalten bei der Verbindung eines nicht authentifizierbaren Geräts getestet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a24-m5",
+                    "uuid": "e82f2fa5-b32f-4480-a021-dba5d07d9a90",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die NAC-Lösung führt vor der Gewährung des Netzwerkzugriffs eine umfassende Überprüfung des Sicherheitszustands (Posture Assessment) des Endgeräts durch. Es wird geprüft, ob das Betriebssystem aktuell ist, ein Antivirus-Programm läuft und die Festplattenverschlüsselung aktiv ist. Geräte, die die Prüfung nicht bestehen, erhalten nur eingeschränkten Zugriff auf ein Remediation-VLAN."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Agent der NAC-Lösung wird auf allen Endgeräten installiert. Dieser Agent sammelt die für die Haltungsprüfung notwendigen Informationen und übermittelt sie an den Policy Server. Im Policy Server werden detaillierte Posture-Regeln definiert. Das Remediation-VLAN erlaubt nur den Zugriff auf Update-Server und den Helpdesk, damit der Benutzer die Mängel beheben kann."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Posture-Regeln im NAC-System. Es wird versucht, sich mit einem Testgerät zu verbinden, auf dem absichtlich Sicherheitsupdates fehlen. Es wird geprüft, ob das Gerät korrekt als nicht-konform erkannt und in das Remediation-VLAN verschoben wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f9f689b6-8e29-441c-940c-66845c79fc69",
+                "control-id": "KONF.7.15",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a18-m3",
+                    "uuid": "f5a7ca5e-f3ab-4293-9e72-9a458ce5e31b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zugriff auf Router und Switches SOLLTE mithilfe von Access Control Lists (ACLs) definiert werden. In der ACL SOLLTE anhand der Sicherheitsrichtlinie der Institution festgelegt werden, über welche IT-Systeme oder Netze mit welcher Methode auf einen Router oder Switch zugegriffen werden darf. Für den Fall, dass keine spezifischen Regeln existieren, SOLLTE generell der restriktivere Allowlist-Ansatz bevorzugt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "ACLs werden verwendet, um den Datenverkehr zwischen verschiedenen Netzsegmenten (VLANs) entsprechend der Sicherheitsrichtlinie zu filtern. Der Grundsatz ist 'deny by default', d.h., es wird nur der explizit erlaubte Verkehr durchgelassen. Jede ACL endet mit einer impliziten oder expliziten `deny any`-Anweisung. Jede Regel in einer ACL wird dokumentiert, um ihren Zweck zu erklären."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die auf den Routern und L3-Switches konfigurierten ACLs. Es wird geprüft, ob sie dem 'deny by default'-Prinzip folgen und ob die erlaubten Regeln mit den Vorgaben der Sicherheitsrichtlinie übereinstimmen. Die Dokumentation der ACL-Regeln wird auf ihre Verständlichkeit und Aktualität geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a18-m4",
+                    "uuid": "7e2b0f19-a0d0-40d6-a3db-9b31cfac0d65",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "ACLs werden regelmäßig überprüft, um veraltete oder nicht mehr benötigte Regeln zu identifizieren und zu entfernen. Es werden Werkzeuge eingesetzt, die die Auswirkungen von ACL-Änderungen simulieren, bevor sie produktiv geschaltet werden. Blockierte Pakete werden protokolliert, um Fehlkonfigurationen zu erkennen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein vierteljährlicher Review-Prozess für alle wichtigen ACLs wird etabliert. Werkzeuge wie `object-groups` werden verwendet, um ACLs übersichtlicher und wartbarer zu gestalten. Die `log`-Option wird an `deny`-Anweisungen angefügt, um verworfene Pakete auf dem Syslog-Server sichtbar zu machen und analysieren zu können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Protokolle der letzten ACL-Reviews. Er analysiert die Syslog-Server auf geloggte 'deny'-Ereignisse und fragt, wie diese analysiert werden. Es wird geprüft, ob die ACLs gut strukturiert sind (z.B. durch Verwendung von `object-groups` und Kommentaren)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a18-m5",
+                    "uuid": "5255999b-27ea-4296-8f80-07bfd900df04",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "ACLs werden zentral über eine 'Single Source of Truth' verwaltet und automatisiert auf die Geräte ausgerollt. Die Richtlinien werden nicht auf Basis von IP-Adressen, sondern auf Basis von Identitäten oder Tags definiert (Policy as Code). Ein zentrales Tool analysiert und visualisiert die resultierenden Datenflüsse und kann redundante oder überschattete Regeln automatisch erkennen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein System wie Cisco ACI oder eine herstellerunabhängige Lösung wird verwendet, um Netzwerkrichtlinien zentral zu definieren. Die Richtlinien werden in einer verständlichen Sprache (z.B. YAML) in einem Git-Repository gepflegt und über eine CI/CD-Pipeline ausgerollt. Tools zur formalen Verifikation wie Batfish werden eingesetzt, um die Korrektheit und die Auswirkungen von Änderungen vor dem Deployment zu beweisen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Policy-Definitionen in der zentralen Verwaltungslösung oder im Git-Repository. Es wird der Prozess der automatisierten Ausrollung und Validierung geprüft. Die Berichte der Analysetools zu überschatteten oder redundanten Regeln werden ausgewertet. Die Prüfung erfolgt automatisiert, indem die Policy-Definitionen mit den Sicherheitsvorgaben abgeglichen werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "23a4b295-6a84-4429-a141-14889741c9d6",
+                "control-id": "KONF.7.16",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a5-m1",
+                    "uuid": "a1b16d0e-18ff-4776-959f-27210006ab40",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Schutzmechanismen gegen Fragmentierungsangriffe sind nur auf Routern am Internetübergang aktiviert. Auf internen Layer-3-Switches, die ebenfalls Routing-Aufgaben übernehmen, sind diese Schutzfunktionen nicht konfiguriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration konzentriert sich auf den Schutz vor externen Angriffen. Die Möglichkeit, dass solche Angriffe auch aus dem internen Netz gestartet werden könnten (z.B. von einem kompromittierten Client), wird nicht berücksichtigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration eines oder mehrerer interner Core- oder Distribution-Layer-3-Switches. Es wird verifiziert, ob Mechanismen zur Kontrolle von IP-Fragmenten (z.B. `ip virtual-reassembly` bei Cisco) aktiviert sind. Ist dies nicht der Fall, ist die Kontrolle unzureichend."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m2",
+                    "uuid": "2d959b25-c177-4e06-88c3-444e609d4af5",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Auf allen Routern und Layer-3-Switches sind die grundlegenden Schutzmechanismen gegen Fragmentierungsangriffe mit den Standardeinstellungen des Herstellers aktiviert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf Cisco-Geräten wird beispielsweise der Befehl `ip virtual-reassembly in` auf allen relevanten Interfaces konfiguriert. Es findet jedoch keine Anpassung der Schwellenwerte oder Timeouts statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert stichprobenartig die Konfigurationen von Routern und L3-Switches, um die Aktivierung der Schutzfunktion zu verifizieren. Es wird geprüft, ob der Befehl global oder auf allen relevanten Schnittstellen vorhanden ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m3",
+                    "uuid": "452507b6-b36e-4a81-91fc-9ce3029f7910",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Am Router und Layer-3-Switch MÜSSEN Schutzmechanismen aktiviert sein, um IPv4- sowie IPv6-Fragmentierungsangriffe abzuwehren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für alle Router und L3-Switches wird ein definierter Konfigurationsstandard umgesetzt, der die Aktivierung von Schutzmechanismen gegen Fragmentierungsangriffe für IPv4 und IPv6 vorschreibt. Dies kann die virtuelle Wiederzusammensetzung von Paketen (virtual reassembly) zur Überprüfung oder das Verwerfen von Fragmenten durch ACLs umfassen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfigurationen der relevanten Geräte, um sicherzustellen, dass sowohl für IPv4 als auch für IPv6 Schutzmaßnahmen gegen Fragmentierung implementiert sind. Dies kann durch Überprüfung von Interface-Konfigurationen (`ip virtual-reassembly`) und Access-Control-Listen (ACLs, die `fragments` blockieren) erfolgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m4",
+                    "uuid": "96848254-8c68-42b3-92fa-16619e4f4278",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Parameter der Schutzmechanismen gegen Fragmentierungsangriffe, wie maximale Anzahl gleichzeitiger Wiederzusammensetzungen, Puffergrößen und Timeouts, werden an die spezifischen Anforderungen des Netzwerks angepasst, um sowohl Sicherheit als auch Performance zu gewährleisten. Das Auftreten von Fragmentierungsangriffen wird protokolliert und überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Standardwerte für `ip virtual-reassembly` werden analysiert und gegebenenfalls angepasst (z.B. `ip virtual-reassembly in max-reassemblies <number> timeout <seconds>`). Auf Grenz-Firewalls werden explizite Regeln erstellt, die fragmentierte Pakete protokollieren und bei Überschreiten eines Schwellenwerts verwerfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der Fragmentierungsschutz-Parameter und befragt die Administratoren nach der Begründung für die gewählten Werte. Die Log-Konfiguration wird überprüft, um sicherzustellen, dass entsprechende Ereignisse erfasst und an ein zentrales System gesendet werden. Die automatische Prüfung kann durch `show ip virtual-reassembly` erfolgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a5-m5",
+                    "uuid": "c570f4c3-098e-4b58-8f69-284b49989082",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein dediziertes Intrusion Prevention System (IPS) wird eingesetzt, das den Netzwerkverkehr in Echtzeit analysiert. Es erkennt und blockiert aktiv komplexe und evasive Fragmentierungsangriffe basierend auf Signaturen und anomaliebasierten Heuristiken, die über die Fähigkeiten von Standard-Routern hinausgehen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Next-Generation Firewall (NGFW) oder ein eigenständiges IPS-Gerät wird am Netzwerkperimeter oder an kritischen internen Segmentierungspunkten platziert. Die entsprechenden Schutzprofile (z.B. 'DoS Protection') werden aktiviert und feinjustiert. Das IPS wird in den SIEM-Prozess integriert, um Alarme zu korrelieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration und die Platzierung des IPS/NGFW. Die Wirksamkeit der Schutzprofile wird analysiert. Es wird geprüft, ob Alarme zu Fragmentierungsangriffen vom IPS generiert und im SIEM-System sichtbar sind. Ein Penetrationstest kann versuchen, die Schutzmechanismen mit Tools wie 'hping3' oder 'scapy' zu umgehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "c1cedfcf-b56c-4e6b-a3b5-9872d0736a17",
+                "control-id": "KONF.9.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a26-m3",
+                    "uuid": "2c2d6f94-0d60-4445-acff-c46243423c21",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Router und Switches SOLLTEN redundant ausgelegt werden. Dabei SOLLTE darauf geachtet werden, dass die Sicherheitsrichtlinie der Institution eingehalten wird. Die Realisierung einer Hochverfügbarkeitslösung SOLLTE den Betrieb der Router und Switches bzw. deren Sicherheitsfunktionen NICHT behindern oder das Sicherheitsniveau senken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Kritische Netzwerkkomponenten (Core-Switches, Grenzrouter) werden als redundante Paare (Cluster, Stack) implementiert. Protokolle wie HSRP/VRRP für Router-Redundanz und LACP für redundante Switch-Uplinks werden verwendet. Die Konfiguration des redundanten Paares wird synchron gehalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Netzwerktopologie und die Konfiguration der kritischen Komponenten, um die redundante Auslegung zu verifizieren. Es wird geprüft, ob die Konfigurationen der redundanten Geräte konsistent sind und ob die Failover-Protokolle korrekt konfiguriert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a26-m4",
+                    "uuid": "de993608-ccff-4f4a-9467-8d08cc8c4e05",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die redundante Auslegung umfasst nicht nur die Geräte selbst, sondern auch deren Stromversorgung und Netzwerkanbindungen. Jedes Gerät eines redundanten Paares wird an separate Stromkreise (idealerweise USV A/B) angeschlossen. Uplinks werden auf verschiedene Line-Cards oder Module verteilt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Switches mit redundanten Netzteilen werden beschafft. Ein Netzteil wird an den A-Strom, das andere an den B-Strom angeschlossen. Uplink-Ports werden physisch auf unterschiedliche Module des Chassis verteilt. Die redundanten Geräte werden in unterschiedlichen Brandabschnitten oder zumindest unterschiedlichen Racks platziert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt eine physische Inspektion im Rechenzentrum durch, um die Verkabelung der Stromversorgung und der Uplinks zu überprüfen. Es wird kontrolliert, ob die Platzierung der Geräte dem Konzept der physischen Redundanz entspricht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a26-m5",
+                    "uuid": "b728590a-7788-4b2c-957f-c85d8311f135",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Hochverfügbarkeitsarchitektur ist vollständig standortredundant ausgelegt. Kritische Netzwerkfunktionen werden parallel in zwei geografisch getrennten Rechenzentren betrieben. Der Failover-Prozess zwischen den Standorten wird regelmäßig und automatisiert getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Aktiv/Aktiv- oder Aktiv/Passiv-Rechenzentrumsarchitektur wird implementiert. Routing-Protokolle werden so konfiguriert, dass der Datenverkehr im Fehlerfall eines Standortes automatisch über den zweiten Standort umgeleitet wird. Techniken wie OTV (Overlay Transport Virtualization) oder VXLAN werden verwendet, um Layer-2-Konnektivität zwischen den Standorten zu ermöglichen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die standortübergreifende Netzwerkarchitektur und die Konfiguration der Routing-Protokolle. Die Protokolle der letzten Desaster-Recovery-Tests, bei denen ein kompletter Standortausfall simuliert wurde, werden ausgewertet."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ca34957c-06ed-4599-a60a-7ede01c96141",
+                "control-id": "NOT.4.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.3.1.a8-m1",
+                    "uuid": "46ec4746-d4f6-44e7-80f1-24bee6fc0791",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Konfigurations-Backups werden nur manuell und unregelmäßig vor größeren geplanten Änderungen erstellt. Es gibt keinen automatisierten oder regelmäßigen Prozess."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Administratoren führen vor einem Update `show running-config` aus und kopieren den Inhalt in eine Textdatei auf ihrem lokalen Rechner. Die Ablage ist nicht zentralisiert und nicht vor Verlust geschützt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fragt nach der Konfigurationssicherung eines bestimmten Gerätes von vor drei Monaten. Kann diese nicht oder nur mit großem Aufwand bereitgestellt werden, ist die Kontrolle mangelhaft. Die Dateisysteme auf den Admin-Workstations werden auf verstreute Konfigurationsdateien überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m2",
+                    "uuid": "680c465d-7a52-40f6-a5cf-5dcdc6ae2a15",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein automatisiertes Skript sichert die Konfigurationen aller Geräte nächtlich auf einen zentralen Dateiserver. Es findet jedoch keine Überprüfung der erfolgreichen Sicherung und keine Versionierung statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein einfaches Shell-Skript, das `expect` verwendet, oder ein TFTP-Server-basierter Prozess wird per Cronjob ausgeführt. Die Konfigurationsdateien werden jeden Tag überschrieben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft das Backup-Skript und die Zieldateien auf dem Server. Es wird verifiziert, ob die Zeitstempel der Dateien aktuell sind. Der Inhalt einer Sicherungsdatei wird stichprobenartig mit der Live-Konfiguration verglichen, um die Vollständigkeit zu prüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m3",
+                    "uuid": "0f4b6990-7700-4b85-9374-832a31888b1c",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfigurationsdateien von Routern und Switches MÜSSEN regelmäßig gesichert werden. Die Sicherungskopien MÜSSEN so abgelegt werden, dass im Notfall darauf zugegriffen werden kann."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein definierter Prozess stellt sicher, dass die Konfigurationen aller Netzwerkkomponenten regelmäßig (z.B. täglich) auf einem zentralen, gesicherten und redundanten Speichersystem abgelegt werden. Der Zugriff auf die Sicherungen ist auf autorisierte Administratoren beschränkt. Die Backups werden versioniert, um auf ältere Stände zurückgreifen zu können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert das Datensicherungskonzept für Netzwerkkomponenten an. Es wird überprüft, ob für alle relevanten Geräte aktuelle Sicherungen auf dem Backup-Server vorhanden sind. Es wird stichprobenartig geprüft, ob auf eine Konfiguration von vor einer Woche zurückgegriffen werden kann. Die Zugriffsberechtigungen auf das Backup-Verzeichnis werden kontrolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m4",
+                    "uuid": "47608bf3-1fe9-42af-aca4-6b4ee9237fb3",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein dediziertes Network Configuration Management (NCM) Tool wird eingesetzt. Dieses sichert Konfigurationen nicht nur zeitgesteuert, sondern auch ereignisgesteuert, d.h. unmittelbar nach jeder erkannten Änderung. Das Tool bietet eine grafische Oberfläche zum Vergleich von Konfigurationsversionen (Diff)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools wie Oxidized, RANCID oder kommerzielle NCM-Lösungen (z.B. von SolarWinds, ManageEngine) werden implementiert. Diese Tools werden so konfiguriert, dass sie auf Syslog-Nachrichten über Konfigurationsänderungen lauschen und daraufhin sofort ein Backup auslösen. Die Konfigurationen werden in einem Git-Repository gespeichert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des NCM-Tools. Es wird eine kleine Änderung an einem Testgerät vorgenommen und live beobachtet, ob das Tool die Änderung erkennt und eine neue Sicherung anlegt. Die Versionierungshistorie im Tool oder im Git-Repository wird geprüft. Die Prüfung kann automatisiert erfolgen, indem die API des NCM-Tools abgefragt wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.3.1.a8-m5",
+                    "uuid": "e8658ef9-678f-483d-9efc-58d3937926cd",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das NCM-Tool ist vollständig in das Change-Management-System (ITSM) und das SIEM integriert. Gesicherte Konfigurationen werden automatisch auf Konformität mit den Sicherheitsrichtlinien geprüft (Compliance Checking). Der Prozess zur Wiederherstellung einer Konfiguration aus dem Backup wird regelmäßig im Rahmen von Notfallübungen getestet und ist automatisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das NCM-Tool wird so konfiguriert, dass es Konfigurationsänderungen nur dann zulässt oder bestätigt, wenn eine gültige Change-Ticket-Nummer vorliegt. Compliance-Verstöße in Konfigurationen werden als Alarme an das SIEM gesendet. Ansible-Playbooks oder ähnliche Skripte werden entwickelt, um die Wiederherstellung einer Konfiguration auf Knopfdruck zu ermöglichen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Integrationen zwischen NCM, ITSM und SIEM. Es wird ein Compliance-Bericht aus dem NCM-Tool angefordert und analysiert. Die Protokolle der letzten Notfallübungen werden eingesehen, um die erfolgreiche Durchführung des Wiederherstellungstests zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

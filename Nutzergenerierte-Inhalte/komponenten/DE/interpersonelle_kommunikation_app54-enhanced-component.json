@@ -1,0 +1,1820 @@
+{
+  "component-definition": {
+    "uuid": "56c55a9c-328c-4f13-aec2-ebbe07fb06b9",
+    "metadata": {
+      "title": "APP.5.4 Interpersonelle Kommunikation - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:33.361324+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "f91359e1-d4c8-49b0-92a6-fcf2400ca77d",
+        "type": "software",
+        "title": "APP.5.4 Interpersonelle Kommunikation",
+        "description": "This component represents the implementation of all controls for Baustein APP.5.4.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Unified Communications bezeichnet einen Dienst, der verschiedene Kommunikationsdienste in einer Anwendung und in der Regel auch einem Softclient vereint. Damit wird der Anteil der traditionellen Telefonie in der persönlichen digitalen Kommunikation reduziert. Die möglichen Kommunikationswege werden um zusätzliche Dienste wie Video, diverse Formen von Chats und Erreichbarkeitsanzeigen erweitert.<BR>Eine Kommunikationsbeziehung zwischen zwei oder mehr Teilnehmenden wird unabhängig vom benutzten Dienst als Konversation bezeichnet.<BR>Die häufig bei Unified Communications und Collaboration (UCC) genannte Zusammenarbeit (Collaboration) geht noch einen Schritt weiter. Während damit in der Vergangenheit häufig nur Dienste wie Screen Sharing und (digitales) Whiteboarding bezeichnet wurden, stellen UCC-Dienste viele weitere Funktionen zur Verfügung. Insbesondere beim Zusammenarbeiten von Teams hat sich eine Anzahl von Anwendungen etabliert, die häufig als Cloud-Dienst benutzt werden und neben Telefonie, Erreichbarkeitsanzeige, klassischen Chats, Video-Anrufen und Konferenzen auch Team-Chatbereiche sowie gemeinsame Dateiablagen beinhalten. Hinzukommen (offene) Schnittstellen, wodurch zusätzliche Anwendungen integriert werden können, so dass der Gesamtdienst funktional gegebenenfalls sehr umfangreich wird."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, die Informationssicherheit als integralen Bestandteil beim erweiterten Kommunikationsspektrum von UCC-Diensten zu etablieren, ein Bewusstsein für die potenzielle Gefährdungslage dieser Anwendungen zu schaffen und Ansätze zur Vermeidung von Gefährdungen anzubieten."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein APP.5.4 Unified Communications und Collaboration (UCC) ist auf alle IT-Systeme und Kommunikationsnetze sowie Anwendungen anzuwenden, mit denen UCC-Dienste betrieben werden. Da UCC über Datennetze betrieben wird, sind zusätzlich zu diesem Baustein die Anforderungen der Bausteine NET.1.1 Netzarchitektur- und Design und NET.3.2 Firewall zu berücksichtigen.<BR>Da sich der Geltungsbereich von Kommunikationsdiensten durch UCC zunehmend erweitert, gibt es eine besonders große Zahl von Überschneidungen mit anderen Bausteinen.<BR>Dieser Baustein behandelt die folgenden Inhalte:<BR>• die UCC-Dienste sowie Interaktion und Wechselwirkungen unterschiedlicher Dienste<BR>• die (Soft-) Clients, die bereitgestellt werden, um diese Dienste zu benutzen und deren Funktionsumfang<BR>• die zugehörigen Infrastrukturkomponenten, sofern diese nicht bereits durch andere Bausteine abgedeckt sind<BR>• Themen, die sich aus dem (aus Sicht der Benutzenden) fließenden Übergang zwischen der UCC-Umgebung und weiteren Anwendungen ergeben<BR>Folgende Inhalte sind ebenfalls von Bedeutung und werden an anderer Stelle behandelt:<BR>• Falls über eine dedizierte TK-Anlage telefoniert wird, muss der Baustein NET.4.1 TK-Anlagen angewendet werden.<BR>• Für Voice over IP (VoIP) als ein elementarer Dienst bei UCC-Diensten muss der Baustein NET.4.2 VoIP angewendet werden.<BR>• Für die zentralen Server sowie diverse Endgeräte und Clients müssen die Bausteine SYS.1.1 Allgemeiner Server und SYS.2.1 Allgemeiner Client sowie gegebenenfalls spezifische Bausteine angewendet werden.<BR>• Für die zugrundeliegenden Netze muss der Baustein NET.1.1 Netzarchitektur und -design angewendet werden.<BR>• Falls UCC-Dienste aus der Cloud bereitgestellt werden, ist der Baustein OPS.2.2 Cloud-Nutzung anzuwenden.<BR>• Um Dateiablagen abzusichern, die im Rahmen der UCC-Dienste bereitgestellt werden, sind insbesondere die Bausteine APP.3.3 Fileserver und SYS.1.8 Speicherlösungen anzuwenden.<BR>Dieser Baustein behandelt nicht die folgenden Inhalte:<BR>• Der E-Mail-Dienst ist in der Regel nicht Teil der UCC-Dienste. Hier ist der Baustein APP.5.3 Allgemeiner E-Mail-Client und -Server anzuwenden."
+          },
+          {
+            "name": "2.1. Eingeschränkte Verfügbarkeit von UCC-Diensten",
+            "value": "UCC-Dienste unterliegen häufig erhöhten Anforderungen an die Verfügbarkeit und gleichzeitig hängt die Funktionstüchtigkeit von UCC-Diensten von weiteren IT-Systemen und Anwendungen ab.<BR>Falls die Datennetze, die von UCC-Diensten verwendet werden, nicht voll funktionsfähig sind, kann das die Verfügbarkeit der UCC-Dienste beeinträchtigen. So können beispielsweise Störungen im Datennetz oder bei der Internetverbindung die Qualität der Kommunikation einschränken, was eine verzögerte Sprachverständigung, Artefakte im Videobild oder den Abbruch der Verbindung verursachen kann. Abhängigkeiten zwischen kritischen IT-Systemen können auch die Funktionsfähigkeit von weiteren Diensten oder Organisationseinheiten behindern. Wenn beispielsweise UCC als Kommunikationsplattform zwingend erforderlich ist, um das Netz wiederaufzubauen, das Netz aber benötigt wird, damit die UCC-Dienste funktionieren, dann blockieren sich beide und können nicht wiederhergestellt werden.<BR>Häufig werden UCC-Dienste als Cloud-Dienst benutzt oder bei einem Dienstleistungsunternehmen betrieben, wodurch Störungen bei externen Netzen oder beim Dienstleistungsunternehmen zu eingeschränkter Verfügbarkeit der UCC-Dienste führen können. Gleiches gilt für den Authentisierungsdienst, über den sich die Benutzenden an den UCC-Diensten anmelden. Fällt der Authentisierungsdienst aus, können die UCC-Dienste oft nicht mehr verwendet werden."
+          },
+          {
+            "name": "2.2. Unzureichende Planung von UCC",
+            "value": "Wenn UCC nicht so geplant wird, wie es auch tatsächlich benutzt werden soll, kann dies Auswirkungen auf die Funktionalität aller UCC-Dienste haben. Werden UCC-Komponenten verändert oder vermehrt benutzt, z. B. durch eine erhöhte Anzahl von Benutzenden, kann eine ursprünglich geeignete Planung unzureichend werden.<BR>Je nach Bereitstellungsart und benutzten Diensten können sich die Anforderungen der UCC-Komponenten an die Netze stark unterscheiden. Eine auf Sprachkommunikation fokussierte UCC-Komponente im eigenen Netz kann beispielsweise andere Anforderungen an Internet- und WAN-Verbindungen stellen als ein Cloud-Dienst, der auch mobil benutzt werden soll. Werden die Netze nicht so geplant, dass sie UCC-Dienste berücksichtigen, sind die UCC-Dienste nicht ausreichend benutzbar.<BR>Entsprechende Gefährdungen gibt es auch für die zu berücksichtigenden Endgeräte. Besonders die Videokommunikation und die zugehörigen Funktionen stellen zum Teil sehr hohe Anforderungen an die Clients. Insbesondere bei Thin Clients kann dies zu Problemen führen, da UCC-Dienste häufig ganz oder teilweise auf dem Endgerät ausgeführt werden, um Kommunikationsdatenströme zu optimieren. Clients mit unzureichender Rechenleistung können beispielsweise Aussetzer oder Artefakte bei der Videokommunikation bedingen."
+          },
+          {
+            "name": "2.3. Fehlerhafte Konfiguration von UCC",
+            "value": "Eine große Zahl von Funktionen und Diensten bedeutet oft auch eine Vielzahl von Konfigurationsmöglichkeiten. Dabei können Fehlkonfigurationen auftreten.<BR>Benutzende können oder müssen ihre UCC-Clients teilweise selbst konfigurieren. Dies kann Benutzende aufgrund der Vielzahl von Konfigurationsmöglichkeiten überfordern und fehlerhafte Konfigurationen verursachen. Wenn beispielsweise im Büro und im Homeoffice verschiedene Headsets verwendet werden, muss die Konfiguration gegebenenfalls angepasst werden. Fehlkonfigurationen können dazu führen, dass Benutzende in Besprechungen nicht hör- oder sichtbar sind oder selbst keinen Ton hören. Darüber hinaus können ungewollt Informationen preisgegeben werden, wenn Raumsysteme so konfiguriert sind, dass eingehende Kommunikationsanfragen automatisch angenommen werden.<BR>Ebenso können durch ein unzureichendes Identitäts- und Berechtigungskonzept Fehler auftreten, wenn UCC-Dienste konfiguriert werden. Administrierende, die im Rahmen der Einrichtung von neuen Konten ebenfalls zentrale Routing-Einstellungen ändern, können hierdurch eine gravierende Fehlkonfiguration verursachen. Diese kann dazu führen, dass Daten verloren gehen, oder der UCC-Dienst ausfällt.<BR>Zu den Fehlkonfigurationen durch ein unzureichendes Identitäts- und Berechtigungskonzept gehören auch unzureichend eingeschränkte Berechtigungen von externen Teilnehmenden. Können diese beispielsweise unberechtigt auf Inhalte von Konversationen zugreifen, so können Informationen abfließen oder manipuliert werden."
+          },
+          {
+            "name": "2.4. Unbefugte oder missbräuchliche Benutzung der Administrationsrechte eines UCC-Dienstes",
+            "value": "Durch die zugewiesenen Administrationsrechte können Administrierende die UCC-Dienste gegebenenfalls tiefgreifend ändern. Werden Administrationsrechte unbefugt oder missbräuchlich benutzt, kann dies weitreichende Folgen haben. Beispielsweise können Administrationsrechte dazu benutzt werden, um einen privaten Bereich, wie einen Chat oder eine Dateiablage, der ursprünglich nur für einen begrenzten Personenkreis zugänglich war, für alle Benutzenden des UCC-Dienstes freizugeben. Hierdurch können schützenswerte Informationen durch unbefugte Personen eingesehen und gegebenenfalls verändert werden.<BR>Weiterhin können durch vorsätzlich veränderte Routing-Konfigurationen die UCC-Dienste nicht oder nur eingeschränkt zur Verfügung stehen. Falls beispielsweise sämtliche ausgehende Anrufe durch zentrale IT-Systeme blockiert werden, kann der Dienst Telefonie nicht mehr benutzt werden."
+          },
+          {
+            "name": "2.5. Preisgabe von schützenswerten Informationen",
+            "value": "Moderne UCC-Clients verfügen über eine Vielfalt an Funktionen und sind daher für viele Benutzende unübersichtlich. Dies begünstigt Fehlbedienungen, die dazu führen können, dass Informationen nicht regelkonform weitergegeben werden. Wird versehentlich ein falscher Kontakt ausgewählt, erhält dieser gegebenenfalls per Chat ungewollt schützenswerte Informationen. Ein weiteres Szenario ist, ungewollt Informationen bei einer Bildschirmfreigabe preiszugeben, wenn beispielsweise versehentlich der E-Mail-Client statt der vorgesehenen Präsentation freigegeben wird.<BR>Vielen Benutzenden ist nicht bewusst, dass die UCC-Dienste Daten, die beispielsweise innerhalb von privaten Chats gesendet werden, in einer Cloud abspeichern. So können unbewusst Ablagerichtlinien der Institution verletzt werden. Gleiches gilt für Dateien, in denen Konversationen aufgezeichnet wurden.<BR>Teambereiche verfügen zwar in der Regel über einen definierten Kreis von Benutzenden und entsprechende Zugriffsbeschränkungen, jedoch ist vielen Benutzenden nicht bewusst, dass die Zugriffsrechte und Mitgliedschaften nachträglich modifiziert werden können. Dadurch können weitere Personen auf alle zuvor dort abgelegten Dateien zugreifen. Darüber hinaus werden häufig öffentliche Teambereiche erstellt, denen weitere Personen ohne explizite Erlaubnis beitreten können. Dadurch können gegebenenfalls Daten von unberechtigten Personen eingesehen werden. Beispielsweise kann ein Teambereich eines Projekts ausschließlich aus internen Benutzenden bestehen. Teilnehmende laden nun interne Dokumente hoch, da alle Teammitglieder intern sind. Wenn im weiteren Projektverlauf externe Personen in den Bereich eingeladen werden, können sie auf alle bisherigen Dokumente zugreifen."
+          },
+          {
+            "name": "2.6. Preisgabe von personenbezogenen Informationen",
+            "value": "UCC-Dienste erheben an vielen Stellen Daten, die auch anderen Benutzenden angezeigt werden. Dies kann dazu führen, dass personenbezogene Informationen ungewollt preisgegeben werden.<BR>Unter anderem kann die Verfügbarkeit von Benutzenden sichtbar sein. Auch Zeitstempel an Beiträgen in Chats bis hin zu umfangreichen Auswertungen über Gespräche, Aktivitäten oder Inhalte für einzelne Benutzende können Teil einer UCC-Komponente sein. Dabei können sogar Personenprofile durch die UCC-Dienste gebildet werden. Auch Personen ohne erweiterte Berechtigungen erhalten häufig Zugriff auf diese Auswertungen. Dadurch können sie Rückschlüsse auf Arbeitszeiten und -inhalte sowie persönliche Beziehungen anderer Personen ziehen und diese beispielsweise zur Leistungsüberwachung verwenden.<BR>Werden bei mobilem Arbeiten virtuelle Konferenzen benutzt, können ungewollt private Informationen an die Teilnehmenden der Konferenz übermittelt werden. Dazu zählen beispielsweise Personen, die durch das Videobild laufen, persönliche Gegenstände im Hintergrund einer Videoübertragung oder Geräusche und Stimmen aus dem privaten Umfeld."
+          },
+          {
+            "name": "2.7. Wechselwirkungen bei UCC-Diensten",
+            "value": "UCC-Dienste können untereinander Wechselwirkungen verursachen, welche die Funktionalität einschränken.<BR>Um das Benutzungserlebnis zu verbessern, werden verschiedene Dienste häufig in einer Benutzungsoberfläche verknüpft. Dies kann jedoch zu Abhängigkeiten zwischen den Diensten führen. Wird beispielsweise der Videokonferenzdienst in eine Oberfläche zur Teamkollaboration integriert, kann der Videodienstes nicht mehr verwendet werden, falls die Oberfläche ausfällt.<BR>UCC-Dienste benutzen häufig gemeinsame Ressourcen. Dies kann zu Konflikten führen, welche die Funktionalität beeinträchtigen. Werden Headsets beispielsweise von einer Telefonie- und einer Videokonferenzanwendung gleichzeitig verwendet, können die Headsets durch eine Anwendung blockiert werden und dann nicht mehr für die andere Anwendung zur Verfügung stehen.<BR>Manche Anwendungen haben sehr hohe Ressourcenanforderungen. Wenn mehrere UCC-Dienste gleichzeitig auf einem IT-System ausgeführt werden, kann dies dazu führen, dass der Client überfordert ist und das IT-System ausfällt oder abstürzt. Wenn beispielsweise mehrere Videokonferenzanwendungen parallel im Hintergrund ausgeführt werden, kann die resultierende Auslastung des Arbeitsspeichers den Client stark beeinträchtigen."
+          },
+          {
+            "name": "2.8. Zugriff auf Applikationen oder Ressourcen durch Freigabe der Steuerung",
+            "value": "Werden den Teilnehmenden innerhalb einer Konversation Desktop- oder Bildschirminhalte angezeigt, kann die Steuerung durch den Freigebenden an andere Benutzende übertragen werden. Dies kann jedoch dazu führen, dass der Freigebende die Kontrolle über weitere Handlungen verliert.<BR>Da die Funktion zwar häufig vorhanden ist, in der Regel aber nur selten benutzt wird, sind viele Benutzende mit der Bedienung nicht vertraut, akzeptieren die Freigabe und verlieren dann die Kontrolle über ihren Client. Beispielsweise können Benutzende die Steuerung ihrer Maus freigeben, ohne zu wissen, wie die Freigabe beendet werden kann. Dadurch können Teilnehmende der Konversation möglicherweise auf weitere Anwendungen des Clients zugreifen."
+          },
+          {
+            "name": "2.9. Vorspiegelung falscher Identitäten",
+            "value": "Dadurch, dass neue UCC-Dienste eingeführt werden und Externe neue Möglichkeiten erhalten, Kontakt aufzunehmen, ergeben sich neue Wege für Angreifende, die sich als vertrauenswürdige Kommunikationspartner und -partnerin ausgeben wollen, um so an vertrauliche Informationen zu gelangen.<BR>Die Komplexität von UCC-Diensten erhöht die Wahrscheinlichkeit für Fehlbedienungen oder unbewusste Verletzungen von Sicherheitsrichtlinien durch die Benutzenden. Hyperlinks zu schädlichen Inhalten können beispielsweise geöffnet werden, weil die UCC-Dienste als interne Plattform mit erhöhter Vertrauenswürdigkeit wahrgenommen werden.<BR>Häufig sind sich die Benutzenden nicht darüber bewusst, dass sie auch von unbekannten Externen kontaktiert werden können. Dadurch sind sie anfälliger für Social Engineering, beispielsweise über einen Chat oder eine Einladung zu einer Konversation.<BR>Weiterhin können Angreifende ihre angezeigten Namen, ihre Stimme oder ihr Aussehen manipulieren. Dadurch kann sich zum Beispiel eine externe Person über die vermeintlich interne Kommunikationsplattform als vorgesetzte Person ausgeben, um so vertrauliche Informationen oder Dokumente direkt über den Chat zu erhalten."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "6eaba025-00c4-4164-b97c-0fd084b49fee",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/interpersonelle_kommunikation_profile.json",
+            "description": "Implementation for all controls in Baustein APP.5.4",
+            "implemented-requirements": [
+              {
+                "uuid": "e05398c0-8700-4fdf-a00b-8bc0952e9b64",
+                "control-id": "ARCH.8.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a11-m1",
+                    "uuid": "ca5daf67-dca5-4643-9b7d-e1e124ddcde6",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verfügbarkeit der UCC-Dienste hängt von einzelnen, nicht-redundanten Komponenten ab. Es gibt keine spezifischen Maßnahmen zur Sicherstellung der Verfügbarkeit."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die gesamte UCC-Plattform läuft auf einem einzigen physischen oder virtuellen Server. Fällt dieser aus, sind alle Dienste nicht verfügbar. Ein Monitoring beschränkt sich auf einen Ping-Check des Servers."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Architektur der UCC-Umgebung und identifiziert Single Points of Failure (SPoFs)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m2",
+                    "uuid": "623c5bac-7b91-4267-b839-4cafec10f8c2",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es sind grundlegende Hardware-Redundanzen wie redundante Netzteile oder Festplatten-RAIDs für die zentralen Server vorhanden. Eine Redundanz auf Dienst-Ebene existiert jedoch nicht. Die Dienstverfügbarkeit wird überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der UCC-Server ist mit zwei Netzteilen ausgestattet und verwendet ein RAID-System. Fällt jedoch die UCC-Anwendung selbst aus, gibt es keinen Failover. Ein Monitoring-System prüft, ob der UCC-Dienst auf dem Server läuft und alarmiert bei einem Ausfall."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Hardware-Spezifikationen der Server und die Konfiguration des Monitorings. Es wird verifiziert, dass keine Anwendungs- oder Standortredundanz implementiert ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m3",
+                    "uuid": "d44dbc4a-7f1c-4713-bfa5-1164d1c49b34",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verfügbarkeit von UCC-Diensten wird durch geplante Maßnahmen sichergestellt. Dies beinhaltet eine redundante Auslegung von zentralen Servern und die Nutzung von Call Admission Control (CAC) zur Qualitätssicherung. Die Verfügbarkeit wird durch ein Monitoring überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Kritische zentrale Server werden als Aktiv/Passiv-Cluster konfiguriert. CAC wird so eingestellt, dass bei Überlastung des Netzwerks keine neuen Videoanrufe mehr zugelassen werden, um die Qualität bestehender Gespräche zu sichern. Das Monitoring überwacht nicht nur die Erreichbarkeit, sondern auch spezifische UCC-Qualitätsparameter."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des Server-Clusters. Die Konfiguration des Call Admission Control wird analysiert. Es wird Einsicht in die Konfiguration und die Daten des Monitoring-Systems genommen, um die Überwachung der Verfügbarkeit und Qualität zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m4",
+                    "uuid": "263d6e60-1fad-4721-b594-169a44f26b75",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verfügbarkeit von UCC-Diensten SOLLTE insbesondere durch folgende technische Maßnahmen sichergestellt werden: redundante Auslegung zentraler Server und Dienste, Benutzung von Call Admission Control (CAC) und möglichst autark funktionierende UCC-Dienste. Bei Cloud-basierten Diensten SOLLTE der Cloud-Provider sowie der Internet-Provider ausfallsicher angebunden werden. Ein hochverfügbarer SIP-Provider SOLLTE ebenfalls ausfallsicher angebunden sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zentrale Server werden als Aktiv/Aktiv-Cluster betrieben. Für Cloud-Dienste werden redundante Internet-Anbindungen über verschiedene Provider genutzt. Der SIP-Trunk wird ebenfalls redundant über zwei verschiedene Provider oder Standorte realisiert. Es wird darauf geachtet, dass die UCC-Lösung so konzipiert ist, dass der Ausfall einer Komponente (z.B. Chat-Server) nicht die Kernfunktionalität (Telefonie) beeinträchtigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Architekturpläne und Konfigurationen zur Verifizierung der redundanten Auslegung von Servern, Internet-Anbindungen und SIP-Providern. Es wird die Konzeption der UCC-Dienste auf ihre Autarkie im Fehlerfall geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a11-m5",
+                    "uuid": "3d96416a-f95c-4a2e-aec2-86cdcba77e20",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle kritischen UCC-Komponenten sind in einer vollredundanten High-Availability-Architektur über mehrere geografische Standorte verteilt (Geo-Redundanz). Der Failover-Prozess ist vollständig automatisiert und wird regelmäßig getestet. Ein umfassendes Monitoring der Dienstgüte (Quality of Experience) liefert proaktiv Hinweise auf sich anbahnende Probleme."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die UCC-Plattform wird in zwei getrennten Rechenzentren in einem Aktiv/Aktiv-Verbund betrieben. Im Falle eines Ausfalls eines Rechenzentrums übernehmen die Systeme im anderen Standort nahtlos den Betrieb. Regelmäßige, automatisierte Failover-Tests sind Teil des Betriebs. Dedizierte Monitoring-Sonden simulieren Benutzerverhalten und messen die wahrgenommene Qualität von Anrufen und Konferenzen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Geo-Redundanz-Architektur. Es werden die Protokolle der automatisierten Failover-Tests eingesehen. Die Konfiguration und die Berichte des Quality of Experience-Monitorings werden geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "08b40602-146f-4b6b-991c-8e5aa00abe49",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a2-m1",
+                    "uuid": "14628376-4819-4e98-b836-4ecd110d5e98",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei der Netzplanung wird lediglich die grob geschätzte zusätzliche Bandbreite für UCC berücksichtigt. Spezifische Leistungsparameter wie Paketverlust, Jitter und Latenz werden ignoriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Netzwerkkapazität wird pauschal um einen bestimmten Prozentsatz erhöht, ohne eine detaillierte Analyse der Anforderungen von Echtzeitkommunikation wie Voice oder Video. Quality of Service (QoS) wird nicht konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Dokumentation der Netzplanung. Es wird festgestellt, dass keine spezifischen Anforderungen für UCC-Dienste bezüglich Latenz, Jitter oder Paketverlust definiert und berücksichtigt wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m2",
+                    "uuid": "ae64d58f-6073-421e-8d40-30ce1b48f8e8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vor der Einführung von UCC-Diensten wird eine grundlegende Prüfung der Bandbreite und Latenz im Netzwerk durchgeführt. Die Prüfung ist jedoch nicht systematisch und deckt nicht alle Nutzungsszenarien (z. B. große Videokonferenzen) ab. Aspekte wie PoE und WLAN-Verfügbarkeit werden nicht proaktiv geplant."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden manuelle Tests mit Tools wie `ping` und `iperf` durchgeführt, um eine grobe Einschätzung der Netzwerkleistung zu erhalten. Es gibt keine dedizierten QoS-Klassen für UCC-Verkehr."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Ergebnisse der Netzwerkprüfung zeigen. Es wird festgestellt, dass die Tests nur einfache Szenarien abdecken und keine umfassende Analyse der Leistungsparameter unter Last stattgefunden hat. Die Dokumentation ist lückenhaft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m3",
+                    "uuid": "688a55da-ee21-420d-9385-1fb602cc3b46",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bevor UCC-Dienste eingeführt werden, MUSS geprüft werden, ob das Netz die UCC-spezifischen Leistungsparameter erfüllt. Falls nicht, MUSS ein Umgang damit festgelegt werden. Im Rahmen der allgemeinen Netzplanung SOLLTEN insbesondere folgende Aspekte berücksichtigt werden: Erfüllung der Parameter wie Paketverlust, Jitter und Latenz; ausreichende Netzkapazitäten (Bandbreite) für die geplante Nutzung; Berücksichtigung von Power over Ethernet (PoE) und die Verfügbarkeit von WLAN für mobile Endgeräte."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Rahmen der Netzplanung werden die vom UCC-Hersteller empfohlenen Schwellenwerte für Paketverlust, Jitter und Latenz als Anforderung definiert. Die Netzkapazität wird basierend auf der erwarteten Anzahl gleichzeitiger Voice- und Video-Streams berechnet. Die PoE-Budgets der Switches werden geprüft und die WLAN-Ausleuchtung für mobile UCC-Nutzung wird verifiziert. Bei Nichterfüllung werden entweder das Netz ertüchtigt oder die UCC-Dienste eingeschränkt (z.B. keine HD-Videotelefonie)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Netzplanungsdokumente. Es wird verifiziert, dass die spezifischen Leistungsparameter für UCC (Paketverlust, Jitter, Latenz, Bandbreite) dokumentiert sind und dass eine Prüfung gegen diese Werte stattgefunden hat. Stichprobenartig werden Switch-Konfigurationen auf PoE-Einstellungen und WLAN-Controller-Konfigurationen auf Abdeckung geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m4",
+                    "uuid": "418c4c0f-0035-4a8d-97f7-3e9f1ae67b25",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Netzplanung umfasst dedizierte Quality of Service (QoS)-Richtlinien, die UCC-Verkehr (insbesondere Voice und Video) priorisieren. Diese Aspekte werden bei jeder Erweiterung der UCC-Dienste erneut geprüft. Das Netzwerk wird aktiv auf die Einhaltung der definierten Leistungsparameter überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In allen relevanten Netzwerkkomponenten (Router, Switches, Firewalls) werden QoS-Konfigurationen (z. B. basierend auf DSCP-Markierungen) implementiert, um Echtzeitverkehr zu priorisieren. Ein Netzwerk-Monitoring-System überwacht kontinuierlich Jitter, Latenz und Paketverlust auf kritischen Pfaden und alarmiert bei Schwellenwertüberschreitungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration von Routern und Switches auf die Existenz und korrekte Implementierung von QoS-Richtlinien. Es wird Einsicht in die Daten des Netzwerk-Monitoring-Systems genommen, um zu verifizieren, dass die UCC-spezifischen Leistungsparameter überwacht werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a2-m5",
+                    "uuid": "7798dae3-8c57-4308-abae-6879721f7317",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Netzplanung verwendet Simulationswerkzeuge, um die Auswirkungen von UCC-Verkehr unter verschiedenen Lastszenarien zu modellieren und Kapazitätsengpässe proaktiv zu identifizieren. Quality of Service wird dynamisch verwaltet. Für kritische UCC-Dienste sind redundante und ausfallsichere Netzwerkpfade geplant und implementiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor größeren Rollouts werden mit Tools wie OPNET oder GNS3 Simulationen durchgeführt. Software-Defined Networking (SDN) wird eingesetzt, um QoS-Richtlinien zentral und dynamisch zu steuern. Kritische UCC-Server und Gateways sind über getrennte Switches und Router angebunden, um eine hohe Ausfallsicherheit zu gewährleisten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich Berichte aus den Netzwerksimulationen vorlegen. Es wird die Konfiguration des SDN-Controllers auf dynamische QoS-Richtlinien geprüft. Anhand von Netzwerkplänen und Konfigurationen wird die redundante Anbindung kritischer UCC-Komponenten verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "bc2f51d5-84ea-409c-af3a-a36e91a9039a",
+                "control-id": "DET.3.1.12",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a18-m1",
+                    "uuid": "00cc9a54-6077-4150-be5c-b2ce44a468df",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Protokolldateien der UCC-Komponenten werden mit den Standardeinstellungen lokal auf den Systemen gespeichert, aber nicht zentral gesammelt oder ausgewertet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Fehlerfall loggt sich ein Administrator auf dem jeweiligen UCC-Server ein und schaut sich die lokalen Log-Dateien an. Ein proaktives oder zentrales Monitoring von sicherheitsrelevanten Ereignissen findet nicht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, dass keine zentrale Log-Sammlung für UCC-Komponenten existiert und keine Integration in ein SIEM-System erfolgt ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m2",
+                    "uuid": "2bf2f6f8-9336-4bfc-a5ae-a7ea3dba0210",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Protokolldateien von kritischen UCC-Komponenten wie SBCs und zentralen Servern werden zentral gesammelt und archiviert. Es gibt jedoch keine spezifischen Regeln oder Anwendungsfälle zur automatisierten Auswertung dieser Daten auf Sicherheitsvorfälle."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Log-Management-System sammelt die Syslog-Nachrichten der UCC-Server. Die Daten werden zur späteren forensischen Analyse aufbewahrt. Es werden nur generische Alarme (z.B. 'Server nicht erreichbar') generiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert im Log-Management-System, dass die UCC-Logs ankommen. Es wird jedoch festgestellt, dass keine spezifischen Parsing- oder Korrelationsregeln für UCC-Sicherheitsereignisse implementiert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m3",
+                    "uuid": "87d4c5bf-ca84-4620-951e-fa1111214c8d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die zentralen UCC-Komponenten sind in das Sicherheitsmonitoring eingebunden. Es sind grundlegende Anwendungsfälle für die Erkennung von Sicherheitsvorfällen definiert und im SIEM-System implementiert, z.B. die Erkennung von fehlgeschlagenen Anmeldeversuchen in großer Zahl."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Logs der UCC-Server und SBCs werden an das SIEM gesendet. Dort gibt es Regeln, die bei mehr als 10 fehlgeschlagenen Logins von derselben IP-Adresse innerhalb einer Minute einen Alarm auslösen. Das SOC (Security Operations Center) hat eine Anweisung, wie auf diesen Alarm zu reagieren ist."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration des SIEM-Systems und verifiziert die Implementierung von grundlegenden Erkennungsregeln für UCC-Systeme. Es wird geprüft, ob für die daraus resultierenden Alarme Handlungsanweisungen (Playbooks) im SOC existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m4",
+                    "uuid": "5fc20fa8-7ee8-45f2-8edd-2f3cddea1be6",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die zentralen UCC-Komponenten SOLLTEN durch ein Sicherheitsmonitoring überwacht werden. Dies SOLLTE mindestens für Komponenten umgesetzt werden, die Verschlüsselungsendpunkte realisieren (z.B. MCUs) oder an Vertrauensgrenzen positioniert sind (z.B. SBCs). Wird ein System zur zentralen Detektion (SIEM) eingesetzt, SOLLTEN die zentralen UCC-Komponenten hierin eingebunden werden. Es werden spezifische Erkennungsregeln für UCC-Angriffe implementiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle SBCs, MCUs, Call Manager und angebundenen Datenbanken liefern ihre Logs an das SIEM. Dort sind spezifische Korrelationsregeln implementiert, um z.B. Betrugsversuche (Toll Fraud), Registrierungs-Hijacking oder Angriffe auf die Verschlüsselung zu erkennen. Die Regeln basieren auf bekannten Angriffsmustern für die eingesetzte UCC-Lösung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Datenquellen im SIEM und stellt sicher, dass alle kritischen UCC-Komponenten erfasst sind. Die Implementierung von spezifischen UCC-Angriffserkennungsregeln wird detailliert geprüft. Die Wirksamkeit wird ggf. durch einen simulierten Angriff getestet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a18-m5",
+                    "uuid": "4c4f9922-d7ea-43a1-a529-5b0cfa2f5a49",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Sicherheitsmonitoring für UCC nutzt Verhaltensanalyse (User and Entity Behavior Analytics, UEBA), um Anomalien im Kommunikationsverhalten zu erkennen. Das Monitoring ist in eine SOAR-Plattform (Security Orchestration, Automation, and Response) integriert, um auf erkannte Bedrohungen automatisiert zu reagieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein UEBA-Modul im SIEM lernt das normale Anrufverhalten der Benutzer und alarmiert, wenn ein Konto plötzlich beginnt, hunderte Anrufe in Risikoländer zu tätigen. Bei einem solchen Alarm löst das SIEM einen Webhook zur SOAR-Plattform aus. Diese führt ein automatisiertes Playbook aus, das die verdächtige IP-Adresse auf dem SBC blockiert und das Benutzerkonto temporär sperrt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration des UEBA-Moduls für die UCC-Daten. Die SOAR-Playbooks für UCC-Sicherheitsvorfälle werden analysiert. Es wird die Funktionsfähigkeit der automatisierten Reaktion durch einen Test-Alarm verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "7fb7b921-84f1-48b2-b873-318dc9181132",
+                "control-id": "DET.3.1.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a13-m1",
+                    "uuid": "8805938d-0c6e-467b-b18c-ac8fa06bbe0b",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Jeder Administrator mit Zugriff auf die UCC-Plattform kann alle Einstellungen des SIP-Trunks eigenmächtig und ohne Überprüfung ändern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein einzelner Administrator ändert eine Routing-Konfiguration, um ein Problem zu beheben, verursacht dadurch aber unbeabsichtigt, dass keine internationalen Anrufe mehr möglich sind. Es gibt keine Kontrollinstanz."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Berechtigungen für die Administration der SIP-Trunk-Einstellungen und stellt fest, dass mehrere Personen uneingeschränkte Schreibrechte haben. Es gibt keinen dokumentierten oder erzwungenen Freigabeprozess."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m2",
+                    "uuid": "cc8a11b6-b1d8-4ba4-bf4b-a9f6743a7f43",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt eine organisatorische Regelung, dass kritische Änderungen an SIP-Trunks von einer zweiten Person geprüft werden sollen. Die Einhaltung dieser Regelung wird jedoch nicht technisch erzwungen oder systematisch kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Team ist abgemacht, dass man 'kurz Bescheid sagt', bevor man etwas am Routing ändert. Dies geschieht informell per Chat. Eine formelle Freigabe oder Dokumentation findet nicht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer befragt die Administratoren zum Änderungsprozess. Es wird klar, dass der Prozess informell ist und es keine technischen Mittel gibt, die eine einseitige Änderung verhindern."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m3",
+                    "uuid": "57243322-cfaa-4b92-83ab-29619dbd5e2a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für kritische Änderungen an der Konfiguration von SIP-Trunks wird ein 4-Augen-Prinzip im Rahmen des Change-Management-Prozesses angewendet. Alle Änderungen werden in einem Change-Request-Ticket dokumentiert und müssen vor der Umsetzung genehmigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Administrator erstellt ein Ticket im Change-Management-System, das die geplante Änderung (z.B. an der Routing-Konfiguration) beschreibt. Ein zweiter, benannter Administrator oder der Teamleiter prüft und genehmigt das Ticket. Erst danach wird die Änderung umgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Change-Management-Protokolle für kürzliche Änderungen an SIP-Trunks. Es wird verifiziert, dass für alle kritischen Änderungen dokumentierte Anträge und Genehmigungen nach dem 4-Augen-Prinzip vorliegen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m4",
+                    "uuid": "dc3863db-6ec1-4376-8d60-b68b64de4c5c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn SIP-Trunks administriert werden, SOLLTE für folgende Tätigkeiten ein 4-Augen-Prinzip angewendet werden: Änderungen an Routing-Konfigurationen, an Parametern für Call Admission Control, an der Verschlüsselung und an der lokalen Speicherung von Verbindungsdaten. Das 4-Augen-Prinzip wird, wo technisch möglich, durch getrennte Rollen und Berechtigungen im Administrations-Interface durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der UCC-Plattform werden zwei Admin-Rollen konfiguriert: 'Change Preparer' und 'Change Approver'. Ein Preparer kann eine Änderung für die in der Anforderung genannten Bereiche vorbereiten, aber nicht aktivieren. Nur ein Approver kann die vorbereitete Änderung prüfen und live schalten. Alle Aktionen werden revisionssicher protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der administrativen Rollen und Berechtigungen in der UCC-Plattform. Es wird verifiziert, dass für die kritischen Bereiche eine technische Trennung zwischen Vorbereitung und Aktivierung einer Änderung existiert. Die Audit-Logs werden auf die korrekte Anwendung des Prinzips geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a13-m5",
+                    "uuid": "7342756a-2c07-4441-b581-8664cea360f2",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Administration von SIP-Trunks erfolgt ausschließlich über eine Privileged Access Management (PAM)-Lösung. Änderungen werden über einen automatisierten Workflow mit 4-Augen-Prinzip abgewickelt. Konfigurationsänderungen werden als Code (Infrastructure as Code) verwaltet und Änderungen durchlaufen einen Peer-Review- und einen automatisierten Testprozess, bevor sie zur Genehmigung vorgelegt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Administratoren haben keinen direkten Zugriff mehr auf die UCC-Plattform. Sie checken Konfigurationsänderungen in ein Git-Repository ein. Ein Pull-Request löst automatisierte Syntax- und Sicherheitstests aus. Ein zweiter Administrator muss den Code reviewen und genehmigen. Erst dann deployt eine CI/CD-Pipeline die Änderung über die PAM-Lösung auf das Produktivsystem."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration der PAM-Lösung und der CI/CD-Pipeline. Das Git-Repository wird auf die Historie von Änderungen, Reviews und Genehmigungen geprüft. Es wird verifiziert, dass kein direkter administrativer Zugriff auf die SIP-Trunk-Konfiguration möglich ist."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a7d63697-69b6-4ce1-b3a3-7bb441af366c",
+                "control-id": "DEV.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ISGA",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a1-m1",
+                    "uuid": "5fa68d91-db44-4e84-9030-acd7e81e99aa",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Planung für UCC-Dienste existiert nur für einzelne Aspekte, beispielsweise für die Ablösung der klassischen Telefonie. Übergreifende Funktionen wie Collaboration, Chat oder Videokonferenzen werden ad hoc und ohne strategische Planung eingeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Planung beschränkt sich auf eine Anforderungsliste für einen Telefonie-Client. Es gibt keine Analyse der Abhängigkeiten von der Netzwerkinfrastruktur oder anderen Anwendungen. Organisatorische Regelungen zur Nutzung werden nicht erstellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die vorhandenen Planungsdokumente. Es wird geprüft, ob die Planung nur isolierte UCC-Dienste abdeckt und ob wesentliche Aspekte wie funktionale Anforderungen an die Gesamtheit, Absicherung oder organisatorische Regelungen fehlen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m2",
+                    "uuid": "4d491f90-6dbe-4e6b-bb65-b29b802633d9",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wurde ein grundlegender Plan erstellt, der die wichtigsten Einsatzzwecke und funktionalen Anforderungen an die UCC-Dienste beschreibt. Die Planung berücksichtigt jedoch nicht ausreichend die Wechselwirkungen zwischen den Diensten oder die Integration in die bestehende IT-Infrastruktur."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Dokument listet die gewünschten UCC-Dienste und deren Hauptfunktionen auf. Eine detaillierte Analyse der Netzwerkanforderungen oder der notwendigen Schnittstellen fehlt jedoch. Die Auswahl der Produkte erfolgt primär anhand der Funktionsliste, nicht anhand von Sicherheits- oder Integrationsanforderungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht den Plan mit den Anforderungen aus dem Baustein. Es wird festgestellt, ob der Plan zwar die grundlegenden Dienste beschreibt, aber Aspekte wie 'Analyse der Kommunikation und der Abhängigkeiten' oder 'Integration in die IT-Infrastruktur' nur oberflächlich oder gar nicht behandelt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m3",
+                    "uuid": "fc9e3585-b26c-48fd-9da8-42ba1b6b43e4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS umfassend und detailliert geplant werden, wie und für welchen Zweck UCC eingesetzt werden soll. Die Planung MUSS insbesondere die Wechselwirkungen der UCC-Dienste berücksichtigen und mindestens folgende Aspekte beinhalten: Einsatzzwecke, funktionale Anforderungen, Anforderungen zur Absicherung, Festlegung zu übertragbaren Informationen, Analyse der Abhängigkeiten, Produktauswahl und organisatorische Regelungen. Bei der Planung MUSS berücksichtigt werden, wie UCC in die IT-Infrastruktur integriert wird, einschließlich Netzsegmentierung und Schnittstellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein detailliertes UCC-Konzept erstellt, das alle in der Anforderung genannten Punkte abdeckt. Dieses Konzept wird vor der Einführung von den relevanten Stakeholdern (IT-Betrieb, Informationssicherheit, Datenschutz) geprüft und freigegeben. Die Produktauswahl basiert auf einem definierten Anforderungskatalog, der auch Sicherheitskriterien enthält."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich das UCC-Planungsdokument bzw. -Konzept vorlegen. Es wird verifiziert, dass alle in der Anforderung genannten Aspekte (Einsatzzwecke, funktionale und Sicherheitsanforderungen, Datenflüsse, Abhängigkeiten, Produktauswahl, Regelungen, Integration) detailliert behandelt und dokumentiert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m4",
+                    "uuid": "0684733b-16c8-405a-9388-46f0244e7038",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die UCC-Planung ist ein wiederkehrender Prozess, der regelmäßig, mindestens jährlich, sowie bei jeder wesentlichen Änderung der Dienste oder der Infrastruktur überprüft und aktualisiert wird. Die Planung umfasst eine detaillierte Risikoanalyse für die ausgewählten UCC-Dienste und definiert konkrete Maßnahmen zur Risikominderung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die UCC-Planung ist Teil des IT-Service-Katalogs und wird über einen formellen Change-Management-Prozess verwaltet. Die Risikoanalyse wird anhand von Bedrohungsszenarien aus dem IT-Grundschutz-Kompendium (z. B. Gefährdungen aus diesem Baustein) durchgeführt. Die Ergebnisse fließen direkt in die Konfigurationsvorgaben ein."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Protokolle der regelmäßigen Überprüfungen des UCC-Konzepts. Es wird geprüft, ob eine dokumentierte Risikoanalyse existiert und ob deren Ergebnisse nachvollziehbar in die Planung und die Sicherheitsanforderungen eingeflossen sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a1-m5",
+                    "uuid": "3e045942-b09e-488f-9ddd-60934793ce74",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die UCC-Planung ist vollständig in das übergreifende ISMS und die IT-Strategie der Organisation integriert. Sie basiert auf einem kontinuierlichen Verbesserungsprozess, der Kennzahlen (KPIs) zur Sicherheit, Verfügbarkeit und Nutzung der Dienste erhebt und auswertet. Bedrohungsmodellierungen werden eingesetzt, um proaktiv Sicherheitsanforderungen für zukünftige UCC-Anwendungsfälle zu definieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die UCC-Planung wird durch ein dediziertes Gremium gesteuert, das regelmäßig tagt. Dashboards visualisieren die definierten KPIs. Automatisierte Tools unterstützen die Analyse von Abhängigkeiten. Threat-Modeling-Workshops werden durchgeführt, um potenzielle Schwachstellen in der geplanten Architektur frühzeitig zu identifizieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Integration der UCC-Planung in das ISMS, z.B. durch Einsicht in Management-Reviews. Es wird geprüft, ob definierte KPIs für UCC-Dienste existieren, ob diese gemessen werden und ob die Ergebnisse nachweislich zu Anpassungen im UCC-Konzept führen. Die Existenz von Threat-Modeling-Berichten wird stichprobenartig kontrolliert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ffea8c7c-a20e-41e7-9b09-fcb15e8e59bc",
+                "control-id": "KONF.10.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a9-m1",
+                    "uuid": "d29813ed-8a5f-49c6-8f3e-b5228f58c92b",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfiguration der UCC-Systeme erfolgt mit den Standardeinstellungen des Herstellers. Nur die offensichtlichsten Sicherheitseinstellungen, wie das Ändern des Standard-Administratorpassworts, werden vorgenommen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Während der Installation wird das Passwort für den 'admin'-Benutzer geändert. Alle anderen Einstellungen, wie Verschlüsselungsparameter, offene Dienste oder Logging-Level, bleiben im Auslieferungszustand."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt einen Konfigurationsscan des UCC-Systems durch und vergleicht das Ergebnis mit bekannten Härtungsempfehlungen. Es wird eine hohe Anzahl an Abweichungen und die Verwendung von Standardeinstellungen festgestellt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m2",
+                    "uuid": "0eb79f6e-9484-4318-b89e-50c538de683e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Härtung der UCC-Systeme wird anhand einer generischen Checkliste durchgeführt. Die Konfiguration wird jedoch nicht auf den spezifischen Kontext der Organisation oder das definierte Schutzbedürfnis angepasst."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Administrator arbeitet eine allgemeine Härtungsanleitung aus dem Internet ab. Ob alle Punkte für die eigene Umgebung sinnvoll sind oder ob weitere, nicht genannte Einstellungen relevant wären, wird nicht bewertet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die verwendete Härtungscheckliste zeigen und vergleicht sie mit den spezifischen Anforderungen der Organisation. Es wird geprüft, ob die Konfiguration über die Checkliste hinausgehende Risiken berücksichtigt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m3",
+                    "uuid": "254a3d5f-f0d3-4c10-9510-a9198ff3d72b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Um UCC sicher zu konfigurieren, SOLLTEN mindestens die folgenden Aspekte berücksichtigt werden: Verschlüsselung von Signalisierungs- und Mediendaten auch auf vertrauenswürdigen Übertragungsstrecken; Absicherung von gespeicherten Daten, insbesondere Festlegung für Zugriffsberechtigung auf Aufzeichnungen; Einschränkung der Dienste auf ausschließlich interne Benutzende; Einschränkung der Übertragung von Erreichbarkeitsinformationen. Gespeicherte Daten SOLLTEN verschlüsselt werden. Auf gespeicherte Daten SOLLTEN Benutzende nur nach vorheriger Authentisierung zugreifen können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine verbindliche Konfigurations- und Härtungsrichtlinie für die UCC-Systeme erstellt. Diese Richtlinie schreibt die Verschlüsselung auch im internen Netz vor, definiert, wer auf Aufzeichnungen zugreifen darf und schränkt die Sichtbarkeit von Präsenzinformationen auf definierte Gruppen ein. Die Umsetzung der Richtlinie wird dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Härtungsrichtlinie vorlegen. Stichprobenartig wird die Konfiguration der UCC-Systeme auf die Umsetzung der genannten Punkte (interne Verschlüsselung, Zugriffsrechte auf Aufzeichnungen, etc.) überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m4",
+                    "uuid": "237ee44e-739d-4f3d-ac02-18300daf951b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sichere Konfigurationsbaselines werden für alle UCC-Komponenten definiert, dokumentiert und versioniert. Für textbasierte Konversationen SOLLTE ein Malware-Schutz aktiviert werden. Die Umsetzung der Konfiguration SOLLTE regelmäßig und anlassbezogen auf Einhaltung der Vorgaben geprüft und angepasst werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Härtungsrichtlinien werden als detaillierte Konfigurationsbaselines (z.B. nach CIS-Benchmarks) ausgearbeitet und im Intranet veröffentlicht. Ein Virenscanner mit Anbindung an die UCC-Plattform prüft hochgeladene Dateien in Chats. Regelmäßige interne Audits überprüfen die Einhaltung der Baselines."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die definierten Konfigurationsbaselines. Es wird die Konfiguration des Malware-Schutzes geprüft. Die Protokolle und Ergebnisse der internen Konfigurationsaudits werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a9-m5",
+                    "uuid": "bdf4c6e4-e86a-482d-b747-0d1f555edaea",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfigurationsbaselines werden mithilfe von Automatisierungswerkzeugen (Infrastructure as Code) verwaltet und durchgesetzt. Jede Abweichung vom definierten Soll-Zustand wird automatisch erkannt und entweder korrigiert oder es wird ein Alarm ausgelöst. Die Sicherheitskonfiguration wird kontinuierlich überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ansible-Playbooks oder Puppet-Manifeste definieren den gehärteten Zustand aller UCC-Komponenten. Diese werden regelmäßig ausgeführt, um die Konformität sicherzustellen. Ein Security Configuration Management (SCM) Tool überwacht die Systeme in Echtzeit und meldet Abweichungen an das SIEM."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert den Code der Automatisierungsskripte (z.B. Ansible-Playbooks), um die Umsetzung der Härtungsrichtlinie zu verifizieren. Es wird die Konfiguration des SCM-Tools und die Behandlung von Alarmen bei Konfigurationsabweichungen geprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ab2f7157-5471-4403-af6f-bea5fba0cfa6",
+                "control-id": "KONF.10.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a4-m1",
+                    "uuid": "47871ceb-7247-4a92-a528-221b836acd6c",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die UCC-Dienste werden mit der Standardkonfiguration des Herstellers betrieben. Nur offensichtlich unsichere oder problematische Funktionen werden bei Bedarf manuell deaktiviert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Administrator deaktiviert beispielsweise die Funktion 'Dateiversand an Externe', nachdem es zu einem Vorfall kam. Eine systematische Überprüfung und Reduzierung des Funktionsumfangs findet nicht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die aktive Konfiguration mit einer Liste potenziell riskanter Funktionen. Es wird festgestellt, dass viele nicht benötigte Funktionen (z.B. öffentliche Teambereiche, Speicherung von Log-Daten) aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m2",
+                    "uuid": "13b6cdc8-5aff-472c-85f6-9f11c7fc613b",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Basierend auf einer allgemeinen Checkliste werden einige nicht benötigte Funktionen deaktiviert. Dies geschieht jedoch ohne eine detaillierte Analyse der spezifischen Einsatzzwecke und ohne Berücksichtigung von Wechselwirkungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei der Ersteinrichtung wird eine generische Härtungsanleitung befolgt, die empfiehlt, bestimmte Funktionen abzuschalten. Ob diese Funktionen für die Organisation doch nützlich wären oder ob andere, nicht auf der Liste stehende Funktionen ein Risiko darstellen, wird nicht geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die verwendete Checkliste oder Härtungsanleitung zeigen. Es wird geprüft, ob diese auf die spezifischen, in der UCC-Planung definierten Einsatzzwecke abgestimmt ist. Oftmals wird eine Diskrepanz festgestellt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m3",
+                    "uuid": "cf8206a4-7492-4d77-bac9-f6b02abf502c",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "UCC-Dienste DÜRFEN NUR mit dem geringsten notwendigen Funktionsumfang betrieben werden. Die verfügbaren Funktionen und Dienste MÜSSEN entsprechend der definierten Einsatzzwecke ausgewählt werden. Dabei MÜSSEN Wechselwirkungen berücksichtigt werden. Insbesondere MÜSSEN folgende Dienste und Funktionen auf Notwendigkeit geprüft und ggf. deaktiviert werden: Speicherung personenbezogener Daten, Zugriff und Verarbeitung dieser Daten, Benutzbarkeit von Funktionen durch Externe, Senden von Daten an Externe. Konversationsbezogene Log-Daten DÜRFEN NUR minimal gespeichert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Basierend auf dem UCC-Konzept (siehe A1) wird eine Konfigurationsrichtlinie erstellt, die genau festlegt, welche Funktionen für welche Benutzergruppen aktiviert sein dürfen (Principle of Least Functionality). Diese Richtlinie wird bei der Einrichtung aller UCC-Komponenten angewendet. Beispielsweise wird die Chat-Funktion für externe Gäste standardmäßig deaktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Konfigurationsrichtlinie und die UCC-Planung vorlegen. Stichprobenartig wird die Konfiguration von UCC-Servern und -Clients daraufhin überprüft, ob die Vorgaben der Richtlinie umgesetzt sind und nicht benötigte Funktionen (insbesondere die in der Anforderung genannten) tatsächlich deaktiviert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m4",
+                    "uuid": "235d112a-c2b7-4650-a5f6-845db9ee710b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird eine 'Default-Deny'-Richtlinie für UCC-Funktionen umgesetzt. Alle Funktionen sind standardmäßig deaktiviert und müssen explizit für bestimmte Rollen oder Benutzergruppen basierend auf einem dokumentierten Bedarf freigegeben werden. Die Einhaltung dieser Konfiguration wird regelmäßig überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei der Bereitstellung wird ein Härtungsskript verwendet, das zunächst alle optionalen Funktionen deaktiviert. Anschließend werden Funktionen gemäß dem Rollen- und Berechtigungskonzept gezielt freigeschaltet. Regelmäßige Konfigurationsaudits prüfen die Umsetzung dieser Richtlinie."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz und Anwendung der 'Default-Deny'-Richtlinie. Es werden die Freigabeprozesse für neue Funktionen geprüft. Die Ergebnisse der regelmäßigen Konfigurationsaudits werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a4-m5",
+                    "uuid": "2ae8a616-508f-4efa-bccc-79ceffcd6678",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfiguration des Funktionsumfangs wird durch ein Konfigurationsmanagement-Tool automatisiert durchgesetzt und überwacht. Jede Abweichung von der definierten, gehärteten Baseline wird automatisch korrigiert oder löst einen Sicherheitsalarm aus. Die Freischaltung von Funktionen erfolgt dynamisch basierend auf dem Benutzerkontext (z.B. Gerät, Standort, Rolle)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Tool wie Ansible oder Puppet wird verwendet, um den Soll-Zustand der UCC-Konfiguration zu definieren und durchzusetzen. Ein SIEM-System korreliert Konfigurationsänderungs-Logs mit den Vorgaben und alarmiert bei unautorisierten Änderungen. Conditional Access Policies werden genutzt, um Funktionen kontextabhängig zu steuern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration im Konfigurationsmanagement-Tool ('Infrastructure as Code'). Es wird die Regelbasis im SIEM zur Überwachung der UCC-Konfiguration geprüft. Stichprobenartig werden Alarmierungen zu Konfigurationsabweichungen nachvollzogen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "609a466d-4d17-483d-bd17-6610712c71dd",
+                "control-id": "KONF.11.8",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a8-m1",
+                    "uuid": "ebeefeed-4152-4285-89af-479d1821964e",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird kein Session Border Controller (SBC) eingesetzt. Die Anbindung an den SIP-Provider erfolgt direkt über die Firewall, auf der die notwendigen Ports geöffnet werden. Eine anwendungsspezifische Absicherung findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf der Perimeter-Firewall wird eine Portweiterleitung für SIP (Port 5060/5061) und RTP (ein großer Portbereich) zur internen UCC-Anlage eingerichtet. Dies exponiert die Anlage direkt gegenüber Angriffen aus dem Internet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der Perimeter-Firewall und den Netzwerkplan. Es wird festgestellt, dass kein SBC im Signalweg zum Provider vorhanden ist und die UCC-Anlage direkt erreichbar ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m2",
+                    "uuid": "4dc7f83b-dc82-44cf-8e82-c49ce620b854",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein SBC wird eingesetzt, aber hauptsächlich zur Lösung von Netzwerkproblemen wie NAT Traversal. Er wird mit einer grundlegenden Standardkonfiguration betrieben, die nur minimale Sicherheitsfunktionen wie Topology Hiding bietet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der SBC wird so konfiguriert, dass die interne Netzwerktopologie verborgen und die Adressübersetzung korrekt durchgeführt wird. Erweiterte Filterfunktionen, Verschlüsselungsterminierung oder die Validierung von SIP-Nachrichten werden nicht genutzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration des SBC. Es wird festgestellt, dass zwar ein SBC vorhanden ist, aber dessen Sicherheitsfunktionen (z.B. Filterregeln, DoS-Schutz) nicht oder nur in der Standardeinstellung aktiviert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m3",
+                    "uuid": "40c5878a-7a6a-4856-87b6-b2aeb97ef3b7",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die UCC-Kommunikation über eingeschränkt vertrauenswürdige Netze SOLLTE mindestens für Sprachdienste ein Session Border Controller (SBC) am Netzübergang zum SIP-Provider eingesetzt werden. Der SBC SOLLTE als Verschlüsselungsendpunkt die Signalisierung und die Medienströme terminieren. Der SBC SOLLTE für die Signalisierung und die Medienströme Filterfunktionen unterstützen, die die jeweiligen Konversationen zusätzlich absichern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Am Übergang zum SIP-Provider wird ein SBC installiert. Er wird so konfiguriert, dass er als B2BUA (Back-to-Back User Agent) agiert, die SIP- und RTP-Ströme terminiert und neu aufbaut. Er terminiert die verschlüsselte Verbindung zum Provider (TLS/SRTP) und baut eine separate Verbindung zur internen Anlage auf. Es werden grundlegende Filterregeln konfiguriert, um ungültige SIP-Methoden oder bekannte Angriffsmuster zu blockieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert anhand des Netzwerkplans und der Konfiguration des SBC dessen Positionierung und Funktionsweise als B2BUA. Es wird geprüft, ob der SBC die Verschlüsselung terminiert und ob grundlegende Filterregeln zur Absicherung der Kommunikation implementiert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m4",
+                    "uuid": "5db420f3-13f8-49f6-97ea-869f0b5e812a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Filterregeln des SBC sind detailliert an die Kommunikationsrichtlinien der Organisation angepasst. Der SBC führt eine Tiefenprüfung (Deep Packet Inspection) der SIP-Nachrichten durch, um Anomalien und Angriffsversuche zu erkennen. Er verfügt über Mechanismen zum Schutz vor Denial-of-Service-Angriffen (DoS). Seine Protokolldaten werden an ein zentrales SIEM-System weitergeleitet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf dem SBC werden spezifische Regeln implementiert, die z.B. Anrufe zu teuren Servicerufnummern unterbinden oder die Anzahl der Anrufe pro Sekunde von einer Quell-IP begrenzen (Rate Limiting). Die Logging-Funktion wird so konfiguriert, dass alle relevanten Ereignisse an den SIEM-Server gesendet werden, wo entsprechende Korrelationsregeln existieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die detaillierten Filter- und Sicherheitsregeln des SBC und vergleicht sie mit den Anforderungen der Sicherheitsrichtlinie. Es wird die Konfiguration des DoS-Schutzes und der Protokollweiterleitung an das SIEM überprüft. Im SIEM wird die Verarbeitung der SBC-Logs verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a8-m5",
+                    "uuid": "fc73126f-9624-4c3a-80de-0cc82899a3d4",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der SBC wird als hochverfügbares Cluster betrieben. Er setzt dynamische Richtlinien durch, die beispielsweise auf externen Threat-Intelligence-Feeds basieren, um Angriffe von bekannten bösartigen IP-Adressen proaktiv zu blockieren. Der SBC ist in der Lage, bei Bedarf Mediendaten zu transkodieren, um die Interoperabilität sicherzustellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zwei oder mehr SBCs sind in einem Failover-Cluster konfiguriert, um einen unterbrechungsfreien Betrieb zu gewährleisten. Der SBC bezieht automatisiert IP-Blacklists und wendet diese auf den eingehenden Verkehr an. Die Transcoding-Funktionen sind für die Anbindung von Partnern mit abweichenden Codec-Anforderungen konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des SBC-Clusters und testet den Failover-Mechanismus. Es wird die Anbindung an die Threat-Intelligence-Feeds und die Umsetzung der daraus resultierenden Regeln geprüft. Die Konfiguration der Transcoding-Regeln wird analysiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b5e76f93-2608-4b2b-aa33-0ca634176ca6",
+                "control-id": "KONF.14.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a6-m1",
+                    "uuid": "80b990b3-16c3-4390-be26-d9fb5b7fbd87",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verschlüsselung wird nur dort eingesetzt, wo sie standardmäßig vom Hersteller aktiviert ist. Es gibt keine einheitliche Richtlinie oder Überprüfung der Verschlüsselungseinstellungen. Gespeicherte Daten (at rest) werden grundsätzlich nicht verschlüsselt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Web-Traffic zum UCC-Portal ist per HTTPS verschlüsselt, weil der Webserver dies standardmäßig so konfiguriert. SIP-Signalisierung oder Mediendaten werden jedoch unverschlüsselt übertragen, da dies manuell hätte aktiviert werden müssen. In Chats geteilte Dateien liegen unverschlüsselt auf dem Fileserver."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt Netzwerk-Sniffing durch, um die Verschlüsselung von Signalisierungs- und Mediendaten zu überprüfen. Es wird auf dem Speichersystem geprüft, ob abgelegte UCC-Dateien unverschlüsselt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m2",
+                    "uuid": "fdcea87f-bbb2-4ee5-8345-e131ab150ccb",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesamte Kommunikation über unzureichend vertrauenswürdige Netze (z.B. das Internet) wird durchgängig transportverschlüsselt. Eine Verschlüsselung von Daten im Ruhezustand (at rest) oder eine Ende-zu-Ende-Verschlüsselung findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für alle externen Verbindungen wird TLS für die Signalisierung (z.B. SIPS) und SRTP für die Mediendaten konfiguriert. Interne Kommunikation findet jedoch unverschlüsselt statt. Konferenzaufzeichnungen werden unverschlüsselt auf einem Netzlaufwerk gespeichert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration der UCC-Server und Gateways, um sicherzustellen, dass für externe Kommunikation TLS und SRTP erzwungen werden. Es wird verifiziert, dass interne Kommunikation und gespeicherte Daten unverschlüsselt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m3",
+                    "uuid": "73f8ccf4-5bd1-41df-a987-03de4f28c30b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sämtliche Kommunikation über unzureichend vertrauenswürdige Netze MUSS mit sicheren Verfahren verschlüsselt werden. Dateiablagen, die persistente personenbezogene oder vertrauliche Daten enthalten, MÜSSEN mit Hilfe von sicheren Verschlüsselungsmechanismen abgesichert werden. Dies betrifft sowohl interne als auch externe angebundene Dateiablagen. Die Benutzenden MÜSSEN über den Status der Verschlüsselung innerhalb von Konversationen informiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Verschlüsselungsrichtlinie für UCC definiert. Diese schreibt Transportverschlüsselung (TLS, SRTP) für alle Verbindungen (intern und extern) vor. Für Dateiablagen wird serverseitige Verschlüsselung (Encryption at Rest) auf den Speichersystemen aktiviert. Die UCC-Clients zeigen den Verschlüsselungsstatus z.B. durch ein Schlosssymbol an."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Verschlüsselungsrichtlinie zeigen. Die Konfiguration der UCC-Komponenten wird auf die durchgängige Erzwingung von Transportverschlüsselung geprüft. Die Konfiguration der Speichersysteme wird auf die Aktivierung von Encryption at Rest geprüft. Es wird im Client verifiziert, ob der Verschlüsselungsstatus angezeigt wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m4",
+                    "uuid": "7c9437c9-5c25-4cd5-a526-1eb9e891c39e",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die eingesetzten Verschlüsselungsverfahren, Algorithmen und Schlüssellängen entsprechen den aktuellen Empfehlungen des BSI (z.B. TR-02102). Wo technisch möglich und sinnvoll, wird eine Ende-zu-Ende-Verschlüsselung für Chats und 1:1-Anrufe eingesetzt. Ein zentrales System für die Verwaltung der Zertifikate wird verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Konfiguration der UCC-Systeme wird gezielt auf die Einhaltung der BSI TR-02102 überprüft (z.B. Deaktivierung von alten TLS-Versionen und unsicheren Cipher-Suiten). Die E2EE-Funktion des UCC-Clients wird für alle Benutzer aktiviert. Zertifikate werden über eine interne PKI oder einen professionellen Zertifikatsmanagement-Dienst verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Konfiguration der Verschlüsselungseinstellungen (TLS-Versionen, Cipher-Suiten) mit den Vorgaben der BSI TR-02102. Es wird geprüft, ob E2EE für Chats aktiv ist. Der Prozess zur Verwaltung von Zertifikaten wird auditiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a6-m5",
+                    "uuid": "aeba7788-436a-4e05-be0c-544655fa3f1e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird durchgängig eine sichere Ende-zu-Ende-Verschlüsselung für alle Kommunikationsformen, einschließlich Mehrpersonen-Konferenzen (Signalisierung und Medien), erzwungen. Kritische Schlüssel für die serverseitige Verschlüsselung werden in Hardware-Sicherheitsmodulen (HSM) geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine UCC-Lösung eingesetzt, die Protokolle wie MLS (Messaging Layer Security) oder eine vergleichbar sichere Methode für E2EE in Gruppenkonferenzen unterstützt. Diese Funktion wird für alle Benutzer erzwungen. Die Speichersysteme sind an ein HSM angebunden, um die Schlüssel für die Verschlüsselung der ruhenden Daten zu schützen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die technische Dokumentation der UCC-Lösung und die Konfiguration, um die Implementierung der E2EE für Gruppen zu verifizieren. Es wird die Anbindung der Speichersysteme an das HSM geprüft und die Konfiguration des HSMs auditiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "3aaa00d5-132c-4ddf-a0d9-e0fe01af7036",
+                "control-id": "KONF.14.1.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a14-m1",
+                    "uuid": "0ec275a3-754d-46c5-836d-1995ea74f6a6",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ausschließlich Transportverschlüsselung eingesetzt. Ende-zu-Ende-Verschlüsselung (E2EE) wird nicht als Anforderung betrachtet oder genutzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Kommunikation ist auf dem Transportweg (z.B. zwischen Client und Server) verschlüsselt, aber der Betreiber der Server kann die gesamte Kommunikation im Klartext einsehen. Dies ist die typische Konfiguration bei TLS/SRTP-Terminierung auf dem Server."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Architektur und stellt fest, dass die Verschlüsselung am Server terminiert wird und somit keine Ende-zu-Ende-Verschlüsselung gegeben ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m2",
+                    "uuid": "47a72b12-afb2-4423-a2fd-eaa6f0c6b0ca",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ende-zu-Ende-Verschlüsselung wird für einfache Kommunikationsformen wie 1-zu-1-Textchats genutzt, sofern die UCC-Plattform dies standardmäßig anbietet. Für Anrufe, Videokonferenzen oder Gruppenchats wird sie nicht eingesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Chat-Funktion des UCC-Clients ist E2E-verschlüsselt. Sobald jedoch ein Anruf gestartet oder eine weitere Person zum Chat hinzugefügt wird, fällt die Kommunikation auf Transportverschlüsselung zurück."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, dass E2EE für 1:1-Chats aktiv ist, aber testet und bestätigt, dass sie für andere Kommunikationsformen (Gruppen, Anrufe) nicht aktiv ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m3",
+                    "uuid": "a63c8e1c-b226-4107-a564-330345c67b67",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wurde eine Richtlinie erstellt, die den Einsatz von Ende-zu-Ende-Verschlüsselung (E2EE) für Kommunikationen mit hohem Schutzbedarf fordert. Es wird eine UCC-Lösung eingesetzt, die E2EE für 1-zu-1-Anrufe und -Chats unterstützt, und diese Funktion ist für alle Benutzer aktiviert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Sicherheitsrichtlinie definiert, dass z.B. Gespräche der Geschäftsführung oder mit der Rechtsabteilung E2E-verschlüsselt sein müssen. Die eingesetzte UCC-Lösung wird so konfiguriert, dass alle direkten Anrufe und Chats standardmäßig E2EE nutzen. Für Gruppenkonferenzen wird auf die Transportverschlüsselung hingewiesen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Richtlinie und überprüft die Konfiguration der UCC-Plattform, um sicherzustellen, dass E2EE für die definierten 1-zu-1-Szenarien für alle Benutzer erzwungen wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m4",
+                    "uuid": "d9f716ff-a16a-434c-8554-7edf22bdd0ec",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für UCC-Kommunikation SOLLTE eine sichere Ende-zu-Ende-Verschlüsselung benutzt werden. Die E2EE SOLLTE sich sowohl auf die Signalisierung als auch auf die Mediendaten von Audio- und Videokommunikation mit zwei oder mehr Teilnehmenden erstrecken. Bei Konversationen zwischen UCC-Diensten von verschiedenen Herstellenden SOLLTEN die übertragenen Informationen eingeschränkt werden, sofern eine E2EE nicht möglich ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine UCC-Lösung eingesetzt, die E2EE auch für Gruppenkonferenzen unterstützt (z.B. mittels MLS oder einem vergleichbaren Protokoll). Diese Funktion wird für alle internen Konferenzen standardmäßig aktiviert. Die Benutzer werden geschult, bei gemischten Konferenzen mit externen Teilnehmern, deren Clients kein E2EE unterstützen, auf die Übertragung sensibler Informationen zu verzichten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die technische Dokumentation und Konfiguration der UCC-Lösung, um die Implementierung von E2EE für Gruppenkonferenzen zu verifizieren. Es wird geprüft, wie die Benutzer über den E2EE-Status in gemischten Konferenzen informiert werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a14-m5",
+                    "uuid": "eda5374a-f8e2-4bb2-9d14-6407b568ed5b",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die verwendete Ende-zu-Ende-Verschlüsselung wird technisch für alle Kommunikationsformen erzwungen. Die Implementierung verwendet moderne kryptographische Eigenschaften wie Forward Secrecy und Post-Quantum-Kryptographie-Algorithmen. Die Identität der Kommunikationsteilnehmer wird vor dem Schlüsselaustausch stark verifiziert (z.B. durch Vergleich von Sicherheitsnummern oder Zertifikats-Pinning)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine UCC-Lösung eingesetzt, deren kryptographische Implementierung öffentlich dokumentiert und idealerweise unabhängig auditiert ist. Die Konfiguration erzwingt E2EE und lässt keine unverschlüsselten oder nur transportverschlüsselten Fallbacks zu. Die Organisation schult die Benutzer in der Verifikation von Sicherheitsnummern für besonders schutzbedürftige Konversationen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die unabhängigen Audit-Berichte der E2EE-Implementierung der UCC-Lösung. Die Konfiguration wird auf die strikte Erzwingung von E2EE geprüft. Der Prozess zur Verifizierung von Identitäten wird analysiert und die Schulungsunterlagen dazu werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "3b53a692-ea6e-4056-8d6c-daf0a016c053",
+                "control-id": "KONF.6.13",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a17-m1",
+                    "uuid": "4d686795-01ca-4491-89e2-d6a8fc837768",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt keine Einschränkungen bei der Benutzung von UCC-Diensten. Alle Funktionen sind für alle Benutzer, intern wie extern, gleichermaßen verfügbar."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jeder Benutzer kann alle Funktionen nutzen, externe Gäste einladen, Konferenzen aufzeichnen und auf alle Teambereiche zugreifen. Es wird keine Multi-Faktor-Authentisierung verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer testet mit einem Standard-Benutzerkonto den Zugriff auf verschiedene Funktionen und stellt fest, dass keine nennenswerten Einschränkungen vorhanden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m2",
+                    "uuid": "05980d32-2487-495e-80b3-98d759278e2f",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es sind grundlegende Einschränkungen für externe Benutzer implementiert, z.B. können diese keine Konferenzen starten. Eine Multi-Faktor-Authentisierung ist für Administratoren aktiviert, aber nicht für normale Benutzer."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Admin-Konsole wird die Gast-Rolle so konfiguriert, dass sie eingeschränkte Rechte hat. Die MFA-Einstellung für Standard-Benutzer bleibt deaktiviert, um die Benutzerfreundlichkeit nicht zu beeinträchtigen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der Gast-Rolle und die MFA-Einstellungen für die verschiedenen Benutzergruppen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m3",
+                    "uuid": "e2357151-eeff-44fa-afb3-b92a1dd07ca8",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Benutzung von UCC-Diensten wird basierend auf dem Schutzbedarf der übertragenen Informationen eingeschränkt. Die Nutzung von Multi-Faktor-Authentisierung (MFA) für alle internen und externen Benutzer ist als Standard vorgesehen. Funktionen für externe Benutzer werden auf das notwendige Minimum reduziert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Richtlinie legt fest, welche UCC-Funktionen für die Übertragung von als 'vertraulich' klassifizierten Daten genutzt werden dürfen. MFA wird für alle Benutzerkonten ausgerollt und erzwungen. Die Standard-Gastrolle wird so konfiguriert, dass sie nur an Konferenzen teilnehmen, aber keine Inhalte teilen oder Chats nutzen kann."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Richtlinie zur datenklassifikationsbasierten Nutzung. Es wird die Konfiguration zur Erzwingung von MFA für alle Benutzer geprüft. Die Berechtigungen der Gastrolle werden analysiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m4",
+                    "uuid": "0da07778-2fcb-411e-b656-e659ffeecc05",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Folgende Aspekte SOLLTEN mindestens berücksichtigt werden, um die UCC-Dienste zusätzlich abzusichern: Einschränkung der Dienste entsprechend des Schutzbedarfs, Benutzung von MFA, Deaktivierung von Funktionen für Externe, Deaktivierung der Speicherung von Metadaten, Einschränkung der Sichtbarkeit von Kommunikationsdaten für Admins. Zusätzlich SOLLTEN technische und organisatorische Vorkehrungen getroffen werden, um Konversationen über die Vergabe von PINs/Passwörtern hinaus abzusichern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle in der Anforderung genannten Punkte werden umgesetzt. Insbesondere wird die Speicherung von Metadaten (z.B. Anruflisten) auf das rechtlich notwendige Minimum reduziert. Administrative Rollen werden so eingeschränkt, dass sie keine Inhalte oder Metadaten von Benutzerkommunikation einsehen können. Technische Maßnahmen wie Warteräume oder die Pflicht zur expliziten Zulassung jedes Teilnehmers durch einen Moderator werden für externe Konferenzen erzwungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt eine umfassende Konfigurationsprüfung durch, die alle in der Anforderung genannten Punkte abdeckt. Insbesondere werden die Einstellungen zur Metadatenspeicherung und die administrativen Berechtigungen auditiert. Die erzwungenen Sicherheitseinstellungen für Konferenzen werden getestet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a17-m5",
+                    "uuid": "341efe29-6efc-4361-a727-793c1fd5de39",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Einschränkung der Benutzung wird durch ein System für Conditional Access und Data Loss Prevention (DLP) dynamisch und automatisiert durchgesetzt. Der Zugriff auf UCC-Dienste und -Funktionen hängt vom Benutzer, dem Endgerät, dem Standort und dem Schutzbedarf der Daten ab. Jede administrative Tätigkeit erfordert eine Just-in-Time-Genehmigung über ein Privileged Access Management (PAM)-System."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Conditional Access Policy verlangt z.B. MFA und ein vom Unternehmen verwaltetes Gerät für den Zugriff auf UCC. Ein DLP-System blockiert das Teilen von als 'vertraulich' markierten Dokumenten in Chats mit externen Teilnehmern. Ein Administrator muss im PAM-System einen begründeten Antrag stellen, um für eine begrenzte Zeit administrative Rechte auf der UCC-Plattform zu erhalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der Conditional Access Policies, des DLP-Regelwerks und des PAM-Workflows. Es wird die lückenlose Protokollierung und die Wirksamkeit dieser automatisierten Kontrollen verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "cdf256b3-9090-4f3f-a367-674e9bac2efd",
+                "control-id": "KONF.6.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a5-m1",
+                    "uuid": "40e4ae1e-a931-4af1-b510-f9c56690ea1e",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert keine spezifische Rollendefinition für UCC-Dienste. Es wird lediglich zwischen normalen Benutzern und Administratoren unterschieden. Externe Benutzer erhalten dieselben Rechte wie interne Standardbenutzer."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle Benutzer werden bei der Einrichtung in die Standard-Benutzergruppe eingeteilt. Es gibt keine differenzierten Rechte, z. B. wer Konferenzen aufzeichnen oder externe Teilnehmer einladen darf."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Benutzer- und Gruppenverwaltung der UCC-Plattform. Es wird festgestellt, dass keine differenzierten Rollen existieren und die Berechtigungen für alle Benutzer weitgehend identisch sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m2",
+                    "uuid": "4d2d8f45-8186-42bb-b92f-c40fc1350b8b",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein grundlegendes Rollenkonzept mit einigen wenigen Rollen (z.B. 'Moderator', 'Gast') ist dokumentiert. Die Zuweisung und Überprüfung der Rollen erfolgt jedoch manuell und unregelmäßig."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In einem Wiki-Dokument sind 2-3 Rollen beschrieben. Die Administratoren weisen diese Rollen bei der Benutzereinrichtung manuell zu. Es gibt keinen Prozess zur regelmäßigen Überprüfung der zugewiesenen Berechtigungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die dokumentierten Rollen mit den tatsächlichen Berechtigungen in der UCC-Plattform. Es wird geprüft, ob ein Prozess für regelmäßige Access Reviews existiert, was typischerweise nicht der Fall ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m3",
+                    "uuid": "5a38b97f-ac54-40c0-a006-95e4c498050b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Rollen- und Berechtigungskonzept MUSS um UCC-spezifische Definitionen von Rollen und Berechtigungen ergänzt werden. Dies MUSS sowohl für interne als auch für externe Benutzende getroffen werden. Es MÜSSEN Berechtigungen zur zielgerichteten Benutzung, zur Konfigurationsanpassung von Konversationen und für spezielle Funktionen wie Aufzeichnung definiert werden. Die Berechtigungen MÜSSEN auf das notwendige Minimum reduziert werden. Die Festlegungen MÜSSEN festgehalten, regelmäßig und anlassbezogen geprüft und aktualisiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das bestehende unternehmensweite Rollenkonzept wird um ein Kapitel zu UCC erweitert. Darin werden spezifische Rollen (z.B. 'Standard-Benutzer', 'Team-Verantwortlicher', 'Externer Gast') und deren Berechtigungen (z.B. 'darf aufzeichnen', 'darf Externe einladen', 'darf nur an Chats teilnehmen') detailliert beschrieben. Die Umsetzung erfolgt durch Konfiguration von Benutzergruppen in der UCC-Plattform. Mindestens einmal jährlich findet eine Überprüfung der Rollendefinitionen und der wichtigsten zugewiesenen Berechtigungen statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich das erweiterte Rollen- und Berechtigungskonzept zeigen. Es wird verifiziert, dass UCC-spezifische Rollen für interne und externe Nutzer definiert sind. Stichprobenartig wird die Konfiguration der Benutzergruppen in der UCC-Plattform geprüft. Es werden Protokolle der regelmäßigen Überprüfungen angefordert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m4",
+                    "uuid": "91786707-9b88-4e0b-a2f3-fb6dd40ed8c8",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Rollen- und Berechtigungskonzept ist fein-granular und unterscheidet zwischen verschiedenen Konversationstypen und Funktionen. Nur explizit berechtigte Benutzende SOLLTEN auf Daten wie Aufzeichnungen oder Dateiablagen zugreifen können. Die Zuweisung von Rollen ist an den Mitarbeiter-Lifecycle gekoppelt (Joiner, Mover, Leaver). Halbjährliche Access Reviews für kritische Berechtigungen werden durchgeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das UCC-Rollenkonzept ist mit dem HR-Prozess verknüpft, sodass neue Mitarbeiter automatisch die Standardrolle erhalten und bei Abteilungswechsel oder Austritt die Rechte angepasst oder entzogen werden. Für den Zugriff auf Konferenzaufzeichnungen wird eine separate Berechtigungsgruppe verwendet. Ein Identity-Management-Tool unterstützt die Durchführung der Access Reviews."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Anbindung des UCC-Berechtigungsmanagements an die HR-Prozesse. Es wird die Konfiguration der Berechtigungen für den Zugriff auf Aufzeichnungen geprüft. Die Protokolle und Ergebnisse der halbjährlichen Access Reviews werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a5-m5",
+                    "uuid": "f4fe2532-9dab-4419-bdcf-bd5b5c02df79",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Berechtigungsmanagement für UCC ist vollständig in ein zentrales Identity and Access Management (IAM) System integriert. Es wird ein Attribute-Based Access Control (ABAC) Ansatz verwendet, bei dem Berechtigungen nicht nur auf statischen Rollen, sondern auch auf dynamischen Attributen (z.B. Projektzugehörigkeit, Gerätetyp, Standort) basieren. Die Access Reviews sind vollständig automatisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein zentrales IAM-System provisioniert und deprovisioniert Benutzer und deren Berechtigungen in der UCC-Plattform über eine API (z.B. SCIM). Die ABAC-Policy legt z.B. fest, dass nur Mitarbeiter aus der Rechtsabteilung von einem als sicher eingestuften Gerät aus auf als 'juristisch vertraulich' markierte Teambereiche zugreifen dürfen. Das IAM-Tool generiert automatisch Rezertifizierungs-Aufgaben für die Vorgesetzten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration des IAM-Systems und der ABAC-Richtlinien für die UCC-Plattform. Der automatisierte Prozess für Access Reviews wird durch Einsicht in die Workflows und Protokolle des IAM-Tools verifiziert. Es wird geprüft, wie dynamische Attributänderungen zu Berechtigungsanpassungen führen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ec26beb5-8130-45ea-bfea-008d20584a9a",
+                "control-id": "NOT.4.17",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "TEST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.5.4.a3-m1",
+                    "uuid": "918254f6-4f09-4bea-bec5-eaaf641f3dab",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es werden nur informelle Funktionstests durch IT-Personal durchgeführt, bevor ein neuer UCC-Dienst live geschaltet wird. Interaktionen mit anderen Anwendungen oder Tests durch Endbenutzer finden nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Administrator testet, ob er sich am neuen Client anmelden und einen Anruf tätigen kann. Die Tests werden nicht dokumentiert und es gibt keine definierten Testfälle."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fragt nach Testprotokollen für die Einführung von UCC-Diensten. Es wird festgestellt, dass keine formellen Testdokumente oder Benutzerabnahmetests existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m2",
+                    "uuid": "8735f099-4e47-45c0-aeea-be6734fa719a",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vor der Einführung werden initiale Funktionstests der UCC-Komponenten untereinander durchgeführt. Tests werden jedoch nach Änderungen oder Erweiterungen nicht wiederholt. Benutzertests sind informell und werden nicht systematisch ausgewertet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine kleine Gruppe von IT-affinen Benutzern wird gebeten, die neuen Funktionen 'mal auszuprobieren'. Das Feedback wird mündlich gesammelt. Es gibt keine formalen Testpläne oder Abnahmekriterien."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich den Testprozess beschreiben. Es wird deutlich, dass Tests zwar initial stattfinden, aber kein Prozess für Regressionstests bei Änderungen existiert. Die Ergebnisse von Benutzertests sind nicht dokumentiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m3",
+                    "uuid": "5ed82608-4628-4df3-9a74-00ebdb38ad50",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die UCC-Dienste MÜSSEN initial Tests durchgeführt werden, die verifizieren, dass die UCC-Komponenten untereinander und mit anderen UCC-Diensten interferenzfrei funktionieren. Ebenfalls MÜSSEN Tests mit ausgewählten Benutzenden durchgeführt werden, um insbesondere Wechselwirkungen mit anderen Anwendungen zu überprüfen. Diese Tests SOLLTEN wiederholt werden, wenn die UCC-Dienste erweitert oder verändert werden. Zusätzlich SOLLTE die Konfiguration der UCC-Dienste in regelmäßigen Abständen auf Plausibilität und Konformität für die festgelegten Einsatzzwecke überprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Testplan erstellt, der technische Tests (z.B. parallele Nutzung von Telefonie und Videokonferenz) und User Acceptance Tests (UAT) umfasst. Eine repräsentative Gruppe von Benutzern aus verschiedenen Abteilungen wird in die UAT einbezogen. Die Testergebnisse werden dokumentiert und vor dem Go-Live abgenommen. Im Change-Management-Prozess ist festgelegt, dass bei UCC-Änderungen relevante Testfälle wiederholt werden müssen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet Testpläne und Testprotokolle für die Einführung und für kürzliche Änderungen an den UCC-Diensten. Es wird verifiziert, dass sowohl technische Interferenztests als auch dokumentierte Benutzertests durchgeführt wurden. Es wird geprüft, ob ein Prozess zur regelmäßigen Konfigurationsüberprüfung existiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m4",
+                    "uuid": "91c165f9-0a6c-4a04-9181-e91fa9f03baf",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert eine dedizierte Testumgebung, die die Produktionsumgebung weitgehend nachbildet. Vor der Einführung neuer Versionen oder größerer Änderungen werden dort umfassende Regressionstests durchgeführt. Die regelmäßige Überprüfung der Konfiguration erfolgt teilautomatisiert durch Skripte."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Staging-Umgebung wird mit einer Kopie der Produktionskonfiguration betrieben. Testfälle sind in einem Testmanagement-Tool dokumentiert. Konfigurations-Checks werden z.B. mit PowerShell oder Python-Skripten implementiert und periodisch ausgeführt. Die Ergebnisse werden zentral gesammelt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz und den aktuellen Stand der Testumgebung. Es wird Einsicht in das Testmanagement-Tool genommen, um die Abdeckung der Testfälle zu prüfen. Die Skripte zur Konfigurationsüberprüfung und deren Ausführungsprotokolle werden stichprobenartig kontrolliert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.5.4.a3-m5",
+                    "uuid": "011beaa7-e9af-4844-a769-71e2e68ba29e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Testprozesse sind weitgehend automatisiert und in die CI/CD-Pipeline für die UCC-Verwaltung integriert. Automatisierte Testsuiten führen nach jeder Konfigurationsänderung Regressionstests, Performance-Tests und Lasttests durch. Die Konformitätsprüfung der Konfiguration erfolgt kontinuierlich und Abweichungen lösen automatisch einen Alarm aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools wie Selenium oder Cypress werden für die Automatisierung von Client-Tests verwendet. Lasttest-Tools wie JMeter werden eingesetzt, um das Verhalten unter hoher Last zu simulieren. Ein Konfigurationsmanagement-Tool (z. B. Ansible) prüft und erzwingt kontinuierlich den Soll-Zustand der UCC-Konfiguration."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Konfiguration der CI/CD-Pipeline und der automatisierten Testwerkzeuge. Es werden Berichte aus den automatisierten Testläufen (Funktion, Last, Performance) geprüft. Die Konfiguration des Konfigurationsmanagement-Tools wird auf die Regeln zur Überprüfung der UCC-Dienste kontrolliert."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,1226 @@
+{
+  "component-definition": {
+    "uuid": "38482ccc-eda9-496a-9a82-d1b99296b2da",
+    "metadata": {
+      "title": "NET.4.1 TK-Anlagen - Benutzerdefiniert",
+      "last-modified": "2025-11-14T19:05:38.278973+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "071723a6-0123-4aa7-8865-bc91e315f08c",
+        "type": "interconnection",
+        "title": "NET.4.1 TK-Anlagen",
+        "description": "This component represents the implementation of all controls for Baustein NET.4.1.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Mit einer Telekommunikationsanlage, kurz TK-Anlage, können die Telefone einer Institution intern verbunden und extern an ein öffentliches Telefonnetz angeschlossen werden. Durch die zunehmende Verzahnung von IT und Telekommunikation können TK-Anlagen dabei sowohl analog als auch IP-basiert aufgebaut sein. Hybrid-Anlagen sind eine Kombination aus einer klassischen Telekommunikationslösung und einem VoIP-System. Mit einer Hybrid-Anlage können klassische digitale und analoge Telefonie sowie VoIP gleichzeitig betrieben werden.<BR>Neben der Sprachtelefonie können, abhängig von den angeschlossenen Endgeräten, weitere Dienste genutzt werden. So ist es möglich, mittels TK-Anlagen Daten, Texte, Grafiken und Bewegtbilder zu übertragen. Die Informationen können dabei analog oder digital über drahtgebundene oder drahtlose Übertragungsmedien weitergeleitet werden. Je nach Anbindung und genutzten Datennetzen können in einer Institution verschiedenste Telekommunikationsanlagen eingesetzt werden."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "In diesem Baustein werden die für die TK-Anlagen sowie die entsprechenden Anteile von Hybrid-Anlagen spezifischen Gefährdungen und Anforderungen betrachtet. Das Ziel des Bausteins ist der Schutz der Informationen, die über TK-Anlagen übermittelt werden sowie der Schutz der Anlage vor Fremdeingriffen und Manipulationen."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein NET.4.1 TK-Anlagen ist auf jede TK-Anlage anzuwenden.<BR>Dieser Baustein behandelt die Gefährdungen und Anforderungen, die spezifisch für eine TK-Anlage sowie die entsprechenden Teile einer Hybrid-Anlage sind. Themen, die über die TK-Anlage hinausgehen, wie zum Beispiel Gefährdungen und Anforderungen für einzelne VoIP-Implementierungen, sowie extern bereitgestellte Dienste werden in den entsprechenden Bausteinen des IT-Grundschutz-Kompendiums gesondert behandelt.<BR>Die Sicherheitsaspekte von VoIP-Komponenten und der Sprachübertragung über VoIP werden im Baustein NET.4.2 VoIP näher betrachtet."
+          },
+          {
+            "name": "Abhören von TK-Anlagen",
+            "value": "Wenn Telefongespräche oder Daten über eine TK-Anlage unverschlüsselt übertragen werden, besteht grundsätzlich die Gefahr, dass Angreifende Informationen mithören oder mitlesen. So könnten sie beispielsweise die Telefonkabel direkt anzapfen oder an einer zwischen den Gesprächsteilnehmenden vermittelnden TK-Anlage lauschen.<BR>Bei vielen TK-Anlagen können Anrufende Empfangenden Nachrichten hinterlassen, wenn diese zum Zeitpunkt des Anrufs telefonisch nicht erreichbar sind. Einige Anrufbeantworter, vor allem bei VoIP-Anlagen, verschicken diese Informationen als Audio-Datei in einer E-Mail. Der Inhalt dieser E-Mail könnte direkt von Angreifenden abgefangen und angehört werden.<BR>Des Weiteren könnten Gespräche durch das Aktivieren von gesperrten, in Deutschland zum Teil unzulässigen, Leistungsmerkmalen von Dritten mitgehört werden. Ein Beispiel hierfür ist die Zeugenschaltung. Eine derartige Aktivierung erfordert zwar genauere Systemkenntnisse, ist aber aufgrund vieler frei verfügbarer Hinweise im Internet häufig kein großes Hindernis."
+          },
+          {
+            "name": "Abhören von Räumen über TK-Anlagen",
+            "value": "Über Mikrofone in Endgeräten können grundsätzlich auch Räume abgehört werden. Dabei werden zwei Varianten unterschieden:<BR>Bei der ersten Variante können Endgeräte, wenn entsprechende Funktionen implementiert sind, aus dem öffentlichen Netz oder über das LAN dazu veranlasst werden, die eingebauten Mikrofone zu aktivieren. Ein bekanntes Beispiel hierfür ist die sogenannte „Baby-Watch-Funktion“ von Telefonen oder Anrufbeantwortern.<BR>Bei der zweiten Variante kann das Leistungsmerkmal „direktes Ansprechen“ in Kombination mit der Option „Freisprechen“ missbraucht werden. Die auf diese Weise realisierbare Funktion einer Wechselsprechanlage kann unter gewissen Umständen auch zum Abhören eines Raumes ausgenutzt werden."
+          },
+          {
+            "name": "Gebührenbetrug",
+            "value": "Gebührenbetrug im Zusammenhang mit Daten- oder Telekommunikationsdiensten hat das Ziel, die Kosten für geführte Telefonate oder Datentransfers auf Dritte zu übertragen. Eine TK-Anlage lässt sich auf verschiedene Weise von außen manipulieren. Zum einen können Angreifende versuchen, vorhandene Leistungsmerkmale für den Gebührenbetrug zu missbrauchen. Zu diesen Leistungsmerkmalen zählen beispielsweise aus der Ferne umprogrammierbare Rufumleitungen oder Dial-in-Optionen. Zum anderen können die Berechtigungen so vergeben werden, dass kommende „Amtsleitungen“ abgehende „Amtsleitungen“ belegen. Auf diese Weise können Anrufenden bei Anwahl einer bestimmten Rufnummer auf Kosten des TK-Anlagenbetreibenden von außen automatisch wieder mit dem „Amt\" verbunden werden.<BR>Darüber hinaus können nicht nur Angreifende von außen, sondern auch die Beschäftigten innerhalb einer Institution mit den Gebühren betrügen. So können sie etwa versuchen, auf Kosten der Institution oder der anderen Beschäftigten zu telefonieren, indem sie z. B. von fremden Apparaten telefonieren, fremde Berechtigungscodes (Passwörter) auslesen oder persönliche Berechtigungen verändern."
+          },
+          {
+            "name": "Missbrauch frei zugänglicher Telefonanschlüsse",
+            "value": "Oft werden Telefone betrieben, die keinen Benutzenden persönlich zugeordnet sind. Einige dieser Telefone, wie zum Beispiel solche in Druckerräumen, sind nur einem eingeschränkten Personenkreis zugänglich. Andererseits sind Telefone häufig in Bereichen zu finden, die für Besuchende frei zugänglich sind. Dazu zählen beispielsweise Parkhäuser oder Bereiche vor Zugangskontrollsystemen. Besitzen diese Telefone ein elektronisches Telefonbuch, in dem interne Telefonnummern gespeichert sind, könnten diese Nummern ungewollt nach außen gelangen."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "a2e62f85-e896-48e7-9696-623e53ae1c84",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/tk-anwendungen_profile.json",
+            "description": "Implementation for all controls in Baustein NET.4.1",
+            "implemented-requirements": [
+              {
+                "uuid": "9bf26e7a-03bd-4152-999e-17e8e2016219",
+                "control-id": "ASST.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Improvement",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a12-m1",
+                    "uuid": "c10ac627-d1f4-4354-88aa-45f7536d129d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ausgemusterte VoIP-Geräte werden einfach vom Netz genommen und ohne Löschung der Konfiguration oder Daten gelagert oder entsorgt. Beschriftungen, die auf die Institution oder den Benutzer hinweisen, werden nicht entfernt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keinen Prozess für die Außerbetriebnahme. Geräte werden im Lager gestapelt oder direkt dem Elektroschrott zugeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer inspiziert das Lager für ausgemusterte IT-Geräte und prüft stichprobenartig VoIP-Telefone, ob diese noch Konfigurationsdaten (z.B. SIP-Credentials, Telefonbücher) enthalten oder Beschriftungen aufweisen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m2",
+                    "uuid": "b36c49a0-1886-477b-9b86-9bf5f5e5ae89",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Auf allen VoIP-Komponenten wird vor der Entsorgung oder Weitergabe ein 'Factory Reset' (Zurücksetzen auf Werkseinstellungen) durchgeführt. Dies erfolgt nach einer einfachen Checkliste."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein einfacher Prozess wird etabliert: 'Vor der Entsorgung Knopf X für 10 Sekunden drücken'. Die Durchführung wird nicht gesondert dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer bittet um die Vorführung des 'Factory Reset'-Prozesses. Es wird geprüft, ob eine entsprechende Anweisung für das Personal existiert. An einem ausgemusterten Gerät wird geprüft, ob die Konfiguration tatsächlich gelöscht wurde."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m3",
+                    "uuid": "39bfbba2-b645-43eb-96a4-0c150e92edd7",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn VoIP-Komponenten außer Betrieb genommen oder ersetzt werden, SOLLTEN alle sicherheitsrelevanten Informationen (z.B. Konfiguration, Telefonbücher, Anruflisten, Zugangsdaten) von den Geräten gelöscht werden. Vertrauliche Informationen SOLLTEN auch von zugehörigen Backup-Medien gelöscht werden. Alle Beschriftungen SOLLTEN vor der Entsorgung entfernt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein dokumentierter Prozess für die Außerbetriebnahme von VoIP-Komponenten wird etabliert. Dieser Prozess schreibt das sichere Löschen der Konfiguration (z.B. durch Factory Reset und ggf. Überschreiben), das Entfernen von Beschriftungen und die Löschung des Geräts aus der zentralen Verwaltung und den Backups vor."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert den Prozess zur Außerbetriebnahme an und lässt ihn sich demonstrieren. Es wird geprüft, ob die Durchführung der Löschung protokolliert wird. Es wird kontrolliert, ob die entsprechenden Einträge in der VoIP-Anlage und im Backup-System entfernt wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m4",
+                    "uuid": "0f5826af-69f3-45b0-8557-afc6be44c18b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nach dem Löschvorgang SOLLTE überprüft und dokumentiert werden, ob die Daten auch tatsächlich erfolgreich und unwiederbringlich entfernt wurden. Es SOLLTE frühzeitig mit Herstellenden oder Service-Unternehmen geklärt werden, welche Maßnahmen zur Löschung sicherheitsrelevanter Informationen mit den Vertrags- und Garantiebedingungen vereinbar sind."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Löschprozess wird durch einen Vier-Augen-Prinzip verifiziert. Die erfolgreiche Löschung wird in einem Übergabeprotokoll bestätigt. Bei gemieteten Geräten werden die Anforderungen an die Datenlöschung bei Vertragsende bereits im Vertrag festgelegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Protokolle zur Außerbetriebnahme und prüft, ob die Verifizierung der Löschung dokumentiert ist. Bei Mietverträgen wird geprüft, ob diese Klauseln zur Datensicherheit bei Vertragsende enthalten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a12-m5",
+                    "uuid": "255006b6-96ab-481c-9b5a-ad21a6aa02d8",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Prozess zur Außerbetriebnahme ist vollständig auditiert und nachvollziehbar. Für Geräte, die sensible Daten enthalten, wird eine kryptografische Löschung (Crypto Erase) oder die physische Zerstörung der Speichermedien angewendet. Für jedes entsorgte Gerät wird von einem zertifizierten Dienstleister ein Vernichtungszertifikat eingeholt. Alle zugehörigen Konten, Konfigurationen und Firewall-Regeln werden automatisiert aus den Verwaltungssystemen entfernt (De-Provisioning)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein zertifizierter Entsorgungsfachbetrieb wird mit der Datenvernichtung beauftragt. Der Außerbetriebnahmeprozess ist in ein automatisiertes Skript oder einen Workflow im IT-Service-Management-Tool integriert, das sicherstellt, dass alle digitalen Spuren des Geräts entfernt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert eine Stichprobe von Vernichtungszertifikaten an. Der automatisierte De-Provisioning-Prozess wird analysiert und getestet. Es wird geprüft, ob nach der Ausführung des Prozesses noch Referenzen auf das ausgemusterte Gerät in Konfigurationen oder Datenbanken existieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "575c68da-5a6b-4fb7-b60a-421b5f410fd7",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BES",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a9-m1",
+                    "uuid": "05c2aa4e-fb28-486f-b26d-07f9784fafbd",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "VoIP-Komponenten werden hauptsächlich nach Preis, Markenbekanntheit oder Empfehlung ausgewählt. Es gibt keine formale Anforderungsliste, die als Grundlage für die Auswahl dient."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Beschaffung erfolgt oft reaktiv, wenn eine alte Anlage ausfällt, und orientiert sich an dem, was der bevorzugte Lieferant gerade anbietet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer bittet um die Dokumentation des Auswahlprozesses für die aktuellen VoIP-Komponenten. Fehlt diese oder besteht sie nur aus Angeboten, ist dies ein Indikator für diese Reifegradstufe."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m2",
+                    "uuid": "d6df2432-d4a0-4cc2-affb-60cfc9ae6b06",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vor der Beschaffung wird eine grundlegende Liste mit funktionalen Anforderungen erstellt. Produkte am Markt werden anhand dieser Liste und der Herstellerangaben verglichen. Sicherheitsmerkmale spielen eine untergeordnete Rolle."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine einfache Feature-Tabelle wird in einer Tabellenkalkulation erstellt, um die Angebote verschiedener Hersteller zu vergleichen. Die Entscheidung basiert auf der Erfüllung der meisten funktionalen Anforderungen zum besten Preis."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Anforderungsliste und die Vergleichsdokumentation an. Es wird bewertet, ob die Auswahl auf einem dokumentierten Vergleich basierte, auch wenn Sicherheitsaspekte nicht im Fokus standen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m3",
+                    "uuid": "9310f2c3-b0a4-4e29-b610-98b8532c9a2d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bevor VoIP-Komponenten beschafft werden, SOLLTE eine formale Anforderungsliste erstellt werden. Anhand dieser Anforderungsliste SOLLTEN die am Markt erhältlichen Produkte bewertet und die Auswahlentscheidung dokumentiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein formaler Anforderungskatalog wird erstellt, der funktionale und nicht-funktionale Anforderungen (z.B. Skalierbarkeit) umfasst. Ein standardisierter Prozess zur Marktanalyse und Produktbewertung wird durchgeführt. Die finale Entscheidung wird schriftlich begründet und archiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert den Anforderungskatalog und die Dokumentation des Bewertungsprozesses und der Auswahlentscheidung an. Es wird geprüft, ob ein systematischer und nachvollziehbarer Prozess stattgefunden hat."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m4",
+                    "uuid": "d525c6a1-2d97-4007-ab99-0ae7ce8f6118",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Anforderungsliste SOLLTE explizit alle Merkmale zur Erreichung des angestrebten Sicherheitsniveaus umfassen. Dies beinhaltet z.B. die Unterstützung spezifischer Verschlüsselungsprotokolle oder Härtungsmaßnahmen. Es SOLLTE ein formaler Prozess geregelt werden, wie die Produkte gemäß der Anforderungsliste bewertet werden, einschließlich der Gewichtung von Sicherheitsmerkmalen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Anforderungskatalog enthält ein dediziertes Kapitel zu Sicherheitsanforderungen (z.B. 'Muss TLS 1.2+ unterstützen', 'Muss SRTP unterstützen', 'Muss rollenbasiertes Admin-Konzept haben'). Bei der Bewertung wird den Sicherheitsmerkmalen ein hohes Gewicht beigemessen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert den Anforderungskatalog auf die Existenz und Angemessenheit der Sicherheitsanforderungen. Es wird geprüft, ob die Bewertungsmatrix die Sicherheitskriterien angemessen gewichtet und ob die finale Produktauswahl mit diesen Kriterien konsistent ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a9-m5",
+                    "uuid": "1676f91d-9d76-49a6-ac5e-16aafd08ec4f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Auswahlprozess umfasst eine verpflichtende Proof-of-Concept (PoC)-Phase, in der die favorisierten Produkte in einer Testumgebung gegen die definierten Sicherheitsanforderungen validiert werden. Die Sicherheitsreputation des Herstellers, sein Software Development Lifecycle und seine Patch-Politik (z.B. Reaktionszeit auf Schwachstellen) sind entscheidende Kriterien bei der Auswahl."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Top-2-Kandidaten aus der Papier-Evaluierung werden in einem Labor-Setup installiert. Ein Testplan wird abgearbeitet, der gezielt die Sicherheitsfunktionen unter die Lupe nimmt. Gleichzeitig wird eine Recherche zur Sicherheitshistorie des Herstellers durchgeführt und dessen Umgang mit gemeldeten Schwachstellen bewertet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die PoC-Testpläne und -Ergebnisberichte an. Es wird die Dokumentation zur Bewertung des Herstellers und seiner Sicherheitsprozesse geprüft. Es wird verifiziert, dass die endgültige Entscheidung nachweislich auf den Ergebnissen des PoC und der Herstellerbewertung basiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "88c3ee08-68ca-4376-a864-9c0177ef2850",
+                "control-id": "DEV.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ISGA",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a1-m1",
+                    "uuid": "9818801c-3fb1-469f-a41a-e2dfb9a8bbb4",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Entscheidung für den VoIP-Einsatz wird ad hoc und projektbezogen getroffen, ohne eine übergreifende Planung oder Strategie. Es werden nur die unmittelbarsten funktionalen Anforderungen berücksichtigt, ohne eine formale Auswahl von Protokollen oder eine Bewertung der Netzwerkkapazitäten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In dieser Phase wird VoIP oft für eine kleine Pilotgruppe oder eine neue Niederlassung eingeführt. Die Konfiguration basiert meist auf den Standardeinstellungen des Anbieters. Eine Dokumentation der Entscheidung oder Konfiguration fehlt weitgehend."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, ob es überhaupt schriftliche Planungsdokumente zum VoIP-Einsatz gibt. Durch Befragung der IT-Verantwortlichen wird ermittelt, ob die Auswahl der VoIP-Lösung auf einer systematischen Entscheidung beruhte oder eine Ad-hoc-Entscheidung war."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m2",
+                    "uuid": "0926839b-6d95-40b0-8549-8e23a7f44d23",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert ein grundlegender Plan, in dem entschieden wird, ob eine vollständige oder teilweise Migration zu VoIP erfolgen soll. Die grundlegenden Signalisierungs- und Transportprotokolle werden ausgewählt, jedoch ohne eine tiefgehende Analyse von Sicherheitsaspekten oder der genauen Netzwerkauslastung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein einfaches Planungsdokument wird erstellt. Die Auswahl der Protokolle (z.B. SIP) erfolgt auf Basis der Herstellerempfehlungen. Eine grundlegende Abschätzung des Bandbreitenbedarfs wird vorgenommen, aber keine detaillierte Kapazitätsplanung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert das Planungsdokument an und prüft, ob die grundlegenden Entscheidungen (partiell/vollständig, Protokollauswahl) dokumentiert sind. Es wird geprüft, ob eine grundlegende Abschätzung der Netzwerkanforderungen stattgefunden hat."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m3",
+                    "uuid": "fad0c688-8301-4618-9822-ea098edd8e55",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Bedingungen, unter denen VoIP eingesetzt werden soll, MÜSSEN festgelegt werden. Es MUSS unter anderem entschieden werden, ob vollständig oder partiell auf VoIP umgestiegen werden soll. Geeignete Signalisierungs- und Medientransportprotokolle MÜSSEN vor dem Einsatz ausgewählt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein formales Planungsdokument erstellt, das die Migrationsstrategie, die Auswahl und Begründung der Protokolle (z. B. SIP für Signalisierung, RTP für Medien) und die grundlegenden Rahmenbedingungen festlegt. Diese Planung wird vom zuständigen Gremium verabschiedet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert anhand des Planungsdokuments, dass die im Control geforderten Festlegungen getroffen wurden. Es wird geprüft, ob die Auswahl der Protokolle dokumentiert und nachvollziehbar ist. Es wird kontrolliert, ob die Entscheidung über eine vollständige oder partielle Umstellung formal getroffen wurde."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m4",
+                    "uuid": "f577ceb3-9b64-41c2-b22c-37cd8ec8b563",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur Basisplanung SOLLTEN besondere Anforderungen an die Verfügbarkeit von VoIP sowie an die Vertraulichkeit und Integrität der Telefonate und Signalisierungsinformationen vorab ermittelt und dokumentiert werden. Es SOLLTE entschieden werden, ob und wie die VoIP-Infrastruktur an öffentliche (Daten-)Netze angebunden wird. Die Kapazitäten und das Design von vorhandenen Datennetzen SOLLTEN bei der Planung detailliert berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Planung umfasst eine Anforderungsanalyse bezüglich Schutzbedarf (Verfügbarkeit, Vertraulichkeit, Integrität). Die Anbindung an externe Netze wird konzeptionell geplant, z.B. durch den Einsatz eines Session Border Controllers (SBC). Eine Kapazitätsplanung des Netzwerks wird durchgeführt, um Engpässe zu vermeiden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert, ob die Planungsdokumente eine explizite Analyse der Schutzbedarfsanforderungen enthalten. Es wird geprüft, ob ein Konzept für die Anbindung an öffentliche Netze existiert. Die Existenz und Angemessenheit der Netzwerkkapazitätsplanung wird verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a1-m5",
+                    "uuid": "e6b1cf8e-11c0-431a-ad14-c396c1cbe4cb",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VoIP-Planung ist vollständig in die übergreifende IT-Sicherheitsstrategie und das ISMS integriert. Sie beinhaltet eine detaillierte Risikoanalyse für die spezifische VoIP-Implementierung. Die Kapazitätsplanung wird durch Lasttests validiert. Der Plan ist ein lebendes Dokument, das regelmäßig, mindestens jährlich sowie bei signifikanten Änderungen der Bedrohungslage, überprüft und angepasst wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine formale Risikoanalyse nach z. B. BSI-Standard 200-3 wird für die VoIP-Infrastruktur durchgeführt. Vor dem Rollout werden Lasttests im Netzwerk durchgeführt, um die Ergebnisse der Kapazitätsplanung zu verifizieren. Ein Prozess zur regelmäßigen Überprüfung und Aktualisierung des VoIP-Konzepts wird etabliert und im ISMS verankert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Existenz und die Ergebnisse der spezifischen VoIP-Risikoanalyse und der Lasttests. Es wird geprüft, ob der Planungsprozess einen dokumentierten Revisionszyklus vorsieht und ob in der Vergangenheit Aktualisierungen stattgefunden haben. Die Integration in das ISMS wird durch Prüfung der entsprechenden Dokumente und Prozesse nachgewiesen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "de975020-6bd1-4a74-b02f-3578f4cb1e31",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a8-m1",
+                    "uuid": "63cc0c9f-c64e-4cee-b755-6373f00e00af",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verschlüsselung ist nur dort aktiv, wo sie eine Standardeinstellung der verwendeten Clients oder der Middleware ist. Es gibt keine klare Richtlinie oder einheitliche Konfiguration zur Verschlüsselung von VoIP-Verkehr. Oft wird bei Kompatibilitätsproblemen auf unverschlüsselte Kommunikation zurückgefallen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Verschlüsselungsoptionen in den Endgeräten und der Telefonanlage werden in der Standardeinstellung belassen. Wenn ein Endgerät keine Verschlüsselung unterstützt, findet die Kommunikation unverschlüsselt statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer zeichnet mit einem Netzwerk-Sniffer (z.B. Wireshark) den Verkehr einer Stichprobe von Anrufen auf und prüft, ob die Signalisierung (SIP) und der Medienstrom (RTP) unverschlüsselt übertragen werden. In Wireshark kann nach `sip` und `rtp` gefiltert werden, um dies zu überprüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m2",
+                    "uuid": "9c0c3ea3-efd0-4e7f-a8f7-a71a690be64d",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert eine Richtlinie, die vorschreibt, dass jeglicher VoIP-Verkehr, der die vertrauenswürdige Netzwerkgrenze verlässt, verschlüsselt werden muss. Dies wird durch einen Session Border Controller (SBC) oder ein VPN-Gateway umgesetzt. Die interne Kommunikation im LAN erfolgt jedoch weiterhin unverschlüsselt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der SBC am Netzwerkperimeter wird so konfiguriert, dass er für alle externen Verbindungen TLS für SIP und SRTP für die Mediendaten erzwingt. Interne Clients kommunizieren unverschlüsselt mit der Telefonanlage."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des SBC oder VPN-Gateways auf die Erzwingung von Verschlüsselung für externe Verbindungen. Zusätzlich wird der interne Netzwerkverkehr mitgeschnitten, um zu bestätigen, dass dieser unverschlüsselt ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m3",
+                    "uuid": "ac96ffa9-b2ab-41a1-adf6-b80862c8d290",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE entschieden und dokumentiert werden, ob und welche Sprach- und Signalisierungsinformationen verschlüsselt werden sollen. Generell SOLLTEN alle VoIP-Datenpakete, die das gesicherte LAN verlassen, durch geeignete Sicherheitsmechanismen (z.B. TLS für Signalisierung und SRTP für Mediendaten) geschützt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine formale Entscheidung über den Umfang der Verschlüsselung getroffen und dokumentiert. Als Mindeststandard wird festgelegt, dass die gesamte Kommunikation, die über unsichere Netze (wie das Internet) läuft, verschlüsselt wird. Dies wird technisch über einen SBC oder die Telefonanlage selbst konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert das Dokument an, das die Entscheidung über den Verschlüsselungsumfang festhält. Die Konfiguration der relevanten Systeme (SBC, PBX) wird geprüft, um sicherzustellen, dass die Verschlüsselung für externe Kommunikation wie definiert aktiv ist. Ein Netzwerk-Mitschnitt an der Netzwerkgrenze verifiziert dies."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m4",
+                    "uuid": "35a8b759-bae8-414d-b536-5adcd6114a8a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur Verschlüsselung des externen Verkehrs wird auch die interne VoIP-Kommunikation (sowohl Signalisierung via TLS als auch Mediendaten via SRTP) standardmäßig verschlüsselt, um auch vor internen Angreifern zu schützen. Die Benutzenden SOLLTEN über die Nutzung und die Grenzen der VoIP-Verschlüsselung (z.B. End-to-End vs. Transport) informiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Telefonanlage und alle Endgeräte werden so konfiguriert, dass sie standardmäßig Verschlüsselung für alle Anrufe anfordern und verwenden. Die Information der Benutzer erfolgt über das Intranet oder im Rahmen von Security-Awareness-Schulungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer schneidet den Verkehr im internen LAN mit und verifiziert, dass auch Anrufe zwischen zwei internen Teilnehmern verschlüsselt sind (SIP over TLS, SRTP). Es wird geprüft, ob es Informationsmaterial für Benutzer zur VoIP-Verschlüsselung gibt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m5",
+                    "uuid": "b3dafe74-d837-40de-b15a-7d0689179948",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wo immer technisch möglich, wird eine Ende-zu-Ende-Verschlüsselung (E2EE) für VoIP-Gespräche durchgesetzt. Es werden ausschließlich starke, zentral verwaltete kryptografische Parameter verwendet. Das System ist so konfiguriert, dass unverschlüsselte Verbindungen strikt abgelehnt werden (Encrypt-or-Drop-Policy). Das Management der Zertifikate für TLS ist automatisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Protokolle wie ZRTP oder eine PKI-basierte Lösung für E2EE implementiert. Die Telefonanlage wird so konfiguriert, dass sie nur sichere Krypto-Suiten akzeptiert und Anrufe ablehnt, wenn keine sichere SRTP-Verbindung ausgehandelt werden kann. Ein ACME-Client oder ein internes Zertifikatsmanagementsystem wird für die automatische Ausstellung und Erneuerung von TLS-Zertifikaten verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der Telefonanlage und der Endgeräte auf die Erzwingung von E2EE und die Konfiguration der 'Encrypt-or-Drop'-Policy. Es wird geprüft, ob ein Anrufversuch mit einem Client, der nur unverschlüsseltes RTP unterstützt, fehlschlägt. Der Prozess zur automatisierten Zertifikatsverwaltung wird auditiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f511a085-eb00-4042-8754-956b4c68f008",
+                "control-id": "KONF.10.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a5-m1",
+                    "uuid": "313da789-00b8-4a49-bf76-d269e0fd4d6b",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VoIP-Middleware wird mit den Standardeinstellungen des Herstellers betrieben. Nur die für die Grundfunktion absolut notwendigen Parameter und die Administrator-Passwörter werden geändert. Viele nicht benötigte Dienste laufen weiter."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Installation erfolgt nach dem 'Next-Next-Finish'-Prinzip. Es findet keine systematische Härtung statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die laufende Konfiguration der VoIP-Middleware mit den bekannten Standardeinstellungen des Herstellers. Ein Portscan des Servers zeigt, welche Dienste aktiv sind, und kann mit einer Liste der notwendigen Dienste verglichen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m2",
+                    "uuid": "b3db621b-edca-4f93-9630-7b95fd29e5c8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Härtung der VoIP-Middleware wird durchgeführt. Alle Standardpasswörter werden geändert und eine Checkliste wird verwendet, um häufige, nicht benötigte Dienste (z. B. unverschlüsselte Administrationsschnittstellen) zu deaktivieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine interne Checkliste für die Basiskonfiguration wird erstellt und bei jeder Installation angewendet. Diese Checkliste basiert auf allgemeinen Best Practices und Herstellerempfehlungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Konfigurations-Checkliste an und überprüft stichprobenartig, ob die Punkte in der produktiven Umgebung umgesetzt sind. Es wird geprüft, ob alle Standard-Accounts deaktiviert oder deren Passwörter geändert wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m3",
+                    "uuid": "9b7778ff-c34b-4f70-8c73-1da4a6bfce0d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die VoIP-Komponenten (Middleware) MÜSSEN so konfiguriert sein, dass sie den Schutzbedarf angemessen erfüllen. Die Default-Konfigurationen der VoIP-Middleware MÜSSEN vor der produktiven Inbetriebnahme angepasst werden. Alle nicht benötigten Dienste der VoIP-Middleware MÜSSEN deaktiviert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine formale, dokumentierte Sicherheitskonfiguration für die VoIP-Middleware erstellt. Diese basiert auf einer Analyse der benötigten Funktionen und dem definierten Schutzbedarf. Ein Standardprozess zur Härtung wird etabliert, der die Deaktivierung aller nicht essenziellen Dienste und die Konfiguration von Sicherheitsfeatures umfasst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die laufende Konfiguration der VoIP-Middleware mit der dokumentierten Sicherheitskonfiguration. Mittels eines Portscans und der Überprüfung der Prozessliste (`ps aux` oder `netstat -tulpen`) wird verifiziert, dass keine nicht benötigten Dienste aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m4",
+                    "uuid": "42860040-2c9c-4b76-b6e3-f286a6140658",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Installations- und Konfigurationsschritte SOLLTEN so dokumentiert werden, dass die Installation und Konfiguration durch sachkundige Dritte anhand der Dokumentation nachvollzogen und wiederholt werden können. Die Konfigurationsdokumentation wird versioniert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden detaillierte Installations- und Konfigurationsanleitungen ('Runbooks') erstellt. Diese Anleitungen werden in einem zentralen Wissensmanagementsystem (z. B. Wiki) versioniert und gepflegt. Änderungen an der Konfiguration folgen einem Change-Management-Prozess."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Installations- und Konfigurationsdokumentation an und prüft diese auf Vollständigkeit, Verständlichkeit und Aktualität. Es wird geprüft, ob ein Change-Management-Prozess für Konfigurationsänderungen existiert und eingehalten wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a5-m5",
+                    "uuid": "d2e7834b-58d5-45b4-9ceb-7b80d2a35593",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfiguration der VoIP-Middleware wird mittels Infrastructure as Code (IaC) verwaltet, z.B. mit Ansible, Puppet oder SaltStack. Alle Konfigurationsänderungen werden in einem Versionskontrollsystem (z.B. Git) nachverfolgt, automatisch in einer Staging-Umgebung getestet und dann auf die Produktionssysteme ausgerollt. Die Systemintegrität und Konfigurationstreue werden kontinuierlich überwacht, und Abweichungen führen zu automatisierten Korrekturen oder Alarmen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ansible-Playbooks oder äquivalente Skripte werden entwickelt, um die VoIP-Middleware vollständig automatisiert zu installieren und zu konfigurieren. Ein CI/CD-Pipeline wird für das Testen und Ausrollen von Konfigurationsänderungen genutzt. Tools wie AIDE oder Wazuh werden zur Überwachung der Konfigurationsdateien auf dem Server eingesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert das IaC-Repository und die CI/CD-Pipeline. Es werden die Protokolle der automatisierten Tests und der Konfigurationsüberwachungstools eingesehen. Ein Test könnte darin bestehen, eine Konfigurationsdatei manuell zu ändern und zu überprüfen, ob das System die Änderung erkennt und korrigiert oder alarmiert: `sudo echo '# Injected comment' >> /etc/asterisk/sip.conf; sleep 60; sudo cat /etc/asterisk/sip.conf | grep '# Injected comment'`."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ca905c8e-14a9-4b62-9800-84a6a793714e",
+                "control-id": "KONF.10.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a3-m1",
+                    "uuid": "9e2ce042-2b7c-4f1c-aa3a-415fd3a2e074",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nur einige wenige, offensichtlich nicht benötigte Funktionen werden auf einigen VoIP-Endgeräten deaktiviert. Es gibt keine standardisierte Konfiguration oder ein einheitliches Vorgehen zur Härtung der Endgeräte."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Typischerweise werden nur Web-Interfaces an Endgeräten deaktiviert, wenn diese Probleme verursachen. Die Konfiguration erfolgt manuell und uneinheitlich pro Gerät."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer wählt eine Stichprobe von VoIP-Endgeräten aus und vergleicht deren Konfigurationen. Es wird auf signifikante Inkonsistenzen und auf aktive, aber bekanntermaßen unsichere oder unnötige Dienste (z. B. Telnet, HTTP) geachtet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m2",
+                    "uuid": "50c22b89-77b4-4817-a86f-11cf705dcaa5",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für alle VoIP-Endgeräte wird eine grundlegende Härtung nach einer einfachen Checkliste durchgeführt. Dies beinhaltet das Ändern von Standard-Passwörtern und das Deaktivieren bekannter, nicht benötigter Dienste. Der Zugriff auf die Konfiguration ist durch ein geändertes Passwort geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine einfache Härtungsanleitung wird erstellt und bei der Inbetriebnahme jedes Geräts abgearbeitet. Das Standard-Administrationspasswort wird durch ein einheitliches, aber nicht-triviales Passwort ersetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Härtungs-Checkliste an. Anhand einer Stichprobe von Geräten wird geprüft, ob Standardpasswörter geändert wurden und ob die in der Checkliste genannten Dienste deaktiviert sind. Dies kann durch einen Portscan der Geräte oder durch Einsicht in die Konfiguration erfolgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m3",
+                    "uuid": "d1ff74eb-bf4b-4006-9d42-679c533ad17d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nicht benötigte Funktionen der Endgeräte MÜSSEN deaktiviert werden. Die Konfigurationseinstellungen DÜRFEN NICHT unberechtigt geändert werden können, beispielsweise durch einen Passwortschutz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine verbindliche Basis-Konfiguration für jeden Typ von VoIP-Endgerät definiert und dokumentiert. Diese Konfiguration deaktiviert alle nicht explizit für den Betrieb benötigten Funktionen (z.B. Webserver, Bluetooth, WLAN, wenn nicht genutzt). Der Zugriff auf das Konfigurationsmenü wird durch ein individuelles oder rollenbasiertes, sicheres Passwort geschützt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Konfiguration einer Stichprobe von Endgeräten mit der dokumentierten Basis-Konfiguration. Es wird geprüft, ob nicht benötigte Dienste deaktiviert sind und ob der Konfigurationszugriff wirksam passwortgeschützt ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m4",
+                    "uuid": "0a1381f7-5727-4dc9-b764-3f7ca081d798",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Sicherheitsfunktionen der Endgeräte, wie z.B. die Verschlüsselungsoptionen, SOLLTEN vor dem produktiven Einsatz getestet werden. Die eingesetzten Sicherheitsmechanismen und die verwendeten Parameter SOLLTEN dokumentiert werden als Teil der verbindlichen Basiskonfiguration."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die definierten Sicherheitskonfigurationen werden in einer Testumgebung auf ihre Funktion und Kompatibilität überprüft, bevor sie ausgerollt werden. Die Konfiguration, einschließlich der Parameter für Verschlüsselung und Authentisierung, wird versioniert und zentral dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Testdokumentation und die detaillierte Konfigurationsdokumentation an. Es wird verifiziert, dass die Sicherheitsfunktionen vor dem Einsatz getestet wurden und dass die produktive Konfiguration der dokumentierten und getesteten Version entspricht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a3-m5",
+                    "uuid": "632cbd6b-671f-4d9b-ba8e-541d584af77f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Konfiguration der VoIP-Endgeräte wird über einen zentralen Provisionierungsserver automatisiert ausgerollt und verwaltet. Die Integrität der Konfiguration auf den Endgeräten wird regelmäßig und automatisiert überwacht. Jede unautorisierte Konfigurationsänderung löst einen Alarm aus. Alle administrativen Zugriffe und Änderungen werden zentral protokolliert und ausgewertet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Provisionierungsserver (z. B. via TFTP/HTTPS) wird verwendet, um allen Endgeräten eine signierte Konfigurationsdatei zuzuweisen. Tools zum Konfigurationsmanagement oder Skripte werden eingesetzt, um regelmäßig die laufende Konfiguration der Geräte mit dem Soll-Zustand abzugleichen. Die Ergebnisse werden an ein zentrales SIEM-System zur Überwachung und Alarmierung gesendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des Provisionierungsservers und den Prozess des automatisierten Rollouts. Es werden die Logs der Integritätsüberwachung und des SIEM-Systems eingesehen, um die Wirksamkeit der Überwachung und Alarmierung zu verifizieren. Ein automatisierter Test könnte eine Konfigurationsdatei auf einem Endgerät verändern und prüfen, ob ein Alarm ausgelöst wird: `sudo sed -i 's/secure_mode=on/secure_mode=off/g' /etc/voip_phone/config.cfg && journalctl -f | grep 'ConfigDriftDetected'`."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "8b1d59c9-e2d6-4063-8f7c-a9e53273bcc0",
+                "control-id": "KONF.11.8.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a4-m1",
+                    "uuid": "483e9424-8026-4420-953b-952a997cbd8e",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt keine klare Richtlinie, wie externe Teilnehmer auf die VoIP-Infrastruktur zugreifen. Der Zugriff wird fallweise und oft mit sehr weitreichenden Firewall-Regeln (z.B. ANY-ANY zum VoIP-Server) gewährt, um Funktionsprobleme zu vermeiden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Firewall-Regeln werden oft reaktiv erstellt, wenn ein externer Benutzer keine Verbindung herstellen kann. Dies führt häufig zu übermäßig permissiven Regeln."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Firewall-Regeln, die den Verkehr zur VoIP-Infrastruktur regeln. Es wird nach übermäßig weitreichenden Regeln (z.B. any/any) oder Regeln ohne explizite Quell- oder Zielbeschränkung gesucht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m2",
+                    "uuid": "8195d4d3-c264-4e16-8732-65160dc824e3",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es ist eine grundlegende Richtlinie für den externen Zugriff definiert. Der direkte Zugriff aus unsicheren Netzen auf interne VoIP-Komponenten wird durch grundlegende Netzwerksegmentierung und Firewall-Regeln unterbunden, die nur die notwendigen Ports (z.B. UDP/5060) freigeben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die VoIP-Anlage befindet sich in einer eigenen DMZ oder einem geschützten VLAN. Die Firewall-Regeln erlauben explizit nur SIP- und RTP-Verkehr von bekannten externen IP-Adressen oder Gateways."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft den Netzwerkplan und die Firewall-Konfiguration, um sicherzustellen, dass die VoIP-Komponenten segmentiert sind und die Zugriffsregeln auf die notwendigen Protokolle und Ports beschränkt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m3",
+                    "uuid": "6a46ce93-597d-4d96-ad67-2724bc1b4c73",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS entschieden und dokumentiert werden, wie externe Gesprächspartner und -partnerinnen auf die VoIP-Architektur zugreifen können. Es MUSS durch technische Maßnahmen, wie z.B. eine Firewall, verhindert werden, dass IT-Systeme aus unsicheren Netzen direkte, unkontrollierte Datenverbindungen zu internen VoIP-Komponenten aufbauen können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine formale Zugriffsrichtlinie für externe VoIP-Kommunikation wird erstellt. Die VoIP-Infrastruktur wird in einer DMZ platziert. Die Firewall-Regeln sind restriktiv konfiguriert (Default-Deny) und erlauben nur den notwendigen Verkehr zu definierten VoIP-Komponenten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Zugriffsrichtlinie an und vergleicht sie mit der implementierten Firewall-Konfiguration. Es wird geprüft, ob die Regeln den direkten Zugriff auf interne VoIP-Clients oder -Server wirksam verhindern und nur den Verkehr zum definierten Gateway (z. B. in der DMZ) erlauben."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m4",
+                    "uuid": "2421a5fe-306c-4822-b5ba-15d309378fd3",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wenn alle ein- und ausgehenden Verbindungen über ein zentrales IT-System abgewickelt werden, SOLLTE sichergestellt werden, dass alle Signalisierungs- und Sprachinformationen zwischen dem öffentlichen und dem privaten Datennetz nur über dieses autorisierte IT-System ausgetauscht werden. Dieses System ist typischerweise ein Session Border Controller (SBC)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Session Border Controller (SBC) wird als zentraler, autorisierter Übergangspunkt zwischen dem internen und externen Netz implementiert. Alle Firewall-Regeln erzwingen, dass der gesamte VoIP-Verkehr durch den SBC geleitet wird. Direkte Verbindungen von extern zu internen VoIP-Komponenten sind verboten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Netzwerktopologie und die Firewall-Regeln, um sicherzustellen, dass der SBC der einzige erlaubte Kommunikationspfad für VoIP-Verkehr über die Netzwerkgrenze ist. Die Konfiguration des SBC wird auf korrekte Funktion (z.B. Topology Hiding) geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a4-m5",
+                    "uuid": "a7a54f3c-4d5a-4eb1-816e-b68c8c41def0",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ein hochverfügbarer Cluster von Session Border Controllern (SBCs) eingesetzt. Der gesamte VoIP-Verkehr wird auf der Anwendungsebene tiefgehend inspiziert (Deep Packet Inspection), um Angriffe wie SIP-Fuzzing oder SQL-Injection in SIP-Headern zu erkennen und zu blockieren. Die SBCs nutzen aktuelle Threat-Intelligence-Feeds und Geo-IP-Filterung, um bekannte bösartige Akteure proaktiv abzuwehren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein redundantes Paar von SBCs wird im Failover-Modus betrieben. Die Intrusion-Prevention-System (IPS)-Funktionen des SBC für VoIP werden aktiviert und mit benutzerdefinierten Regeln sowie Hersteller-Updates gepflegt. Die SBCs sind mit einem SIEM-System zur zentralen Protokollierung und Korrelation von Sicherheitsereignissen verbunden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des SBC-Clusters auf Hochverfügbarkeit und die Aktivierung der DPI/IPS-Funktionen. Die Anbindung an Threat-Intelligence-Feeds und das SIEM wird verifiziert. Testweise können bekannte Angriffsmuster (z.B. von `sipp` mit manipulierten Headern) gegen die Infrastruktur gefahren werden, um die Reaktion des SBC zu beobachten: `sudo sipp -sf custom_attack.xml -d 10000 -s service <SBC_IP>`."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "6922a659-89fa-4d80-9514-b5bef63728eb",
+                "control-id": "KONF.14.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a14-m2",
+                    "uuid": "18695ac5-015c-444c-ad51-202da53852a8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Signalisierung wird konsistent mittels TLS zwischen den Endgeräten und dem VoIP-Server geschützt. Es werden jedoch Standard-Kryptographieeinstellungen verwendet und nur die Server-Identität wird durch ein Zertifikat geprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "SIP over TLS wird auf der Telefonanlage und den Clients aktiviert. Die Telefonanlage verwendet ein gültiges TLS-Zertifikat (z.B. von Let's Encrypt)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer zeichnet den Signalisierungsverkehr auf und verifiziert mit Wireshark, dass dieser über TLS (Standardport 5061) läuft. Das Serverzertifikat wird auf Gültigkeit und Vertrauenswürdigkeit geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a14-m3",
+                    "uuid": "dba79c28-f73c-4278-a0aa-75ca133363b6",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Integrität und Vertraulichkeit der Signalisierungsinformationen SOLLTE durch geeignete kryptografische Verfahren, wie z.B. Transport Layer Security (TLS), gewährleistet werden. Nicht nur die Nutzdaten in der Signalisierung, sondern auch die Authentisierungsdaten SOLLTEN durchgängig verschlüsselt übertragen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Richtlinie etabliert, die die Nutzung von SIP over TLS für die gesamte Signalisierung vorschreibt. Die Konfiguration stellt sicher, dass auch Authentifizierungsmethoden wie SIP Digest innerhalb des TLS-Tunnels stattfinden und somit geschützt sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration von Server und Clients, um die Erzwingung von SIP over TLS zu verifizieren. Ein Netzwerk-Mitschnitt bestätigt, dass keine Signalisierungsdaten unverschlüsselt übertragen werden. Es wird geprüft, ob Authentisierungsversuche innerhalb der TLS-Session stattfinden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a14-m4",
+                    "uuid": "ed95e60d-d437-4edc-ba70-fc937d7f1e0c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zugriff auf das VoIP-Gateway SOLLTE durch die Validierung von VoIP-Adressen (z.B. SIP-URI) und Identitäten (z.B. H.323-ID) so weit wie möglich eingeschränkt werden. Es SOLLTEN zusätzlich Ende-zu-Ende-Sicherheitsmechanismen für die Signalisierung (z.B. durch S/MIME in SIP-Nachrichten) in Betracht gezogen werden. Es SOLLTE dokumentiert werden, wie die Signalisierung geschützt wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der VoIP-Server wird so konfiguriert, dass er nur Anrufe von registrierten und autorisierten SIP-URIs annimmt. Die Möglichkeit, Ende-zu-Ende-verschlüsselte Signalisierung zu nutzen, wird evaluiert und falls möglich für besonders schützenswerte Kommunikation aktiviert. Die gesamte Konfiguration des Schutzes der Signalisierung wird detailliert dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des VoIP-Servers, um die Mechanismen zur Zugriffsbeschränkung zu verifizieren. Es wird geprüft, ob Anrufversuche von nicht autorisierten Adressen abgewiesen werden. Die Dokumentation zum Schutz der Signalisierung wird auf Vollständigkeit und Korrektheit geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a14-m5",
+                    "uuid": "e7207b4b-1c84-43f4-99fb-0f2f5ac21938",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die TLS-Verbindungen wird Mutual TLS (mTLS) erzwungen, bei dem sich sowohl der Client als auch der Server mit einem gültigen, vertrauenswürdigen Zertifikat authentisieren müssen. Es werden ausschließlich starke und moderne Chiffriersuiten zugelassen. Die Gültigkeit der Zertifikate wird aktiv mittels OCSP Stapling oder CRLs überprüft. Alle Aspekte des Schutzes sind dokumentiert und werden regelmäßig auditiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine interne Public Key Infrastructure (PKI) wird zur Ausstellung von Client-Zertifikaten für alle VoIP-Endgeräte verwendet. Der VoIP-Server ist so konfiguriert, dass er nur Verbindungen von Clients mit einem gültigen Zertifikat von dieser PKI akzeptiert. Die Konfiguration des TLS-Protokolls wird gehärtet, um veraltete Protokollversionen (z.B. SSLv3, TLS 1.0/1.1) und schwache Chiffren zu deaktivieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die PKI- und Server-Konfiguration auf die Erzwingung von mTLS. Ein Test mit einem Client ohne gültiges Zertifikat muss fehlschlagen. Die Konfiguration der erlaubten Chiffriersuiten wird mit Tools wie `testssl.sh` oder `sslyze` überprüft: `testssl.sh <voip_server_ip>:<tls_port>`. Die Konfiguration der OCSP/CRL-Prüfung wird verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b0ec6f1e-d600-4d55-9e61-99ef0b72e170",
+                "control-id": "KONF.14.1.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a15-m2",
+                    "uuid": "a9e68c27-0121-4fc2-96d4-3f714a5a7d89",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "SRTP wird für alle Anrufe als bevorzugte Methode aktiviert. Wenn ein Endpunkt SRTP nicht unterstützt, wird jedoch ein ungesicherter Fallback auf RTP erlaubt, um die Kompatibilität zu gewährleisten. Es werden Standardmechanismen zum Schlüsselaustausch verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Konfiguration der Telefonanlage wird SRTP als 'optional' oder 'preferred' eingestellt. Der Schlüsselaustausch erfolgt oft über SDES, bei dem die Schlüssel in den unverschlüsselten oder nur transportverschlüsselten SIP/SDP-Nachrichten übertragen werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt einen Testanruf mit einem Client durch, der explizit kein SRTP unterstützt, und überprüft mit einem Netzwerk-Sniffer, ob der Anruf zustande kommt und der Medienstrom als unverschlüsseltes RTP übertragen wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a15-m3",
+                    "uuid": "1978fbb3-adda-4ea1-ad2e-64a9233f876e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Mediendaten (Sprache, Video), die über das Real-Time Transport Protocol (RTP) übertragen werden, SOLLTEN in geeigneter Weise geschützt werden. Die Nutzdaten SOLLTEN durch den Einsatz von Secure Real-Time Transport Protocol (SRTP) geschützt werden. Der zugehörige Kontrollkanal SOLLTE mittels Secure Real-Time Control Protocol (SRTCP) geschützt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Richtlinie etabliert, die den Einsatz von SRTP/SRTCP für alle Mediendatenströme vorschreibt. Die VoIP-Komponenten werden so konfiguriert, dass sie SRTP/SRTCP für alle Anrufe verwenden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert mit einem Netzwerk-Sniffer (z.B. Wireshark) eine Stichprobe von Anrufen. Es wird überprüft, ob die Mediendaten als SRTP und nicht als RTP übertragen werden. Wireshark kann SRTP-Pakete erkennen und als solche kennzeichnen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a15-m4",
+                    "uuid": "fe2758bf-eedc-4535-8a89-709547fa1c7e",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Einsatz von SRTP wird erzwungen ('Encrypt-or-Drop'), sodass keine Anrufe mit unverschlüsseltem RTP zustande kommen können. Es werden sichere Schlüsselaustauschmechanismen wie DTLS-SRTP verwendet. Die sicherheitsrelevanten Optionen der SRTP-Implementierung, wie die ausgewählten Krypto-Profile, SOLLTEN dokumentiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die VoIP-Anlage und die Clients werden so konfiguriert, dass SRTP zwingend erforderlich ist ('mandatory'). Als Schlüsselaustauschmethode wird DTLS-SRTP konfiguriert, da dies sicherer als SDES ist. Die gewählten SRTP-Profile (z.B. AES_CM_128_HMAC_SHA1_80) werden in der Konfigurationsdokumentation festgehalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer führt einen Testanruf mit einem Client durch, der explizit kein SRTP unterstützt; der Anruf muss fehlschlagen. Die Konfiguration des Schlüsselaustauschmechanismus wird überprüft. Die Dokumentation der Krypto-Profile wird mit der tatsächlichen Konfiguration verglichen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a15-m5",
+                    "uuid": "c3a3897d-28d1-406d-9fdf-6927c9789563",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird eine Ende-zu-Ende-Verschlüsselung der Mediendaten unter Verwendung von fortgeschrittenen Schlüsselaustauschmechanismen wie ZRTP oder PERC durchgesetzt. Das System ist so konfiguriert, dass nur die stärksten verfügbaren Krypto-Profile für SRTP verwendet werden. Es werden regelmäßige, automatisierte Überprüfungen durchgeführt, um sicherzustellen, dass kein Fallback auf unsicheres RTP stattfindet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Clients und Server werden für die Verwendung von ZRTP konfiguriert, das einen opportunistischen, von der SIP-Infrastruktur unabhängigen Schlüsselaustausch ermöglicht. Die Konfiguration erlaubt nur Krypto-Profile mit AES-256. Ein Überwachungsskript prüft regelmäßig die Systemkonfiguration und aktive Anrufe auf die Verwendung von unverschlüsseltem RTP und alarmiert bei Verstößen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration und Funktion von ZRTP, indem er die Short Authentication String (SAS) zwischen zwei Endpunkten vergleicht. Die Konfiguration der erlaubten Krypto-Profile wird analysiert. Die Protokolle des Überwachungsskripts werden eingesehen, um dessen Wirksamkeit zu bewerten."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
