@@ -9,16 +9,18 @@ Jede CSV-Datei entspricht einem eigenen Namespace:
 
 | Datei                            | Beschreibung                                                          |
 | -------------------------------- | --------------------------------------------------------------------- |
-| `dokumentationsempfehlungen.csv` | Definitionen zu Dokumentationsempfehlungen                            |
-| `ergebnis.csv`                   | Definitionen zu anderen verwendeten Begriffen                         |
+| `dokumentationsempfehlungen.csv` | Definitionen zu empfohlenen Dokumentationen                           |
+| `ergebnis.csv`                   | Definitionen zu sonstigen in Anforderungen verwendeten Begriffen*     |
 | `handlungsworte.csv`             | Definitionen zu Handlungs- bzw. Tätigkeitsverben                      |
 | `modalverb.csv`                  | Definitionen zu Modalverben (Grad der Verpflichtung oder Möglichkeit) |
 | `praktiken.csv`                  | Definitionen zu Praktiken oder Vorgehensweisen                        |
 | `sicherheitsniveau.csv`          | Definitionen zu Sicherheitsniveaus                                    |
-| `stufen.csv`                     | Definitionen zu allgemeinen Stufen oder Reifegraden                   |
+| `stufen.csv`                     | Definitionen zu Aufwandsstufen                                        |
 | `tags.csv`                       | Definitionen zu Schlagwörtern oder thematischen Labels                |
-| `themen.csv`                     | Definitionen zu Themen und Themenbereichen                            |
-| `zielobjekte.csv`                | Definitionen zu Zielobjekten (z. B. Assets, Systeme, Komponenten)     |
+| `themen.csv`                     | Definitionen zu Themen (= Untergliederung von Praktiken)              |
+| `zielobjekte.csv`                | Definitionen zu Zielobjekten (z. B. IT-Systeme, Anwendungen)          |
+
+(*) Im Ergebnis verwendete Begriffe werden in der ergebnis.csv aufgenommen, wenn der Begriff weder im Duden noch in der deutschen Wikipedia definiert ist oder eine von der allgemeinen Definition abweichende Definition verwendet wird. Dabei gilt ein Begriff auch dann als durch Duden oder Wikipedia definiert, wenn es sich um einen zusammengesetzten Begriff handelt, dessen Bestandteile alle bereits definiert sind.
 
 ---
 
