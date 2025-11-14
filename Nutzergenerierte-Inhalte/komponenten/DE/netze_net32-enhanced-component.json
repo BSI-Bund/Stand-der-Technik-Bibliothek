@@ -1,56 +1,56 @@
 {
   "component-definition": {
-    "uuid": "0f56ee41-71ca-4245-870b-b7ede81b5d78",
+    "uuid": "dadb69a4-87f4-4d58-852a-1726c953b6b7",
     "metadata": {
-      "title": "NET.1.2 Netzmanagement - Benutzerdefiniert",
-      "last-modified": "2025-11-14T19:05:37.547873+00:00",
+      "title": "NET.3.2 Firewall - Benutzerdefiniert",
+      "last-modified": "2025-11-14T22:09:00.332283+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "562ce5ae-7928-46df-8e71-529aeb22cf2a",
+        "uuid": "fe5168ce-08fd-46a7-a105-f0f6c96de839",
         "type": "interconnection",
-        "title": "NET.1.2 Netzmanagement",
-        "description": "This component represents the implementation of all controls for Baustein NET.1.2.",
+        "title": "NET.3.2 Firewall",
+        "description": "This component represents the implementation of all controls for Baustein NET.3.2.",
         "props": [
           {
             "name": "Einleitung",
-            "value": "Ein zuverlässiges Netzmanagement ist Grundvoraussetzung für den sicheren und effizienten Betrieb moderner Netze. Dazu ist es erforderlich, dass das Netzmanagement alle Netzkomponenten umfassend integriert. Außerdem müssen geeignete Maßnahmen umgesetzt werden, um die Netzmanagement-Kommunikation und -infrastruktur zu schützen.<BR>Das Netzmanagement umfasst viele wichtige Funktionen wie z. B. die Netzüberwachung, die Konfiguration der Komponenten, die Behandlung von Ereignissen und die Protokollierung. Eine weitere wichtige Funktion ist das Reporting, das als gemeinsame Plattform für Netz und IT-Systeme angelegt werden kann. Alternativ kann es dediziert als einheitliche Plattform oder als Bestandteil der einzelnen Netzmanagement-Komponenten realisiert werden.<BR>Die Netzmanagement-Infrastruktur besteht aus zentralen Management-Systemen, wie z. B. einem SNMP-Server, Administrations-Endgeräten mit Software für Managementzugriffe und dezentralen Managementagenten. Außerdem gehören dedizierte Managementwerkzeuge, wie z. B. Probes bzw. spezifische Messgeräte sowie Managementprotokolle, wie z. B. SNMP oder SSH, dazu. Auch Managementschnittstellen, wie dedizierte Ethernet-Ports oder Konsolen-Ports, sind Bestandteil einer Netzmanagement-Infrastruktur."
+            "value": "Eine Firewall ist ein System aus soft- und hardwaretechnischen Komponenten, das dazu eingesetzt wird, IP-basierte Datennetze sicher zu koppeln. Dazu wird mithilfe einer Firewall-Struktur der technisch mögliche Informationsfluss auf die in einer Sicherheitsrichtlinie als vorher sicher definierte Kommunikation eingeschränkt. Sicher bedeutet hierbei, dass ausschließlich die erwünschten Zugriffe oder Datenströme zwischen verschiedenen Netzen zugelassen werden.<BR>Um Netzübergänge abzusichern, wird oft nicht mehr eine einzelne Komponente verwendet, sondern eine ganze Reihe von IT-Systemen, die unterschiedliche Aufgaben übernehmen, z. B. ausschließlich Pakete zu filtern oder Netzverbindungen mithilfe von Proxy-Funktionen strikt zu trennen. Der in diesem Baustein verwendete Begriff „Application Level Gateway“ (ALG) bezeichnet eine Firewall-Komponente, die Datenströme auf Basis von Sicherheitsproxies regelt.<BR>Eine Firewall wird am Übergang zwischen unterschiedlich vertrauenswürdigen Netzen eingesetzt. Unterschiedlich vertrauenswürdige Netze stellen dabei nicht unbedingt nur die Kombination aus Internet und Intranet dar. Vielmehr können auch zwei institutionsinterne Netze einen unterschiedlich hohen Schutzbedarf besitzen. So hat z. B. das Netz der Bürokommunikation meistens einen geringeren Schutzbedarf als das Netz der Personalabteilung, in dem besonders schützenswerte, personenbezogene Daten übertragen werden."
           },
           {
             "name": "Zielsetzung",
-            "value": "Ziel dieses Bausteins ist es, die Informationssicherheit als integralen Bestandteil des Netzmanagements zu etablieren."
+            "value": "Ziel des Bausteins ist es, eine Firewall bzw. eine Firewall-Struktur mithilfe der in den folgenden Kapiteln beschriebenen Anforderungen sicher einsetzen zu können, um Netze mit unterschiedlichen Schutzanforderungen sicher miteinander zu verbinden."
           },
           {
             "name": "Abgrenzung und Modellierung",
-            "value": "Der Baustein NET.1.2 Netzmanagement ist auf jedes Netzmanagement-System (Management-System und zu verwaltende IT-System) anzuwenden, das im Informationsverbund eingesetzt wird. Bei den zu verwaltenden IT-Systemen handelt es sich üblicherweise um einzelne Clients, Server oder aktive Netzkomponenten (Netzkoppelelemente).<BR>Dieser Baustein betrachtet die notwendigen Komponenten und konzeptionellen Aufgaben zum Netzmanagement. Anforderungen zum Systemmanagement für vernetzte Clients und Server werden hier nicht beschrieben."
+            "value": "Der Baustein NET.3.2 Firewall ist auf jede im Informationsverbund eingesetzte Firewall anzuwenden.<BR>Ein typischer Anwendungsfall ist die Absicherung einer Außenverbindung, z. B. beim Übergang eines internen Netzes zum Internet oder bei Anbindungen zu Netzen von Partnerinstitutionen. Aber auch bei einer Kopplung von zwei institutionsinternen Netzen mit unterschiedlich hohem Schutzbedarf ist der Baustein anzuwenden, z. B. bei der Trennung des Bürokommunikationsnetzes vom Netz der Entwicklungsabteilung, wenn dort besonders vertrauliche Daten verarbeitet werden."
           },
           {
-            "name": "Unberechtigter Zugriff auf zentrale Netzmanagement-Komponenten",
-            "value": "Wenn es bei einem Angriff gelingt, auf Netzmanagement-Lösungen zuzugreifen, z. B. durch ungepatchte Sicherheitslücken oder eine ungenügende Netztrennung, können alle dort angeschlossenen Netzkomponenten kontrolliert und neu konfiguriert werden. So kann z. B. auf schützenswerte Informationen zugegriffen, der Netzverkehr umgeleitet oder auch das gesamte Netz nachhaltig gestört werden."
+            "name": "2.1. Distributed Denial of Service (DDoS)",
+            "value": "Bei einem DDoS-Angriff auf ein geschütztes Netz (z. B. TCP SYN Flooding, UDP Packet Storm) kann die Firewall aufgrund der vielen Netzverbindungen, die verarbeitet werden müssen, ausfallen. Das kann dazu führen, dass bestimmte Dienste im Local Area Network (LAN) nicht mehr verfügbar sind oder das gesamte LAN ausfällt."
           },
           {
-            "name": "Unberechtigter Zugriff auf einzelne Netzkomponenten",
-            "value": "Wenn es bei einem Angriff gelingt, auf einzelne Netzkomponenten zuzugreifen, kann die jeweilige Komponente kontrolliert und manipuliert werden. Jeder über die Netzkomponente geleitete Datenverkehr kann somit kompromittiert werden. Darüber hinaus können weiterführende Angriffe vorbereitet werden, um tiefer in das Netz der Institution einzudringen."
+            "name": "2.2. Manipulation",
+            "value": "Gelingt es Angreifenden, unberechtigt auf eine Firewall oder eine entsprechende Verwaltungsoberfläche zuzugreifen, können sie dort Dateien beliebig manipulieren. So können sie beispielsweise die Konfiguration ändern, zusätzliche Dienste starten oder Schadsoftware installieren. Ebenso können sie auf dem manipulierten IT-System die Kommunikationsverbindungen mitschneiden. Auch lassen sich beispielsweise die Firewall-Regeln so verändern, dass aus dem Internet auf die Firewall und auf das Intranet der Institution zugegriffen werden kann. Weiterhin können Angreifende einen Denial-of-Service (DoS)-Angriff starten, indem sie im Regelwerk den Zugriff auf einzelne Server-Dienste verhindern."
           },
           {
-            "name": "Unberechtigte Eingriffe in die Netzmanagement-Kommunikation",
-            "value": "Wird die Netzmanagement-Kommunikation abgehört und manipuliert, können auf diesem Weg aktive Netzkomponenten fehlkonfiguriert bzw. kontrolliert werden. Dadurch kann die Netzintegrität verletzt und die Verfügbarkeit der Netzinfrastruktur eingeschränkt werden. Außerdem können die übertragenen Daten mitgeschnitten und eingesehen werden."
+            "name": "2.3. Umgehung der Firewall-Regeln",
+            "value": "Angreifende können mithilfe grundlegender Mechanismen in den Netzprotokollen die Firewall-Regeln umgehen (z. B. durch Fragmentierungsangriffe), um in einen durch die Firewall geschützten Bereich einzudringen. Im geschützten Bereich können sie anschließend weiteren Schaden anrichten, z. B. schützenswerte Daten auslesen, manipulieren oder löschen."
           },
           {
-            "name": "Unzureichende Zeitsynchronisation der Netzmanagement-Komponenten",
-            "value": "Wird die Systemzeit der Netzmanagement-Komponenten unzureichend synchronisiert, können die Protokollierungsdaten eventuell nicht miteinander korreliert werden. Auch kann die Korrelation eventuell zu fehlerhaften Aussagen führen, da die unterschiedlichen Zeitstempel von Ereignissen keine gemeinsame Basis aufweisen. So kann nicht geeignet auf Ereignisse reagiert werden. Probleme können zudem nicht beseitigt werden. Dadurch können beispielsweise Sicherheitsvorfälle und Datenabflüsse unerkannt bleiben."
+            "name": "2.4. Fehlerhafte Konfiguration und Bedienungsfehler einer Firewall",
+            "value": "Eine fehlerhaft konfigurierte oder falsch bediente Firewall kann sich gravierend auf die Verfügbarkeit von Diensten auswirken. Werden beispielsweise Firewall-Regeln falsch gesetzt, können Netzzugriffe blockiert werden. Weiterhin können fehlerhafte Konfigurationen dazu führen, dass IT-Systeme nicht mehr vollständig oder gar nicht mehr geschützt sind. Im schlimmsten Fall sind dadurch interne Dienste für Angreifende erreichbar."
           }
         ],
         "control-implementations": [
           {
-            "uuid": "c30da6f5-c51b-4371-b03d-8c7d22fddc9a",
+            "uuid": "2fb94071-b52d-492d-9a84-af03787b2547",
             "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/netze_profile.json",
-            "description": "Implementation for all controls in Baustein NET.1.2",
+            "description": "Implementation for all controls in Baustein NET.3.2",
             "implemented-requirements": [
               {
-                "uuid": "167579d4-a493-474a-a9c5-45f0d8aeb91c",
+                "uuid": "64dcf7e7-6cb0-492c-ae59-ad3599130647",
                 "control-id": "ARCH.2.1",
                 "description": "",
                 "props": [
@@ -88,7 +88,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.3.4.A4-m3",
-                    "uuid": "dc34f1ff-42bd-4c0e-9413-10ed1eb1c8e0",
+                    "uuid": "5b03b604-3fc0-46e4-a9bd-f6a68bc90249",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -107,7 +107,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A4-m4",
-                    "uuid": "0e0716bb-3f0c-4d28-b5d0-ee8afbfb23df",
+                    "uuid": "7c3970ee-9669-41d0-9172-ec1a98c94441",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -126,7 +126,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A4-m5",
-                    "uuid": "7a7caa09-e4b8-461e-9ba4-b9999b2461ab",
+                    "uuid": "54ec96d5-b046-4047-b69b-b51812c2eb32",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -146,7 +146,7 @@
                 ]
               },
               {
-                "uuid": "e567521c-9f82-403f-a3ab-49dfb6b3b9be",
+                "uuid": "cb0d9697-4440-49fd-83b7-826fa7bfc881",
                 "control-id": "ARCH.2.2",
                 "description": "",
                 "props": [
@@ -184,7 +184,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.3.4.A9-m3",
-                    "uuid": "ef75561d-0da4-4f41-bc58-a80ad5722bb4",
+                    "uuid": "934f1e44-1b1e-46e3-a828-a6289f27e9de",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -203,7 +203,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A9-m4",
-                    "uuid": "b5967df4-5081-489f-b51d-338ae79cf49e",
+                    "uuid": "7d88b6a9-a173-43cd-b3c2-f473c76e7ebd",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -222,7 +222,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A9-m5",
-                    "uuid": "adaf33f5-1716-48a2-9af1-a519b8507fb8",
+                    "uuid": "9bdd9831-046d-4cfb-ae18-adfc59ac5196",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -242,7 +242,103 @@
                 ]
               },
               {
-                "uuid": "3daac155-7e8a-4bd9-a5f5-d655ef400af9",
+                "uuid": "e3185f13-2663-486e-86e5-667db9e10f4e",
+                "control-id": "ARCH.2.2.7",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.3.4.A8-m3",
+                    "uuid": "a3716de6-9e52-4702-9aa8-eafeb2937971",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Im Rollen- und Berechtigungskonzept für den RADIUS-Server SOLLTEN die verschiedenen Gruppen berücksichtigt werden, die wegen NAC auf einen RADIUS-Server zugreifen müssen. Mindestens SOLLTEN die jeweiligen Organisationseinheiten, die Access-Switches (RADIUS-Clients) administrieren, die Zuständigen für Endgerätegruppen, die Identitäten verwalten, und der First-Level-Support berücksichtigt werden, um diesen zu administrieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Berechtigungskonzept für den RADIUS-Server erstellt. Es definiert folgende Rollen: 'RADIUS-Admin' (Vollzugriff, 2 Personen), 'Switch-Admin' (darf nur RADIUS-Clients anlegen/ändern, Mitglieder des Netzwerk-Teams), 'MAC-Admin' (darf nur MAC-Adressen in bestimmten Gruppen pflegen, z.B. Facility Management für Drucker), 'Helpdesk-User' (reiner Lesezugriff auf Logs zur Fehleranalyse)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert das Berechtigungskonzept für den RADIUS-Server an. Es wird geprüft, ob die genannten Gruppen berücksichtigt sind und das Prinzip der geringsten Rechte (Least Privilege) angewendet wird. Eine Stichprobe der Benutzerkonten auf dem RADIUS-Server wird mit dem Konzept abgeglichen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.3.4.A8-m4",
+                    "uuid": "ce8b8aa6-9127-42f3-8b78-f8d70f62fb8b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Rollen- und Berechtigungskonzept ist granular umgesetzt. Teams können nur die Objekte (z.B. RADIUS-Clients, MAC-Adress-Gruppen) verwalten, für die sie zuständig sind. Alle administrativen Aktionen auf dem RADIUS-Server werden zentral protokolliert und die Logs werden regelmäßig, z.B. wöchentlich, auf unautorisierte oder ungewöhnliche Aktivitäten überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf dem RADIUS-Server wird eine Regel implementiert, die dem Team 'Produktions-IT' nur die Verwaltung von Switches erlaubt, deren IP-Adressen im Bereich 10.100.0.0/16 liegen. Jede Konfigurationsänderung wird mit Zeitstempel und ausführendem Admin an den zentralen Syslog-Server gesendet. Ein wöchentlicher Bericht über alle Änderungen wird generiert und vom IT-Sicherheitsbeauftragten geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die granulare Umsetzung der Berechtigungen, indem er sich als Mitglied eines eingeschränkten Teams anmeldet und versucht, Objekte außerhalb seiner Zuständigkeit zu ändern. Es wird geprüft, ob die administrative Protokollierung aktiviert ist und die Review-Protokolle der Log-Analyse werden eingesehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.3.4.A8-m5",
+                    "uuid": "1464dd78-7dd9-4f5d-9a11-96154b18ab0e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der administrative Zugriff auf den RADIUS-Server ist vollständig in eine zentrale Identity- und Access-Management-Lösung (IAM) integriert. Für alle administrativen Rollen wird eine Multi-Faktor-Authentisierung (MFA) erzwungen. Die Zuweisung von Berechtigungen erfolgt dynamisch basierend auf der Rolle des Mitarbeiters im IAM und wird regelmäßig durch automatisierte Access-Reviews (Rezertifizierungskampagnen) überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anmeldung am RADIUS-Admin-Interface erfolgt über SAML oder OpenID Connect gegen den zentralen Identity Provider der Organisation, der MFA erzwingt. Verlässt ein Mitarbeiter das Netzwerk-Team, wird seine Gruppenzugehörigkeit im IAM-System geändert, was ihm automatisch und sofort den Zugriff auf den RADIUS-Server entzieht. Alle drei Monate wird eine automatische Rezertifizierungskampagne gestartet, bei der die Vorgesetzten die Berechtigungen ihrer Mitarbeiter bestätigen müssen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der IAM-Anbindung und die MFA-Pflicht. Es werden Berichte aus dem IAM-System über die letzte Access-Review-Kampagne für die RADIUS-Administratoren angefordert. Automatisiert kann die Konfiguration durch eine API-Abfrage an den Identity Provider geprüft werden, um die MFA-Anforderung für die RADIUS-Admin-Anwendung zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d104c61c-8524-4386-88d7-6a5e98b0b506",
                 "control-id": "ARCH.2.3",
                 "description": "",
                 "props": [
@@ -280,7 +376,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.3.4.A2-m1",
-                    "uuid": "e5a01c7c-2d68-49e3-8c0d-12eb4d299f78",
+                    "uuid": "e8563f23-0120-4ba8-9c97-9f581330780e",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -299,7 +395,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A2-m2",
-                    "uuid": "2ff31dc3-3f53-4031-8adc-698e25bd50c1",
+                    "uuid": "e95203ae-617e-4126-bc50-e5c0ff55c764",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -318,7 +414,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A2-m3",
-                    "uuid": "dadfd2d4-553c-468c-b0e8-22c2ad0e7c2a",
+                    "uuid": "9a8668d8-2374-4b07-bba3-df7c06740ef4",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -337,7 +433,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A2-m4",
-                    "uuid": "b5d6f994-da60-4847-9d47-5f61c833a782",
+                    "uuid": "a61eab95-d025-4f25-8d61-de61ab4d7c04",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -356,7 +452,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A2-m5",
-                    "uuid": "47a52ef7-5741-470c-b591-c8e50e327196",
+                    "uuid": "1a542cbe-6187-467e-b87b-33c0b906bf47",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -376,103 +472,7 @@
                 ]
               },
               {
-                "uuid": "d39d7973-c7dc-470d-bed6-737c3c5e46af",
-                "control-id": "ARCH.4.3",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "3",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "BER",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "NET.3.4.A7-m3",
-                    "uuid": "6192df69-7c6f-4500-b199-56beea905156",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Endgeräte SOLLTEN sichere Authentisierungsverfahren nach dem Stand der Technik verwenden und automatisiert auf Basis von Zertifikaten oder Zugangskonten authentisiert werden. Unsichere Authentisierungsverfahren SOLLTEN nur in begründeten Ausnahmefällen genutzt und die Entscheidung dokumentiert werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Die Standardkonfiguration für Windows- und macOS-Clients wird so eingestellt, dass EAP-TLS mit Gerätezertifikaten für die 802.1X-Authentisierung verwendet wird. Für eine Liste von alten Druckern, die kein 802.1X unterstützen, wird eine Ausnahme für MAC-Authentisierung in einem separaten, stark eingeschränkten VLAN dokumentiert und genehmigt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer überprüft die Konfiguration auf dem RADIUS-Server und die Client-Konfigurationen (z.B. GPOs für Windows), um festzustellen, welche Authentisierungsverfahren erlaubt sind. Es wird die Liste der dokumentierten Ausnahmen für unsichere Verfahren angefordert und deren Begründung geprüft."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.3.4.A7-m4",
-                    "uuid": "3bad7492-c339-440f-99ba-75e9ee3db3c0",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Eine Richtlinie erzwingt die ausschließliche Verwendung von sicheren EAP-Typen, insbesondere EAP-TLS. Die Verwendung schwächerer Methoden wie MAC-Authentisierung oder EAP-MD5 ist grundsätzlich verboten und erfordert einen formalen Risikoakzeptanzprozess durch das Informationssicherheitsmanagement. Die Validierung des RADIUS-Server-Zertifikats wird auf allen Clients erzwungen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Die RADIUS-Server-Konfiguration lässt nur EAP-TLS als Authentisierungsmethode zu. Für die MAC-Authentisierung von Druckern muss ein formaler Antrag mit Risikoanalyse gestellt und vom CISO genehmigt werden. Die Client-Konfigurationen (via MDM/GPO) erzwingen die Server-Zertifikatsprüfung und geben den Namen des erwarteten RADIUS-Servers vor, um Man-in-the-Middle-Angriffe zu verhindern."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die RADIUS-Konfiguration, um die erlaubten EAP-Typen zu verifizieren. Es wird der Prozess für die Risikoakzeptanz von Ausnahmen geprüft. Zudem wird die Client-Konfiguration daraufhin untersucht, ob die Server-Zertifikatsvalidierung erzwungen wird. Automatisiert kann dies durch ein Skript auf einem Test-Client geprüft werden, das versucht, sich mit einem falschen Server-Zertifikat zu verbinden, was fehlschlagen muss."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.3.4.A7-m5",
-                    "uuid": "4b55dbf9-5137-4bc2-8284-4d33eb711e69",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Für die Authentisierung werden ausschließlich hardware-gestützte Zertifikate verwendet, die sicher in einem Trusted Platform Module (TPM) oder einer vergleichbaren Secure Enclave auf den Endgeräten gespeichert sind. Die Ausstellung, Erneuerung und der Widerruf dieser Zertifikate sind vollständig automatisiert und in eine PKI- und Mobile-Device-Management-Lösung integriert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Die Zertifikatsvorlagen in der Microsoft PKI sind so konfiguriert, dass der private Schlüssel im TPM des Clients erstellt und gespeichert wird ('Key Attestation'). Die Verteilung und Erneuerung der Zertifikate erfolgt automatisch über SCEP/NDES, das vom MDM-System gesteuert wird. Unsichere Authentisierungsverfahren sind auf dem RADIUS-Server komplett deaktiviert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert die Konfiguration der Zertifikatsvorlagen auf der PKI und die SCEP/MDM-Konfiguration. Auf einem Beispiel-Client wird geprüft, ob der private Schlüssel des Zertifikats tatsächlich als nicht exportierbar und hardware-gebunden markiert ist. Die RADIUS-Logs werden daraufhin analysiert, ob ausschließlich Authentisierungen mit zertifikatbasierten Methoden stattfinden."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "97464041-9104-4c75-8bef-1509ad8e85b5",
+                "uuid": "e9abfbf0-373d-4d7d-89cc-5d9d7e4adc90",
                 "control-id": "ARCH.5.1",
                 "description": "",
                 "props": [
@@ -510,7 +510,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.3.4.A3-m1",
-                    "uuid": "61173234-ef67-4afd-912e-c79c747a8d0f",
+                    "uuid": "4d207c7f-1981-473d-adbf-5f631c4a4d6e",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -529,7 +529,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A3-m2",
-                    "uuid": "575ebdab-6d28-48f8-b017-d2a3e81989e6",
+                    "uuid": "9bc55857-76ed-4cc7-ad27-42c89d962589",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -548,7 +548,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A3-m3",
-                    "uuid": "b43e8e19-de28-4780-83d8-a3d889155c41",
+                    "uuid": "86778d02-b69b-4805-8c5c-61c82865489a",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -567,7 +567,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A3-m4",
-                    "uuid": "2e39c0fc-d877-4a6d-9a21-44af535d1920",
+                    "uuid": "d15f346f-ac52-4b1a-91d4-06dfd82260af",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -586,7 +586,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A3-m5",
-                    "uuid": "13b217de-ff2a-462b-834e-a632767c025b",
+                    "uuid": "ae84dae8-dbc2-41ec-87b9-48be859db435",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -606,7 +606,7 @@
                 ]
               },
               {
-                "uuid": "81cf027c-1764-41f6-a871-de277e062464",
+                "uuid": "113d22fc-59a2-472b-97a4-1233998a3f15",
                 "control-id": "ASST.2.2.1",
                 "description": "",
                 "props": [
@@ -644,7 +644,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.3.4.A5-m3",
-                    "uuid": "96fbad6f-df4b-4377-8add-ad9290a21760",
+                    "uuid": "611da640-4823-4817-a1c0-56da55d216ed",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -663,7 +663,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A5-m4",
-                    "uuid": "112501c1-0077-45d7-9a61-6a177bf7f855",
+                    "uuid": "361419ea-5633-438b-a87f-cfdd67427831",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -682,7 +682,7 @@
                   },
                   {
                     "statement-id": "NET.3.4.A5-m5",
-                    "uuid": "40e18a24-c7c1-43c5-ac6d-68af26efa593",
+                    "uuid": "49777532-fee6-4c0e-8ad4-b2aa84f19b36",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -696,102 +696,6 @@
                       {
                         "name": "assessment-method",
                         "value": "Der Prüfer lässt sich den automatisierten Onboarding- und Offboarding-Prozess demonstrieren. Es werden die Logs der beteiligten Systeme (Client-Management, PKI, NAC) analysiert, um die vollautomatische Orchestrierung zu verifizieren. Automatisiert kann der Prozess durch eine API-Abfrage an das Client-Management-System geprüft werden, das den Status des Onboarding-Prozesses zurückgibt."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "ce4ccc4e-618c-445e-a56e-175b68df90d8",
-                "control-id": "DET.4.11",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "3",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Risk Treatment",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "NOT",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "NET.3.4.A6-m3",
-                    "uuid": "28e8f059-3a1a-4f2a-8346-26a55e1eb627",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Es SOLLTE erwogen werden, die Sicherheitsmechanismen von NAC temporär zu deaktivieren, wenn die Wirkkette gestört ist. Bei den Notfallmaßnahmen, die im Notfallprozess festgelegt werden, SOLLTEN Produktivität und Informationssicherheit gegeneinander abgewogen werden. Dabei SOLLTEN die Optionen von Notfallmaßnahmen (RADIUS-down-Policies) betrachtet und mit den relevanten Sicherheitsrichtlinien abgestimmt werden, wie z.B. bestehende Verbindungen beibehalten, eine feste Zuweisung von Netzsegmenten vornehmen oder NAC komplett deaktivieren."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein Notfallhandbuch wird erstellt, das festlegt: 'Bei einem Totalausfall des RADIUS-Clusters wird die RADIUS-down-Policy 'Fail-Open in Gast-VLAN' aktiviert. Dies geschieht durch Ausführen des Skripts 'enable_nac_fallback.sh' auf dem zentralen Switch-Management-Server. Die Aktivierung muss vom Leiter IT-Betrieb genehmigt werden.' Die Entscheidung für diese Policy wurde dokumentiert und dabei die Risiken (eingeschränkte Produktivität) gegen die Sicherheit (kein unkontrollierter Zugriff auf interne Netze) abgewogen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer fordert das Notfallhandbuch für NAC an. Es wird geprüft, ob die verschiedenen Optionen für RADIUS-down-Policies dokumentiert sind, ob eine klare Entscheidung für eine der Optionen getroffen wurde und ob die Abwägung zwischen Sicherheit und Produktivität nachvollziehbar ist. Zudem wird die Switch-Konfiguration daraufhin geprüft, ob die gewählte Fallback-Policy technisch umgesetzt ist."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.3.4.A6-m4",
-                    "uuid": "b2cd2bab-be0b-44b1-b722-b7cd438ccf34",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Der Notfallprozess enthält klare Kriterien für die Aktivierung, einen Kommunikationsplan an die Betroffenen (inkl. Helpdesk und Anwender) sowie eindeutig definierte Rollen und Verantwortlichkeiten. Die Fallback-Konfigurationen sind auf den Switches vorkonfiguriert und werden regelmäßig (z.B. im Rahmen von Notfallübungen) getestet, um ihre Funktionsfähigkeit sicherzustellen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Das Notfallhandbuch definiert: 'Der Notfallprozess wird aktiviert, wenn das Monitoring-System für >5 Minuten einen Ausfall beider RADIUS-Server meldet.' Es gibt eine E-Mail-Vorlage zur Information des Helpdesks. Im Rahmen der jährlichen Notfallübung wird der Ausfall der RADIUS-Server simuliert und der Fallback-Mechanismus live getestet. Die Ergebnisse werden protokolliert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer sichtet das Notfallhandbuch auf Aktivierungskriterien und Kommunikationspläne. Es werden Protokolle der Notfallübungen eingefordert, um zu verifizieren, dass die Fallback-Mechanismen regelmäßig und erfolgreich getestet werden."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.3.4.A6-m5",
-                    "uuid": "7d8d97bb-9126-4fc6-ad7d-02ea2673d80e",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Der Notfall-Failover ist automatisiert. Das Monitoring-System erkennt einen kritischen NAC-Ausfall und aktiviert automatisch den vordefinierten, sicheren Fallback-Zustand auf den betreffenden Netzwerkkomponenten. Gleichzeitig wird das Security- und Netzwerkteam alarmiert. Sobald das Problem behoben ist, erkennt das System dies und schaltet automatisch wieder in den Normalbetrieb zurück."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein zentrales Monitoring-Tool (z.B. Nagios, Prometheus) führt alle 30 Sekunden eine synthetische RADIUS-Anmeldung durch. Schlägt diese dreimal in Folge fehl, löst das Tool über eine API-Anbindung an das Switch-Management-System die Aktivierung der Fallback-Konfiguration aus und erstellt ein Prio-1-Ticket im Ticketsystem. Sobald die synthetische Anmeldung wieder erfolgreich ist, wird die normale Konfiguration ebenfalls automatisch wiederhergestellt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die Konfiguration des Monitoring- und Automatisierungstools. Es wird geprüft, ob der Failover- und Failback-Prozess vollautomatisiert ist. Der Prozess wird durch einen simulierten Ausfall des RADIUS-Dienstes getestet, wobei die Logs des Monitoring-, Automatisierungs- und Netzwerk-Management-Systems zur Verifizierung der automatischen Umschaltung herangezogen werden. Ein automatischer Test könnte eine API-Abfrage an das Monitoring-System sein, um die Konfiguration der Failover-Regel zu überprüfen."
                       }
                     ]
                   }

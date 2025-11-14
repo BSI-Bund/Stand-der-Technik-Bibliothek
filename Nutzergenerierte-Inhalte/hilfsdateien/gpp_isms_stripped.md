@@ -1,17 +1,17 @@
 | ID | name | description | UUID (only for G++ controls!) |
 |---|---|---|---|
-| GC.1.1 | Errichtung und Aufrechterhaltung eines ISMS | Governance und Compliance MUSS ein Verfahren zur Errichtung und Aufrechterhaltung eines ISMS nach {{ insert: param, gc.1.1-prm1 }} verankern. | 80351189-6ffc-495e-a995-6219b9704724 |
+| GC.1.1 | Errichtung und Aufrechterhaltung eines ISMS | Governance und Compliance MUSS Verfahren und Regelungen zur Errichtung und Aufrechterhaltung eines ISMS nach {{ insert: param, gc.1.1-prm1 }} veranker | 80351189-6ffc-495e-a995-6219b9704724 |
 | GC.2.1 | Analyse der interessierten Parteien | Governance und Compliance MUSS ein Verfahren zum Ermitteln der interessierten Parteien und ihrer Bedürfnisse und Erwartungen an das ISMS verankern. | 834c85a0-f793-4d6a-8eba-5f26f38979cd |
 | GC.2.2 | Verfahren und Regelungen | Governance und Compliance MUSS ein Verfahren zur Sammlung, Integration und Priorisierung aller für das Informationssicherheitsmanagement relevanten Ra | de07bcb3-2a0b-44d4-bd3f-eca08ce44992 |
 | GC.2.2.1 | Gesetzliche Verpflichtungen | Governance und Compliance SOLLTE gesetzliche Verpflichtungen, welche die Verarbeitung von Informationen durch die Institution betreffen, dokumentieren | 02747a0f-cd38-4815-9eec-351ae89dbdfe |
 | GC.2.2.2 | Anhörung zuständiger Stellen | Governance und Compliance SOLLTE für die Einhaltung gesetzlicher Verpflichtungen in der Informationsverarbeitung zuständige Stellen in der Institution | 3d677306-5748-405a-b5f3-cdc2939e7d14 |
 | GC.2.2.3 | Vertragliche Verpflichtungen | Governance und Compliance SOLLTE vertragliche Verpflichtungen, welche die Verarbeitung von Informationen durch die Institution betreffen, dokumentiere | fc2115c2-43fe-4b22-88c5-b28784174936 |
-| GC.3.1 | Definition des Informationsverbunds | Governance und Compliance MUSS den nachvollziehbar abgegrenzten Informationsverbund auf Basis des Kontextes und Anforderungen der interessierten Parte | cba2f75c-95f5-4398-9a8b-7773bdcd1c7d |
+| GC.3.1 | Definition des Informationsverbunds | Governance und Compliance MUSS den nachvollziehbar abgegrenzten Informationsverbund auf Basis des Kontextes und der Anforderungen der interessierten P | cba2f75c-95f5-4398-9a8b-7773bdcd1c7d |
 | GC.3.2 | Festlegen der Schnittstellen | Governance und Compliance MUSS Schnittstellen des Informationsverbunds zu externen Prozessen dokumentieren. | c30d414e-65e5-460e-8239-892f9a196a1f |
 | GC.3.3 | Überblick über den Informationsverbund | Governance und Compliance SOLLTE einen Überblick über den Informationsverbund dokumentieren. | 22bd4408-502b-4731-8ea5-b0a9ebb471a6 |
 | GC.4.1 | Festlegung von Rollen und Zuständigkeiten | Governance und Compliance MUSS die Rollen und Zuständigkeiten im Rahmen des ISMS mit den notwendigen Qualifikationen, Aufgaben und Kompetenzen (bzw. B | 5cc59bb1-af0d-457f-a548-03373447fec7 |
-| GC.4.2 | Vermeidung von Interessenskonflikten | Governance und Compliance MUSS Maßnahmen zur Vermeidung von Interessenskonflikten bei der Festlegung von Rollen und Zuständigkeiten des ISMS verankern | e57f0e21-92f1-4ddb-8248-e74613905d7d |
-| GC.4.3 | Festlegen einer Sicherheitsorganisation | Governance und Compliance MUSS die Sicherheitsorganisation für das ISMS mit den festgelegten Rollen, Zuständigkeiten sowie auch Gremien verankern. | 56907e29-773a-4339-8166-785b68f9c065 |
+| GC.4.2 | Vermeidung von Interessenkonflikten | Governance und Compliance MUSS Maßnahmen zur Vermeidung von Interessenkonflikten bei der Festlegung von Rollen und Zuständigkeiten des ISMS verankern. | e57f0e21-92f1-4ddb-8248-e74613905d7d |
+| GC.4.3 | Festlegen einer Sicherheitsorganisation | Governance und Compliance MUSS die Sicherheitsorganisation für das ISMS mit den festgelegten Rollen, Zuständigkeiten sowie Gremien verankern. | 56907e29-773a-4339-8166-785b68f9c065 |
 | GC.4.4 | Sicherstellen der Qualifikation | Governance und Compliance MUSS ein Verfahren zur Sicherstellung der Qualifikation von Rollen- und Verantwortungsträgern verankern. | 09da6b52-1efc-4c44-98b3-4d9b094fd107 |
 | GC.4.5 | Stellvertreterregelungen | Governance und Compliance MUSS Stellvertreterregelungen für alle relevanten Rollen und Zuständigkeiten im ISMS zuweisen. | 0d09d72c-92af-4749-9ce1-a523f0546e46 |
 | GC.5.1 | Festlegen von Zielen für die Informationssicherheit | Governance und Compliance MUSS auf Basis der identifizierten Rahmenbedingungen konkrete und messbare Ziele für die Informationssicherheit verankern. | 551fec73-dce4-4f34-b41d-555142b09cf7 |
@@ -24,7 +24,7 @@
 | GC.6.2 | Kommunikation im Projektmanagement | Governance und Compliance SOLLTE ein Verfahren zur Etablierung der Informationssicherheit in das Projektmanagement verankern. | 6ccbc3f1-0984-4b12-86f2-708d40e9b635 |
 | GC.7.1 | Festlegen von Vorgehensweisen | Governance und Compliance MUSS die Verfahren des ISMS sowie die Zuständigkeiten dokumentieren. | 4b2b03f6-103d-4435-9edc-27cd961e2361 |
 | GC.7.1.1 | Änderungen im ISMS | Governance und Compliance MUSS ein Verfahren zur Etablierung von Änderungen im ISMS verankern. | b7831de9-e3ff-4c82-b6d0-75a90f3f50df |
-| GC.7.2 | Freigabe von Vorgehensweisen | Governance und Compliance SOLLTE die Freigabe der Verfahren für das ISMS durch die Institutionsleitung dokumentieren. | d6d44aa6-9010-40f0-9c3b-cc568b951410 |
+| GC.7.2 | Freigabe von Vorgehensweisen | Governance und Compliance MUSS die Freigabe der Verfahren für das ISMS durch die Institutionsleitung dokumentieren. | d6d44aa6-9010-40f0-9c3b-cc568b951410 |
 | GC.7.3 | Freigabe des Managementberichtes | Governance und Compliance MUSS den Managementbericht durch die Institutionsleitung autorisieren. | 143c7db5-bb1f-4f6f-b3b2-7ae66e22200d |
 | GC.7.4 | Methodik für das Risikomanagement | Governance und Compliance MUSS eine einheitliche Methodik für das Informationssicherheitsrisikomanagement auf Basis des Kontextes und Anforderungen de | 0567f921-f474-4060-9a64-11e5148ebe09 |
 | GC.7.5 | Definition des Risikoeigentümers | Governance und Compliance MUSS in der Methodik für das Risikomanagement die Rolle des Risikoeigentümers mit den notwendigen Aufgaben und Befugnissen v | 1a225ac3-6072-44ba-bfd6-b30e52477dd4 |
@@ -43,12 +43,12 @@
 | STM.5.1 | Modellierung der Praktiken | Strukturmodellierung MUSS die ausgewählten Anforderungen den jeweiligen Zielobjekten bzw. Zielobjektklassen und die Anforderungen den Assettypen bzw.  | 8f41f095-427e-4764-b055-7bb6bad722f2 |
 | STM.5.1.1 | Ergänzung optionaler Praktiken und Anforderungen | Strukturmodellierung SOLLTE die in der Blaupause nicht enthaltenen (optionalen) Praktiken und Anforderungen aus dem Kompendium auf Anwendbarkeit überp | 3a4d684a-b638-474a-aa7b-dd913567d3f5 |
 | STM.5.2 | Begründung nicht-modellierter Praktiken und Anforderungen | Strukturmodellierung MUSS die Begründung nicht modellierter Praktiken und Anforderungen nachvollziehbar dokumentieren. | 988a659e-c504-462c-a553-0156bd915618 |
-| STM.6.1 | Gesetzliche Verpflichtungen integrieren | Strukturmodellierung SOLLTE gesetzliche Verpflichtungen, welche die Verarbeitung von Informationen durch die Institution betreffen, dokumentieren. | 872f32b0-e09a-49bc-8309-3fe903998ed5 |
-| STM.6.2 | Vertragliche Verpflichtungen integrieren | Strukturmodellierung SOLLTE vertragliche Verpflichtungen, welche die Verarbeitung von Informationen durch die Institution betreffen, dokumentieren. | dc636f1b-8a43-47d9-81fa-420dee4e9f25 |
+| STM.6.1 | Gesetzliche Verpflichtungen integrieren | Strukturmodellierung MUSS gesetzliche Verpflichtungen, welche die Verarbeitung von Informationen durch die Institution betreffen, dokumentieren. | 872f32b0-e09a-49bc-8309-3fe903998ed5 |
+| STM.6.2 | Vertragliche Verpflichtungen integrieren | Strukturmodellierung MUSS vertragliche Verpflichtungen, welche die Verarbeitung von Informationen durch die Institution betreffen, dokumentieren. | dc636f1b-8a43-47d9-81fa-420dee4e9f25 |
 | STM.7.1 | Durchführung einer vereinfachten Risikobewertung | Strukturmodellierung MUSS die Assets, für die es keine einschlägigen Anforderungen im Kompendium oder in der Blaupause gibt, dokumentieren. | 42cc5d6f-e4f8-4247-a8fa-f90988af02cb |
 | STM.8.1 | Durchführung von Risikoanalysen | Strukturmodellierung MUSS für Assets, die einen erhöhten Schutzbedarf aufweisen, eine vertiefende Risikoanalyse verankern. | 2761ceae-c2ad-49ea-8455-e669bb25a9d4 |
-| STM.8.2 | Freigabe der Risikobehandlung | Strukturmodellierung SOLLTE die in der Risikoanalyse getroffenen Entscheidungen zur Risikobehandlung durch die Risikoeigentümer dokumentieren. | 3b4584fc-f6e1-4426-9f5e-c295ff61ca6c |
-| STM.8.3 | Konsolidierung der ergänzenden Anforderungen | Strukturmodellierung SOLLTE ergänzende Anforderungen bzw. Maßnahmen aus der Risikoanalyse in der Blaupause dokumentieren. | e1879233-df7f-4f8b-8d2b-8047f499a826 |
+| STM.8.2 | Freigabe der Risikobehandlung | Strukturmodellierung MUSS die in der Risikoanalyse getroffenen Entscheidungen zur Risikobehandlung durch die Risikoeigentümer dokumentieren. | 3b4584fc-f6e1-4426-9f5e-c295ff61ca6c |
+| STM.8.3 | Konsolidierung der ergänzenden Anforderungen | Strukturmodellierung MUSS ergänzende Anforderungen bzw. Maßnahmen aus der Risikoanalyse in der Blaupause dokumentieren. | e1879233-df7f-4f8b-8d2b-8047f499a826 |
 | UMS.1.1 | Prävention von Verstößen | Umsetzung SOLLTE Verfahren zur Prävention gegen Verstöße verankern. | 6874056a-4f01-497d-8ef4-0411a55671e7 |
 | UMS.1.2 | Aufgabenzuweisung | Umsetzung SOLLTE zu jeder Verpflichtung die zu ihrer Einhaltung erforderlichen Aufgaben zuweisen. | 4409672d-fbc3-4126-b87d-fc33c0f3c253 |
 | UMS.2.1 | Überprüfung des Umsetzungsstatus | Umsetzung MUSS den Umsetzungsstatus der Anforderungen der verschiedenen Praktiken vollständig überprüfen. | e2c90fc0-e6e5-4a89-8099-39360b6e8eb9 |
@@ -64,7 +64,7 @@
 | UMS.6.1 | Nachverfolgung des Umsetzungsfortschritts | Umsetzung MUSS ein Verfahren für die Nachverfolgung der Umsetzung von Maßnahmen verankern. | 5ebbee40-3069-4d3e-a708-69f50c017059 |
 | UMS.6.2 | Wirksamkeitsprüfung der Umsetzung | Umsetzung SOLLTE die Wirksamkeit der umgesetzten Maßnahmen überprüfen. | d12031e0-670b-4b21-8ec0-555e31ff7730 |
 | UMS.6.3 | Fortschreibung des Umsetzungsplans | Umsetzung MUSS ein Verfahren zur Fortschreibung des Umsetzungsplans verankern. | 2383a636-5eab-43e4-b026-c6fbaae7ae56 |
-| VRB.1.1 | Behandlung von Verstößen | Verbesserung SOLLTE ein Verfahren zur Behandlung von Verstößen verankern. | 8a5be79d-22b6-4a78-a87e-6445c9fdd20d |
+| VRB.1.1 | Behandlung von Verstößen | Verbesserung MUSS ein Verfahren zur Behandlung von Verstößen verankern. | 8a5be79d-22b6-4a78-a87e-6445c9fdd20d |
 | VRB.2.1 | Verfahren zur kontinuierlichen Verbesserung | Verbesserung MUSS ein Verfahren zur kontinuierlichen Verbesserung des ISMS verankern. | af4befb6-3550-4461-bd46-78af23a02817 |
 | VRB.2.1.1 | Umgang mit Nichtkonformitäten | Verbesserung MUSS eine Methode zur Überprüfung von Nichtkonformitäten hinsichtlich Ursachen und Wiederauftreten verankern. | 55056da1-3773-4fb8-b7bf-9d5d7e42f5e6 |
 | VRB.2.1.2 | Umgang mit Verbesserungspotentialen | Verbesserung SOLLTE eine Methode zur Überprüfung und Bewertung von Verbesserungspotentialen unter Berücksichtigung von  Risiken verankern. | 9e104747-342c-4fae-a76f-0c3ee159aba5 |
@@ -154,8 +154,8 @@
 | NOT.3.6 | Sicherheitsmechanismen | Notfallplanung SOLLTE alternative Sicherheitsmechanismen , die in Notfällen greifen, verankern. | f0645a33-62db-46f5-9153-1ee8833eba34 |
 | NOT.4.1 | Dokumentation der Quellen | Notfallplanung SOLLTE die zu sichernden Daten dokumentieren. | db78cca2-d85a-443d-8198-b5fa84d58b9d |
 | NOT.4.6 | Geschützte Aufbewahrung | Notfallplanung SOLLTE eine geschützte Aufbewahrung von Datensicherungen verankern. | ac46110b-7f7f-4111-b7e8-5abf648563b9 |
-| NOT.4.7 | Versionierung | Notfallplanung SOLLTE eine Versionierung der Datensicherung verankern. | 7c3570d6-8230-42ca-a79e-d198cc7e7744 |
-| NOT.4.8 | Verschlüsselung | Notfallplanung SOLLTE die Datensicherung durch {{ insert: param, not.4.8-prm1 }} verschlüsseln. | b443fd60-5e58-454b-8d57-baec8a876d22 |
+| NOT.4.7 | Versionierte Datensicherung | Notfallplanung SOLLTE eine Versionierung der Datensicherung verankern. | 7c3570d6-8230-42ca-a79e-d198cc7e7744 |
+| NOT.4.8 | Verschlüsselte Datensicherung | Notfallplanung SOLLTE die Datensicherung durch {{ insert: param, not.4.8-prm1 }} verschlüsseln. | b443fd60-5e58-454b-8d57-baec8a876d22 |
 | NOT.4.9 | Speichermedien | Notfallplanung SOLLTE dedizierte Speichermedien, die für den festgelegten Aufbewahrungszeitraum geeignet sind, installieren. | 10c6fc65-f0f6-4ed2-9f47-65458aeb1e51 |
 | NOT.4.10 | Getrennte Aufbewahrung | Notfallplanung SOLLTE die Datensicherung getrennt von den Originaldaten platzieren. | c272387e-88de-4794-a223-c502c136a501 |
 | NOT.4.11 | Datenträgerarchiv | Notfallplanung SOLLTE ein Datenträgerarchiv installieren. | a7779b58-de2c-4f8c-aedd-008bdffcc823 |
@@ -221,7 +221,7 @@
 | PERS.2.2 | Rollen | Personal SOLLTE für alle Tätigkeiten im Geltungsbereich Rollen mit Zielen, Aufgaben, erforderlichen Kompetenzen und Qualifikationen verankern. | 75dd9995-57e7-4d64-aad3-8b1b0f6b57ea |
 | PERS.2.3 | Rollentrennung | Personal SOLLTE für unvereinbare Aufgaben eine Rollentrennung verankern. | e21a20ee-0e0c-4e42-b2fd-9849257bf3da |
 | PERS.2.3.1 | Rollentrennung - Verzeichnisdienst | Personal SOLLTE zwischen Administration von Verzeichnisdiensten und Pflege der verwalteten Daten eine Rollentrennung verankern. | 8cfe386c-0e94-4926-b82d-07d24441e434 |
-| PERS.2.3.2 | Rollentrennung - Virtualisierung | Personal SOLLTE zwischen Administration von virtuellen Systemen und VM-Hosts eine Rollentrennung verankern. | e26fc4a9-c6cf-41f8-bfd7-e01cc950de47 |
+| PERS.2.3.2 | Rollentrennung - Virtualisierung | Personal SOLLTE zwischen Administration von virtuellen Systemen und Virtualisierungslösungen eine Rollentrennung verankern. | e26fc4a9-c6cf-41f8-bfd7-e01cc950de47 |
 | PERS.2.3.3 | Rollentrennung - Audits | Personal SOLLTE zwischen Implementierung von Sicherheitsanforderungen und deren Überprüfung eine Rollentrennung verankern. | e105f038-c2ae-4411-b7bd-26d6b0188e5e |
 | PERS.2.3.4 | Rollentrennung - Änderungen und Tests | Personal SOLLTE zwischen Implementierung und Test eine Rollentrennung verankern. | de64f532-164e-4b94-b32f-481ccc0be507 |
 | PERS.2.4 | Zuständigkeiten | Personal SOLLTE Zuständigkeiten für die Rollen zuweisen. | 349d8caa-cd47-484d-8474-1497c7212382 |
@@ -276,14 +276,14 @@
 | BER.2.2 | Einschränkung | Berechtigung SOLLTE die Einrichtung, Änderung oder Löschung einer Identität einschränken. | e83e80c1-6725-4812-82be-f86dce11d07e |
 | BER.2.3 | Stammdatenprüfung | Berechtigung SOLLTE Stammdaten einer Identität anhand allgemeiner Stammdaten {{ insert: param, ber.2.3-prm1 }} überprüfen. | ee2514d4-b2ce-4e97-85e7-a82cdb937e82 |
 | BER.2.4 | Protokollierung von Stammdatenänderungen | Berechtigung SOLLTE Änderungen von Identitäts-Stammdaten protokollieren. | 7bba1e58-63d0-4588-81dc-f87c512e7e82 |
-| BER.2.5 | Weggang | Berechtigung SOLLTE die zugeordnete Identität bei Weggang von Nutzenden deaktivieren. | fbc81602-53a3-44a0-a6bf-c83b3ec60964 |
-| BER.2.6 | Löschen | Berechtigung SOLLTE nicht mehr benötigte Identitäten nach Ablauf der Löschfristen löschen. | f7541c92-ff46-4d17-9232-2998a41c6613 |
+| BER.2.5 | Deaktivierung bei Weggang | Berechtigung SOLLTE die zugeordnete Identität bei Weggang von Nutzenden deaktivieren. | fbc81602-53a3-44a0-a6bf-c83b3ec60964 |
+| BER.2.6 | Löschen nach Fristablauf | Berechtigung SOLLTE nicht mehr benötigte Identitäten nach Ablauf der Löschfristen löschen. | f7541c92-ff46-4d17-9232-2998a41c6613 |
 | BER.3.1 | Zentrales Management | Berechtigung SOLLTE ein zentrales Managementsystem für Zugangskonten installieren. | 0aec1964-0172-4194-836b-90fa6d8002ba |
 | BER.3.2 | Einschränkung des Managements | Berechtigung SOLLTE das Management von Zugangskonten auf Administrierende einschränken. | 6b065020-06dc-4be4-86f7-12371499a6c0 |
 | BER.3.3 | Protokollierung von Änderungen | Berechtigung SOLLTE Aktionen an Zugangskonten revisionsfähig protokollieren. | 744a1a50-616b-4092-91f6-b2b4b1b0aa01 |
 | BER.3.4 | Identität-Zugangskonto | Berechtigung SOLLTE ein Zugangskonto zu genau einer Identität zuweisen. | 3aee31a9-78e2-453e-8bce-d4212130dbf7 |
 | BER.3.7 | Ereignisgesteuerte Deaktivierung | Berechtigung SOLLTE Zugangskonten ereignisgesteuert deaktivieren. | 610f7bda-9051-44a0-bc6e-c8cbbac35af0 |
-| BER.3.12 | Löschen | Berechtigung SOLLTE nicht mehr benötigte Zugangskonten nach Ablauf der Löschfristen löschen. | 04d6a7fe-9e5a-424b-b647-3e95ce943ce9 |
+| BER.3.12 | Zugang löschen nach Fristablauf | Berechtigung SOLLTE nicht mehr benötigte Zugangskonten nach Ablauf der Löschfristen löschen. | 04d6a7fe-9e5a-424b-b647-3e95ce943ce9 |
 | BER.3.13 | Zugang nur durch zwei Personen | Berechtigung KANN die Aufteilung von Authentisierungsmitteln auf mehrere Personen verankern. | cc01c015-42f4-4e42-a986-ad7c954733db |
 | BER.3.14 | Gruppenkonten | Berechtigung SOLLTE Gruppenkonten untersagen. | 78e70d76-b423-4707-a3c4-27f416fa7d14 |
 | BER.3.15 | Gruppenkonten - MFA | Berechtigung SOLLTE für Gruppenkonten die Mehr-Faktor-Authentisierung aktivieren. | d59c4b33-c1d6-446a-bb0f-047fe832974d |
@@ -299,7 +299,6 @@
 | BER.5.1 | Vorkonfigurierte Authentisierungsmittel | Berechtigung SOLLTE vorkonfigurierte Authentisierungsmittel deaktivieren. | 7e0edf55-22d6-42d8-973f-d3f8635a0913 |
 | BER.5.2 | Deaktivierung einfacher Biometrie | Berechtigung SOLLTE die Authentifizierung nur anhand von Biometrie deaktivieren. | 4483f020-da27-44af-ae23-edf7d676d72f |
 | BER.5.4 | Mehr-Faktor-Authentisierung für weitreichende Berechtigungen | Berechtigung SOLLTE Mehr-Faktor-Authentisierung für weitreichende Berechtigungen aktivieren. | 55b70084-f446-42af-908b-0f514a72f380 |
-| BER.5.6 | Trivialpasswörter | Berechtigung SOLLTE die Verwendung von Trivialpassworten blockieren. | f0722999-f8c4-4c75-810b-94d7563dd698 |
 | BER.5.7 | Kriterien für die Qualität von Passwörtern | Berechtigung SOLLTE Kriterien für die Qualität von Passwörtern anhand von Lebensdauer und Angriffsmöglichkeiten verankern. | af5ba77a-8d77-4a4f-8842-23ba9dedb829 |
 | BER.5.8 | Anlassbezogene Passwortwechsel | Berechtigung SOLLTE einen Passwortwechsel ausschließlich anlassbezogen ausführen. | 4de1c314-e6b3-4b70-bc73-54cdafca7ae9 |
 | BER.5.9 | Monitoring von Zugangsdaten | Berechtigung SOLLTE Zugangsdaten auf Kompromittierung durch {{ insert: param, ber.5.9-prm1 }} überwachen. | 4785649d-561d-4757-9421-4d0db14ee4df |
@@ -353,8 +352,6 @@
 | DET.5.3.1 | Autorisierung kritischer Scans | Detektion SOLLTE kritische Scans durch {{ insert: param, det.5.3.1-prm1 }} autorisieren. | d19ef635-5438-4b4e-b75b-479764f39069 |
 | DET.5.3.2 | Korrelation komplexer Angriffswege | Detektion KANN Schwachstellen anhand eines Abgleichs mehrerer Scans miteinander überprüfen. | 1221903d-e402-49b0-a7ac-763a11683a4b |
 | DET.5.3.3 | Historische Analyse | Detektion KANN Schwachstellen in öffentlich erreichbaren Systemen oder Anwendungen anhand bekannter Anzeichen im Audit Log testen. | f64131d9-e0cd-4c01-937a-ea93d7a92371 |
-| DET.5.4 | Regelmäßige Penetrationstests | Detektion KANN die Abwehrfähigkeit durch Penetrationstests nach {{ insert: param, det.5.4-prm1 }} {{ insert: param, det.5.4-prm2 }} überprüfen. | 622f98fa-a211-4c1e-b655-5e9dd6c0d507 |
-| DET.5.5 | Red Teaming | Detektion KANN die Abwehrfähigkeit durch simulierte Angriffe, die von einem unabhängigen Team durchgeführt werden, {{ insert: param, det.5.5-prm1 }} ü | ea34243d-adc3-4208-ab4e-25247aa8c009 |
 | DET.5.6 | Threat Hunting | Detektion KANN den Informationsverbund durch Sicherheitsexperten auf Anzeichen für Angriffe {{ insert: param, det.5.6-prm1 }} überprüfen. | ff549367-0992-4b06-a2c0-246915632cb1 |
 | DET.5.7 | Analyse verdeckter Kanäle | Detektion KANN den Informationsverbund auf verdeckte Kommunikationskanäle {{ insert: param, det.5.7-prm1 }} überprüfen. | 8f64e735-9870-4a8d-8b7b-220b93baddba |
 | DET.5.8 | Bedrohungsanalyse | Detektion SOLLTE verfügbare Informationen zu Bedrohungen, die für den Informationsverbund relevant sind, {{ insert: param, det.5.8-prm1 }} überprüfen. | 2134a13a-50a6-44b7-8df1-3ce041ef376a |
@@ -364,7 +361,7 @@
 | DET.5.9.1 | Bonusprogramm | Detektion KANN ein Bonusprogramm für externe Schwachstellenmeldungen verankern. | aeb9f98e-0aad-44c1-8ab1-2f7276e387de |
 | DET.5.10 | Zeitnahes Patchmanagement | Detektion SOLLTE ein zeitnahes Patchmanagement verankern. | b2c08460-0038-4f49-b459-dba756e55ae9 |
 | DET.5.10.1 | Autorisierte Bezugsquellen | Detektion SOLLTE Bezugsquellen für Patches autorisieren. | 681afb8d-1864-4d86-9e69-3ecd9c14fbb8 |
-| DET.5.10.2 | Integritätsprüfung | Detektion SOLLTE Patches vor der Installation auf Integrität testen. | 8eb6cebe-6ea5-4f78-a9b3-ce5a29f3bcc7 |
+| DET.5.10.2 | Integritätsprüfung von Patches | Detektion SOLLTE Patches vor der Installation auf Integrität testen. | 8eb6cebe-6ea5-4f78-a9b3-ce5a29f3bcc7 |
 | DET.5.10.6 | Test gemäß Änderungsmanagement | Detektion KANN Patches entsprechend der Anforderungen der Praktik „Änderungen und Tests“ vor der Installation testen. | 7f1d3645-70d4-4c0d-a3c6-ecb497e3f45b |
 | DET.6.1 | Beurteilung von Ereignissen | Detektion SOLLTE ein Verfahren zur Beurteilung von sicherheitsrelevanten Ereignissen anhand von {{ insert: param, det.6.1-prm1 }} verankern. | a8c7d445-54b4-40e2-aab5-b46e30549ec5 |
 | DET.6.1.1 | Automatisierte Feststellung | Detektion SOLLTE kritische Vorfälle anhand von {{ insert: param, det.6.1.1-prm1 }} durch {{ insert: param, det.6.1.1-prm2 }} protokollieren. | 92f55893-595b-4d3d-80eb-ef8e7b5ed1cb |

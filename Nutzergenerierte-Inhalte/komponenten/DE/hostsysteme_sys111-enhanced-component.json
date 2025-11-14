@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "911b1ebe-84da-4ba5-b1e1-05a4d8ba4c7c",
+    "uuid": "5e5378f6-e225-4b04-aed4-18f66faf24d1",
     "metadata": {
       "title": "SYS.1.11 Benutzerdefiniert: Server unter FreeBSD - Benutzerdefiniert",
-      "last-modified": "2025-11-14T19:05:33.965603+00:00",
+      "last-modified": "2025-11-14T22:08:56.340480+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "9c06db3d-a40d-4964-809c-1946870e997e",
+        "uuid": "23ad5699-b086-417f-886b-62011f084846",
         "type": "hardware",
         "title": "SYS.1.11 Benutzerdefiniert: Server unter FreeBSD",
         "description": "This component represents the implementation of all controls for Baustein SYS.1.11.",
@@ -49,12 +49,12 @@
         ],
         "control-implementations": [
           {
-            "uuid": "eec8c7dc-9f42-49de-bbca-d09cde36c40a",
+            "uuid": "9284891e-e8c1-4b19-9102-cf36962c9d27",
             "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/hostsysteme_profile.json",
             "description": "Implementation for all controls in Baustein SYS.1.11",
             "implemented-requirements": [
               {
-                "uuid": "e3e7bc49-4cc9-4bc3-9239-98077c65250f",
+                "uuid": "2bc6134d-1283-44d1-8fe2-7668444d1179",
                 "control-id": "ARCH.2.2.3",
                 "description": "",
                 "props": [
@@ -92,7 +92,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a33-m2",
-                    "uuid": "f9d085c6-2e4e-4050-a8c7-28bdcc2b037a",
+                    "uuid": "0c2bce1c-8cbb-4973-93a5-8c65e226c842",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -111,7 +111,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a33-m3",
-                    "uuid": "41e51b57-9506-4c5b-8c98-2f9ddf2e60fe",
+                    "uuid": "c34b33d9-ca9a-4082-897a-5d39319851d1",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -130,7 +130,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a33-m4",
-                    "uuid": "e4140880-fbb2-4fc4-9a37-d56b095212a7",
+                    "uuid": "1427de13-b781-4d88-bf98-f5c4ad214a2b",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -149,7 +149,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a33-m5",
-                    "uuid": "99caa5ff-36df-40c2-a8a3-e9f150b9c026",
+                    "uuid": "18a31b39-1986-4218-8130-60a7e4f539a4",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -169,13 +169,13 @@
                 ]
               },
               {
-                "uuid": "de65193e-7de3-40f5-bb96-09f700b1b64b",
+                "uuid": "a2c88645-431c-40ad-ad6e-719254bb9170",
                 "control-id": "ASST.2.3.1",
                 "description": "",
                 "props": [
                   {
                     "name": "level",
-                    "value": "3",
+                    "value": "1",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -185,7 +185,7 @@
                   },
                   {
                     "name": "practice",
-                    "value": "APP",
+                    "value": "SYS",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -206,104 +206,104 @@
                 ],
                 "statements": [
                   {
-                    "statement-id": "sys.1.7.a19-m1",
-                    "uuid": "2befc9da-ad61-4660-803a-44605f093552",
+                    "statement-id": "sys.1.7.a2-m1",
+                    "uuid": "b910db3a-bd30-400d-8870-05183190050a",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Subsysteme wie CICS oder IMS nutzen ihre eigene, interne Sicherheitsfunktion (z.B. CICS-interne Transaktionssicherheit). Diese ist nicht mit RACF integriert, was zu einer separaten und inkonsistenten Benutzerverwaltung führt."
+                        "value": "Nur die bekanntesten sicherheitskritischen Programme sind durch RACF-Profile geschützt. Alias-Namen werden dabei oft nicht berücksichtigt. Die Installation von (Fremd-)Programmen wird nicht systematisch kontrolliert und erfolgt oft manuell."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Sicherheitseinstellungen in CICS (`SEC=YES`) sind aktiv, aber die Systemschnittstelle zu einem externen Sicherheitsmanager (`XTRAN`) ist nicht für RACF konfiguriert. Benutzer und Berechtigungen werden direkt in CICS-Tabellen gepflegt."
+                        "value": "Es werden RACF-Profile für Programme wie `ICKDSF` oder `AMASPZAP` angelegt, aber Aliase oder weniger bekannte Tools bleiben ungeschützt. SMP/E wird nicht konsequent für alle Software-Installationen verwendet."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Überprüfung der Systeminitialisierungsparameter von CICS oder IMS. Vergleich der Benutzerlisten in CICS/IMS mit denen in RACF auf Inkonsistenzen."
+                        "value": "Prüfen, ob für bekannte sicherheitskritische Programme auch deren Aliase geschützt sind. Suchen nach Software in Systembibliotheken, die nicht über SMP/E verwaltet wird."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a19-m2",
-                    "uuid": "5eebfcf8-838e-4684-8100-de4b14081e96",
+                    "statement-id": "sys.1.7.a2-m2",
+                    "uuid": "f48e4165-2c77-4283-840c-5dbe9ccd06a9",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Das Subsystem ist über RACF abgesichert, aber die Berechtigungen werden sehr breit vergeben (z.B. erhalten alle Benutzer einer Abteilung Zugriff auf die gleichen CICS-Transaktionen), ohne das Prinzip der geringsten Rechte (PoLP) zu befolgen."
+                        "value": "Alle bekannten sicherheitskritischen Programme und deren Aliase sind durch RACF-Profile geschützt. Die Installation von Programmen erfolgt standardmäßig über SMP/E, jedoch wird die Herkunft der Installationspakete nicht systematisch verifiziert."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Subsysteme sind mit RACF verbunden. Es werden RACF-Gruppen verwendet, um den Zugriff auf Transaktionen zu steuern, aber diese Gruppen sind sehr grob und nicht aufgabenspezifisch."
+                        "value": "Eine Liste kritischer Programme und ihrer Aliase wird gepflegt und in RACF umgesetzt. SMP/E wird als Standardwerkzeug für die Softwareverteilung etabliert. Die Quellen der Software (z.B. von IBM oder Drittanbietern) werden als vertrauenswürdig angenommen, aber nicht kryptographisch geprüft."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Analyse der RACF-Profile und Gruppen, die den Zugriff auf CICS-, IMS- oder Db2-Ressourcen steuern. Befragung der Anwendungsverantwortlichen, ob die Berechtigungen dem PoLP entsprechen."
+                        "value": "Überprüfung der RACF-Profile für die Liste der kritischen Programme und Aliase. Verifizierung, dass neue Software über SMP/E installiert wurde. Befragung der Administratoren zum Prozess der Quellenverifikation."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a19-m3",
-                    "uuid": "cc2f85d4-8bfb-4bb0-a1ae-6009daaf2ab2",
+                    "statement-id": "sys.1.7.a2-m3",
+                    "uuid": "a269b86c-4a61-4061-b065-84cc377071b6",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Falls Transaktionsmonitore oder Datenbanken (z.B. IMS, CICS, Db2) unter z/OS eingesetzt werden, SOLLTEN diese mittels RACF abgesichert werden. Dies gilt auch für die zugehörigen System-Kommandos und -Dateien. Interne Sicherheitsmechanismen der Transaktionsmonitore und Datenbanken SOLLTEN hingegen nur dort angewandt werden, wo es keine entsprechenden RACF-Funktionen gibt. Benutzende und Administrierende SOLLTEN nur die Zugriffsrechte erhalten, die sie für ihre jeweilige Tätigkeit benötigen."
+                        "value": "Sicherheitskritische (Dienst-)Programme und Kommandos sowie deren Alias-Namen MÜSSEN mit Rechten auf entsprechende RACF-Profile so geschützt werden, dass sie nur von den dafür vorgesehenen und autorisierten Personen benutzt werden können. Es MUSS sichergestellt sein, dass (Fremd-)Programme nicht unerlaubt installiert werden können. Außerdem DÜRFEN Programme NUR von gesicherten Quellen und über nachvollziehbare Methoden (z. B. SMP/E) installiert werden."
                       },
                       {
                         "name": "guidance",
-                        "value": "Alle relevanten Ressourcenklassen der Subsysteme (z.B. `TCICSTRN` für CICS-Transaktionen, `DBSUB` für Db2-Befehle) werden in RACF aktiviert und mit Profilen geschützt. Das Berechtigungskonzept definiert aufgabenspezifische Rollen und weist diesen die benötigten Zugriffsrechte in RACF zu. Die Nutzung interner Sicherheitsfunktionen wird auf ein Minimum reduziert."
+                        "value": "Es wird eine umfassende Liste sicherheitskritischer Programme und ihrer Aliase gepflegt. Der Zugriff wird über die `PROGRAM` Klasse in RACF gesteuert. Alle Programminstallationen und -updates müssen über SMP/E erfolgen und im Change-Management-System dokumentiert werden. Gesicherte Quellen sind definierte, vertrauenswürdige Repositories."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Überprüfung der aktiven RACF-Klassen (`SETROPTS LIST`). Verifizierung, dass die relevanten Subsystem-Ressourcen durch RACF geschützt sind. Stichprobenartige Prüfung der Berechtigungen von Benutzern gegen das Berechtigungskonzept."
+                        "value": "Prüfung der RACF-Konfiguration für die `PROGRAM` Klasse. Stichprobenartige Überprüfung von Installationen auf die Einhaltung des SMP/E-Prozesses und die Dokumentation im Change-Management. Überprüfung der Definition und Sicherung der Software-Quellen."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a19-m4",
-                    "uuid": "741761dd-02d4-49fe-ae2c-d54669d0c094",
+                    "statement-id": "sys.1.7.a2-m4",
+                    "uuid": "54c69266-05b1-41bb-b7cc-e1dfbc3aabb4",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Zugriff auf Transaktionen und Daten innerhalb des Subsystems wird durch feingranulare RACF-Profile gesteuert. Sicherheits-Exits in den Subsystemen werden verwendet, um zusätzliche, anwendungsspezifische Sicherheitslogik durchzusetzen. Deren Einsatz ist dokumentiert und kontrolliert."
+                        "value": "Zusätzlich zum definierten Schutz wird ein Integritätsüberwachungssystem eingesetzt, das kritische Systembibliotheken (z.B. `SYS1.LPALIB`, `SYS1.LINKLIB`) regelmäßig auf unautorisierte Änderungen überprüft. Der SMP/E-Prozess ist fest in das Change-Management-System integriert und erfordert eine formale Genehmigung für jede Installation."
                       },
                       {
                         "name": "guidance",
-                        "value": "Statt generischer Profile werden spezifische Profile für einzelne Transaktionen oder Tabellen verwendet. Ein CICS-Security-Exit wird beispielsweise implementiert, um eine kontextabhängige Prüfung durchzuführen (z.B. darf eine Transaktion nur zu bestimmten Tageszeiten ausgeführt werden). Der Quellcode der Exits ist versioniert."
+                        "value": "Tools wie Tripwire oder zSecure Alert/Audit werden konfiguriert, um die Integrität kritischer Datasets zu überwachen und bei Änderungen zu alarmieren. Der SMP/E-Prozess wird durch ein Workflow-Tool gesteuert, das die Freigabe dokumentiert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Analyse der Granularität der RACF-Profile. Überprüfung der Dokumentation und des Quellcodes der eingesetzten Sicherheits-Exits."
+                        "value": "Überprüfung der Konfiguration und der Protokolle des Integritätsüberwachungssystems. Analyse von Change-Tickets, um die Einhaltung des Genehmigungsworkflows für SMP/E-Aktivitäten zu verifizieren."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a19-m5",
-                    "uuid": "c8e44cf9-8e94-40ab-83b9-a69772a85e42",
+                    "statement-id": "sys.1.7.a2-m5",
+                    "uuid": "6af9a1b7-2e34-4442-83c6-e8507b626bc2",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Alle sicherheitsrelevanten Ereignisse aus den Subsystemen (z.B. Transaktionsausführung, Datenbankabfragen, fehlgeschlagene Zugriffe) werden in SMF protokolliert und zur Echtzeitüberwachung und Bedrohungserkennung in ein SIEM integriert. Database Activity Monitoring (DAM) Tools werden eingesetzt, um den Zugriff auf sensible Daten in Db2 zu analysieren."
+                        "value": "Alle sicherheitskritischen Bibliotheken sind durch kryptographische Signaturen geschützt. Das System verhindert automatisch die Ausführung von Programmen, die unautorisiert sind oder deren Signatur ungültig ist. Die Programminstallation ist vollständig über eine CI/CD-Pipeline automatisiert, die Sicherheitstests (z.B. Code-Scanning) und automatische Signierung integriert."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Audit-Optionen in CICS, IMS und Db2 werden so konfiguriert, dass alle relevanten Ereignisse SMF-Datensätze schreiben. Diese werden in Echtzeit an das SIEM gesendet. Ein DAM-Tool (z.B. IBM Guardium) überwacht den SQL-Verkehr zu Db2."
+                        "value": "Es werden Funktionen wie Programmkontrolle mit digitalen Signaturen genutzt. Die CI/CD-Pipeline (z.B. mit Jenkins oder GitLab) wird so konfiguriert, dass sie nach erfolgreichen Tests die Softwarepakete automatisch signiert und mittels SMP/E in einer kontrollierten Weise ausrollt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Überprüfung der Audit-Konfiguration der Subsysteme. Verifizierung des Datenflusses von SMF zum SIEM. Analyse der im SIEM und DAM-Tool konfigurierten Regeln und Berichte für die Subsystem-Überwachung."
+                        "value": "Überprüfung der Konfiguration der Programmkontrolle und der Signaturüberprüfung. Audit der CI/CD-Pipeline-Konfiguration, um die korrekte Implementierung der Sicherheits-Gates und des Signaturprozesses zu verifizieren."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "024c58f0-3f72-45a5-b130-d3fa27d07b82",
+                "uuid": "c3087412-dbf4-4dbf-8cfa-564689162bc3",
                 "control-id": "ASST.5.2",
                 "description": "",
                 "props": [
@@ -341,7 +341,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a3-m1",
-                    "uuid": "2c8e4b72-17ba-4ab8-bcd7-5974c4e3b751",
+                    "uuid": "c6c3fb13-3a1c-44e7-a76e-a2a34d2640be",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -360,7 +360,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a3-m2",
-                    "uuid": "3ef7ea53-3d5c-4f7a-9dce-52d406250f18",
+                    "uuid": "cc893dbf-7e34-41ef-acb9-c3a8170e71ce",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -379,7 +379,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a3-m3",
-                    "uuid": "9abba9cc-c6db-410e-b36a-996bc97fb628",
+                    "uuid": "170b56bc-85ee-4c4a-a6d8-5a89faacd6bb",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -398,7 +398,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a3-m4",
-                    "uuid": "47d10e21-aa21-457e-b411-d7b537c052b5",
+                    "uuid": "9f5fecae-ad9c-439f-a2e1-e6abbcd5daec",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -417,7 +417,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a3-m5",
-                    "uuid": "d6389109-d6cd-494e-951a-e243be45722b",
+                    "uuid": "53a8b2c2-e0cd-4ffd-9473-1d6136fc9233",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -437,7 +437,7 @@
                 ]
               },
               {
-                "uuid": "8990ed5c-c57b-4831-8cd5-1c4e5b43de0a",
+                "uuid": "edf07c04-f224-490d-a868-77ce3e450a4d",
                 "control-id": "ASST.5.4",
                 "description": "",
                 "props": [
@@ -475,7 +475,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a22-m1",
-                    "uuid": "a3503367-e2a5-4262-b3ca-4165b2e25705",
+                    "uuid": "91b0f3a3-3516-43a3-a5dc-2498f5f1df5b",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -494,7 +494,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a22-m2",
-                    "uuid": "072e90d4-be13-4e66-9944-fa3f9aac78fa",
+                    "uuid": "9ee3e998-1b96-40dc-b533-e7726caaf96f",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -513,7 +513,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a22-m3",
-                    "uuid": "4c8d6d2f-7c3b-4825-a546-eaa2138cc66f",
+                    "uuid": "8f0c889a-80c4-47b2-b6f3-a3a37c85ee0c",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -532,7 +532,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a22-m4",
-                    "uuid": "86a64649-51bf-43e8-a30d-d117b3c07fad",
+                    "uuid": "3c8cca4f-25ca-4ab4-ad82-e9a96eb842ef",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -551,7 +551,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a22-m5",
-                    "uuid": "328080b0-5efe-4d2e-bb12-9e10bbfe2e53",
+                    "uuid": "6fb364f6-9505-4614-8e0a-52f46ec503a2",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -571,141 +571,7 @@
                 ]
               },
               {
-                "uuid": "8c8b4235-c82b-4444-bc48-ab095f614184",
-                "control-id": "ASST.6.4",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "3",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Improvement",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "ASST",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "sys.1.7.a20-m1",
-                    "uuid": "0394e37f-a835-451d-b2eb-682369df3422",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Das System wird abgeschaltet, aber Referenzen von anderen Systemen (z.B. in Sysplex-Definitionen oder Netzwerkkonfigurationen) werden nicht entfernt, was zu Fehlern im laufenden Betrieb führt. Die Datenträger werden nicht sicher gelöscht."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der Fokus liegt nur auf dem Herunterfahren des einen Systems. Die Auswirkungen auf die verbleibende Landschaft werden nicht analysiert. Festplatten werden ausgebaut und gelagert, ohne ihren Inhalt zu löschen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Prüfung der Konfigurationen von verbliebenen Systemen auf verwaiste Referenzen. Befragung zum Prozess der Datenträgerentsorgung."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a20-m2",
-                    "uuid": "4dd64bdb-ed99-4cd1-aea3-58ef5b9cfe87",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Das System wird ordnungsgemäß aus dem Verbund entfernt. Die Datenträger werden mit Standard-Software-Utilities (z.B. `ICKDSF`) gelöscht. Es gibt keine vertragliche Vereinbarung über die Vernichtung von Datenträgern, die vom Hersteller ausgetauscht werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Vor dem Abschalten werden die Definitionen in den anderen Systemen angepasst. Ein `ICKDSF` Job wird ausgeführt, um die Platten zu initialisieren, was die Daten überschreibt. Defekte Platten werden dem Hersteller ohne weitere Auflagen zurückgegeben."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfung der Systemdefinitionen auf verwaiste Einträge. Prüfung der Job-Protokolle der Datenträgerlöschung. Einsicht in die Wartungsverträge bezüglich des Umgangs mit defekten Medien."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a20-m3",
-                    "uuid": "c92a3626-e67c-4827-8018-8df98d90cd72",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Bei der Stilllegung von z/OS-Systemen SOLLTEN andere z/OS-Systeme, Verbünde und Verwaltungssysteme so angepasst werden, dass sie nicht mehr auf das stillgelegte System verweisen. Auswirkungen auf Lizenzen SOLLTEN berücksichtigt werden. Datenträger mit vertraulichen Daten SOLLTEN so gelöscht werden, dass ihr Inhalt nicht mehr reproduziert werden kann. Für defekte Datenträger, die vom Hersteller getauscht werden, SOLLTE vertraglich vereinbart sein, dass diese sicher vernichtet oder gelöscht werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein Stilllegungsprozess wird definiert. Er beinhaltet die technische Entkopplung, eine Überprüfung der Lizenzsituation und die sichere Datenlöschung. Für die Datenlöschung wird ein Standardverfahren (z.B. mehrfaches Überschreiben) festgelegt. In Wartungsverträgen wird eine Klausel zur zertifizierten Löschung oder Vernichtung von ausgetauschten Datenträgern aufgenommen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Prüfung des dokumentierten Stilllegungsprozesses. Verifizierung der durchgeführten Lösch-Protokolle. Überprüfung der Wartungsverträge auf entsprechende Klauseln."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a20-m4",
-                    "uuid": "80b1ee73-b7ab-4ce0-aef5-e07347664685",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Eine formale Stilllegungs-Checkliste wird verwendet. Die Datenlöschung folgt einem anerkannten Standard (z.B. NIST SP 800-88). Für alle entsorgten oder ausgetauschten Datenträger wird ein Vernichtungs- oder Löschzertifikat eingeholt."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Die Checkliste stellt sicher, dass alle Aspekte (Technik, Lizenzen, Daten, Entsorgung) berücksichtigt werden. Es werden Tools eingesetzt, die eine Löschung nach NIST-Standards durchführen und ein Zertifikat ausstellen. Von Dienstleistern oder dem Hersteller werden ebenfalls Zertifikate angefordert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfung der ausgefüllten Checklisten für vergangene Stilllegungen. Einsicht in die gesammelten Lösch- und Vernichtungszertifikate."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a20-m5",
-                    "uuid": "8d018640-c1e9-4540-ac2a-d2725be76c53",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Der gesamte Stilllegungsprozess ist, wo möglich, automatisiert. Für höchste Sicherheitsanforderungen werden Datenträger vor der Entsorgung vor Ort physisch zerstört (z.B. geschreddert oder degausst). Der Prozess wird mit einem vollständigen Audit-Trail dokumentiert, der die Seriennummern der zerstörten Medien enthält."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein eigener Degausser oder Schredder für Festplatten wird vor Ort betrieben. Der gesamte Prozess von der Identifizierung der Platte bis zur Zerstörung wird in einer Datenbank protokolliert, inklusive Fotos und Zeugen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfung des Audit-Trails der Datenträgervernichtung. Beobachtung einer physischen Zerstörung vor Ort. Verifizierung, dass die Seriennummern im Protokoll mit den ausgebauten Geräten übereinstimmen."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "b26502ca-eff9-4c81-b691-a73a1e56739c",
+                "uuid": "624a2a2c-02d1-4111-afd0-9c832984c0df",
                 "control-id": "DET.4.14",
                 "description": "",
                 "props": [
@@ -743,7 +609,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a16-m1",
-                    "uuid": "b992322b-17f1-4b03-8ff6-3fba8729f74f",
+                    "uuid": "07f2d9c9-38cf-434b-8bfe-ed6a4bfc02b7",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -762,7 +628,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a16-m2",
-                    "uuid": "0a6701ef-151b-48cf-832c-9bfe81d01508",
+                    "uuid": "f6a51412-dce6-4a5d-ad19-a0638ddd4279",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -781,7 +647,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a16-m3",
-                    "uuid": "29497509-3248-4c96-88aa-39b26af1676d",
+                    "uuid": "38b9794a-8714-4f2f-af09-c98d0bb2ab1e",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -800,7 +666,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a16-m4",
-                    "uuid": "8cce23d7-0f39-4fda-9538-e5259ea95063",
+                    "uuid": "d7ae2d3d-2773-48bb-9cf9-3b8799468d2a",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -819,7 +685,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a16-m5",
-                    "uuid": "7212046e-3c29-4e5c-84e7-b56e02025ff1",
+                    "uuid": "205db3e0-18a7-4478-9249-1093911830de",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -839,7 +705,7 @@
                 ]
               },
               {
-                "uuid": "b3fffa3e-04c7-4eb1-9b37-bf49b311d527",
+                "uuid": "8c5995c7-ed0a-4122-8bf5-af86eb87bc35",
                 "control-id": "DET.4.2",
                 "description": "",
                 "props": [
@@ -877,7 +743,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a14-m1",
-                    "uuid": "be1982b6-7601-4664-9181-e2fb778b870c",
+                    "uuid": "8373be80-679e-43b7-878f-6bb5a3135cfe",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -896,7 +762,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a14-m2",
-                    "uuid": "caaf175b-5440-43b5-a661-00d860d1e89d",
+                    "uuid": "15bf7cad-58d1-4ebe-b72c-a03c880a8e5e",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -915,7 +781,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a14-m3",
-                    "uuid": "c9521166-3c1d-4844-aa3f-f27ca7f8af6d",
+                    "uuid": "56a1cce7-e852-4133-a326-9776c3a838e1",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -934,7 +800,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a14-m4",
-                    "uuid": "d260f377-bd4a-45e2-b7e5-39e2b3c85cfd",
+                    "uuid": "0699832b-e532-4eba-affa-baed4b69989b",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -953,7 +819,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a14-m5",
-                    "uuid": "1abee9fa-f62c-4899-94fe-7d7e5c110fae",
+                    "uuid": "ecd1b243-b343-4875-8a4c-1782be0fdf35",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -973,7 +839,7 @@
                 ]
               },
               {
-                "uuid": "cf2df5a8-fc40-498c-a466-2d8b8cf5e066",
+                "uuid": "8112bc47-60a6-435a-a565-ac69b3306d89",
                 "control-id": "GEB.7.2",
                 "description": "",
                 "props": [
@@ -1011,7 +877,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a5-m1",
-                    "uuid": "71a52688-c025-4792-88a3-d8fd75f4571e",
+                    "uuid": "2f32bb7e-e3b4-4e96-a2ab-6a652d09d0a6",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1030,7 +896,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a5-m2",
-                    "uuid": "67056ffa-2110-4eed-9400-b37372372487",
+                    "uuid": "d5f8f63c-b275-4b94-b383-b614bcd3f2af",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1049,7 +915,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a5-m3",
-                    "uuid": "7454156d-6a35-49f2-bb03-5b6834ba6c61",
+                    "uuid": "d37e36d6-43d1-4306-8117-d421b916afbf",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1068,7 +934,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a5-m4",
-                    "uuid": "53e8e366-3076-4943-b0c0-839bb2160ea7",
+                    "uuid": "5cd08abe-16cb-4d89-a098-6a57de62b62b",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1087,7 +953,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a5-m5",
-                    "uuid": "05f6871e-55ba-46df-9e3d-3067ba95cf14",
+                    "uuid": "562125c7-100a-4286-a9db-4afbd3f4bc4c",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1107,7 +973,7 @@
                 ]
               },
               {
-                "uuid": "fdcdc8fd-836d-466e-abf9-d8bdcaf266c1",
+                "uuid": "b921505d-e126-42c6-a0d3-6d876248c283",
                 "control-id": "KONF.2.1",
                 "description": "",
                 "props": [
@@ -1145,7 +1011,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a32-m2",
-                    "uuid": "51e7d49c-9122-44c6-94d8-775f2187d8ea",
+                    "uuid": "94bb0d47-fa63-438f-9733-2702b3584a56",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1164,7 +1030,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a32-m3",
-                    "uuid": "002b110d-b269-4a19-bcfa-499db901f5e1",
+                    "uuid": "5d44ba76-bfc3-4424-9bb3-1fdfa9c61d17",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1183,7 +1049,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a32-m4",
-                    "uuid": "fd1d7eb9-b4a6-451f-a83d-73735dac604b",
+                    "uuid": "ab0e4745-9b9f-49aa-a1b5-412f076ef3c1",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1203,7 +1069,7 @@
                 ]
               },
               {
-                "uuid": "d3ee75e7-17ee-45d3-a469-abf07954e987",
+                "uuid": "be118bac-ca7d-4d32-817b-6f4b1cbacb6b",
                 "control-id": "KONF.2.2",
                 "description": "",
                 "props": [
@@ -1241,7 +1107,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a11-m1",
-                    "uuid": "bfc5e2ea-ffaf-4e18-b94a-1827cd7e4834",
+                    "uuid": "fbf5b6bc-ec53-404d-8649-13dc990ac72b",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1260,7 +1126,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a11-m2",
-                    "uuid": "77f4a82b-7191-43d0-8322-86cd6f4a92e7",
+                    "uuid": "0e8c46dd-e058-4f7e-ade4-9eea42314e7d",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1279,7 +1145,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a11-m3",
-                    "uuid": "4bf2ede8-e9b9-44f4-931d-6abd0101035c",
+                    "uuid": "79277b37-36fa-40af-a1ea-39d0161cb08e",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1298,7 +1164,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a11-m4",
-                    "uuid": "35a4ca1f-cdcb-4d5e-979b-bb64aa9b8008",
+                    "uuid": "876d4e1e-2661-4883-a634-894bb946df5e",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1317,7 +1183,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a11-m5",
-                    "uuid": "eb92dcd6-e912-4f39-8223-fc484576ccd9",
+                    "uuid": "8197f06c-1e57-43f2-b4bc-f5b411519fd6",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1337,7 +1203,7 @@
                 ]
               },
               {
-                "uuid": "8921ce63-ba49-4d25-b7c4-649cfec7f155",
+                "uuid": "bdc9e714-dda9-4f2b-ac25-b0d418aa6c2c",
                 "control-id": "KONF.2.3",
                 "description": "",
                 "props": [
@@ -1375,7 +1241,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a23-m2",
-                    "uuid": "6178ee58-0fce-4397-81f5-e1c6cffaecb2",
+                    "uuid": "ad5ecd87-fec8-4cac-b2e7-c29c1fa921f2",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1394,7 +1260,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a23-m3",
-                    "uuid": "c39e40be-0cc9-4608-9249-d7abce6c3d56",
+                    "uuid": "24488bc0-41dd-4185-94af-eeeb24028f5c",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1413,7 +1279,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a23-m4",
-                    "uuid": "3622afed-f246-4a51-832f-ad0adc71ad1b",
+                    "uuid": "82725653-3996-497f-80d2-20791dda34ef",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1433,7 +1299,7 @@
                 ]
               },
               {
-                "uuid": "6a5a48ef-75f0-42e8-bc21-8e52cd14e408",
+                "uuid": "033b5c5d-40e5-464d-877b-0a2cf7984754",
                 "control-id": "KONF.2.5",
                 "description": "",
                 "props": [
@@ -1471,7 +1337,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a17-m1",
-                    "uuid": "ddd76ba5-b65d-4e9d-bae4-21e277f46c01",
+                    "uuid": "1bfb3458-642a-4197-8ddd-46e313ddb149",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1490,7 +1356,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a17-m2",
-                    "uuid": "7c56036e-189b-4309-ba2a-e0d294415c43",
+                    "uuid": "671f3927-0d99-44f0-9c3c-b023a05888e8",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1509,7 +1375,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a17-m3",
-                    "uuid": "8a9211e1-4bf6-46dd-8922-ac622d74b580",
+                    "uuid": "e982668c-e7d6-42ef-8750-3a6941faa3ca",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1528,7 +1394,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a17-m4",
-                    "uuid": "992b8cb7-49a1-46d0-becc-f88e86f4c557",
+                    "uuid": "6a0bf9ef-c15a-433a-af35-26dd94228c8f",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1547,7 +1413,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a17-m5",
-                    "uuid": "52a99cb1-38de-4524-843b-c532b9356cf2",
+                    "uuid": "637139c9-f9f6-4b13-8377-a5ffcabb693c",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1567,7 +1433,7 @@
                 ]
               },
               {
-                "uuid": "dc3ce3f5-a78b-48de-bd4e-8ae5eb000036",
+                "uuid": "ff517feb-138d-4d95-bad2-911cc79ba531",
                 "control-id": "KONF.2.8",
                 "description": "",
                 "props": [
@@ -1605,7 +1471,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a21-m1",
-                    "uuid": "1e6c4b71-731b-4a52-b410-868d675c91ee",
+                    "uuid": "8fceda87-91db-4f64-84ac-d0c96521c291",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1624,7 +1490,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a21-m2",
-                    "uuid": "b9601211-ae5a-4d4f-a89b-a3ad4bbbb5b8",
+                    "uuid": "49740f0f-5ee4-4b3a-968d-6b373a998713",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1643,7 +1509,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a21-m3",
-                    "uuid": "c8a32707-bf96-4572-9e23-c667be3738ed",
+                    "uuid": "fd115898-1017-44b0-befd-c4f8493d3e9b",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1662,7 +1528,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a21-m4",
-                    "uuid": "6051fc38-5949-4451-93aa-68730d575eee",
+                    "uuid": "1b8b2821-2349-4239-a57f-9b004693c844",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1681,7 +1547,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a21-m5",
-                    "uuid": "2e25ed87-00e6-4366-8228-c561d33fb8ad",
+                    "uuid": "feb18339-ffc0-4a1a-8e48-db09e3ff12be",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1701,7 +1567,141 @@
                 ]
               },
               {
-                "uuid": "ba62db44-5913-454d-b25d-640745bde3a9",
+                "uuid": "0f8cf5e4-81d7-47f7-8df2-4f900b559adf",
+                "control-id": "KONF.4.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.7.a8-m1",
+                    "uuid": "6a9deddd-2750-47bf-8420-985c3b29d050",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "RACF ist aktiv, aber viele Einstellungen sind Standard. Passwortregeln sind schwach (z.B. kurze Länge, keine Komplexität). Nicht alle kritischen Datasets sind geschützt. Benutzerkonten werden bei Inaktivität oder Fehlversuchen nicht automatisch gesperrt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "RACF wird mit den `SETROPTS`-Standardeinstellungen betrieben. Der Fokus liegt auf dem Schutz von Login und Anwendungsdaten, System-Datasets werden vernachlässigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Anzeigen der aktiven RACF-Optionen mit `SETROPTS LIST`. Überprüfung der Passwortregeln. Stichprobenartige Prüfung des Schutzes von System-Datasets."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a8-m2",
+                    "uuid": "de9c2e54-01f1-4e7d-8288-95c3e8e8bfa9",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "RACF ist mit angepassten Regeln für Passwörter und den Account-Lebenszyklus konfiguriert. Kritische Datasets sind geschützt. Erweiterte Funktionen wie KDFAES für Passwörter oder der Enhanced PassTicket Algorithmus sind jedoch nicht aktiviert. RACF-Exits werden ohne angemessene Dokumentation oder Überwachung eingesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die `SETROPTS` werden angepasst, um Passwortlänge und -historie zu erzwingen. Es gibt einen Prozess für die Account-Sperrung. Die Nutzung von RACF-Exits wird als gegeben hingenommen, aber nicht aktiv verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der `SETROPTS`-Einstellungen. Überprüfung, ob KDFAES aktiv ist (`PASSWORD(ALGORITHM(KDFAES))`). Suchen nach aktiven RACF-Exits und Prüfung der dazugehörigen Dokumentation."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a8-m3",
+                    "uuid": "f887d942-61f8-482b-9100-8f39a37523fb",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Einsatz von RACF für z/OS MUSS sorgfältig geplant werden. Dies umfasst die Auswahl des Zeichensatzes, die Festlegung von Regeln für User-ID und Passwort, die Aktivierung der KDFAES-Verschlüsselung und des Enhanced PassTicket Algorithmus (falls PassTickets genutzt werden). Voreingestellte Passwörter MÜSSEN geändert werden. Der Einsatz von RACF-Exits MUSS begründet, dokumentiert und regelmäßig überwacht werden. Verfahren für das Anlegen, Sperren, Freischalten und Löschen von Kennungen MÜSSEN festgelegt sein. Eine Kennung MUSS nach einer festgelegten Anzahl von Fehlversuchen gesperrt werden (Ausnahme: Notfall-User). Benutzerkennungen MÜSSEN nach längerer Inaktivität gesperrt werden. Dateien, Started Tasks und Programme MÜSSEN mittels RACF-Profilen nach dem Prinzip der geringsten Rechte geschützt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein RACF-Konfigurationsdokument legt alle `SETROPTS`-Parameter und die Richtlinien für den Account-Lebenszyklus fest. Es gibt eine dokumentierte Liste der eingesetzten RACF-Exits mit Begründung und Review-Datum. Die Schutzprofile für kritische Ressourcen sind Teil des Berechtigungskonzepts."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der aktiven RACF-Konfiguration (`SETROPTS LIST`) gegen das Konfigurationsdokument. Verifizierung, dass KDFAES und der Enhanced PassTicket Algorithmus aktiv sind. Prüfung der Exit-Dokumentation. Stichprobenartige Überprüfung von Benutzerkonten auf die Einhaltung der Inaktivitäts- und Sperrregeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a8-m4",
+                    "uuid": "c38e3c87-b8cd-4735-ae0f-8e12a020cebb",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle relevanten RACF-Funktionen sind aktiv und die Konfiguration ist basierend auf Security Best Practices (z.B. DISA STIGs) gehärtet. Alle administrativen RACF-Aktionen (z.B. `ALTUSER`, `CONNECT`) werden protokolliert und regelmäßig überprüft. Ein regelmäßiger Audit der RACF-Datenbank auf Fehlkonfigurationen wird durchgeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die RACF-Konfiguration wird gegen einen Härtungsleitfaden geprüft und angepasst. Mit Tools wie zSecure Audit werden regelmäßig Berichte erstellt, die administrative Tätigkeiten und potenzielle Konfigurationsschwächen aufzeigen. Diese Berichte werden vom Sicherheitsteam überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der RACF-Konfiguration gegen einen externen Benchmark (z.B. STIG). Analyse der Berichte der letzten RACF-Audits und der Bearbeitung von Findings. Prüfung der Protokolle administrativer Aktionen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.7.a8-m5",
+                    "uuid": "ff2872dd-948c-40d6-bf82-e60e47e62211",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die RACF-Konfiguration wird als Code (Infrastructure as Code) verwaltet und versioniert. Änderungen werden vor dem Deployment automatisiert gegen eine Sicherheitsrichtlinie getestet. RACF-Ereignisprotokolle (SMF Typ 80) werden in Echtzeit in ein SIEM integriert, und es sind automatisierte Reaktionen auf kritische Sicherheitsereignisse konfiguriert. MFA ist für alle Benutzeranmeldungen in RACF integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "RACF-Befehle werden in Skripten (z.B. REXX) gehalten und über ein Versionskontrollsystem wie Git verwaltet. Eine CI/CD-Pipeline führt Tests durch, bevor die Befehle auf dem System ausgeführt werden. Ein SIEM-Connector leitet SMF-Daten weiter; SOAR-Playbooks reagieren auf Alarme (z.B. Sperren eines Benutzers bei Brute-Force-Angriff)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Infrastructure-as-Code-Prozesses und der Testabdeckung. Überprüfung der SIEM-Korrelationsregeln und SOAR-Playbooks für RACF-Ereignisse. Verifizierung der durchgängigen MFA-Implementierung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "75e4c258-872a-41a9-b5c8-909d99f0a9e6",
                 "control-id": "KONF.4.4",
                 "description": "",
                 "props": [
@@ -1739,7 +1739,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a6-m1",
-                    "uuid": "439215f3-de90-44a5-b040-dac60aa78e4c",
+                    "uuid": "06a54b35-84e4-4137-8f0c-1ed6a46b8b01",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1758,7 +1758,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a6-m2",
-                    "uuid": "6eea4625-d67c-4352-ad0c-c0659defda50",
+                    "uuid": "29325921-e017-4207-a572-c290fab0bc12",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1777,7 +1777,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a6-m3",
-                    "uuid": "af8f26c7-7e5f-4aa6-8e5d-c72f5a94fc8f",
+                    "uuid": "91b8160e-5390-4c06-94e7-0dee25b47df4",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1796,7 +1796,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a6-m4",
-                    "uuid": "6d6af909-27eb-4f62-9c03-8f979af2b869",
+                    "uuid": "8c065479-96c2-4fa7-8c7d-859cb90c591e",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1815,7 +1815,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a6-m5",
-                    "uuid": "9814b287-70ee-44f2-896d-ec53e791fd7f",
+                    "uuid": "0741e246-93e1-4411-ba17-6359b9c18861",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1835,13 +1835,13 @@
                 ]
               },
               {
-                "uuid": "f54252f0-cedd-4fa0-924f-32c4cff72a23",
+                "uuid": "129db4b7-424d-464d-911f-4faea7249cd1",
                 "control-id": "KONF.6.1",
                 "description": "",
                 "props": [
                   {
                     "name": "level",
-                    "value": "1",
+                    "value": "3",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -1851,7 +1851,7 @@
                   },
                   {
                     "name": "practice",
-                    "value": "BER",
+                    "value": "APP",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -1866,110 +1866,110 @@
                   },
                   {
                     "name": "effective_on_a",
-                    "value": "false",
+                    "value": "true",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   }
                 ],
                 "statements": [
                   {
-                    "statement-id": "sys.1.7.a7-m1",
-                    "uuid": "31b71b1e-287a-4ec3-949e-13c535f0831c",
+                    "statement-id": "sys.1.7.a19-m1",
+                    "uuid": "15d1201c-7e0b-4208-9d32-3d5b1ec48e20",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Das Prinzip der geringsten Rechte (PoLP) wird nur auf Benutzer-Datasets angewendet. Systemressourcen wie APF-autorisierte Bibliotheken oder Parmlib-Member sind nicht granular geschützt."
+                        "value": "Subsysteme wie CICS oder IMS nutzen ihre eigene, interne Sicherheitsfunktion (z.B. CICS-interne Transaktionssicherheit). Diese ist nicht mit RACF integriert, was zu einer separaten und inkonsistenten Benutzerverwaltung führt."
                       },
                       {
                         "name": "guidance",
-                        "value": "Administratoren fokussieren sich auf den Schutz von Anwendungs- und Benutzerdaten, während System-Datasets oft breit zugänglich bleiben, z.B. über `UACC(READ)`."
+                        "value": "Die Sicherheitseinstellungen in CICS (`SEC=YES`) sind aktiv, aber die Systemschnittstelle zu einem externen Sicherheitsmanager (`XTRAN`) ist nicht für RACF konfiguriert. Benutzer und Berechtigungen werden direkt in CICS-Tabellen gepflegt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Überprüfung der RACF-Profile kritischer Systembibliotheken (z.B. `SYS1.PARMLIB`, `SYS1.PROCLIB`) auf zu weitreichende Berechtigungen."
+                        "value": "Überprüfung der Systeminitialisierungsparameter von CICS oder IMS. Vergleich der Benutzerlisten in CICS/IMS mit denen in RACF auf Inkonsistenzen."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a7-m2",
-                    "uuid": "1f7f4adb-cbbd-470e-a642-cbd7e540ad36",
+                    "statement-id": "sys.1.7.a19-m2",
+                    "uuid": "5fbeba09-0575-4356-bd84-11f88a9b0302",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Das PoLP-Prinzip wird generell angewendet, aber die Rollendefinitionen sind grob, was dazu führt, dass Benutzer mehr Berechtigungen als nötig haben. Regelmäßige Überprüfungen der Berechtigungen finden nicht statt."
+                        "value": "Das Subsystem ist über RACF abgesichert, aber die Berechtigungen werden sehr breit vergeben (z.B. erhalten alle Benutzer einer Abteilung Zugriff auf die gleichen CICS-Transaktionen), ohne das Prinzip der geringsten Rechte (PoLP) zu befolgen."
                       },
                       {
                         "name": "guidance",
-                        "value": "RACF-Gruppen werden zur Rechtevergabe genutzt, aber die Gruppen sind sehr breit definiert (z.B. 'Alle Entwickler', 'Alle Operatoren')."
+                        "value": "Die Subsysteme sind mit RACF verbunden. Es werden RACF-Gruppen verwendet, um den Zugriff auf Transaktionen zu steuern, aber diese Gruppen sind sehr grob und nicht aufgabenspezifisch."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Analyse der RACF-Gruppenstruktur und der darin gebündelten Berechtigungen. Befragung, ob und wie oft Berechtigungen überprüft werden."
+                        "value": "Analyse der RACF-Profile und Gruppen, die den Zugriff auf CICS-, IMS- oder Db2-Ressourcen steuern. Befragung der Anwendungsverantwortlichen, ob die Berechtigungen dem PoLP entsprechen."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a7-m3",
-                    "uuid": "5160cbf9-c855-4521-8e1f-8d5470dd0a5f",
+                    "statement-id": "sys.1.7.a19-m3",
+                    "uuid": "ca5d341d-822e-4e5e-9c79-cb2a805bfef1",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Im Rahmen der Grundkonfiguration MÜSSEN die Autorisierungsmechanismen so konfiguriert werden, dass alle Personen (definierte User-IDs in Gruppen gemäß Rolle) nur die Zugriffsmöglichkeiten erhalten, die sie für ihre jeweiligen Tätigkeiten benötigen. Hierfür MÜSSEN insbesondere APF-Autorisierungen, SVCs, Ressourcen des z/OS-Betriebssystems, IPL-Parameter, Parmlib-Definitionen, Started Tasks und JES2/3-Definitionen berücksichtigt werden."
+                        "value": "Falls Transaktionsmonitore oder Datenbanken (z.B. IMS, CICS, Db2) unter z/OS eingesetzt werden, SOLLTEN diese mittels RACF abgesichert werden. Dies gilt auch für die zugehörigen System-Kommandos und -Dateien. Interne Sicherheitsmechanismen der Transaktionsmonitore und Datenbanken SOLLTEN hingegen nur dort angewandt werden, wo es keine entsprechenden RACF-Funktionen gibt. Benutzende und Administrierende SOLLTEN nur die Zugriffsrechte erhalten, die sie für ihre jeweilige Tätigkeit benötigen."
                       },
                       {
                         "name": "guidance",
-                        "value": "Ein detailliertes Rollen- und Berechtigungskonzept wird erstellt. Der Zugriff auf alle kritischen Systemressourcen wird über RACF-Profile gesteuert. APF-Listen, SVC-Tabellen und Parmlib-Member werden als kritische Ressourcen behandelt und ihr Schreibschutz wird durch RACF erzwungen."
+                        "value": "Alle relevanten Ressourcenklassen der Subsysteme (z.B. `TCICSTRN` für CICS-Transaktionen, `DBSUB` für Db2-Befehle) werden in RACF aktiviert und mit Profilen geschützt. Das Berechtigungskonzept definiert aufgabenspezifische Rollen und weist diesen die benötigten Zugriffsrechte in RACF zu. Die Nutzung interner Sicherheitsfunktionen wird auf ein Minimum reduziert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Prüfung des Rollen- und Berechtigungskonzepts. Verifizierung der RACF-Profile für APF-Bibliotheken, Parmlib, Proclib und andere Systemressourcen. Überprüfung, ob der Zugriff auf SVCs und Started Tasks dem PoLP-Prinzip folgt."
+                        "value": "Überprüfung der aktiven RACF-Klassen (`SETROPTS LIST`). Verifizierung, dass die relevanten Subsystem-Ressourcen durch RACF geschützt sind. Stichprobenartige Prüfung der Berechtigungen von Benutzern gegen das Berechtigungskonzept."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a7-m4",
-                    "uuid": "bd39f9ec-52f8-4a99-bca5-d16988c3620d",
+                    "statement-id": "sys.1.7.a19-m4",
+                    "uuid": "4ec7ee4e-d30e-42af-829a-05454d3c7161",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Ein formales rollenbasiertes Zugriffskontrollmodell (RBAC) ist definiert und umgesetzt. Zugriffsrechte werden regelmäßig (z.B. quartalsweise) halbautomatisch überprüft. Ein formalisierter Prozess zur Beantragung und Genehmigung von Ausnahmen ist etabliert."
+                        "value": "Der Zugriff auf Transaktionen und Daten innerhalb des Subsystems wird durch feingranulare RACF-Profile gesteuert. Sicherheits-Exits in den Subsystemen werden verwendet, um zusätzliche, anwendungsspezifische Sicherheitslogik durchzusetzen. Deren Einsatz ist dokumentiert und kontrolliert."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Rollen werden in einer Matrix dokumentiert. Mit Tools wie zSecure werden regelmäßige Berichte zur Überprüfung der Berechtigungen erstellt. Ausnahmeanträge werden über ein ITSM-System abgewickelt."
+                        "value": "Statt generischer Profile werden spezifische Profile für einzelne Transaktionen oder Tabellen verwendet. Ein CICS-Security-Exit wird beispielsweise implementiert, um eine kontextabhängige Prüfung durchzuführen (z.B. darf eine Transaktion nur zu bestimmten Tageszeiten ausgeführt werden). Der Quellcode der Exits ist versioniert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Prüfung der RBAC-Dokumentation. Analyse der Berichte der letzten Berechtigungs-Reviews und der umgesetzten Korrekturen. Überprüfung von Tickets für Ausnahmeanträge."
+                        "value": "Analyse der Granularität der RACF-Profile. Überprüfung der Dokumentation und des Quellcodes der eingesetzten Sicherheits-Exits."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.7.a7-m5",
-                    "uuid": "0cb1495c-27bc-486f-8929-517f090c7d42",
+                    "statement-id": "sys.1.7.a19-m5",
+                    "uuid": "bbbf68ec-39bd-446b-bd47-12f8ec5253a5",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Ein automatisiertes Identity and Access Management (IAM) System verwaltet den gesamten Lebenszyklus von Rollen und Berechtigungen. Berechtigungs-Reviews sind automatisiert und erfordern eine regelmäßige Re-Zertifizierung durch die Vorgesetzten. Anomalieerkennung wird eingesetzt, um Rechteausweitungen oder ungewöhnliche Zugriffsmuster zu identifizieren."
+                        "value": "Alle sicherheitsrelevanten Ereignisse aus den Subsystemen (z.B. Transaktionsausführung, Datenbankabfragen, fehlgeschlagene Zugriffe) werden in SMF protokolliert und zur Echtzeitüberwachung und Bedrohungserkennung in ein SIEM integriert. Database Activity Monitoring (DAM) Tools werden eingesetzt, um den Zugriff auf sensible Daten in Db2 zu analysieren."
                       },
                       {
                         "name": "guidance",
-                        "value": "Ein IAM-Tool (z.B. von Broadcom, IBM) wird mit RACF integriert. Das IAM-Tool steuert den Workflow für Anträge, Genehmigungen und Rezertifizierungen. SIEM- oder UEBA-Tools analysieren SMF-Daten, um Anomalien wie den Zugriff auf selten genutzte, aber kritische Ressourcen zu erkennen."
+                        "value": "Die Audit-Optionen in CICS, IMS und Db2 werden so konfiguriert, dass alle relevanten Ereignisse SMF-Datensätze schreiben. Diese werden in Echtzeit an das SIEM gesendet. Ein DAM-Tool (z.B. IBM Guardium) überwacht den SQL-Verkehr zu Db2."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Überprüfung der Konfiguration des IAM-Systems und der Rezertifizierungs-Workflows. Analyse der Berichte und Alarme des Anomalieerkennungssystems. Verifizierung, dass die Rezertifizierungen fristgerecht durchgeführt werden."
+                        "value": "Überprüfung der Audit-Konfiguration der Subsysteme. Verifizierung des Datenflusses von SMF zum SIEM. Analyse der im SIEM und DAM-Tool konfigurierten Regeln und Berichte für die Subsystem-Überwachung."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "e365efff-fede-4625-bc06-6b3041ee227c",
+                "uuid": "26daed7e-2eb5-4cf3-aa39-ba5a5529fab8",
                 "control-id": "KONF.6.1.2",
                 "description": "",
                 "props": [
@@ -2007,7 +2007,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a9-m1",
-                    "uuid": "7f5d4acd-9387-4517-b1bf-26ed2232b548",
+                    "uuid": "84a0750e-3df0-49dd-953e-39201abf47ad",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -2026,7 +2026,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a9-m2",
-                    "uuid": "bc5c2603-ccab-493d-b0e2-eb39dc270ff0",
+                    "uuid": "01f59acd-1fc8-4577-9d34-cc3db535f2b4",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -2045,7 +2045,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a9-m3",
-                    "uuid": "291bbc2f-3ca4-4ca8-b468-67a038fd55fa",
+                    "uuid": "96c3a50a-c865-473c-b42f-403be5b1f8de",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -2064,7 +2064,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a9-m4",
-                    "uuid": "ce4f76e0-ebf1-442f-8bd8-1c22db12260e",
+                    "uuid": "ba61b098-d99c-4a96-a5cf-cb7fb604ab08",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -2083,7 +2083,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a9-m5",
-                    "uuid": "90c95966-854f-4654-868b-2551bf4ab893",
+                    "uuid": "8daefc0d-860f-4f40-8305-943fb55bb982",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -2103,7 +2103,7 @@
                 ]
               },
               {
-                "uuid": "15955e7b-f9dc-4196-9d24-ec609369d412",
+                "uuid": "c91be277-c732-4088-b09e-9b2993107b34",
                 "control-id": "KONF.6.4",
                 "description": "",
                 "props": [
@@ -2141,7 +2141,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a1-m1",
-                    "uuid": "ea510e19-c319-48f2-8f2c-fd747d9e124b",
+                    "uuid": "f9b684fa-b821-4ff6-beda-3a3faff53213",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -2160,7 +2160,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a1-m2",
-                    "uuid": "b99930e3-6a14-4cb7-b558-40173318e7f4",
+                    "uuid": "f4bc4956-4273-4cf9-80b3-9745b6625558",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -2179,7 +2179,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a1-m3",
-                    "uuid": "ec2b8783-5810-4d80-a0f3-e6237b4ef3dd",
+                    "uuid": "d6aed67f-bb48-4441-b8cb-b10b58396554",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -2198,7 +2198,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a1-m4",
-                    "uuid": "155d740e-d859-46da-ba49-a6d7706f0358",
+                    "uuid": "c0364905-7460-44f8-b686-5aede8962185",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -2217,7 +2217,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a1-m5",
-                    "uuid": "cd98f509-4f9f-446b-971a-5e84115df454",
+                    "uuid": "55477843-f88d-447c-95dd-b404918d9c20",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -2237,7 +2237,7 @@
                 ]
               },
               {
-                "uuid": "313bd2c3-23c0-486a-8e67-70836788cf9f",
+                "uuid": "86370700-658a-42e1-9863-7eb3c02f121f",
                 "control-id": "KONF.6.4.1",
                 "description": "",
                 "props": [
@@ -2275,7 +2275,7 @@
                 "statements": [
                   {
                     "statement-id": "sys.1.7.a18-m1",
-                    "uuid": "b4e4cc58-a207-4baa-acfa-aa5912ec5863",
+                    "uuid": "d85ae849-c86d-4f5c-aa20-e0bff8d34dc5",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -2294,7 +2294,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a18-m2",
-                    "uuid": "dd3c42f4-09e2-45f5-ae6c-dcd16ed4d42f",
+                    "uuid": "1f262c6b-907b-4468-8455-d967b153d552",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -2313,7 +2313,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a18-m3",
-                    "uuid": "b2ef2bcd-a5fa-4ac6-97a0-a07e2f113484",
+                    "uuid": "1734597e-1912-4b0f-86d6-3fccd49be2c9",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -2332,7 +2332,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a18-m4",
-                    "uuid": "ddc58a5a-cd3f-4f6f-acb5-4238b2410b79",
+                    "uuid": "0406a739-3795-4cac-9e25-c98a76cf1601",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -2351,7 +2351,7 @@
                   },
                   {
                     "statement-id": "sys.1.7.a18-m5",
-                    "uuid": "8919df65-2362-4287-a9cb-79a20031bcf1",
+                    "uuid": "27d1103d-c52f-4219-9960-b43918d68e47",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -2365,140 +2365,6 @@
                       {
                         "name": "assessment-method",
                         "value": "Überprüfung der Konfiguration des IAM-Tools und der SoD-Matrix. Analyse der Berichte über festgestellte SoD-Konflikte. Testen der Zuweisung einer konfliktbehafteten Rolle, um die korrekte Funktion der Erkennung zu verifizieren."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "9cb3b081-d691-4245-abed-61cd271e3b77",
-                "control-id": "KONF.7.10",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "1",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "SYS",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "sys.1.7.a2-m1",
-                    "uuid": "c72f143f-09b4-43ff-8cd5-038b06acdd92",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Nur die bekanntesten sicherheitskritischen Programme sind durch RACF-Profile geschützt. Alias-Namen werden dabei oft nicht berücksichtigt. Die Installation von (Fremd-)Programmen wird nicht systematisch kontrolliert und erfolgt oft manuell."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es werden RACF-Profile für Programme wie `ICKDSF` oder `AMASPZAP` angelegt, aber Aliase oder weniger bekannte Tools bleiben ungeschützt. SMP/E wird nicht konsequent für alle Software-Installationen verwendet."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Prüfen, ob für bekannte sicherheitskritische Programme auch deren Aliase geschützt sind. Suchen nach Software in Systembibliotheken, die nicht über SMP/E verwaltet wird."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a2-m2",
-                    "uuid": "d8cede68-f14f-4888-bc5a-7e8411dc6298",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Alle bekannten sicherheitskritischen Programme und deren Aliase sind durch RACF-Profile geschützt. Die Installation von Programmen erfolgt standardmäßig über SMP/E, jedoch wird die Herkunft der Installationspakete nicht systematisch verifiziert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Eine Liste kritischer Programme und ihrer Aliase wird gepflegt und in RACF umgesetzt. SMP/E wird als Standardwerkzeug für die Softwareverteilung etabliert. Die Quellen der Software (z.B. von IBM oder Drittanbietern) werden als vertrauenswürdig angenommen, aber nicht kryptographisch geprüft."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfung der RACF-Profile für die Liste der kritischen Programme und Aliase. Verifizierung, dass neue Software über SMP/E installiert wurde. Befragung der Administratoren zum Prozess der Quellenverifikation."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a2-m3",
-                    "uuid": "e89a1e5f-0545-4edb-a440-4ce52d3acacb",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Sicherheitskritische (Dienst-)Programme und Kommandos sowie deren Alias-Namen MÜSSEN mit Rechten auf entsprechende RACF-Profile so geschützt werden, dass sie nur von den dafür vorgesehenen und autorisierten Personen benutzt werden können. Es MUSS sichergestellt sein, dass (Fremd-)Programme nicht unerlaubt installiert werden können. Außerdem DÜRFEN Programme NUR von gesicherten Quellen und über nachvollziehbare Methoden (z. B. SMP/E) installiert werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es wird eine umfassende Liste sicherheitskritischer Programme und ihrer Aliase gepflegt. Der Zugriff wird über die `PROGRAM` Klasse in RACF gesteuert. Alle Programminstallationen und -updates müssen über SMP/E erfolgen und im Change-Management-System dokumentiert werden. Gesicherte Quellen sind definierte, vertrauenswürdige Repositories."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Prüfung der RACF-Konfiguration für die `PROGRAM` Klasse. Stichprobenartige Überprüfung von Installationen auf die Einhaltung des SMP/E-Prozesses und die Dokumentation im Change-Management. Überprüfung der Definition und Sicherung der Software-Quellen."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a2-m4",
-                    "uuid": "d967ea62-19d8-4a29-a642-b0ad91b67528",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Zusätzlich zum definierten Schutz wird ein Integritätsüberwachungssystem eingesetzt, das kritische Systembibliotheken (z.B. `SYS1.LPALIB`, `SYS1.LINKLIB`) regelmäßig auf unautorisierte Änderungen überprüft. Der SMP/E-Prozess ist fest in das Change-Management-System integriert und erfordert eine formale Genehmigung für jede Installation."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Tools wie Tripwire oder zSecure Alert/Audit werden konfiguriert, um die Integrität kritischer Datasets zu überwachen und bei Änderungen zu alarmieren. Der SMP/E-Prozess wird durch ein Workflow-Tool gesteuert, das die Freigabe dokumentiert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfung der Konfiguration und der Protokolle des Integritätsüberwachungssystems. Analyse von Change-Tickets, um die Einhaltung des Genehmigungsworkflows für SMP/E-Aktivitäten zu verifizieren."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.7.a2-m5",
-                    "uuid": "89a2dd27-144c-434e-b35a-c7ba7295c046",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Alle sicherheitskritischen Bibliotheken sind durch kryptographische Signaturen geschützt. Das System verhindert automatisch die Ausführung von Programmen, die unautorisiert sind oder deren Signatur ungültig ist. Die Programminstallation ist vollständig über eine CI/CD-Pipeline automatisiert, die Sicherheitstests (z.B. Code-Scanning) und automatische Signierung integriert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es werden Funktionen wie Programmkontrolle mit digitalen Signaturen genutzt. Die CI/CD-Pipeline (z.B. mit Jenkins oder GitLab) wird so konfiguriert, dass sie nach erfolgreichen Tests die Softwarepakete automatisch signiert und mittels SMP/E in einer kontrollierten Weise ausrollt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfung der Konfiguration der Programmkontrolle und der Signaturüberprüfung. Audit der CI/CD-Pipeline-Konfiguration, um die korrekte Implementierung der Sicherheits-Gates und des Signaturprozesses zu verifizieren."
                       }
                     ]
                   }

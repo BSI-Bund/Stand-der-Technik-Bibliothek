@@ -6,7 +6,7 @@
 | ARCH.2.2.1 | Externe Netzanschlüsse | Architektur für Netze SOLLTE Verbindungen über externe Netzanschlüsse einschränken. | 56a54bba-30a4-478f-8464-bc5194cae49f |
 | ARCH.2.2.2 | Gastnetz | Architektur für Netze SOLLTE Verbindungen zwischen Gastnetz und internem Netz einschränken. | 73c9c122-d3f6-42f9-a6f1-6b454a8b1853 |
 | ARCH.2.2.3 | Segmentierung von Servern und Clients | Architektur für Hostsysteme SOLLTE Verbindungen von und zu Clients einschränken. | 8af42e9e-5340-4690-9567-88a5309aee3a |
-| ARCH.2.2.4 | VoIP-Netz | Architektur für Netze KANN eine oder mehreren separate Netzdomänen zur Trennung von Daten- und VoIP-Kommunikation installieren. | 02cac8a8-60e3-481d-96bf-3fa484afea78 |
+| ARCH.2.2.4 | VoIP-Netz | Architektur für Netze KANN eine oder mehrere separate Netzdomänen zur Trennung von Daten- und VoIP-Kommunikation installieren. | 02cac8a8-60e3-481d-96bf-3fa484afea78 |
 | ARCH.2.2.5 | OT-Systeme | Architektur für OT-Systeme SOLLTE für diese ein oder mehrere separate Netzsegmente installieren. | 43badc07-0172-4666-9a72-0c0289b7f540 |
 | ARCH.2.2.6 | Demilitarisierte Zone | Architektur für Netze SOLLTE eine demilitarisierte Zone installieren. | f9e8c80d-0043-42ac-a71b-73ff1e6cad50 |
 | ARCH.2.2.7 | Management-Netz | Architektur für Netze SOLLTE ein oder mehrere Management-Netze installieren. | d02f23d0-9c15-4811-838f-6440ee744334 |
@@ -20,7 +20,7 @@
 | ARCH.3.1 | Netzabdeckung | Architektur für WLANs SOLLTE die Netzabdeckung testen. | 57639fa6-7898-4ad8-91c5-cc77106e0d02 |
 | ARCH.3.2 | Einschränkung in Sicherheitsbereichen | Architektur für WLANs KANN in Sicherheitsbereichen die Ausstrahlung einschränken. | 0ecd6068-4509-4cb5-bf12-b35076cc88e3 |
 | ARCH.3.3 | SSIDs | Architektur für WLANs SOLLTE institutionsspezifische SSIDs aktivieren. | 06d3eb79-4326-4bd8-87c0-9808909d29c7 |
-| ARCH.3.4 | Verschlüsselung | Architektur für WLANs SOLLTE die Netzanbindung {{ insert: param, arch.3.4-prm1 }} verschlüsseln. | 45bb11ba-1018-430e-be4f-7cae54407f3c |
+| ARCH.3.4 | Verschlüsselte Netzanbindung | Architektur für WLANs SOLLTE die Netzanbindung {{ insert: param, arch.3.4-prm1 }} verschlüsseln. | 45bb11ba-1018-430e-be4f-7cae54407f3c |
 | ARCH.4.1 | Netzzugangskontrolle | Architektur für Interne Netzsegmente SOLLTE den Zugriff von IT-Systemen auf das Netzsegment im Einklang mit den zugehörigen Anforderungen des Identitä | 9ec9762e-c115-4e56-8b45-b88a872f47ce |
 | ARCH.4.1.1 | Dynamische Netzzugangskontrolle | Architektur für Interne Netzsegmente SOLLTE den Zugriff von IT-Systemen auf das Netzsegment anhand {{ insert: param, arch.4.1.1-prm1 }} im Einklang mi | fec4fcdf-13e7-4a32-a3e1-52dce90ea1d7 |
 | ARCH.4.1.2 | Quarantäne | Architektur für Interne Netzsegmente KANN ein Quarantänenetz für nicht authentifizierte IT-Systeme installieren. | 5f97efff-4db1-4b26-8ab9-4521108e5c0c |
@@ -50,7 +50,7 @@
 | ARCH.7.3 | Entwicklungs- und Testumgebungen | Architektur für Virtualisierungslösungen SOLLTE Entwicklungs- und Testumgebungen nicht auf produktiven Hostsystemen platzieren. | 15bdb341-c907-4daa-9e39-1dc3777ef9bc |
 | ARCH.8.1 | Redundanz im Kernnetz | Architektur für Netze SOLLTE für das Kernnetz redundante Netzkomponenten installieren. | 37f932b2-e132-4bf0-b8c3-eed73eadc680 |
 | ARCH.8.2 | Redundante TK-Anbindung | Architektur für Externe Netzanschlüsse KANN redundante TK-Anbindungen für eingehende und ausgehende Verbindungen installieren. | 11904e1d-22f5-4855-b2b4-5b82a423c2d7 |
-| ARCH.8.3 | Redundante Server | Architektur für Anwendungen KANN für die Funktionsfähigkeit der Anwendung erforderliche Server-Systeme redundant installieren. | d1a0c0ac-dc2e-4d90-b67d-b76eec256915 |
+| ARCH.8.3 | Redundante Server | Architektur für Anwendungen KANN für die Funktionsfähigkeit der Anwendung erforderliche Hostsysteme redundant installieren. | d1a0c0ac-dc2e-4d90-b67d-b76eec256915 |
 | ARCH.9.1 | Dimensionierung der Netzanbindung | Architektur für Netze SOLLTE eine bedarfsgerechte Netzanbindung installieren. | 82cfd8da-b3d8-4b87-8770-f39aaf7de728 |
 | ARCH.9.2 | Lastverteilung | Architektur für Anwendungen KANN eine {{ insert: param, arch.9.2-prm1 }} automatische Lastverteilung aktivieren. | 50e54872-271e-41b4-b54a-50e9ebab82bd |
 | ARCH.9.3 | Automatische Skalierung | Architektur für Anwendungen KANN eine automatische Skalierung der von der Anwendung verwendeten Computerinstanzen anhand von {{ insert: param, arch.9. | bbfa749a-99a4-4ff3-9cce-5ceeb3162596 |
@@ -118,8 +118,8 @@
 | SENS.8.4.1 | Beaufsichtigung Externer | Sensibilisierung für Mitarbeitende von Standorten SOLLTE zur Beaufsichtigung von Externen in sensiblen Bereichen anweisen. | 2b9cec51-f841-4ba6-b50d-29c1c2f2c21d |
 | SENS.8.5 | Verwahrung Intern | Sensibilisierung für Nutzende von Räumen SOLLTE zur sicheren Verwahrung von IT-Systemen und Datenträgern sensibilisieren. | a5504b88-679b-418b-ab9e-5741317f29ff |
 | SENS.8.6 | Rückgabe nicht mehr benötigter Assets | Sensibilisierung für Nutzende SOLLTE zur Rückgabe nicht mehr benötigter Assets anweisen. | 857f189a-5ede-47d6-89d5-faff63d736d2 |
-| SENS.8.7 | Brandschutz | Sensibilisierung für Mitarbeitende SOLLTE zur korrekten Verwendung bereitgestellter Brandschutz-Hilfsmittel sensibilisieren. | 37823d46-59ad-487b-bba1-5917c017c625 |
-| SENS.8.8 | Wasserschutz | Sensibilisierung für Mitarbeitende KANN zur korrekten Verwendung bereitgestellter Wasserschutz-Hilfsmittel sensibilisieren. | 75859261-aa48-4faf-9489-3d875e585f9d |
+| SENS.8.7 | Verwendung von Brandschutmitteln | Sensibilisierung für Mitarbeitende SOLLTE zur korrekten Verwendung bereitgestellter Brandschutz-Hilfsmittel sensibilisieren. | 37823d46-59ad-487b-bba1-5917c017c625 |
+| SENS.8.8 | Verwendung von Wasserschutzmitteln | Sensibilisierung für Mitarbeitende KANN zur korrekten Verwendung bereitgestellter Wasserschutz-Hilfsmittel sensibilisieren. | 75859261-aa48-4faf-9489-3d875e585f9d |
 | SENS.9.1 | Verarbeitung in der Öffentlichkeit | Sensibilisierung für Nutzende SOLLTE gegen die Verarbeitung von vertraulichen Informationen in der Öffentlichkeit sensibilisieren. | 4d8775fd-52b0-491f-b0ce-7a8ceaba4819 |
 | SENS.9.2 | Vorsicht vor Mithören | Sensibilisierung für Nutzende SOLLTE gegen das Abhören von Gesprächen beim mobilen Arbeiten sensibilisieren. | bd43cb07-83d9-4105-9039-3dba57a180e9 |
 | SENS.9.3 | Verwahrung außer Haus | Sensibilisierung für Nutzende SOLLTE zur Verwahrung von IT-Systemen und Datenträgern beim mobilen Arbeiten anweisen. | 65a6dd9c-baab-49b8-8d28-ee4cab5b52a9 |
@@ -154,7 +154,7 @@
 | ASST.2.3.2 | Software Bill of Materials (SBOM) | Informationen und Assets für Anwendungen SOLLTE die Software Bill of Materials (SBOM) dokumentieren. | ddd9f433-8d27-4ed5-9061-e77fc9564dbc |
 | ASST.2.4 | Klassifizierung | Informationen und Assets für Daten SOLLTE diese einer Schutzbedarfsklasse zuweisen. | 41530972-ff04-4df0-a2b5-8bab6859becb |
 | ASST.3.1 | Nutzungsvereinbarungen | Informationen und Assets für Nutzende SOLLTE diese zu den Regelungen der Nutzung von Informationen und anderen Assets anweisen. | ec6bc7aa-7f8c-4cb1-a564-73e39401051f |
-| ASST.3.1.1 | Weitergabe von Informationen | Informationen und Assets für Nutzende SOLLTE zur Weitergabe von Informationen nur bei Erforderlichkeit anweisen. | 32afe7a4-d3d4-43d2-a37b-8ecd45ea69f5 |
+| ASST.3.1.1 | Weitergabe nur bei Erforderlichkeit | Informationen und Assets für Nutzende SOLLTE zur Weitergabe von Informationen nur bei Erforderlichkeit anweisen. | 32afe7a4-d3d4-43d2-a37b-8ecd45ea69f5 |
 | ASST.3.1.1.1 | Entfernung nicht erforderlicher Rest- oder Zusatzdaten | Informationen und Assets für Daten SOLLTE die Entfernung nicht erforderlicher Rest- oder Zusatzdaten verankern. | 5316fe85-7996-41dc-a475-4d5cfeda250c |
 | ASST.3.3 | Kennzeichnung ohne vertrauliche Daten | Informationen und Assets für IT-Systeme SOLLTE Kennzeichnung ohne vertrauliche Daten verankern. | e6bdfec9-97ef-405a-a90f-e5b63f900e21 |
 | ASST.3.4 | Tainting | Informationen und Assets für Daten KANN eine Markierung durch eingebettete Daten oder Funktionen zur Wiedererkennung zuweisen. | 11c6919e-1dac-4816-9b42-88218c04c62b |
@@ -233,7 +233,7 @@
 | BES.4.5.2 | Mandantentrennung | Beschaffungsmanagement für Outsourcing KANN eine festgelegte Mandantentrennung vereinbaren. | ffafe5ae-04e1-4aef-ae3f-2a3eeb193743 |
 | BES.4.6 | Security by Default | Beschaffungsmanagement für Einkäufe SOLLTE Security by Default vereinbaren. | eaea6c10-713f-41d4-95f1-128784ef15d5 |
 | BES.4.6.1 | Authentifizierung des Kunden | Beschaffungsmanagement für Dienstleistungen SOLLTE eine Authentifizierung vor dem Zugriff auf schützenswerte Informationen oder Dienste vereinbaren. | 812c1589-0233-4e24-a69b-d9a4b02e3c1e |
-| BES.4.6.2 | Verschlüsselung | Beschaffungsmanagement für Outsourcing SOLLTE die Verschlüsselung schützenswerter Informationen durch den Anbieter vereinbaren. | adac1038-a7a7-4346-8c7e-22e322cf8f2b |
+| BES.4.6.2 | Verschlüsselung durch den Anbieter | Beschaffungsmanagement für Outsourcing SOLLTE die Verschlüsselung schützenswerter Informationen durch den Anbieter vereinbaren. | adac1038-a7a7-4346-8c7e-22e322cf8f2b |
 | BES.4.6.3 | Manipulationsschutz | Beschaffungsmanagement für IT-Produkte KANN Schutzmechanismen gegen Manipulationen auf dem Lieferweg vereinbaren. | 4e08941c-a1c7-4718-934f-c1e8c3e17864 |
 | BES.4.7 | ISMS beim Dienstleister | Beschaffungsmanagement für Outsourcing SOLLTE ein Managementsystem für Informationssicherheit (ISMS) vereinbaren. | b70e7569-2d18-482b-8f7f-720cd0b1fcb7 |
 | BES.4.8 | Konformitätsnachweise | Beschaffungsmanagement für Einkäufe SOLLTE Nachweise des Lieferanten zur Erfüllung der Sicherheitskriterien vereinbaren. | 3e56f7c0-63b1-4017-8e30-3a78c1f06693 |
@@ -258,7 +258,7 @@
 | BES.5.9 | Umgang mit Änderungen | Beschaffungsmanagement für Dienstleistungen SOLLTE Regelungen für den Umgang mit Änderungen vereinbaren. | 114cc12e-3b48-4632-ae06-d50a461dcd3a |
 | BES.5.9.1 | Autorisierung von Änderungen | Beschaffungsmanagement für Dienstleistungen KANN die Autorisierung von Änderungen durch den Auftraggeber vereinbaren. | a47e5549-802f-4d91-a69e-a537a813ba19 |
 | BES.5.10 | Behandlung von Vorfällen | Beschaffungsmanagement für Einkäufe SOLLTE Regelungen für die Behandlung von Vorfällen vereinbaren. | 61055c24-1924-4b3f-804c-d96e2a683821 |
-| BES.5.10.1 | Meldewege | Beschaffungsmanagement für Einkäufe SOLLTE die Erreichbarkeit des Lieferanten über bestimmte Meldewege vereinbaren. | f2e723f5-6a1a-4358-bce2-458523049346 |
+| BES.5.10.1 | Erreichbarkeit über Meldewege | Beschaffungsmanagement für Einkäufe SOLLTE die Erreichbarkeit des Lieferanten über bestimmte Meldewege vereinbaren. | f2e723f5-6a1a-4358-bce2-458523049346 |
 | BES.5.10.2 | Melden von Vorfällen | Beschaffungsmanagement für Einkäufe SOLLTE eine Verpflichtung zur unverzüglichen Information des Auftraggebers über ihn betreffende Vorfälle vereinbar | d359fe31-8bf1-47ae-bbcc-e572b1998d52 |
 | BES.5.10.3 | Schwachstellenbehebung | Beschaffungsmanagement für Einkäufe SOLLTE eine Verpflichtung für Lieferanten, die den Auftraggeber betreffende Schwachstelle zeitnah zu beheben, vere | d7946adc-4cf2-4fc9-aad7-9d43c6855384 |
 | BES.5.10.3.1 | Schwachstellenmeldeprozess | Beschaffungsmanagement für IT-Produkte KANN einen Schwachstellenmeldeprozess nach {{ insert: param, bes.5.10.3.1-prm1 }} vereinbaren. | ebc08e41-e728-4447-93fa-233fbad7f2fa |
@@ -293,7 +293,7 @@
 | BES.7.4.8 | Technische Schnittstellen | Beschaffungsmanagement für Dienstleistungen SOLLTE die vom Dienstleister bereitgestellten technischen Schnittstellen und deren Sicherheitsfunktionalit | e0b880c1-c7a8-491a-a8c4-df081ed9a8d4 |
 | BES.7.4.9 | Auslagerungsregister | Beschaffungsmanagement für Outsourcing SOLLTE Informationen über den Dienstleister, die Kritikalität des Prozesses, abgeschlossene Verträge und Verein | ca2e05d8-da09-45f2-b9e7-48e3ef4b032c |
 | BES.7.4.10 | Serviceprofil | Beschaffungsmanagement für Cloud-Dienste SOLLTE für jeden geplanten oder genutzten Cloud-Dienst ein Serviceprofil mit dem Namen des Services und des A | 406b5a6e-fb23-4a70-8d6d-2a5965513eb4 |
-| BES.7.4.11 | Mandantentrennung | Beschaffungsmanagement für Outsourcing KANN die beim Dienstleister implementierten Maßnahmen zur Mandantentrennung nach Vertragsschluss dokumentieren. | d59ad53c-00d4-4bfd-8af9-bf09722731c5 |
+| BES.7.4.11 | Dokumentierte Mandantentrennung | Beschaffungsmanagement für Outsourcing KANN die beim Dienstleister implementierten Maßnahmen zur Mandantentrennung nach Vertragsschluss dokumentieren. | d59ad53c-00d4-4bfd-8af9-bf09722731c5 |
 | BES.7.4.12 | Software Bill of Materials (SBOM) - Cloud | Beschaffungsmanagement für Cloud-Dienste KANN für jede gelieferte Software-as-a-Service (SaaS) die entsprechende Software Bill of Materials (SBOM) nac | 7a3321a5-9f54-4ada-955d-647aeb0e51b5 |
 | BES.8.1 | Bereithaltung alternativer Lieferanten | Beschaffungsmanagement für Einkäufe KANN die Bereithaltung alternativer Lieferanten verankern. | 7a7af54d-83c0-4a32-900f-e4ff9ac02450 |
 | BES.8.2 | Verfahren zur Übertragung von Geschäftsprozessen | Beschaffungsmanagement für Outsourcing KANN Verfahren zur Übertragung von Geschäftsprozessen für den Fall einer geplanten oder ungeplanten Beendigung  | e69b2846-6b36-4b3e-8fbc-e1ccd17f4f48 |
@@ -312,7 +312,7 @@
 | DEV.3.4 | Passwort-Hashing | Entwicklung für Anwendungen SOLLTE das Hashing von Passwörtern, die zur Authentifizierung an der Anwendung verwendet werden vor der Verarbeitung oder  | 6b7d5613-a32c-4a47-8a4f-766053da0e74 |
 | DEV.4.1 | Nutzerinformation bei kritischen Ereignissen | Entwicklung für Anwendungen SOLLTE bei sicherheitskritischen Ereignissen die betroffenen Nutzenden informieren. | 15c87c6f-7b62-4dcf-88a5-f38bb5a00ce5 |
 | DEV.4.2 | Bibliotheksquellen | Entwicklung für Anwendungen SOLLTE die Einbindung externer Softwarebibliotheken und -Schnittstellen aus unzuverlässigen oder unbekannten Quellen unter | 54b5a504-5b17-4fea-8514-079d99eb0102 |
-| DEV.4.3 | SBOM | Entwicklung für Anwendungen SOLLTE die Bestandteile mit Hilfe einer Software Bill of Materials (SBOM) vor dem Release dokumentieren. | 5b695087-3a35-441a-b8c9-9937a681a996 |
+| DEV.4.3 | Softwarebestandteile (SBOM) | Entwicklung für Anwendungen SOLLTE die Bestandteile mit Hilfe einer Software Bill of Materials (SBOM) vor dem Release dokumentieren. | 5b695087-3a35-441a-b8c9-9937a681a996 |
 | DEV.4.4 | Integrität externer Softwarebibliotheken | Entwicklung für Anwendungen SOLLTE die Integrität externer Softwarebibliotheken vor dem Release testen. | 62b75210-9470-456f-a191-9bbe48da5313 |
 | DEV.4.5 | Updates externer Softwarebibliotheken | Entwicklung für Anwendungen SOLLTE externe Softwarebibliotheken auf Sicherheitsupdates vor dem Release testen. | 3d451248-af76-44a4-87b9-8a86cdff4c28 |
 | DEV.4.6 | Compileroptionen | Entwicklung für Anwendungen SOLLTE Compileroptionen für Sicherheitsfunktionen vor dem Release aktivieren. | 615f77e2-9734-4778-ba5a-95a6b80a92d9 |
@@ -326,7 +326,7 @@
 | DEV.5.3 | Integritätsprüfung | Entwicklung für Anwendungen SOLLTE Nutzende über Möglichkeiten zur Verifikation der Integrität von Installations-, Update- und Patchdateien informiere | 878e31fd-614f-4034-8d96-2604e4ed6b92 |
 | DEV.7.2 | Zertifikatsmonitoring | Entwicklung für Anwendungen SOLLTE die Ausstellung neuer Zertifikate für die von der Anwendung verwendeten Domains überwachen. | 61b03a52-d68e-4bda-b715-91cac2e70e87 |
 | KONF.2.1 | Grundkonfiguration für Systeme | Konfiguration für IT-Systeme SOLLTE eine Grundkonfiguration dokumentieren. | 8bd05aba-b395-43cf-a38e-f4e8656df7c4 |
-| KONF.2.1.1 | Versionierung | Konfiguration für IT-Systeme SOLLTE eine Versionierung vorheriger Konfigurationen verankern. | 3b25d629-b441-4365-96fb-d06e2e35b89d |
+| KONF.2.1.1 | Versionierung der Systemkonfiguration | Konfiguration für IT-Systeme SOLLTE eine Versionierung vorheriger Konfigurationen verankern. | 3b25d629-b441-4365-96fb-d06e2e35b89d |
 | KONF.2.2 | Kryptographische Verfahren und Protokolle | Konfiguration für IT-Systeme SOLLTE kryptographische Verfahren und Protokolle im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berech | e4570c64-4790-4a5c-95e4-4c168d447566 |
 | KONF.2.3 | Änderung von Default-Zugangsdaten | Konfiguration für IT-Systeme SOLLTE die Änderung von Default-Zugangsdaten ausführen. | 14a61781-67a3-41c7-9f73-89d5809ea2b0 |
 | KONF.2.4 | Deaktivierung nicht benötigter Systemfunktionen | Konfiguration für IT-Systeme SOLLTE nicht benötigte Systemfunktionen deaktivieren. | 24c072af-d71b-4d57-8b8f-119194e5cb8a |
@@ -350,7 +350,7 @@
 | KONF.4.1 | Anbindung an Verzeichnisdienst | Konfiguration für IT-Systeme SOLLTE die Anbindung an einen Verzeichnisdienst aktivieren. | 99b370b9-b48c-4f68-b88c-d44ef31f83e0 |
 | KONF.4.1.1 | Weiterleitung von Anmeldeinformationen | Konfiguration für IT-Systeme SOLLTE die Weiterleitung mehrfach verwendbarer Anmeldeinformationen deaktivieren. | 6089e247-2518-4c90-b991-df8cbb24585f |
 | KONF.4.2 | DNS-Anbindung | Konfiguration für IT-Systeme SOLLTE die vom System verwendeten DNS-Server autorisieren. | 490400dc-4769-4127-9869-720a3ce1585c |
-| KONF.4.2.1 | DNS-Verschlüsselung | Konfiguration für IT-Systeme SOLLTE DNS-Verschlüsselung aktivieren. | ccb6bfb1-1b49-4d03-9705-2d05bca018b5 |
+| KONF.4.2.1 | DNS-Verschlüsselung | Konfiguration für IT-Systeme SOLLTE DNS-Verbindungen durch {{ insert: param, konf.4.2.1-prm1 }} verschlüsseln. | ccb6bfb1-1b49-4d03-9705-2d05bca018b5 |
 | KONF.4.3 | Authentifizierung von Fernwartungsfunktionen | Konfiguration für IT-Systeme SOLLTE Fernwartungsfunktionen im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement a | 6fa4659a-8472-4d26-9f3b-a3edfa412a8c |
 | KONF.4.4 | Einschränkung von Fernwartungsfunktionen | Konfiguration für IT-Systeme SOLLTE Fernwartungsfunktionen im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement e | 2e782e35-d708-49c3-b022-76616ae204be |
 | KONF.4.5 | Zeitquellen | Konfiguration für IT-Systeme SOLLTE Zeitquellen autorisieren. | 92eee157-2b9b-4a80-8f17-4b124590d72f |
@@ -360,8 +360,8 @@
 | KONF.5.2 | Keine Mehrfachanmeldung | Konfiguration für IT-Systeme SOLLTE die gleichzeitige Anmeldung mehrerer Zugangskonten deaktivieren. | 71f7d8c3-4e50-45b8-a01a-5ee7b957d31b |
 | KONF.6.1 | Minimal erforderliche Berechtigungen für Anwendungen | Konfiguration für IT-Systeme SOLLTE erforderliche Berechtigungen für Anwendungen einschränken. | cc6a9a9d-cb65-4e22-aad5-d93f73e522b8 |
 | KONF.6.1.1 | Datenkapselung | Konfiguration für IT-Systeme KANN Datenkapselung aktivieren. | 6bb18861-0616-4cde-afed-7929b71ba16c |
-| KONF.6.1.2 | Isolierung von Anwendungen | Konfiguration für IT-Systeme KANN Isolierung von Anwendungen aktivieren. | d380c6d8-1ab0-4e4b-bcca-2e620b40d934 |
-| KONF.6.1.3 | Isolierte Arbeitsumgebungen | Konfiguration für Endgeräte KANN eine isolierte Arbeitsumgebungen aktivieren. | cfe748d3-22ff-4f2c-8bb0-d22338c67f45 |
+| KONF.6.1.2 | Isolierung von Anwendungen | Konfiguration für IT-Systeme KANN die Isolierung von {{ insert: param, konf.6.1.2-prm1 }} aktivieren. | d380c6d8-1ab0-4e4b-bcca-2e620b40d934 |
+| KONF.6.1.3 | Isolierte Arbeitsumgebungen | Konfiguration für Endgeräte KANN die Isolation verschiedener Arbeitsumgebungen für verschiedene Verwendungen aktivieren. | cfe748d3-22ff-4f2c-8bb0-d22338c67f45 |
 | KONF.6.2 | Gemeinsam genutzte Verzeichnisse | Konfiguration für Endgeräte SOLLTE die Zugriffsrechte gemeinsam verwendeter Verzeichnisse einschränken. | ec10cb70-9101-4293-ab4c-92d57f84af77 |
 | KONF.6.3 | Kiosk-Modus | Konfiguration für Endgeräte KANN das automatische Zurücksetzen auf einen definierten Zustand nach der Nutzung aktivieren. | 1b90a130-be97-42bf-8d30-8458a1d743ee |
 | KONF.6.4 | Privilegierte Systemfunktionen | Konfiguration für IT-Systeme SOLLTE privilegierte Funktionen einschränken. | f129ae20-1423-4df0-a735-db8365592cd1 |
@@ -403,7 +403,7 @@
 | KONF.9.2 | Begrenzung der Rechenleistung | Konfiguration für Hostsysteme KANN die zur Verfügung stehende Rechenleistung anhand von {{ insert: param, konf.9.2-prm1 }} einschränken. | 3b0eb166-07b9-4b51-a1f5-75513b28015c |
 | KONF.9.3 | Alternative Komponenten für kritische Funktionen | Konfiguration für IT-Systeme KANN alternative Komponenten für {{ insert: param, konf.9.3-prm1 }} installieren. | bd64ca41-01df-48ba-85ea-3241017cf750 |
 | KONF.10.1 | Grundkonfiguration für Anwendungen | Konfiguration für Anwendungen SOLLTE eine Grundkonfiguration dokumentieren. | 23571325-0e60-4d28-96e1-ed57f794f790 |
-| KONF.10.1.1 | Versionierung | Konfiguration für Anwendungen SOLLTE eine Versionierung vorheriger Konfigurationen verankern. | cb46badf-b942-4007-ab50-e941711b3c58 |
+| KONF.10.1.1 | Versionierung der Anwendungskonfiguration | Konfiguration für Anwendungen SOLLTE eine Versionierung vorheriger Konfigurationen verankern. | cb46badf-b942-4007-ab50-e941711b3c58 |
 | KONF.10.2 | Kryptographische Verfahren und Protokolle in Anwendungen | Konfiguration für Anwendungen SOLLTE kryptographische Verfahren und Protokolle im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berec | 94aac721-fbe3-44d0-a0ce-55ebded001ab |
 | KONF.10.3 | Änderung von Default-Zugangsdaten | Konfiguration für Anwendungen SOLLTE die Änderung von Default-Zugangsdaten ausführen. | f154f8a8-8abb-4c9c-a3d8-f2d20d6fd339 |
 | KONF.10.4 | Deaktivierung nicht benötigter Anwendungsfunktionen | Konfiguration für Anwendungen SOLLTE nicht benötigte Anwendungsfunktionen deaktivieren. | 990f4798-6926-41be-b09d-ee0162c530a0 |
@@ -432,19 +432,19 @@
 | KONF.12.1.6 | JavaScript | Konfiguration für Webbrowser KANN JavaScript einschränken. | f66bbf9d-76ba-423f-b2e5-25cc775c16c6 |
 | KONF.12.1.7 | Filtern schädlicher Webinhalte | Konfiguration für Webanwendungen SOLLTE eine Filterung schädlicher Webinhalte aktivieren. | 568f6977-4f5c-44a4-92c7-1e6e09cc3631 |
 | KONF.12.1.8 | Duplikate im Verzeichnisbaum | Konfiguration für Verzeichnisdienste SOLLTE Duplikate im Verzeichnisbaum blockieren. | c9194ad7-5382-4810-a5b9-d4013a28f5a5 |
-| KONF.12.1.9 | Journaling | Konfiguration für Dateiserver SOLLTE Journaling aktivieren. | 87ccf38b-ac1d-4e14-a599-b536321b0f75 |
+| KONF.12.1.9 | Journaling | Konfiguration für Dateiserver SOLLTE Dateisystem-Journaling aktivieren. | 87ccf38b-ac1d-4e14-a599-b536321b0f75 |
 | KONF.12.1.10 | HTTP-Response-Header | Konfiguration für Webanwendungen SOLLTE HTTP-Response-Header aktivieren. | 34bf7846-28cb-41db-bd7b-2e81bee980b3 |
-| KONF.12.1.11 | Aktive Inhalte | Konfiguration für Office-Anwendungen SOLLTE Aktive Inhalte deaktivieren. | fe822942-31a1-4961-832f-3523f7622754 |
+| KONF.12.1.11 | Aktive Dateiinhalte | Konfiguration für Office-Anwendungen SOLLTE aktive Inhalte in Office-Dateien deaktivieren. | fe822942-31a1-4961-832f-3523f7622754 |
 | KONF.12.2 | Verschlüsselungsstatus der aktuellen Verbindung | Konfiguration für Webbrowser SOLLTE eine Anzeige der Verschlüsselung der aktuellen Verbindung aktivieren. | 8e35ba9c-0926-4cef-bd95-ec79933a6ee2 |
 | KONF.12.3 | Cookies | Konfiguration für Webbrowser SOLLTE Cookies einschränken. | 77690b80-cd45-47dd-9540-b8de5d67cbbe |
-| KONF.12.4 | Speicherung von Zugangsdaten | Konfiguration für Webbrowser SOLLTE eine geschützte Speicherung von Zugangsdaten aktivieren. | 93d5129d-c905-439f-b7cf-2ddcd92fac5a |
+| KONF.12.4 | Speicherung von Zugangsdaten | Konfiguration für Webbrowser SOLLTE die Speicherung von Zugangsdaten {{ insert: param, konf.12.4-prm1 }} aktivieren. | 93d5129d-c905-439f-b7cf-2ddcd92fac5a |
 | KONF.12.5 | Auto-Vervollständigung von Daten | Konfiguration für Webbrowser SOLLTE die Auto-Vervollständigung von Daten einschränken. | 884ebdea-7054-48bf-932a-bb4f704baa8e |
 | KONF.12.6 | Browser-Historie | Konfiguration für Webbrowser KANN die dauerhafte Browser-Historie deaktivieren. | 1eb77ea1-1c97-4027-9098-a874951b0f47 |
-| KONF.12.7 | Erweiterte Attribute | Konfiguration für Dateiserver SOLLTE Erweiterte Attribute aktivieren. | 7ec374a6-4efc-45a4-b596-4e8fc1402daf |
+| KONF.12.7 | Erweiterte Attribute | Konfiguration für Dateiserver SOLLTE erweiterte Attribute aktivieren. | 7ec374a6-4efc-45a4-b596-4e8fc1402daf |
 | KONF.12.8 | Teilnahme per Default ohne Bild und Ton | Konfiguration für VK-Anwendungen SOLLTE Bild und Ton per Default deaktivieren. | bbea53dc-e082-4ac7-80f7-a25e0bf04a76 |
-| KONF.12.9 | Information über Aufzeichnung | Konfiguration für VK-Anwendungen SOLLTE eine Anzeige laufender Aufzeichnungen aktivieren. | 46dd3e73-e1d5-4dee-9312-d52e9bb5c631 |
+| KONF.12.9 | Information über Aufzeichnung | Konfiguration für VK-Anwendungen SOLLTE eine Anzeige laufender Aufzeichnungen für alle Teilnehmenden aktivieren. | 46dd3e73-e1d5-4dee-9312-d52e9bb5c631 |
 | KONF.12.10 | Cookie-Attribute | Konfiguration für Webanwendungen SOLLTE Cookie-Attribute aktivieren. | 4ac2fe69-5f2d-47d8-acf7-2be1485f9f37 |
-| KONF.12.11 | Anonyme oder Pseudonyme Kommunikation | Konfiguration für TK-Anwendungen KANN Anonyme oder Pseudonyme Kommunikation aktivieren. | a06eca6b-f142-4808-b04d-c19adf178db4 |
+| KONF.12.11 | Anonyme oder Pseudonyme Kommunikation | Konfiguration für TK-Anwendungen KANN die Übermittlung {{ insert: param, konf.12.11-prm1 }} zur Gegenstelle aktivieren. | a06eca6b-f142-4808-b04d-c19adf178db4 |
 | KONF.12.12 | Verbindungsprotokoll | Konfiguration für TK-Anwendungen SOLLTE ein für Nutzende verfügbares Verbindungsprotokoll protokollieren. | 31191a30-d1fd-4adf-a407-35e4fc782e79 |
 | KONF.12.13 | Sendebericht | Konfiguration für Faxe SOLLTE einen Sendebericht protokollieren. | 0ef855ab-834e-405e-99f4-a1bca3f09d15 |
 | KONF.12.14 | DNS-Falschinformationen | Konfiguration für DNS-Server SOLLTE DNS-Antworten, die falsche Domain-Informationen liefern, deaktivieren. | d3856d40-5869-4b06-812b-4cc966f96d80 |
@@ -500,9 +500,9 @@
 | GEB.3.1.2 | Überprüfung mitgeführter Gegenstände | Gebäudemanagement für Standorte KANN das Mitführen von Gegenständen überwachen. | 012da5ef-7ee9-4bf2-bb39-eebd2ae7b17b |
 | GEB.3.2 | Anmelde- und Empfangsbereiche | Gebäudemanagement für Standorte SOLLTE Anmelde- und Empfangsbereiche installieren. | 46bec5e4-88b9-45d1-ae2a-56b534ad94ad |
 | GEB.3.3 | Authentifizierung vor Zutritt | Gebäudemanagement für Standorte SOLLTE Zutritte im Einklang mit den Festlegungen des Identitäts- und Berechtigungsmanagements authentifizieren. | 5ac8362d-3e6b-4922-8e12-66a80d8d883b |
-| GEB.3.3.1 | Zugangskontrollanlage | Gebäudemanagement für Standorte KANN Zutritte automatisch im Einklang mit den Festlegungen des Identitäts- und Berechtigungsmanagements authentifizier | 5bc938de-7123-4793-8ba4-3183c2264acf |
+| GEB.3.3.1 | Zugangskontrollanlage | Gebäudemanagement für Standorte KANN Zutritte durch {{ insert: param, geb.3.3.1-prm1 }} im Einklang mit den Festlegungen des Identitäts- und Berechtig | 5bc938de-7123-4793-8ba4-3183c2264acf |
 | GEB.3.3.2 | Dokumentation von Zutritten | Gebäudemanagement für Standorte KANN Zutritte und Austritte mit Identität und Zeitpunkt dokumentieren. | a0b89dd6-4aec-41bd-b4bf-01e704072ed5 |
-| GEB.3.3.3 | Besucheranmeldung | Gebäudemanagement für Standorte SOLLTE Besuche autorisieren. | ce537201-8949-41a6-855b-c7671d226853 |
+| GEB.3.3.3 | Besucheranmeldung | Gebäudemanagement für Standorte SOLLTE Besuche durch {{ insert: param, geb.3.3.3-prm1 }} autorisieren. | ce537201-8949-41a6-855b-c7671d226853 |
 | GEB.3.4 | Berechtigungsmarkierung | Gebäudemanagement für Nutzende von Standorten KANN zum Tragen von gut sichtbaren Berechtigungsmarkierungen innerhalb des Sicherheitsperimeters anweise | 63985f87-b50e-4c73-9962-f026b5e6d840 |
 | GEB.3.5 | Einbruchhemmung | Gebäudemanagement für Standorte KANN einbruchhemmende Bauteile nach {{ insert: param, geb.3.5-prm1 }} installieren. | 02f648cd-8aec-4bfb-b751-dab8974d874c |
 | GEB.3.6 | Einbruchmeldeanlagen | Gebäudemanagement für Standorte KANN Einbrüche nach {{ insert: param, geb.3.6-prm1 }} überwachen. | 01193c74-a4fc-4669-816c-651fcdca362e |
@@ -519,12 +519,12 @@
 | GEB.6.2 | Screen Lock | Gebäudemanagement für Räume SOLLTE zum Sperren von IT-System vor dem Verlassen des Arbeitsplatzes anweisen. | 56f4e238-cbce-4353-b4a8-bc3ee1c665c5 |
 | GEB.6.3 | Lieferzugang | Gebäudemanagement für Standorte SOLLTE einen Zugang für die Abwicklung von Lieferungen ohne unbefugten Zugang zum restlichen Standort installieren. | bf559e67-d53f-4ef3-928b-5d9774e7b87c |
 | GEB.6.4 | Schutz gegen Manipulation | Gebäudemanagement für IT-Systeme KANN Manipulationsschutzvorkehrungen installieren. | 59810143-17bf-49b6-91d0-1266cb7eb9da |
-| GEB.6.5 | Mikrosegmentierung | Gebäudemanagement für IT-Systeme KANN eine physische Mikrosegmentierung installieren. | ae6ec98f-fe6f-4334-904c-9f17235c45e5 |
+| GEB.6.5 | Physische Mikrosegmentierung | Gebäudemanagement für IT-Systeme KANN eine physische Mikrosegmentierung installieren. | ae6ec98f-fe6f-4334-904c-9f17235c45e5 |
 | GEB.7.1 | Zugang zu Ausgabesystemen | Gebäudemanagement für IT-Systeme SOLLTE den Zugang zu nicht-öffentlichen Ausgabesystemen einschränken. | 9c8e26af-7fd2-4a30-ac89-232a0bc418a1 |
 | GEB.7.2 | Geschützte Aufstellung | Gebäudemanagement für IT-Systeme SOLLTE diese geschützt vor dem Zugriff von Unbefugten platzieren. | 4bd461c1-265d-4823-8b2c-4c435af0943a |
 | GEB.7.2.1 | Hostsysteme | Gebäudemanagement für Hostsysteme SOLLTE diese ausschließlich in Serverräumen platzieren. | 25dfb04d-3274-446e-9bb0-f2fb1a2e511a |
 | GEB.7.3 | Netzkomponenten | Gebäudemanagement für Netze SOLLTE für die Funktionsfähigkeit des Netzes erforderliche Systeme ausschließlich in Räumen für technische Infrastruktur p | 525d2727-f932-4f27-bffc-7a8104194bc8 |
-| GEB.7.4 | Normgerechte Rechenzentren | Gebäudemanagement für Serverräume KANN diese ausschließlich in normgerechten Rechenzentren platzieren. | 280b1dd1-f839-473f-8e71-3cd871fc55b1 |
+| GEB.7.4 | Normgerechte Rechenzentren | Gebäudemanagement für Serverräume KANN diese ausschließlich in Rechenzentren nach {{ insert: param, geb.7.4-prm1 }} platzieren. | 280b1dd1-f839-473f-8e71-3cd871fc55b1 |
 | GEB.8.1 | Schlüsselbeauftragte | Gebäudemanagement für Standorte SOLLTE die Verwaltung von Schlüsseln {{ insert: param, geb.8.1-prm1 }} zuweisen. | 989b0846-7561-4d14-99d0-ce46a749cde0 |
 | GEB.8.2 | Verwahrung von Schlüsseln | Gebäudemanagement für Standorte SOLLTE zur Verwahrung von Schlüsseln anweisen. | b4af7248-ff08-4cb7-99b5-cd5f589ec1df |
 | GEB.8.3 | Schlüsselaudit | Gebäudemanagement für Standorte SOLLTE die vorhandenen Schlüssel {{ insert: param, geb.8.3-prm1 }} überprüfen. | 97d89e25-dbe3-4da7-bcfb-07537a05d6bf |
@@ -574,6 +574,7 @@
 | BER.4.7 | IT-System-Zugangskonto | Berechtigung für IT-Systeme KANN diese genau einem Zugangskonto zuweisen. | 7057a1f6-0804-49ac-9d7f-289ecc71fa33 |
 | BER.5.3 | Mehr-Faktor-Authentisierung am Perimeter | Berechtigung für Anwendungen von Externe Netzanschlüssen SOLLTE Mehr-Faktor-Authentisierung aktivieren. | 2b9ddd3e-5233-46f5-abca-1793b89e2809 |
 | BER.5.5 | Blockieren von Passwort Recycling | Berechtigung für Nutzende SOLLTE die Wiederverwendung von Passwörtern blockieren. | d7c76736-0c1d-4693-92d5-894a8b740204 |
+| BER.5.6 | Trivialpasswörter | Berechtigung für Nutzende SOLLTE die Verwendung von Trivialpassworten blockieren. | f0722999-f8c4-4c75-810b-94d7563dd698 |
 | BER.6.2 | Passwortmanager | Berechtigung für Nutzende SOLLTE einen Passwortmanager installieren. | c1cfa733-340c-497d-a3b6-8480d78e1278 |
 | BER.6.4 | Hinweise bei Anmeldefehlern | Berechtigung für Anwendungen SOLLTE Hinweise darauf, ob ein Zugangskonto existiert bei erfolglosen Anmeldeversuchen deaktivieren. | dd5fcc0c-d602-4d15-839c-5adb4fef150e |
 | DET.3.1.2 | Datenverarbeitungen | Detektion für Daten KANN die Verarbeitung von Daten protokollieren. | ca3be46d-c9ce-45b0-8da9-e4f83f123e6d |
@@ -609,6 +610,8 @@
 | DET.4.16 | Anwendungsbasiertes Kapazitätsmanagement | Detektion für Anwendungen KANN die Ressourcenauslastung systemübergreifend anhand von {{ insert: param, det.4.16-prm1 }} überwachen. | 93561982-927d-461c-a0eb-c9aec0b1159d |
 | DET.4.17 | Öffentliche Blocklisten | Detektion für E-Mail KANN öffentliche Blocklisten auf Einträge für eigene E-Mail-Server {{ insert: param, det.4.17-prm1 }} überprüfen. | e180774d-4880-4ef4-bc08-5c06e034dbc9 |
 | DET.4.18 | Unautorisierte Sendeanlagen | Detektion für Räume KANN diesen nach unautorisierten Sendeanlagen durch {{ insert: param, det.4.18-prm1 }} überwachen. | d85d0d64-bc5c-4a11-91d8-7c567abd5b21 |
+| DET.5.4 | Regelmäßige Penetrationstests | Detektion für IT-Systeme KANN die tatsächliche Abwehrfähigkeit nach {{ insert: param, det.5.4-prm1 }} {{ insert: param, det.5.4-prm2 }} überprüfen. | 622f98fa-a211-4c1e-b655-5e9dd6c0d507 |
+| DET.5.5 | Red Teaming | Detektion für IT-Systeme KANN die tatsächliche Abwehrfähigkeit {{ insert: param, det.5.5-prm1 }} durch unabhängig agierende Sicherheitsexperten überpr | ea34243d-adc3-4208-ab4e-25247aa8c009 |
 | DET.5.10.3 | Schrittweiser Rollout | Detektion für IT-Systeme KANN die Installation von Patches stufenweise ausführen. | 87ed8671-91f1-4892-b765-4400b25bc665 |
 | DET.5.10.4 | Automatisierte Überwachung von Systemupdates | Detektion für IT-Systeme SOLLTE den Patchstatus durch {{ insert: param, det.5.10.4-prm1 }} überwachen. | d652bc78-8f87-42ef-a52a-7bdd9a43212f |
 | DET.5.10.5 | Automatisierte Überwachung von Anwendungsupdates | Detektion für Anwendungen KANN den Patchstatus durch {{ insert: param, det.5.10.5-prm1 }} überwachen. | 1aec3d83-b204-4999-88f5-abf1e140a925 |
