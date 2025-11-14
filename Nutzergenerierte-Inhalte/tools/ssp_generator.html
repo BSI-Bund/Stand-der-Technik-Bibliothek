@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL SSP Generator</title>
+    <!-- Lädt Tailwind CSS zum Stylen -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Verwendet ein sauberes, modernes Font-Pairing */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Einfache Lade-Spinner-Animation */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Container für Checkbox-Listen */
+        .list-container {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+        /* Stile für die hinzugefügten Komponenten-Listen-Elemente */
+        .added-component-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            background-color: #f3f4f6; /* gray-100 */
+            border-radius: 0.375rem; /* rounded-md */
+            margin-top: 6px;
+        }
+        .remove-component-btn {
+            background-color: #ef4444; /* red-500 */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 20px; /* 'X' zentrieren */
+            text-align: center;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.2s;
+        }
+        .remove-component-btn:hover {
+            background-color: #dc2626; /* red-600 */
+        }
+    </style>
+    <!-- Lädt Inter Font von Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen p-4 md:p-8">
+
+    <div class="container mx-auto max-w-3xl bg-white rounded-lg shadow-xl p-6 md:p-10 space-y-8">
+        
+        <!-- Header -->
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">OSCAL SSP Generator</h1>
+            <p class="text-gray-600 mt-2">Hallo Christoph! Erstelle hier ein einfaches OSCAL System Security Plan (SSP) JSON, indem du Daten eingibst und Ressourcen auswählst.</p>
+        </div>
+
+        <!-- Lade- und Fehlerstatus -->
+        <div id="loading-container" class="flex flex-col items-center justify-center p-6 bg-gray-50 rounded-lg hidden">
+            <div class="loader"></div>
+            <p class="text-gray-600 mt-3">Lade Profile & Komponenten von GitHub...</p>
+        </div>
+        
+        <div id="error-message" class="hidden p-4 bg-red-100 text-red-700 rounded-lg"></div>
+
+        <!-- Hauptformular -->
+        <div id="form-container" class="space-y-6">
+            
+            <!-- 1. Systeminformationen -->
+            <fieldset class="space-y-4 border border-gray-300 p-4 rounded-lg">
+                <legend class="text-lg font-semibold text-gray-700 px-2">1. Systeminformationen (Erforderlich)</legend>
+                
+                <div>
+                    <label for="system-name" class="block text-sm font-medium text-gray-700 mb-1">Systemname</label>
+                    <input type="text" id="system-name" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Mein Tolles System">
+                </div>
+                
+                <div>
+                    <label for="system-description" class="block text-sm font-medium text-gray-700 mb-1">Systembeschreibung</label>
+                    <textarea id="system-description" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="Eine kurze Beschreibung, was dieses System tut."></textarea>
+                </div>
+
+                <div>
+                    <label for="ssp-version" class="block text-sm font-medium text-gray-700 mb-1">SSP Version</label>
+                    <input type="text" id="ssp-version" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" value="1.0.0">
+                </div>
+            </fieldset>
+
+            <!-- 2. Profile auswählen -->
+            <fieldset id="profile-fieldset" class="space-y-2 border border-gray-300 p-4 rounded-lg">
+                <legend class="text-lg font-semibold text-gray-700 px-2">2. Profile auswählen (Min. 1)</legend>
+                <p class="text-sm text-gray-500 pb-2">Wähle die Profile aus, die importiert werden sollen. Das erste ausgewählte Profil wird als primäres `import-profile` verwendet.</p>
+                <div id="profile-list" class="list-container space-y-2">
+                    <!-- Profil-Checkboxen werden hier per JS eingefügt -->
+                    <p class="text-gray-400">Lade Profile...</p>
+                </div>
+            </fieldset>
+
+            <!-- 3. Komponenten hinzufügen -->
+            <fieldset id="component-fieldset" class="space-y-4 border border-gray-300 p-4 rounded-lg hidden">
+                <legend class="text-lg font-semibold text-gray-700 px-2">3. Komponenten hinzufügen (Min. 1)</legend>
+                <p class="text-sm text-gray-500 pb-2">Wähle Komponenten aus der Liste aus und füge sie hinzu. Jede Komponente kann mehrfach hinzugefügt werden. Laut Schema ist min. 1 Komponente erforderlich.</p>
+                
+                <div class="flex items-center space-x-2">
+                    <select id="component-dropdown" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        <!-- Komponenten-Optionen werden hier per JS eingefügt -->
+                        <option value="">Lade Komponenten...</option>
+                    </select>
+                    <button type="button" id="add-component-btn" class="px-4 py-2 bg-blue-600 text-white rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap">
+                        Hinzufügen
+                    </button>
+                </div>
+                
+                <div id="added-component-list-container" class="border-t border-gray-200 pt-4 mt-4">
+                    <h4 class="text-sm font-medium text-gray-700 mb-2">Hinzugefügte Komponenten:</h4>
+                    <ul id="added-component-list" class="space-y-1">
+                        <!-- Hinzugefügte Komponenten (<li>) werden hier per JS eingefügt -->
+                        <li id="no-components-placeholder" class="text-gray-500 text-sm">Noch keine Komponenten hinzugefügt.</li>
+                    </ul>
+                </div>
+            </fieldset>
+
+            <!-- 4. Aktion -->
+            <div>
+                <button id="generate-btn" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                    OSCAL SSP (JSON) generieren & herunterladen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URLs zur GitHub API für die Verzeichnisinhalte
+        const PROFILE_API_URL = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Zielobjekt-Bausteine/profiles';
+        const COMPONENT_API_URL = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Zielobjekt-Bausteine/components/DE';
+
+        // DOM-Elemente
+        let profileListEl, componentDropdownEl, addComponentBtn, addedComponentListEl, noComponentsPlaceholder, generateBtn, loadingEl, errorEl, formEl;
+        let systemNameEl, systemDescriptionEl, sspVersionEl;
+        let componentFieldsetEl; // Hinzugefügt
+
+        /**
+         * Initialisiert die Anwendung nach dem Laden des DOM.
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Element-Referenzen holen
+            profileListEl = document.getElementById('profile-list');
+            componentFieldsetEl = document.getElementById('component-fieldset'); // Hinzugefügt
+            componentDropdownEl = document.getElementById('component-dropdown');
+            addComponentBtn = document.getElementById('add-component-btn');
+            addedComponentListEl = document.getElementById('added-component-list');
+            noComponentsPlaceholder = document.getElementById('no-components-placeholder');
+            generateBtn = document.getElementById('generate-btn');
+            loadingEl = document.getElementById('loading-container');
+            errorEl = document.getElementById('error-message');
+            formEl = document.getElementById('form-container');
+            
+            systemNameEl = document.getElementById('system-name');
+            systemDescriptionEl = document.getElementById('system-description');
+            sspVersionEl = document.getElementById('ssp-version');
+
+            // Event Listener
+            generateBtn.addEventListener('click', generateSSP);
+            profileListEl.addEventListener('change', handleProfileChange); // Hinzugefügt
+            addComponentBtn.addEventListener('click', addComponentToList); // Hinzugefügt
+            addedComponentListEl.addEventListener('click', handleAddedComponentListClick); // Hinzugefügt
+
+            // Startet das Laden der Daten
+            fetchGitHubData();
+        });
+
+        /**
+         * Zeigt eine Fehlermeldung im UI an.
+         * @param {string} message - Die anzuzeigende Fehlermeldung.
+         */
+        function showError(message) {
+            errorEl.textContent = message;
+            errorEl.classList.remove('hidden');
+        }
+
+        /**
+         * Löscht die aktuelle Fehlermeldung.
+         */
+        function clearError() {
+            errorEl.textContent = '';
+            errorEl.classList.add('hidden');
+        }
+
+        /**
+         * Lädt die Profil- und Komponentendaten von GitHub.
+         */
+        async function fetchGitHubData() {
+            loadingEl.classList.remove('hidden');
+            formEl.classList.add('hidden');
+            clearError();
+
+            try {
+                // Paralleles Fetchen beider Endpunkte
+                const [profileResponse, componentResponse] = await Promise.all([
+                    fetch(PROFILE_API_URL),
+                    fetch(COMPONENT_API_URL)
+                ]);
+
+                if (!profileResponse.ok || !componentResponse.ok) {
+                    throw new Error('Netzwerkantwort war nicht OK.');
+                }
+
+                const profiles = await profileResponse.json();
+                const components = await componentResponse.json();
+
+                // Rendert die Checkbox-Listen
+                renderCheckboxes(profiles, profileListEl, 'profile');
+                // Rendert die Dropdown-Optionen
+                renderComponentDropdown(components, componentDropdownEl);
+
+            } catch (error) {
+                console.error('Fehler beim Laden der GitHub-Daten:', error);
+                showError(`Fehler beim Laden der Daten: ${error.message}. Bitte lade die Seite neu.`);
+            } finally {
+                // Versteckt den Lade-Spinner und zeigt das Formular an
+                loadingEl.classList.add('hidden');
+                formEl.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Rendert eine Liste von Checkboxen in einem Container-Element.
+         * @param {Array} items - Array von Objekten aus der GitHub API.
+         * @param {HTMLElement} container - Das DOM-Element, in das die Checkboxen eingefügt werden.
+         * @param {string} name - Der 'name'-Attributwert für die Checkboxen.
+         */
+        function renderCheckboxes(items, container, name) {
+            container.innerHTML = ''; // Leert den Container
+            
+            // Filtert nur JSON-Dateien
+            const files = items.filter(item => item.type === 'file' && item.name.endsWith('.json'));
+
+            if (files.length === 0) {
+                container.innerHTML = `<p class="text-gray-500">Keine .json-Dateien in diesem Verzeichnis gefunden.</p>`;
+                return;
+            }
+
+            files.forEach((file, index) => {
+                const id = `cb-${name}-${index}`;
+                
+                const div = document.createElement('div');
+                div.className = 'flex items-center';
+
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.id = id;
+                input.name = name;
+                input.value = file.download_url; // Speichert die download_url als Wert
+                input.className = 'h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500';
+
+                const label = document.createElement('label');
+                label.htmlFor = id;
+                label.textContent = file.name;
+                label.className = 'ml-2 block text-sm text-gray-900';
+
+                div.appendChild(input);
+                div.appendChild(label);
+                container.appendChild(div);
+            });
+        }
+
+        /**
+         * Rendert die Komponenten-Optionen in einem Dropdown-Menü.
+         * @param {Array} items - Array von Objekten aus der GitHub API.
+         * @param {HTMLElement} container - Das <select>-Element.
+         */
+        function renderComponentDropdown(items, container) {
+            container.innerHTML = ''; // Leert den Container
+            
+            const files = items.filter(item => item.type === 'file' && item.name.endsWith('.json'));
+
+            if (files.length === 0) {
+                container.innerHTML = `<option value="" disabled>Keine Komponenten gefunden.</option>`;
+                return;
+            }
+
+            // Fügt eine Standard-Platzhalter-Option hinzu
+            const placeholder = document.createElement('option');
+            placeholder.value = "";
+            placeholder.textContent = "Komponente auswählen...";
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            container.appendChild(placeholder);
+
+            files.forEach((file) => {
+                const option = document.createElement('option');
+                option.value = file.download_url; // Speichert die download_url als Wert
+                option.textContent = file.name; // Zeigt den Dateinamen an
+                container.appendChild(option);
+            });
+        }
+
+        /**
+         * Zeigt die Komponenten-Sektion an/blendet sie aus, basierend auf der Profilauswahl.
+         */
+        function handleProfileChange() {
+            const selectedProfiles = document.querySelectorAll('input[name="profile"]:checked').length;
+            if (selectedProfiles > 0) {
+                componentFieldsetEl.classList.remove('hidden');
+            } else {
+                componentFieldsetEl.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Fügt die ausgewählte Komponente aus dem Dropdown zur Liste "Hinzugefügte Komponenten" hinzu.
+         */
+        function addComponentToList() {
+            const selectedOption = componentDropdownEl.options[componentDropdownEl.selectedIndex];
+            if (!selectedOption || !selectedOption.value) {
+                // Verhindert das Hinzufügen der Platzhalter-Option
+                return; 
+            }
+
+            const downloadUrl = selectedOption.value;
+            const fileName = selectedOption.textContent;
+
+            // Platzhalter entfernen, falls vorhanden
+            if (noComponentsPlaceholder) {
+                noComponentsPlaceholder.remove();
+                noComponentsPlaceholder = null; // Sicherstellen, dass er nur einmal entfernt wird
+            }
+
+            const li = document.createElement('li');
+            li.className = 'added-component-item';
+            // Speichert die Daten im Element für die spätere JSON-Generierung
+            li.dataset.url = downloadUrl;
+            li.dataset.filename = fileName;
+            
+            li.innerHTML = `
+                <span class="truncate" title="${fileName}">${fileName}</span>
+                <button type="button" class="remove-component-btn" title="Entfernen">X</button>
+            `;
+            
+            addedComponentListEl.appendChild(li);
+
+            // Setzt das Dropdown zurück
+            componentDropdownEl.selectedIndex = 0;
+        }
+
+        /**
+         * Verarbeitet Klicks auf der Liste der hinzugefügten Komponenten (zum Entfernen).
+         * @param {Event} event
+         */
+        function handleAddedComponentListClick(event) {
+            if (event.target.classList.contains('remove-component-btn')) {
+                event.target.closest('li').remove();
+
+                // Platzhalter wieder anzeigen, wenn die Liste leer ist
+                if (addedComponentListEl.children.length === 0 && !noComponentsPlaceholder) {
+                    noComponentsPlaceholder = document.createElement('li');
+                    noComponentsPlaceholder.id = 'no-components-placeholder';
+                    noComponentsPlaceholder.className = 'text-gray-500 text-sm';
+                    noComponentsPlaceholder.textContent = 'Noch keine Komponenten hinzugefügt.';
+                    addedComponentListEl.appendChild(noComponentsPlaceholder);
+                }
+            }
+        }
+
+
+        /**
+         * Generiert das SSP JSON und löst den Download aus.
+         */
+        function generateSSP() {
+            clearError();
+
+            // --- 1. Eingaben validieren ---
+            const systemName = systemNameEl.value.trim();
+            const systemDescription = systemDescriptionEl.value.trim();
+            const sspVersion = sspVersionEl.value.trim() || '1.0.0';
+            
+            const selectedProfileCheckboxes = document.querySelectorAll('input[name="profile"]:checked');
+            const addedComponentItems = document.querySelectorAll('#added-component-list li:not(#no-components-placeholder)');
+
+            if (!systemName) {
+                showError('Bitte geben Sie einen Systemnamen ein.');
+                systemNameEl.focus();
+                return;
+            }
+
+            if (selectedProfileCheckboxes.length === 0) {
+                showError('Bitte wählen Sie mindestens ein Profil aus (erforderlich für `import-profile`).');
+                return;
+            }
+
+            // Validierung für Schema-Anforderung (minItems: 1)
+            if (addedComponentItems.length === 0) {
+                showError('Bitte fügen Sie mindestens eine Komponente hinzu. (Laut OSCAL-Schema ist `system-implementation.components` ein Pflichtfeld mit min. 1 Eintrag.)');
+                return;
+            }
+
+            // --- 2. Daten für SSP sammeln ---
+            const timestamp = new Date().toISOString();
+            const sspUuid = crypto.randomUUID();
+            const partyUuid = crypto.randomUUID(); // Hinzugefügt für Schema-Fix
+
+            // Profile verarbeiten
+            const selectedProfileHrefs = Array.from(selectedProfileCheckboxes).map(cb => cb.value);
+            const mainProfileHref = selectedProfileHrefs[0];
+            // Fügt zusätzliche Profile als Links in die Metadaten ein
+            const otherProfileLinks = selectedProfileHrefs.slice(1).map(href => ({
+                "href": href,
+                "rel": "profile"
+            }));
+
+            // Komponenten verarbeiten (basierend auf der <ul> Liste)
+            const sspComponents = Array.from(addedComponentItems).map(item => {
+                const downloadUrl = item.dataset.url;
+                const fileName = item.dataset.filename;
+                return {
+                    "uuid": crypto.randomUUID(),
+                    "type": "service", // Setzt einen Standardtyp
+                    "title": fileName.replace('.json', ''),
+                    "description": `Komponentendefinition geladen von ${fileName}`,
+                    "status": { "state": "operational" },
+                    "links": [
+                        { "href": downloadUrl, "rel": "component-definition" }
+                    ]
+                };
+            });
+            
+            // --- 3. Minimales SSP-Objekt erstellen ---
+            // Basiert auf der Struktur des OSCAL SSP Schemas
+            const ssp = {
+                "system-security-plan": {
+                    "uuid": sspUuid,
+                    "metadata": {
+                        "title": `System Security Plan (SSP) für ${systemName}`,
+                        "last-modified": timestamp,
+                        "version": sspVersion,
+                        "oscal-version": "1.1.3", // Gemäß dem von dir bereitgestellten Schema
+                        
+                        // FIX: "links": [] ist ungültig (minItems: 1).
+                        // Füge "links" nur hinzu, wenn otherProfileLinks (Profil 2+) Einträge hat.
+                        ...(otherProfileLinks.length > 0 && { "links": otherProfileLinks }),
+
+                        "roles": [
+                            { "id": "creator", "title": "Document Creator" }
+                        ],
+                        "parties": [
+                            {
+                                "uuid": partyUuid, // FIX B1
+                                "type": "organization",
+                                "name": "Platzhalter-Organisation"
+                            }
+                        ],
+                        "responsible-parties": [
+                            {
+                                "role-id": "creator",
+                                "party-uuids": [ partyUuid ] // FIX B1
+                            }
+                        ]
+                    },
+                    "import-profile": {
+                        "href": mainProfileHref
+                    },
+                    "system-characteristics": {
+                        "system-ids": [
+                            {
+                                "id": crypto.randomUUID(),
+                                "identifier-type": "http://ietf.org/rfc/rfc4122"
+                            }
+                        ],
+                        "system-name": systemName,
+                        "description": systemDescription || "Keine Beschreibung angegeben.",
+                        "system-information": {
+                            // Erforderliches Feld
+                            "information-types": [
+                                {
+                                    "uuid": crypto.randomUUID(),
+                                    "title": "Standard-Informationstyp",
+                                    "description": "Platzhalter für einen Informationstyp, der vom System verarbeitet wird."
+                                }
+                            ]
+                        },
+                        "security-impact-level": {
+                            // Platzhalter für erforderliches Feld
+                            "security-objective-confidentiality": "low",
+                            "security-objective-integrity": "low",
+                            "security-objective-availability": "low"
+                        },
+                        "status": {
+                            "state": "operational" // Erforderliches Feld
+                        },
+                        "authorization-boundary": {
+                            "description": "Platzhalter für die Beschreibung der Autorisierungsgrenze." // Erforderliches Feld
+                        }
+                    },
+                    "system-implementation": {
+                        // 'users' und 'components' sind erforderlich
+                        "users": [
+                            {
+                                "uuid": crypto.randomUUID(),
+                                "title": "Standardbenutzer",
+                                "description": "Ein generischer Benutzer des Systems."
+                            }
+                        ],
+                        "components": sspComponents // Unsere ausgewählten Komponenten
+                    },
+                    "control-implementation": {
+                        // 'description' und 'implemented-requirements' sind erforderlich
+                        "description": `Kontrollimplementierung für ${systemName}. Automatisch generiert.`,
+                        "implemented-requirements": [
+                            // Fügt einen Platzhalter hinzu, da minItems 1 ist
+                            {
+                                "uuid": crypto.randomUUID(),
+                                "control-id": "ac-1", // Beispiel-Kontroll-ID
+                                // FIX B2: 'description' ist hier ungültig, 'remarks' ist korrekt.
+                                "remarks": "Platzhalter für die Implementierungsaussage. Dieses SSP muss manuell vervollständigt werden."
+                            }
+                        ]
+                    }
+                }
+            };
+
+            // --- 4. JSON-Download auslösen ---
+            const jsonString = JSON.stringify(ssp, null, 2);
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            // Erstellt einen sauberen Dateinamen
+            const safeFilename = systemName.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'ssp-generated';
+            a.download = `${safeFilename}-ssp.json`;
+            
+            document.body.appendChild(a);
+            a.click();
+            
+            // Aufräumen
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+    </script>
+</body>
+</html>
