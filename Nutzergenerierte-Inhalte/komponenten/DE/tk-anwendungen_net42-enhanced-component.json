@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "2601b4a8-0e5a-4fd4-9fbb-115916597d54",
+    "uuid": "05a97b27-9ce7-4e2c-93bd-27f7ae8b7001",
     "metadata": {
       "title": "NET.4.2 TK-Anwendungen - Benutzerdefiniert",
-      "last-modified": "2025-11-14T22:09:00.714424+00:00",
+      "last-modified": "2025-11-15T16:31:55.477379+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "2027cdcd-bf71-4a54-adb9-f8190aa18077",
+        "uuid": "da15ca1b-6397-4b47-b3a1-9de49bde86f3",
         "type": "interconnection",
         "title": "NET.4.2 TK-Anwendungen",
         "description": "This component represents the implementation of all controls for Baustein NET.4.2.",
@@ -45,12 +45,127 @@
         ],
         "control-implementations": [
           {
-            "uuid": "86e5bb1c-fb8d-4a18-8020-b58563619f79",
+            "uuid": "50d2d984-925a-4734-ac03-d1e268f374f6",
             "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/tk-anwendungen_profile.json",
             "description": "Implementation for all controls in Baustein NET.4.2",
             "implemented-requirements": [
               {
-                "uuid": "5a3dd4df-0331-4d78-b3a3-5e4103592a0d",
+                "uuid": "edfd20fb-0d77-4f69-84ab-91295ab85e3e",
+                "control-id": "ARCH.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a16-m2",
+                    "uuid": "8392200e-0658-4ffc-8abd-32e566fb0aea",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein dediziertes VLAN wird für den VoIP-Verkehr eingerichtet. Das primäre Ziel ist die Sicherstellung der Dienstgüte (Quality of Service - QoS) durch Priorisierung des Voice-Traffics. Die Sicherheitsaspekte der Trennung sind sekundär und es gibt kaum oder keine restriktiven Regeln für die Kommunikation zwischen den VLANs."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf den Netzwerk-Switches wird ein neues VLAN (z.B. VLAN 10) für Voice erstellt. Die Switch-Ports für Telefone werden diesem VLAN zugewiesen. QoS-Einstellungen (z.B. CoS, DSCP) werden konfiguriert, um den Voice-Traffic zu priorisieren. Zwischen dem Voice-VLAN und dem Daten-VLAN bestehen oft 'allow any'-Regeln."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Switch-Konfiguration, um die Existenz des Voice-VLANs zu bestätigen. Die Konfiguration des Routers oder Layer-3-Switches wird auf die Regeln für das Inter-VLAN-Routing geprüft. Ein Test-PC im Daten-VLAN versucht, eine Verbindung zu einem Telefon im Voice-VLAN aufzubauen, um die fehlende Restriktion zu zeigen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a16-m3",
+                    "uuid": "e5df5899-db94-43a4-a20b-8fe8aa0d1ade",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das VoIP-Netz SOLLTE in geeigneter Weise vom allgemeinen Datennetz getrennt werden. Dies wird typischerweise durch den Einsatz eines separaten logischen Netzwerks (VLAN) für VoIP-Komponenten erreicht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Richtlinie zur Netzwerksegmentierung etabliert, die ein separates VLAN für VoIP vorschreibt. Die Switches werden entsprechend konfiguriert, um VoIP-Endgeräte in dieses VLAN zu platzieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Netzwerkrichtlinien und die Switch-Konfigurationen, um sicherzustellen, dass ein separates VLAN für VoIP existiert und verwendet wird. Es wird stichprobenartig geprüft, ob die VoIP-Endgeräte dem korrekten VLAN zugeordnet sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a16-m4",
+                    "uuid": "67868721-3e0d-49f7-bf5e-5d65cc3c422e",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das VoIP-VLAN wird durch strikte Access Control Lists (ACLs) am Router oder Layer-3-Switch abgesichert. Diese erlauben nur die absolut notwendige Kommunikation (z.B. Signalisierung zum VoIP-Server, DHCP, Provisioning) und blockieren standardmäßig jeglichen anderen Verkehr, insbesondere die direkte Kommunikation vom Daten-VLAN in das Voice-VLAN. Es SOLLTE eine Regelung für den Umgang mit Geräten wie PCs mit Softphones geben, die auf beide Netze zugreifen müssen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Am L3-Switch werden ACLs konfiguriert, die den Verkehr in und aus dem Voice-VLAN filtern. Beispielsweise wird nur Verkehr auf Port 5061 zum VoIP-Server und auf Port 67/68 zum DHCP-Server erlaubt. Für Softphone-Clients werden entweder spezifische Firewall-Regeln auf dem Client-PC oder eine VPN-Lösung für den Zugriff auf das Voice-Netz verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die ACLs, die auf das Voice-VLAN angewendet werden, auf ihre Restriktivität. Es werden Penetrationstests durchgeführt, um zu versuchen, von einem Client im Datennetz auf Dienste im Voice-Netz zuzugreifen. Die Lösung für Softphone-Clients wird auf ihre Sicherheit hin bewertet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a16-m5",
+                    "uuid": "2ffa24dc-4729-48bd-ae2c-2b29b1071a3a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Trennung wird durch eine physisch separate Netzwerkinfrastruktur realisiert oder, falls logisch, durch den Einsatz von 802.1X port-basierter Netzwerkzugangskontrolle (PNAC) abgesichert, um zu verhindern, dass nicht autorisierte Geräte eine Verbindung zum Voice-VLAN herstellen. VoIP-Endgeräte in einem VoIP-Netz SOLLTEN NUR die vorgesehenen VoIP-Verbindungen zu anderen IT-Systemen aufbauen können; jeglicher anderer ausgehender Verkehr wird blockiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein RADIUS-Server wird für die 802.1X-Authentifizierung eingesetzt. Nur Geräte mit einem gültigen Zertifikat oder bekannten MAC-Adresse (MAB als Fallback) erhalten Zugang zum Voice-VLAN. Ausgehender Verkehr vom Voice-VLAN wird durch eine Firewall so gefiltert, dass die Telefone nur mit dem VoIP-Server, Provisioning-Server und NTP-Server kommunizieren können, aber nicht frei im Internet surfen können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration des RADIUS-Servers und der Switches für 802.1X. Es wird versucht, ein nicht autorisiertes Gerät (z.B. einen Laptop) an einen für VoIP vorgesehenen Port anzuschließen, um zu prüfen, ob der Zugriff verweigert oder das Gerät in ein Quarantäne-VLAN verschoben wird. Ein Test von einem VoIP-Telefon aus, z.B. ein Ping auf eine externe Internet-Adresse, muss fehlschlagen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "faade17d-3732-40d1-96d6-bb22b775f0d2",
                 "control-id": "ASST.7.1",
                 "description": "",
                 "props": [
@@ -88,7 +203,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a12-m1",
-                    "uuid": "fe0cf495-3dcd-4167-98b4-1f95ed9ca30f",
+                    "uuid": "ce1b1f9d-7ef4-40ae-83f5-68d1829534f8",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -107,7 +222,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m2",
-                    "uuid": "5678e9cc-2107-4980-972a-f4f2f8e6e74d",
+                    "uuid": "025e5027-e8f8-4fc9-98e2-63712f514fc8",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -126,7 +241,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m3",
-                    "uuid": "315c0f5e-086c-4c80-af9d-d6db24cb9930",
+                    "uuid": "ab5c8a04-5742-4f19-ace6-420f97d4ec7e",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -145,7 +260,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m4",
-                    "uuid": "04177164-0698-44de-b319-78d0701c4a7f",
+                    "uuid": "eea76c67-c528-473f-a0a8-49fb207335b3",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -164,7 +279,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m5",
-                    "uuid": "527ebdc3-a204-4b04-92ec-7c36ce31df39",
+                    "uuid": "38fead05-12ef-42d7-bc06-1231c8f77e03",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -184,7 +299,7 @@
                 ]
               },
               {
-                "uuid": "a8206c56-166d-4228-8999-c988002b2384",
+                "uuid": "ea2a5da6-cd49-4bca-9c8a-4841a2819615",
                 "control-id": "BES.2.1.3",
                 "description": "",
                 "props": [
@@ -222,7 +337,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a9-m1",
-                    "uuid": "49994bd3-7adc-4cad-8a22-a74f4cd3fa47",
+                    "uuid": "d37e5382-67e6-4b48-8fd4-4e7c9a08941e",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -241,7 +356,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m2",
-                    "uuid": "cdcb04ca-2ba4-4638-9ddb-748350b81dcd",
+                    "uuid": "86215363-b9b7-4fa7-ae44-869f2e054aab",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -260,7 +375,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m3",
-                    "uuid": "75c3fe9b-65ab-4be8-890f-ca1f80378974",
+                    "uuid": "511a37c2-59c0-4e36-8fd1-11207f893916",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -279,7 +394,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m4",
-                    "uuid": "33b77c52-aa93-4742-80ca-86c9269bce38",
+                    "uuid": "2a51f2fe-3bd7-4f55-909f-9bc2a2b53c4a",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -298,7 +413,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m5",
-                    "uuid": "7b1ccfa3-c26e-4bf9-9557-e7895ab41bb2",
+                    "uuid": "6001b932-5095-43be-ae08-8af4c6e18b1b",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -318,7 +433,7 @@
                 ]
               },
               {
-                "uuid": "51ad7c94-0df6-46d8-b7e0-c0a1a4f57431",
+                "uuid": "c170d860-0391-495f-aa5f-ca6f7af87b86",
                 "control-id": "DEV.2.2",
                 "description": "",
                 "props": [
@@ -356,7 +471,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a1-m1",
-                    "uuid": "b101a5d1-74c7-4e38-a986-e07b930a4354",
+                    "uuid": "3ce6cbac-eaf4-4b17-a5ac-7b5fd221495b",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -375,7 +490,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m2",
-                    "uuid": "fc1ab8b5-4e6b-4ebb-9beb-8da68de23fe8",
+                    "uuid": "49fe7b9d-b240-4aae-8bfc-f795ebf44f4a",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -394,7 +509,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m3",
-                    "uuid": "9524d48f-6698-42b8-a76b-d6fe10fbf9f4",
+                    "uuid": "0d718904-b711-4ffa-8f57-3f768f039913",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -413,7 +528,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m4",
-                    "uuid": "8bcc2166-5a98-4812-965d-0e1645619e34",
+                    "uuid": "8030e3a2-fae4-41ba-86a6-dc82927a2aae",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -432,7 +547,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m5",
-                    "uuid": "bf03e013-a38e-43c6-a91a-53bcde86f4cf",
+                    "uuid": "6d782e5b-4e71-4edb-a38f-526c9e9c4299",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -452,7 +567,7 @@
                 ]
               },
               {
-                "uuid": "e9b5b048-6aa0-418a-a111-bb94c44b5449",
+                "uuid": "3c1caa85-f3a3-4afa-8e34-b214fd309dbd",
                 "control-id": "KONF.10.1",
                 "description": "",
                 "props": [
@@ -490,7 +605,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a5-m1",
-                    "uuid": "7d279a0a-7584-4cfc-9df6-17658ff21940",
+                    "uuid": "81cfcd69-f47d-41a7-beb9-fb2892e241d6",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -509,7 +624,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m2",
-                    "uuid": "1e6fb281-9abf-4afd-97f6-61411483be4c",
+                    "uuid": "ea4704cf-24d3-4169-88c2-6e1b79c48b72",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -528,7 +643,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m3",
-                    "uuid": "da058269-df4c-47e9-ad5b-1fc95c3713f0",
+                    "uuid": "95822e6d-1818-47a3-8903-7ca53057b98e",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -547,7 +662,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m4",
-                    "uuid": "7e538ffe-c879-4b71-aa20-170f436f9bea",
+                    "uuid": "45cc22ff-faec-4172-aa69-2bdc72ad7e0e",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -566,7 +681,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m5",
-                    "uuid": "c9792cc6-6d62-4304-8a2b-65ce9c158123",
+                    "uuid": "26c78f4d-4e0d-4dea-902f-64115a79dcb0",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -586,7 +701,141 @@
                 ]
               },
               {
-                "uuid": "3073fcfc-7e80-4760-be58-c2853fab0f1f",
+                "uuid": "668c2c70-71ad-4897-8d86-eff99ffa065b",
+                "control-id": "KONF.10.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "net.4.2.a8-m1",
+                    "uuid": "e5437c98-33c8-41ea-9607-811de6d35db0",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verschlüsselung ist nur dort aktiv, wo sie eine Standardeinstellung der verwendeten Clients oder der Middleware ist. Es gibt keine klare Richtlinie oder einheitliche Konfiguration zur Verschlüsselung von VoIP-Verkehr. Oft wird bei Kompatibilitätsproblemen auf unverschlüsselte Kommunikation zurückgefallen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Verschlüsselungsoptionen in den Endgeräten und der Telefonanlage werden in der Standardeinstellung belassen. Wenn ein Endgerät keine Verschlüsselung unterstützt, findet die Kommunikation unverschlüsselt statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer zeichnet mit einem Netzwerk-Sniffer (z.B. Wireshark) den Verkehr einer Stichprobe von Anrufen auf und prüft, ob die Signalisierung (SIP) und der Medienstrom (RTP) unverschlüsselt übertragen werden. In Wireshark kann nach `sip` und `rtp` gefiltert werden, um dies zu überprüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m2",
+                    "uuid": "d4ba0221-5f6e-4897-9ca3-da21edb7f221",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert eine Richtlinie, die vorschreibt, dass jeglicher VoIP-Verkehr, der die vertrauenswürdige Netzwerkgrenze verlässt, verschlüsselt werden muss. Dies wird durch einen Session Border Controller (SBC) oder ein VPN-Gateway umgesetzt. Die interne Kommunikation im LAN erfolgt jedoch weiterhin unverschlüsselt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der SBC am Netzwerkperimeter wird so konfiguriert, dass er für alle externen Verbindungen TLS für SIP und SRTP für die Mediendaten erzwingt. Interne Clients kommunizieren unverschlüsselt mit der Telefonanlage."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Konfiguration des SBC oder VPN-Gateways auf die Erzwingung von Verschlüsselung für externe Verbindungen. Zusätzlich wird der interne Netzwerkverkehr mitgeschnitten, um zu bestätigen, dass dieser unverschlüsselt ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m3",
+                    "uuid": "feef067a-e90a-4bd1-a051-521c61eb8ec7",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE entschieden und dokumentiert werden, ob und welche Sprach- und Signalisierungsinformationen verschlüsselt werden sollen. Generell SOLLTEN alle VoIP-Datenpakete, die das gesicherte LAN verlassen, durch geeignete Sicherheitsmechanismen (z.B. TLS für Signalisierung und SRTP für Mediendaten) geschützt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine formale Entscheidung über den Umfang der Verschlüsselung getroffen und dokumentiert. Als Mindeststandard wird festgelegt, dass die gesamte Kommunikation, die über unsichere Netze (wie das Internet) läuft, verschlüsselt wird. Dies wird technisch über einen SBC oder die Telefonanlage selbst konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert das Dokument an, das die Entscheidung über den Verschlüsselungsumfang festhält. Die Konfiguration der relevanten Systeme (SBC, PBX) wird geprüft, um sicherzustellen, dass die Verschlüsselung für externe Kommunikation wie definiert aktiv ist. Ein Netzwerk-Mitschnitt an der Netzwerkgrenze verifiziert dies."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m4",
+                    "uuid": "74ec2cd7-6763-44c3-b214-379784b41b1c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur Verschlüsselung des externen Verkehrs wird auch die interne VoIP-Kommunikation (sowohl Signalisierung via TLS als auch Mediendaten via SRTP) standardmäßig verschlüsselt, um auch vor internen Angreifern zu schützen. Die Benutzenden SOLLTEN über die Nutzung und die Grenzen der VoIP-Verschlüsselung (z.B. End-to-End vs. Transport) informiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Telefonanlage und alle Endgeräte werden so konfiguriert, dass sie standardmäßig Verschlüsselung für alle Anrufe anfordern und verwenden. Die Information der Benutzer erfolgt über das Intranet oder im Rahmen von Security-Awareness-Schulungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer schneidet den Verkehr im internen LAN mit und verifiziert, dass auch Anrufe zwischen zwei internen Teilnehmern verschlüsselt sind (SIP over TLS, SRTP). Es wird geprüft, ob es Informationsmaterial für Benutzer zur VoIP-Verschlüsselung gibt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "net.4.2.a8-m5",
+                    "uuid": "049dcff5-94bf-49ff-9c1b-290876777c58",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wo immer technisch möglich, wird eine Ende-zu-Ende-Verschlüsselung (E2EE) für VoIP-Gespräche durchgesetzt. Es werden ausschließlich starke, zentral verwaltete kryptografische Parameter verwendet. Das System ist so konfiguriert, dass unverschlüsselte Verbindungen strikt abgelehnt werden (Encrypt-or-Drop-Policy). Das Management der Zertifikate für TLS ist automatisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Protokolle wie ZRTP oder eine PKI-basierte Lösung für E2EE implementiert. Die Telefonanlage wird so konfiguriert, dass sie nur sichere Krypto-Suiten akzeptiert und Anrufe ablehnt, wenn keine sichere SRTP-Verbindung ausgehandelt werden kann. Ein ACME-Client oder ein internes Zertifikatsmanagementsystem wird für die automatische Ausstellung und Erneuerung von TLS-Zertifikaten verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Konfiguration der Telefonanlage und der Endgeräte auf die Erzwingung von E2EE und die Konfiguration der 'Encrypt-or-Drop'-Policy. Es wird geprüft, ob ein Anrufversuch mit einem Client, der nur unverschlüsseltes RTP unterstützt, fehlschlägt. Der Prozess zur automatisierten Zertifikatsverwaltung wird auditiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b1d2d83e-24f9-4d1c-856d-e72a3547eea8",
                 "control-id": "KONF.10.4",
                 "description": "",
                 "props": [
@@ -624,7 +873,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a3-m1",
-                    "uuid": "6b257838-619a-48bc-83e6-4a7b95efa4d5",
+                    "uuid": "5a807174-48d3-45ea-974a-b005ee5a0d20",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -643,7 +892,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m2",
-                    "uuid": "225eae8e-10b0-4374-8f9c-18120a0772b0",
+                    "uuid": "0a5794b3-7940-42cc-ae8f-caeb65cd5065",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -662,7 +911,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m3",
-                    "uuid": "40370cdd-b53d-4d40-a708-9a07598324ad",
+                    "uuid": "484d5bdb-bcb7-44a2-b40b-fad1119eaea8",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -681,7 +930,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m4",
-                    "uuid": "1947236d-5f0d-4433-b445-cbb5348f0abe",
+                    "uuid": "2f659eef-3163-4c09-93b2-790fa410868a",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -700,7 +949,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m5",
-                    "uuid": "ceec1b4e-0f05-40c2-a1fb-e904468b8056",
+                    "uuid": "fd358230-145e-40a0-a824-5742fe6746b7",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -720,7 +969,7 @@
                 ]
               },
               {
-                "uuid": "0895b4b9-4179-4ed2-bc6f-10bdada676d3",
+                "uuid": "b0a5c683-0033-43ce-acfc-0cceda382b43",
                 "control-id": "KONF.11.8.2.1",
                 "description": "",
                 "props": [
@@ -758,7 +1007,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a4-m1",
-                    "uuid": "d265b73b-7cfa-4bf7-96c3-15833c59aca0",
+                    "uuid": "d71d92b4-6beb-4ae4-85f9-10c7a932035c",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -777,7 +1026,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m2",
-                    "uuid": "c3b1a963-f1db-43d4-aa4c-954452cbe6cf",
+                    "uuid": "65d6b1d2-3ccc-4720-ae38-5090e51dbf05",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -796,7 +1045,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m3",
-                    "uuid": "dfa75caf-a6e9-47bd-a63b-009c239ac2c7",
+                    "uuid": "ed97af6f-b5d6-4b49-96bf-bc9ac12a4119",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -815,7 +1064,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m4",
-                    "uuid": "8bedc32a-ec98-4800-a743-74ca907a62cd",
+                    "uuid": "3e53c065-7c61-4090-b218-894d048256e6",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -834,7 +1083,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m5",
-                    "uuid": "45691d60-d516-4c63-ba2d-9122d315fc57",
+                    "uuid": "4157dd6e-1312-490d-bf45-d246ca10d749",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -854,142 +1103,8 @@
                 ]
               },
               {
-                "uuid": "d1e43bb6-4f09-4b7e-893e-3955c360ca5c",
+                "uuid": "43031418-c49e-4a48-965d-5a0728ae5a6e",
                 "control-id": "KONF.14.1",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "3",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "SYS",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "net.4.2.a8-m1",
-                    "uuid": "fa2421c5-af88-4b70-8483-8f6a084834cd",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Verschlüsselung ist nur dort aktiv, wo sie eine Standardeinstellung der verwendeten Clients oder der Middleware ist. Es gibt keine klare Richtlinie oder einheitliche Konfiguration zur Verschlüsselung von VoIP-Verkehr. Oft wird bei Kompatibilitätsproblemen auf unverschlüsselte Kommunikation zurückgefallen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Die Verschlüsselungsoptionen in den Endgeräten und der Telefonanlage werden in der Standardeinstellung belassen. Wenn ein Endgerät keine Verschlüsselung unterstützt, findet die Kommunikation unverschlüsselt statt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer zeichnet mit einem Netzwerk-Sniffer (z.B. Wireshark) den Verkehr einer Stichprobe von Anrufen auf und prüft, ob die Signalisierung (SIP) und der Medienstrom (RTP) unverschlüsselt übertragen werden. In Wireshark kann nach `sip` und `rtp` gefiltert werden, um dies zu überprüfen."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "net.4.2.a8-m2",
-                    "uuid": "5b8af006-2fbf-4412-9d48-cd18179053d4",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Es existiert eine Richtlinie, die vorschreibt, dass jeglicher VoIP-Verkehr, der die vertrauenswürdige Netzwerkgrenze verlässt, verschlüsselt werden muss. Dies wird durch einen Session Border Controller (SBC) oder ein VPN-Gateway umgesetzt. Die interne Kommunikation im LAN erfolgt jedoch weiterhin unverschlüsselt."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der SBC am Netzwerkperimeter wird so konfiguriert, dass er für alle externen Verbindungen TLS für SIP und SRTP für die Mediendaten erzwingt. Interne Clients kommunizieren unverschlüsselt mit der Telefonanlage."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer überprüft die Konfiguration des SBC oder VPN-Gateways auf die Erzwingung von Verschlüsselung für externe Verbindungen. Zusätzlich wird der interne Netzwerkverkehr mitgeschnitten, um zu bestätigen, dass dieser unverschlüsselt ist."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "net.4.2.a8-m3",
-                    "uuid": "36689ac7-6fcd-4c0e-a6a0-fa0fd39bc78f",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Es SOLLTE entschieden und dokumentiert werden, ob und welche Sprach- und Signalisierungsinformationen verschlüsselt werden sollen. Generell SOLLTEN alle VoIP-Datenpakete, die das gesicherte LAN verlassen, durch geeignete Sicherheitsmechanismen (z.B. TLS für Signalisierung und SRTP für Mediendaten) geschützt werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es wird eine formale Entscheidung über den Umfang der Verschlüsselung getroffen und dokumentiert. Als Mindeststandard wird festgelegt, dass die gesamte Kommunikation, die über unsichere Netze (wie das Internet) läuft, verschlüsselt wird. Dies wird technisch über einen SBC oder die Telefonanlage selbst konfiguriert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer fordert das Dokument an, das die Entscheidung über den Verschlüsselungsumfang festhält. Die Konfiguration der relevanten Systeme (SBC, PBX) wird geprüft, um sicherzustellen, dass die Verschlüsselung für externe Kommunikation wie definiert aktiv ist. Ein Netzwerk-Mitschnitt an der Netzwerkgrenze verifiziert dies."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "net.4.2.a8-m4",
-                    "uuid": "954a7cae-0f2e-4c42-8d6f-0bf80babc309",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Zusätzlich zur Verschlüsselung des externen Verkehrs wird auch die interne VoIP-Kommunikation (sowohl Signalisierung via TLS als auch Mediendaten via SRTP) standardmäßig verschlüsselt, um auch vor internen Angreifern zu schützen. Die Benutzenden SOLLTEN über die Nutzung und die Grenzen der VoIP-Verschlüsselung (z.B. End-to-End vs. Transport) informiert werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Die Telefonanlage und alle Endgeräte werden so konfiguriert, dass sie standardmäßig Verschlüsselung für alle Anrufe anfordern und verwenden. Die Information der Benutzer erfolgt über das Intranet oder im Rahmen von Security-Awareness-Schulungen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer schneidet den Verkehr im internen LAN mit und verifiziert, dass auch Anrufe zwischen zwei internen Teilnehmern verschlüsselt sind (SIP over TLS, SRTP). Es wird geprüft, ob es Informationsmaterial für Benutzer zur VoIP-Verschlüsselung gibt."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "net.4.2.a8-m5",
-                    "uuid": "96af5d3c-5bdb-4ec9-9834-0cfa5c357f1c",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Wo immer technisch möglich, wird eine Ende-zu-Ende-Verschlüsselung (E2EE) für VoIP-Gespräche durchgesetzt. Es werden ausschließlich starke, zentral verwaltete kryptografische Parameter verwendet. Das System ist so konfiguriert, dass unverschlüsselte Verbindungen strikt abgelehnt werden (Encrypt-or-Drop-Policy). Das Management der Zertifikate für TLS ist automatisiert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es werden Protokolle wie ZRTP oder eine PKI-basierte Lösung für E2EE implementiert. Die Telefonanlage wird so konfiguriert, dass sie nur sichere Krypto-Suiten akzeptiert und Anrufe ablehnt, wenn keine sichere SRTP-Verbindung ausgehandelt werden kann. Ein ACME-Client oder ein internes Zertifikatsmanagementsystem wird für die automatische Ausstellung und Erneuerung von TLS-Zertifikaten verwendet."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die Konfiguration der Telefonanlage und der Endgeräte auf die Erzwingung von E2EE und die Konfiguration der 'Encrypt-or-Drop'-Policy. Es wird geprüft, ob ein Anrufversuch mit einem Client, der nur unverschlüsseltes RTP unterstützt, fehlschlägt. Der Prozess zur automatisierten Zertifikatsverwaltung wird auditiert."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "ec8cf2a3-b4e1-46e0-a074-63fa15252709",
-                "control-id": "KONF.14.1.1",
                 "description": "",
                 "props": [
                   {
@@ -1026,7 +1141,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a14-m2",
-                    "uuid": "d70c574c-f568-4fa4-9a23-6b05b4837c21",
+                    "uuid": "69c0d872-232f-4009-86db-69864fa52eb2",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1045,7 +1160,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a14-m3",
-                    "uuid": "b39ae40f-e5d2-4362-8600-612c71c5f828",
+                    "uuid": "c5b5ca0b-a652-42f4-9602-b51abd48f8ef",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1064,7 +1179,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a14-m4",
-                    "uuid": "ad0d8fa4-4615-411c-9831-62704de5f5f7",
+                    "uuid": "36bb7970-8310-41f0-9c35-e98ca7d49685",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1083,7 +1198,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a14-m5",
-                    "uuid": "22faf264-4597-4ad9-b430-d3364dee25a0",
+                    "uuid": "003d318a-9f54-43ed-901d-cd0de96cb24c",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1103,8 +1218,8 @@
                 ]
               },
               {
-                "uuid": "408eb092-7dfd-434d-b486-e9aef5f673e3",
-                "control-id": "KONF.14.1.2",
+                "uuid": "61380135-cc15-4cc4-aa41-d26cdbb2a8ae",
+                "control-id": "KONF.14.1.1",
                 "description": "",
                 "props": [
                   {
@@ -1141,7 +1256,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a15-m2",
-                    "uuid": "c026f164-e34b-4cb8-91d3-179a5188e9fc",
+                    "uuid": "caa4285c-2ae0-4d10-892a-3c68defe847e",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1160,7 +1275,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a15-m3",
-                    "uuid": "92540906-3c27-467f-a05c-b28311072bdd",
+                    "uuid": "bb38d1a2-d635-419c-bef0-d655697e1b84",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1179,7 +1294,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a15-m4",
-                    "uuid": "19597dfd-80af-4928-ad42-5c71c0bafc2a",
+                    "uuid": "c0b192ae-2518-4d17-8c16-77f5dba2b76b",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1198,7 +1313,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a15-m5",
-                    "uuid": "a351c7e8-3762-461f-9094-250e57f9cbe7",
+                    "uuid": "db687907-52c5-420c-ba9a-1a7e2bfdda39",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {

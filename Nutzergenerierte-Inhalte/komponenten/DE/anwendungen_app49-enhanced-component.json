@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "d25ae360-442d-47e8-9d26-d60530519f7f",
+    "uuid": "6f778e65-82c9-40bc-ae2f-7d4e27b0f53f",
     "metadata": {
       "title": "APP.4.9 Benutzerdefiniert: Objektbasierte Speicherlösungen - Benutzerdefiniert",
-      "last-modified": "2025-11-14T20:17:58.723112+00:00",
+      "last-modified": "2025-11-15T16:31:50.519793+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "adff86fe-8792-4796-811b-a80fee4c192e",
+        "uuid": "635c181b-b32f-48f4-b4cf-a73029db1274",
         "type": "software",
         "title": "APP.4.9 Benutzerdefiniert: Objektbasierte Speicherlösungen",
         "description": "This component represents the implementation of all controls for Baustein APP.4.9.",
@@ -49,10 +49,815 @@
         ],
         "control-implementations": [
           {
-            "uuid": "798020eb-22dd-438b-8116-e7773771026c",
+            "uuid": "96d52ffd-cf82-461c-b6c4-721675f20890",
             "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/anwendungen_profile.json",
             "description": "Implementation for all controls in Baustein APP.4.9",
-            "implemented-requirements": []
+            "implemented-requirements": [
+              {
+                "uuid": "87950ec4-133d-40ce-8b42-218e92b8ad0a",
+                "control-id": "ARCH.8.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.2.2-a12-m1",
+                    "uuid": "ef4399bd-c198-4ea9-b18d-cb3c2da7e59b",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Redundanz wird ausschließlich auf der Hardware-Ebene betrachtet, z.B. durch redundante Netzteile oder Festplatten (RAID). Es gibt keine Maßnahmen zur Hochverfügbarkeit auf Ebene des Betriebssystems oder der Anwendung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Beim Kauf von Servern wird auf redundante Komponenten geachtet, aber die vom Betriebssystem bereitgestellten Hochverfügbarkeitsfunktionen werden nicht genutzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer inspiziert die Hardware-Spezifikationen der Server. Es wird festgestellt, dass keine OS-Level-HA-Technologien wie Failover Clustering oder NLB konfiguriert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a12-m2",
+                    "uuid": "9fa95af8-0ecc-45c1-a61c-13733de5b99a",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einfache Redundanzfunktionen wie NIC-Teaming (LBFO) zur Erhöhung der Netzwerkverfügbarkeit werden implementiert. Komplexere Hochverfügbarkeitstechnologien wie Failover Clustering werden jedoch auch dort nicht eingesetzt, wo sie zur Erfüllung der Verfügbarkeitsanforderungen notwendig wären."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "NIC-Teaming wird als Standard auf allen Servern mit mehreren Netzwerkadaptern konfiguriert. Eine Analyse, ob für bestimmte Dienste ein Failover Cluster erforderlich ist, findet nicht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration des NIC-Teamings auf den Servern. Es wird kritische, nicht-redundante Dienste identifiziert, für die keine Hochverfügbarkeitslösung implementiert wurde."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a12-m3",
+                    "uuid": "1cf8921d-be64-4e7d-867b-33734238b3df",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es muss eine dokumentierte Analyse durchgeführt werden, um zu bestimmen, welche nativen Windows Server-Hochverfügbarkeitsfunktionen (z. B. Failover Clustering, Network Load Balancing, DFS, NIC-Teaming) zur Erfüllung der definierten Verfügbarkeitsanforderungen geeignet sind. Die auf Basis der Analyse ausgewählten Funktionen müssen grundlegend konfiguriert sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für jeden kritischen Dienst wird ein Service Level Agreement (SLA) hinsichtlich der Verfügbarkeit definiert. Auf dieser Basis wird in einem Konzept entschieden, welche HA-Technologie (z.B. Failover Cluster für eine SQL-Datenbank) eingesetzt wird. Die Installation und Basiskonfiguration dieser Technologie wird durchgeführt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Analyse- und Konzeptdokumente an und vergleicht sie mit den definierten SLAs. Es wird geprüft, ob die ausgewählten HA-Technologien auf den entsprechenden Systemen installiert und grundsätzlich funktionsfähig sind, z.B. durch Abfrage des Cluster-Status (`Get-Cluster`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a12-m4",
+                    "uuid": "5141a814-4c04-422d-b457-9e3d7b69f754",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Failover Clustering und/oder Network Load Balancing werden für kritische Dienste konsequent auf Basis der Analyse implementiert und optimiert. Für standortübergreifende Szenarien wird Distributed File System (DFS) für einen resilienten Dateizugriff genutzt. Für Außenstellen wird BranchCache aktiviert, um die Verfügbarkeit und Performance zu verbessern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Cluster-Quorum-Einstellungen werden optimiert und Cluster-Validierungstests werden regelmäßig durchgeführt. DFS-Namespaces und -Replikation werden für wichtige Dateifreigaben eingerichtet. BranchCache wird per GPO für die entsprechenden Server und Clients in den Außenstellen aktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer auditiert die Konfiguration der Failover Cluster, einschließlich der Quorum-Einstellungen. Die DFS-Topologie wird überprüft. Die GPOs zur Konfiguration von BranchCache werden analysiert und es wird stichprobenartig geprüft, ob der Dienst auf den Zielsystemen läuft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a12-m5",
+                    "uuid": "f3582262-17c4-4f5f-b4f1-f20b7f11e322",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine umfassende Hochverfügbarkeits- und Disaster-Recovery-Lösung wird implementiert, die potenziell mehrere Rechenzentren umspannt (z.B. ein Multi-Site-Cluster oder Stretch-Cluster). Die Funktionsfähigkeit der Lösung wird regelmäßig durch geplante, automatisierte Failover-Tests überprüft. Die Integrität des Clusters und der replizierten Daten wird kontinuierlich überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Stretch-Failover-Cluster mit synchroner oder asynchroner Replikation (z.B. via Storage Replica oder Drittanbieter-Lösungen) eingerichtet. Automatisierte Testskripte werden entwickelt, die in regelmäßigen Abständen einen Failover simulieren und die Verfügbarkeit des Dienstes überprüfen. Monitoring-Tools überwachen permanent den Cluster-Zustand und die Replikationslatenz."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Architektur der Multi-Site-Lösung. Die Protokolle und Ergebnisse der automatisierten Failover-Tests werden angefordert und ausgewertet. Das Monitoring-Dashboard wird eingesehen, um den aktuellen Zustand des Clusters und der Replikation zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a4b5f3e9-ab87-4d1d-a07b-18d456aa3bfe",
+                "control-id": "BES.2.1.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.2.2-a1-m1",
+                    "uuid": "884c75e2-7d6d-499a-8e6b-58bfd7d6c4e9",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Planung für den Einsatz von Windows Server 2012 erfolgt ad-hoc und unvollständig. Es wird sich typischerweise nur auf einzelne Aspekte wie die Hardwarebeschaffung konzentriert, während wichtige Entscheidungen zur Server-Edition, Active Directory-Integration oder zur Nutzung von Cloud-Diensten nicht getroffen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In dieser Phase wird oft einfach ein Server bestellt, ohne eine formale Analyse der Softwareanforderungen durchzuführen. Die Entscheidungen werden von einzelnen Administratoren ohne formale Dokumentation oder Abstimmung getroffen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, ob überhaupt Planungsdokumente existieren. Durch Interviews mit den Administratoren wird ermittelt, ob die Entscheidungsfindung für den Servereinsatz systematisch oder spontan erfolgte."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a1-m2",
+                    "uuid": "b742fca9-417b-4a3a-bf18-ac48385f91ce",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Planung für den Einsatz von Windows Server 2012 wird durchgeführt. Die Hardwareanforderungen und die Server-Edition werden bestimmt. Der Planungsprozess ist jedoch nicht formell dokumentiert und Aspekte wie Cloud-Integration oder spezifische Sicherheitskonfigurationen werden nicht berücksichtigt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein einfaches Planungsdokument oder eine Checkliste wird verwendet. Die Spezifikation des Einsatzzwecks und die Einbindung ins Active Directory werden zwar angedacht, aber nicht detailliert ausgearbeitet oder formal genehmigt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die grundlegenden Planungsdokumente an und prüft, ob die wesentlichen Aspekte (Hardware, Edition) abgedeckt sind. Es wird geprüft, ob die Entscheidungen nachvollziehbar sind, auch wenn keine formale Genehmigung vorliegt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a1-m3",
+                    "uuid": "73face8d-deeb-49f5-bcf5-6cef87c2b38a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Einsatz von Windows Server 2012 MUSS vor der Installation sorgfältig geplant werden. Die Anforderungen an die Hardware MÜSSEN vor der Beschaffung geprüft werden. Es MUSS eine begründete und dokumentierte Entscheidung für eine geeignete Edition des Windows Server 2012 getroffen werden. Der Einsatzzweck des Servers sowie die Einbindung ins Active Directory MÜSSEN dabei spezifiziert werden. Die Nutzung von ins Betriebssystem integrierten Cloud-Diensten MUSS grundsätzlich abgewogen und geplant werden. Wenn nicht benötigt, MUSS die Einrichtung von Microsoft-Konten auf dem Server blockiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für die Planung wird eine Vorlage verwendet, die alle in der Anforderung genannten Punkte abdeckt. Die Entscheidung für oder gegen Cloud-Dienste wird in einem Konzept dokumentiert. Die Blockierung von Microsoft-Konten kann über eine Gruppenrichtlinie (GPO) umgesetzt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Planungsdokumentation an. Es wird verifiziert, dass die Hardwareprüfung, die Editionsentscheidung, die Spezifikation des Einsatzzwecks und die Planung der AD-Einbindung dokumentiert sind. Es wird geprüft, ob eine dokumentierte Abwägung zu Cloud-Diensten existiert und ob die Blockierung von Microsoft-Konten (falls zutreffend) technisch umgesetzt wurde, z.B. durch Überprüfung der entsprechenden GPO-Einstellung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a1-m4",
+                    "uuid": "de3d2b86-bf3f-467e-a425-1ec296a0ca50",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Planungsprozess ist formalisiert, wird dokumentiert, überprüft und genehmigt. Der Plan enthält spezifische Vorgaben für die Basiskonfiguration und die Härtung des Systems. Die Entscheidung über die Nutzung von Cloud-Diensten basiert auf einer dokumentierten Risikoanalyse. Der gesamte Prozess wird versioniert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Planungsprozess ist in das IT-Servicemanagement-System integriert. Vorlagen für Serverpläne werden zentral gepflegt. Die Ergebnisse der Planung, inklusive der Konfigurations-Baselines, werden in einem Konfigurationsmanagementsystem (CMS) hinterlegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die formalen Planungs- und Genehmigungsdokumente. Es wird geprüft, ob die Planung eine Risikoanalyse für Cloud-Dienste umfasst und ob die geplanten Konfigurationen eine nachvollziehbare Sicherheitsbaseline darstellen. Die Versionierung der Planungsdokumente wird ebenfalls stichprobenartig geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a1-m5",
+                    "uuid": "98169053-19b2-43ea-9249-303230df2250",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Planungsprozess ist vollständig in ein übergeordnetes Enterprise-Architecture-Management und Change-Management-Framework integriert. Die Planung berücksichtigt Lebenszyklus-, Disaster-Recovery- und Business-Continuity-Aspekte. Die Planungsdokumente sind lebende Dokumente, die bei Änderungen an der Systemlandschaft dynamisch angepasst werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Spezialisierte Tools für das Enterprise-Architecture-Management werden zur Planung und Visualisierung der Serverlandschaft eingesetzt. Kapazitätsplanung und Performance-Analyse sind feste Bestandteile des Planungsprozesses. Die Planung wird regelmäßig auditiert und verbessert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Integration des Planungsprozesses in die übergeordneten Management-Frameworks. Es wird geprüft, ob Disaster-Recovery-Pläne existieren und mit der Serverplanung konsistent sind. Durch die Analyse von Änderungsanträgen wird nachvollzogen, ob die Planungsprozesse bei Änderungen an der IT-Infrastruktur eingehalten und die Dokumente aktualisiert werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "07d2cd60-3646-4231-a31f-40721eaa7542",
+                "control-id": "DET.3.1.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DET",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.2.2-a11-m1",
+                    "uuid": "baa9a78d-4224-448a-8ff1-1acc7ec7749a",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Protokollierung auf den Servern ist mit den Standardeinstellungen aktiviert. Die Ereignisprotokolle werden nur lokal auf den Maschinen gespeichert und nur reaktiv nach einem Sicherheitsvorfall manuell ausgewertet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden keine erweiterten Überwachungsrichtlinien konfiguriert. Die Größe der lokalen Ereignisprotokolle ist oft zu klein, was dazu führt, dass wichtige Informationen schnell überschrieben werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert die Konfiguration der Überwachungsrichtlinien (`auditpol /get /category:*`) und die Größe der Ereignisprotokolle auf einem Server und stellt fest, dass nur die Basiseinstellungen aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a11-m2",
+                    "uuid": "d5b155f8-3a1a-4f6b-b153-cd57a6a675f2",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wichtige sicherheitsrelevante Ereignisse werden zentral gesammelt, beispielsweise in einem Log-Aggregator. Es gibt jedoch keinen etablierten Prozess zur aktiven und regelmäßigen Analyse oder Alarmierung auf Basis dieser Daten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Windows Event Forwarding (WEF) oder ein Log-Agent wird verwendet, um die Sicherheits-Ereignisprotokolle an einen zentralen Server zu senden. Die gesammelten Daten werden primär zur Archivierung und für forensische Analysen vorgehalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Konfiguration der Protokollweiterleitung. Auf dem zentralen Log-Server wird geprüft, ob Protokolle von den Servern ankommen. Durch Interviews wird festgestellt, dass keine proaktive Auswertung der Protokolle stattfindet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a11-m3",
+                    "uuid": "666e4ef9-59fa-48d2-931f-017d416eeb5d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sicherheitsrelevante Ereignisse müssen auf dem Server aktiviert und an ein zentrales Log-Management-System zur Sammlung und Auswertung weitergeleitet werden. Verschlüsselte Partitionen (z.B. mit BitLocker) müssen so konfiguriert sein, dass sie nach einer definierten Anzahl fehlgeschlagener Entsperrversuche gesperrt werden, um Brute-Force-Angriffe zu erschweren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Erweiterte Überwachungsrichtlinien werden per GPO konfiguriert und aktiviert. Die Protokolle werden an ein SIEM-System gesendet. Die BitLocker-Sperre nach fehlgeschlagenen Versuchen wird ebenfalls per GPO konfiguriert ('Standard user lockout')."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer auditiert die GPOs für die Überwachungsrichtlinien. Es wird geprüft, ob im SIEM Protokolle von den Servern ankommen. Die BitLocker-bezogenen GPO-Einstellungen zur Sperrung werden verifiziert. Automatisiert können die Überwachungsrichtlinien mit `auditpol` ausgelesen werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a11-m4",
+                    "uuid": "1c77e6ad-1cb3-4c85-a333-bfd24b6d2814",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die im zentralen SIEM gesammelten Protokolle werden aktiv und automatisiert mithilfe von vordefinierten Korrelationsregeln analysiert, um verdächtige Aktivitäten und Angriffsmuster zu erkennen. Bei Ereignissen mit hoher Priorität werden automatisch Alarme an das Sicherheitsteam generiert. Die Protokollierung wird gehärtet, z.B. durch die Aktivierung von PowerShell Script Block Logging."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im SIEM werden Regeln implementiert, die z.B. auf fehlgeschlagene Anmeldeversuche von mehreren Quellen, die Erstellung neuer administrativer Konten oder das Löschen von Ereignisprotokollen prüfen. PowerShell Script Block Logging wird per GPO aktiviert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Korrelationsregeln im SIEM und deren Schwellenwerte. Die Konfiguration der Alarmierung wird geprüft. Es wird verifiziert, dass PowerShell Script Block Logging aktiv ist und die entsprechenden Ereignisse (ID 4104) generiert und weitergeleitet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a11-m5",
+                    "uuid": "781636c8-c6ac-4c0a-9416-67727b51ea6c",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das SIEM nutzt fortschrittliche Analysemethoden und maschinelles Lernen (User and Entity Behavior Analytics - UEBA), um Anomalien und komplexe Angriffe zu erkennen. Die Angriffserkennung ist mit einem Security Orchestration, Automation and Response (SOAR) System integriert, um Bedrohungen automatisiert und in nahezu Echtzeit einzudämmen (z.B. durch Netzwerkisolation eines kompromittierten Servers). Das Sicherheitsteam führt regelmäßig proaktive Bedrohungssuchen (Threat Hunting) auf Basis der gesammelten Protokolldaten durch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein SIEM mit UEBA-Modul wird eingesetzt. SOAR-Playbooks werden entwickelt, um auf spezifische Alarme zu reagieren, z.B. durch Ausführung von Skripten auf Firewalls oder auf dem betroffenen Endpunkt. Für das Threat Hunting werden Hypothesen auf Basis von Threat Intelligence aufgestellt und systematisch mit den verfügbaren Daten überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer auditiert die Konfiguration des UEBA-Moduls und die SOAR-Playbooks. Es wird ein simulierter Angriff durchgeführt, um zu verifizieren, dass die automatisierte Reaktion wie erwartet funktioniert. Die Dokumentation und Ergebnisse der durchgeführten Threat-Hunting-Aktivitäten werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "bab5433f-0b51-4348-a977-e0c51995e7fd",
+                "control-id": "DEV.2.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BER",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.2.2-a6-m1",
+                    "uuid": "756ebf64-efd4-4826-9baf-a8fa1ee3a896",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es werden ausschließlich Standard-Authentifizierungsmechanismen ohne zusätzliche Härtungsmaßnahmen verwendet. Privilegierte Konten sind nicht besonders geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Authentifizierung erfolgt nur über Benutzername und Passwort. Es gibt keine Maßnahmen zum Schutz von Anmeldeinformationen im Arbeitsspeicher."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, dass keine der erweiterten Sicherheitsfunktionen wie LSA Protection oder die Gruppe 'Geschützte Benutzer' konfiguriert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a6-m2",
+                    "uuid": "52da503f-1092-4446-933d-d2d6ab5b7d2f",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der LSA-Schutz (Local Security Authority) ist auf den kritischsten Servern, wie z.B. Domänencontrollern, aktiviert, wird aber nicht universell auf allen Servern durchgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Registry-Schlüssel `HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa` mit dem Wert `RunAsPPL` wird auf Domänencontrollern manuell oder über eine spezielle GPO gesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert den genannten Registry-Schlüssel auf Domänencontrollern und vergleicht dies mit der Konfiguration auf regulären Mitgliedsservern, um die inkonsistente Anwendung festzustellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a6-m3",
+                    "uuid": "6d1e58c4-3e37-4198-af5f-5e9076a341a0",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der PPL-Schutz (Protected Process Light) für den Local Credential Store (LSA) muss auf allen Servern aktiviert sein, um das Auslesen von Anmeldeinformationen aus dem Arbeitsspeicher zu erschweren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der LSA-Schutz wird über eine Gruppenrichtlinie für alle Server der Domäne aktiviert. Dies geschieht durch Setzen des Registry-Schlüssels `HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa` auf `RunAsPPL` = 1."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die relevanten Gruppenrichtlinien, um sicherzustellen, dass die Einstellung global erzwungen wird. Auf einem repräsentativen Server wird der Registry-Schlüssel überprüft. Automatisiert kann dies mittels PowerShell geprüft werden: `(Get-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa' -Name 'RunAsPPL').RunAsPPL -eq 1`."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a6-m4",
+                    "uuid": "8b0a4b95-395b-4b9e-97aa-2adc1674cce8",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zum LSA-Schutz werden auf Windows Server 2012 R2 alle Benutzerkonten mit erhöhten Rechten Mitglied der Sicherheitsgruppe „Geschützte Nutzer“ (Protected Users) gemacht. Für Dienstkonten werden nach Möglichkeit „Managed Service Accounts“ (MSAs) oder „group Managed Service Accounts“ (gMSAs) verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Prozess wird etabliert, um alle administrativen Konten (z.B. Domänen-Admins) der Gruppe 'Protected Users' hinzuzufügen. Bestehende Dienste, die mit Standard-Benutzerkonten laufen, werden identifiziert und auf die Verwendung von MSAs/gMSAs umgestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Mitgliedschaften der Gruppe 'Protected Users' anzeigen und vergleicht diese mit der Liste der Administratoren. Die Konfiguration von Diensten auf Servern wird stichprobenartig geprüft, um die Verwendung von MSAs/gMSAs zu verifizieren. `Get-ADGroupMember -Identity 'Protected Users'` kann zur automatisierten Prüfung verwendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a6-m5",
+                    "uuid": "1e9d3ea8-44ac-4ae2-9b27-83dd73370b43",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Kontrollen der vorherigen Stufen sind umgesetzt und automatisiert. Zusätzlich wird die Authentisierung für alle administrativen Zugriffe durch eine Multi-Faktor-Authentifizierung (MFA) gestärkt. Für die Autorisierung auf Dateiservern wird die dynamische Zugriffsteuerung (Dynamic Access Control, DAC) für eine feingranulare, attributbasierte Rechtevergabe genutzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine MFA-Lösung (z.B. Smartcards, Windows Hello for Business oder eine Drittanbieter-Lösung) wird für RDP- und PowerShell-Remoting-Zugriffe erzwungen. DAC wird konfiguriert, indem zentrale Zugriffsregeln und -richtlinien definiert und über Gruppenrichtlinien verteilt werden, die auf Benutzer- und Geräte-Claims basieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer auditiert die MFA-Konfiguration und testet einen administrativen Anmeldeversuch, um die MFA-Anforderung zu verifizieren. Die DAC-Konfiguration, einschließlich der definierten Claims und zentralen Zugriffsregeln, wird analysiert. Es wird praktisch auf einem Dateiserver getestet, ob der Zugriff gemäß der DAC-Richtlinien korrekt gewährt oder verweigert wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "999e5cb4-f919-4968-b8d8-553bad48f8c2",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.2.2-a4-m1",
+                    "uuid": "812ec985-04c5-4125-8442-2d62d021f357",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Härtung der Server-Systeme findet nur sporadisch und ad-hoc auf besonders kritischen Systemen statt. Es gibt keine konsistente Sicherheitsbaseline oder Vorlagen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einzelne Administratoren ändern manuell einige Sicherheitseinstellungen, von denen sie wissen, ohne dass dies auf einem dokumentierten Standard basiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Konfigurationen mehrerer Server und stellt signifikante Inkonsistenzen in den Sicherheitseinstellungen fest. Es kann keine Dokumentation zu einer Härtungsrichtlinie vorgelegt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a4-m2",
+                    "uuid": "3ecc82ca-44f7-4e70-901a-53dcc135384e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird eine grundlegende Härtungs-Checkliste oder ein einfaches Skript verwendet. Dieses wird jedoch nicht konsequent auf alle Server angewendet oder regelmäßig aktualisiert, was zu Konfigurationsdrift führt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Basis-Sicherheitstemplate (z.B. aus dem Security Compliance Manager) wird bei der Ersteinrichtung angewendet, aber spätere Änderungen an der Vorlage werden nicht auf bestehende Systeme ausgerollt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Härtungs-Checkliste oder das Skript an. Anschließend wird auf mehreren älteren und neueren Servern geprüft, ob die Konfiguration der Vorlage entspricht, um Konfigurationsdrift festzustellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a4-m3",
+                    "uuid": "4b7c0d68-e3ce-443b-95db-ef3537ed50b9",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vor der Inbetriebnahme muss das System grundlegend gehärtet werden. Dafür müssen funktionsspezifische und institutionsweite Sicherheitsvorlagen erstellt, gepflegt und auf die Server ausgerollt werden. Dieser Prozess muss wiederholbar und dokumentiert sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Sicherheitsvorlagen werden als Gruppenrichtlinienobjekte (GPOs) erstellt und über Organisationseinheiten (OUs) im Active Directory an die entsprechenden Server zugewiesen. Es gibt eine Basis-GPO für alle Server und spezifische GPOs für verschiedene Serverrollen (z.B. Webserver, Datenbankserver)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die GPO-Struktur und die darin definierten Sicherheitsvorlagen. Mit Werkzeugen wie `gpresult` wird auf einem repräsentativen Server geprüft, ob die korrekten Richtlinien angewendet werden. Die Dokumentation der Vorlagen wird auf Aktualität und Vollständigkeit geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a4-m4",
+                    "uuid": "0d613474-9edd-4d3c-bc1c-ffccebbfe2ca",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wesentliche Funktionen und Rollen werden auf verschiedene Server aufgeteilt, um die Angriffsfläche zu reduzieren. Der Internet Explorer wird nur in der 'Enhanced Security Configuration' und im 'Enhanced Protected Mode' genutzt. Die Anwendung der Sicherheitsvorlagen wird automatisiert und regelmäßig auf Konformität überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein dedizierter Server wird beispielsweise nur für die Rolle des Webservers genutzt und nicht gleichzeitig als Datenbankserver. Die IE-Einstellungen werden per GPO erzwungen. Die Konformität wird mittels Security Compliance Manager (SCM) oder Konfigurationselementen im System Center Configuration Manager (SCCM) überwacht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Server-Architektur auf eine sinnvolle Rollentrennung. Die GPOs für die IE-Härtung werden inspiziert. Berichte aus dem Überwachungstool (SCM/SCCM) werden angefordert, um die Konformitätsrate der Serverflotte zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a4-m5",
+                    "uuid": "89f6ebaa-5057-48dd-8d38-b43a3fb83b02",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Serverkonfiguration wird durch ein Desired State Configuration (DSC) Werkzeug verwaltet und erzwungen. Jegliche Abweichung von der gehärteten Baseline wird automatisch erkannt und entweder gemeldet oder sofort korrigiert. Die Konfigurationsbaseline basiert auf international anerkannten Benchmarks (z.B. CIS Benchmarks) und wird kontinuierlich auditiert und verbessert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird PowerShell DSC oder ein Drittanbieter-Tool wie Ansible, Puppet oder Chef eingesetzt. Die DSC-Konfigurationen werden in einem Git-Repository versioniert (Infrastructure as Code). Ein zentraler DSC-Pull-Server oder ein äquivalentes System wird für die Verteilung und Überwachung der Konfigurationen verwendet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer auditiert die DSC-Konfigurationsskripte und deren Verwaltung im Repository. Das Dashboard des Konfigurationsmanagement-Tools wird eingesehen, um den Konformitätsstatus der gesamten Serverflotte zu überprüfen. Es wird getestet, ob eine manuelle, nicht autorisierte Konfigurationsänderung auf einem Server erkannt und korrigiert wird. Die automatische Prüfung kann durch `Test-DscConfiguration -Detailed` auf einem Zielknoten erfolgen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "428a0196-1b82-4929-8bb4-b7fe57f96249",
+                "control-id": "KONF.10.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.1.2.2-a2-m1",
+                    "uuid": "fbf92708-c640-4995-822d-153ca7f3639e",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Installation von Windows Server 2012 wird ohne Beachtung des Prinzips der minimalen Rechte durchgeführt. Es wird typischerweise die vollständige GUI-Version mit zahlreichen nicht benötigten Rollen und Features installiert. Ein Patching während der Installation findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Installation erfolgt manuell über das Installationsmedium, wobei die Standardeinstellungen weitgehend übernommen werden. Die Auswahl der zu installierenden Komponenten erfolgt ohne vorherige Analyse des tatsächlichen Bedarfs."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer inspiziert eine Auswahl von Servern und vergleicht die Liste der installierten Rollen und Features mit dem tatsächlichen Einsatzzweck des Servers. Der Patch-Stand wird überprüft, um festzustellen, ob zeitnah zur Installation Patches eingespielt wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a2-m2",
+                    "uuid": "514105d6-b29b-46ce-821f-35deaec9db40",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei der Installation wird darauf geachtet, nur die benötigten Serverrollen und Features zu installieren. Das Einspielen von Patches erfolgt jedoch erst nach der abgeschlossenen Installation als separater Schritt. Die Entscheidung zwischen Server Core und der GUI-Variante wird nicht formal begründet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Administratoren verwenden eine Checkliste, um sicherzustellen, dass nur notwendige Rollen und Features während der manuellen Installation ausgewählt werden. Das System wird nach der Installation und vor der produktiven Inbetriebnahme mit dem zentralen Patch-Management-System verbunden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die installierten Rollen und Features auf ihre Notwendigkeit. Es wird anhand von Logs oder Tickets nachvollzogen, wie schnell das System nach der Installation gepatcht wurde. In Interviews wird nach der Begründung für die Wahl der Installationsvariante (Core/GUI) gefragt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a2-m3",
+                    "uuid": "3ee34f56-89bc-4dca-bb83-c092f75f8192",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es DÜRFEN KEINE anderen als die benötigten Serverrollen und Features bzw. Funktionen installiert werden. Wenn es vom Funktionsumfang her ausreichend ist, MUSS die Server-Core-Variante installiert werden. Andernfalls MUSS begründet werden, warum die Server-Core-Variante nicht genügt. Der Server MUSS bereits während der Installation auf einen aktuellen Patch-Stand gebracht werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Um Patches während der Installation einzuspielen (Offline Servicing), werden die Installationsmedien regelmäßig mit den neuesten Updates aktualisiert, beispielsweise mithilfe von DISM (Deployment Image Servicing and Management). Die Entscheidung für oder gegen Server Core wird pro Serverrolle in einem Konzept dokumentiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Liste der installierten Rollen und Features auf mehreren Systemen. Es wird die Dokumentation eingesehen, in der die Nutzung der GUI-Variante begründet wird. Es wird geprüft, ob der Prozess zum Aktualisieren der Installationsmedien etabliert ist und regelmäßig durchgeführt wird, z.B. durch Überprüfung der Zeitstempel der Installations-Images."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a2-m4",
+                    "uuid": "fb5c623f-7dbd-44f4-86d1-91ebb3f8326d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Installationsprozess wird mithilfe von Antwortdateien (unattend.xml) oder Deployment-Skripten automatisiert, um Konsistenz sicherzustellen. Die Entscheidung für Server Core ist die dokumentierte Standardvorgabe, von der nur mit begründeter Ausnahme abgewichen wird. Eine initiale Sicherheitskonfiguration (Härtung) wird bereits während der Installation angewendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden Tools wie der Windows Deployment Services (WDS) oder das Microsoft Deployment Toolkit (MDT) eingesetzt. PowerShell-Skripte werden verwendet, um nach der Basisinstallation automatisch Härtungseinstellungen anzuwenden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die verwendeten Antwortdateien oder Deployment-Skripte und prüft sie auf Korrektheit und Vollständigkeit. Es wird kontrolliert, ob die Server-Core-Variante der de-facto-Standard ist. Der Prüfer vergleicht die Konfiguration eines neu installierten Servers mit der definierten Härtungs-Baseline."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.1.2.2-a2-m5",
+                    "uuid": "d59d38ba-1a82-4664-b3f8-52b859ff9db7",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für die Bereitstellung wird eine vollständig automatisierte 'Golden Image'-Pipeline verwendet. Diese Images sind vorgehärtet, enthalten alle aktuellen Patches sowie minimale Rollen und werden vor der Freigabe automatisiert auf Schwachstellen gescannt. Die Verwendung von Server Core ist, wo technisch möglich, obligatorisch und Abweichungen erfordern einen formalen Genehmigungsprozess."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine CI/CD-Pipeline (z.B. mit Jenkins, Azure DevOps oder Packer) wird genutzt, um die Golden Images automatisch zu erstellen, zu patchen, zu testen und zu verteilen. Die Images werden in einer zentralen Artefakt-Registry versioniert und verwaltet. Die Konfiguration wird mittels Desired State Configuration (DSC) durchgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer auditiert die CI/CD-Pipeline und die zugehörigen Skripte. Es wird verifiziert, dass automatisierte Sicherheits-Scans Teil der Pipeline sind und dass deren Ergebnisse nachverfolgt werden. Der Genehmigungsprozess für Abweichungen von der Server-Core-Richtlinie wird auf seine Wirksamkeit überprüft."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

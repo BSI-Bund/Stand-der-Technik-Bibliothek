@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "1094bb1c-fc7a-4aad-a908-dc464b639bec",
+    "uuid": "b0b15bfb-1973-460a-8ce2-78ea0382268b",
     "metadata": {
       "title": "APP.1.2 Webbrowser - Benutzerdefiniert",
-      "last-modified": "2025-11-14T22:08:53.715696+00:00",
+      "last-modified": "2025-11-15T16:31:48.880752+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "9765d64e-e570-4aaf-8643-3210407b7b77",
+        "uuid": "7164e7ab-93c1-4e04-a6c5-667f6fed9f3b",
         "type": "software",
         "title": "APP.1.2 Webbrowser",
         "description": "This component represents the implementation of all controls for Baustein APP.1.2.",
@@ -49,12 +49,146 @@
         ],
         "control-implementations": [
           {
-            "uuid": "fccab726-4e0a-4211-b2bf-88b6733f327e",
+            "uuid": "ff9a1e77-950b-49e8-9742-2e096b498a01",
             "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/webbrowser_profile.json",
             "description": "Implementation for all controls in Baustein APP.1.2",
             "implemented-requirements": [
               {
-                "uuid": "877c3186-5553-4c9f-a873-0a889e0e8e7e",
+                "uuid": "3e85814c-7e64-454e-8c4b-3f0af5f7611f",
+                "control-id": "KONF.10.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "APP",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.1.2.a13-m1",
+                    "uuid": "0bc0c71f-01c3-4a0e-ad96-df7e8fb73527",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die DNS-over-HTTPS (DoH)-Einstellung wird den Standardeinstellungen des Browsers überlassen. Dies führt dazu, dass Browser möglicherweise ohne Wissen der IT DoH aktivieren und öffentliche Resolver verwenden, wodurch interne DNS-Richtlinien und -Filter umgangen werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keine bewusste Entscheidung oder Konfiguration bezüglich DoH. Die IT-Abteilung ist sich der Funktion und ihrer Auswirkungen möglicherweise nicht bewusst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Standardeinstellungen für DoH in den verwendeten Browserversionen. Auf einem Client wird der Netzwerkverkehr analysiert, um festzustellen, ob DNS-Anfragen an den vom Betriebssystem konfigurierten DNS-Server oder an einen öffentlichen DoH-Resolver des Browserherstellers gesendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m2",
+                    "uuid": "d4be6f70-e297-4234-adb2-9083a64d549c",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wurde eine Entscheidung über die Nutzung von DoH getroffen, diese wird aber nicht technisch durchgesetzt. Die IT empfiehlt den Benutzern, DoH manuell zu deaktivieren, um die Verwendung des internen DNS-Resolvers sicherzustellen, aber es gibt keine Garantie für die Einhaltung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Anleitung zur Deaktivierung von DoH wird im Intranet veröffentlicht. Die Umsetzung bleibt jedoch dem einzelnen Benutzer überlassen, was zu einer inkonsistenten Konfiguration in der gesamten Organisation führt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor befragt Benutzer und prüft stichprobenartig Client-Systeme, um die Konfiguration der DoH-Einstellungen zu verifizieren. Es wird eine hohe Rate an Abweichungen von der empfohlenen Konfiguration festgestellt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m3",
+                    "uuid": "7375aa72-76cc-4717-8883-7e7b2c73f3ca",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Institution MUSS eine dokumentierte Entscheidung treffen, ob die verwendeten Browser DNS-over-HTTPS (DoH) verwenden sollen oder nicht. Die Browser MÜSSEN entsprechend dieser Entscheidung zentral konfiguriert werden. Falls ein interner DNS-Resolver verwendet wird, MUSS dieser auch vom Browser genutzt werden (entweder durch Deaktivierung von DoH oder durch Konfiguration des Browsers, den internen Resolver als DoH-Endpunkt zu nutzen)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Entscheidung wird in einer Sicherheitsrichtlinie festgehalten. Die Konfiguration wird über eine zentrale Verwaltung (GPO, MDM) durchgesetzt. Wenn DoH deaktiviert wird, wird die entsprechende Richtlinie (`DnsOverHttpsMode` auf `off`) gesetzt. Wenn ein interner DoH-Resolver genutzt wird, wird dessen URI in der Richtlinie (`DnsOverHttpsTemplates`) eingetragen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Existenz der schriftlichen Richtlinie zur DoH-Nutzung. Anschließend wird die Konfiguration in der zentralen Verwaltungskonsole verifiziert. Auf Client-Systemen wird über die Browser-Diagnoseseiten (`chrome://policy`) geprüft, ob die Richtlinie korrekt angewendet wird. Ein Netzwerk-Sniffer kann bestätigen, dass DNS-Anfragen an das korrekte Ziel (interner DNS oder interner DoH-Resolver) gesendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m4",
+                    "uuid": "17a30115-2b5b-4b64-bd39-c7669283c48f",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur zentralen Konfiguration werden Netzwerk-Kontrollen implementiert, um die Umgehung der DoH-Richtlinie zu verhindern. Der Netzwerk-Gateway (Firewall) wird so konfiguriert, dass er die IP-Adressen bekannter öffentlicher DoH-Resolver blockiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Liste bekannter öffentlicher DoH-Provider wird gepflegt und in die Blacklists der Firewall eingetragen. Diese Liste wird regelmäßig aktualisiert. Dies verhindert, dass auch nicht verwaltete Geräte oder Anwendungen die internen DNS-Richtlinien umgehen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration der Firewall-Regeln. Von einem Test-Client aus wird versucht, eine DNS-Anfrage an einen blockierten öffentlichen DoH-Resolver zu senden (z.B. mittels `curl https://chrome.cloudflare-dns.com/dns-query`). Dieser Versuch muss fehlschlagen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.1.2.a13-m5",
+                    "uuid": "26d89931-a819-49b9-83f7-d216a701854a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesamte DNS-Infrastruktur, einschließlich des verwendeten DoH-Resolvers, ist durch DNSSEC abgesichert. Ausgehender Netzwerkverkehr wird aktiv auf DoH-Anfragen zu nicht autorisierten Endpunkten überwacht (z.B. durch Analyse von SNI-Headern in TLS-Verbindungen). Verdächtige Aktivitäten lösen einen Alarm aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der interne DNS-Server (oder DoH-Resolver) ist so konfiguriert, dass er DNSSEC-Signaturen validiert. Ein Intrusion Detection System (IDS) oder eine Next-Generation Firewall (NGFW) wird mit Regeln zur Erkennung von DoH-Verkehr zu nicht genehmigten Zielen ausgestattet. Diese Regeln können auf IP-Listen, aber auch auf Mustern im TLS-Handshake basieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die DNSSEC-Konfiguration des internen Resolvers. Die Regeln und Alarme im IDS/NGFW-System werden eingesehen. Es wird ein Testfall durchgeführt, bei dem ein Client versucht, eine DoH-Verbindung zu einem unbekannten, nicht blockierten Resolver aufzubauen. Dieser Versuch muss vom Überwachungssystem erkannt und gemeldet werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "6dfc4fd6-37e5-446c-a835-dbd8c868f607",
                 "control-id": "KONF.12.1.1",
                 "description": "",
                 "props": [
@@ -92,7 +226,7 @@
                 "statements": [
                   {
                     "statement-id": "app.1.2.a3-m1",
-                    "uuid": "fd1541c3-2894-462f-8e87-0ddb3d8b9ce9",
+                    "uuid": "faf86705-250c-494b-aab9-369903c42701",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -111,7 +245,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a3-m2",
-                    "uuid": "c979f3e1-87d8-4db2-9ead-a4fe181f3a3f",
+                    "uuid": "c40e9ecb-0701-4898-88e1-699a39bdcf4a",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -130,7 +264,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a3-m3",
-                    "uuid": "2a104464-3478-44bc-8d70-20e2333c88c8",
+                    "uuid": "45e57977-fb30-4546-8f67-bb5585473c35",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -149,7 +283,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a3-m4",
-                    "uuid": "b7d21761-a496-449d-a04c-7b42a3beea8f",
+                    "uuid": "08e77916-645e-40bd-ac8b-10be92cc7e66",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -168,7 +302,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a3-m5",
-                    "uuid": "28ceff10-47a1-4deb-8306-cf2bad7a557c",
+                    "uuid": "dbdaefe8-1664-4291-abdf-a49d52b22739",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -188,7 +322,7 @@
                 ]
               },
               {
-                "uuid": "e18ed8f8-85dd-47a2-8432-5709a42c3d97",
+                "uuid": "af2a9f54-d47a-4a90-b383-aacd1abb4e47",
                 "control-id": "KONF.12.4",
                 "description": "",
                 "props": [
@@ -226,7 +360,7 @@
                 "statements": [
                   {
                     "statement-id": "app.1.2.a6-m1",
-                    "uuid": "ffe04782-9daf-4473-b05b-b4d9ef173bf8",
+                    "uuid": "af955805-2564-45a5-92dd-3cd40448416f",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -245,7 +379,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a6-m2",
-                    "uuid": "e2f4948c-cfea-4873-9a9d-fa279c3e8a01",
+                    "uuid": "60a7acc9-f605-4ed3-90eb-4277fd23b9d2",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -264,7 +398,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a6-m3",
-                    "uuid": "d65ae51a-b5ae-4a94-9ea8-acbde91a4a14",
+                    "uuid": "bb463432-6c94-4e11-b96a-564fd88fe8fc",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -283,7 +417,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a6-m4",
-                    "uuid": "ebf2c08e-8ec1-45d5-88c1-690e96ced864",
+                    "uuid": "849cb4f6-0e16-4776-9a66-fbd222b505c7",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -302,7 +436,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a6-m5",
-                    "uuid": "389115c6-c8e9-44bd-bafc-8bd344f556ff",
+                    "uuid": "cee595e3-36a1-48d5-aafb-936c388a3299",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -322,7 +456,7 @@
                 ]
               },
               {
-                "uuid": "5f7f20e7-d2e9-4cc8-a331-59b84cec184b",
+                "uuid": "6dfb06cd-0eb2-442f-8c2c-e2ff9e97bdb3",
                 "control-id": "KONF.12.5",
                 "description": "",
                 "props": [
@@ -360,7 +494,7 @@
                 "statements": [
                   {
                     "statement-id": "app.1.2.a7-m1",
-                    "uuid": "ee9f656e-4781-4c59-9630-431fbcf5f142",
+                    "uuid": "ce610056-9fe8-4d07-8f8f-e6ff7cade598",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -379,7 +513,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a7-m2",
-                    "uuid": "04e07ad1-fd12-427e-ba9a-1bd3423debdd",
+                    "uuid": "1e56a8fb-d1a7-4389-9fdc-67a9cab34e50",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -398,7 +532,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a7-m3",
-                    "uuid": "d4f4a5bf-0be8-433e-a8ca-49a7d13d46f5",
+                    "uuid": "6a4080fb-4411-4b11-a13a-58aadb6979ed",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -417,7 +551,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a7-m4",
-                    "uuid": "36602d9a-5de9-4a26-96f5-67874e1e704a",
+                    "uuid": "c94ab3c4-3a39-47d8-8963-2232880d91c3",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -436,7 +570,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a7-m5",
-                    "uuid": "454a787b-ead7-4fac-aa7a-1c12341caad9",
+                    "uuid": "49573fed-aa9b-4332-a0f2-4dcf97f48626",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -456,7 +590,7 @@
                 ]
               },
               {
-                "uuid": "baafce51-367b-4e5c-b1df-939396e21143",
+                "uuid": "c10121bf-af32-470d-b0de-bb03e672b3e4",
                 "control-id": "KONF.12.6",
                 "description": "",
                 "props": [
@@ -494,7 +628,7 @@
                 "statements": [
                   {
                     "statement-id": "app.1.2.a10-m1",
-                    "uuid": "0e9c95fa-d7f4-4135-908c-022aaf89c164",
+                    "uuid": "b4adecf5-c2fb-4520-b4aa-49699e7a89c4",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -513,7 +647,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a10-m2",
-                    "uuid": "e7e1a164-355d-49ad-86ed-5150d04e3e74",
+                    "uuid": "cd8e39a0-ba1a-4b36-a065-1c18b5e41557",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -532,7 +666,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a10-m3",
-                    "uuid": "51dee7cc-3312-4d73-a00a-a95b01f1b218",
+                    "uuid": "286e82dc-bb07-4c59-aee9-e3ef9f5923f6",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -551,7 +685,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a10-m4",
-                    "uuid": "b7590d7b-b3b7-4cf9-ba27-52a8ec04d2f3",
+                    "uuid": "ccc5933c-c653-4395-a77d-4df8f6312292",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -570,7 +704,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a10-m5",
-                    "uuid": "17e9f3ef-3c33-4d68-9a38-a357ee6f12e8",
+                    "uuid": "750f72b9-7fc2-44f5-9d31-3f9db2bcfbf9",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -590,8 +724,8 @@
                 ]
               },
               {
-                "uuid": "61b7fb15-fe50-4ced-9f09-fc4cbc57f255",
-                "control-id": "KONF.14.1.1",
+                "uuid": "2debc4c5-c8ff-4bda-9259-5c690a41a68a",
+                "control-id": "KONF.14.1",
                 "description": "",
                 "props": [
                   {
@@ -628,7 +762,7 @@
                 "statements": [
                   {
                     "statement-id": "app.1.2.a2-m1",
-                    "uuid": "99532324-e5c3-4fbd-8fce-ded3ba6d1cb0",
+                    "uuid": "9138a9d3-30e3-4cac-90f6-18cc9954a312",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -647,7 +781,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a2-m2",
-                    "uuid": "76c5891b-ac1f-4424-8006-c1ff828852ea",
+                    "uuid": "ee318810-c8e3-4b8b-aae9-e08d8768d448",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -666,7 +800,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a2-m3",
-                    "uuid": "fcfc5ff9-7c25-4ae1-befa-9c29458c7056",
+                    "uuid": "83335523-f7ac-40a0-86e0-9c27d7360648",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -685,7 +819,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a2-m4",
-                    "uuid": "ba82be1e-bfb4-4265-8bf1-e1080ebf3792",
+                    "uuid": "facad19c-59f0-44c7-b95d-ac3d739d8ba4",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -704,7 +838,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a2-m5",
-                    "uuid": "4391b066-4690-496c-82e0-16451a6f7ad7",
+                    "uuid": "481fa6f6-c248-42a2-b1e7-120d4b9ab449",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -724,7 +858,7 @@
                 ]
               },
               {
-                "uuid": "f698458d-efc8-4e6c-aac2-2ab22914d430",
+                "uuid": "41cec079-48dc-4629-ae38-2e3dffaa1cd1",
                 "control-id": "KONF.6.14",
                 "description": "",
                 "props": [
@@ -762,7 +896,7 @@
                 "statements": [
                   {
                     "statement-id": "app.1.2.a1-m1",
-                    "uuid": "7591f826-5b57-4a5a-82b7-755e692e1d9c",
+                    "uuid": "ee46330b-a4a0-4a60-abe7-480eb5db015b",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -781,7 +915,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a1-m2",
-                    "uuid": "3d322918-85d8-4953-a8ba-37aac5a64b39",
+                    "uuid": "4c13de42-c1d6-4631-8e6a-d90d869f8b21",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -800,7 +934,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a1-m3",
-                    "uuid": "dd0b0092-19ac-4328-a057-26d8f0de036c",
+                    "uuid": "9ccca791-e112-4516-a7b7-5ef9ff7c7adf",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -819,7 +953,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a1-m4",
-                    "uuid": "0841c338-d23e-4a22-80ae-ec5a3969ba51",
+                    "uuid": "9698feda-7206-4fce-8ddd-2b8cf067173a",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -838,7 +972,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a1-m5",
-                    "uuid": "0c5fa6ba-12a5-4bb1-b420-203c26574409",
+                    "uuid": "03b45271-0a6d-4663-9da8-6a74f71a91c0",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -858,7 +992,7 @@
                 ]
               },
               {
-                "uuid": "94397e0b-5d5e-45a4-86d3-8a583c729cd8",
+                "uuid": "8ded5371-7dd5-483c-a888-8da557cff626",
                 "control-id": "KONF.6.15",
                 "description": "",
                 "props": [
@@ -896,7 +1030,7 @@
                 "statements": [
                   {
                     "statement-id": "app.1.2.a9-m1",
-                    "uuid": "6c5a8a51-da51-498a-9ba8-3efd4522f060",
+                    "uuid": "fb494ced-b3c4-4174-9ea4-5d40cb045885",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -915,7 +1049,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a9-m2",
-                    "uuid": "a4956b09-3eca-4880-a107-da5d97a803bd",
+                    "uuid": "92997160-6b3f-46f6-85c6-b8bd59bec8ab",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -934,7 +1068,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a9-m3",
-                    "uuid": "7c10fa70-cda4-4c4d-85f7-cdca46d1fe74",
+                    "uuid": "206f74d4-640b-4ce8-9175-5616c05400b2",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -953,7 +1087,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a9-m4",
-                    "uuid": "b0541d52-db77-4d99-a5d1-cce42831c011",
+                    "uuid": "62d3a9d1-38ca-4ae5-98da-d55e391ee94b",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -972,7 +1106,7 @@
                   },
                   {
                     "statement-id": "app.1.2.a9-m5",
-                    "uuid": "65fa9881-37a9-4ca8-a573-1b63cbcf39fa",
+                    "uuid": "50f17aa5-e1d9-49d1-965d-9e2afe00005e",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
