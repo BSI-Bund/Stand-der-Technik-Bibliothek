@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL SSP Editor + Parameter</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .collapsible-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+        }
+        .collapsible-content.open {
+            max-height: 20000px;
+            opacity: 1;
+        }
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        .chevron-icon.open {
+            transform: rotate(90deg);
+        }
+        .maturity-radio-label:hover {
+            background-color: #334155;
+        }
+        /* Markierung für Parameter im Text */
+        .param-placeholder {
+            color: #60a5fa; /* blue-400 */
+            font-family: monospace;
+            font-weight: bold;
+            background-color: rgba(30, 58, 138, 0.3);
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="h-full p-4 md:p-8 font-sans text-slate-200">
+    <div class="max-w-6xl mx-auto bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg">
+
+        <header class="mb-6 pb-6 border-b border-slate-700">
+            <h1 class="text-3xl font-bold text-white">OSCAL SSP Editor</h1>
+            <p class="mt-2 text-slate-300">Laden Sie eine OSCAL SSP JSON-Datei. Parameter (Variablen) werden automatisch erkannt und können bearbeitet werden.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <label for="file-uploader" class="block text-sm font-medium text-slate-300 mb-2">SSP JSON-Datei laden</label>
+                <input id="file-uploader" type="file" accept=".json" class="block w-full text-sm text-slate-400
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-lg file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-blue-800 file:text-blue-200
+                    hover:file:bg-blue-700 cursor-pointer">
+            </div>
+            
+            <div class="flex md:justify-end items-end">
+                <button id="save-button" class="w-full md:w-auto bg-blue-600 text-white font-medium py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 disabled:bg-slate-600" disabled>
+                    JSON speichern
+                </button>
+            </div>
+        </div>
+
+        <div id="ssp-editor" class="hidden space-y-4"></div>
+
+        <div id="loading-indicator" class="hidden text-center py-8">
+            <p id="loading-text" class="text-slate-400 animate-pulse">Lade Datei...</p>
+        </div>
+
+    </div>
+
+    <script>
+        let sspData = null;
+        let sspFileName = 'edited-ssp.json';
+        let componentDefinitions = {};
+        let catalogData = null; 
+        let catalogControlMap = new Map(); 
+        
+        // NEU: Map für Parameter-Definitionen aus dem Katalog (param-id -> paramObject)
+        let catalogParamMap = new Map();
+
+        const fileUploader = document.getElementById('file-uploader');
+        const saveButton = document.getElementById('save-button');
+        const editorDiv = document.getElementById('ssp-editor');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const loadingText = document.getElementById('loading-text');
+
+        fileUploader.addEventListener('change', handleFileLoad);
+        saveButton.addEventListener('click', handleFileSave);
+
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        async function handleFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            sspFileName = file.name.replace('.json', '-edited.json') || 'edited-ssp.json';
+            loadingText.textContent = 'Lade SSP...';
+            loadingIndicator.classList.remove('hidden');
+            editorDiv.classList.add('hidden');
+            editorDiv.innerHTML = '';
+            
+            sspData = null;
+            componentDefinitions = {};
+            catalogData = null;
+            catalogControlMap.clear();
+            catalogParamMap.clear(); // Reset Param Map
+            saveButton.disabled = true;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => { 
+                try {
+                    sspData = JSON.parse(e.target.result);
+                    
+                    if (sspData && sspData['system-security-plan']) {
+                        await fetchAllComponentDefinitions(sspData['system-security-plan']);
+                        await fetchCatalog(sspData['system-security-plan']);
+
+                        if (catalogData && !catalogData.error) {
+                            processCatalogData(catalogData); 
+                        }
+
+                        renderSSP(sspData['system-security-plan']);
+                        editorDiv.classList.remove('hidden');
+                        saveButton.disabled = false;
+                    } else {
+                        throw new Error("Keine gültige OSCAL SSP-Datei.");
+                    }
+                } catch (error) {
+                    handleReadError(error);
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        async function fetchAllComponentDefinitions(ssp) {
+            componentDefinitions = {};
+            const components = ssp['system-implementation']?.components || [];
+            const definitionLinks = new Set();
+
+            components.forEach(comp => {
+                const defLink = comp.links?.find(link => link.rel === 'component-definition');
+                if (defLink && defLink.href) definitionLinks.add(defLink.href);
+            });
+
+            const linksToFetch = Array.from(definitionLinks);
+            if (linksToFetch.length === 0) return;
+
+            loadingText.textContent = `Lade Komponenten-Definitionen...`;
+            loadingIndicator.classList.remove('hidden');
+
+            const fetchPromises = linksToFetch.map(href => 
+                fetch(href).then(res => res.ok ? res.json() : null)
+                    .then(json => ({ href, value: json }))
+                    .catch(err => ({ href, error: err.message }))
+            );
+            
+            const results = await Promise.all(fetchPromises); 
+            results.forEach(r => {
+                if(r.value) componentDefinitions[r.href] = r.value;
+            });
+        }
+        
+        async function fetchCatalog(ssp) {
+            catalogData = null;
+            const profileHref = ssp['import-profile']?.href; 
+
+            if (!profileHref) return;
+
+            loadingText.textContent = 'Lade Profil...';
+            loadingIndicator.classList.remove('hidden');
+
+            try {
+                const response = await fetch(profileHref);
+                const profileJson = await response.json();
+                const catalogHref = profileJson?.profile?.imports?.[0]?.href;
+
+                if (catalogHref) {
+                    loadingText.textContent = 'Lade Katalog...';
+                    const catalogResponse = await fetch(catalogHref);
+                    const catalogJson = await catalogResponse.json();
+                    if (catalogJson.catalog) catalogData = catalogJson.catalog;
+                }
+            } catch (error) {
+                console.error("Katalog-Ladefehler:", error);
+                catalogData = { error: error.message };
+            }
+        }
+
+        function processCatalogData(catalog) {
+            catalogControlMap.clear();
+            catalogParamMap.clear();
+            
+            function scanRecursively(items) {
+                if (!items || !Array.isArray(items)) return;
+
+                items.forEach(item => {
+                    // Controls erfassen
+                    if (item.id && (item.parts || item.class)) {
+                        catalogControlMap.set(item.id, item);
+                    }
+
+                    // NEU: Params erfassen
+                    if (item.params && Array.isArray(item.params)) {
+                        item.params.forEach(param => {
+                            if(param.id) {
+                                catalogParamMap.set(param.id, param);
+                            }
+                        });
+                    }
+
+                    // Rekursion
+                    if (item.controls) scanRecursively(item.controls);
+                    if (item.groups) scanRecursively(item.groups);
+                });
+            }
+
+            scanRecursively(catalog.groups);
+            scanRecursively(catalog.controls);
+            console.log(`Katalog: ${catalogControlMap.size} Controls, ${catalogParamMap.size} Params geladen.`);
+        }
+        
+        function handleReadError(error) {
+            editorDiv.innerHTML = `<p class="text-red-400">Fehler: ${error.message}</p>`;
+            editorDiv.classList.remove('hidden');
+            saveButton.disabled = true;
+        }
+
+        function handleFileSave() {
+            if (!sspData) return;
+
+            try {
+                const ssp = sspData['system-security-plan'];
+                
+                // 1. Metadaten etc.
+                ssp.metadata.title = document.getElementById('metadata-title').value;
+                ssp['system-characteristics']['system-name'] = document.getElementById('system-name').value;
+                ssp['system-characteristics'].description = document.getElementById('system-description').value;
+
+                if (!ssp['control-implementation']) ssp['control-implementation'] = {};
+                
+                // --- NEU: Parameter speichern (in control-implementation.set-parameters) ---
+                const paramInputs = document.querySelectorAll('.param-input');
+                const setParameters = [];
+                
+                paramInputs.forEach(input => {
+                    const paramId = input.dataset.paramId;
+                    const val = input.value.trim();
+                    
+                    if (val) {
+                        setParameters.push({
+                            "param-id": paramId,
+                            "values": [ val ] // OSCAL erwartet Array von Strings
+                        });
+                    }
+                });
+                
+                ssp['control-implementation']['set-parameters'] = setParameters;
+                // -------------------------------------------------------------------------
+
+                // 2. Requirements (bestehende Logik)
+                if (!Array.isArray(ssp['control-implementation']['implemented-requirements'])) {
+                    ssp['control-implementation']['implemented-requirements'] = [];
+                }
+                const requirements = ssp['control-implementation']['implemented-requirements'];
+                const controlEntries = document.querySelectorAll('.control-entry');
+
+                controlEntries.forEach(entry => {
+                    const controlId = entry.dataset.controlId;
+                    const compUuid = entry.dataset.compUuid;
+                    const uniqueDomId = `${controlId.replace(/[^a-zA-Z0-9]/g, '-')}-${compUuid}`;
+
+                    const stateEl = entry.querySelector(`#state-${uniqueDomId}`);
+                    const descriptionEl = entry.querySelector(`#desc-${uniqueDomId}`);
+                    const nameEl = entry.querySelector(`#name-${uniqueDomId}`);
+                    const dateEl = entry.querySelector(`#date-${uniqueDomId}`);
+
+                    if (!stateEl) return;
+
+                    const state = stateEl.value;
+                    const description = descriptionEl.value;
+                    const name = nameEl.value;
+                    const date = dateEl.value;
+                    
+                    if (state || description || name || date) {
+                        let req = requirements.find(r => r['control-id'] === controlId);
+                        if (!req) {
+                            req = { "uuid": generateUUID(), "control-id": controlId, "by-components": [] };
+                            requirements.push(req);
+                        }
+                        if (!req['by-components']) req['by-components'] = [];
+
+                        let byCompEntry = req['by-components'].find(bc => bc['component-uuid'] === compUuid);
+                        if (!byCompEntry) {
+                            byCompEntry = {
+                                "uuid": generateUUID(),
+                                "component-uuid": compUuid,
+                                "description": description,
+                                "implementation-status": { "state": state },
+                                "props": []
+                            };
+                            req['by-components'].push(byCompEntry);
+                        } else {
+                            byCompEntry.description = description;
+                            if(!byCompEntry['implementation-status']) byCompEntry['implementation-status'] = {};
+                            byCompEntry['implementation-status'].state = state;
+                            if(!byCompEntry.props) byCompEntry.props = [];
+                        }
+
+                        const setProp = (n, v) => {
+                            let p = byCompEntry.props.find(x => x.name === n);
+                            if(v) { p ? p.value = v : byCompEntry.props.push({ "name": n, "value": v }); }
+                            else { byCompEntry.props = byCompEntry.props.filter(x => x.name !== n); }
+                        };
+                        setProp('implementing-user', name);
+                        setProp('implementation-date', date);
+                        
+                        if (byCompEntry.props.length === 0) delete byCompEntry.props;
+
+                    } else {
+                        // Lösch-Logik wenn leer
+                        let req = requirements.find(r => r['control-id'] === controlId);
+                        if (req && req['by-components']) {
+                            req['by-components'] = req['by-components'].filter(bc => bc['component-uuid'] !== compUuid);
+                            if (req['by-components'].length === 0) {
+                                ssp['control-implementation']['implemented-requirements'] = requirements.filter(r => r.uuid !== req.uuid);
+                            }
+                        }
+                    }
+                });
+
+                const dataStr = JSON.stringify(sspData, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                const a = document.createElement('a');
+                a.href = url; a.download = sspFileName;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+
+            } catch (error) {
+                console.error(error);
+                alert("Fehler beim Speichern: " + error.message);
+            }
+        }
+
+        function renderSSP(ssp) {
+            editorDiv.innerHTML = `
+                ${createCollapsibleSection('metadata', 'Metadaten', renderMetadata(ssp.metadata))}
+                ${createCollapsibleSection('system-characteristics', 'System-Charakteristika', renderSystemCharacteristics(ssp['system-characteristics']))}
+                ${createCollapsibleSection('implementation', 'Komponenten-Implementierung', renderImplementation(ssp), true)}
+            `;
+            attachCollapsibleListeners();
+            attachEditorListeners();
+            attachFilterListeners();
+        }
+
+        function createCollapsibleSection(id, title, contentHtml, isOpen = false) {
+            const openClass = isOpen ? 'open' : '';
+            return `
+                <div class="border border-slate-700 rounded-lg overflow-hidden mb-4">
+                    <button class="collapsible-header w-full flex justify-between items-center p-4 bg-slate-700 hover:bg-slate-600 focus:outline-none">
+                        <h2 class="text-xl font-semibold text-white">${title}</h2>
+                        <svg class="chevron-icon ${openClass} w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                    </button>
+                    <div id="${id}-content" class="collapsible-content ${openClass} p-4 border-t border-slate-700 bg-slate-800">
+                        ${contentHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function attachCollapsibleListeners() {
+            document.querySelectorAll('.collapsible-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    content.classList.toggle('open');
+                    header.querySelector('.chevron-icon').classList.toggle('open');
+                });
+            });
+        }
+        
+        function attachEditorListeners() {
+            document.querySelectorAll('.maturity-radio').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const ta = document.getElementById(radio.dataset.targetTextarea);
+                    const desc = radio.dataset.description || '';
+                    if (ta && desc !== "") { ta.value = desc; ta.focus(); }
+                    else if (ta) { ta.focus(); }
+                });
+            });
+        }
+
+        function attachFilterListeners() {
+            document.querySelectorAll('.control-class-filter').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    const val = e.target.value;
+                    const container = document.querySelector(`.control-list-container[data-comp-uuid="${e.target.dataset.compUuid}"]`);
+                    if (container) {
+                        container.querySelectorAll('.control-entry').forEach(c => {
+                            c.style.display = (val === 'all' || c.dataset.controlClass === val) ? 'block' : 'none';
+                        });
+                    }
+                });
+            });
+        }
+
+        function renderMetadata(metadata) {
+            return `
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Titel</label>
+                        <input type="text" id="metadata-title" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white" value="${(metadata.title || '').replace(/"/g, '&quot;')}">
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSystemCharacteristics(chars) {
+            return `
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">System-Name</label>
+                        <input type="text" id="system-name" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white" value="${(chars['system-name'] || '').replace(/"/g, '&quot;')}">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Beschreibung</label>
+                        <textarea id="system-description" rows="4" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white">${chars.description || ''}</textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderImplementation(ssp) {
+            const sspComponents = ssp['system-implementation']?.components || [];
+            const sspRequirements = ssp['control-implementation']?.['implemented-requirements'] || [];
+            
+            // NEU: Lade die gespeicherten Parameter-Werte aus dem SSP
+            const sspSetParams = ssp['control-implementation']?.['set-parameters'] || [];
+            // Map: param-id -> value (string)
+            const sspParamValuesMap = new Map();
+            sspSetParams.forEach(sp => {
+                if(sp.values && sp.values.length > 0) {
+                    sspParamValuesMap.set(sp['param-id'], sp.values[0]);
+                }
+            });
+
+            if (!sspComponents.length) return '<p class="text-slate-400">Keine Komponenten.</p>';
+
+            let html = '<div class="space-y-4">';
+
+            sspComponents.forEach((sspComp, index) => {
+                const compUuid = sspComp.uuid;
+                const defLink = sspComp.links?.find(link => link.rel === 'component-definition');
+                const compDef = defLink ? componentDefinitions[defLink.href] : null;
+
+                // Maps für Controls bauen
+                const sspControlMap = new Map();
+                sspRequirements.forEach(r => {
+                    const entry = r['by-components']?.find(bc => bc['component-uuid'] === compUuid);
+                    if (entry) sspControlMap.set(r['control-id'], entry);
+                });
+
+                const defControlMap = new Map();
+                if (compDef && !compDef.error) {
+                    const impls = compDef['component-definition']?.components?.[0]?.['control-implementations'] || [];
+                    impls.forEach(i => (i['implemented-requirements'] || []).forEach(req => defControlMap.set(req['control-id'], req)));
+                }
+
+                const allKeys = new Set([...sspControlMap.keys(), ...defControlMap.keys()]);
+                const sortedKeys = Array.from(allKeys).sort();
+                
+                let compControlsHtml = `<div class="space-y-4 control-list-container" data-comp-uuid="${compUuid}">`;
+                
+                if (sortedKeys.length === 0) {
+                    compControlsHtml += '<p class="text-slate-400 text-sm">Keine Controls gefunden.</p>';
+                } else {
+                    sortedKeys.forEach(cid => {
+                        compControlsHtml += renderControlEntry(
+                            cid, sspComp, sspControlMap.get(cid), defControlMap.get(cid), sspParamValuesMap
+                        );
+                    });
+                }
+                compControlsHtml += '</div>';
+
+                const isOpen = index === 0;
+                const openClass = isOpen ? 'open' : '';
+                
+                // Filter UI
+                const filterId = `filter-${sspComp.uuid}`;
+                
+                html += `
+                    <div class="border border-slate-700 rounded-lg overflow-hidden bg-slate-800 shadow-sm">
+                        <button class="collapsible-header w-full flex justify-between items-center p-4 hover:bg-slate-700">
+                            <h3 class="text-lg font-bold text-white">${sspComp.title}</h3>
+                            <svg class="chevron-icon ${openClass} w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                        </button>
+                        <div class="collapsible-content ${openClass} p-4 border-t border-slate-700 bg-slate-800">
+                            <div class="flex justify-end mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <label for="${filterId}" class="text-sm text-slate-300">Filter:</label>
+                                    <select id="${filterId}" data-comp-uuid="${sspComp.uuid}" class="control-class-filter rounded border-slate-600 bg-slate-700 text-white text-sm">
+                                        <option value="all">Alle</option>
+                                        <option value="normal-SdT">normal-SdT</option>
+                                        <option value="erhöht">erhöht</option>
+                                        <option value="unknown">Ohne Klasse</option>
+                                    </select>
+                                </div>
+                            </div>
+                            ${compControlsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderControlEntry(controlId, sspComponent, byCompEntry, implementedReq, sspParamValuesMap) {
+            const compUuid = sspComponent.uuid;
+            const uniqueDomId = `${controlId.replace(/[^a-zA-Z0-9]/g, '-')}-${compUuid}`;
+            
+            // SSP Values
+            const currentState = byCompEntry?.['implementation-status']?.state || '';
+            const currentDesc = byCompEntry?.description || '';
+            const currentName = byCompEntry?.props?.find(p => p.name === 'implementing-user')?.value || '';
+            const currentDate = byCompEntry?.props?.find(p => p.name === 'implementation-date')?.value || '';
+
+            // Catalog Values
+            const catCtrl = catalogControlMap.get(controlId);
+            const title = catCtrl?.title || '';
+            const catClass = catCtrl?.class || 'unknown';
+            const displayClass = catClass !== 'unknown' ? ` <span class="text-sm font-normal text-slate-400">(${catClass})</span>` : '';
+            
+            // --- PARAMS / VARIABLEN LOGIK (NEU) ---
+            let paramsHtml = '';
+            let referencedParams = new Set();
+            
+            // 1. Parameter finden, die direkt am Control definiert sind
+            if (catCtrl && catCtrl.params) {
+                catCtrl.params.forEach(p => referencedParams.add(p.id));
+            }
+
+            // Text verarbeiten für Placeholder {{ insert: param, ID }}
+            let proseText = catCtrl?.parts?.find(p => p.name === 'statement')?.prose || '';
+            
+            // Regex um Parameter im Text zu finden
+            const paramRegex = /{{\s*insert:\s*param,\s*([a-zA-Z0-9._-]+)\s*}}/g;
+            let match;
+            while ((match = paramRegex.exec(proseText)) !== null) {
+                referencedParams.add(match[1]);
+            }
+
+            // Prose-Text mit Highlighting ersetzen
+            proseText = proseText.replace(paramRegex, (match, pId) => {
+                // Versuche Label zu finden
+                const pDef = catalogParamMap.get(pId);
+                const label = pDef?.label || pId;
+                return `<span class="param-placeholder" title="Parameter: ${pId}">[${label}]</span>`;
+            });
+            
+            const guidanceText = catCtrl?.parts?.find(p => p.name === 'guidance')?.prose || '';
+            
+            // HTML für Parameter-Inputs generieren
+            if (referencedParams.size > 0) {
+                paramsHtml = `<div class="mt-4 pt-4 border-t border-slate-600 bg-slate-800/50 p-3 rounded-md border border-blue-900/30">
+                    <h5 class="text-sm font-bold text-blue-300 mb-2 flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Parameter / Variablen
+                    </h5>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+                
+                referencedParams.forEach(paramId => {
+                    const paramDef = catalogParamMap.get(paramId);
+                    const label = paramDef?.label || paramId;
+                    // Hole gespeicherten Wert aus SSP oder Fallback auf Default
+                    // (Default ist im Snippet nicht sichtbar, wäre aber paramDef.default)
+                    const savedVal = sspParamValuesMap.get(paramId) || ''; 
+                    
+                    // Check ob es Select-Optionen gibt (im Snippet nicht sichtbar, aber Standard-OSCAL)
+                    // Wir bauen hier ein einfaches Input Feld, da das Beispiel keine Constraints zeigte.
+                    
+                    paramsHtml += `
+                        <div>
+                            <label for="p-${uniqueDomId}-${paramId}" class="block text-xs font-medium text-slate-400 mb-1">${label} <span class="text-slate-500 font-mono">(${paramId})</span></label>
+                            <input type="text" 
+                                id="p-${uniqueDomId}-${paramId}" 
+                                data-param-id="${paramId}"
+                                class="param-input block w-full rounded-md border-slate-600 bg-slate-700 text-white text-sm focus:border-blue-500 focus:ring-blue-500"
+                                value="${savedVal.replace(/"/g, '&quot;')}" 
+                                placeholder="Wert eingeben...">
+                        </div>
+                    `;
+                });
+                paramsHtml += `</div></div>`;
+            }
+            // ---------------------------------------
+
+
+            // Component Description (Props etc.)
+            const compDesc = implementedReq?.description || '';
+            const statements = implementedReq?.statements || [];
+            
+            // HTML Construction
+            return `
+                <div class="control-entry p-4 border border-slate-600 rounded-lg bg-slate-700 shadow-sm mb-4" 
+                     data-control-id="${controlId}" 
+                     data-comp-uuid="${compUuid}"
+                     data-control-class="${catClass}">
+                    
+                    <h4 class="text-lg font-bold text-white flex items-center">
+                        ${controlId}: ${title} ${displayClass}
+                    </h4>
+
+                    ${paramsHtml}
+
+                    <div class="mt-4 pt-4 border-t border-slate-600 text-sm space-y-3">
+                        ${proseText ? `<div class="p-3 rounded-md bg-slate-800 border border-slate-600 text-slate-200 font-medium leading-relaxed">${proseText}</div>` : ''}
+                        ${guidanceText ? `<div class="p-3 rounded-md bg-slate-800 border border-slate-600 mt-2 text-slate-300 italic border-l-4 border-l-slate-500">${guidanceText}</div>` : ''}
+                        ${(!proseText && !guidanceText) ? '<p class="text-slate-400 italic">Keine Katalog-Infos.</p>' : ''}
+                    </div>
+
+                    ${compDesc ? `<div class="mt-4 pt-4 border-t border-slate-600 text-sm"><h5 class="font-semibold text-slate-100">Vorgabe (Komponente)</h5><div class="p-3 bg-slate-900 border border-blue-800 text-blue-200 mt-2 rounded">${compDesc}</div></div>` : ''}
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-slate-600">
+                        <div class="md:col-span-1">
+                            <label class="block text-sm text-slate-300 mb-1">Status</label>
+                            <select id="state-${uniqueDomId}" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm">
+                                <option value="" ${currentState===''?'selected':''}>-- Offen --</option>
+                                <option value="implemented" ${currentState==='implemented'?'selected':''}>Umgesetzt</option>
+                                <option value="partial" ${currentState==='partial'?'selected':''}>Teilweise</option>
+                                <option value="planned" ${currentState==='planned'?'selected':''}>Geplant</option>
+                                <option value="alternative" ${currentState==='alternative'?'selected':''}>Alternative</option>
+                                <option value="not-applicable" ${currentState==='not-applicable'?'selected':''}>Nicht zutreffend</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-slate-300 mb-1">Bearbeiter</label>
+                            <input type="text" id="name-${uniqueDomId}" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm" value="${currentName}">
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-sm text-slate-300 mb-1">Datum</label>
+                            <input type="date" id="date-${uniqueDomId}" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm" value="${currentDate}">
+                        </div>
+                        <div class="md:col-span-4">
+                            <label class="block text-sm text-slate-300 mb-1">Kommentar / Umsetzung</label>
+                            ${renderStatementsRadio(statements, uniqueDomId, currentDesc)}
+                            <textarea id="desc-${uniqueDomId}" rows="4" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm mt-2">${currentDesc}</textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderStatementsRadio(statements, uniqueDomId, currentDesc) {
+            if (!statements || statements.length === 0) return '';
+            
+            // Prüfen ob Manuell gewählt ist (kein Statement passt exakt)
+            let manualChecked = true;
+            let radiosHtml = statements.map((stmt, idx) => {
+                const stmtText = stmt.props?.find(p => p.name === 'statement')?.value || '';
+                const isChecked = (currentDesc.trim() === stmtText.trim() && stmtText !== '');
+                if (isChecked) manualChecked = false;
+                
+                return `
+                <div class="flex items-start mt-2">
+                    <input type="radio" id="r-${uniqueDomId}-${idx}" name="mat-${uniqueDomId}" 
+                        class="maturity-radio mt-1 bg-slate-700 border-slate-500"
+                        data-target-textarea="desc-${uniqueDomId}" data-description="${stmtText.replace(/"/g, '&quot;')}" ${isChecked ? 'checked':''}>
+                    <label for="r-${uniqueDomId}-${idx}" class="ml-2 text-sm text-slate-300 cursor-pointer">
+                        ${stmt.description || 'Statement '+(idx+1)}
+                        <div class="text-xs text-slate-400 mt-1 pl-1 border-l-2 border-slate-600">${stmtText}</div>
+                    </label>
+                </div>`;
+            }).join('');
+
+            return `
+                <div class="mb-2">
+                    <div class="flex items-center">
+                        <input type="radio" id="r-man-${uniqueDomId}" name="mat-${uniqueDomId}" 
+                            class="maturity-radio bg-slate-700 border-slate-500"
+                            data-target-textarea="desc-${uniqueDomId}" data-description="" ${manualChecked?'checked':''}>
+                        <label for="r-man-${uniqueDomId}" class="ml-2 text-sm text-white font-medium cursor-pointer">Manuell</label>
+                    </div>
+                    ${radiosHtml}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
