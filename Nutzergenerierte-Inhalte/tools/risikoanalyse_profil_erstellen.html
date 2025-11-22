@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL Risk Profile Creator</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        /* Sanfter Übergang für das Ein- und Ausklappen */
+        .collapsible-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+        }
+        .collapsible-content.open {
+            max-height: 5000px; /* Ausreichend großer Wert */
+            opacity: 1;
+        }
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        .chevron-icon.open {
+            transform: rotate(90deg);
+        }
+        /* Styling für Suchergebnisse */
+        .search-result-item:hover {
+            background-color: #334155; /* slate-700 */
+        }
+    </style>
+</head>
+<body class="h-full p-4 md:p-8 font-sans text-slate-200">
+    <div class="max-w-6xl mx-auto bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg">
+
+        <header class="mb-6 pb-6 border-b border-slate-700">
+            <h1 class="text-3xl font-bold text-white">OSCAL Risk Profile Creator</h1>
+            <p class="mt-2 text-slate-300">Laden Sie eine OSCAL SSP JSON-Datei. Der verlinkte Katalog wird automatisch geladen. Definieren Sie Risiken und wählen Sie mitigierende Controls aus, um ein neues Profil zu erstellen.</p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+                <label for="file-uploader" class="block text-sm font-medium text-slate-300 mb-2">SSP JSON-Datei laden</label>
+                <input id="file-uploader" type="file" accept=".json" class="block w-full text-sm text-slate-400
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-lg file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-blue-800 file:text-blue-200
+                    hover:file:bg-blue-700 cursor-pointer">
+            </div>
+            
+            <div class="flex md:justify-end items-end">
+                <button id="save-button" class="w-full md:w-auto bg-emerald-600 text-white font-medium py-2 px-6 rounded-lg shadow-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50 transition duration-150 disabled:bg-slate-600" disabled>
+                    Profil & SSP speichern
+                </button>
+            </div>
+        </div>
+
+        <div id="main-editor" class="hidden space-y-4">
+            </div>
+
+        <div id="loading-indicator" class="hidden text-center py-8">
+            <p id="loading-text" class="text-slate-400 animate-pulse">Lade Datei...</p>
+        </div>
+
+    </div>
+
+    <div id="search-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full z-50">
+        <div class="relative top-10 mx-auto p-5 border w-full max-w-3xl shadow-lg rounded-md bg-slate-800 border-slate-700">
+            <div class="mt-3">
+                <h3 class="text-lg leading-6 font-medium text-white mb-4">Control hinzufügen</h3>
+                
+                <div class="border-b border-slate-700 mb-4">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <button id="tab-search" class="tab-button border-blue-500 text-blue-400 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="tab-content-search">Katalog-Suche</button>
+                        <button id="tab-custom" class="tab-button border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-target="tab-content-custom">Benutzerdefiniert</button>
+                    </nav>
+                </div>
+
+                <div id="tab-content-search" class="tab-content">
+                    <input type="text" id="catalog-search-input" placeholder="Suchen nach ID oder Titel..." class="mb-4 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    <div id="catalog-search-results" class="space-y-2 max-h-96 overflow-y-auto">
+                        </div>
+                </div>
+
+                <div id="tab-content-custom" class="tab-content hidden space-y-4">
+                    <div>
+                        <label for="custom-control-id" class="block text-sm font-medium text-slate-300">Control ID (z.B. CUSTOM.1)</label>
+                        <input type="text" id="custom-control-id" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="custom-control-title" class="block text-sm font-medium text-slate-300">Titel</label>
+                        <input type="text" id="custom-control-title" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="custom-control-statement" class="block text-sm font-medium text-slate-300">Statement (Anforderungstext)</label>
+                        <textarea id="custom-control-statement" rows="4" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"></textarea>
+                    </div>
+                    <button id="add-custom-control-button" class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
+                        Benutzerdefiniertes Control hinzufügen
+                    </button>
+                </div>
+
+
+                <div class="mt-4 flex justify-end">
+                    <button id="close-modal-button" class="bg-slate-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-slate-700">
+                        Schließen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Globale Variablen
+        let sspData = null;
+        let sspFileName = 'ssp.json';
+        let profileFileName = 'risk-profile.json';
+        
+        let catalogData = null; // Speichert das geladene Katalog-Objekt UND die URL
+        let catalogControlMap = new Map(); // Flache Map für schnellen Control-Zugriff
+
+        // Kerndatenmodell für die Risikoanalyse
+        let riskData = []; 
+
+        // UI-Elemente
+        const fileUploader = document.getElementById('file-uploader');
+        const saveButton = document.getElementById('save-button');
+        const editorDiv = document.getElementById('main-editor');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const loadingText = document.getElementById('loading-text');
+        const searchModal = document.getElementById('search-modal');
+        const searchInput = document.getElementById('catalog-search-input');
+        const searchResults = document.getElementById('catalog-search-results');
+
+        let currentRiskUuidForSearch = null; // Speichert, für welches Risiko gerade gesucht wird
+
+        // Event Listener
+        fileUploader.addEventListener('change', handleFileLoad);
+        saveButton.addEventListener('click', handleFileSave);
+        searchInput.addEventListener('input', handleCatalogSearch);
+        document.getElementById('close-modal-button').addEventListener('click', closeSearchModal);
+        document.getElementById('add-custom-control-button').addEventListener('click', handleAddCustomControl);
+
+        // Tab Listener
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Deaktiviere alle Tabs
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('border-blue-500', 'text-blue-400');
+                    btn.classList.add('border-transparent', 'text-slate-400', 'hover:text-slate-200', 'hover:border-slate-600');
+                });
+                // Aktiviere den geklickten Tab
+                button.classList.add('border-blue-500', 'text-blue-400');
+                button.classList.remove('border-transparent', 'text-slate-400', 'hover:text-slate-200', 'hover:border-slate-600');
+
+                // Verstecke alle Inhalte
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                });
+                // Zeige den Ziel-Inhalt
+                document.getElementById(button.dataset.target).classList.remove('hidden');
+            });
+        });
+
+
+        /**
+         * Helferfunktion zur Generierung einer UUID (v4)
+         */
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        /**
+         * Helferfunktion für UTF-8 sicheres Base64 Encoding
+         * Notwendig für Umlaute in eingebetteten JSON-Daten (back-matter).
+         */
+        function base64EncodeUnicode(str) {
+            // 1. encodeURIComponent, um percent-encoded UTF-8 zu erhalten
+            // 2. Konvertiere percent encodings in raw bytes (moderne Alternative zu unescape)
+            // 3. Base64 encode das Ergebnis
+            const utf8Bytes = encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+                function toSolidBytes(match, p1) {
+                    return String.fromCharCode('0x' + p1);
+            });
+
+            return btoa(utf8Bytes);
+        }
+
+
+        // --- Datei-Handling & Initialisierung ---
+
+        /**
+         * Verarbeitet das Laden der SSP-Datei.
+         */
+        async function handleFileLoad(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            sspFileName = file.name || 'ssp.json';
+            profileFileName = sspFileName.replace('.json', '-risk-profile.json') || 'risk-profile.json';
+            
+            loadingText.textContent = 'Lade SSP...';
+            loadingIndicator.classList.remove('hidden');
+            editorDiv.classList.add('hidden');
+            editorDiv.innerHTML = '';
+            
+            // Setze alle globalen Daten zurück
+            sspData = null;
+            catalogData = null;
+            catalogControlMap.clear();
+            riskData = [];
+            saveButton.disabled = true;
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    // Lese die Datei als UTF-8
+                    const text = e.target.result;
+                    sspData = JSON.parse(text);
+                    
+                    if (sspData && sspData['system-security-plan']) {
+                        
+                        // Starte den automatischen Download des Katalogs
+                        await fetchCatalog(sspData['system-security-plan']);
+
+                        // Verarbeite den Katalog, falls er geladen wurde
+                        if (catalogData && !catalogData.error) {
+                            processCatalogData(catalogData);
+                        }
+
+                        // Rendere die Haupt-UI
+                        renderMainUI(sspData['system-security-plan']);
+                        
+                        editorDiv.classList.remove('hidden');
+                        saveButton.disabled = false;
+                        
+                    } else {
+                        throw new Error("Dies ist keine gültige OSCAL SSP-Datei (fehlender 'system-security-plan'-Stammknoten).");
+                    }
+                } catch (error) {
+                    handleReadError(error);
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                }
+            };
+            reader.onerror = () => handleReadError(new Error("Datei konnte nicht gelesen werden."));
+            // Wichtig: Sicherstellen, dass als UTF-8 gelesen wird
+            reader.readAsText(file, 'UTF-8');
+        }
+
+        /**
+         * Versucht, den verlinkten Katalog aus 'import-profile' zu laden.
+         * Speichert auch die Katalog-URL.
+         */
+        async function fetchCatalog(ssp) {
+            catalogData = null; // Zurücksetzen
+            const importProfile = ssp['import-profile'];
+            const profileHref = importProfile?.href; 
+
+            if (!profileHref) {
+                catalogData = { error: "Kein Import-Profil im SSP gefunden." };
+                return;
+            }
+
+            loadingText.textContent = 'Lade Profil (für Katalog-Link)...';
+
+            try {
+                // 1. Lade das PROFIL
+                const response = await fetch(profileHref);
+                if (!response.ok) {
+                    throw new Error(`Netzwerk-Antwort nicht OK (Status: ${response.status}) für Profil ${profileHref}`);
+                }
+                const profileJson = await response.json();
+                
+                // 2. Extrahiere die KATALOG-URL aus dem Profil
+                const catalogHref = profileJson?.profile?.imports?.[0]?.href;
+
+                if (catalogHref) {
+                    loadingText.textContent = 'Lade Katalog-Definition...';
+
+                    // 3. Lade den KATALOG
+                    const catalogResponse = await fetch(catalogHref);
+                    if (!catalogResponse.ok) {
+                        throw new Error(`Netzwerk-Antwort nicht OK (Status: ${catalogResponse.status}) für Katalog ${catalogHref}`);
+                    }
+                    const catalogJson = await catalogResponse.json();
+
+                    if (catalogJson.catalog) {
+                        catalogData = catalogJson.catalog;
+                        catalogData.sourceUrl = catalogHref; // WICHTIG: Speichere die URL für später
+                    } else {
+                        throw new Error("Geladene Katalog-Datei ist kein gültiger OSCAL-Katalog.");
+                    }
+                } else {
+                    throw new Error("Geladenes Profil importiert keinen Katalog.");
+                }
+            } catch (error) {
+                console.error(`Fehler beim Laden des Katalogs: ${error.message}`);
+                catalogData = { error: error.message };
+            }
+        }
+
+        /**
+         * Verarbeitet die geladenen Katalogdaten und erstellt eine flache Map.
+         */
+        function processCatalogData(catalog) {
+            catalogControlMap.clear();
+            
+            function findControlsRecursively(items) {
+                if (!items || !Array.isArray(items)) return;
+
+                items.forEach(item => {
+                    // Prüfe, ob es ein Control ist (hat oft 'parts' oder 'class', aber immer ID und Titel)
+                    const isControl = item.id && item.title; 
+                    const isContainer = item.groups || item.controls;
+
+                    if (isControl) {
+                        catalogControlMap.set(item.id, item);
+                    } 
+                    
+                    // Rekursiv weiter suchen
+                    if (isContainer) {
+                         if (item.controls) {
+                            findControlsRecursively(item.controls);
+                        }
+                        if (item.groups) {
+                            findControlsRecursively(item.groups);
+                        }
+                    }
+                });
+            }
+
+            findControlsRecursively(catalog.groups);
+            findControlsRecursively(catalog.controls);
+        }
+        
+        function handleReadError(error) {
+            console.error("Fehler:", error);
+            editorDiv.innerHTML = `<p class="text-red-400">Fehler: ${error.message}</p>`;
+            editorDiv.classList.remove('hidden');
+        }
+
+        // --- UI Rendering ---
+
+        /**
+         * Rendert die gesamte Editor-Struktur.
+         */
+        function renderMainUI(ssp) {
+            editorDiv.innerHTML = `
+                ${createCollapsibleSection(
+                    'ssp-info', 
+                    'SSP Informationen & Katalog-Status', 
+                    renderSSPInfo(ssp)
+                )}
+                ${createCollapsibleSection(
+                    'risk-analysis', 
+                    'Risikoanalyse', 
+                    renderRiskAnalysis(),
+                    true // Standardmäßig geöffnet
+                )}
+                ${createCollapsibleSection(
+                    'profile-preview', 
+                    'Profil-Vorschau (Ausgewählte Controls)', 
+                    renderProfilePreview()
+                )}
+            `;
+            
+            // Event Listeners hinzufügen
+            attachCollapsibleListeners();
+            attachRiskListeners();
+            refreshProfilePreviewUI();
+        }
+
+         /**
+         * Helferfunktion zum Erstellen eines einklappbaren Abschnitts.
+         */
+        function createCollapsibleSection(id, title, contentHtml, isOpen = false) {
+            const openClass = isOpen ? 'open' : '';
+            const contentId = `${id}-content`;
+            return `
+                <div class="border border-slate-700 rounded-lg overflow-hidden" data-section-id="${id}">
+                    <button class="collapsible-header w-full flex justify-between items-center p-4 bg-slate-700 hover:bg-slate-600 focus:outline-none text-left">
+                        <h2 class="text-xl font-semibold text-white">${title}</h2>
+                        <svg class="chevron-icon ${openClass} w-5 h-5 text-slate-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                    <div id="${contentId}" class="collapsible-content ${openClass} p-4 border-t border-slate-700 bg-slate-800">
+                        ${contentHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Fügt die Klick-Listener zu allen collapsible-header hinzu.
+         */
+        function attachCollapsibleListeners() {
+            document.querySelectorAll('.collapsible-header').forEach(header => {
+                // Entferne bestehende Listener (Clone-and-replace, um Duplikate beim Neu-Rendern zu vermeiden)
+                const newHeader = header.cloneNode(true);
+                header.parentNode.replaceChild(newHeader, header);
+
+                newHeader.addEventListener('click', () => {
+                    const content = newHeader.nextElementSibling;
+                    const icon = newHeader.querySelector('.chevron-icon');
+                    content.classList.toggle('open');
+                    icon.classList.toggle('open');
+                });
+            });
+        }
+
+        /**
+         * Rendert Basisinformationen zum SSP und den Status des Katalogs.
+         */
+        function renderSSPInfo(ssp) {
+            let html = `<div class="space-y-4">
+                <div>
+                    <h4 class="font-medium text-slate-100">System Name:</h4>
+                    <p class="text-sm text-slate-300">${ssp['system-characteristics']['system-name'] || 'N/A'}</p>
+                </div>
+                <div>
+                    <h4 class="font-medium text-slate-100">Katalog-Status:</h4>
+            `;
+
+            if (catalogData) {
+                if (catalogData.error) {
+                    html += `<p class="text-sm text-red-400">Fehler beim Laden: ${catalogData.error}</p>`;
+                } else {
+                    html += `<p class="text-sm text-green-400">Erfolgreich geladen (${catalogControlMap.size} Controls).</p>`;
+                    html += `<p class="text-sm text-slate-400 break-all">Quelle: ${catalogData.sourceUrl}</p>`;
+                }
+            } else {
+                html += '<p class="text-sm text-orange-400">Wird geladen...</p>';
+            }
+
+            html += '</div></div>';
+            return html;
+        }
+
+        // --- Risikoanalyse-Funktionen ---
+
+        function renderRiskAnalysis() {
+            return `
+                <div class="mb-4 flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-white">Definierte Risiken</h3>
+                    <button id="add-risk-button" class="bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-150">
+                        Neues Risiko hinzufügen
+                    </button>
+                </div>
+                <div id="risk-list-container" class="space-y-4">${renderRiskList()}</div>
+            `;
+        }
+
+        function renderRiskList() {
+            if (riskData.length === 0) {
+                return '<p class="text-center text-slate-400 py-8">Noch keine Risiken definiert. Klicken Sie auf "Neues Risiko hinzufügen".</p>';
+            }
+
+            let html = '<div class="space-y-3">';
+            riskData.forEach(risk => {
+                html += createCollapsibleSection(
+                    `risk-${risk.uuid}`,
+                    `${risk.title} (${risk.mitigatingControls.length} Controls)`,
+                    renderRiskEditor(risk),
+                    false
+                );
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderRiskEditor(risk) {
+            const likelihoodOptions = ['low', 'medium', 'high', 'very-high'];
+            const impactOptions = ['low', 'medium', 'high', 'very-high'];
+
+            return `<div class="space-y-6 p-4 bg-slate-900 rounded-lg shadow-inner risk-editor-form" data-risk-uuid="${risk.uuid}">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-3">
+                        <label class="block text-sm font-medium text-slate-300">Titel</label>
+                        <input type="text" name="title" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" value="${risk.title.replace(/"/g, '&quot;')}">
+                    </div>
+                    <div class="md:col-span-3">
+                        <label class="block text-sm font-medium text-slate-300">Beschreibung</label>
+                        <textarea name="description" rows="3" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">${risk.description}</textarea>
+                    </div>
+                     <div class="md:col-span-3">
+                        <label class="block text-sm font-medium text-slate-300">Bedrohung (Threat)</label>
+                        <textarea name="threat" rows="2" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">${risk.threat}</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Wahrscheinlichkeit (Likelihood)</label>
+                        <select name="likelihood" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            ${likelihoodOptions.map(opt => `<option value="${opt}" ${risk.likelihood === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300">Auswirkung (Impact)</label>
+                        <select name="impact" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                            ${impactOptions.map(opt => `<option value="${opt}" ${risk.impact === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                        </select>
+                    </div>
+                </div>
+
+                <hr class="border-slate-700">
+
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="text-lg font-semibold text-white">Mitigierende Controls</h4>
+                        <button class="open-search-modal-button bg-blue-600 text-white text-sm font-medium py-1 px-3 rounded-lg hover:bg-blue-700" data-risk-uuid="${risk.uuid}">
+                            Control hinzufügen
+                        </button>
+                    </div>
+                    <div class="space-y-2">${renderRiskControls(risk)}</div>
+                </div>
+
+                <hr class="border-slate-700">
+
+                <div class="flex justify-end">
+                    <button class="delete-risk-button bg-red-600 text-white text-sm font-medium py-1 px-3 rounded-lg hover:bg-red-700" data-risk-uuid="${risk.uuid}">
+                        Risiko löschen
+                    </button>
+                </div>
+            </div>`;
+        }
+
+        function renderRiskControls(risk) {
+            if (risk.mitigatingControls.length === 0) {
+                return '<p class="text-sm text-slate-400 italic">Keine Controls ausgewählt.</p>';
+            }
+
+            let html = '<ul class="space-y-2">';
+            risk.mitigatingControls.forEach((control, index) => {
+                let title = control.id;
+                let badge = '';
+                if (control.source === 'catalog') {
+                    const catalogEntry = catalogControlMap.get(control.id);
+                    if (catalogEntry) title = `${control.id}: ${catalogEntry.title}`;
+                    badge = `<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-800 text-blue-100">Katalog</span>`;
+                } else if (control.source === 'custom') {
+                    title = `${control.id}: ${control.title}`;
+                    badge = `<span class="ml-2 px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-800 text-green-100">Custom</span>`;
+                }
+
+                html += `
+                    <li class="flex justify-between items-center p-2 bg-slate-700 rounded-md">
+                        <span class="text-sm text-white">${title} ${badge}</span>
+                        <button class="remove-control-button text-red-400 hover:text-red-500" data-risk-uuid="${risk.uuid}" data-control-index="${index}" title="Entfernen">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 011-1h4a1 1 0 110 2H8a1 1 0 01-1-1z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+            return html;
+        }
+
+        function attachRiskListeners() {
+            // 1. Neues Risiko hinzufügen
+            const addRiskBtn = document.getElementById('add-risk-button');
+            if (addRiskBtn) addRiskBtn.addEventListener('click', addNewRisk);
+
+            // 2. Risiko löschen
+            document.querySelectorAll('.delete-risk-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const uuid = event.currentTarget.dataset.riskUuid;
+                    if (confirm('Möchten Sie dieses Risiko wirklich löschen?')) deleteRisk(uuid);
+                });
+            });
+
+            // 3. Risiko-Details speichern (bei Änderung)
+            document.querySelectorAll('.risk-editor-form input, .risk-editor-form textarea, .risk-editor-form select').forEach(input => {
+                input.addEventListener('change', (event) => {
+                    const form = event.target.closest('.risk-editor-form');
+                    const uuid = form.dataset.riskUuid;
+                    updateRiskDetails(uuid, form);
+                });
+            });
+
+            // 4. Control hinzufügen (Modal öffnen)
+            document.querySelectorAll('.open-search-modal-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const uuid = event.currentTarget.dataset.riskUuid;
+                    openSearchModal(uuid);
+                });
+            });
+
+            // 5. Control entfernen
+            document.querySelectorAll('.remove-control-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const uuid = event.currentTarget.dataset.riskUuid;
+                    const index = parseInt(event.currentTarget.dataset.controlIndex, 10);
+                    removeControlFromRisk(uuid, index);
+                });
+            });
+        }
+
+        // --- Risiko-Datenmanagement ---
+
+        function addNewRisk() {
+            const newRisk = {
+                uuid: generateUUID(),
+                title: "Neues Risiko",
+                description: "",
+                threat: "",
+                likelihood: "medium",
+                impact: "medium",
+                mitigatingControls: []
+            };
+            riskData.push(newRisk);
+            refreshRiskUI();
+            
+            // Öffne das neu erstellte Risiko
+            const sectionElement = document.querySelector(`[data-section-id="risk-${newRisk.uuid}"]`);
+            if (sectionElement) {
+                const headerEl = sectionElement.querySelector('.collapsible-header');
+                if (!headerEl.querySelector('.chevron-icon').classList.contains('open')) {
+                   headerEl.click();
+                }
+                // Fokussiere und selektiere den Titel
+                const titleInput = sectionElement.querySelector('input[name="title"]');
+                if (titleInput) {
+                    titleInput.focus();
+                    titleInput.select();
+                }
+            }
+        }
+
+        function deleteRisk(uuid) {
+            riskData = riskData.filter(risk => risk.uuid !== uuid);
+            refreshRiskUI();
+        }
+
+        function updateRiskDetails(uuid, formElement) {
+            const risk = riskData.find(r => r.uuid === uuid);
+            if (!risk) return;
+
+            risk.title = formElement.querySelector('[name="title"]').value;
+            risk.description = formElement.querySelector('[name="description"]').value;
+            risk.threat = formElement.querySelector('[name="threat"]').value;
+            risk.likelihood = formElement.querySelector('[name="likelihood"]').value;
+            risk.impact = formElement.querySelector('[name="impact"]').value;
+
+            // Nur den Titel im Header aktualisieren
+            const sectionElement = document.querySelector(`[data-section-id="risk-${uuid}"]`);
+            if (sectionElement) {
+                const titleEl = sectionElement.querySelector('.collapsible-header h2');
+                titleEl.textContent = `${risk.title} (${risk.mitigatingControls.length} Controls)`;
+            }
+        }
+
+        function addControlToRisk(riskUuid, controlData) {
+            const risk = riskData.find(r => r.uuid === riskUuid);
+            if (!risk) return;
+
+            // Prüfen auf Duplikate
+            if (risk.mitigatingControls.some(c => c.id === controlData.id)) {
+                alert(`Control ${controlData.id} ist bereits diesem Risiko zugeordnet.`);
+                return;
+            }
+
+            risk.mitigatingControls.push(controlData);
+            refreshRiskUI();
+        }
+
+        function removeControlFromRisk(riskUuid, index) {
+            const risk = riskData.find(r => r.uuid === riskUuid);
+            if (risk && index >= 0 && index < risk.mitigatingControls.length) {
+                risk.mitigatingControls.splice(index, 1);
+                refreshRiskUI();
+            }
+        }
+
+        /**
+         * Aktualisiert die UI nach Änderungen (Rendert neu unter Beibehaltung des Zustands).
+         */
+        function refreshRiskUI() {
+            const container = document.getElementById('risk-list-container');
+            if (container) {
+                // Speichere, welche Abschnitte offen waren
+                const openSections = new Set();
+                document.querySelectorAll('#risk-list-container .collapsible-content.open').forEach(el => {
+                    openSections.add(el.id.replace('-content', ''));
+                });
+
+                container.innerHTML = renderRiskList();
+                
+                // Zustand wiederherstellen
+                riskData.forEach(risk => {
+                    const sectionId = `risk-${risk.uuid}`;
+                    const sectionElement = document.querySelector(`[data-section-id="${sectionId}"]`);
+                    
+                    if (sectionElement) {
+                        const contentEl = sectionElement.querySelector('.collapsible-content');
+                        const iconEl = sectionElement.querySelector('.chevron-icon');
+                        const titleEl = sectionElement.querySelector('.collapsible-header h2');
+
+                        // Titel aktualisieren (falls Control-Anzahl sich geändert hat)
+                        titleEl.textContent = `${risk.title} (${risk.mitigatingControls.length} Controls)`;
+
+                        if (openSections.has(sectionId)) {
+                            contentEl.classList.add('open');
+                            iconEl.classList.add('open');
+                        }
+                    }
+                });
+
+                // Listener müssen neu angehängt werden, da der Inhalt ersetzt wurde
+                attachCollapsibleListeners();
+                attachRiskListeners();
+            }
+            refreshProfilePreviewUI();
+        }
+
+
+        // --- Katalog-Suche & Modal Logik ---
+
+        function openSearchModal(riskUuid) {
+            currentRiskUuidForSearch = riskUuid;
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            
+            // Reset Modal
+            document.getElementById('tab-search').click(); 
+            document.getElementById('custom-control-id').value = '';
+            document.getElementById('custom-control-title').value = '';
+            document.getElementById('custom-control-statement').value = '';
+
+            // Katalog-Status prüfen
+            const searchTab = document.getElementById('tab-search');
+            if (catalogControlMap.size === 0) {
+                searchTab.disabled = true;
+                searchTab.classList.add('opacity-50', 'cursor-not-allowed');
+                let errorMsg = (catalogData && catalogData.error) ? catalogData.error : "Katalog ist leer oder nicht geladen.";
+                searchResults.innerHTML = `<p class="text-red-400 text-sm p-2">${errorMsg} Nur benutzerdefinierte Controls möglich.</p>`;
+                document.getElementById('tab-custom').click(); 
+            } else {
+                searchTab.disabled = false;
+                searchTab.classList.remove('opacity-50', 'cursor-not-allowed');
+                handleCatalogSearch(); // Lade initiale Ergebnisse
+            }
+
+            searchModal.classList.remove('hidden');
+            if (!searchTab.disabled) searchInput.focus();
+            else document.getElementById('custom-control-id').focus();
+        }
+
+        function closeSearchModal() {
+            searchModal.classList.add('hidden');
+            currentRiskUuidForSearch = null;
+        }
+
+        function handleCatalogSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            if (query.length === 0) {
+                // Zeige die ersten 100 Controls, wenn die Suche leer ist
+                const allControls = Array.from(catalogControlMap.entries()).map(([id, control]) => ({ id, title: control.title || '(Kein Titel)' }));
+                allControls.sort((a, b) => a.id.localeCompare(b.id));
+                renderSearchResults(allControls.slice(0, 100));
+                return;
+            }
+
+            if (query.length < 2) {
+                searchResults.innerHTML = '<p class="text-slate-400 text-sm text-center p-2">Mindestens 2 Zeichen eingeben.</p>';
+                return;
+            }
+
+            const results = [];
+            for (const [id, control] of catalogControlMap.entries()) {
+                if (id.toLowerCase().includes(query) || (control.title && control.title.toLowerCase().includes(query))) {
+                    results.push({ id, title: control.title || '(Kein Titel)' });
+                }
+            }
+
+            if (results.length === 0) {
+                searchResults.innerHTML = '<p class="text-slate-400 text-sm text-center p-2">Keine Ergebnisse gefunden.</p>';
+                return;
+            }
+
+            results.sort((a, b) => a.id.localeCompare(b.id));
+            renderSearchResults(results.slice(0, 100));
+        }
+
+        function renderSearchResults(results) {
+            let html = '';
+            results.forEach(result => {
+                html += `
+                    <div class="search-result-item p-3 rounded-md cursor-pointer flex justify-between items-center" data-control-id="${result.id}">
+                        <div>
+                            <p class="font-medium text-white">${result.id}</p>
+                            <p class="text-sm text-slate-300">${result.title}</p>
+                        </div>
+                        <button class="text-blue-400 hover:text-blue-500" title="Hinzufügen">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                        </button>
+                    </div>
+                `;
+            });
+
+            searchResults.innerHTML = html;
+
+            // Listener für Ergebnisse
+            document.querySelectorAll('.search-result-item').forEach(item => {
+                item.addEventListener('click', () => selectControlFromSearch(item.dataset.controlId));
+            });
+        }
+
+        function selectControlFromSearch(controlId) {
+            if (!currentRiskUuidForSearch) return;
+            addControlToRisk(currentRiskUuidForSearch, { id: controlId, source: "catalog" });
+            closeSearchModal();
+        }
+
+        function handleAddCustomControl() {
+            if (!currentRiskUuidForSearch) return;
+
+            const id = document.getElementById('custom-control-id').value.trim();
+            const title = document.getElementById('custom-control-title').value.trim();
+            const statement = document.getElementById('custom-control-statement').value.trim();
+
+            if (!id || !title || !statement) {
+                alert("Bitte füllen Sie alle Felder aus.");
+                return;
+            }
+
+            // Prüfen, ob ID bereits im Katalog existiert
+            if (catalogControlMap.has(id)) {
+                alert(`Die ID "${id}" existiert bereits im Katalog. Bitte wählen Sie eine eindeutige ID oder nutzen Sie den Katalog-Tab.`);
+                return;
+            }
+
+            addControlToRisk(currentRiskUuidForSearch, { id: id, title: title, statement: statement, source: "custom" });
+            closeSearchModal();
+        }
+
+
+        // --- Profil-Vorschau ---
+
+        function renderProfilePreview() {
+            return `<div id="profile-preview-container"></div>`;
+        }
+
+        function refreshProfilePreviewUI() {
+            const container = document.getElementById('profile-preview-container');
+            if (!container) return;
+
+            const { catalogControls, customControls } = collectSelectedControls();
+
+            if (catalogControls.length === 0 && customControls.length === 0) {
+                container.innerHTML = '<p class="text-slate-400">Es wurden noch keine Controls ausgewählt.</p>';
+                return;
+            }
+
+            let html = '';
+            if (catalogControls.length > 0) {
+                html += `<h4 class="text-lg font-semibold text-white mb-3">Aus Katalog (${catalogControls.length})</h4><ul class="list-disc list-inside space-y-1 text-sm text-slate-300">`;
+                catalogControls.forEach(id => {
+                    const control = catalogControlMap.get(id);
+                    html += `<li><strong>${id}</strong>: ${control ? control.title : '(Titel nicht gefunden)'}</li>`;
+                });
+                html += '</ul>';
+            }
+
+            if (customControls.length > 0) {
+                html += `<h4 class="text-lg font-semibold text-white mt-6 mb-3">Benutzerdefiniert (${customControls.length})</h4><ul class="list-disc list-inside space-y-1 text-sm text-slate-300">`;
+                customControls.forEach(control => {
+                    html += `<li><strong>${control.id}</strong>: ${control.title}</li>`;
+                });
+                html += '</ul>';
+            }
+            container.innerHTML = html;
+        }
+
+        function collectSelectedControls() {
+            const catalogControlSet = new Set();
+            const customControlMap = new Map();
+
+            riskData.forEach(risk => {
+                risk.mitigatingControls.forEach(control => {
+                    if (control.source === 'catalog') {
+                        catalogControlSet.add(control.id);
+                    } else if (control.source === 'custom') {
+                        if (!customControlMap.has(control.id)) {
+                            customControlMap.set(control.id, control);
+                        }
+                    }
+                });
+            });
+
+            const catalogControls = Array.from(catalogControlSet).sort((a, b) => a.localeCompare(b));
+            const customControls = Array.from(customControlMap.values()).sort((a, b) => a.id.localeCompare(b.id));
+
+            return { catalogControls, customControls };
+        }
+
+
+        // --- Speichern und OSCAL-Generierung ---
+
+        function handleFileSave() {
+            if (!sspData) return;
+
+             if (riskData.length === 0) {
+                alert("Es wurden keine Risiken definiert. Das Profil kann nicht erstellt werden.");
+                return;
+            }
+
+            try {
+                const ssp = sspData['system-security-plan'];
+                const { catalogControls, customControls } = collectSelectedControls();
+
+                if (catalogControls.length === 0 && customControls.length === 0) {
+                    alert("Es wurden keine mitigierenden Controls ausgewählt. Das Profil kann nicht erstellt werden.");
+                    return;
+                }
+
+                // 1. Generiere das OSCAL Profil
+                const profileData = generateOscalProfile(ssp, catalogControls, customControls);
+                
+                // 2. Aktualisiere das SSP
+                updateSspWithProfileLink(ssp, profileFileName);
+
+                // 3. Downloads
+                downloadJson(profileData, profileFileName);
+                setTimeout(() => {
+                    const updatedSspFileName = sspFileName.replace('.json', '-updated.json');
+                    downloadJson(sspData, updatedSspFileName);
+                }, 500);
+
+            } catch (error) {
+                console.error("Fehler beim Speichern:", error);
+                alert("Fehler beim Generieren der OSCAL-Dateien: " + error.message);
+            }
+        }
+
+        function generateOscalProfile(ssp, catalogControls, customControls) {
+            const profileUuid = generateUUID();
+            const sspTitle = ssp.metadata.title || 'Unnamed SSP';
+            const timestamp = new Date().toISOString();
+            const oscalVersion = ssp.metadata["oscal-version"] || "1.1.3";
+
+            const profile = {
+                "profile": {
+                    "uuid": profileUuid,
+                    "metadata": {
+                        "title": `Risiko-basiertes Profil für ${sspTitle}`,
+                        "last-modified": timestamp,
+                        "version": "1.0.0",
+                        "oscal-version": oscalVersion,
+                         "props": [
+                            { "name": "derived-from-ssp-uuid", "value": ssp.uuid }
+                        ],
+                    },
+                    "imports": [],
+                    "back-matter": { "resources": [] }
+                }
+            };
+
+            // 1. Imports (Katalog-Controls)
+            if (catalogControls.length > 0 && catalogData && catalogData.sourceUrl) {
+                profile.profile.imports.push({
+                    "href": catalogData.sourceUrl,
+                    "include-controls": [{ "with-ids": catalogControls }]
+                });
+            }
+
+            // 2. Custom Controls (via Back-Matter Embedding)
+            if (customControls.length > 0) {
+                const customCatalogUuid = generateUUID();
+                
+                // Erstelle Mini-Katalog JSON
+                const miniCatalog = {
+                    "catalog": {
+                        "uuid": generateUUID(),
+                        "metadata": { "title": `Custom Controls Catalog`, "last-modified": timestamp, "version": "1.0", "oscal-version": oscalVersion },
+                        "controls": customControls.map(c => ({
+                            "id": c.id,
+                            "title": c.title,
+                            "parts": [{ "name": "statement", "prose": c.statement }]
+                        }))
+                    }
+                };
+                
+                // Encode (UTF-8 sicher)
+                const encodedCatalog = base64EncodeUnicode(JSON.stringify(miniCatalog, null, 2));
+
+                const customCatalogResource = {
+                    "uuid": customCatalogUuid,
+                    "title": `Benutzerdefinierte Controls`,
+                     "rlinks": [
+                        {
+                            "href": `#${customCatalogUuid}-data`,
+                            "media-type": "application/oscal.catalog+json"
+                        }
+                    ],
+                    "attachments": [{
+                        "uuid": `${customCatalogUuid}-data`,
+                        "media-type": "application/oscal.catalog+json",
+                        "base64": { "filename": "custom-controls.json", "value": encodedCatalog }
+                    }]
+                };
+                profile.profile["back-matter"].resources.push(customCatalogResource);
+
+                // Importiere diesen Back-Matter Katalog (referenziert die Resource UUID)
+                profile.profile.imports.push({
+                    "href": `#${customCatalogUuid}`,
+                    "include-controls": [{ "with-ids": customControls.map(c => c.id) }]
+                });
+            }
+
+
+            // 3. Risiko-Details (via Back-Matter Embedding)
+            const riskDataUuid = generateUUID();
+            const encodedRiskData = base64EncodeUnicode(JSON.stringify({ "risks": riskData }, null, 2));
+
+            const riskDataResource = {
+                "uuid": riskDataUuid,
+                "title": "Details der Risikoanalyse",
+                "description": "Enthält die definierten Risiken, Bewertungen und Zuordnungen.",
+                 "rlinks": [
+                    {
+                        "href": `#${riskDataUuid}-data`,
+                        "media-type": "application/json"
+                    }
+                ],
+                "attachments": [{
+                    "uuid": `${riskDataUuid}-data`,
+                     "media-type": "application/json",
+                    "base64": { "filename": "risk-analysis.json", "value": encodedRiskData }
+                }]
+            };
+            profile.profile["back-matter"].resources.push(riskDataResource);
+
+            // Füge einen Prop hinzu, der auf die Risiko-Details verweist
+            profile.profile.metadata.props.push({
+                "name": "risk-analysis-details-ref",
+                "value": `#${riskDataUuid}`
+            });
+
+            return profile;
+        }
+
+        function updateSspWithProfileLink(ssp, profileName) {
+            if (!ssp.metadata.links) ssp.metadata.links = [];
+
+            const existingLink = ssp.metadata.links.find(link => link.href === profileName && link.rel === 'profile');
+
+            if (!existingLink) {
+                ssp.metadata.links.push({
+                    "href": profileName,
+                    "rel": "profile",
+                    "media-type": "application/oscal.profile+json",
+                    "text": "Risiko-basiertes Profil (generiert)"
+                });
+            }
+            
+            ssp.metadata["last-modified"] = new Date().toISOString();
+        }
+
+        function downloadJson(dataObject, fileName) {
+            // UTF-8 mit BOM (Byte Order Mark) für maximale Kompatibilität
+            const dataStr = JSON.stringify(dataObject, null, 2); 
+            const dataBlob = new Blob(["\uFEFF" + dataStr], { type: 'application/json;charset=utf-8' });
+            const url = URL.createObjectURL(dataBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+    </script>
+</body>
+</html>
