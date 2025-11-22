@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "51f21564-5785-4206-942e-135f3556c469",
+    "uuid": "2b52079d-9b18-4000-bc4b-742b279824be",
     "metadata": {
       "title": "NET.4.1 TK-Anlagen - Benutzerdefiniert",
-      "last-modified": "2025-11-15T16:31:55.371860+00:00",
+      "last-modified": "2025-11-22T12:46:14.233394+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "7e5099f6-a1d0-4757-b55f-ee77e8adeff1",
+        "uuid": "9f73a5c4-d442-44d0-b90d-c891be9e28c4",
         "type": "interconnection",
         "title": "NET.4.1 TK-Anlagen",
         "description": "This component represents the implementation of all controls for Baustein NET.4.1.",
@@ -45,127 +45,12 @@
         ],
         "control-implementations": [
           {
-            "uuid": "2bdc2eb0-842e-43a1-93ef-1c1382752335",
-            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/tk-anwendungen_profile.json",
+            "uuid": "9ef1d5f4-c802-4eb2-a52e-5b6826fddfc3",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Kompendien/Grundschutz%2B%2B-Kompendium/profile/tk-anwendungen_profile.json",
             "description": "Implementation for all controls in Baustein NET.4.1",
             "implemented-requirements": [
               {
-                "uuid": "82aea5b7-b84a-4df1-b78a-85a496cfa6d0",
-                "control-id": "ARCH.7.1",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "5",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "ARCH",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "net.4.2.a16-m2",
-                    "uuid": "2fc4be58-973e-4b98-8734-275d4b1259c0",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Ein dediziertes VLAN wird für den VoIP-Verkehr eingerichtet. Das primäre Ziel ist die Sicherstellung der Dienstgüte (Quality of Service - QoS) durch Priorisierung des Voice-Traffics. Die Sicherheitsaspekte der Trennung sind sekundär und es gibt kaum oder keine restriktiven Regeln für die Kommunikation zwischen den VLANs."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Auf den Netzwerk-Switches wird ein neues VLAN (z.B. VLAN 10) für Voice erstellt. Die Switch-Ports für Telefone werden diesem VLAN zugewiesen. QoS-Einstellungen (z.B. CoS, DSCP) werden konfiguriert, um den Voice-Traffic zu priorisieren. Zwischen dem Voice-VLAN und dem Daten-VLAN bestehen oft 'allow any'-Regeln."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die Switch-Konfiguration, um die Existenz des Voice-VLANs zu bestätigen. Die Konfiguration des Routers oder Layer-3-Switches wird auf die Regeln für das Inter-VLAN-Routing geprüft. Ein Test-PC im Daten-VLAN versucht, eine Verbindung zu einem Telefon im Voice-VLAN aufzubauen, um die fehlende Restriktion zu zeigen."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "net.4.2.a16-m3",
-                    "uuid": "2168dde8-73b0-4a62-8346-c2d13ca09525",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Das VoIP-Netz SOLLTE in geeigneter Weise vom allgemeinen Datennetz getrennt werden. Dies wird typischerweise durch den Einsatz eines separaten logischen Netzwerks (VLAN) für VoIP-Komponenten erreicht."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es wird eine Richtlinie zur Netzwerksegmentierung etabliert, die ein separates VLAN für VoIP vorschreibt. Die Switches werden entsprechend konfiguriert, um VoIP-Endgeräte in dieses VLAN zu platzieren."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer überprüft die Netzwerkrichtlinien und die Switch-Konfigurationen, um sicherzustellen, dass ein separates VLAN für VoIP existiert und verwendet wird. Es wird stichprobenartig geprüft, ob die VoIP-Endgeräte dem korrekten VLAN zugeordnet sind."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "net.4.2.a16-m4",
-                    "uuid": "6a9350be-7a88-4dbf-a467-c264140ab5d9",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Das VoIP-VLAN wird durch strikte Access Control Lists (ACLs) am Router oder Layer-3-Switch abgesichert. Diese erlauben nur die absolut notwendige Kommunikation (z.B. Signalisierung zum VoIP-Server, DHCP, Provisioning) und blockieren standardmäßig jeglichen anderen Verkehr, insbesondere die direkte Kommunikation vom Daten-VLAN in das Voice-VLAN. Es SOLLTE eine Regelung für den Umgang mit Geräten wie PCs mit Softphones geben, die auf beide Netze zugreifen müssen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Am L3-Switch werden ACLs konfiguriert, die den Verkehr in und aus dem Voice-VLAN filtern. Beispielsweise wird nur Verkehr auf Port 5061 zum VoIP-Server und auf Port 67/68 zum DHCP-Server erlaubt. Für Softphone-Clients werden entweder spezifische Firewall-Regeln auf dem Client-PC oder eine VPN-Lösung für den Zugriff auf das Voice-Netz verwendet."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die ACLs, die auf das Voice-VLAN angewendet werden, auf ihre Restriktivität. Es werden Penetrationstests durchgeführt, um zu versuchen, von einem Client im Datennetz auf Dienste im Voice-Netz zuzugreifen. Die Lösung für Softphone-Clients wird auf ihre Sicherheit hin bewertet."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "net.4.2.a16-m5",
-                    "uuid": "7e1f31a2-7b6f-4639-9a78-b5abbf58d7cf",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Trennung wird durch eine physisch separate Netzwerkinfrastruktur realisiert oder, falls logisch, durch den Einsatz von 802.1X port-basierter Netzwerkzugangskontrolle (PNAC) abgesichert, um zu verhindern, dass nicht autorisierte Geräte eine Verbindung zum Voice-VLAN herstellen. VoIP-Endgeräte in einem VoIP-Netz SOLLTEN NUR die vorgesehenen VoIP-Verbindungen zu anderen IT-Systemen aufbauen können; jeglicher anderer ausgehender Verkehr wird blockiert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein RADIUS-Server wird für die 802.1X-Authentifizierung eingesetzt. Nur Geräte mit einem gültigen Zertifikat oder bekannten MAC-Adresse (MAB als Fallback) erhalten Zugang zum Voice-VLAN. Ausgehender Verkehr vom Voice-VLAN wird durch eine Firewall so gefiltert, dass die Telefone nur mit dem VoIP-Server, Provisioning-Server und NTP-Server kommunizieren können, aber nicht frei im Internet surfen können."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die Konfiguration des RADIUS-Servers und der Switches für 802.1X. Es wird versucht, ein nicht autorisiertes Gerät (z.B. einen Laptop) an einen für VoIP vorgesehenen Port anzuschließen, um zu prüfen, ob der Zugriff verweigert oder das Gerät in ein Quarantäne-VLAN verschoben wird. Ein Test von einem VoIP-Telefon aus, z.B. ein Ping auf eine externe Internet-Adresse, muss fehlschlagen."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "d6402046-68bb-461b-8614-1fb999cd009f",
+                "uuid": "40b49bba-6817-4e05-84cc-9b94199fe965",
                 "control-id": "ASST.7.1",
                 "description": "",
                 "props": [
@@ -203,7 +88,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a12-m1",
-                    "uuid": "f494a0e6-d6cc-4fe7-b950-856f63088c1e",
+                    "uuid": "5d851cf6-5ed6-4484-8dd1-cd75384696db",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -222,7 +107,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m2",
-                    "uuid": "cf3c4f46-5cc5-4cbc-a2ec-f53fc3e1b1b8",
+                    "uuid": "5302e39d-ad7b-49aa-a781-3d5ec1af6d08",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -241,7 +126,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m3",
-                    "uuid": "ad82658f-ac7c-4740-b50d-66ac88c7c6db",
+                    "uuid": "5b321926-39f9-4283-bde9-c8ab4e99dece",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -260,7 +145,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m4",
-                    "uuid": "223b313b-77d1-4411-a4a6-6f47ffcb24a3",
+                    "uuid": "085e3018-1871-47cd-91b8-60060406e35f",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -279,7 +164,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a12-m5",
-                    "uuid": "fb28593b-410c-4dc5-906a-124d12dd1524",
+                    "uuid": "e1ef2c0f-e095-4eb5-be92-5bda230928ab",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -299,7 +184,7 @@
                 ]
               },
               {
-                "uuid": "a855a15d-13da-485e-9328-6aa82389913c",
+                "uuid": "5c663f69-2512-4667-9ab9-5e1b115d5ab0",
                 "control-id": "BES.2.1.3",
                 "description": "",
                 "props": [
@@ -337,7 +222,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a9-m1",
-                    "uuid": "f22cbf4b-a8db-493d-aa01-798c18cbef0d",
+                    "uuid": "248a74c9-f600-4d68-8fce-11f24b8b141d",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -356,7 +241,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m2",
-                    "uuid": "ac66935b-1139-4380-a78f-c8d9b858428b",
+                    "uuid": "c41052c5-deb6-4176-8da5-62150285e850",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -375,7 +260,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m3",
-                    "uuid": "e04cf40f-3b0a-471f-8957-9174968aa8d4",
+                    "uuid": "da936bc2-31a2-4504-9fea-679211a6eef0",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -394,7 +279,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m4",
-                    "uuid": "a49a9d7e-2369-422f-a051-a0f270cf4db5",
+                    "uuid": "e85aaebe-8855-44e3-be32-ab9f990014fe",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -413,7 +298,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a9-m5",
-                    "uuid": "404b9d2a-f7ad-4f2b-b826-d06cc74bc5ed",
+                    "uuid": "c532ec32-cda8-40a0-9f14-f07ba93b1b51",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -433,7 +318,7 @@
                 ]
               },
               {
-                "uuid": "c7c9d9d5-67e1-4503-b5d7-5aee88dcfcf2",
+                "uuid": "7fb4b747-b7fe-4954-be26-94d4e06c52c0",
                 "control-id": "DEV.2.2",
                 "description": "",
                 "props": [
@@ -471,7 +356,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a1-m1",
-                    "uuid": "317e9820-f51c-475a-a482-118a0f96c0c0",
+                    "uuid": "ecb6326b-c00e-43a9-a966-764c1705c164",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -490,7 +375,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m2",
-                    "uuid": "9535eeec-2182-4650-8448-a1b34a280182",
+                    "uuid": "e3c712d1-8abc-445b-bd62-4c83cf8d14a0",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -509,7 +394,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m3",
-                    "uuid": "62cbd637-17af-47a9-8af3-7e6661fd230e",
+                    "uuid": "1ee8d8d3-70cc-40a8-80a7-6b838bb02e14",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -528,7 +413,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m4",
-                    "uuid": "a18c2aa3-7413-4833-89b6-ca0aa4c82c7d",
+                    "uuid": "cfd75ea3-9799-4f96-995e-f56f4fac0077",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -547,7 +432,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a1-m5",
-                    "uuid": "0ac52f46-551a-4765-8cc1-0061b1dd74d0",
+                    "uuid": "a8e2fafd-ea80-4771-b786-2f29fac2f0b4",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -567,7 +452,7 @@
                 ]
               },
               {
-                "uuid": "7c4c07c1-9bda-4aa1-9863-e8c8b0ac2a92",
+                "uuid": "5d8cde42-95ea-4113-88ce-a8b0656fb47a",
                 "control-id": "KONF.10.1",
                 "description": "",
                 "props": [
@@ -605,7 +490,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a5-m1",
-                    "uuid": "a2e94398-6db3-40c3-b10e-28079fd32c17",
+                    "uuid": "7cece52f-a6c7-4a3f-9054-fc2d07f075ca",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -624,7 +509,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m2",
-                    "uuid": "67ad783d-3fac-4921-a6ec-eca3d8f149d3",
+                    "uuid": "b21dd235-c4dc-4931-b829-80f8cd3387fd",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -643,7 +528,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m3",
-                    "uuid": "cb4486e0-05ef-41eb-8179-32a33fe7b3ad",
+                    "uuid": "b5c3d8ad-8c16-4808-b409-24d287591ba0",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -662,7 +547,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m4",
-                    "uuid": "f5d09cef-19c6-4067-ac2b-61d5d15229ad",
+                    "uuid": "91e68271-0855-4bdd-bc2b-86e9b8ed6a88",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -681,7 +566,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a5-m5",
-                    "uuid": "24eab0d9-4c81-4d62-8949-6a6ff9f87097",
+                    "uuid": "8930ceb4-2631-40b8-9f61-ca5a34e795c0",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -701,7 +586,7 @@
                 ]
               },
               {
-                "uuid": "981c4bbd-ab61-4dc8-80ac-84a491ba16e1",
+                "uuid": "ec5cf49e-d7ad-408a-ad3a-249d7f4f1cf4",
                 "control-id": "KONF.10.2",
                 "description": "",
                 "props": [
@@ -739,7 +624,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a8-m1",
-                    "uuid": "b20e2429-44d0-4a05-961f-3d8baf57f58b",
+                    "uuid": "77a89ee9-b800-46ee-ab8b-9353c3cb1e19",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -758,7 +643,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a8-m2",
-                    "uuid": "9fdade14-95b0-45d7-ab71-8892a318b7f1",
+                    "uuid": "5d2a60b1-164b-41b6-bdb8-b3dae20f7a05",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -777,7 +662,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a8-m3",
-                    "uuid": "4a307e45-49cc-4b30-8a3b-f4a6d28494a1",
+                    "uuid": "191479c6-92ee-43e5-84aa-d764680eefd8",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -796,7 +681,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a8-m4",
-                    "uuid": "809e50d5-306e-4e7a-aa48-ee5c01d2ac59",
+                    "uuid": "2c9afa53-9339-4e05-8a35-06a266bebf67",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -815,7 +700,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a8-m5",
-                    "uuid": "6d467c11-0ac7-422c-8190-0e56b48d66c9",
+                    "uuid": "3d373e35-d846-4bd8-a255-a36c7ef73acd",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -835,7 +720,7 @@
                 ]
               },
               {
-                "uuid": "aa0b6a8c-5d44-42a0-915f-90881f4bbc58",
+                "uuid": "4ed896dd-05f6-47d1-9d82-842d66bbd748",
                 "control-id": "KONF.10.4",
                 "description": "",
                 "props": [
@@ -873,7 +758,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a3-m1",
-                    "uuid": "83b1677b-8d3f-4bf0-9aa5-d31608f486dc",
+                    "uuid": "845b4f6b-d9fa-4938-bc93-c4a8ec2a8eef",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -892,7 +777,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m2",
-                    "uuid": "ea0b1619-ae94-4a20-958f-a2fe785fab05",
+                    "uuid": "aa43dd4b-ce91-41f4-924c-64f794dde3cd",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -911,7 +796,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m3",
-                    "uuid": "46a465c5-c180-4976-a609-98d4a0493de0",
+                    "uuid": "af59cbf4-462d-4ae7-a9db-94665cbfa765",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -930,7 +815,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m4",
-                    "uuid": "ce43303c-b558-4f96-8078-7861c828ffb2",
+                    "uuid": "ef846ae3-0c85-4af6-8a0a-6348cb230068",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -949,7 +834,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a3-m5",
-                    "uuid": "52a39905-bcaf-42da-89b8-7914e115c8fb",
+                    "uuid": "9a3004ed-612d-4be2-9997-7a54af7981c7",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -969,7 +854,7 @@
                 ]
               },
               {
-                "uuid": "f348c568-c90c-4b46-84ce-ed202ced392a",
+                "uuid": "52609864-8a0a-4614-9868-ecfcaa082c05",
                 "control-id": "KONF.11.8.2.1",
                 "description": "",
                 "props": [
@@ -1007,7 +892,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a4-m1",
-                    "uuid": "8bb3626d-5caa-47d7-986f-81526bfbeb83",
+                    "uuid": "f7f52bda-2f48-4fc9-9aed-7a7c6259b45d",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1026,7 +911,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m2",
-                    "uuid": "737610c0-86cc-41ea-9f96-0edbcdc0378d",
+                    "uuid": "37bdf7df-f168-4837-a467-986bfeece3ce",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1045,7 +930,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m3",
-                    "uuid": "06c16969-7d91-4d6d-8e83-3e9567917134",
+                    "uuid": "0f10c53a-80a0-41c3-9cbb-eefe79e6fe7e",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1064,7 +949,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m4",
-                    "uuid": "32686b2c-a1b8-4f8b-a0d1-019226de7351",
+                    "uuid": "1bfc841b-92d4-473a-9db7-f3285c3bd7fa",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1083,7 +968,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a4-m5",
-                    "uuid": "fb5cbcf6-107d-4880-bb7c-353106454ce1",
+                    "uuid": "33c31058-5658-4e3e-b8b8-72a143c9513c",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1103,7 +988,7 @@
                 ]
               },
               {
-                "uuid": "d6a23fde-4877-4a8b-98e1-bc23b2c3f9ae",
+                "uuid": "b15bcd47-1cea-489e-b093-cbaa963b34c4",
                 "control-id": "KONF.14.1",
                 "description": "",
                 "props": [
@@ -1141,7 +1026,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a14-m2",
-                    "uuid": "1ebb689d-53dc-40da-92b1-e54ac228bb36",
+                    "uuid": "a2567228-d29b-44d2-b5ba-ec34aae7804d",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1160,7 +1045,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a14-m3",
-                    "uuid": "24a0c37f-bfc9-41a3-841f-310976a9ce50",
+                    "uuid": "c16820ce-11c4-4925-b947-aa48d52e2182",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1179,7 +1064,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a14-m4",
-                    "uuid": "63fed200-fa45-49ca-81d1-c33761c4b02b",
+                    "uuid": "44db5119-f3b2-40a4-976d-b8d3b06330d3",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1198,7 +1083,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a14-m5",
-                    "uuid": "e79c869d-d8e0-47ce-b238-bfbb81f199fd",
+                    "uuid": "27c67766-d386-4b8c-b9c0-ae7825edb9b4",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1218,7 +1103,7 @@
                 ]
               },
               {
-                "uuid": "a91a7473-9076-4a9b-baf8-af02ae7ea605",
+                "uuid": "dbd7e397-34a7-49f3-9ed1-449042d4379a",
                 "control-id": "KONF.14.1.1",
                 "description": "",
                 "props": [
@@ -1256,7 +1141,7 @@
                 "statements": [
                   {
                     "statement-id": "net.4.2.a15-m2",
-                    "uuid": "64d3ca0a-5073-4af6-b758-f1a2526001b4",
+                    "uuid": "7332da95-0309-49f2-8c14-e939d399b2c8",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1275,7 +1160,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a15-m3",
-                    "uuid": "cc92f79f-b7b7-4226-a62c-83bb96ff3250",
+                    "uuid": "1f69fb73-42ad-4c93-8d7f-381826658309",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1294,7 +1179,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a15-m4",
-                    "uuid": "0ceda375-8678-4648-b011-57a87ede988d",
+                    "uuid": "f84d4613-e8cf-4aed-99d0-7ed0262f8ff5",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1313,7 +1198,7 @@
                   },
                   {
                     "statement-id": "net.4.2.a15-m5",
-                    "uuid": "6baee864-6d5b-4798-bb94-c323e5a5f891",
+                    "uuid": "bf1f43f5-e6cd-4dbd-b1cb-38e8de800d58",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {

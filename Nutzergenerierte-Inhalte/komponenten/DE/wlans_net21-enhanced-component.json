@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "d40f09b7-1444-426b-a262-3e3fb86dd8ca",
+    "uuid": "8a14b11b-81d6-4fd7-9916-ea6f9cec6335",
     "metadata": {
       "title": "NET.2.1 WLANs - Benutzerdefiniert",
-      "last-modified": "2025-11-15T16:31:54.790091+00:00",
+      "last-modified": "2025-11-22T12:46:13.571564+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "0437747b-1795-4ef5-8b1d-2e26a7fc5bed",
+        "uuid": "8683916f-b274-4d04-9668-5685340fa444",
         "type": "interconnection",
         "title": "NET.2.1 WLANs",
         "description": "This component represents the implementation of all controls for Baustein NET.2.1.",
@@ -73,13 +73,147 @@
         ],
         "control-implementations": [
           {
-            "uuid": "15bfe725-1e44-4f18-9cc9-e380a7ec6655",
-            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/wlans_profile.json",
+            "uuid": "80f20a3c-31ba-40d4-85ee-e413389b71c3",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Kompendien/Grundschutz%2B%2B-Kompendium/profile/wlans_profile.json",
             "description": "Implementation for all controls in Baustein NET.2.1",
             "implemented-requirements": [
               {
-                "uuid": "ade05ce0-3d5e-43d4-ae96-7012a634817b",
+                "uuid": "3d5ab51e-1257-45eb-985e-4d5369d9203e",
                 "control-id": "ARCH.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Risk Treatment",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A7-m1",
+                    "uuid": "271f445a-c37d-4134-8250-72a97e7f2149",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Access Points werden direkt an verfügbare LAN-Switches angeschlossen, ohne eine bewusste Entscheidung über die Trennung des Distribution Systems."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Verbindung der Access Points zum kabelgebundenen Netz erfolgt opportunistisch. Es wird keine Trennung des Management- oder Datenverkehrs der APs vom restlichen LAN-Verkehr vorgenommen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Switch-Port-Konfigurationen, an denen Access Points angeschlossen sind. Stellen Sie fest, ob diese Ports sich in demselben VLAN wie andere Endgeräte befinden und keine spezifische Konfiguration aufweisen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A7-m2",
+                    "uuid": "6da50ab4-59bd-485f-ac5d-d50814416453",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wurde entschieden, den WLAN-Datenverkehr logisch vom restlichen LAN zu trennen. Die Umsetzung erfolgt durch die Konfiguration von VLANs auf den vorhandenen Access Switches."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Notwendigkeit einer Trennung ist erkannt. Man nutzt die vorhandene Infrastruktur (Access Switches), um mittels VLANs den Datenverkehr der verschiedenen SSIDs vom übrigen LAN-Verkehr zu separieren. Eine physische Trennung wird aus Kostengründen nicht in Betracht gezogen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie die Konfiguration der Access Switches. Verifizieren Sie, dass die Ports, an denen die APs hängen, als Trunk-Ports konfiguriert sind und die entsprechenden VLANs für die SSIDs transportieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A7-m3",
+                    "uuid": "79a3b37c-881b-4118-9e89-92e569d32d65",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bevor ein kabelgebundenes Distribution System aufgebaut wird, MUSS prinzipiell entschieden werden, ob physisch oder logisch durch VLANs auf den Access Switches des kabelbasierten LANs getrennt wird. Diese Entscheidung MUSS dokumentiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Rahmen der Planung wird eine bewusste und dokumentierte Entscheidung getroffen, wie das Backbone-Netz für die Access Points (das Distribution System) gestaltet wird. Beide Optionen – eine komplett separate physische Verkabelung oder die Nutzung von VLANs auf der bestehenden Infrastruktur – werden hinsichtlich Kosten, Sicherheit und Flexibilität abgewogen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Fordern Sie das Planungsdokument für das WLAN-Distribution-System an. Prüfen Sie, ob darin die Abwägung zwischen physischer und logischer Trennung und die daraus resultierende Entscheidung nachvollziehbar dokumentiert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A7-m4",
+                    "uuid": "537c3d02-743f-42e6-b5cf-716fd3db8b7c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Entscheidung für eine logische oder physische Trennung wird auf Basis einer formalen Risikoanalyse getroffen. Bei logischer Trennung wird der Management-Verkehr der Access Points in einem dedizierten, besonders geschützten VLAN geführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Wahl der Trennungsart ist nicht nur eine technische, sondern eine risikobasierte Entscheidung. Unabhängig von der Trennung des Nutzerdatenverkehrs wird der administrative Verkehr zur Steuerung und Überwachung der APs selbst zusätzlich isoliert, um Angriffe auf die Infrastruktur zu erschweren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Fordern Sie die Risikoanalyse bezüglich des Distribution Systems an. Überprüfen Sie die Switch- und AP-Konfigurationen, um sicherzustellen, dass der Management-Traffic (z.B. für CAPWAP-Tunnel zum Controller oder die Management-IP des APs) in einem separaten, gesicherten VLAN liegt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A7-m5",
+                    "uuid": "76f4c846-44fc-46e6-802a-e99a085e4e6d",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Kommunikation innerhalb des Distribution Systems, insbesondere zwischen Access Points und WLAN-Controllern, wird durch eine durchgängige Verschlüsselung auf der Vermittlungsschicht (z.B. IPsec oder MACsec) geschützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Selbst bei einer logischen Trennung durch VLANs wird der Verkehr zusätzlich verschlüsselt. Dies schützt vor Angriffen innerhalb des kabelgebundenen Netzes, wie z.B. VLAN-Hopping oder ARP-Spoofing, und stellt die Vertraulichkeit und Integrität des gesamten WLAN-Infrastrukturverkehrs sicher."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Konfiguration der Switches, Access Points und des WLAN-Controllers auf aktive MACsec- oder IPsec-Konfigurationen für das Distribution System. Analysieren Sie den Netzwerkverkehr zwischen einem AP und dem Controller mit einem Paket-Sniffer (z.B. `Wireshark`), um zu verifizieren, dass der Verkehr (z.B. innerhalb eines ESP- oder CAPWAP-DTLS-Tunnels) verschlüsselt ist."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "96520f7b-7641-45ff-9cfc-b03405255918",
+                "control-id": "ARCH.2.2",
                 "description": "",
                 "props": [
                   {
@@ -116,7 +250,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A6-m1",
-                    "uuid": "19781979-4d5d-4a16-b19c-79404c3eadb1",
+                    "uuid": "d98b22d0-3d6a-418b-b800-4625d4706b7b",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -135,7 +269,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A6-m2",
-                    "uuid": "2865266e-7507-4f30-8fd0-b8844e55ff25",
+                    "uuid": "6379cc03-6eb4-47b9-993e-696c80c04ca3",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -154,7 +288,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A6-m3",
-                    "uuid": "8c77740b-e3ec-4d1b-a1b6-0703e45766dc",
+                    "uuid": "f7d847d4-ee66-4065-9b8f-5f7f0cd6cf00",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -173,7 +307,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A6-m4",
-                    "uuid": "73b615e7-3d66-4342-9960-975d3b65ab94",
+                    "uuid": "7e546336-6dbe-46a8-81cb-dc3dcb3556ca",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -192,7 +326,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A6-m5",
-                    "uuid": "58880f90-14e3-482b-99b9-7f350e266efb",
+                    "uuid": "2d63c31d-7798-42da-98c9-00d2b00c1421",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -212,8 +346,8 @@
                 ]
               },
               {
-                "uuid": "b676ea71-149b-4e85-9181-6cf19245cf83",
-                "control-id": "ARCH.2.2",
+                "uuid": "63942c49-c4d2-44ab-94e2-f0a705547af5",
+                "control-id": "ARCH.2.2.7",
                 "description": "",
                 "props": [
                   {
@@ -228,7 +362,7 @@
                   },
                   {
                     "name": "practice",
-                    "value": "ARCH",
+                    "value": "CON",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -243,244 +377,110 @@
                   },
                   {
                     "name": "effective_on_a",
-                    "value": "false",
+                    "value": "true",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   }
                 ],
                 "statements": [
                   {
-                    "statement-id": "NET.2.1.A9-m1",
-                    "uuid": "55bab740-c479-4740-a6db-e83b0eb4c652",
+                    "statement-id": "NET.2.1.A12-m1",
+                    "uuid": "d3d9276f-9b87-4b7f-9c7c-5204c39d11b2",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "WLANs werden ohne jegliche Absicherung direkt an das LAN angebunden. Der Access Point agiert als simple Bridge."
+                        "value": "Jeder Access Point wird einzeln und manuell über seine eigene Weboberfläche oder Kommandozeile konfiguriert und verwaltet."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es gibt keine logische oder physische Trennung zwischen dem drahtlosen und dem kabelgebundenen Netzwerk. Ein im WLAN kompromittierter Client hat vollen Zugriff auf das LAN, als wäre er per Kabel verbunden."
+                        "value": "Es gibt kein zentrales Werkzeug. Änderungen an der Konfiguration (z.B. ein neues Passwort) müssen auf jedem Gerät separat durchgeführt werden. Dies ist fehleranfällig und bei größeren Installationen nicht praktikabel."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Überprüfen Sie die Netzwerkkonfiguration eines WLAN-Clients und vergleichen Sie diese mit einem LAN-Client. Führen Sie von einem WLAN-Client aus einen Ping oder Portscan auf kritische Server im LAN durch. Erfolg bei diesen Tests deutet auf fehlende Trennung hin."
+                        "value": "Befragen Sie die Administratoren, wie sie eine Konfigurationsänderung auf alle Access Points anwenden. Beobachten Sie den Prozess. Das Fehlen einer zentralen Konsole oder eines Controllers ist ein klares Indiz."
                       }
                     ]
                   },
                   {
-                    "statement-id": "NET.2.1.A9-m2",
-                    "uuid": "c5bc761e-e492-450f-b89f-c20979d01513",
+                    "statement-id": "NET.2.1.A12-m2",
+                    "uuid": "cc305efc-a926-492b-88de-2ad49e94d77b",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Eine grundsätzliche Trennung des WLAN vom LAN wird durch die Platzierung der WLAN-Clients in einem eigenen VLAN erreicht. Es gibt jedoch keine Firewall oder Paketfilter zwischen den Netzen."
+                        "value": "Ein einfaches, zentrales Management-Tool wird eingesetzt, das primär der Überwachung des Betriebszustands (online/offline) und der Verteilung von Firmware-Updates dient."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Netze sind auf Layer 2 getrennt, aber auf Layer 3 über einen Router ohne Filterregeln miteinander verbunden. Dies verhindert Broadcast-Stürme, bietet aber keine wirksame Sicherheitskontrolle gegen gezielte Angriffe."
+                        "value": "Es gibt eine zentrale Übersicht, aber die Konfigurationsmöglichkeiten sind begrenzt. Komplexe Änderungen müssen eventuell immer noch manuell pro Gerät vorgenommen werden. Die Lösung erfüllt grundlegende Monitoring-Aufgaben."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Prüfen Sie die VLAN-Konfiguration auf den Switches. Überprüfen Sie anschließend die Konfiguration des Routers, der zwischen dem WLAN-VLAN und dem LAN-VLAN vermittelt. Stellen Sie sicher, dass dort keine Access Control Lists (ACLs) oder Firewall-Regeln aktiv sind."
+                        "value": "Lassen Sie sich die Managementlösung zeigen. Prüfen Sie den Funktionsumfang. Kann eine sicherheitsrelevante Einstellung, wie die Verschlüsselungsart, für alle APs zentral und gleichzeitig geändert werden, oder dient das Tool nur der Übersicht?"
                       }
                     ]
                   },
                   {
-                    "statement-id": "NET.2.1.A9-m3",
-                    "uuid": "492df0f1-0ef4-4642-9145-f43fd04529d4",
+                    "statement-id": "NET.2.1.A12-m3",
+                    "uuid": "868d8bee-b1d4-41cb-91d4-42ec856670c6",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Übergang zwischen WLANs und LAN MUSS durch einen Paketfilter oder eine Firewall abgesichert werden. Die Anbindung erfolgt unter Berücksichtigung der Entscheidung über das Distribution System (gemäß NET.2.1.A7)."
+                        "value": "Eine zentrale Managementlösung MUSS eingesetzt werden. Der Leistungsumfang der eingesetzten Lösung MUSS im Einklang mit den Anforderungen der WLAN-Strategie sein, insbesondere was die zentrale Konfiguration von Sicherheitsmerkmalen betrifft."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es ist eine verbindliche Regel, dass der gesamte Datenverkehr, der vom WLAN in das LAN (und umgekehrt) fließt, eine Kontrollinstanz (Firewall, Paketfilter) passieren muss. Die dort hinterlegten Regeln erlauben nur die explizit benötigte Kommunikation."
+                        "value": "Der Einsatz einer zentralen WLAN-Managementlösung (WLAN-Controller, Cloud-Management) ist verpflichtend. Die Lösung muss es ermöglichen, alle sicherheitsrelevanten Einstellungen (SSIDs, Verschlüsselung, Authentisierung, Passwörter etc.) zentral zu definieren und auf alle oder Gruppen von Access Points auszurollen."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Fordern Sie die Netzwerkarchitekturdokumentation an. Überprüfen Sie das Regelwerk der Firewall oder der Router-ACLs, die den Verkehr zwischen WLAN- und LAN-Zonen kontrollieren. Die Regeln sollten dem Prinzip der minimalen Rechtevergabe folgen."
+                        "value": "Überprüfen Sie, ob eine zentrale Managementlösung im Einsatz ist. Fordern Sie die WLAN-Strategie an und gleichen Sie die dort definierten Anforderungen mit den Fähigkeiten der Managementlösung ab. Lassen Sie sich zeigen, wie eine zentrale Konfigurationsänderung durchgeführt wird."
                       }
                     ]
                   },
                   {
-                    "statement-id": "NET.2.1.A9-m4",
-                    "uuid": "10ced394-a98f-40c2-bab1-8a089cc65a51",
+                    "statement-id": "NET.2.1.A12-m4",
+                    "uuid": "4be2572c-aa39-4384-bde7-df4e58c1a522",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Übergang zwischen WLAN und LAN wird durch eine Next-Generation Firewall (NGFW) mit Stateful Inspection und Intrusion Prevention (IPS) abgesichert. Die Regeln sind anwendungsspezifisch (Layer 7)."
+                        "value": "Die eingesetzte Managementlösung bietet erweiterte Funktionen wie die Erstellung von Heatmaps zur Visualisierung der Funkausleuchtung, die Überwachung der Konfigurationsintegrität und detaillierte Reporting-Funktionen über Clients und Nutzung."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Absicherung beschränkt sich nicht auf Ports und IP-Adressen. Die NGFW analysiert den Datenverkehr auf Anwendungsebene und kann z.B. nur bestimmte Funktionen von HTTP erlauben. Ein integriertes IPS erkennt und blockiert bekannte Angriffsmuster im Datenstrom."
+                        "value": "Die Managementlösung ist mehr als nur ein Konfigurationswerkzeug. Sie ist ein zentrales Instrument zur Analyse und Optimierung des WLANs. Sie hilft, die Einhaltung von Sicherheitsrichtlinien zu überwachen und liefert die Datenbasis für Kapazitätsplanung und Fehlersuche."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Überprüfen Sie das Regelwerk der NGFW und stellen Sie sicher, dass es anwendungsspezifische Kontrollen enthält. Prüfen Sie die Konfiguration und die Logs des IPS-Moduls auf erkannte und blockierte Angriffe, die aus dem WLAN stammen."
+                        "value": "Lassen Sie sich die erweiterten Funktionen der Managementlösung demonstrieren. Prüfen Sie beispielhaft einen Report zur Client-Auslastung oder eine Konformitätsprüfung. Vergleichen Sie eine generierte Heatmap mit der tatsächlichen Abdeckung vor Ort."
                       }
                     ]
                   },
                   {
-                    "statement-id": "NET.2.1.A9-m5",
-                    "uuid": "4ffb5548-54fb-4b39-a0f2-341a4c4e9034",
+                    "statement-id": "NET.2.1.A12-m5",
+                    "uuid": "91208e93-11f0-47f6-ac24-ba4e77e77c96",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Übergang wird durch eine Zero-Trust-Architektur gesichert. Jeder Zugriffsversuch aus dem WLAN wird pro Sitzung authentifiziert und autorisiert, unabhängig vom Gerät oder Benutzer. Der gesamte Verkehr wird auf Malware und Bedrohungen untersucht."
+                        "value": "Die WLAN-Management-Lösung ist über APIs vollständig in das IT-Ökosystem (z.B. SIEM, NAC, CMDB) integriert. Konfigurationsänderungen und operative Aufgaben sind weitgehend automatisiert (z.B. durch SOAR-Playbooks)."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es gibt keine implizit vertrauenswürdigen WLANs mehr. Eine Network Access Control (NAC) Lösung in Kombination mit einer NGFW und Malware-Analyse (Sandboxing) prüft jede Anfrage. Der Zugriff wird dynamisch auf Basis von Identität, Gerätezustand und Risikobewertung gewährt."
+                        "value": "Die Managementlösung agiert nicht isoliert. Erkennt das SIEM einen Angriff von einem WLAN-Client, kann es über die API der Managementlösung diesen Client automatisch sperren. Neue APs, die in der CMDB erfasst werden, werden automatisch in der Managementlösung provisioniert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Prüfen Sie die Richtlinien der NAC- und Zero-Trust-Lösung. Analysieren Sie die Integrationspunkte zwischen NAC, Firewall und Malware-Schutz. Überprüfen Sie die Protokolle, um die dynamische Durchsetzung der Richtlinien nachzuvollziehen."
+                        "value": "Prüfen Sie die Konfiguration der API-Schnittstellen der Managementlösung. Fordern Sie Beispiele für Automatisierungs-Workflows oder Skripte an, die diese APIs nutzen. Verfolgen Sie einen automatisierten Prozess, z.B. die Reaktion auf einen Sicherheitsalarm, durch die Protokolle der verschiedenen integrierten Systeme."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "5f2992f7-b26d-4bf5-912f-a21ea6f453dd",
-                "control-id": "ARCH.2.2.7",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "5",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "SYS",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "NET.2.1.A17-m1",
-                    "uuid": "a2c3f2fb-9839-4d28-aaa2-09ef4ce20436",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Kommunikation zwischen den Access Points erfolgt unverschlüsselt über das LAN."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Wenn Access Points untereinander oder mit einem zentralen Controller kommunizieren, geschieht dies im Klartext. Ein Angreifer im LAN könnte diesen Verkehr abhören oder manipulieren."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Schließen Sie einen Laptop an einen Switch-Port an, der für das WLAN-Management-VLAN konfiguriert ist. Zeichnen Sie den Verkehr mit einem Sniffer wie Wireshark auf. Prüfen Sie, ob Protokolle wie CAPWAP ohne DTLS-Verschlüsselung verwendet werden."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.2.1.A17-m2",
-                    "uuid": "4dd7d49d-f3cd-496c-b32b-515030d5904e",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Kommunikation zwischen Access Points und einem zentralen WLAN-Controller ist durch einen proprietären, herstellerspezifischen Mechanismus geschützt, dessen Sicherheit nicht verifiziert ist."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der Hersteller wirbt mit 'sicherer Kommunikation', aber es wird kein Standardprotokoll wie IPsec oder DTLS verwendet. Die tatsächliche Sicherheit ist unklar und nicht nachprüfbar."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Konsultieren Sie die Herstellerdokumentation, um die Art der Verschlüsselung zu verstehen. Analysieren Sie den Verkehr mit Wireshark. Selbst wenn er nicht im Klartext ist, prüfen Sie, ob das Protokoll bekannt ist oder ob es sich um eine undokumentierte, proprietäre Lösung handelt."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.2.1.A17-m3",
-                    "uuid": "3d07ad91-8b9b-4992-ad6f-99902a63a323",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Management-Kommunikation zwischen den Access Points und dem WLAN-Controller MUSS durch ein standardisiertes Protokoll wie DTLS (im Rahmen von CAPWAP) oder IPsec verschlüsselt werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es wird sichergestellt, dass der Kontroll- und Steuerungsverkehr zwischen den Infrastrukturkomponenten vertraulich und integer ist. Die Verwendung von etablierten, standardisierten Verschlüsselungsprotokollen ist hierfür die Mindestanforderung."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfen Sie die Konfiguration des WLAN-Controllers und der Access Points, um sicherzustellen, dass die Verschlüsselung des Management-Verkehrs aktiviert ist. Analysieren Sie den Verkehr mit Wireshark und verifizieren Sie, dass ein DTLS-Handshake stattfindet oder dass der Verkehr in ESP-Pakete (IPsec) gekapselt ist."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.2.1.A17-m4",
-                    "uuid": "2ccfe89c-124d-4c68-b824-486c2954405e",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Kommunikation zwischen den Access Points über die Funkschnittstelle (z.B. bei Mesh-Netzwerken) und das LAN wird vollständig verschlüsselt. Dies umfasst sowohl den Management- als auch den Nutzdatenverkehr."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Nicht nur der Steuerungsverkehr zum Controller, sondern auch die Nutzdaten werden getunnelt und verschlüsselt zum Controller geleitet. Wenn APs drahtlos miteinander kommunizieren (Mesh-Backhaul), muss auch diese Verbindung nach dem stärksten verfügbaren Standard (z.B. 802.11i/SAE) verschlüsselt sein."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Prüfen Sie in der Controller-Konfiguration, ob der Nutzdatenverkehr getunnelt (und nicht lokal am AP gebridged) wird. Überprüfen Sie die Konfiguration des Mesh-Netzwerks auf die Verwendung einer starken Verschlüsselung für die Backhaul-Links. Automatisierte Prüfung: `(API-Call an Controller).get('/api/v1/aps').forEach(ap => assert(ap.data_encryption === true))`"
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "NET.2.1.A17-m5",
-                    "uuid": "74827f58-1fc4-41a3-984d-063aeab33a4d",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die gesamte Kommunikation zwischen allen WLAN-Infrastrukturkomponenten wird durchgängig mit MACsec (IEEE 802.1AE) auf der Sicherungsschicht geschützt. Dies sichert die Hop-zu-Hop-Kommunikation im gesamten Distribution System ab."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Zusätzlich zur Ende-zu-Ende-Verschlüsselung des Tunnels zwischen AP und Controller wird jede einzelne Kabelverbindung zwischen den Switches und den APs durch MACsec geschützt. Dies verhindert Angriffe wie ARP-Spoofing oder Man-in-the-Middle-Angriffe innerhalb des kabelgebundenen Distribution-Systems selbst."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Überprüfen Sie die Konfiguration der Switch-Ports, an denen die Access Points angeschlossen sind, sowie die Konfiguration der APs selbst. Suchen Sie nach aktiven MACsec-Konfigurationen. Führen Sie einen Test durch, indem Sie versuchen, den Verkehr an einem gespiegelten Port mitzuschneiden; er sollte verschlüsselt sein."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "4953c302-f6c0-4323-a6f7-ea8e14312eb3",
+                "uuid": "9086c705-1b6c-4a89-80f7-7f8818ece64e",
                 "control-id": "ARCH.2.4",
                 "description": "",
                 "props": [
@@ -518,7 +518,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A14-m1",
-                    "uuid": "80530d37-93bb-44cb-a228-95cbcb50e062",
+                    "uuid": "b7541f4f-0ff3-4f26-b898-d07bd5504454",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -537,7 +537,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A14-m2",
-                    "uuid": "7f2d6118-2faa-4851-8f90-cc194d8ca18c",
+                    "uuid": "95db3bc9-c57a-4485-877e-a19174ff2f00",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -556,7 +556,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A14-m3",
-                    "uuid": "5bb47292-899d-426a-bfcf-6d051a45d84d",
+                    "uuid": "d5ff0355-5218-4b7c-b141-96edd8fe1169",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -575,7 +575,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A14-m4",
-                    "uuid": "26f055ce-c5f9-45ae-8175-ba8daf9d5868",
+                    "uuid": "1df933da-dadd-42e0-9463-fea1a20d15cf",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -594,7 +594,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A14-m5",
-                    "uuid": "1d51c289-4e82-4a90-8e64-0c518600a443",
+                    "uuid": "93047c77-26ed-41d6-9b0f-76ed965c83ac",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -614,7 +614,7 @@
                 ]
               },
               {
-                "uuid": "37bee473-df61-4b09-aeb6-830d0e5c4fd9",
+                "uuid": "7f968d1e-e293-41bc-9cf1-5bf2ddd84169",
                 "control-id": "ARCH.3.3",
                 "description": "",
                 "props": [
@@ -652,7 +652,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A5-m1",
-                    "uuid": "9d8cc858-28b5-4c01-afc8-32a110f81f53",
+                    "uuid": "ce076e2a-989d-42b0-a184-7397244f5b45",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -671,7 +671,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A5-m2",
-                    "uuid": "9cc0f594-df71-4382-99b0-76c746616736",
+                    "uuid": "e72f42d9-212e-4cab-a15d-8613930ceb73",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -690,7 +690,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A5-m3",
-                    "uuid": "bae3dd34-2e76-4285-add7-9317d043c3a1",
+                    "uuid": "186d0602-a818-4a2e-bc5c-ac33cf0cb27a",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -709,7 +709,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A5-m4",
-                    "uuid": "2fb34d6a-5295-4bbc-826b-a08afb6a8dee",
+                    "uuid": "f49cbabf-abbb-45a6-a9d5-caead4a4c896",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -728,7 +728,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A5-m5",
-                    "uuid": "4cee954f-cd71-489c-ada2-04aa430b9826",
+                    "uuid": "a970146c-aaa4-4116-811c-3d261ded9f92",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -748,7 +748,7 @@
                 ]
               },
               {
-                "uuid": "311022cd-3cdc-4aed-b6c9-2004259ef0b7",
+                "uuid": "6560d3a4-4732-4441-9276-d3800372fe8b",
                 "control-id": "ARCH.3.4",
                 "description": "",
                 "props": [
@@ -786,7 +786,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A3-m1",
-                    "uuid": "ac491ccf-a6de-4e19-b3e3-bb6bd8137e6d",
+                    "uuid": "6a2a18cf-b6cc-42cf-a1a6-955ee207a4cd",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -805,7 +805,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A3-m2",
-                    "uuid": "8b4fe30f-25ac-4bfd-8238-6a7383e3517f",
+                    "uuid": "dd1f00c4-6fe9-45ea-a433-607aa415f6cb",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -824,7 +824,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A3-m3",
-                    "uuid": "eb604ad8-5f3e-4735-bd99-18fdb8d6b717",
+                    "uuid": "fdf52423-af1a-49ac-afcd-8bd9531d4c96",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -843,7 +843,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A3-m4",
-                    "uuid": "e0eda485-1182-499a-9c6c-efe12463413f",
+                    "uuid": "b4f134f3-ec6d-4e61-8eb7-57427b424d07",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -862,7 +862,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A3-m5",
-                    "uuid": "709a4849-e25d-4d9e-acab-44a0efdb6c2d",
+                    "uuid": "7248e280-2da9-42d3-8daf-1e462b7f1f54",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -882,8 +882,276 @@
                 ]
               },
               {
-                "uuid": "c645a545-f011-429c-b806-330f441a543f",
+                "uuid": "555f0aae-1e42-4ca6-9e6b-f5c2101cdee7",
+                "control-id": "ARCH.4.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A17-m1",
+                    "uuid": "5bd1b550-d467-439e-b62b-1a77ed48db01",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Kommunikation zwischen den Access Points erfolgt unverschlüsselt über das LAN."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Wenn Access Points untereinander oder mit einem zentralen Controller kommunizieren, geschieht dies im Klartext. Ein Angreifer im LAN könnte diesen Verkehr abhören oder manipulieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Schließen Sie einen Laptop an einen Switch-Port an, der für das WLAN-Management-VLAN konfiguriert ist. Zeichnen Sie den Verkehr mit einem Sniffer wie Wireshark auf. Prüfen Sie, ob Protokolle wie CAPWAP ohne DTLS-Verschlüsselung verwendet werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A17-m2",
+                    "uuid": "ffa0d7ea-4844-4f53-a77b-06b078cd07da",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Kommunikation zwischen Access Points und einem zentralen WLAN-Controller ist durch einen proprietären, herstellerspezifischen Mechanismus geschützt, dessen Sicherheit nicht verifiziert ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Hersteller wirbt mit 'sicherer Kommunikation', aber es wird kein Standardprotokoll wie IPsec oder DTLS verwendet. Die tatsächliche Sicherheit ist unklar und nicht nachprüfbar."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Konsultieren Sie die Herstellerdokumentation, um die Art der Verschlüsselung zu verstehen. Analysieren Sie den Verkehr mit Wireshark. Selbst wenn er nicht im Klartext ist, prüfen Sie, ob das Protokoll bekannt ist oder ob es sich um eine undokumentierte, proprietäre Lösung handelt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A17-m3",
+                    "uuid": "ea97c229-498a-4c6a-9ea8-74a126893db7",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Management-Kommunikation zwischen den Access Points und dem WLAN-Controller MUSS durch ein standardisiertes Protokoll wie DTLS (im Rahmen von CAPWAP) oder IPsec verschlüsselt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird sichergestellt, dass der Kontroll- und Steuerungsverkehr zwischen den Infrastrukturkomponenten vertraulich und integer ist. Die Verwendung von etablierten, standardisierten Verschlüsselungsprotokollen ist hierfür die Mindestanforderung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Konfiguration des WLAN-Controllers und der Access Points, um sicherzustellen, dass die Verschlüsselung des Management-Verkehrs aktiviert ist. Analysieren Sie den Verkehr mit Wireshark und verifizieren Sie, dass ein DTLS-Handshake stattfindet oder dass der Verkehr in ESP-Pakete (IPsec) gekapselt ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A17-m4",
+                    "uuid": "04a6e1f8-5b6e-4f29-983b-0f520a2e5583",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Kommunikation zwischen den Access Points über die Funkschnittstelle (z.B. bei Mesh-Netzwerken) und das LAN wird vollständig verschlüsselt. Dies umfasst sowohl den Management- als auch den Nutzdatenverkehr."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nicht nur der Steuerungsverkehr zum Controller, sondern auch die Nutzdaten werden getunnelt und verschlüsselt zum Controller geleitet. Wenn APs drahtlos miteinander kommunizieren (Mesh-Backhaul), muss auch diese Verbindung nach dem stärksten verfügbaren Standard (z.B. 802.11i/SAE) verschlüsselt sein."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie in der Controller-Konfiguration, ob der Nutzdatenverkehr getunnelt (und nicht lokal am AP gebridged) wird. Überprüfen Sie die Konfiguration des Mesh-Netzwerks auf die Verwendung einer starken Verschlüsselung für die Backhaul-Links. Automatisierte Prüfung: `(API-Call an Controller).get('/api/v1/aps').forEach(ap => assert(ap.data_encryption === true))`"
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A17-m5",
+                    "uuid": "cd85e134-a83b-4f74-ad6c-a61ed87bc70d",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die gesamte Kommunikation zwischen allen WLAN-Infrastrukturkomponenten wird durchgängig mit MACsec (IEEE 802.1AE) auf der Sicherungsschicht geschützt. Dies sichert die Hop-zu-Hop-Kommunikation im gesamten Distribution System ab."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zusätzlich zur Ende-zu-Ende-Verschlüsselung des Tunnels zwischen AP und Controller wird jede einzelne Kabelverbindung zwischen den Switches und den APs durch MACsec geschützt. Dies verhindert Angriffe wie ARP-Spoofing oder Man-in-the-Middle-Angriffe innerhalb des kabelgebundenen Distribution-Systems selbst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Konfiguration der Switch-Ports, an denen die Access Points angeschlossen sind, sowie die Konfiguration der APs selbst. Suchen Sie nach aktiven MACsec-Konfigurationen. Führen Sie einen Test durch, indem Sie versuchen, den Verkehr an einem gespiegelten Port mitzuschneiden; er sollte verschlüsselt sein."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "46580288-41e6-4cff-857e-320244b3b68f",
                 "control-id": "ARCH.5.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "NET.2.1.A9-m1",
+                    "uuid": "c388c861-2ab4-45a0-8892-34cc80d0f9b9",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "WLANs werden ohne jegliche Absicherung direkt an das LAN angebunden. Der Access Point agiert als simple Bridge."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keine logische oder physische Trennung zwischen dem drahtlosen und dem kabelgebundenen Netzwerk. Ein im WLAN kompromittierter Client hat vollen Zugriff auf das LAN, als wäre er per Kabel verbunden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Netzwerkkonfiguration eines WLAN-Clients und vergleichen Sie diese mit einem LAN-Client. Führen Sie von einem WLAN-Client aus einen Ping oder Portscan auf kritische Server im LAN durch. Erfolg bei diesen Tests deutet auf fehlende Trennung hin."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m2",
+                    "uuid": "4aa65d84-a2a6-419f-9d58-c6778fa95796",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundsätzliche Trennung des WLAN vom LAN wird durch die Platzierung der WLAN-Clients in einem eigenen VLAN erreicht. Es gibt jedoch keine Firewall oder Paketfilter zwischen den Netzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Netze sind auf Layer 2 getrennt, aber auf Layer 3 über einen Router ohne Filterregeln miteinander verbunden. Dies verhindert Broadcast-Stürme, bietet aber keine wirksame Sicherheitskontrolle gegen gezielte Angriffe."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie die VLAN-Konfiguration auf den Switches. Überprüfen Sie anschließend die Konfiguration des Routers, der zwischen dem WLAN-VLAN und dem LAN-VLAN vermittelt. Stellen Sie sicher, dass dort keine Access Control Lists (ACLs) oder Firewall-Regeln aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m3",
+                    "uuid": "1acbe0e4-35b6-4693-bdee-79337f021adc",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Übergang zwischen WLANs und LAN MUSS durch einen Paketfilter oder eine Firewall abgesichert werden. Die Anbindung erfolgt unter Berücksichtigung der Entscheidung über das Distribution System (gemäß NET.2.1.A7)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist eine verbindliche Regel, dass der gesamte Datenverkehr, der vom WLAN in das LAN (und umgekehrt) fließt, eine Kontrollinstanz (Firewall, Paketfilter) passieren muss. Die dort hinterlegten Regeln erlauben nur die explizit benötigte Kommunikation."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Fordern Sie die Netzwerkarchitekturdokumentation an. Überprüfen Sie das Regelwerk der Firewall oder der Router-ACLs, die den Verkehr zwischen WLAN- und LAN-Zonen kontrollieren. Die Regeln sollten dem Prinzip der minimalen Rechtevergabe folgen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m4",
+                    "uuid": "76ddbf04-e7fc-487e-bf24-7a6fc87c2644",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Übergang zwischen WLAN und LAN wird durch eine Next-Generation Firewall (NGFW) mit Stateful Inspection und Intrusion Prevention (IPS) abgesichert. Die Regeln sind anwendungsspezifisch (Layer 7)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Absicherung beschränkt sich nicht auf Ports und IP-Adressen. Die NGFW analysiert den Datenverkehr auf Anwendungsebene und kann z.B. nur bestimmte Funktionen von HTTP erlauben. Ein integriertes IPS erkennt und blockiert bekannte Angriffsmuster im Datenstrom."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie das Regelwerk der NGFW und stellen Sie sicher, dass es anwendungsspezifische Kontrollen enthält. Prüfen Sie die Konfiguration und die Logs des IPS-Moduls auf erkannte und blockierte Angriffe, die aus dem WLAN stammen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "NET.2.1.A9-m5",
+                    "uuid": "1937259f-ba6a-4564-8a41-23a76451d283",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Übergang wird durch eine Zero-Trust-Architektur gesichert. Jeder Zugriffsversuch aus dem WLAN wird pro Sitzung authentifiziert und autorisiert, unabhängig vom Gerät oder Benutzer. Der gesamte Verkehr wird auf Malware und Bedrohungen untersucht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keine implizit vertrauenswürdigen WLANs mehr. Eine Network Access Control (NAC) Lösung in Kombination mit einer NGFW und Malware-Analyse (Sandboxing) prüft jede Anfrage. Der Zugriff wird dynamisch auf Basis von Identität, Gerätezustand und Risikobewertung gewährt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie die Richtlinien der NAC- und Zero-Trust-Lösung. Analysieren Sie die Integrationspunkte zwischen NAC, Firewall und Malware-Schutz. Überprüfen Sie die Protokolle, um die dynamische Durchsetzung der Richtlinien nachzuvollziehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "c34a9fc1-f590-47ce-8714-104f33299376",
+                "control-id": "ARCH.5.1.2",
                 "description": "",
                 "props": [
                   {
@@ -920,7 +1188,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A16-m1",
-                    "uuid": "e4e6d0b0-6de4-4bb6-9182-61040ae1bb5b",
+                    "uuid": "4ace22c2-aaba-49f8-a8f0-992646adda9c",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -939,7 +1207,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A16-m2",
-                    "uuid": "57e114ff-1534-4acf-a74f-abf8b7ac8684",
+                    "uuid": "5a7c3367-a386-476f-bffe-b33525aaf318",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -958,7 +1226,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A16-m3",
-                    "uuid": "e94ba77b-f7fb-41a4-8dae-377ddd308f6f",
+                    "uuid": "e251c90b-7b3e-4a94-bb80-eb83d2e5958f",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -977,7 +1245,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A16-m4",
-                    "uuid": "3789637e-9e6a-4bdd-b4e5-e90143dd3d23",
+                    "uuid": "7c17c92f-03f1-4967-82ae-ef23875652d0",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -996,7 +1264,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A16-m5",
-                    "uuid": "546ba0dd-004b-495c-8eec-4a80346d5281",
+                    "uuid": "9f0fec0d-67f0-4124-b249-5d94c220766a",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1016,7 +1284,7 @@
                 ]
               },
               {
-                "uuid": "417eeac1-79be-401a-9bb1-df367c90a285",
+                "uuid": "4a377f21-7717-438c-a5be-3be79c43d205",
                 "control-id": "ASST.2.2.1",
                 "description": "",
                 "props": [
@@ -1054,7 +1322,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A13-m1",
-                    "uuid": "f480138a-e2e7-4023-bd09-4b8bdd6584f1",
+                    "uuid": "1efa0cdf-1536-4c95-b4ca-72bcb49a3ecc",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1073,7 +1341,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A13-m2",
-                    "uuid": "414bc812-ceeb-408f-bd7f-b1f548b9a71e",
+                    "uuid": "398b3518-4b98-4113-ab00-1040c91bd6bf",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1092,7 +1360,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A13-m3",
-                    "uuid": "1abba5d9-d199-4921-a5b8-230a9c6a7b19",
+                    "uuid": "c4b910ea-1acf-4a70-ab30-ede2daf72268",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1111,7 +1379,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A13-m4",
-                    "uuid": "079fec82-be14-4722-acd4-29b6b92b0fa9",
+                    "uuid": "7f180306-968f-43a1-aaa0-4c2f86b46725",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1130,7 +1398,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A13-m5",
-                    "uuid": "e03f4632-4e9d-4320-9311-628e79bd4fab",
+                    "uuid": "e48e09b8-9a76-4ccb-aef3-5675968cd7d6",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1150,7 +1418,7 @@
                 ]
               },
               {
-                "uuid": "40bddfda-2764-4e62-b8bb-df1fb227307c",
+                "uuid": "94e32bb9-5c12-4e77-aba3-2dd3763f44c3",
                 "control-id": "DET.4.10",
                 "description": "",
                 "props": [
@@ -1188,7 +1456,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A18-m1",
-                    "uuid": "13a2c30f-914c-4912-a834-97eda168e526",
+                    "uuid": "6b2dd2cb-dad0-4a42-a13a-620d553ff3c8",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1207,7 +1475,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A18-m2",
-                    "uuid": "9f1fd6ba-662b-4178-8ecb-aac636366e97",
+                    "uuid": "49494a77-429b-4069-b673-fdfda404d28d",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1226,7 +1494,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A18-m3",
-                    "uuid": "89d4105a-1cfb-40e0-a403-b6db07443a13",
+                    "uuid": "324a39b1-cd9e-42ef-81f0-99a705980ee8",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1245,7 +1513,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A18-m4",
-                    "uuid": "e014d116-70b9-432b-b0d3-ae45311a3981",
+                    "uuid": "49868ee9-f87b-4ac2-aa1d-27b37446e007",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1264,7 +1532,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A18-m5",
-                    "uuid": "31d97e53-4bd4-482c-ab9e-3cb224d35669",
+                    "uuid": "72ba1684-fd24-4dc0-b5f2-e94e500e2869",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1284,7 +1552,7 @@
                 ]
               },
               {
-                "uuid": "56959105-f841-43b9-b8b4-4e4647dfc537",
+                "uuid": "ffe7a888-4749-49de-9f32-69f5639c2636",
                 "control-id": "GEB.7.3",
                 "description": "",
                 "props": [
@@ -1322,7 +1590,7 @@
                 "statements": [
                   {
                     "statement-id": "NET.2.1.A4-m1",
-                    "uuid": "c72095a5-2441-4613-989d-4021c2fae5df",
+                    "uuid": "65a86d58-a782-44e7-a753-c6f720146238",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1341,7 +1609,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A4-m2",
-                    "uuid": "3cad0c64-94e5-44fa-adc7-118a5e860617",
+                    "uuid": "d26505f7-8c29-4aff-b8e8-5de123af067f",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1360,7 +1628,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A4-m3",
-                    "uuid": "4af03ec0-8083-4ca8-8fa6-8960c83b4efa",
+                    "uuid": "81388f70-0945-4141-9365-c2900d90a6a5",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1379,7 +1647,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A4-m4",
-                    "uuid": "b09cbceb-2a21-47b1-98c4-7da4a88fb8a7",
+                    "uuid": "0b37d81e-9dcf-4707-9025-f56439429118",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1398,7 +1666,7 @@
                   },
                   {
                     "statement-id": "NET.2.1.A4-m5",
-                    "uuid": "93638e64-b167-45d4-9821-1e332caccb22",
+                    "uuid": "b85d8d56-c83a-41fe-81f7-6645e313f8f0",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {

@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "03947ce8-329d-4205-b8ce-73d500800291",
+    "uuid": "c7d8eb8b-8d8a-4fb2-92ff-a51451f6d91b",
     "metadata": {
       "title": "APP.2.1 Allgemeiner Verzeichnisdienst - Benutzerdefiniert",
-      "last-modified": "2025-11-15T16:31:48.983262+00:00",
+      "last-modified": "2025-11-22T12:46:06.425337+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "1eeadaab-a250-4df0-902f-273c747a57de",
+        "uuid": "d4453560-783e-4c71-837d-c98faee8229d",
         "type": "software",
         "title": "APP.2.1 Allgemeiner Verzeichnisdienst",
         "description": "This component represents the implementation of all controls for Baustein APP.2.1.",
@@ -57,12 +57,146 @@
         ],
         "control-implementations": [
           {
-            "uuid": "9bab7e67-2f01-4f69-a056-132c66477207",
-            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/verzeichnisdienste_profile.json",
+            "uuid": "de7549dd-9451-4f5a-aad1-f0e939e78166",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Kompendien/Grundschutz%2B%2B-Kompendium/profile/verzeichnisdienste_profile.json",
             "description": "Implementation for all controls in Baustein APP.2.1",
             "implemented-requirements": [
               {
-                "uuid": "e797cd30-5e73-4241-9006-0c1167f318b8",
+                "uuid": "b5bcd999-d41f-4e64-92e2-06f2a86a2c76",
+                "control-id": "ARCH.7.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.2.3.A11-m1",
+                    "uuid": "3e88a01f-645b-4bc9-bd38-c5c3d6a9685f",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der slapd-Server läuft als nicht-privilegierter Benutzer, es werden jedoch keine weiteren Einschränkungen auf die Laufzeitumgebung angewendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der `slapd`-Prozess wird als Benutzer `ldap` gestartet, hat aber ansonsten vollen Zugriff auf das Dateisystem und die Netzwerkressourcen des Hosts, soweit es die Benutzerrechte zulassen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert mit `ps aux | grep slapd`, dass der Prozess als nicht-privilegierter Benutzer läuft. Es wird festgestellt, dass keine weiteren Sicherheitsmechanismen wie chroot oder AppArmor aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m2",
+                    "uuid": "2e8631fc-a0f6-4eba-8bc6-53031cef56ce",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der slapd-Server wird in einem einfachen Container oder auf einem dedizierten Server mit Standard-Betriebssystemhärtung betrieben. Es werden grundlegende Einschränkungen angewendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "OpenLDAP wird in einem Standard-Docker-Container betrieben oder auf einem Server installiert, auf dem ein grundlegendes Härtungsskript für das Betriebssystem ausgeführt wurde. Es werden keine speziellen Profile für den Container oder den Dienst erstellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, dass der Dienst containerisiert ist oder auf einem gehärteten System läuft. Es wird jedoch verifiziert, dass keine spezifischen Sicherheitsprofile (z.B. seccomp, AppArmor) für den OpenLDAP-Prozess selbst konfiguriert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m3",
+                    "uuid": "3bc0d0ff-7abd-493b-84a1-ea5a94a3ba96",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Laufzeitumgebung des slapd-Servers SOLLTE, möglichst mit Mitteln des Betriebssystems, auf die minimal benötigten Dateien, Verzeichnisse und vom Betriebssystem bereitgestellten Funktionen eingeschränkt werden. Werden hierfür Containerisierungstechniken eingesetzt, SOLLTEN diese unter Berücksichtigung von SYS.1.6 Containerisierung genutzt werden. Wird der slapd-Server als exklusiver Dienst auf einem dedizierten Server betrieben, SOLLTE dieser ausreichend gehärtet sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein spezifisches Sicherheits-Profil für den slapd-Prozess erstellt und angewendet, z.B. mittels AppArmor oder SELinux. Dieses Profil beschränkt den Dateisystemzugriff auf die benötigten Verzeichnisse (`/etc/ldap`, `/var/lib/ldap`) und verbietet die Ausführung von externen Programmen. Bei Einsatz von Containern wird ein gehärtetes Basis-Image verwendet und die Container-Funktionen gemäß den Empfehlungen aus SYS.1.6 eingeschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer überprüft die Aktivität und den Inhalt des AppArmor-/SELinux-Profils für slapd (z.B. mit `aa-status`). Es wird verifiziert, dass das Profil den Zugriff auf das Notwendigste beschränkt. Bei Containern wird die Konfiguration (`docker inspect`) auf Sicherheitseinstellungen wie `security_opt` oder `cap_drop` geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m4",
+                    "uuid": "b27d3201-6c05-41f6-93ed-fd9974c32b67",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ein gehärtetes Container-Image verwendet, aus dem alle unnötigen Binärdateien und Bibliotheken entfernt wurden. Ein striktes Sicherheitsprofil (z.B. AppArmor, seccomp) wird durchgesetzt, das die Systemaufrufe (syscalls) auf das absolut notwendige Minimum beschränkt. Der Netzwerkzugriff wird über Firewall-Regeln strikt kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein benutzerdefiniertes, minimalistisches Container-Image erstellt. Ein `seccomp`-Profil wird generiert (z.B. mit `strace`), das nur die von slapd tatsächlich genutzten Systemaufrufe erlaubt. Host-basierte Firewall-Regeln (iptables, nftables) erlauben nur eingehende Verbindungen auf den LDAP(S)-Ports von definierten IP-Adressbereichen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert das Dockerfile des verwendeten Images auf seine Minimalität. Das `seccomp`-Profil wird auf Vollständigkeit und Korrektheit geprüft. Die Firewall-Regeln, die den slapd-Prozess oder Container betreffen, werden analysiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.2.3.A11-m5",
+                    "uuid": "0c022e54-3ac7-4591-9652-2f3b5d67864b",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der slapd-Server läuft in einem minimalen, 'distroless' Container. Alle Interaktionen mit dem Host-Betriebssystem werden protokolliert und auf Anomalien überwacht. Die Integrität des Containers wird zur Laufzeit überprüft. Die gesamte Umgebung ist als Code definiert und wird automatisch bereitgestellt und auditiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das OpenLDAP-Binary wird in ein 'distroless' oder Scratch-Image kopiert, das keine Shell oder andere Werkzeuge enthält. Ein Laufzeit-Sicherheitstool (z.B. Falco, Sysdig) überwacht die Systemaufrufe des Containers in Echtzeit und meldet verdächtige Aktivitäten. Die gesamte Umgebungsdefinition (Container, Netzwerk, Profile) wird in einem Git-Repository verwaltet und über eine CI/CD-Pipeline bereitgestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert die Verwendung eines 'distroless' Images. Die Konfiguration und die Alarmierungsregeln des Laufzeit-Sicherheitstools werden analysiert. Es wird geprüft, ob ein Versuch, eine Shell im Container zu starten, erkannt und gemeldet wird. Die CI/CD-Pipeline und die zugehörigen Konfigurationsdateien werden auditiert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "810b6a6a-a6dd-46d7-8d2c-dfd94eec1968",
                 "control-id": "ARCH.8.3",
                 "description": "",
                 "props": [
@@ -100,7 +234,7 @@
                 "statements": [
                   {
                     "statement-id": "APP.2.3.A9-m1",
-                    "uuid": "2183795c-aab9-49c4-9c53-5a933bed93d5",
+                    "uuid": "19eb2470-a2d0-4493-addd-f26125242ce9",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -119,7 +253,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A9-m2",
-                    "uuid": "9270f066-9659-4df6-a444-9ff54245e093",
+                    "uuid": "5f819cc8-b6ff-409c-ae83-5be9eaa99597",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -138,7 +272,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A9-m3",
-                    "uuid": "f0b31eec-49f0-4af1-9666-3504b37ce01c",
+                    "uuid": "eb50b76e-99e3-49ce-a663-7d78279de3a5",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -157,7 +291,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A9-m4",
-                    "uuid": "8bda5ffb-e164-478c-87cd-5e7bcf73f7d4",
+                    "uuid": "751d9417-095c-4173-b8a3-d2d5489dbfe3",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -176,7 +310,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A9-m5",
-                    "uuid": "28d1ba69-2f63-48f5-8893-012ee22b7870",
+                    "uuid": "983073b6-26c3-4a3c-b7b4-243e6e27380f",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -196,8 +330,8 @@
                 ]
               },
               {
-                "uuid": "3548cd48-bec7-4a1c-9a6e-d3efec1b91db",
-                "control-id": "DEV.2.2",
+                "uuid": "6443021d-c6f1-49aa-84c9-ecbfa37d7837",
+                "control-id": "BES.2.1.3",
                 "description": "",
                 "props": [
                   {
@@ -234,7 +368,7 @@
                 "statements": [
                   {
                     "statement-id": "APP.2.3.A1-m1",
-                    "uuid": "4abafe16-8c4b-49c7-8525-25de1cc8a50e",
+                    "uuid": "4eb28d98-d5b0-4a73-bd5e-3ac1bfe1aacd",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -253,7 +387,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A1-m2",
-                    "uuid": "afd3fbff-92cf-41b3-9686-82e1a708572d",
+                    "uuid": "2eb8d54d-07b7-4908-9e65-1ed49408f313",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -272,7 +406,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A1-m3",
-                    "uuid": "ed3fd7c8-42ac-440c-994d-23d78770b875",
+                    "uuid": "254e5a07-e6cd-410c-94fe-b65f454528f2",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -291,7 +425,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A1-m4",
-                    "uuid": "4e5109cc-19be-4290-9565-c83f81afe05a",
+                    "uuid": "5c4e9c3b-be30-4041-b536-bff122db280d",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -310,7 +444,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A1-m5",
-                    "uuid": "ceb09b18-2b9d-4d7b-916a-04c0e6978f90",
+                    "uuid": "cfac5864-a6e7-4b23-a6d6-79b096faae89",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -330,13 +464,13 @@
                 ]
               },
               {
-                "uuid": "d7e2f3e5-8731-4ab9-9ace-1a8425120c79",
+                "uuid": "3d4c90f0-daa0-446c-b962-9a00c27f16e9",
                 "control-id": "DEV.2.3",
                 "description": "",
                 "props": [
                   {
                     "name": "level",
-                    "value": "3",
+                    "value": "1",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -346,7 +480,7 @@
                   },
                   {
                     "name": "practice",
-                    "value": "SYS",
+                    "value": "CON",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -367,104 +501,104 @@
                 ],
                 "statements": [
                   {
-                    "statement-id": "APP.2.3.A11-m1",
-                    "uuid": "92673e77-e3da-4a04-a793-5596f2a7135b",
+                    "statement-id": "APP.2.3.A4-m1",
+                    "uuid": "2e5e99f7-62cd-444b-b3a5-8711fcdf3d37",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der slapd-Server läuft als nicht-privilegierter Benutzer, es werden jedoch keine weiteren Einschränkungen auf die Laufzeitumgebung angewendet."
+                        "value": "Die Berechtigungen für Datenbankdateien werden bei der Installation gesetzt, aber nicht speziell auf den slapd-Benutzer beschränkt. Interne Datenbankeinstellungen werden nicht angepasst."
                       },
                       {
                         "name": "guidance",
-                        "value": "Der `slapd`-Prozess wird als Benutzer `ldap` gestartet, hat aber ansonsten vollen Zugriff auf das Dateisystem und die Netzwerkressourcen des Hosts, soweit es die Benutzerrechte zulassen."
+                        "value": "Die Datenbankdateien haben oft die Standardberechtigungen, die vom Betriebssystem oder dem Installationspaket vorgegeben werden, was möglicherweise zu weitreichenden Leseberechtigungen führt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert mit `ps aux | grep slapd`, dass der Prozess als nicht-privilegierter Benutzer läuft. Es wird festgestellt, dass keine weiteren Sicherheitsmechanismen wie chroot oder AppArmor aktiv sind."
+                        "value": "Der Prüfer kontrolliert die Dateiberechtigungen des OpenLDAP-Datenbankverzeichnisses und stellt fest, dass sie nicht dem Prinzip der geringsten Rechte folgen."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A11-m2",
-                    "uuid": "c7ef055c-dc7b-4ef8-a02a-73921de128c0",
+                    "statement-id": "APP.2.3.A4-m2",
+                    "uuid": "d64b1fd0-33d9-4c39-96ff-90b33ac0163a",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der slapd-Server wird in einem einfachen Container oder auf einem dedizierten Server mit Standard-Betriebssystemhärtung betrieben. Es werden grundlegende Einschränkungen angewendet."
+                        "value": "Die Zugriffsrechte auf die Datenbankdateien sind auf das Dienstkonto des slapd-Servers beschränkt. Es werden die Standardeinstellungen der Datenbank verwendet, ohne spezifische Anpassungen."
                       },
                       {
                         "name": "guidance",
-                        "value": "OpenLDAP wird in einem Standard-Docker-Container betrieben oder auf einem Server installiert, auf dem ein grundlegendes Härtungsskript für das Betriebssystem ausgeführt wurde. Es werden keine speziellen Profile für den Container oder den Dienst erstellt."
+                        "value": "Mittels `chown` und `chmod` werden die Eigentümerschaft und die Zugriffsrechte des Datenbankverzeichnisses korrekt auf den `slapd`-Benutzer (z.B. `ldap:ldap`) und die entsprechenden Berechtigungen (z.B. `700`) gesetzt. Die Datenbankkonfiguration selbst (`olcDbConfig`) bleibt unberührt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer stellt fest, dass der Dienst containerisiert ist oder auf einem gehärteten System läuft. Es wird jedoch verifiziert, dass keine spezifischen Sicherheitsprofile (z.B. seccomp, AppArmor) für den OpenLDAP-Prozess selbst konfiguriert sind."
+                        "value": "Der Prüfer verifiziert mit `ls -ld` die Berechtigungen des Datenbankverzeichnisses. Es wird geprüft, ob die Datenbank-internen Einstellungen den Standardwerten entsprechen, indem die `olcDbConfig`-Attribute ausgelesen werden."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A11-m3",
-                    "uuid": "20318385-6f6e-4bff-9837-aa493a5acb46",
+                    "statement-id": "APP.2.3.A4-m3",
+                    "uuid": "cadd1524-718b-4d36-bbb3-9a001ca6c487",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Laufzeitumgebung des slapd-Servers SOLLTE, möglichst mit Mitteln des Betriebssystems, auf die minimal benötigten Dateien, Verzeichnisse und vom Betriebssystem bereitgestellten Funktionen eingeschränkt werden. Werden hierfür Containerisierungstechniken eingesetzt, SOLLTEN diese unter Berücksichtigung von SYS.1.6 Containerisierung genutzt werden. Wird der slapd-Server als exklusiver Dienst auf einem dedizierten Server betrieben, SOLLTE dieser ausreichend gehärtet sein."
+                        "value": "Die Zugriffsrechte für neu angelegte Datenbankdateien MÜSSEN auf die Kennung beschränkt werden, in deren Kontext der slapd-Server betrieben wird. Die Standard-Einstellungen der von OpenLDAP genutzten Datenbank MÜSSEN angepasst werden."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es wird ein spezifisches Sicherheits-Profil für den slapd-Prozess erstellt und angewendet, z.B. mittels AppArmor oder SELinux. Dieses Profil beschränkt den Dateisystemzugriff auf die benötigten Verzeichnisse (`/etc/ldap`, `/var/lib/ldap`) und verbietet die Ausführung von externen Programmen. Bei Einsatz von Containern wird ein gehärtetes Basis-Image verwendet und die Container-Funktionen gemäß den Empfehlungen aus SYS.1.6 eingeschränkt."
+                        "value": "Die Betriebssystem-Dateiberechtigungen für das Verzeichnis, das die MDB-Datenbank enthält, werden strikt auf den Dienstbenutzer beschränkt. Zusätzlich werden Datenbank-interne Parameter wie die Cache-Größe (`olcDbCacheSize`) und die Konfiguration für Lazy-Commits (`olcDbCheckpoint`) an die erwartete Last und die Hardware angepasst, um die Leistung und Stabilität zu verbessern."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer überprüft die Aktivität und den Inhalt des AppArmor-/SELinux-Profils für slapd (z.B. mit `aa-status`). Es wird verifiziert, dass das Profil den Zugriff auf das Notwendigste beschränkt. Bei Containern wird die Konfiguration (`docker inspect`) auf Sicherheitseinstellungen wie `security_opt` oder `cap_drop` geprüft."
+                        "value": "Der Prüfer kontrolliert die Dateiberechtigungen des Datenbankverzeichnisses und stellt sicher, dass nur der `slapd`-Dienstbenutzer darauf zugreifen kann. Zusätzlich werden die Datenbank-internen Konfigurationsparameter (`olcDb*`) ausgelesen und auf sinnvolle, von den Standardwerten abweichende Werte geprüft."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A11-m4",
-                    "uuid": "2bb055a4-be8b-416e-8816-91672b6ef815",
+                    "statement-id": "APP.2.3.A4-m4",
+                    "uuid": "c6e9bf45-ebc9-4a0a-88ba-c6255d169b0f",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Es wird ein gehärtetes Container-Image verwendet, aus dem alle unnötigen Binärdateien und Bibliotheken entfernt wurden. Ein striktes Sicherheitsprofil (z.B. AppArmor, seccomp) wird durchgesetzt, das die Systemaufrufe (syscalls) auf das absolut notwendige Minimum beschränkt. Der Netzwerkzugriff wird über Firewall-Regeln strikt kontrolliert."
+                        "value": "Die Datenbankeinstellungen werden basierend auf dokumentierten Best Practices für Leistung und Sicherheit optimiert. Die Dateisystemberechtigungen werden regelmäßig auf ihre Konformität hin überprüft. Es werden automatische und regelmäßige Integritätsprüfungen der Datenbank durchgeführt."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es wird ein benutzerdefiniertes, minimalistisches Container-Image erstellt. Ein `seccomp`-Profil wird generiert (z.B. mit `strace`), das nur die von slapd tatsächlich genutzten Systemaufrufe erlaubt. Host-basierte Firewall-Regeln (iptables, nftables) erlauben nur eingehende Verbindungen auf den LDAP(S)-Ports von definierten IP-Adressbereichen."
+                        "value": "Ein Konfigurationsmanagement-Tool stellt sicher, dass die optimierten Datenbankparameter (z.B. `olcDbCacheSize`, Indizes) und Dateiberechtigungen konsistent angewendet werden. Ein nächtlicher Cron-Job führt `mdb_cv` oder ein ähnliches Werkzeug aus, um die Integrität der Datenbank zu überprüfen und meldet Fehler."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer analysiert das Dockerfile des verwendeten Images auf seine Minimalität. Das `seccomp`-Profil wird auf Vollständigkeit und Korrektheit geprüft. Die Firewall-Regeln, die den slapd-Prozess oder Container betreffen, werden analysiert."
+                        "value": "Der Prüfer sichtet die Dokumentation zu den Best Practices und vergleicht sie mit der implementierten Konfiguration. Die Protokolle der automatisierten Integritätsprüfungen werden eingesehen. Die Konfiguration des Konfigurationsmanagement-Tools wird geprüft."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A11-m5",
-                    "uuid": "e03827ec-9cb1-4c4c-b54e-399b0073f356",
+                    "statement-id": "APP.2.3.A4-m5",
+                    "uuid": "0c4e8d7d-3be1-403c-aa16-736ea4d5df47",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der slapd-Server läuft in einem minimalen, 'distroless' Container. Alle Interaktionen mit dem Host-Betriebssystem werden protokolliert und auf Anomalien überwacht. Die Integrität des Containers wird zur Laufzeit überprüft. Die gesamte Umgebung ist als Code definiert und wird automatisch bereitgestellt und auditiert."
+                        "value": "Die Datenbank wird im Ruhezustand (at rest) mittels Dateisystem- oder datenbanknativer Verschlüsselung verschlüsselt. Der Zugriff auf die Datenbankdateien wird von einem File Integrity Monitoring (FIM)-Tool in Echtzeit überwacht. Alle Konfigurationsparameter werden über ein Konfigurationsmanagementsystem verwaltet."
                       },
                       {
                         "name": "guidance",
-                        "value": "Das OpenLDAP-Binary wird in ein 'distroless' oder Scratch-Image kopiert, das keine Shell oder andere Werkzeuge enthält. Ein Laufzeit-Sicherheitstool (z.B. Falco, Sysdig) überwacht die Systemaufrufe des Containers in Echtzeit und meldet verdächtige Aktivitäten. Die gesamte Umgebungsdefinition (Container, Netzwerk, Profile) wird in einem Git-Repository verwaltet und über eine CI/CD-Pipeline bereitgestellt."
+                        "value": "Das Dateisystem, auf dem die OpenLDAP-Datenbank liegt, wird mit LUKS verschlüsselt. Ein FIM-Tool wie AIDE oder Wazuh ist so konfiguriert, dass es jegliche Lese- oder Schreibzugriffe auf die Datenbankdateien, die nicht vom `slapd`-Prozess stammen, sofort meldet."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert die Verwendung eines 'distroless' Images. Die Konfiguration und die Alarmierungsregeln des Laufzeit-Sicherheitstools werden analysiert. Es wird geprüft, ob ein Versuch, eine Shell im Container zu starten, erkannt und gemeldet wird. Die CI/CD-Pipeline und die zugehörigen Konfigurationsdateien werden auditiert."
+                        "value": "Der Prüfer verifiziert den Status der Dateisystemverschlüsselung (z.B. mit `cryptsetup status`). Die Konfiguration und die Alarmierungsprotokolle des FIM-Tools werden analysiert. Es wird geprüft, ob ein unautorisierter Zugriff (z.B. mit `cat` durch root) einen Alarm auslöst."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "083a3b13-8fd9-4d80-b413-7996db626386",
+                "uuid": "2189177e-c272-4fa0-8766-4d52559e2b04",
                 "control-id": "KONF.10.1",
                 "description": "",
                 "props": [
@@ -502,7 +636,7 @@
                 "statements": [
                   {
                     "statement-id": "APP.2.3.A3-m1",
-                    "uuid": "99b24141-dff7-402f-bc93-308318e46d2e",
+                    "uuid": "aeda408b-58fc-42ee-9981-ddf638faed54",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -521,7 +655,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A3-m2",
-                    "uuid": "ad787011-95b2-44f6-8ae4-5fda04241f2f",
+                    "uuid": "d8aadd1c-02e0-4719-b587-4106bbfe799e",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -540,7 +674,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A3-m3",
-                    "uuid": "9bb80c5e-c510-4307-b55a-b076f8bacba3",
+                    "uuid": "5ad38be1-2f2c-42a1-8f70-87999609cfd4",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -559,7 +693,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A3-m4",
-                    "uuid": "c173f172-2d3b-4870-95cc-0c9af4789f07",
+                    "uuid": "5138d296-2630-477d-b4a4-e1d9bb0278c5",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -578,7 +712,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A3-m5",
-                    "uuid": "650398c1-599a-486e-9e66-9d59fb82fc4b",
+                    "uuid": "8d85c11c-75ce-4388-be31-7cc8cead055c",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -598,142 +732,8 @@
                 ]
               },
               {
-                "uuid": "a9241251-5415-4c95-a4e8-d364252540b2",
-                "control-id": "KONF.12.1.8",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "3",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Operation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "BER",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "APP.2.3.A8-m1",
-                    "uuid": "2a12dfc2-a90b-4295-83cc-84c41fc3e496",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Es werden nur für ein einzelnes, kritisches Attribut Einschränkungen implementiert, z. B. die Sicherstellung, dass die Benutzer-ID (`uid`) eindeutig ist."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Das `unique`-Overlay wird für das `uid`-Attribut konfiguriert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer versucht, einen Benutzer mit einer bereits vorhandenen `uid` anzulegen, und erwartet, dass die Operation fehlschlägt. Es wird festgestellt, dass keine weiteren Einschränkungen existieren."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "APP.2.3.A8-m2",
-                    "uuid": "55662b1a-d8da-48f0-87d3-93c36287303f",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Das `constraint`-Overlay wird verwendet, um die Eindeutigkeit und das Format der Werte für mehrere wichtige Attribute (z.B. `uid`, `mail`) durchzusetzen. Die Einschränkungen gelten für alle Objekttypen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Das `constraint`-Overlay wird mit einfachen regulären Ausdrücken für E-Mail-Adressen und Regeln für die Eindeutigkeit von `uid` und `mail` konfiguriert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer überprüft die Konfiguration des `constraint`-Overlays (`olcConstraintAttribute`). Es wird versucht, Objekte mit ungültigen oder doppelten Attributwerten anzulegen."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "APP.2.3.A8-m3",
-                    "uuid": "cfd852b1-71e7-4e2a-8a8d-72b6caa3f1b5",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Anhand von Overlays SOLLTEN die Attribute in OpenLDAP eingeschränkt werden. OpenLDAP SOLLTE so angepasst werden, dass Werte im Verzeichnisdienst nur einem bestimmten regulären Ausdruck entsprechen. Zudem SOLLTE mit Hilfe von Overlays sichergestellt werden, dass ausgesuchte Werte nur einmal im Verzeichnisbaum vorhanden sind. Solche Restriktionen SOLLTEN ausschließlich auf Daten von Nutzenden angewendet werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Das `constraint`-Overlay wird gezielt eingesetzt, um Datenqualität sicherzustellen. Es werden URI-basierte Einschränkungen (`olcConstraintURI`) verwendet, um die Regeln nur auf bestimmte Teile des Verzeichnisbaums (z.B. die `ou=people`) und bestimmte Objekttypen (`objectClass=inetOrgPerson`) anzuwenden. Dies verhindert, dass die Einschränkungen versehentlich auf Dienst- oder Konfigurationskonten wirken."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die Konfiguration des `constraint`-Overlays und verifiziert, dass die `olcConstraintURI`-Direktiven korrekt gesetzt sind, um den Geltungsbereich der Einschränkungen wie gefordert auf Benutzerdaten zu begrenzen. Es wird getestet, ob das Anlegen eines Benutzers mit einer ungültigen E-Mail-Adresse fehlschlägt, während ein Dienstkonto mit einem anders formatierten Attribut angelegt werden kann."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "APP.2.3.A8-m4",
-                    "uuid": "65b3c62d-62bc-4605-8248-c7cac91a8c2e",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Verwendung von Attributbeschränkungen ist ein Standardbestandteil des Schema-Designs. Reguläre Ausdrücke zur Wertvalidierung sind komplex und decken alle relevanten Datenformate ab. Eine Richtlinie legt fest, welche Attribute eindeutig sein oder bestimmten Formaten entsprechen müssen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Für jedes neue Attribut im Schema wird im Rahmen des Designprozesses geprüft, ob eine Beschränkung (Eindeutigkeit, Format, Wertebereich) erforderlich ist. Diese Anforderungen werden in einer zentralen Richtlinie dokumentiert und im `constraint`-Overlay umgesetzt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer sichtet die Schema- und Attribut-Richtlinie. Es wird stichprobenartig geprüft, ob die in der Richtlinie definierten Einschränkungen korrekt im `constraint`-Overlay implementiert sind und wirksam greifen."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "APP.2.3.A8-m5",
-                    "uuid": "bf07e6eb-c132-4f78-a73d-9d0ba7b23065",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Attributbeschränkungen werden dynamisch durchgesetzt und überwacht. Ein automatisierter Prozess validiert das gesamte Verzeichnis regelmäßig gegen die Beschränkungsrichtlinien und meldet alle Verstöße. Das `constraint`-Overlay wird mit anderen Overlays (z.B. `ppolicy`) für eine umfassende Durchsetzung von Datenqualität und Sicherheit kombiniert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein Skript durchläuft nächtlich das gesamte LDAP-Verzeichnis und prüft jeden Eintrag gegen die im `constraint`-Overlay definierten Regeln. Dies dient dazu, eventuell vor der Einführung der Regeln erstellte inkonsistente Daten zu finden. Verstöße werden in einem Bericht erfasst und einem Dateneigner zur Korrektur zugewiesen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer sichtet die Berichte des automatisierten Validierungsprozesses. Es wird geprüft, ob ein Prozess zur Behebung der gemeldeten Inkonsistenzen existiert und befolgt wird. Die Kombination der Overlays wird auf logische Korrektheit und Vollständigkeit geprüft."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "d1f5d3d4-2252-4d80-be2e-498108e00454",
-                "control-id": "KONF.14.1.1",
+                "uuid": "bb4f165a-7098-4f54-a81d-4a376fbdb3ae",
+                "control-id": "KONF.11.1",
                 "description": "",
                 "props": [
                   {
@@ -770,7 +770,7 @@
                 "statements": [
                   {
                     "statement-id": "APP.2.3.A6-m1",
-                    "uuid": "83ef50df-afb0-43cf-b92f-f92602ff2dc9",
+                    "uuid": "9f32aab0-46d5-414b-8a78-edac28ff7a93",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -789,7 +789,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A6-m2",
-                    "uuid": "724da9d1-477f-487c-a021-93ddf8697c63",
+                    "uuid": "68a1409b-31eb-4d1d-b8c8-627f81baac53",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -808,7 +808,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A6-m3",
-                    "uuid": "a5041ce1-bbe6-4519-8fef-70b6286e2bf2",
+                    "uuid": "79b54020-69a4-4347-9cbb-81cd98a40367",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -827,7 +827,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A6-m4",
-                    "uuid": "849048de-b7f0-4dbc-8171-e5e8db1b82ea",
+                    "uuid": "8ca71947-d3a3-4107-9747-8d7ce8ba609d",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -846,7 +846,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A6-m5",
-                    "uuid": "7ce488f8-cbe4-440c-a91b-db106f64a318",
+                    "uuid": "81f8ae97-13aa-403e-b1e0-d73bd04b61b3",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -866,23 +866,23 @@
                 ]
               },
               {
-                "uuid": "a7159981-d068-400b-b1f2-807a778481bb",
-                "control-id": "KONF.6.6",
+                "uuid": "37064583-9e70-4939-bb45-a09e3f2ec7c7",
+                "control-id": "KONF.12.1",
                 "description": "",
                 "props": [
                   {
                     "name": "level",
-                    "value": "1",
+                    "value": "3",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
                     "name": "phase",
-                    "value": "Implementation",
+                    "value": "Operation",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
                     "name": "practice",
-                    "value": "CON",
+                    "value": "BER",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -892,115 +892,115 @@
                   },
                   {
                     "name": "effective_on_i",
-                    "value": "true",
+                    "value": "false",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
                     "name": "effective_on_a",
-                    "value": "true",
+                    "value": "false",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   }
                 ],
                 "statements": [
                   {
-                    "statement-id": "APP.2.3.A4-m1",
-                    "uuid": "7f0e8c26-0e1f-46e3-a378-ba5d32aee1b4",
+                    "statement-id": "APP.2.3.A8-m1",
+                    "uuid": "2d838e97-719f-4869-9046-fc77bf380a03",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Berechtigungen für Datenbankdateien werden bei der Installation gesetzt, aber nicht speziell auf den slapd-Benutzer beschränkt. Interne Datenbankeinstellungen werden nicht angepasst."
+                        "value": "Es werden nur für ein einzelnes, kritisches Attribut Einschränkungen implementiert, z. B. die Sicherstellung, dass die Benutzer-ID (`uid`) eindeutig ist."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Datenbankdateien haben oft die Standardberechtigungen, die vom Betriebssystem oder dem Installationspaket vorgegeben werden, was möglicherweise zu weitreichenden Leseberechtigungen führt."
+                        "value": "Das `unique`-Overlay wird für das `uid`-Attribut konfiguriert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer kontrolliert die Dateiberechtigungen des OpenLDAP-Datenbankverzeichnisses und stellt fest, dass sie nicht dem Prinzip der geringsten Rechte folgen."
+                        "value": "Der Prüfer versucht, einen Benutzer mit einer bereits vorhandenen `uid` anzulegen, und erwartet, dass die Operation fehlschlägt. Es wird festgestellt, dass keine weiteren Einschränkungen existieren."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A4-m2",
-                    "uuid": "462afedc-a42f-4f81-87d8-498ee187e993",
+                    "statement-id": "APP.2.3.A8-m2",
+                    "uuid": "265a6a70-5681-4a1d-b6bb-71ed6944da69",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Zugriffsrechte auf die Datenbankdateien sind auf das Dienstkonto des slapd-Servers beschränkt. Es werden die Standardeinstellungen der Datenbank verwendet, ohne spezifische Anpassungen."
+                        "value": "Das `constraint`-Overlay wird verwendet, um die Eindeutigkeit und das Format der Werte für mehrere wichtige Attribute (z.B. `uid`, `mail`) durchzusetzen. Die Einschränkungen gelten für alle Objekttypen."
                       },
                       {
                         "name": "guidance",
-                        "value": "Mittels `chown` und `chmod` werden die Eigentümerschaft und die Zugriffsrechte des Datenbankverzeichnisses korrekt auf den `slapd`-Benutzer (z.B. `ldap:ldap`) und die entsprechenden Berechtigungen (z.B. `700`) gesetzt. Die Datenbankkonfiguration selbst (`olcDbConfig`) bleibt unberührt."
+                        "value": "Das `constraint`-Overlay wird mit einfachen regulären Ausdrücken für E-Mail-Adressen und Regeln für die Eindeutigkeit von `uid` und `mail` konfiguriert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert mit `ls -ld` die Berechtigungen des Datenbankverzeichnisses. Es wird geprüft, ob die Datenbank-internen Einstellungen den Standardwerten entsprechen, indem die `olcDbConfig`-Attribute ausgelesen werden."
+                        "value": "Der Prüfer überprüft die Konfiguration des `constraint`-Overlays (`olcConstraintAttribute`). Es wird versucht, Objekte mit ungültigen oder doppelten Attributwerten anzulegen."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A4-m3",
-                    "uuid": "43f4e732-3f6a-45a7-b94b-1e8fbad0048f",
+                    "statement-id": "APP.2.3.A8-m3",
+                    "uuid": "affd2c8c-6239-4cfd-878e-2f55180f59df",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Zugriffsrechte für neu angelegte Datenbankdateien MÜSSEN auf die Kennung beschränkt werden, in deren Kontext der slapd-Server betrieben wird. Die Standard-Einstellungen der von OpenLDAP genutzten Datenbank MÜSSEN angepasst werden."
+                        "value": "Anhand von Overlays SOLLTEN die Attribute in OpenLDAP eingeschränkt werden. OpenLDAP SOLLTE so angepasst werden, dass Werte im Verzeichnisdienst nur einem bestimmten regulären Ausdruck entsprechen. Zudem SOLLTE mit Hilfe von Overlays sichergestellt werden, dass ausgesuchte Werte nur einmal im Verzeichnisbaum vorhanden sind. Solche Restriktionen SOLLTEN ausschließlich auf Daten von Nutzenden angewendet werden."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Betriebssystem-Dateiberechtigungen für das Verzeichnis, das die MDB-Datenbank enthält, werden strikt auf den Dienstbenutzer beschränkt. Zusätzlich werden Datenbank-interne Parameter wie die Cache-Größe (`olcDbCacheSize`) und die Konfiguration für Lazy-Commits (`olcDbCheckpoint`) an die erwartete Last und die Hardware angepasst, um die Leistung und Stabilität zu verbessern."
+                        "value": "Das `constraint`-Overlay wird gezielt eingesetzt, um Datenqualität sicherzustellen. Es werden URI-basierte Einschränkungen (`olcConstraintURI`) verwendet, um die Regeln nur auf bestimmte Teile des Verzeichnisbaums (z.B. die `ou=people`) und bestimmte Objekttypen (`objectClass=inetOrgPerson`) anzuwenden. Dies verhindert, dass die Einschränkungen versehentlich auf Dienst- oder Konfigurationskonten wirken."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer kontrolliert die Dateiberechtigungen des Datenbankverzeichnisses und stellt sicher, dass nur der `slapd`-Dienstbenutzer darauf zugreifen kann. Zusätzlich werden die Datenbank-internen Konfigurationsparameter (`olcDb*`) ausgelesen und auf sinnvolle, von den Standardwerten abweichende Werte geprüft."
+                        "value": "Der Prüfer analysiert die Konfiguration des `constraint`-Overlays und verifiziert, dass die `olcConstraintURI`-Direktiven korrekt gesetzt sind, um den Geltungsbereich der Einschränkungen wie gefordert auf Benutzerdaten zu begrenzen. Es wird getestet, ob das Anlegen eines Benutzers mit einer ungültigen E-Mail-Adresse fehlschlägt, während ein Dienstkonto mit einem anders formatierten Attribut angelegt werden kann."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A4-m4",
-                    "uuid": "5d85ad6e-3e13-4bd9-b11e-33a70008a9cb",
+                    "statement-id": "APP.2.3.A8-m4",
+                    "uuid": "b5eb8bf7-be06-4302-8e90-7817cc871920",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Datenbankeinstellungen werden basierend auf dokumentierten Best Practices für Leistung und Sicherheit optimiert. Die Dateisystemberechtigungen werden regelmäßig auf ihre Konformität hin überprüft. Es werden automatische und regelmäßige Integritätsprüfungen der Datenbank durchgeführt."
+                        "value": "Die Verwendung von Attributbeschränkungen ist ein Standardbestandteil des Schema-Designs. Reguläre Ausdrücke zur Wertvalidierung sind komplex und decken alle relevanten Datenformate ab. Eine Richtlinie legt fest, welche Attribute eindeutig sein oder bestimmten Formaten entsprechen müssen."
                       },
                       {
                         "name": "guidance",
-                        "value": "Ein Konfigurationsmanagement-Tool stellt sicher, dass die optimierten Datenbankparameter (z.B. `olcDbCacheSize`, Indizes) und Dateiberechtigungen konsistent angewendet werden. Ein nächtlicher Cron-Job führt `mdb_cv` oder ein ähnliches Werkzeug aus, um die Integrität der Datenbank zu überprüfen und meldet Fehler."
+                        "value": "Für jedes neue Attribut im Schema wird im Rahmen des Designprozesses geprüft, ob eine Beschränkung (Eindeutigkeit, Format, Wertebereich) erforderlich ist. Diese Anforderungen werden in einer zentralen Richtlinie dokumentiert und im `constraint`-Overlay umgesetzt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer sichtet die Dokumentation zu den Best Practices und vergleicht sie mit der implementierten Konfiguration. Die Protokolle der automatisierten Integritätsprüfungen werden eingesehen. Die Konfiguration des Konfigurationsmanagement-Tools wird geprüft."
+                        "value": "Der Prüfer sichtet die Schema- und Attribut-Richtlinie. Es wird stichprobenartig geprüft, ob die in der Richtlinie definierten Einschränkungen korrekt im `constraint`-Overlay implementiert sind und wirksam greifen."
                       }
                     ]
                   },
                   {
-                    "statement-id": "APP.2.3.A4-m5",
-                    "uuid": "69fe5075-c811-46ae-a898-d2b4084ee0ab",
+                    "statement-id": "APP.2.3.A8-m5",
+                    "uuid": "4489316c-40b0-4778-8d76-3cfecbf88a15",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Datenbank wird im Ruhezustand (at rest) mittels Dateisystem- oder datenbanknativer Verschlüsselung verschlüsselt. Der Zugriff auf die Datenbankdateien wird von einem File Integrity Monitoring (FIM)-Tool in Echtzeit überwacht. Alle Konfigurationsparameter werden über ein Konfigurationsmanagementsystem verwaltet."
+                        "value": "Attributbeschränkungen werden dynamisch durchgesetzt und überwacht. Ein automatisierter Prozess validiert das gesamte Verzeichnis regelmäßig gegen die Beschränkungsrichtlinien und meldet alle Verstöße. Das `constraint`-Overlay wird mit anderen Overlays (z.B. `ppolicy`) für eine umfassende Durchsetzung von Datenqualität und Sicherheit kombiniert."
                       },
                       {
                         "name": "guidance",
-                        "value": "Das Dateisystem, auf dem die OpenLDAP-Datenbank liegt, wird mit LUKS verschlüsselt. Ein FIM-Tool wie AIDE oder Wazuh ist so konfiguriert, dass es jegliche Lese- oder Schreibzugriffe auf die Datenbankdateien, die nicht vom `slapd`-Prozess stammen, sofort meldet."
+                        "value": "Ein Skript durchläuft nächtlich das gesamte LDAP-Verzeichnis und prüft jeden Eintrag gegen die im `constraint`-Overlay definierten Regeln. Dies dient dazu, eventuell vor der Einführung der Regeln erstellte inkonsistente Daten zu finden. Verstöße werden in einem Bericht erfasst und einem Dateneigner zur Korrektur zugewiesen."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert den Status der Dateisystemverschlüsselung (z.B. mit `cryptsetup status`). Die Konfiguration und die Alarmierungsprotokolle des FIM-Tools werden analysiert. Es wird geprüft, ob ein unautorisierter Zugriff (z.B. mit `cat` durch root) einen Alarm auslöst."
+                        "value": "Der Prüfer sichtet die Berichte des automatisierten Validierungsprozesses. Es wird geprüft, ob ein Prozess zur Behebung der gemeldeten Inkonsistenzen existiert und befolgt wird. Die Kombination der Overlays wird auf logische Korrektheit und Vollständigkeit geprüft."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "46f3914f-c1df-4cb5-bb09-8aa82a5fe065",
+                "uuid": "a68bf35e-d1a3-4cd4-bd57-8a87b28ec591",
                 "control-id": "KONF.6.7",
                 "description": "",
                 "props": [
@@ -1038,7 +1038,7 @@
                 "statements": [
                   {
                     "statement-id": "APP.2.3.A5-m1",
-                    "uuid": "022541e6-9d8d-422b-8949-f7cf4b87df58",
+                    "uuid": "4313f0d9-ccc9-48ed-aab5-64a8e68bb9b9",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1057,7 +1057,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A5-m2",
-                    "uuid": "7d82f84a-4af5-487c-8d12-40f3ec8ffc3c",
+                    "uuid": "678bae05-c654-4516-9e50-6db876a2066d",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1076,7 +1076,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A5-m3",
-                    "uuid": "190233f4-63a3-47f7-badc-c537b8cf5c6c",
+                    "uuid": "e73a5b44-75b0-44af-a5dd-ea5953f8dfc7",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1095,7 +1095,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A5-m4",
-                    "uuid": "6f4d05d8-ad55-4be2-b0a5-fb3fa5550b7f",
+                    "uuid": "6c335f9c-7769-4202-bdd2-f4867bf3b243",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1114,7 +1114,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A5-m5",
-                    "uuid": "493fa7b2-6d93-44de-b12c-c11a2b4b7768",
+                    "uuid": "f522e3c2-e3f8-4854-a6cd-22c4ccf53dc7",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1134,7 +1134,7 @@
                 ]
               },
               {
-                "uuid": "aa5f2f78-07de-4f8b-a6b5-249903d4d3ee",
+                "uuid": "52e4a286-f2d6-411e-b68b-23d3398dae17",
                 "control-id": "KONF.8.2",
                 "description": "",
                 "props": [
@@ -1172,7 +1172,7 @@
                 "statements": [
                   {
                     "statement-id": "APP.2.3.A10-m1",
-                    "uuid": "0b56bd75-121a-4b3b-a0c4-c7a8443112b0",
+                    "uuid": "732fbb10-7362-4a7f-b690-007e9c679503",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -1191,7 +1191,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A10-m2",
-                    "uuid": "a9506d1e-8455-443f-9f3e-10c1bc71a98d",
+                    "uuid": "de903dc2-66d5-4f07-8b0b-6268012247f2",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1210,7 +1210,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A10-m3",
-                    "uuid": "aa54a6db-2599-4b4a-af8c-353a06df5cd3",
+                    "uuid": "f1827cf4-ea03-4bc6-a9f5-139da85569a2",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1229,7 +1229,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A10-m4",
-                    "uuid": "913b4876-28d6-4c77-ab5d-a8fc8b7f4215",
+                    "uuid": "54bff614-9c45-49ea-b93e-62c38b48c6be",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1248,7 +1248,7 @@
                   },
                   {
                     "statement-id": "APP.2.3.A10-m5",
-                    "uuid": "f1b3485c-7dfd-4cc2-8af3-bd20e34e25bd",
+                    "uuid": "28b02597-5db1-45d9-aea8-b1c432634c13",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {

@@ -1,0 +1,1224 @@
+{
+  "component-definition": {
+    "uuid": "3465ec32-d795-4bcd-aa80-8fff7334191e",
+    "metadata": {
+      "title": "SYS.3.2.3 iOS (for Enterprise) - Benutzerdefiniert",
+      "last-modified": "2025-11-22T12:46:11.795849+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "b4d350f5-be10-45ad-8a9c-15ed24815336",
+        "type": "hardware",
+        "title": "SYS.3.2.3 iOS (for Enterprise)",
+        "description": "This component represents the implementation of all controls for Baustein SYS.3.2.3.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Aufgrund von modernen, einfachen Bedienkonzepten sowie ihrer hohen Leistungsfähigkeit sind Smartphones und Tablets heutzutage weit verbreitet. Dazu zählen auch die von der Firma Apple produzierten Mobilgeräte iPhone und iPad mit den Betriebssystemen iOS und iPadOS. Da iPadOS auf iOS basiert, werden beide in diesem Baustein zur einfachen Lesbarkeit als „iOS“ zusammengefasst. Die beiden Betriebssysteme haben aktuell vor allem funktionale Unterschiede, die den abweichenden Formfaktor der Geräte berücksichtigen.<BR>Ursprünglich wurden diese Geräte für den privaten Gebrauch konzipiert. Durch die Umgestaltung der Infrastrukturen und die Art der Informationserhebung und -verarbeitung werden sie jedoch immer häufiger auch im beruflichen Umfeld verwendet und lösen teilweise sogar Notebooks ab.<BR>Durch die Integration von Business-Funktionen wurde iOS seit der Version 4 schrittweise für den Einsatz in Unternehmen und Behörden ausgebaut und Funktionen für die Verwaltung aus Sicht einer Institution integriert. Hierzu gehören die Möglichkeit zur zentralisierten Geräteregistrierung (Apple Business Manager) sowie Optionen wie Single Sign-On (SSO)."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, aufzuzeigen, wie mit iOS (for Enterprise) betriebene Geräte sicher in Institutionen eingesetzt werden können. Dazu werden Anforderungen für Einstellungen der iOS-basierten Endgeräte aufgestellt, die in Form von Konfigurationsprofilen auf den Endgeräten verteilt werden können. iOS-Konfigurationsprofile enthalten einheitlich definierte Einstellungen, z. B. für Sicherheitsrichtlinien oder einzelne Systemaspekte, um iOS-basierte Geräte einheitlich und zentral zu verwalten und automatisch zu konfigurieren."
+          },
+          {
+            "name": "Abgrenzung und Modellierung",
+            "value": "Der Baustein SYS.3.2.3 iOS (for Enterprise) ist auf alle dienstlich verwendeten Smartphones und Tablets mit dem Betriebssystem Apple iOS anzuwenden.<BR>Dieser Baustein enthält grundsätzliche Anforderungen, die beim Betrieb von iOS-basierten Geräten, die in die Prozesse der Institution integriert sind, zu beachten und zu erfüllen sind. Anforderungen an die Integration in die Sicherheits- oder Kollaborationsinfrastruktur der Institution stehen nicht im Fokus dieses Bausteins. Mit einem sogenannten „Mobile Device Management“ (MDM) besteht die Möglichkeit, die Geräte zentral zu verwalten und Konfigurationsprofile pro Gruppe von Benutzenden oder Einsatzzweck auszurollen. Über ein MDM lassen sich auch Sicherheitsmaßnahmen einheitlich umsetzen. Dieser Baustein setzt voraus, dass zu verwaltende iOS-Geräte in eine MDM-Infrastruktur integriert sind. Wird eine geringe Anzahl von Geräten verwaltet, können diese aus wirtschaftlichen Gründen ausnahmsweise ohne MDM eingesetzt werden. Anforderungen für den Betrieb von MDM finden sich im Baustein SYS.3.2.2 Mobile Device Management (MDM). Für kleinere Umgebungen kann der Apple Configurator verwendet werden, um die in diesem Baustein aufgeführten Anforderungen auf mehreren Endgeräten einheitlich umzusetzen. Allgemeine und übergreifende Aspekte zum Betrieb von Smartphones und Tablets, unabhängig vom darauf eingesetzten Betriebssystem, finden sich im Baustein SYS.3.2.1 Allgemeine Smartphones und Tablets und sind ebenfalls umzusetzen, wenn iOS-basierte Geräte verwendet werden.<BR>Für die Nutzung von biometrischen Authentisierungsmechanismen enthält der Baustein SYS.3.2.1 Allgemeine Smartphones und Tablets entsprechende Anforderungen."
+          },
+          {
+            "name": "Risikokonzentration durch ein Konto (Apple-ID) für alle Apple-Dienste",
+            "value": "Mit der Apple-ID gibt es einen zentralen Zugang zu allen von der Firma Apple zur Verfügung gestellten Diensten (z. B. „iMessage“, „FaceTime“, „iCloud“, „App Store“, „iTunes“, „iBook-Store“, „iPhone-Suche“ oder Synchronisationsdienste). Wenn Unbefugte auf eine nicht ausreichend abgesicherte Apple-ID zugreifen können, können sie diese Apple-Dienste unter Umständen nutzen, die Verfügbarkeit der Apple-ID-basierten Dienste stören, iOS-basierte Geräte aus der Ferne lokalisieren oder auf Werkseinstellungen zurücksetzen sowie auf Informationen des Cloud-Dienstes iCloud zugreifen. Insbesondere ist es Angreifenden bei aktivierten iCloud-Backups möglich, die gespeicherten Daten auf ein eigenes iOS-Gerät zu klonen."
+          },
+          {
+            "name": "Feste Integration von vorinstallierten Apps und deren Funktionen",
+            "value": "Mit iOS liefert Apple bereits fest integrierte und vorinstallierte Apps (z. B. „Mail“ und „Safari“) aus. Diese Apps werden teilweise mit höheren Berechtigungen als die aus dem App Store herunterladbaren Apps ausgeführt, wodurch sich die Angriffsfläche des iOS-basierten Geräts vergrößert."
+          },
+          {
+            "name": "Missbräuchlicher Zugriff auf ausgelagerte Daten",
+            "value": "Für eine Reihe iOS-spezifischer Funktionen muss die von der Firma Apple betriebene Infrastruktur verwendet werden. Werden die Funktionen „iCloud-Schlüsselbund“, „iMessage“, „FaceTime“, „Siri“, „Continuity“, „Spotlight-Vorschläge“ sowie Funktionen der iCloud zum Anlegen von Backups oder zum gemeinsamen Arbeiten an Dokumenten verwendet, werden die Daten zwischen unterschiedlichen Geräten oder Benutzenden stets über die Infrastruktur der Firma Apple synchronisiert. Ebenfalls werden Push-Nachrichten für iOS-basierte Geräte über diese Infrastruktur weitergeleitet. Es besteht somit prinzipiell die Gefahr, dass auf Apple-Server zugegriffen wird und die dort gespeicherten oder übertragenen Daten für andere Zwecke missbraucht werden."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "9cf9f115-0dd5-4836-a44e-3d141963d674",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Kompendien/Grundschutz%2B%2B-Kompendium/profile/mobiltelefone_profile.json",
+            "description": "Implementation for all controls in Baustein SYS.3.2.3",
+            "implemented-requirements": [
+              {
+                "uuid": "d6eb510a-deb3-4e07-9317-1509e9d039d4",
+                "control-id": "ASST.6.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Improvement",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a4-m1",
+                    "uuid": "56cdeca2-3caa-47cc-b3f7-e1cc8fcb0616",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ausgediente Mobiltelefone werden eingesammelt und unsortiert in einer Kiste gelagert. Es gibt keinen definierten Prozess zur Löschung von Daten oder zur sicheren Entsorgung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die gesammelten Geräte sind ungesichert und potenziell für jedermann im Lager zugänglich. Daten, insbesondere auf Speicherkarten, bleiben erhalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor inspiziert den Lagerort der Altgeräte und stellt die mangelnde physische Sicherheit und das Fehlen eines Lösch- und Entsorgungsprozesses fest. Stichprobenartig wird ein Gerät eingeschaltet, um zu prüfen, ob noch Daten vorhanden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a4-m2",
+                    "uuid": "8098300e-b8c1-4f70-a910-8134410385c2",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Benutzer werden angewiesen, ihre Geräte auf Werkseinstellungen zurückzusetzen, bevor sie diese zurückgeben. Die zurückgegebenen Geräte werden in einem verschlossenen Schrank aufbewahrt, bis sie entsorgt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anweisung zum Zurücksetzen ist Teil des Offboarding-Prozesses. Es gibt jedoch keine Überprüfung, ob die Löschung tatsächlich und vollständig erfolgt ist. Die Entsorgung erfolgt über den allgemeinen Elektroschrott ohne spezielle Sicherheitsmaßnahmen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Offboarding-Checkliste auf die Anweisung zum Zurücksetzen. Er inspiziert den Aufbewahrungsort und stellt fest, dass keine Überprüfung der Datenlöschung stattfindet. Der Entsorgungsweg wird als nicht sicher für potenziell datentragende Geräte bewertet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a4-m3",
+                    "uuid": "e9190a4c-5db1-4935-b355-f2093f45ee25",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Mobiltelefone MÜSSEN vor der Entsorgung auf den Werkszustand zurückgesetzt werden. Es MUSS überprüft werden, ob alle Daten, auch auf Speicherkarten, gelöscht wurden. Gesammelte Mobiltelefone und Speicherkarten MÜSSEN bis zur Entsorgung vor unberechtigtem Zugriff geschützt aufbewahrt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein IT-Mitarbeiter ist für den Aussonderungsprozess verantwortlich. Jedes zurückgegebene Gerät wird manuell auf Werkseinstellungen zurückgesetzt und die erfolgreiche Löschung wird auf einer Checkliste dokumentiert. Speicherkarten werden entnommen und separat sicher gelagert. Die Geräte werden in einem dedizierten, zugriffsgeschützten Bereich aufbewahrt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Prozessdokumentation und die ausgefüllten Checklisten zur Datenlöschung. Er inspiziert den sicheren Lagerort. Stichprobenartig werden Geräte aus dem Lager genommen und versucht, Daten wiederherzustellen, um die Wirksamkeit der Löschung zu überprüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a4-m4",
+                    "uuid": "2f80919f-4458-4b64-ae40-5ca77b0c6a61",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird sichergestellt, dass die Mobiltelefone und eventuell darin verwendete Speicherkarten ordnungsgemäß und nachweislich entsorgt werden. Hierfür wird ein zertifizierter Dienstleister für Datenvernichtung beauftragt. Der gesamte Prozess wird dokumentiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es besteht ein Vertrag mit einem nach ISO 21964 (ehemals DIN 66399) zertifizierten Entsorgungsunternehmen. Die Geräte werden in versiegelten Behältern übergeben. Der Dienstleister stellt ein Vernichtungszertifikat aus, das archiviert wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft den Vertrag mit dem Entsorgungsdienstleister und dessen Zertifizierung. Er sichtet die Übergabeprotokolle und die erhaltenen Vernichtungszertifikate, um eine lückenlose Nachweiskette sicherzustellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a4-m5",
+                    "uuid": "2b9b840c-0244-48da-9e27-f36cfb104ffd",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der gesamte Lebenszyklus der Mobiltelefone wird in einem Asset-Management-System verfolgt. Der Aussonderungsprozess wird im System angestoßen, wobei die Datenlöschung durch eine zweite Person verifiziert (Vier-Augen-Prinzip) und im System bestätigt wird, bevor das Gerät zur physischen Zerstörung freigegeben wird. Speicherkarten werden grundsätzlich physisch zerstört (z.B. geschreddert)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Asset-Management-System erzwingt die Einhaltung des Prozesses. Der Status jedes Geräts (z.B. 'in Nutzung', 'zurückgegeben', 'Löschung verifiziert', 'vernichtet') ist transparent nachverfolgbar. Die physische Zerstörung von Speicherkarten erfolgt intern mit einem geeigneten Schredder."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft den Workflow im Asset-Management-System und die dazugehörigen Protokolleinträge. Er verifiziert die Aufzeichnungen des Vier-Augen-Prinzips und prüft den Prozess der internen Zerstörung der Speicherkarten. Ein automatischer Audit kann regelmäßig Berichte aus dem Asset-Management-System generieren, um Geräte zu identifizieren, deren Aussonderungsprozess überfällig ist."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "37c1687b-0dcb-4937-95b8-63e787e5e92b",
+                "control-id": "GEB.6.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "GEB",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a15-m3",
+                    "uuid": "ba687e1b-a258-4757-972c-cca7511901ac",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Damit vertrauliche Informationen nicht abgehört werden können, SOLLTE dafür gesorgt werden, dass keine Mobiltelefone zu vertraulichen Besprechungen und Gesprächen in die entsprechenden Räume mitgenommen werden. Dies wird als formale Richtlinie für ausgewiesene Sicherheitsbereiche und Besprechungsräume festgelegt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die betroffenen Räume sind klar gekennzeichnet. Die Regel ist Teil der Einladung zu vertraulichen Besprechungen. Die Teilnehmer werden zu Beginn der Besprechung vom Organisator an die Regel erinnert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Richtlinie und die Kennzeichnung der Räume. Er nimmt als stiller Beobachter an einer vertraulichen Besprechung teil, um zu sehen, ob die Regel kommuniziert und eingehalten wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a15-m4",
+                    "uuid": "463f3f9e-2801-4f90-b315-c444eb92dcf1",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Verbot, Mobiltelefone mit in Sicherheitsbereiche zu nehmen, wird durch organisatorische Maßnahmen erzwungen. Vor den entsprechenden Räumen werden Schließfächer zur sicheren Aufbewahrung der Geräte bereitgestellt. Die Einhaltung der Regel wird aktiv kontrolliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "An den Eingängen zu den Sicherheitsbereichen sind Piktogramme und Schilder angebracht. Die Schließfächer sind für alle Mitarbeiter und Gäste zugänglich. Der Organisator einer Besprechung oder ein Sicherheitsmitarbeiter ist dafür verantwortlich, die Einhaltung vor Beginn der Besprechung sicherzustellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor inspiziert die physischen Kontrollen (Schilder, Schließfächer). Er prüft die Prozessanweisungen für Besprechungsorganisatoren. Durch Beobachtung wird die konsequente Umsetzung der Kontrolle verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a15-m5",
+                    "uuid": "4900cf72-d9ac-4b50-845b-c494d66d7266",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls erforderlich, SOLLTE das Mitführungsverbot durch den Einsatz von Mobilfunk-Detektoren an den Eingängen zu Hochsicherheitsbereichen technisch überprüft werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "An den Zugängen zu den definierten Hochsicherheitszonen sind fest installierte oder mobile Detektoren im Einsatz, die auf aktive oder passive Mobiltelefone reagieren. Der Einsatz ist rechtlich geprüft und wird durch Sicherheitspersonal überwacht. Personen, bei denen ein Gerät detektiert wird, wird der Zutritt verwehrt, bis das Gerät abgelegt wurde."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die rechtliche Grundlage und die Prozessdokumentation für den Einsatz der Detektoren. Er prüft die Funktionsfähigkeit der Detektoren und beobachtet das Vorgehen des Sicherheitspersonals bei einem Alarm. Ein automatischer Audit kann die Funktionsfähigkeit und Betriebsbereitschaft der Detektoren regelmäßig prüfen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ec6309c7-e30e-424b-8a39-42c0a86087e2",
+                "control-id": "KONF.2.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "GOV",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a1-m1",
+                    "uuid": "9e1121d6-0e19-41d4-8631-fcbf781d6ca1",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert lediglich ein Entwurf einer Sicherheitsrichtlinie für Mobiltelefone, der weder offiziell freigegeben noch an die Mitarbeitenden verteilt wurde. Die Richtlinie ist unvollständig und deckt nur grundlegende Aspekte wie die private Nutzung ab, während kritische Punkte wie der Umgang mit Verlusten fehlen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In dieser Phase wird typischerweise ein erster Entwurf in einem Textverarbeitungsdokument erstellt, oft als Reaktion auf einen spezifischen Vorfall. Es gibt keine formelle Überprüfung oder Genehmigung durch das Management oder die Informationssicherheit."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor stellt durch Befragung des ISB fest, ob eine Richtlinie existiert. Der Auditor prüft das Dokument auf seinen Status (z. B. „Entwurf“) und seinen Inhalt, um die Unvollständigkeit und das Fehlen eines Verteilungsprozesses zu bestätigen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a1-m2",
+                    "uuid": "26b18249-e38a-4e6b-b415-fb0cc84af537",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Sicherheitsrichtlinie wurde erstellt und allen Mitarbeitenden bei der Ausgabe eines Mobiltelefons zur Verfügung gestellt. Sie deckt die wichtigsten Nutzungsregeln ab, wird jedoch nicht regelmäßig auf Einhaltung überprüft oder aktualisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Richtlinie wird als Standarddokument im Intranet veröffentlicht oder als Ausdruck bei der Geräteübergabe ausgehändigt. Die Kenntnisnahme wird möglicherweise durch eine Unterschrift bestätigt, es finden aber keine weiteren Maßnahmen zur Sicherstellung des Verständnisses statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft, ob eine offizielle Version der Richtlinie existiert und ob ein Prozess zur Verteilung an alle Mobiltelefon-Nutzer etabliert ist. Durch Stichproben bei den Nutzern wird verifiziert, ob diese die Richtlinie erhalten haben. Das Fehlen von Überprüfungs- und Aktualisierungsprozessen wird im Auditbericht vermerkt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a1-m3",
+                    "uuid": "759fe534-2700-484a-b83d-7c578678066e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Im Hinblick auf die Nutzung und Kontrolle der Geräte MUSS eine Sicherheitsrichtlinie erstellt werden. Jeder benutzenden Person eines Mobiltelefons MUSS ein Exemplar der Sicherheitsrichtlinie ausgehändigt werden. Es MUSS regelmäßig überprüft werden, ob die Sicherheitsrichtlinie eingehalten wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Sicherheitsrichtlinie ist ein offizielles, vom Management genehmigtes Dokument. Die Aushändigung wird dokumentiert. Die regelmäßige Überprüfung kann durch jährliche Befragungen oder stichprobenartige technische Kontrollen erfolgen, deren Ergebnisse protokolliert werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz, den Genehmigungsstatus und die Aktualität der Sicherheitsrichtlinie. Er verifiziert die Nachweise über die Verteilung an die Nutzer (z.B. Empfangsbestätigungen). Zudem werden Protokolle der regelmäßigen Überprüfungen eingesehen, um die Einhaltung des Prozesses zu bestätigen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a1-m4",
+                    "uuid": "90ee1621-44e3-41ef-892c-af5013177113",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Sicherheitsrichtlinie ist integraler Bestandteil der Sicherheitsschulungen. Ihre Einhaltung wird aktiv durch regelmäßige, dokumentierte Stichproben überwacht. Die Richtlinie wird mindestens jährlich oder bei signifikanten Änderungen der Bedrohungslage oder Technologie überprüft und bei Bedarf aktualisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Inhalte der Richtlinie werden in die jährlichen Security-Awareness-Kampagnen und Onboarding-Prozesse integriert. Die Überprüfung der Einhaltung erfolgt durch den IT-Betrieb. Ein formaler Prozess zur Aktualisierung der Richtlinie, inklusive einer Überprüfung durch den ISB, ist etabliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Schulungsunterlagen auf Inhalte, die sich auf die Mobiltelefon-Richtlinie beziehen. Er sichtet die Protokolle der Stichproben-Kontrollen und die Dokumentation des Richtlinien-Review-Prozesses, um dessen Regelmäßigkeit und Gründlichkeit zu bewerten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a1-m5",
+                    "uuid": "0a838a4c-fae5-4caa-964b-6499a8a16186",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Sicherheitsrichtlinie ist in einem GRC-Tool (Governance, Risk, Compliance) abgebildet und ihre Einhaltung wird, soweit technisch möglich, durch eine zentrale Verwaltungslösung (z.B. MDM/UEM für Smartphones) automatisiert erzwungen und überwacht. Ausnahmen von der Richtlinie erfordern einen formalen, dokumentierten Risikobewertungs- und Genehmigungsprozess."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Richtlinienkonformität wird durch technische Profile sichergestellt, die auf die Geräte aufgespielt werden. Verstöße gegen die Richtlinie (z. B. Installation nicht genehmigter Apps, falls zutreffend) führen zu automatischen Alarmen oder Sanktionen. Der Prozess für Ausnahmeanträge ist im GRC-Tool implementiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration im GRC- und MDM/UEM-System, um die automatisierte Durchsetzung der Richtlinie zu verifizieren. Er prüft die Protokolle der automatisierten Überwachung sowie die Dokumentation der genehmigten Ausnahmen auf Vollständigkeit und Nachvollziehbarkeit. Ein automatischer Audit kann Konfigurationsdateien des MDM-Systems gegen einen vordefinierten 'Golden Standard' prüfen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d8c23a17-ddad-4cea-9b67-be21ee313212",
+                "control-id": "KONF.2.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a10-m2",
+                    "uuid": "7aa6c270-4be7-4485-b01c-4476a84afe40",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es gibt eine allgemeine Regel, dass vertrauliche Informationen nicht über Mobiltelefone verarbeitet oder übertragen werden sollen. Es gibt jedoch keine genaue Definition, was als vertraulich gilt und welche Ausnahmen es gibt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Regel ist Teil der IT-Nutzungsrichtlinie, ist aber für die Benutzer schwer im Alltag umzusetzen, da sie zu unspezifisch ist."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor stellt bei der Prüfung der Richtlinie und in Interviews mit Benutzern fest, dass die Regel aufgrund ihrer mangelnden Spezifität zu Unsicherheit und inkonsistenter Anwendung führt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a10-m3",
+                    "uuid": "ebc920b2-2483-4665-a405-255310a4a40b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE geregelt sein, welche Daten über Mobiltelefone übertragen werden dürfen. Die dafür erlaubten Schnittstellen SOLLTEN festgelegt werden. Außerdem SOLLTE beschlossen werden, wie die Daten bei Bedarf zu verschlüsseln sind."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist eine einfache Datenklassifizierung (z.B. „öffentlich“, „intern“, „vertraulich“) definiert. Eine Richtlinie legt fest, welche Datenklassen über welche Kanäle (z.B. E-Mail, SMS) übertragen werden dürfen. Für die Übertragung von als „vertraulich“ eingestuften Daten wird eine Methode zur Verschlüsselung (z.B. passwortgeschützte ZIP-Archive) vorgegeben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz der Datenklassifizierung und der zugehörigen Übertragungsrichtlinie. Er verifiziert, dass eine Methode zur Verschlüsselung definiert und den Benutzern bekannt ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a10-m4",
+                    "uuid": "2b07ae3e-0c86-481a-b998-7c3736bcb74d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Regeln zur Datenübertragung sind detailliert und an eine mehrstufige Datenklassifizierungsrichtlinie gekoppelt. Es sind spezifische, genehmigte Anwendungen und Verfahren für die Übertragung von sensiblen Daten definiert (z.B. Nutzung eines sicheren Messengers, falls auf dem Gerät verfügbar). Die Benutzer werden in der Anwendung dieser Verfahren geschult."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Richtlinie ist praxisnah und gibt klare Handlungsanweisungen für verschiedene Szenarien. Beispielsweise darf die Personalabteilung bestimmte Daten mobil bearbeiten, aber nur über einen gesicherten Kanal. Die Schulungen beinhalten praktische Übungen zur Verschlüsselung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die detaillierte Richtlinie und die Schulungsunterlagen. In Interviews wird das Verständnis der Benutzer für die korrekte Handhabung verschiedener Datenklassen auf ihren Mobiltelefonen überprüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "eb3e2b4f-8c61-4b3e-bbe0-83eecff8273b",
+                "control-id": "KONF.2.4",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "CON",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a8-m2",
+                    "uuid": "ab7ebfce-f211-43fb-b60e-75dfe27c2dc9",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Benutzer werden in einer Richtlinie darauf hingewiesen, nicht benötigte drahtlose Schnittstellen wie Bluetooth oder WLAN zu deaktivieren. Die Einhaltung wird nicht überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein entsprechender Passus ist Teil der allgemeinen Sicherheitsrichtlinie für Mobiltelefone. Es werden keine weiteren Maßnahmen ergriffen, um die Benutzer an diese Regel zu erinnern oder sie zu schulen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Richtlinie auf den entsprechenden Hinweis. Bei einer stichprobenartigen Inspektion von Geräten wird festgestellt, dass die Schnittstellen häufig dauerhaft aktiviert sind, was auf eine geringe Wirksamkeit der Maßnahme hindeutet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a8-m3",
+                    "uuid": "9de879b3-f03c-45a3-8037-9a891e497666",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Drahtlose Schnittstellen von Mobiltelefonen wie IrDA, WLAN oder Bluetooth SOLLTEN deaktiviert werden, solange sie nicht benötigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Diese Regel wird den Benutzern im Rahmen der Sicherheitsschulung aktiv vermittelt. Es wird erklärt, warum dies wichtig ist (Reduzierung der Angriffsfläche, Stromsparen). Die Benutzer werden angeleitet, die Schnittstellen nur bei Bedarf zu aktivieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Schulungsunterlagen auf entsprechende Inhalte. Bei Interviews und stichprobenartigen Geräteprüfungen wird verifiziert, ob die Benutzer die Regel kennen, ihren Zweck verstehen und sie im Alltag mehrheitlich umsetzen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a8-m4",
+                    "uuid": "a351a47b-24cd-440b-9bb9-9c96fe1e319f",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Richtlinie zum Deaktivieren ungenutzter Schnittstellen wird durch regelmäßige Erinnerungen im Rahmen von Awareness-Kampagnen verstärkt. Die Benutzer werden explizit über die Risiken der Verbindung mit unsicheren öffentlichen WLANs oder dem Koppeln mit unbekannten Bluetooth-Geräten geschult."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In Newslettern oder am „Security Awareness Day“ wird das Thema regelmäßig aufgegriffen. Die Schulungen enthalten konkrete Beispiele für Angriffe über drahtlose Schnittstellen. Die Einhaltung wird bei Support-Anfragen stichprobenartig überprüft und der Nutzer freundlich daran erinnert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Materialien der Awareness-Kampagnen und die erweiterten Schulungsinhalte. Er befragt Mitarbeiter, um festzustellen, ob sie die spezifischen Risiken (z.B. „Man-in-the-Middle“-Angriffe im WLAN) kennen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "504dd73e-e169-45e0-9b4c-bddccf3bfef4",
+                "control-id": "KONF.3.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a5-m2",
+                    "uuid": "a43e361a-3072-40b0-875a-775b69c4cdcf",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Verwendung einer SIM-Karten-PIN ist für alle Benutzer verpflichtend. Die Verwendung eines Geräte-Sperrcodes wird empfohlen, aber nicht erzwungen oder überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bei der Ausgabe des Geräts wird der Benutzer angewiesen, die Standard-PIN der SIM-Karte zu ändern. Es gibt keine weiteren Konfigurationen oder Überprüfungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor befragt Benutzer stichprobenartig, ob sie eine SIM-PIN verwenden. Es wird festgestellt, dass keine Maßnahmen zur Durchsetzung eines Geräte-Sperrcodes existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a5-m3",
+                    "uuid": "ce4f46d6-8645-4910-8f56-87b9798fc44a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die verfügbaren Sicherheitsmechanismen SOLLTEN auf den Mobiltelefonen genutzt und vorkonfiguriert werden. Die SIM-Karte SOLLTE durch eine sichere PIN geschützt werden. Das Mobiltelefon SOLLTE durch einen Geräte-Code geschützt werden. Die Super-PIN/PUK SOLLTE nur im Rahmen der definierten Prozesse von den Zuständigen benutzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor der Ausgabe werden die Mobiltelefone so konfiguriert, dass die Nutzung einer SIM-PIN und eines Geräte-Sperrcodes erzwungen wird. Die Benutzer werden bei der Übergabe angeleitet, sichere, nicht-triviale Codes zu setzen. Der PUK wird zentral und sicher vom IT-Betrieb verwaltet und nur nach einer Identitätsprüfung des Benutzers herausgegeben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft den Prozess der Geräteausgabe, um sicherzustellen, dass die Sicherheitsmechanismen konfiguriert werden. Er überprüft den Prozess zur Verwaltung und Herausgabe des PUK auf Sicherheit und Nachvollziehbarkeit. Bei der physischen Inspektion von Geräten wird geprüft, ob Sperrcodes aktiv sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a5-m4",
+                    "uuid": "2b5bfbaf-c292-4a8d-a700-b1284f38fd14",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zusätzlich zur PIN- und Gerätecode-Pflicht wird, falls technisch möglich, das Gerät fest an die ausgegebene SIM-Karte gebunden (SIM-Lock). Es wird eine Richtlinie für die Komplexität der Geräte-Codes (Mindestlänge) durchgesetzt und die automatische Sperre des Bildschirms nach kurzer Inaktivität wird konfiguriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die SIM-Lock-Funktion wird direkt beim Mobilfunkanbieter oder, falls vom Gerät unterstützt, manuell konfiguriert. Die Benutzer werden angewiesen, einen mindestens 6-stelligen Geräte-Code zu verwenden und die automatische Sperre auf maximal 1 Minute einzustellen. Dies wird bei der Ausgabe überprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft stichprobenartig die Konfiguration der Geräte auf die Aktivierung von SIM-Lock, die Einhaltung der Code-Länge und die Einstellung der automatischen Sperre. Die Prozessdokumentation zur Konfiguration wird eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "64472e82-d6e3-4f6a-a219-e964f1d94529",
+                "control-id": "KONF.3.5",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "5",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a13-m3",
+                    "uuid": "f81f9ae0-68d7-422a-9f39-932f2f44ed57",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "In den Sicherheitsrichtlinien und Schulungen wird auf die Risiken der Standortermittlung durch das Mobilfunknetz und GPS hingewiesen. Für Geräte mit GPS-Funktion ist festgelegt, dass diese standardmäßig deaktiviert sein muss."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Benutzer werden angewiesen, die GPS-Funktion in den Geräteeinstellungen zu deaktivieren und nur bei Bedarf für Navigationszwecke zu aktivieren. Dies wird in der Sicherheitsschulung thematisiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Richtlinien und Schulungsunterlagen. Bei stichprobenartigen Geräte-Inspektionen wird die GPS-Einstellung überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a13-m4",
+                    "uuid": "14e97383-282f-425d-912f-48e7da3155fe",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE geklärt werden, ob sich die Erstellung von Bewegungsprofilen durch Dritte negativ auswirken kann oder als Problem angesehen wird. Um eine Ortung über GPS zu verhindern, SOLLTE diese Funktion abgeschaltet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine spezifische Risikoanalyse für bestimmte Benutzergruppen (z.B. Führungskräfte, Geheimnisträger) durchgeführt, um die Gefährdung durch Bewegungsprofile zu bewerten. Basierend auf dem Ergebnis werden verbindliche Anweisungen zur Deaktivierung von GPS und ggf. weitere Verhaltensregeln erlassen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die durchgeführte Risikoanalyse und die daraus abgeleiteten Schutzmaßnahmen. Er verifiziert durch Interviews und technische Kontrollen, dass die Maßnahmen bei der betroffenen Benutzergruppe umgesetzt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a13-m5",
+                    "uuid": "b8b04ee1-6bfc-48d5-9f73-e74d550aa9a6",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Falls eine Ortung über das Mobilfunknetz für bestimmte Situationen oder an bestimmten Orten zuverlässig verhindert werden soll, SOLLTE das Mobiltelefon vollständig abgeschaltet und der Akku entfernt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für den Aufenthalt in Hochsicherheitsbereichen oder bei vertraulichen Besprechungen ist eine verbindliche Anweisung erlassen, Mobiltelefone auszuschalten und den Akku zu entnehmen. Zur Aufbewahrung werden spezielle, abgeschirmte Taschen oder Schließfächer bereitgestellt. Die Regel gilt für alle Teilnehmer."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die entsprechende Richtlinie und die physischen Vorkehrungen (z.B. Schließfächer). Er beobachtet die Einhaltung der Regel bei Beginn einer als vertraulich eingestuften Besprechung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a5607374-8e58-4c41-9a6a-23767f62a75f",
+                "control-id": "KONF.3.6",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "REA",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a2-m1",
+                    "uuid": "83651ce6-0974-4657-867f-732619ba2195",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Benutzer sind sich bewusst, dass ein verlorenes Telefon gemeldet werden sollte, aber es gibt keinen dokumentierten Prozess. Die Kontaktinformationen für die Sperrung der SIM-Karte sind nicht leicht verfügbar und müssen im Einzelfall recherchiert werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Verlustfall müssen die Benutzer selbst herausfinden, an wen sie sich wenden müssen, was zu erheblichen Verzögerungen bei der Sperrung der SIM-Karte führt. Es gibt keine zentrale Anlaufstelle."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor stellt durch Interviews mit Benutzern fest, ob sie wissen, wie sie im Verlustfall eines Geräts reagieren sollen. Das Fehlen eines dokumentierten Prozesses und zentral bereitgestellter Kontaktinformationen wird als Feststellung dokumentiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a2-m2",
+                    "uuid": "ed503724-7453-4537-b2a1-d866b5c87313",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein einfacher Prozess für die Meldung eines verlorenen Geräts ist dokumentiert und im Intranet verfügbar. Die Benutzer wissen, an wen sie sich wenden müssen, um die SIM-Karte sperren zu lassen. Die Reaktion erfolgt jedoch nur während der regulären Geschäftszeiten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Seite im Intranet listet die Telefonnummer des internen IT-Helpdesks als Ansprechpartner auf. Der Helpdesk hat die notwendigen Informationen, um die Sperrung beim Mobilfunkanbieter zu veranlassen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Dokumentation des Meldeprozesses im Intranet. Er verifiziert durch eine Test-Anfrage beim Helpdesk (außerhalb eines echten Notfalls), ob dieser auf den Prozess vorbereitet ist. Die beschränkte Erreichbarkeit wird im Auditbericht vermerkt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a2-m3",
+                    "uuid": "f112fb11-74e3-4c7a-a9a6-371548682cd4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei Verlust eines Mobiltelefons MUSS die darin verwendete SIM-Karte zeitnah gesperrt werden. Alle notwendigen Informationen zur Sperrung von SIM-Karte und Mobiltelefon MÜSSEN für die zuständigen Stellen und die Benutzer unmittelbar griffbereit sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist eine zentrale Notfall-Hotline oder ein klar definierter Meldeweg etabliert, der den Benutzern bekannt ist. Die notwendigen Daten (z. B. Rufnummer, SIM-Kartennummer, Kundennummer beim Provider) werden zentral vorgehalten, um eine schnelle Sperrung zu ermöglichen. Die Informationen sind beispielsweise auf einer Notfallkarte oder in einem sicheren Online-Portal hinterlegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft, ob der definierte Meldeweg existiert und den Benutzern bekannt ist (z. B. durch Prüfung von Onboarding-Material). Er verifiziert stichprobenartig, ob die für eine Sperrung notwendigen Informationen zentral und griffbereit für die zuständige Stelle (z. B. IT-Helpdesk) verfügbar sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a2-m4",
+                    "uuid": "eb5b323e-da9c-4dcc-97d9-94c71906b113",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Prozess zur Sperrung von SIM-Karten und Geräten wird durch einen 24/7 erreichbaren Service Desk sichergestellt. Sofern die Geräte es unterstützen, werden Mechanismen zum Diebstahlschutz wie Fernlöschung oder -sperrung aktiv genutzt. Der gesamte Prozess wird regelmäßig, mindestens einmal jährlich, getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein Bereitschaftsdienst des IT-Helpdesks oder ein externer Dienstleister ist beauftragt, Sperrungen rund um die Uhr durchzuführen. Benutzer werden geschult, wie sie ggf. selbst eine Fernsperrung einleiten können. Die Tests des Prozesses werden protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Verträge und Dienstbeschreibungen (SLAs) des 24/7 Service Desks. Er sichtet die Protokolle der durchgeführten Prozesstests. Zudem werden Schulungsunterlagen daraufhin geprüft, ob die Nutzung von Fernlösch-Funktionen behandelt wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a2-m5",
+                    "uuid": "9bee7886-cbe0-4748-b062-e9c6d9fdf94a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Prozess zur Reaktion auf einen Geräteverlust ist weitgehend automatisiert. Sobald ein Benutzer ein Gerät über ein Self-Service-Portal als verloren meldet, wird automatisch die Sperrung der SIM-Karte beim Mobilfunkanbieter via API angestoßen und, falls technisch möglich, das Gerät ferngesperrt und gelöscht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Mobile-Device-Management-Lösung (MDM/UEM) ist über eine API mit dem System des Mobilfunkanbieters und einem Self-Service-Portal für Benutzer integriert. Der Prozess läuft ohne manuelle Intervention ab, um die Reaktionszeit zu minimieren. Der Status des Prozesses (Meldung, Sperrung, Löschung) ist für den Benutzer und die IT-Sicherheit transparent einsehbar."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration der MDM/UEM-Lösung, der API-Schnittstellen und des Self-Service-Portals. Ein End-to-End-Test des automatisierten Prozesses wird durchgeführt, um die korrekte Funktionsweise zu verifizieren. Die Logs des Systems werden auf erfolgreiche und fehlgeschlagene Automatisierungsläufe geprüft. Ein automatischer Audit kann die Erreichbarkeit und korrekte Konfiguration der API-Endpunkte überwachen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2e625177-43d5-4829-9f14-a3661561a793",
+                "control-id": "KONF.6.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ASST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a12-m2",
+                    "uuid": "a23329e9-bc96-4bf3-ad8a-34f1673f4e89",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Pool von Mobiltelefonen wird in einer einfachen Liste (z.B. Excel) verwaltet. Ausgabe und Rücknahme werden manuell vermerkt. Nach der Rückgabe wird jedes Gerät auf Werkseinstellungen zurückgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Verantwortung liegt bei einer Person im IT-Support. Die Geräte sind nicht vorkonfiguriert, sondern werden bei der Ausgabe mit einer SIM-Karte versehen. Der Ladezustand wird nicht garantiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Inventarliste und die Protokolleinträge für Ausgabe und Rücknahme. Er stellt fest, dass die Vorbereitung der Geräte für den nächsten Nutzer (Laden, Konfiguration) nicht Teil des Prozesses ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a12-m3",
+                    "uuid": "25861e37-9b5c-4c29-b8b9-4b24ada59cb5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei häufig wechselnden Benutzenden dienstlicher Mobiltelefone SOLLTE eine Sammelaufbewahrung (Pool) eingerichtet werden. Die Ausgabe und Rücknahme von Mobiltelefonen und Zubehör SOLLTE dokumentiert werden. Vor der Ausgabe SOLLTE sichergestellt werden, dass die Mobiltelefone aufgeladen und mit den nötigen Daten für die neuen Besitzenden ausgestattet sind. Zudem SOLLTEN die Benutzenden auf die Einhaltung der Sicherheitsleitlinie hingewiesen werden. Nachdem die Geräte wieder zurückgegeben wurden, SOLLTEN sie auf den Werkszustand zurückgesetzt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist ein formaler Prozess für den Geräte-Pool definiert. Eine Checkliste für Ausgabe und Rücknahme stellt sicher, dass alle Schritte (Dokumentation, Laden, Konfiguration, Hinweis auf Richtlinie, Löschen nach Rückgabe) eingehalten werden. Die Geräte werden in einem abschließbaren Schrank mit Ladevorrichtungen aufbewahrt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Prozessdokumentation und die verwendeten Checklisten. Er inspiziert den Aufbewahrungsort. Er begleitet (oder simuliert) einen Ausgabe- und Rücknahmeprozess, um die Einhaltung der definierten Schritte zu verifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a12-m4",
+                    "uuid": "cdee6e6b-367a-4fd8-97db-9f4114c71405",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Verleihprozess wird über ein IT-Ticketsystem verwaltet, das die Dokumentation automatisiert. Jeder Benutzer muss bei der Ausgabe ein Formular unterzeichnen, in dem er den Erhalt und die Kenntnisnahme der Sicherheitsrichtlinien bestätigt. Jedes Gerät hat ein Standard-Konfigurationsprofil, das vor der Ausgabe aufgespielt wird."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Anfragen für Leihgeräte werden als Ticket erfasst. Die Ausgabe und Rücknahme werden im Ticket dokumentiert. Die unterzeichneten Formulare werden digital archiviert. Die Standardkonfiguration umfasst z.B. gespeicherte Notfallnummern oder grundlegende Einstellungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft den Workflow im Ticketsystem. Er sichtet stichprobenartig die archivierten Empfangsbestätigungen. Er überprüft die definierten Standard-Konfigurationsprofile."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "18272a1c-69bc-4cca-a4a8-94ad5bcc7750",
+                "control-id": "KONF.8.1.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "TEST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a6-m2",
+                    "uuid": "b49fb360-3795-461c-9308-682c58f22034",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert eine Richtlinie, die besagt, dass Benutzer verfügbare Softwareupdates für ihre Mobiltelefone installieren sollen. Die IT-Abteilung versendet gelegentlich E-Mail-Erinnerungen, wenn wichtige Updates bekannt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Verantwortung für die Durchführung von Updates liegt vollständig beim Benutzer. Es gibt keine Überprüfung, ob die Updates tatsächlich installiert wurden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Richtlinie und die versendeten E-Mail-Erinnerungen. Durch Befragung von Benutzern wird festgestellt, dass der Update-Status der Geräte uneinheitlich und nicht nachverfolgbar ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a6-m3",
+                    "uuid": "de6d025b-44c9-4dff-a879-175f86ee43ba",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es SOLLTE regelmäßig geprüft werden, ob es Softwareupdates für die Mobiltelefone gibt. Der Umgang mit Updates SOLLTE geregelt werden. Wenn es neue Softwareupdates gibt, SOLLTE festgelegt werden, wie die Benutzenden darüber informiert werden und ob sie die Updates selber installieren dürfen oder ob die Mobiltelefone an einer zentralen Stelle hierfür abgegeben werden sollen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der IT-Betrieb führt eine Liste der eingesetzten Mobiltelefon-Modelle und prüft quartalsweise auf der Website der Hersteller die Verfügbarkeit von Updates. Es ist ein Prozess definiert: Entweder werden die Benutzer per E-Mail mit einer Anleitung zur Selbstinstallation informiert, oder es wird ein Termin für ein zentrales Update durch die IT angeboten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Liste der Mobiltelefon-Modelle und die Protokolle der regelmäßigen Update-Prüfungen. Er verifiziert die Existenz des definierten Prozesses zur Update-Durchführung (z. B. durch Einsicht in die versendeten Anleitungen oder die Terminankündigungen)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a6-m4",
+                    "uuid": "1b3ef7ad-52b1-4f57-92c0-c4c957c9351b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die IT-Abteilung überwacht proaktiv und zeitnah Sicherheitsmeldungen der Hersteller für die eingesetzten Gerätemodelle. Für kritische Sicherheitsupdates wird ein beschleunigter Update-Prozess eingeleitet. Die erfolgreiche Installation wird stichprobenartig überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der IT-Betrieb abonniert die Security-Advisories der relevanten Hersteller. Bei kritischen Lücken werden die Benutzer umgehend zur Installation aufgefordert. Die Überprüfung erfolgt, wenn die Geräte für andere Support-Anfragen bei der IT sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Prozesse zur Überwachung von Sicherheitsmeldungen. Er sichtet die Kommunikation und die Maßnahmen, die bei der letzten kritischen Sicherheitslücke ergriffen wurden. Die Protokolle der stichprobenartigen Überprüfungen werden eingesehen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b8df1509-0ada-4f6d-a173-6ea2596ec27b",
+                "control-id": "NOT.4.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "sys.3.3-a11-m2",
+                    "uuid": "8010a129-a4f8-44d3-b2db-ec84db6e7744",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Benutzer werden angewiesen, wichtige Kontaktdaten manuell auf ihrer SIM-Karte zu sichern. Es wird ein kleiner Pool an unkonfigurierten Ersatzgeräten vorgehalten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Verantwortung für die Datensicherung liegt vollständig beim Benutzer. Im Falle eines Defekts erhält der Benutzer ein leeres Ersatzgerät und muss seine SIM-Karte einlegen. Die Wiederherstellung von Daten, die nicht auf der SIM-Karte waren, ist nicht möglich."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor stellt durch Interviews fest, dass die Datensicherung uneinheitlich und oft unvollständig erfolgt. Er prüft die Existenz des Ersatzgeräte-Pools und den Prozess des Austauschs."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a11-m3",
+                    "uuid": "239861a0-6161-4b92-beab-48673758bb5f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die auf einem Mobiltelefon gespeicherten Daten SOLLTEN in regelmäßigen Abständen auf einem externen Medium gesichert werden. Muss ein defektes Mobiltelefon repariert werden, SOLLTEN zuvor alle Daten gelöscht und das Gerät auf den Werkszustand zurückgesetzt werden. Es SOLLTEN immer Ersatzgeräte vorhanden sein, um ein ausgefallenes Mobiltelefon kurzfristig ersetzen zu können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es ist ein Prozess für regelmäßige Backups definiert, z.B. durch die Anweisung, das Telefon monatlich mit einer PC-Software zu synchronisieren. Ein Pool an vorkonfigurierten Ersatzgeräten steht zur Verfügung. Es gibt eine Checkliste, die sicherstellt, dass Geräte vor der Weitergabe zur Reparatur zurückgesetzt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Prozessdokumentation für Backups und für die Handhabung von Reparaturfällen. Er inspiziert den Ersatzgeräte-Pool. Die Einhaltung der Backup-Prozedur wird durch Befragung der Nutzer verifiziert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "sys.3.3-a11-m4",
+                    "uuid": "567b119f-dca7-47bc-8b69-8d7b32e31183",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sofern technisch möglich, werden Kontaktdaten und Kalender zentral mit einem Server der Organisation (z.B. Exchange ActiveSync) synchronisiert. Der Austausch eines defekten Geräts ist innerhalb einer definierten, kurzen Frist (z.B. ein Arbeitstag) gewährleistet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für Feature-Phones, die Synchronisation unterstützen, wird diese bei der Ausgabe konfiguriert. Dadurch wird die Abhängigkeit von manuellen Backups reduziert. Der Prozess für den Gerätetausch ist so optimiert, dass Ausfallzeiten minimiert werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Konfiguration der Synchronisationsdienste. Er verifiziert die definierte Service-Level-Vereinbarung (SLA) für den Austausch und prüft anhand von Tickets vergangener Austauschvorgänge, ob diese eingehalten wurde."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

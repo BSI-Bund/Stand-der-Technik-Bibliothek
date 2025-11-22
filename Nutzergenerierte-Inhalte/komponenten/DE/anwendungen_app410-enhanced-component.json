@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "34d4c066-0ec1-40ea-b29e-7eb325ba89ac",
+    "uuid": "454de1e6-3805-4c5d-913a-6d3892cc5487",
     "metadata": {
       "title": "APP.4.10 Benutzerdefiniert: Sicherheit von KI-Systemen - Benutzerdefiniert",
-      "last-modified": "2025-11-15T16:31:49.729085+00:00",
+      "last-modified": "2025-11-22T12:46:07.366065+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "69b11132-cba2-4c81-a689-1b8f0bf95648",
+        "uuid": "6c8c88c5-b72b-4f6b-8a1b-af5b97b04157",
         "type": "software",
         "title": "APP.4.10 Benutzerdefiniert: Sicherheit von KI-Systemen",
         "description": "This component represents the implementation of all controls for Baustein APP.4.10.",
@@ -49,146 +49,12 @@
         ],
         "control-implementations": [
           {
-            "uuid": "1d1a1740-245c-42ab-acea-04a9b6b1ee9d",
-            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/anwendungen_profile.json",
+            "uuid": "c480798b-057d-4b33-b3a7-4720b2be3de7",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Kompendien/Grundschutz%2B%2B-Kompendium/profile/anwendungen_profile.json",
             "description": "Implementation for all controls in Baustein APP.4.10",
             "implemented-requirements": [
               {
-                "uuid": "746aa2a8-09d1-467b-9557-03dba2594357",
-                "control-id": "ARCH.8.3",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "5",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "NOT",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "sys.1.2.2-a12-m1",
-                    "uuid": "d5b7d066-5555-4a8b-ab8d-03a5e134a908",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Redundanz wird ausschließlich auf der Hardware-Ebene betrachtet, z.B. durch redundante Netzteile oder Festplatten (RAID). Es gibt keine Maßnahmen zur Hochverfügbarkeit auf Ebene des Betriebssystems oder der Anwendung."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Beim Kauf von Servern wird auf redundante Komponenten geachtet, aber die vom Betriebssystem bereitgestellten Hochverfügbarkeitsfunktionen werden nicht genutzt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer inspiziert die Hardware-Spezifikationen der Server. Es wird festgestellt, dass keine OS-Level-HA-Technologien wie Failover Clustering oder NLB konfiguriert sind."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a12-m2",
-                    "uuid": "4f275db5-5498-4879-bfb3-69e8d95de7bd",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Einfache Redundanzfunktionen wie NIC-Teaming (LBFO) zur Erhöhung der Netzwerkverfügbarkeit werden implementiert. Komplexere Hochverfügbarkeitstechnologien wie Failover Clustering werden jedoch auch dort nicht eingesetzt, wo sie zur Erfüllung der Verfügbarkeitsanforderungen notwendig wären."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "NIC-Teaming wird als Standard auf allen Servern mit mehreren Netzwerkadaptern konfiguriert. Eine Analyse, ob für bestimmte Dienste ein Failover Cluster erforderlich ist, findet nicht statt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert die Konfiguration des NIC-Teamings auf den Servern. Es wird kritische, nicht-redundante Dienste identifiziert, für die keine Hochverfügbarkeitslösung implementiert wurde."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a12-m3",
-                    "uuid": "f34ff5ff-32df-4e7c-ab12-5109a5915e41",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Es muss eine dokumentierte Analyse durchgeführt werden, um zu bestimmen, welche nativen Windows Server-Hochverfügbarkeitsfunktionen (z. B. Failover Clustering, Network Load Balancing, DFS, NIC-Teaming) zur Erfüllung der definierten Verfügbarkeitsanforderungen geeignet sind. Die auf Basis der Analyse ausgewählten Funktionen müssen grundlegend konfiguriert sein."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Für jeden kritischen Dienst wird ein Service Level Agreement (SLA) hinsichtlich der Verfügbarkeit definiert. Auf dieser Basis wird in einem Konzept entschieden, welche HA-Technologie (z.B. Failover Cluster für eine SQL-Datenbank) eingesetzt wird. Die Installation und Basiskonfiguration dieser Technologie wird durchgeführt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer fordert die Analyse- und Konzeptdokumente an und vergleicht sie mit den definierten SLAs. Es wird geprüft, ob die ausgewählten HA-Technologien auf den entsprechenden Systemen installiert und grundsätzlich funktionsfähig sind, z.B. durch Abfrage des Cluster-Status (`Get-Cluster`)."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a12-m4",
-                    "uuid": "60661b5a-21ba-4863-814f-593f414ffdec",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Failover Clustering und/oder Network Load Balancing werden für kritische Dienste konsequent auf Basis der Analyse implementiert und optimiert. Für standortübergreifende Szenarien wird Distributed File System (DFS) für einen resilienten Dateizugriff genutzt. Für Außenstellen wird BranchCache aktiviert, um die Verfügbarkeit und Performance zu verbessern."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Cluster-Quorum-Einstellungen werden optimiert und Cluster-Validierungstests werden regelmäßig durchgeführt. DFS-Namespaces und -Replikation werden für wichtige Dateifreigaben eingerichtet. BranchCache wird per GPO für die entsprechenden Server und Clients in den Außenstellen aktiviert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer auditiert die Konfiguration der Failover Cluster, einschließlich der Quorum-Einstellungen. Die DFS-Topologie wird überprüft. Die GPOs zur Konfiguration von BranchCache werden analysiert und es wird stichprobenartig geprüft, ob der Dienst auf den Zielsystemen läuft."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a12-m5",
-                    "uuid": "c0d020a5-d755-45e2-94fe-31fd811369ef",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Eine umfassende Hochverfügbarkeits- und Disaster-Recovery-Lösung wird implementiert, die potenziell mehrere Rechenzentren umspannt (z.B. ein Multi-Site-Cluster oder Stretch-Cluster). Die Funktionsfähigkeit der Lösung wird regelmäßig durch geplante, automatisierte Failover-Tests überprüft. Die Integrität des Clusters und der replizierten Daten wird kontinuierlich überwacht."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es wird ein Stretch-Failover-Cluster mit synchroner oder asynchroner Replikation (z.B. via Storage Replica oder Drittanbieter-Lösungen) eingerichtet. Automatisierte Testskripte werden entwickelt, die in regelmäßigen Abständen einen Failover simulieren und die Verfügbarkeit des Dienstes überprüfen. Monitoring-Tools überwachen permanent den Cluster-Zustand und die Replikationslatenz."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer sichtet die Architektur der Multi-Site-Lösung. Die Protokolle und Ergebnisse der automatisierten Failover-Tests werden angefordert und ausgewertet. Das Monitoring-Dashboard wird eingesehen, um den aktuellen Zustand des Clusters und der Replikation zu verifizieren."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "4124f521-0922-43c4-be31-5466e8bcd674",
+                "uuid": "d9652d20-4e6d-4754-b65e-b0d2b322c9f9",
                 "control-id": "BES.2.1.3",
                 "description": "",
                 "props": [
@@ -204,7 +70,7 @@
                   },
                   {
                     "name": "practice",
-                    "value": "ARCH",
+                    "value": "DEV",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -225,373 +91,105 @@
                 ],
                 "statements": [
                   {
-                    "statement-id": "sys.1.2.2-a1-m1",
-                    "uuid": "4cc3af62-57ff-44c6-8344-c4f1c2443158",
+                    "statement-id": "APP.7.A1-m1",
+                    "uuid": "8f0504fa-d7bd-4581-89e3-5c832e73be09",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Planung für den Einsatz von Windows Server 2012 erfolgt ad-hoc und unvollständig. Es wird sich typischerweise nur auf einzelne Aspekte wie die Hardwarebeschaffung konzentriert, während wichtige Entscheidungen zur Server-Edition, Active Directory-Integration oder zur Nutzung von Cloud-Diensten nicht getroffen werden."
+                        "value": "Für die Entwicklung von Individualsoftware ist lediglich ein technischer Ansprechpartner benannt. Es existieren keine formalisierten Verantwortlichkeiten oder ein definiertes Vorgehensmodell."
                       },
                       {
                         "name": "guidance",
-                        "value": "In dieser Phase wird oft einfach ein Server bestellt, ohne eine formale Analyse der Softwareanforderungen durchzuführen. Die Entscheidungen werden von einzelnen Administratoren ohne formale Dokumentation oder Abstimmung getroffen."
+                        "value": "In der Praxis bedeutet dies oft, dass die Kommunikation und Steuerung der Entwicklung ad hoc und informell über einen einzelnen Entwickler oder Projektleiter läuft, ohne dass dies in einem organisatorischen Rahmen verankert ist."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer stellt fest, ob überhaupt Planungsdokumente existieren. Durch Interviews mit den Administratoren wird ermittelt, ob die Entscheidungsfindung für den Servereinsatz systematisch oder spontan erfolgte."
+                        "value": "Der Prüfer stellt fest, ob überhaupt ein Ansprechpartner für die Software-Entwicklung benannt ist. Es wird geprüft, ob jegliche Dokumentation über Rollen und Verantwortlichkeiten fehlt."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a1-m2",
-                    "uuid": "edff1cf5-1533-4888-ae84-83045bc18388",
+                    "statement-id": "APP.7.A1-m2",
+                    "uuid": "7188d806-47ea-4327-b2e2-f72df59d124c",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Eine grundlegende Planung für den Einsatz von Windows Server 2012 wird durchgeführt. Die Hardwareanforderungen und die Server-Edition werden bestimmt. Der Planungsprozess ist jedoch nicht formell dokumentiert und Aspekte wie Cloud-Integration oder spezifische Sicherheitskonfigurationen werden nicht berücksichtigt."
+                        "value": "Es ist eine verantwortliche Stelle für die Steuerung und Koordination der Software-Entwicklung benannt. Ein grundlegendes, aber informelles Projektmanagementmodell (z. B. eine einfache Liste von Aufgaben und Meilensteinen) wird verwendet."
                       },
                       {
                         "name": "guidance",
-                        "value": "Ein einfaches Planungsdokument oder eine Checkliste wird verwendet. Die Spezifikation des Einsatzzwecks und die Einbindung ins Active Directory werden zwar angedacht, aber nicht detailliert ausgearbeitet oder formal genehmigt."
+                        "value": "Eine Person oder eine Abteilung wird offiziell als zuständig erklärt. Die Projektplanung erfolgt oft in Standard-Office-Dokumenten und wird nicht systematisch nachverfolgt oder aktualisiert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer fordert die grundlegenden Planungsdokumente an und prüft, ob die wesentlichen Aspekte (Hardware, Edition) abgedeckt sind. Es wird geprüft, ob die Entscheidungen nachvollziehbar sind, auch wenn keine formale Genehmigung vorliegt."
+                        "value": "Der Prüfer verifiziert die Existenz einer offiziellen Benennung der zuständigen Stelle. Es wird geprüft, ob eine grundlegende, wenn auch informelle, Projektplanung existiert (z.B. Aufgabenlisten, E-Mail-Korrespondenz)."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a1-m3",
-                    "uuid": "bdeb07de-3801-4fc2-a200-1b0ded1de4f8",
+                    "statement-id": "APP.7.A1-m3",
+                    "uuid": "76b0bb1d-f040-4c78-81c4-fb94c0e54fcd",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Einsatz von Windows Server 2012 MUSS vor der Installation sorgfältig geplant werden. Die Anforderungen an die Hardware MÜSSEN vor der Beschaffung geprüft werden. Es MUSS eine begründete und dokumentierte Entscheidung für eine geeignete Edition des Windows Server 2012 getroffen werden. Der Einsatzzweck des Servers sowie die Einbindung ins Active Directory MÜSSEN dabei spezifiziert werden. Die Nutzung von ins Betriebssystem integrierten Cloud-Diensten MUSS grundsätzlich abgewogen und geplant werden. Wenn nicht benötigt, MUSS die Einrichtung von Microsoft-Konten auf dem Server blockiert werden."
+                        "value": "Die Planung des Software-Einsatzes MUSS um Aspekte von Individualsoftware ergänzt werden, indem definiert wird, wer dafür zuständig ist, die Software-Entwicklung bzw. den Auftragnehmenden zu steuern und zu koordinieren, sowie in was für einen organisatorischen Rahmen die Software zu entwickeln ist (Projektmanagementmodell)."
                       },
                       {
                         "name": "guidance",
-                        "value": "Für die Planung wird eine Vorlage verwendet, die alle in der Anforderung genannten Punkte abdeckt. Die Entscheidung für oder gegen Cloud-Dienste wird in einem Konzept dokumentiert. Die Blockierung von Microsoft-Konten kann über eine Gruppenrichtlinie (GPO) umgesetzt werden."
+                        "value": "Die Zuständigkeiten werden in einer Rollen- und Verantwortlichkeitsmatrix (RACI) dokumentiert. Als Projektmanagementmodell wird ein etabliertes Modell wie Scrum, Kanban oder ein klassisches Wasserfallmodell ausgewählt und dessen Anwendung für das Projekt verbindlich festgelegt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer fordert die Planungsdokumentation an. Es wird verifiziert, dass die Hardwareprüfung, die Editionsentscheidung, die Spezifikation des Einsatzzwecks und die Planung der AD-Einbindung dokumentiert sind. Es wird geprüft, ob eine dokumentierte Abwägung zu Cloud-Diensten existiert und ob die Blockierung von Microsoft-Konten (falls zutreffend) technisch umgesetzt wurde, z.B. durch Überprüfung der entsprechenden GPO-Einstellung."
+                        "value": "Der Prüfer lässt sich die Dokumentation der Zuständigkeiten und des gewählten Projektmanagementmodells vorlegen. Es wird verifiziert, dass diese Dokumente für das spezifische Entwicklungsprojekt gelten und den Beteiligten bekannt sind."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a1-m4",
-                    "uuid": "11086a80-3a0d-43a4-882f-6496321bb8b9",
+                    "statement-id": "APP.7.A1-m4",
+                    "uuid": "c609baf1-5eb8-48e5-a286-7fc4f4be8dd8",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Planungsprozess ist formalisiert, wird dokumentiert, überprüft und genehmigt. Der Plan enthält spezifische Vorgaben für die Basiskonfiguration und die Härtung des Systems. Die Entscheidung über die Nutzung von Cloud-Diensten basiert auf einer dokumentierten Risikoanalyse. Der gesamte Prozess wird versioniert."
+                        "value": "Individualsoftware SOLLTE im Rahmen eines Entwicklungsprojektes entwickelt werden. Das Entwicklungsprojekt sollte anhand eines Ablaufplans zeitlich grob geplant werden. Das gewählte Projektmanagementmodell ist mit den übergeordneten Sicherheitsrichtlinien der Institution verknüpft."
                       },
                       {
                         "name": "guidance",
-                        "value": "Der Planungsprozess ist in das IT-Servicemanagement-System integriert. Vorlagen für Serverpläne werden zentral gepflegt. Die Ergebnisse der Planung, inklusive der Konfigurations-Baselines, werden in einem Konfigurationsmanagementsystem (CMS) hinterlegt."
+                        "value": "Ein formeller Projektauftrag wird erstellt. Ein grober Zeitplan mit den wichtigsten Phasen (Konzeption, Entwicklung, Test, Inbetriebnahme) und Meilensteinen wird in einem Projektmanagement-Tool erfasst und regelmäßig aktualisiert."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer sichtet die formalen Planungs- und Genehmigungsdokumente. Es wird geprüft, ob die Planung eine Risikoanalyse für Cloud-Dienste umfasst und ob die geplanten Konfigurationen eine nachvollziehbare Sicherheitsbaseline darstellen. Die Versionierung der Planungsdokumente wird ebenfalls stichprobenartig geprüft."
+                        "value": "Der Prüfer kontrolliert, ob ein formelles Entwicklungsprojekt eingerichtet wurde und ob ein zeitlicher Ablaufplan existiert. Es wird geprüft, ob der Plan realistisch ist und ob Fortschritte anhand des Plans nachverfolgt werden."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a1-m5",
-                    "uuid": "3fca7660-4b92-4f06-9159-7e224753b1bd",
+                    "statement-id": "APP.7.A1-m5",
+                    "uuid": "c77a03f6-ef2c-4935-bd29-3e971ce6b9b1",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Planungsprozess ist vollständig in ein übergeordnetes Enterprise-Architecture-Management und Change-Management-Framework integriert. Die Planung berücksichtigt Lebenszyklus-, Disaster-Recovery- und Business-Continuity-Aspekte. Die Planungsdokumente sind lebende Dokumente, die bei Änderungen an der Systemlandschaft dynamisch angepasst werden."
+                        "value": "Das Projektmanagementmodell ist vollständig in die Risikomanagement- und Sicherheits-Governance-Prozesse der Institution integriert. Die definierten Rollen umfassen spezifische Sicherheitsverantwortlichkeiten. Die Planung wird durch dedizierte Tools unterstützt, die eine kontinuierliche Überwachung des Projektfortschritts und der Einhaltung von Sicherheitsmeilensteinen ermöglichen."
                       },
                       {
                         "name": "guidance",
-                        "value": "Spezialisierte Tools für das Enterprise-Architecture-Management werden zur Planung und Visualisierung der Serverlandschaft eingesetzt. Kapazitätsplanung und Performance-Analyse sind feste Bestandteile des Planungsprozesses. Die Planung wird regelmäßig auditiert und verbessert."
+                        "value": "Tools wie Jira oder Azure DevOps werden verwendet, um nicht nur funktionale, sondern auch Sicherheitsanforderungen (Security Stories) zu verwalten. Das Risikomanagement des Projekts ist direkt mit dem zentralen Risikoregister der Organisation verknüpft. Die Einhaltung wird durch automatisierte Berichte und Dashboards überwacht."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert die Integration des Planungsprozesses in die übergeordneten Management-Frameworks. Es wird geprüft, ob Disaster-Recovery-Pläne existieren und mit der Serverplanung konsistent sind. Durch die Analyse von Änderungsanträgen wird nachvollzogen, ob die Planungsprozesse bei Änderungen an der IT-Infrastruktur eingehalten und die Dokumente aktualisiert werden."
+                        "value": "Der Prüfer analysiert die Konfiguration der Projektmanagement-Tools, um die Integration von Sicherheitsprozessen zu verifizieren. Es wird durch Stichproben geprüft, ob Sicherheitsrisiken im Projekt systematisch identifiziert, bewertet und in das zentrale Risikomanagement überführt werden. Ein automatisierter Abruf von Konformitätsberichten aus dem Tool kann Teil der Prüfung sein."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "4bcce18d-c503-4820-a633-d58804b3f187",
-                "control-id": "DET.3.1.4",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "5",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Operation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "DET",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "sys.1.2.2-a11-m1",
-                    "uuid": "c004ac39-ba3c-430c-82a5-50cf01a8a5fd",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Protokollierung auf den Servern ist mit den Standardeinstellungen aktiviert. Die Ereignisprotokolle werden nur lokal auf den Maschinen gespeichert und nur reaktiv nach einem Sicherheitsvorfall manuell ausgewertet."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es werden keine erweiterten Überwachungsrichtlinien konfiguriert. Die Größe der lokalen Ereignisprotokolle ist oft zu klein, was dazu führt, dass wichtige Informationen schnell überschrieben werden."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer kontrolliert die Konfiguration der Überwachungsrichtlinien (`auditpol /get /category:*`) und die Größe der Ereignisprotokolle auf einem Server und stellt fest, dass nur die Basiseinstellungen aktiv sind."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a11-m2",
-                    "uuid": "7834e865-e1b0-4563-b429-eb0533835fb6",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Wichtige sicherheitsrelevante Ereignisse werden zentral gesammelt, beispielsweise in einem Log-Aggregator. Es gibt jedoch keinen etablierten Prozess zur aktiven und regelmäßigen Analyse oder Alarmierung auf Basis dieser Daten."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Windows Event Forwarding (WEF) oder ein Log-Agent wird verwendet, um die Sicherheits-Ereignisprotokolle an einen zentralen Server zu senden. Die gesammelten Daten werden primär zur Archivierung und für forensische Analysen vorgehalten."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert die Konfiguration der Protokollweiterleitung. Auf dem zentralen Log-Server wird geprüft, ob Protokolle von den Servern ankommen. Durch Interviews wird festgestellt, dass keine proaktive Auswertung der Protokolle stattfindet."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a11-m3",
-                    "uuid": "369b1386-5f69-4982-95ac-d8fcd81050a4",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Sicherheitsrelevante Ereignisse müssen auf dem Server aktiviert und an ein zentrales Log-Management-System zur Sammlung und Auswertung weitergeleitet werden. Verschlüsselte Partitionen (z.B. mit BitLocker) müssen so konfiguriert sein, dass sie nach einer definierten Anzahl fehlgeschlagener Entsperrversuche gesperrt werden, um Brute-Force-Angriffe zu erschweren."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Erweiterte Überwachungsrichtlinien werden per GPO konfiguriert und aktiviert. Die Protokolle werden an ein SIEM-System gesendet. Die BitLocker-Sperre nach fehlgeschlagenen Versuchen wird ebenfalls per GPO konfiguriert ('Standard user lockout')."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer auditiert die GPOs für die Überwachungsrichtlinien. Es wird geprüft, ob im SIEM Protokolle von den Servern ankommen. Die BitLocker-bezogenen GPO-Einstellungen zur Sperrung werden verifiziert. Automatisiert können die Überwachungsrichtlinien mit `auditpol` ausgelesen werden."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a11-m4",
-                    "uuid": "075154d7-740e-49f3-a536-ae92de0fff69",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die im zentralen SIEM gesammelten Protokolle werden aktiv und automatisiert mithilfe von vordefinierten Korrelationsregeln analysiert, um verdächtige Aktivitäten und Angriffsmuster zu erkennen. Bei Ereignissen mit hoher Priorität werden automatisch Alarme an das Sicherheitsteam generiert. Die Protokollierung wird gehärtet, z.B. durch die Aktivierung von PowerShell Script Block Logging."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Im SIEM werden Regeln implementiert, die z.B. auf fehlgeschlagene Anmeldeversuche von mehreren Quellen, die Erstellung neuer administrativer Konten oder das Löschen von Ereignisprotokollen prüfen. PowerShell Script Block Logging wird per GPO aktiviert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die Korrelationsregeln im SIEM und deren Schwellenwerte. Die Konfiguration der Alarmierung wird geprüft. Es wird verifiziert, dass PowerShell Script Block Logging aktiv ist und die entsprechenden Ereignisse (ID 4104) generiert und weitergeleitet werden."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a11-m5",
-                    "uuid": "1c6945fd-c6d9-462f-918c-b1f0513a9023",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Das SIEM nutzt fortschrittliche Analysemethoden und maschinelles Lernen (User and Entity Behavior Analytics - UEBA), um Anomalien und komplexe Angriffe zu erkennen. Die Angriffserkennung ist mit einem Security Orchestration, Automation and Response (SOAR) System integriert, um Bedrohungen automatisiert und in nahezu Echtzeit einzudämmen (z.B. durch Netzwerkisolation eines kompromittierten Servers). Das Sicherheitsteam führt regelmäßig proaktive Bedrohungssuchen (Threat Hunting) auf Basis der gesammelten Protokolldaten durch."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein SIEM mit UEBA-Modul wird eingesetzt. SOAR-Playbooks werden entwickelt, um auf spezifische Alarme zu reagieren, z.B. durch Ausführung von Skripten auf Firewalls oder auf dem betroffenen Endpunkt. Für das Threat Hunting werden Hypothesen auf Basis von Threat Intelligence aufgestellt und systematisch mit den verfügbaren Daten überprüft."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer auditiert die Konfiguration des UEBA-Moduls und die SOAR-Playbooks. Es wird ein simulierter Angriff durchgeführt, um zu verifizieren, dass die automatisierte Reaktion wie erwartet funktioniert. Die Dokumentation und Ergebnisse der durchgeführten Threat-Hunting-Aktivitäten werden eingesehen."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "d3b8db9b-c25f-4a49-97de-d350eea76531",
-                "control-id": "DEV.2.5",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "3",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Operation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "BER",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "sys.1.2.2-a6-m1",
-                    "uuid": "912fa25c-7c1a-4c9e-a23f-a270bec7a308",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Es werden ausschließlich Standard-Authentifizierungsmechanismen ohne zusätzliche Härtungsmaßnahmen verwendet. Privilegierte Konten sind nicht besonders geschützt."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Authentifizierung erfolgt nur über Benutzername und Passwort. Es gibt keine Maßnahmen zum Schutz von Anmeldeinformationen im Arbeitsspeicher."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer stellt fest, dass keine der erweiterten Sicherheitsfunktionen wie LSA Protection oder die Gruppe 'Geschützte Benutzer' konfiguriert sind."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a6-m2",
-                    "uuid": "f51f8a62-f52d-4b0d-bf64-1233b004bd19",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Der LSA-Schutz (Local Security Authority) ist auf den kritischsten Servern, wie z.B. Domänencontrollern, aktiviert, wird aber nicht universell auf allen Servern durchgesetzt."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der Registry-Schlüssel `HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa` mit dem Wert `RunAsPPL` wird auf Domänencontrollern manuell oder über eine spezielle GPO gesetzt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer kontrolliert den genannten Registry-Schlüssel auf Domänencontrollern und vergleicht dies mit der Konfiguration auf regulären Mitgliedsservern, um die inkonsistente Anwendung festzustellen."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a6-m3",
-                    "uuid": "a9bdc4df-c478-490a-8687-58467e4dcd06",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Der PPL-Schutz (Protected Process Light) für den Local Credential Store (LSA) muss auf allen Servern aktiviert sein, um das Auslesen von Anmeldeinformationen aus dem Arbeitsspeicher zu erschweren."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der LSA-Schutz wird über eine Gruppenrichtlinie für alle Server der Domäne aktiviert. Dies geschieht durch Setzen des Registry-Schlüssels `HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa` auf `RunAsPPL` = 1."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die relevanten Gruppenrichtlinien, um sicherzustellen, dass die Einstellung global erzwungen wird. Auf einem repräsentativen Server wird der Registry-Schlüssel überprüft. Automatisiert kann dies mittels PowerShell geprüft werden: `(Get-ItemProperty -Path 'HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Lsa' -Name 'RunAsPPL').RunAsPPL -eq 1`."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a6-m4",
-                    "uuid": "6a6a8b57-a68d-4645-bcc5-dad605691f5b",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Zusätzlich zum LSA-Schutz werden auf Windows Server 2012 R2 alle Benutzerkonten mit erhöhten Rechten Mitglied der Sicherheitsgruppe „Geschützte Nutzer“ (Protected Users) gemacht. Für Dienstkonten werden nach Möglichkeit „Managed Service Accounts“ (MSAs) oder „group Managed Service Accounts“ (gMSAs) verwendet."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein Prozess wird etabliert, um alle administrativen Konten (z.B. Domänen-Admins) der Gruppe 'Protected Users' hinzuzufügen. Bestehende Dienste, die mit Standard-Benutzerkonten laufen, werden identifiziert und auf die Verwendung von MSAs/gMSAs umgestellt."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer lässt sich die Mitgliedschaften der Gruppe 'Protected Users' anzeigen und vergleicht diese mit der Liste der Administratoren. Die Konfiguration von Diensten auf Servern wird stichprobenartig geprüft, um die Verwendung von MSAs/gMSAs zu verifizieren. `Get-ADGroupMember -Identity 'Protected Users'` kann zur automatisierten Prüfung verwendet werden."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "sys.1.2.2-a6-m5",
-                    "uuid": "57843833-497e-4171-baf9-0a427f607c97",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Alle Kontrollen der vorherigen Stufen sind umgesetzt und automatisiert. Zusätzlich wird die Authentisierung für alle administrativen Zugriffe durch eine Multi-Faktor-Authentifizierung (MFA) gestärkt. Für die Autorisierung auf Dateiservern wird die dynamische Zugriffsteuerung (Dynamic Access Control, DAC) für eine feingranulare, attributbasierte Rechtevergabe genutzt."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Eine MFA-Lösung (z.B. Smartcards, Windows Hello for Business oder eine Drittanbieter-Lösung) wird für RDP- und PowerShell-Remoting-Zugriffe erzwungen. DAC wird konfiguriert, indem zentrale Zugriffsregeln und -richtlinien definiert und über Gruppenrichtlinien verteilt werden, die auf Benutzer- und Geräte-Claims basieren."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Prüfer auditiert die MFA-Konfiguration und testet einen administrativen Anmeldeversuch, um die MFA-Anforderung zu verifizieren. Die DAC-Konfiguration, einschließlich der definierten Claims und zentralen Zugriffsregeln, wird analysiert. Es wird praktisch auf einem Dateiserver getestet, ob der Zugriff gemäß der DAC-Richtlinien korrekt gewährt oder verweigert wird."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "9a914db1-a3eb-4d8d-bb8e-ea6f1c0c3a0e",
-                "control-id": "KONF.10.1",
+                "uuid": "39d653f7-66ac-466c-831b-39201b5a80bc",
+                "control-id": "DEV.2.2",
                 "description": "",
                 "props": [
                   {
@@ -606,7 +204,7 @@
                   },
                   {
                     "name": "practice",
-                    "value": "CON",
+                    "value": "DOCS",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -627,105 +225,105 @@
                 ],
                 "statements": [
                   {
-                    "statement-id": "sys.1.2.2-a4-m1",
-                    "uuid": "c8838ac2-3e62-42a8-8bb8-ea1fa7bcc814",
+                    "statement-id": "APP.7.A6-m1",
+                    "uuid": "69fc92e7-0f45-402b-8772-ee12adf5e9e4",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Eine Härtung der Server-Systeme findet nur sporadisch und ad-hoc auf besonders kritischen Systemen statt. Es gibt keine konsistente Sicherheitsbaseline oder Vorlagen."
+                        "value": "Anforderungen existieren nur in unstrukturierter Form, beispielsweise als Sammlung von E-Mails, Tickets oder User Stories in einem Backlog. Es gibt kein konsolidiertes, versioniertes Anforderungsdokument."
                       },
                       {
                         "name": "guidance",
-                        "value": "Einzelne Administratoren ändern manuell einige Sicherheitseinstellungen, von denen sie wissen, ohne dass dies auf einem dokumentierten Standard basiert."
+                        "value": "Alle Anforderungen sind in einem Jira-Projekt erfasst, aber es gibt keine übergeordnete Spezifikation oder Dokumentation, die den Gesamtkontext beschreibt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer vergleicht die Konfigurationen mehrerer Server und stellt signifikante Inkonsistenzen in den Sicherheitseinstellungen fest. Es kann keine Dokumentation zu einer Härtungsrichtlinie vorgelegt werden."
+                        "value": "Der Prüfer stellt fest, dass keine zusammenfassende und versionierte Anforderungsdokumentation existiert, die den Entwicklern zur Verfügung gestellt wurde."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a4-m2",
-                    "uuid": "b71f65fc-ef55-4922-9b63-18415a1770e8",
+                    "statement-id": "APP.7.A6-m2",
+                    "uuid": "1fb62582-3090-4e74-aba2-699c4aa5c494",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Es wird eine grundlegende Härtungs-Checkliste oder ein einfaches Skript verwendet. Dieses wird jedoch nicht konsequent auf alle Server angewendet oder regelmäßig aktualisiert, was zu Konfigurationsdrift führt."
+                        "value": "Die Anforderungen sind in einem Dokument zusammengefasst und werden den Entwicklern zur Verfügung gestellt. Die Aktualisierung dieses Dokuments bei Änderungen erfolgt jedoch informell und nicht über einen gesteuerten Prozess."
                       },
                       {
                         "name": "guidance",
-                        "value": "Ein Basis-Sicherheitstemplate (z.B. aus dem Security Compliance Manager) wird bei der Ersteinrichtung angewendet, aber spätere Änderungen an der Vorlage werden nicht auf bestehende Systeme ausgerollt."
+                        "value": "Es gibt ein Word-Dokument „Anforderungen_v1.docx“. Änderungen werden mündlich besprochen und das Dokument wird nur sporadisch aktualisiert und per E-Mail in neuen Versionen verteilt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer fordert die Härtungs-Checkliste oder das Skript an. Anschließend wird auf mehreren älteren und neueren Servern geprüft, ob die Konfiguration der Vorlage entspricht, um Konfigurationsdrift festzustellen."
+                        "value": "Der Prüfer identifiziert das Anforderungsdokument, stellt aber fest, dass es keinen formellen Änderungsmanagementprozess gibt und verschiedene, inkonsistente Versionen im Umlauf sein können."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a4-m3",
-                    "uuid": "3607cb04-2ec4-4a96-b2eb-4eed08a02288",
+                    "statement-id": "APP.7.A6-m3",
+                    "uuid": "0f021883-fabe-4bda-abf6-fefcfeb7b6ea",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Vor der Inbetriebnahme muss das System grundlegend gehärtet werden. Dafür müssen funktionsspezifische und institutionsweite Sicherheitsvorlagen erstellt, gepflegt und auf die Server ausgerollt werden. Dieser Prozess muss wiederholbar und dokumentiert sein."
+                        "value": "Die Anforderungen aus dem Anforderungskatalog, die Sicherheitsanforderungen an den Prozess der Software-Entwicklung, sowie die Sicherheitsfunktionen zur Systemintegration SOLLTEN umfassend dokumentiert werden. Die Dokumentation mitsamt Sicherheitsprofil SOLLTE den Entwickelnden zur Software-Entwicklung zur Verfügung gestellt werden. Die Dokumentation SOLLTE bei Änderungen an der Individualsoftware sowie bei funktionalen Updates aktualisiert werden."
                       },
                       {
                         "name": "guidance",
-                        "value": "Sicherheitsvorlagen werden als Gruppenrichtlinienobjekte (GPOs) erstellt und über Organisationseinheiten (OUs) im Active Directory an die entsprechenden Server zugewiesen. Es gibt eine Basis-GPO für alle Server und spezifische GPOs für verschiedene Serverrollen (z.B. Webserver, Datenbankserver)."
+                        "value": "Alle Anforderungsdokumente werden in einem zentralen, versionierten Repository (z.B. Confluence, SharePoint, Git) gepflegt. Es gibt einen definierten Prozess für Änderungsanträge (Change Requests), der sicherstellt, dass die Dokumentation bei jeder relevanten Änderung aktualisiert wird. Ein initiales Sicherheitsprofil wird als Teil der Dokumentation erstellt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer analysiert die GPO-Struktur und die darin definierten Sicherheitsvorlagen. Mit Werkzeugen wie `gpresult` wird auf einem repräsentativen Server geprüft, ob die korrekten Richtlinien angewendet werden. Die Dokumentation der Vorlagen wird auf Aktualität und Vollständigkeit geprüft."
+                        "value": "Der Prüfer verifiziert die Existenz und Vollständigkeit der zentralen, versionierten Dokumentation. Es wird geprüft, ob ein Änderungsmanagementprozess definiert und gelebt wird. Stichprobenartig wird eine kürzliche funktionale Änderung ausgewählt und geprüft, ob die zugehörige Dokumentation entsprechend aktualisiert wurde."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a4-m4",
-                    "uuid": "7cf04c25-b57b-4feb-87f5-930f3fdfa491",
+                    "statement-id": "APP.7.A6-m4",
+                    "uuid": "a68210bc-fd76-4630-a778-3d4ecdf07a23",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Wesentliche Funktionen und Rollen werden auf verschiedene Server aufgeteilt, um die Angriffsfläche zu reduzieren. Der Internet Explorer wird nur in der 'Enhanced Security Configuration' und im 'Enhanced Protected Mode' genutzt. Die Anwendung der Sicherheitsvorlagen wird automatisiert und regelmäßig auf Konformität überprüft."
+                        "value": "Insbesondere SOLLTE ein Sicherheitsprofil für die Anwendung erstellt werden. Dieses SOLLTE den Schutzbedarf der zu verarbeitenden Daten und Funktionen dokumentieren. Das Sicherheitsprofil wird versioniert und unterliegt einem formalen Freigabeprozess."
                       },
                       {
                         "name": "guidance",
-                        "value": "Ein dedizierter Server wird beispielsweise nur für die Rolle des Webservers genutzt und nicht gleichzeitig als Datenbankserver. Die IE-Einstellungen werden per GPO erzwungen. Die Konformität wird mittels Security Compliance Manager (SCM) oder Konfigurationselementen im System Center Configuration Manager (SCCM) überwacht."
+                        "value": "Ein dediziertes Dokument „Sicherheitsprofil“ wird erstellt. Es enthält eine Schutzbedarfsfeststellung für die Anwendung und die verarbeiteten Datenkategorien. Jede neue Version des Profils muss vom Informationssicherheitsbeauftragten (ISB) und dem Fachverantwortlichen formal genehmigt werden."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer überprüft die Server-Architektur auf eine sinnvolle Rollentrennung. Die GPOs für die IE-Härtung werden inspiziert. Berichte aus dem Überwachungstool (SCM/SCCM) werden angefordert, um die Konformitätsrate der Serverflotte zu verifizieren."
+                        "value": "Der Prüfer fordert das Sicherheitsprofil an und prüft dessen Inhalt, insbesondere die Schutzbedarfsfeststellung. Anhand der Versionshistorie und der Freigabevermerke wird kontrolliert, ob der formale Genehmigungsprozess eingehalten wird."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a4-m5",
-                    "uuid": "a632ebef-1471-4f0c-9c87-4bb2af621233",
+                    "statement-id": "APP.7.A6-m5",
+                    "uuid": "f4e64cc1-e965-4516-84da-5dcedae28e96",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Serverkonfiguration wird durch ein Desired State Configuration (DSC) Werkzeug verwaltet und erzwungen. Jegliche Abweichung von der gehärteten Baseline wird automatisch erkannt und entweder gemeldet oder sofort korrigiert. Die Konfigurationsbaseline basiert auf international anerkannten Benchmarks (z.B. CIS Benchmarks) und wird kontinuierlich auditiert und verbessert."
+                        "value": "Die gesamte Anforderungsdokumentation wird in einem zentralen Repository als „Documentation as Code“ verwaltet und ist direkt mit dem Quellcode, den Tests und den Bereitstellungskonfigurationen verknüpft. Änderungen an Anforderungen lösen automatisierte Workflows für Review, Test und Bereitstellung aus."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es wird PowerShell DSC oder ein Drittanbieter-Tool wie Ansible, Puppet oder Chef eingesetzt. Die DSC-Konfigurationen werden in einem Git-Repository versioniert (Infrastructure as Code). Ein zentraler DSC-Pull-Server oder ein äquivalentes System wird für die Verteilung und Überwachung der Konfigurationen verwendet."
+                        "value": "Anforderungen werden in einem Format wie Markdown oder AsciiDoc in einem Git-Repository neben dem Anwendungscode gespeichert. Pull Requests, die die Dokumentation ändern, erfordern eine Genehmigung. Die Verknüpfung zu User Stories in Jira und zu Testfällen in einem Testmanagement-Tool ist direkt in der Dokumentation enthalten."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer auditiert die DSC-Konfigurationsskripte und deren Verwaltung im Repository. Das Dashboard des Konfigurationsmanagement-Tools wird eingesehen, um den Konformitätsstatus der gesamten Serverflotte zu überprüfen. Es wird getestet, ob eine manuelle, nicht autorisierte Konfigurationsänderung auf einem Server erkannt und korrigiert wird. Die automatische Prüfung kann durch `Test-DscConfiguration -Detailed` auf einem Zielknoten erfolgen."
+                        "value": "Der Prüfer analysiert das Git-Repository und die Konfiguration der CI/CD-Pipeline. Es wird verifiziert, ob die Dokumentation als Code verwaltet wird und ob die Review-Workflows (z.B. über Pull Requests) etabliert sind. Die Nachvollziehbarkeit von Anforderung zu Code zu Test wird stichprobenartig geprüft."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "14cc065b-3d9a-4142-9401-e63af90871bb",
-                "control-id": "KONF.10.4",
+                "uuid": "3d9a3ded-c57a-49bc-9c01-7a7d3bf29a8b",
+                "control-id": "DEV.2.6",
                 "description": "",
                 "props": [
                   {
@@ -740,7 +338,7 @@
                   },
                   {
                     "name": "practice",
-                    "value": "SYS",
+                    "value": "DEV",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -761,97 +359,767 @@
                 ],
                 "statements": [
                   {
-                    "statement-id": "sys.1.2.2-a2-m1",
-                    "uuid": "b6ae7d82-f55a-4143-93fa-6cf71e10ade1",
+                    "statement-id": "APP.7.A2-m1",
+                    "uuid": "54fc01d9-4349-49f1-ab65-00bfe7445c94",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Installation von Windows Server 2012 wird ohne Beachtung des Prinzips der minimalen Rechte durchgeführt. Es wird typischerweise die vollständige GUI-Version mit zahlreichen nicht benötigten Rollen und Features installiert. Ein Patching während der Installation findet nicht statt."
+                        "value": "Es wird lediglich die allgemeine Erwartung geäußert, dass die Software „sicher“ entwickelt werden soll. Es werden keine spezifischen Anforderungen an den Entwicklungsprozess oder die Entwicklungsumgebung formuliert."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die Installation erfolgt manuell über das Installationsmedium, wobei die Standardeinstellungen weitgehend übernommen werden. Die Auswahl der zu installierenden Komponenten erfolgt ohne vorherige Analyse des tatsächlichen Bedarfs."
+                        "value": "Dies entspricht oft einer reinen Beauftragung auf Basis funktionaler Anforderungen, bei der Sicherheitsaspekte dem Entwickler überlassen werden."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer inspiziert eine Auswahl von Servern und vergleicht die Liste der installierten Rollen und Features mit dem tatsächlichen Einsatzzweck des Servers. Der Patch-Stand wird überprüft, um festzustellen, ob zeitnah zur Installation Patches eingespielt wurden."
+                        "value": "Der Prüfer stellt durch Einsicht in die Ausschreibungs- und Vertragsunterlagen fest, dass keine spezifischen Sicherheitsanforderungen an den Entwicklungsprozess dokumentiert sind."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a2-m2",
-                    "uuid": "f0be0c17-2bb7-4409-85aa-4b8fc6a17e24",
+                    "statement-id": "APP.7.A2-m2",
+                    "uuid": "7af62cf3-c206-4513-8a91-55d1ac6e512f",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Bei der Installation wird darauf geachtet, nur die benötigten Serverrollen und Features zu installieren. Das Einspielen von Patches erfolgt jedoch erst nach der abgeschlossenen Installation als separater Schritt. Die Entscheidung zwischen Server Core und der GUI-Variante wird nicht formal begründet."
+                        "value": "Es werden allgemeine Sicherheitsrichtlinien der Institution an den Software-Entwickler übergeben. Es gibt jedoch keine spezifischen Vorgaben, wie diese im Entwicklungsprozess umzusetzen sind oder welche technischen Maßnahmen in der Entwicklungsumgebung erforderlich sind."
                       },
                       {
                         "name": "guidance",
-                        "value": "Administratoren verwenden eine Checkliste, um sicherzustellen, dass nur notwendige Rollen und Features während der manuellen Installation ausgewählt werden. Das System wird nach der Installation und vor der produktiven Inbetriebnahme mit dem zentralen Patch-Management-System verbunden."
+                        "value": "Dem Entwickler wird beispielsweise die allgemeine IT-Sicherheitsrichtlinie des Unternehmens zur Verfügung gestellt, ohne konkrete Ableitungen für das Projekt."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer überprüft die installierten Rollen und Features auf ihre Notwendigkeit. Es wird anhand von Logs oder Tickets nachvollzogen, wie schnell das System nach der Installation gepatcht wurde. In Interviews wird nach der Begründung für die Wahl der Installationsvariante (Core/GUI) gefragt."
+                        "value": "Der Prüfer verifiziert, dass allgemeine Sicherheitsdokumente an den Entwickler übermittelt wurden, stellt aber gleichzeitig fest, dass keine projektspezifischen Anforderungen an den Entwicklungsprozess abgeleitet und definiert wurden."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a2-m3",
-                    "uuid": "85b25e5a-766a-4251-be87-aaae326578e4",
+                    "statement-id": "APP.7.A2-m3",
+                    "uuid": "c0db486f-0a4d-41f1-b7b4-078af93796db",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Es DÜRFEN KEINE anderen als die benötigten Serverrollen und Features bzw. Funktionen installiert werden. Wenn es vom Funktionsumfang her ausreichend ist, MUSS die Server-Core-Variante installiert werden. Andernfalls MUSS begründet werden, warum die Server-Core-Variante nicht genügt. Der Server MUSS bereits während der Installation auf einen aktuellen Patch-Stand gebracht werden."
+                        "value": "Die Institution MUSS klare Anforderungen an den Prozess der Software-Entwicklung definieren. Aus den Anforderungen MUSS hervorgehen, in was für einer Umgebung die Software entwickelt werden darf und welche technischen und organisatorischen Maßnahmen von Seiten der beauftragten Software-Entwickelnden umzusetzen sind."
                       },
                       {
                         "name": "guidance",
-                        "value": "Um Patches während der Installation einzuspielen (Offline Servicing), werden die Installationsmedien regelmäßig mit den neuesten Updates aktualisiert, beispielsweise mithilfe von DISM (Deployment Image Servicing and Management). Die Entscheidung für oder gegen Server Core wird pro Serverrolle in einem Konzept dokumentiert."
+                        "value": "Dies wird durch ein Dokument umgesetzt, das Vorgaben zu sicheren Codierungsrichtlinien (z.B. OWASP Secure Coding Practices), zur Absicherung der Entwicklungsumgebung (z.B. Zugriffskontrollen auf Repositories) und zur Durchführung von Code-Reviews enthält."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer verifiziert die Liste der installierten Rollen und Features auf mehreren Systemen. Es wird die Dokumentation eingesehen, in der die Nutzung der GUI-Variante begründet wird. Es wird geprüft, ob der Prozess zum Aktualisieren der Installationsmedien etabliert ist und regelmäßig durchgeführt wird, z.B. durch Überprüfung der Zeitstempel der Installations-Images."
+                        "value": "Der Prüfer lässt sich das Dokument mit den Anforderungen an den Entwicklungsprozess vorlegen. Es wird geprüft, ob klare und umsetzbare Vorgaben zur Entwicklungsumgebung und zu den erforderlichen Maßnahmen des Entwicklers enthalten sind."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a2-m4",
-                    "uuid": "da6f12af-5f6d-47fb-b723-da64d360bb32",
+                    "statement-id": "APP.7.A2-m4",
+                    "uuid": "b6a0daf8-a595-4656-b7e2-cb701cd2b7cb",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Der Installationsprozess wird mithilfe von Antwortdateien (unattend.xml) oder Deployment-Skripten automatisiert, um Konsistenz sicherzustellen. Die Entscheidung für Server Core ist die dokumentierte Standardvorgabe, von der nur mit begründeter Ausnahme abgewichen wird. Eine initiale Sicherheitskonfiguration (Härtung) wird bereits während der Installation angewendet."
+                        "value": "Die Anforderungen an den Entwicklungsprozess umfassen messbare Sicherheitsmetriken. Dies beinhaltet Vorgaben zur minimalen Testabdeckung durch Sicherheitstests, die verpflichtende Nutzung von Werkzeugen zur statischen Code-Analyse (SAST) und eine Obergrenze für die Anzahl erlaubter kritischer Schwachstellen bei der Auslieferung."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es werden Tools wie der Windows Deployment Services (WDS) oder das Microsoft Deployment Toolkit (MDT) eingesetzt. PowerShell-Skripte werden verwendet, um nach der Basisinstallation automatisch Härtungseinstellungen anzuwenden."
+                        "value": "Im Vertrag wird beispielsweise festgelegt, dass der Code eine SAST-Prüfung ohne kritische oder hohe Befunde bestehen muss, bevor ein Release abgenommen wird. Die Ergebnisse der Scans müssen vorgelegt werden."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer sichtet die verwendeten Antwortdateien oder Deployment-Skripte und prüft sie auf Korrektheit und Vollständigkeit. Es wird kontrolliert, ob die Server-Core-Variante der de-facto-Standard ist. Der Prüfer vergleicht die Konfiguration eines neu installierten Servers mit der definierten Härtungs-Baseline."
+                        "value": "Der Prüfer kontrolliert die vertraglichen Vereinbarungen auf messbare Sicherheitsanforderungen. Es werden stichprobenartig Berichte von Sicherheitstests und SAST-Scans angefordert und mit den Vorgaben abgeglichen."
                       }
                     ]
                   },
                   {
-                    "statement-id": "sys.1.2.2-a2-m5",
-                    "uuid": "fdbdddb7-19c8-4ffa-9007-f8994e216163",
+                    "statement-id": "APP.7.A2-m5",
+                    "uuid": "4eed95e6-98e6-4220-9cc7-f56cd77d5325",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Für die Bereitstellung wird eine vollständig automatisierte 'Golden Image'-Pipeline verwendet. Diese Images sind vorgehärtet, enthalten alle aktuellen Patches sowie minimale Rollen und werden vor der Freigabe automatisiert auf Schwachstellen gescannt. Die Verwendung von Server Core ist, wo technisch möglich, obligatorisch und Abweichungen erfordern einen formalen Genehmigungsprozess."
+                        "value": "Die Einhaltung der Sicherheitsanforderungen an den Entwicklungsprozess wird durch eine sichere CI/CD-Pipeline (DevSecOps) automatisch erzwungen. Die Pipeline integriert SAST-, DAST- und SCA-Werkzeuge (Software Composition Analysis) und verhindert ein Deployment, wenn vordefinierte Sicherheits-Gates nicht erfüllt werden."
                       },
                       {
                         "name": "guidance",
-                        "value": "Eine CI/CD-Pipeline (z.B. mit Jenkins, Azure DevOps oder Packer) wird genutzt, um die Golden Images automatisch zu erstellen, zu patchen, zu testen und zu verteilen. Die Images werden in einer zentralen Artefakt-Registry versioniert und verwaltet. Die Konfiguration wird mittels Desired State Configuration (DSC) durchgesetzt."
+                        "value": "In der Jenkins-, GitLab- oder Azure-DevOps-Pipeline werden Sicherheitsscans als obligatorische Schritte konfiguriert. Ein Build schlägt fehl und kann nicht ausgeliefert werden, wenn beispielsweise neue kritische Schwachstellen im Code oder in verwendeten Bibliotheken gefunden werden."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Prüfer auditiert die CI/CD-Pipeline und die zugehörigen Skripte. Es wird verifiziert, dass automatisierte Sicherheits-Scans Teil der Pipeline sind und dass deren Ergebnisse nachverfolgt werden. Der Genehmigungsprozess für Abweichungen von der Server-Core-Richtlinie wird auf seine Wirksamkeit überprüft."
+                        "value": "Der Prüfer analysiert die Konfiguration der CI/CD-Pipeline (z.B. `gitlab-ci.yml`, `Jenkinsfile`). Es wird verifiziert, dass Sicherheits-Gates korrekt implementiert sind und nicht umgangen werden können. Ein automatisierter Test könnte darin bestehen, Code mit einer bekannten Schwachstelle einzureichen und zu prüfen, ob der Build wie erwartet blockiert wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "adb8e19c-87cd-47a9-8b45-3c39aa0a9178",
+                "control-id": "DEV.4.10",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DEV",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.7.A5-m1",
+                    "uuid": "3b66714d-b019-499b-bb1a-5acc4842fda2",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Entwicklung wird ad-hoc durch informelle Status-Updates gesteuert. Es fehlt ein strukturiertes Vorgehens- oder Projektmanagementmodell."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Steuerung erfolgt durch gelegentliche Telefonate oder E-Mails zwischen Auftraggeber und Entwickler, ohne feste Termine oder eine strukturierte Agenda."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt durch Befragung der Beteiligten und Einsicht in die Projektkommunikation fest, dass kein systematisches Steuerungsmodell verwendet wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A5-m2",
+                    "uuid": "d1bd178a-1d68-465e-8dfa-ff4dac6e51f6",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ein Projektmanagementmodell wie Scrum oder Kanban verwendet, dieses fokussiert sich jedoch rein auf die Umsetzung funktionaler Anforderungen. Aspekte wie Risikomanagement oder formale Qualitätsziele sind nicht explizit integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt regelmäßige Sprint-Meetings und ein Product Backlog. Sicherheitsanforderungen werden jedoch wie normale funktionale Anforderungen behandelt und nicht gesondert priorisiert oder nachverfolgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert das Vorgehen im Projekt (z.B. durch Teilnahme an einem Sprint-Review). Es wird festgestellt, dass ein agiles Modell gelebt wird, aber explizite Artefakte für Risikomanagement oder die Steuerung von Qualitätszielen fehlen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A5-m3",
+                    "uuid": "d01fc28f-85ef-42bb-bc4b-720cb12b6daa",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bei der Entwicklung von Individualsoftware SOLLTE ein geeignetes Steuerungs- und Projektmanagementmodell verwendet werden. Hierbei SOLLTE das ausgewählte Modell mit dem Auftragnehmenden abgestimmt werden. Bei der Steuerung SOLLTE berücksichtigt werden, dass das benötigte Personal ausreichend qualifiziert ist. Alle relevanten Phasen SOLLTEN während des Lebenszyklus der Software abgedeckt werden. Außerdem SOLLTE es ein geeignetes Entwicklungsmodell, ein Risikomanagement sowie Qualitätsziele enthalten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vor Projektbeginn wird gemeinsam mit dem Entwickler entschieden, ob z.B. nach Scrum oder einem V-Modell XT vorgegangen wird. Es wird ein Risikoregister für das Projekt angelegt. Qualitätsziele, wie z.B. Antwortzeitverhalten oder Code-Qualität, werden explizit definiert und dokumentiert. Die Qualifikation des Personals wird durch Prüfung von Lebensläufen oder Zertifikaten sichergestellt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet die Projekt-Charta oder ähnliche Gründungsdokumente, um das vereinbarte Modell zu verifizieren. Es wird geprüft, ob ein Risikoregister und eine Liste mit Qualitätszielen existieren und ob diese Artefakte im Projektverlauf gepflegt werden. Die Qualifikationsnachweise des eingesetzten Personals werden stichprobenartig geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A5-m4",
+                    "uuid": "1d24a472-1b64-45da-9e99-75d16287769c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Steuerungsprozess beinhaltet regelmäßige, formale Reviews von Sicherheitsmeilensteinen und Risikobewertungen. Die Ergebnisse dieser Reviews werden dokumentiert und fließen nachweislich in den weiteren Entwicklungsprozess ein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In regelmäßigen Abständen (z.B. einmal pro Monat) findet ein Security Review Meeting statt, in dem der Status der Sicherheitsanforderungen und das Risikoregister besprochen werden. Die Entscheidungen und neuen Aufgaben werden protokolliert und im Projektmanagement-Tool erfasst."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Protokolle der Security Review Meetings der letzten Monate vorlegen. Es wird geprüft, ob die identifizierten Maßnahmen und Risiken im Projektmanagement-System nachverfolgt und umgesetzt wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A5-m5",
+                    "uuid": "679b57fe-dddf-483a-b835-3c5f766bc9f7",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Steuerung wird durch ein Projektmanagement-Tool unterstützt, das sicherheitsrelevante Aufgaben, Risiken und Qualitätsmetriken automatisiert nachverfolgt. Es stellt den Stakeholdern Echtzeit-Dashboards zum Sicherheitsstatus des Projekts zur Verfügung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In Jira oder Azure DevOps werden spezielle Ticket-Typen für Sicherheitsanforderungen und Sicherheitsrisiken verwendet. Dashboards werden so konfiguriert, dass sie die Anzahl offener Sicherheitstickets pro Kritikalität, die Ergebnisse von Sicherheitsscans aus der CI/CD-Pipeline und den Status des Risikoregisters visualisieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer erhält Lesezugriff auf das Projektmanagement-Tool. Es wird die Konfiguration der Dashboards und der automatisierten Berichte analysiert. Es wird geprüft, ob die dargestellten Daten korrekt und aktuell sind und ob sie für die Projektsteuerung aktiv genutzt werden. Die Prüfung kann automatisiert erfolgen, indem die API des Tools abgefragt wird, um die Konformität der Prozesse zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a6a100cc-8398-4bd0-9589-711ae654bc6c",
+                "control-id": "DEV.4.11",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "TEST",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.7.A8-m1",
+                    "uuid": "a1d82a9d-194e-449b-aff5-ca0a3c592fc9",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Fachverantwortlichen werden erst unmittelbar vor der Inbetriebnahme durch eine Demonstration des fertigen Produkts einbezogen. Es finden keine Tests durch die Fachverantwortlichen statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine Woche vor Go-Live wird eine Präsentation der Software gehalten. Feedback wird zwar entgegengenommen, kann aber in der Regel nicht mehr umgesetzt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt durch Befragung der Fachverantwortlichen fest, dass deren einzige Beteiligung eine Abschlusspräsentation war."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A8-m2",
+                    "uuid": "61929855-fdce-466b-833f-e5b1db2a8f13",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Fachverantwortlichen werden am Ende des Entwicklungszyklus in formale Abnahmetests (User Acceptance Tests, UAT) einbezogen. Eine Beteiligung während der Entwicklung findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nachdem der Entwickler die Software als „fertig“ meldet, erhalten die Fachverantwortlichen eine Testversion und eine Liste von Testfällen, um die Software zu prüfen, bevor die finale Abnahme erfolgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die Protokolle der UAT vorlegen und verifiziert die Beteiligung der Fachverantwortlichen. Gleichzeitig wird festgestellt, dass es keine frühere Beteiligung im Entwicklungsprozess gab."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A8-m3",
+                    "uuid": "a5220a2f-29a8-4eae-8f05-80366e23352c",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Fachverantwortliche SOLLTEN schon vor der endgültigen Abnahme frühzeitig an entwicklungsbegleitenden Tests der Software-Entwickelnden beteiligt werden. Dies SOLLTE in Abstimmung mit dem Auftragnehmenden bereits initial im Projektablaufplan berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Projektablaufplan werden feste Termine für Zwischen-Reviews oder Tests durch die Fachverantwortlichen eingeplant (z.B. am Ende jeder Entwicklungsphase oder nach Erreichen wichtiger Meilensteine). Die Fachverantwortlichen erhalten Zugang zu Testversionen der Software."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert den initialen Projektablaufplan auf geplante, frühzeitige Testaktivitäten mit den Fachverantwortlichen. Anhand von Protokollen oder Testberichten wird verifiziert, dass diese Tests tatsächlich stattgefunden haben."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A8-m4",
+                    "uuid": "7bf0c10f-dee6-496d-84bd-f25f50e5e244",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Fachverantwortlichen werden kontinuierlich in den agilen Entwicklungsprozess einbezogen, beispielsweise durch Teilnahme an Sprint-Reviews. Sie haben permanenten Zugang zu einer Staging-Umgebung, um neue Funktionen zu testen, sobald diese entwickelt sind. Ihr Feedback wird formal erfasst und in nachfolgenden Sprints eingeplant."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Am Ende jedes Sprints präsentieren die Entwickler die neuen Inkremente den Fachverantwortlichen. Das Feedback wird direkt in User Stories oder Bugs für das Backlog umgewandelt. Eine dedizierte Testumgebung wird nach jedem erfolgreichen Build automatisch aktualisiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer nimmt an einem Sprint-Review teil oder sichtet die Protokolle mehrerer solcher Meetings. Es wird im Backlog-Management-Tool geprüft, wie das Feedback der Fachverantwortlichen erfasst und in der Planung berücksichtigt wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A8-m5",
+                    "uuid": "f94850d0-288d-459e-a72b-d0af494b04e0",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Automatisierte Akzeptanztests werden in Zusammenarbeit mit den Fachverantwortlichen unter Verwendung eines Frameworks wie Behavior-Driven Development (BDD) entwickelt. Diese Tests laufen automatisch in der CI/CD-Pipeline und geben sofortiges Feedback, ob neuer Code die fachlichen Anforderungen erfüllt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Fachverantwortliche schreiben oder validieren Testfälle in einer einfachen Sprache (z.B. Gherkin: „Given-When-Then“). Diese Spezifikationen werden von Entwicklern verwendet, um automatisierte Tests (z.B. mit Cucumber oder SpecFlow) zu implementieren. Die Ausführung dieser Tests ist ein obligatorischer Bestandteil der Build-Pipeline."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert das Code-Repository auf BDD-Feature-Dateien und die dazugehörigen Test-Implementierungen. In der CI/CD-Pipeline wird geprüft, ob die Ausführung dieser Akzeptanztests obligatorisch ist. Es wird kontrolliert, ob ein Build fehlschlägt, wenn ein Akzeptanztest nicht erfolgreich ist."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2936a97f-d5a0-4925-8db5-00eef8de8a30",
+                "control-id": "DEV.5.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DLS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.7.A4-m1",
+                    "uuid": "fde76f94-2059-4881-9146-0577da85b0ec",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Beauftragung der Entwicklung erfolgt auf Basis einer informellen Anfrage oder einer kurzen Beschreibung des gewünschten Ergebnisses. Formale Anforderungsdokumente werden nicht verwendet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein typisches Beispiel ist eine Beauftragung per E-Mail mit dem Inhalt „Bitte erstellen Sie ein Tool zur Erfassung von Arbeitszeiten“."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt fest, dass dem Entwicklungsauftrag keine der formalen Anforderungsdokumente (Anforderungskatalog, Prozessanforderungen, Integrationsanforderungen) zugrunde lagen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A4-m2",
+                    "uuid": "050f7b99-0a7f-44cf-8e66-9593a525d866",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Beauftragung basiert auf einem funktionalen Anforderungskatalog. Sicherheitsanforderungen an den Prozess oder die Systemintegration sind jedoch nicht Teil der Beauftragungsgrundlage."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Dem Entwickler wird ein Lastenheft mit User Stories übergeben, aber keine der in A2 und A3 erstellten Sicherheitsdokumente."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer vergleicht die Beauftragungsunterlagen mit den existierenden Anforderungsdokumenten und stellt fest, dass der funktionale Anforderungskatalog verwendet wurde, die spezifischen Sicherheitsdokumente jedoch nicht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A4-m3",
+                    "uuid": "b86038d8-03f2-4aea-b575-17d8e09f85d5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Wird Individualsoftware durch die eigene Institution entwickelt oder extern beauftragt, dann MÜSSEN neben den bestehenden rechtlichen und organisatorischen Vorgaben insbesondere der Anforderungskatalog, die Sicherheitsanforderungen an den Prozess der Software-Entwicklung, sowie die Sicherheitsfunktionen zur Systemintegration als Grundlage zur Software-Entwicklung verwendet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle relevanten Anforderungsdokumente (funktionaler Katalog aus APP.6, Prozessanforderungen aus APP.7.A2, Integrationsanforderungen aus APP.7.A3) werden zu einem integralen Bestandteil der Ausschreibungsunterlagen bzw. des internen Projektauftrags gemacht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich die vollständigen Vergabeunterlagen oder den internen Projektauftrag vorlegen. Es wird verifiziert, dass alle drei genannten Anforderungsdokumente explizit als Grundlage der Entwicklung aufgeführt und beigefügt sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A4-m4",
+                    "uuid": "e7407862-9f52-4cb2-92ce-b126e9f7a821",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Beschaffungsprozess beinhaltet einen formalen Verifikationsschritt, bei dem die Angebote der potenziellen Auftragnehmer daraufhin überprüft werden, ob alle spezifizierten Sicherheitsanforderungen adäquat adressiert und verstanden wurden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird eine Bewertungsmatrix verwendet, in der für jede Sicherheitsanforderung geprüft wird, wie der Bieter diese umzusetzen plant. Angebote, die Sicherheitsanforderungen ignorieren oder unzureichend beschreiben, werden aus dem weiteren Verfahren ausgeschlossen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Protokolle des Vergabeverfahrens und die Bewertungsunterlagen. Es wird geprüft, ob eine systematische Bewertung der Sicherheitsaspekte in den Angeboten stattgefunden hat und wie das Ergebnis die Vergabeentscheidung beeinflusst hat."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A4-m5",
+                    "uuid": "c0e17137-df3d-4bfb-a387-cea2266ab20e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Vertrag mit dem Auftragnehmer enthält Konventionalstrafen für die Nichteinhaltung wesentlicher Sicherheitsanforderungen. Der Auftragnehmer wird vertraglich verpflichtet, die Einhaltung durch nachprüfbare Belege (z.B. Audit-Berichte Dritter, Ergebnisse von Penetrationstests, SAST/DAST-Protokolle) nachzuweisen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Vertrag wird beispielsweise festgelegt: „Wird bei der Abnahme eine kritische Schwachstelle gemäß OWASP Top 10 gefunden, wird eine Vertragsstrafe in Höhe von X fällig. Der Auftragnehmer muss vor jeder Auslieferung einen unaufgeforderten SAST-Bericht vorlegen.“"
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer sichtet den finalen Vertrag und verifiziert die Existenz von Klauseln zu Vertragsstrafen und Nachweispflichten bezüglich der Sicherheit. Es wird stichprobenartig geprüft, ob die vereinbarten Nachweise (z.B. Testberichte) tatsächlich eingefordert und geprüft wurden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b2affcb6-09ae-429a-929c-efdc54861cba",
+                "control-id": "DEV.5.2",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "BES",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.7.A7-m1",
+                    "uuid": "ac70ae94-d0b6-4ff2-b599-0149b5b4fcf2",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Auftragnehmer für die Software-Entwicklung wird primär auf Basis der niedrigsten Kosten ausgewählt. Eine Bewertung der Sicherheitskompetenz des Auftragnehmers findet nicht statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Entscheidung fällt auf den günstigsten Anbieter, ohne dessen Referenzen oder Zertifizierungen im Bereich der sicheren Softwareentwicklung zu prüfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Vergabeunterlagen und stellt fest, dass die Sicherheitskompetenz kein Kriterium im Bewertungs- und Entscheidungsprozess war."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A7-m2",
+                    "uuid": "a2cf7359-021c-4655-9c76-527c07961891",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Beschaffungsprozess bewertet die allgemeinen Fähigkeiten des Auftragnehmers. Dessen Sicherheitsexpertise ist jedoch kein primäres oder entscheidendes Auswahlkriterium. Öffentliche Ausschreibungen können hochrangige Architekturentscheidungen offenlegen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Im Rahmen der Ausschreibung werden allgemeine Unternehmensinformationen und Referenzen abgefragt, aber keine spezifischen Nachweise für sichere Entwicklung. Die Leistungsbeschreibung in der öffentlichen Ausschreibung enthält möglicherweise Details zur geplanten Technologie."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, dass Sicherheit im Kriterienkatalog der Ausschreibung nur eine untergeordnete Rolle spielt. Es wird geprüft, ob die öffentliche Ausschreibung unnötigerweise sensible Informationen enthielt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A7-m3",
+                    "uuid": "7c3d4888-9611-45a8-993d-c20324e43ffa",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Entwicklungsprojekt SOLLTE im Rahmen des hierfür bestens geeigneten Projektmanagementmodells beauftragt werden. Sicherheitsaspekte SOLLTEN dabei bereits bei der Ausschreibung und Vergabe berücksichtigt werden, sodass einerseits nur geeignete Auftragnehmende beauftragt werden, andererseits aber keine weitreichenden Rückschlüsse auf die Sicherheitsarchitektur durch die öffentlich verfügbaren Informationen möglich sind. In der Institution SOLLTEN definierte Prozesse und festgelegte Kontaktpersonen existieren, die sicherstellen, dass die jeweiligen Rahmenbedingungen berücksichtigt werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Ausschreibung enthält Eignungskriterien zur Sicherheitskompetenz des Anbieters. Die Leistungsbeschreibung wird bewusst abstrakt gehalten, um keine Details der Sicherheitsarchitektur preiszugeben. Ein definierter Prozess stellt sicher, dass die Beschaffungsstelle mit dem Informationssicherheitsbeauftragten zusammenarbeitet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die Ausschreibungsunterlagen auf Eignungskriterien zur Sicherheit und auf die Formulierung der Leistungsbeschreibung. Es wird geprüft, ob der definierte Abstimmungsprozess zwischen Beschaffung und Informationssicherheit nachweislich (z.B. durch Protokolle, E-Mails) stattgefunden hat."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A7-m4",
+                    "uuid": "6d72498a-a00b-48ce-b7cb-616696051c77",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Beschaffungsprozess verlangt von potenziellen Auftragnehmern explizite Nachweise ihrer Sicherheitsexpertise. Dies können Zertifizierungen (z.B. ISO 27001) oder detaillierte Referenzen für vergleichbare Projekte zur sicheren Softwareentwicklung sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Als Eignungskriterium in der Ausschreibung wird gefordert: „Der Bieter muss eine gültige ISO 27001-Zertifizierung für den Geltungsbereich Softwareentwicklung nachweisen ODER mindestens zwei Referenzprojekte der letzten drei Jahre mit vergleichbarem Schutzbedarf benennen.“"
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer kontrolliert, ob die Eignungskriterien in der Ausschreibung entsprechende Nachweise fordern und ob die vorgelegten Nachweise des erfolgreichen Bieters geprüft und als valide bewertet wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A7-m5",
+                    "uuid": "5171b0c7-f71d-4361-aa66-e92f0bc2acac",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird ein mehrstufiges Beschaffungsverfahren (z.B. Teilnahmewettbewerb) verwendet. Detaillierte Informationen zur Sicherheitsarchitektur werden erst nach einer Eignungsprüfung und Unterzeichnung einer Geheimhaltungsvereinbarung (NDA) an eine engere Auswahl von Bietern weitergegeben. Der endgültige Vertrag enthält spezifische Service Level Agreements (SLAs) zur Informationssicherheit."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der ersten Stufe werden nur allgemeine Informationen veröffentlicht und die Eignung der Bewerber geprüft. In der zweiten Stufe erhalten die qualifizierten Bieter nach Unterzeichnung eines NDA die detaillierte Leistungsbeschreibung. Der Vertrag enthält SLAs wie „Die Zeit zur Behebung von kritischen Schwachstellen beträgt maximal 48 Stunden.“"
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert den gesamten Ablauf des Vergabeverfahrens und prüft die Dokumentation beider Stufen. Es wird der Vertrag auf die Existenz von Sicherheits-SLAs geprüft und stichprobenartig kontrolliert, ob deren Einhaltung im Betrieb überwacht wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b0dd88af-7446-44ab-897a-437e9e3c356e",
+                "control-id": "KONF.11.8",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "DEV",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "APP.7.A3-m1",
+                    "uuid": "a74337cf-a1aa-449e-9aa7-4eac953e2c47",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es wird nur der allgemeine Zweck der Software beschrieben, ohne spezifische Anforderungen an die technische Plattform, Ressourcen oder Schnittstellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Anforderung lautet beispielsweise „Wir benötigen ein System zur Verwaltung von Kundendaten“, ohne Details zur Datenbank, zum Betriebssystem oder zur Anbindung an andere Systeme."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer stellt anhand der Anforderungsdokumente fest, dass keine technischen Spezifikationen für die Einsatzumgebung oder Schnittstellen definiert wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A3-m2",
+                    "uuid": "1d74d986-6fc0-418c-80ee-1ea8c832bc5e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Zielplattform (z.B. „Windows Server mit IIS“) ist grob spezifiziert. Ressourcenbeschränkungen und detaillierte Schnittstellenanforderungen sind jedoch nur allgemein und nicht formal beschrieben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird festgelegt, dass die Anwendung auf der vorhandenen Server-Infrastruktur laufen muss, aber ohne genaue Angaben zu verfügbarem RAM, CPU oder den exakten Versionen der Software-Stacks."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer verifiziert, dass die Zielplattform benannt ist, stellt aber fest, dass detaillierte, quantifizierbare Anforderungen an Ressourcen und Schnittstellen fehlen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A3-m3",
+                    "uuid": "1d02f04e-815c-4d18-9604-8cb120b7ca61",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der IT-Betrieb und die zuständigen Fachverantwortlichen MÜSSEN Anforderungen an die technische Einsatzumgebung der geplanten Individualsoftware erstellen und mit der Software-Entwicklung abstimmen. Aus den Anforderungen MUSS klar hervorgehen: auf was für einer Hardware-Plattform, auf was für einer Software-Plattform (inklusive gesamten Software-Stack), mit welchen zur Verfügung stehenden Ressourcen (z. B. CPU-Cluster oder Arbeitsspeicher), und mit welchen Schnittstellen mit anderen IT-Systemen oder Anwendungen die Anwendung eingesetzt werden soll sowie welche Sicherheitsfunktionen sich hieraus ergeben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein technisches Zieldokument erstellt, das die genauen Versionen von Betriebssystem und Datenbank, die zugewiesenen vCPU-Kerne und RAM, die erforderlichen Netzwerkports und die Formate der Datenschnittstellen (z.B. REST-Endpunkte mit Beispieldaten) spezifiziert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer lässt sich das Anforderungsdokument für die Einsatzumgebung vorlegen. Es wird geprüft, ob alle Aspekte (Hardware, Software-Stack, Ressourcen, Schnittstellen) klar und unmissverständlich definiert sind und ob die daraus resultierenden Sicherheitsfunktionen (z.B. Notwendigkeit der Authentisierung an einer Schnittstelle) abgeleitet wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A3-m4",
+                    "uuid": "f8380eac-7d32-4194-bb28-ef58b0e2d9ac",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Schnittstellen mit anderen IT-Systemen SOLLTEN in standardisierten technischen Formaten modelliert und definiert werden. Dies umfasst die Definition von Datenmodellen und Endpunkten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Für REST-APIs wird eine OpenAPI-Spezifikation (Version 3.x) erstellt. Für Webservices wird eine WSDL-Datei bereitgestellt. Diese Spezifikationen werden versioniert und als Teil der Anforderungsdokumentation verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer fordert die Schnittstellenspezifikationen (z.B. OpenAPI/Swagger-Datei) an. Es wird geprüft, ob diese Spezifikationen vollständig, standardkonform und aktuell sind. Es kann geprüft werden, ob Code-Generatoren diese Spezifikationen fehlerfrei verarbeiten können."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "APP.7.A3-m5",
+                    "uuid": "d2974b13-78ba-4fd9-b2ea-f68fa2e42730",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle Plattform- und Schnittstellenanforderungen sind als „Infrastructure as Code“ (z.B. mit Terraform, Ansible) und „Policy as Code“ (z.B. mit Open Policy Agent) definiert. Dies stellt eine automatisierte Validierung und die konsistente Bereitstellung der Einsatzumgebung sicher."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Terraform-Skripte definieren die Ziel-VM inklusive Netzwerkkonfiguration. Ansible-Playbooks installieren und härten den Software-Stack. OPA-Regeln definieren die zulässige Kommunikation zwischen den Systemen. Diese Artefakte werden im Code-Repository der Anwendung mitverwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Prüfer analysiert die „Infrastructure as Code“- und „Policy as Code“-Skripte im Repository. Es wird geprüft, ob die produktive Umgebung nachweislich aus diesen Skripten erstellt wurde und ob die Skripte die definierten Sicherheitsanforderungen korrekt umsetzen. Ein automatisierter Audit kann die Konfiguration der Cloud-Umgebung mit dem im Repository definierten Zustand vergleichen."
                       }
                     ]
                   }

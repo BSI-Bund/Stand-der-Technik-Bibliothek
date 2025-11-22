@@ -1,15 +1,15 @@
 {
   "component-definition": {
-    "uuid": "23e6abcd-ef60-474d-95b5-b9ff6922fb87",
+    "uuid": "d1aa3c2f-0652-44ed-b5bb-85b9e3ae29e2",
     "metadata": {
       "title": "APP.3.6 DNS-Server - Benutzerdefiniert",
-      "last-modified": "2025-11-15T16:31:49.616750+00:00",
+      "last-modified": "2025-11-22T12:46:07.247959+00:00",
       "version": "1.0.0",
       "oscal-version": "1.1.3"
     },
     "components": [
       {
-        "uuid": "32e79f86-e081-4c74-87e4-4a3c7af7bd61",
+        "uuid": "cbb9d7b9-f3b2-42b4-81c1-d42fde0ee7be",
         "type": "software",
         "title": "APP.3.6 DNS-Server",
         "description": "This component represents the implementation of all controls for Baustein APP.3.6.",
@@ -65,18 +65,18 @@
         ],
         "control-implementations": [
           {
-            "uuid": "dd51be1f-114f-454a-aff1-66472315c024",
-            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Stand-der-Technik-Bibliothek/Kompendien/Grundschutz++-Kompendium/profile/dns-server_profile.json",
+            "uuid": "7904bb50-a897-408b-ba46-45a3ca6b2c45",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Kompendien/Grundschutz%2B%2B-Kompendium/profile/dns-server_profile.json",
             "description": "Implementation for all controls in Baustein APP.3.6",
             "implemented-requirements": [
               {
-                "uuid": "7cb904bc-d350-480c-a3d7-771f94b00746",
+                "uuid": "927ada34-51db-49b4-a4f9-6ccf8f792318",
                 "control-id": "ARCH.7.1",
                 "description": "",
                 "props": [
                   {
                     "name": "level",
-                    "value": "3",
+                    "value": "1",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -91,7 +91,7 @@
                   },
                   {
                     "name": "effective_on_c",
-                    "value": "false",
+                    "value": "true",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   },
                   {
@@ -101,53 +101,110 @@
                   },
                   {
                     "name": "effective_on_a",
-                    "value": "true",
+                    "value": "false",
                     "ns": "https://www.bsi.bund.de/ns/grundschutz"
                   }
                 ],
                 "statements": [
                   {
-                    "statement-id": "app.3.6-a11-m3",
-                    "uuid": "9e60d505-a1dd-4242-bb27-6c74dcba8f29",
-                    "description": "Maturity Level 3: Defined",
+                    "statement-id": "app.3.6-a3-m1",
+                    "uuid": "7bb12342-14af-4431-b4bc-d06e912005df",
+                    "description": "Maturity Level 1: Partial",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Hardware des DNS-Servers SOLLTE ausreichend dimensioniert sein. Die Hardware des DNS-Servers SOLLTE ausschließlich für den Betrieb dieses DNS-Servers benutzt werden. Die Netzanbindungen sämtlicher DNS-Server im Informationsverbund SOLLTEN ausreichend bemessen sein."
+                        "value": "Ein einziger DNS-Server wird für alle Aufgaben eingesetzt (internes Caching/Resolving und externes Advertising). Eine Trennung wird versucht, durch einfache Access Control Lists (ACLs) zu erreichen, die jedoch unvollständig sind."
                       },
                       {
                         "name": "guidance",
-                        "value": "Die DNS-Server werden auf dedizierten (virtuellen oder physischen) Maschinen betrieben, auf denen keine anderen kritischen Dienste laufen. Die Dimensionierung von CPU, RAM und Netzwerkbandbreite orientiert sich an der erwarteten Anzahl von Anfragen pro Sekunde (QPS) und der Größe der Zonen, mit einem angemessenen Puffer für Lastspitzen."
+                        "value": "Ein BIND-Server ist so konfiguriert, dass er rekursive Abfragen nur für interne IP-Bereiche erlaubt (`allow-recursion`). Er ist jedoch aus dem Internet erreichbar und dient gleichzeitig als autoritativer Server für externe Zonen."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Auditor prüft, ob die DNS-Server dediziert betrieben werden. Anhand von Leistungsdaten aus dem Monitoring-System wird bewertet, ob die aktuelle Auslastung (CPU, RAM, Netzwerk) in einem unkritischen Bereich liegt und ausreichend Reserven vorhanden sind."
+                        "value": "Der Auditor führt eine externe Prüfung durch, um festzustellen, ob der öffentliche DNS-Server rekursive Abfragen beantwortet (Open Resolver). Die Konfigurationsdatei des DNS-Servers wird auf die Vermischung von Resolver- und autoritativen Funktionen überprüft."
                       }
                     ]
                   },
                   {
-                    "statement-id": "app.3.6-a11-m4",
-                    "uuid": "54735e4a-07c0-43c3-bf20-5aba5d7c2c26",
+                    "statement-id": "app.3.6-a3-m2",
+                    "uuid": "873e1618-1625-4ecd-9972-2ff1dd156a37",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Auf derselben Hardware werden getrennte DNS-Server-Prozesse oder virtuelle Maschinen für die Rollen Advertising und Resolving betrieben. Die Clients sind so konfiguriert, dass sie den korrekten Prozess für ihre Anfragen nutzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auf einem Server laufen zwei Instanzen eines DNS-Servers (z.B. BIND) auf unterschiedlichen IP-Adressen oder Ports. Eine Instanz ist für das interne Netz als Resolver konfiguriert, die andere für das externe Netz als autoritativer Server. Interne Clients erhalten per DHCP die IP des internen Resolvers."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Prozessliste und Netzwerkkonfiguration des Servers, um die Trennung der DNS-Dienste zu verifizieren. Die DHCP-Konfiguration wird überprüft, um sicherzustellen, dass interne Clients ausschließlich den internen Resolver verwenden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m3",
+                    "uuid": "45c750a9-d406-410f-a1c0-9ca1f246c14d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Advertising DNS-Server und Resolving DNS-Server MÜSSEN serverseitig getrennt sein. Die Resolver der internen IT-Systeme DÜRFEN NUR die internen Resolving DNS-Server verwenden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es werden dedizierte IT-Systeme für die Rollen Advertising und Resolving eingesetzt. Der Advertising-Server befindet sich in einer DMZ, während der Resolving-Server im internen Netz platziert ist. Firewall-Regeln stellen sicher, dass Clients aus dem internen Netz nur den Resolving-Server erreichen können und nicht direkt externe DNS-Server."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Netzwerkarchitekturpläne und die Firewall-Regelsätze, um die physische oder logische Trennung der Server und die Durchsetzung der Kommunikationspfade zu verifizieren. Stichproben bei Client-Systemen stellen sicher, dass diese korrekt für die Nutzung des internen Resolvers konfiguriert sind (`ipconfig /all` oder `cat /etc/resolv.conf`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m4",
+                    "uuid": "a6acbfdf-dbc2-4f92-a082-6cea6e941e26",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
                         "name": "statement",
-                        "value": "Die Dimensionierung der DNS-Server basiert auf einer systematischen Kapazitätsplanung. Die Leistungsdaten werden über einen längeren Zeitraum analysiert, um Wachstumstrends zu erkennen. Die Server sind so dimensioniert, dass sie auch einen moderaten DDoS-Angriff (z.B. eine DNS-Amplification-Attacke) ohne signifikante Leistungseinbußen bewältigen können."
+                        "value": "Die Trennung von Advertising- und Resolving-Funktionen wird durch den Einsatz unterschiedlicher DNS-Softwareprodukte für die jeweilige Aufgabe weiter gehärtet (z.B. NSD für Advertising, Unbound für Resolving). Die Kommunikation zwischen den internen Resolvern und dem Internet wird durch einen dedizierten DNS-Proxy oder eine Firewall mit DNS-Inspektion kontrolliert."
                       },
                       {
                         "name": "guidance",
-                        "value": "Es wird ein Kapazitätsmanagementprozess etabliert. Mindestens einmal im Jahr werden die QPS-Trends, die Speichernutzung (insbesondere des Caches) und die CPU-Last analysiert, um den Bedarf für das nächste Jahr zu prognostizieren. Die Netzwerkkarte und die Anbindung sind für 1 Gbit/s oder mehr ausgelegt."
+                        "value": "In der DMZ wird ein autoritativer Only-Server wie NSD oder Knot DNS eingesetzt. Im internen Netz wird ein reiner Caching/Resolving-Server wie Unbound oder PowerDNS Recursor verwendet. Dies reduziert die Angriffsfläche, da jede Software nur den für ihre Aufgabe notwendigen Code enthält."
                       },
                       {
                         "name": "assessment-method",
-                        "value": "Der Auditor prüft die Dokumentation des Kapazitätsmanagementprozesses und die Analyseberichte. Es wird verifiziert, dass die Hardware- und Netzwerkausstattung den prognostizierten Anforderungen und potenziellen Angriffsszenarien gewachsen ist."
+                        "value": "Der Auditor prüft die installierte Software auf den DNS-Servern, um die funktionale Spezialisierung zu bestätigen. Die Konfiguration der Firewall oder des DNS-Proxys wird auf Regeln zur Filterung und Protokollierung von DNS-Verkehr überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a3-m5",
+                    "uuid": "54661094-f011-45df-a020-4e7897c6af32",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die interne Resolving-Infrastruktur ist mit einer DNS-Firewall (auch als Response Policy Zone, RPZ, bekannt) ausgestattet, die Anfragen an bekannte bösartige, Phishing- oder Command&Control-Domains proaktiv blockiert oder umleitet. Die Bedrohungsinformationen werden automatisiert und in Echtzeit aktualisiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der interne Resolving DNS-Server (z.B. BIND, Unbound, Knot Resolver) wird so konfiguriert, dass er einen oder mehrere RPZ-Feeds von kommerziellen oder Open-Source-Threat-Intelligence-Anbietern abonniert. Die Richtlinien sind so festgelegt, dass Anfragen an gelistete Domains blockiert (NXDOMAIN) oder auf eine interne Warnseite umgeleitet werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration des Resolving DNS-Servers auf die Einbindung von RPZ-Zonen. Es wird die Aktualität der Threat-Intelligence-Feeds verifiziert. Test-Anfragen an bekannte bösartige Domains werden durchgeführt, um die korrekte Funktion der Blockierung zu bestätigen."
                       }
                     ]
                   }
                 ]
               },
               {
-                "uuid": "ec620202-47f1-4470-aaf9-e74f415c22e0",
+                "uuid": "6770c178-8162-41e6-8898-d57f8adb4ca1",
                 "control-id": "ARCH.8.3",
                 "description": "",
                 "props": [
@@ -185,7 +242,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a2-m1",
-                    "uuid": "5f1ea609-63e1-4f62-b5cc-41cb8cf1617f",
+                    "uuid": "4ab78d81-c843-4952-9d4f-ac84c1c8743a",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -204,7 +261,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a2-m2",
-                    "uuid": "c9d73e63-0038-4baa-a897-8dc9c7b4bb11",
+                    "uuid": "1d38a451-691e-4eb0-bbb3-42b841516f01",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -223,7 +280,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a2-m3",
-                    "uuid": "83e43f82-1794-4549-b49c-e21d1e15ecfd",
+                    "uuid": "13cdaaf8-9c48-4271-b6ac-7017ef455ce8",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -242,7 +299,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a2-m4",
-                    "uuid": "079eb9f0-5ced-4ca3-9c84-f220642e6019",
+                    "uuid": "6297fb5c-0a23-4083-855a-33cfd1974c54",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -261,7 +318,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a2-m5",
-                    "uuid": "e59cc8b7-5d74-409a-acbf-003912b17b36",
+                    "uuid": "e500050d-29a0-4762-8575-83f6a14acc6a",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -281,7 +338,7 @@
                 ]
               },
               {
-                "uuid": "547836bf-3ff4-4c2d-a4e2-bd1fec108d7a",
+                "uuid": "395381f2-d45a-4e6a-93ad-6ba36fa88638",
                 "control-id": "ASST.7.1",
                 "description": "",
                 "props": [
@@ -319,7 +376,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a19-m3",
-                    "uuid": "4ad65e93-d394-414f-9dfe-e88605d539a3",
+                    "uuid": "e85060b7-bd30-4088-98c3-8fca37b7ffa6",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -339,7 +396,7 @@
                 ]
               },
               {
-                "uuid": "2fe21bf5-2e15-4c89-ba9c-685e343324b4",
+                "uuid": "f5e80323-fdd1-4dee-87d8-b420f172ac7b",
                 "control-id": "BES.2.1.3",
                 "description": "",
                 "props": [
@@ -377,7 +434,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a10-m3",
-                    "uuid": "eb635ba1-41b4-4abe-ac06-5a419d24bdbb",
+                    "uuid": "1a90c5ff-af83-4d58-a2c0-d0f83a1f4a45",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -396,7 +453,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a10-m4",
-                    "uuid": "cd092d95-1701-4a6a-8470-feae5b614caa",
+                    "uuid": "10ec9645-916a-45b0-8ba7-5313ea2f2804",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -416,7 +473,7 @@
                 ]
               },
               {
-                "uuid": "ba2d043e-6d33-4bec-8406-f5893dd3a54d",
+                "uuid": "6ca8bafd-3c07-4ff4-b20a-16751783bb85",
                 "control-id": "BES.2.1.5",
                 "description": "",
                 "props": [
@@ -454,7 +511,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a8-m2",
-                    "uuid": "78918686-28f4-40f0-a4b9-5491343da66f",
+                    "uuid": "721997fb-e0c8-42f1-bc01-eefd5b4db0b2",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -473,7 +530,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a8-m3",
-                    "uuid": "0be0d233-c616-4f4a-8ab6-cb6e05610e67",
+                    "uuid": "27cce591-def9-4687-a9d1-8c695ca0d15d",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -492,7 +549,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a8-m4",
-                    "uuid": "a55fdfb7-81cf-4f61-b733-c780bd3ac7bf",
+                    "uuid": "3477d3f5-8e9d-4a4e-a2a6-e5683ff65a94",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -512,8 +569,8 @@
                 ]
               },
               {
-                "uuid": "e5ad1581-8641-4f02-9da0-3ee0c36f0b88",
-                "control-id": "DET.4.15",
+                "uuid": "fcb948e2-47e0-48f5-8061-5637398e9afa",
+                "control-id": "DET.4.13",
                 "description": "",
                 "props": [
                   {
@@ -550,7 +607,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a7-m2",
-                    "uuid": "494516a7-3dbd-4cf4-99f0-42e0d1d0a90f",
+                    "uuid": "d42bc190-1e59-4336-b896-44e6c2c5e78a",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -569,7 +626,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a7-m3",
-                    "uuid": "6e4dd130-4993-4434-b0af-71de949453d5",
+                    "uuid": "c9d4afd7-50fb-4631-88a6-1f09f6bc20f7",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -588,7 +645,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a7-m4",
-                    "uuid": "abd54e31-0655-4f9a-a4f8-d6e3d433ea1f",
+                    "uuid": "f574db54-b988-46c9-a811-56e960dfc630",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -607,7 +664,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a7-m5",
-                    "uuid": "e0661aac-7b17-4245-a9d4-fa6aa6f36aac",
+                    "uuid": "b0d00ea4-af63-4366-9815-b765fe717f28",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -627,7 +684,84 @@
                 ]
               },
               {
-                "uuid": "ac86889e-c94e-48fb-8623-efb0ffc6c6bf",
+                "uuid": "4aa2da77-24c9-4b91-af36-bde8551eab5a",
+                "control-id": "DET.4.16",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "3",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "ARCH",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a11-m3",
+                    "uuid": "cf2df327-72c9-4799-8dbf-101b4def4193",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Hardware des DNS-Servers SOLLTE ausreichend dimensioniert sein. Die Hardware des DNS-Servers SOLLTE ausschließlich für den Betrieb dieses DNS-Servers benutzt werden. Die Netzanbindungen sämtlicher DNS-Server im Informationsverbund SOLLTEN ausreichend bemessen sein."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die DNS-Server werden auf dedizierten (virtuellen oder physischen) Maschinen betrieben, auf denen keine anderen kritischen Dienste laufen. Die Dimensionierung von CPU, RAM und Netzwerkbandbreite orientiert sich an der erwarteten Anzahl von Anfragen pro Sekunde (QPS) und der Größe der Zonen, mit einem angemessenen Puffer für Lastspitzen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft, ob die DNS-Server dediziert betrieben werden. Anhand von Leistungsdaten aus dem Monitoring-System wird bewertet, ob die aktuelle Auslastung (CPU, RAM, Netzwerk) in einem unkritischen Bereich liegt und ausreichend Reserven vorhanden sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a11-m4",
+                    "uuid": "71d1a176-deb5-487d-b301-44e7e07805c4",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Dimensionierung der DNS-Server basiert auf einer systematischen Kapazitätsplanung. Die Leistungsdaten werden über einen längeren Zeitraum analysiert, um Wachstumstrends zu erkennen. Die Server sind so dimensioniert, dass sie auch einen moderaten DDoS-Angriff (z.B. eine DNS-Amplification-Attacke) ohne signifikante Leistungseinbußen bewältigen können."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es wird ein Kapazitätsmanagementprozess etabliert. Mindestens einmal im Jahr werden die QPS-Trends, die Speichernutzung (insbesondere des Caches) und die CPU-Last analysiert, um den Bedarf für das nächste Jahr zu prognostizieren. Die Netzwerkkarte und die Anbindung sind für 1 Gbit/s oder mehr ausgelegt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Dokumentation des Kapazitätsmanagementprozesses und die Analyseberichte. Es wird verifiziert, dass die Hardware- und Netzwerkausstattung den prognostizierten Anforderungen und potenziellen Angriffsszenarien gewachsen ist."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f9356be9-4de2-4a1a-83f9-7e9eab5346e6",
                 "control-id": "DET.4.5",
                 "description": "",
                 "props": [
@@ -665,7 +799,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a15-m3",
-                    "uuid": "5bcffc9d-86db-405a-8408-2ebafd618ba3",
+                    "uuid": "1570385b-301a-4249-8d6c-a3d52c9c54b0",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -684,7 +818,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a15-m4",
-                    "uuid": "373b32ee-dd53-4556-894e-5b876f84ef54",
+                    "uuid": "e6699773-cb0d-47aa-b9af-138b36d0a25d",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -704,8 +838,8 @@
                 ]
               },
               {
-                "uuid": "4bc06015-a862-41de-a1c9-27259c184811",
-                "control-id": "KONF.10.1",
+                "uuid": "f98e9389-b8fa-4d03-8ef0-7570ac03605f",
+                "control-id": "DEV.2.2",
                 "description": "",
                 "props": [
                   {
@@ -742,7 +876,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a1-m1",
-                    "uuid": "a430b2ea-1bf6-4a2e-903f-7626e2b99cd4",
+                    "uuid": "6588c11f-012b-433d-8d66-d58718acb5db",
                     "description": "Maturity Level 1: Partial",
                     "props": [
                       {
@@ -761,7 +895,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a1-m2",
-                    "uuid": "22db0243-a5a0-4002-b8a6-b48b232e2818",
+                    "uuid": "01b18e45-4a68-493d-b6a1-0ca50f484fb3",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -780,7 +914,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a1-m3",
-                    "uuid": "b07bde79-00aa-478a-bfa9-d017c81617b5",
+                    "uuid": "f56e31f6-0d11-4975-b277-72a03b52add0",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -799,7 +933,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a1-m4",
-                    "uuid": "f779085b-417d-41a4-84f2-9409f4b926fd",
+                    "uuid": "2a27e647-76a1-408b-8b4b-fde650f5d99e",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -818,7 +952,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a1-m5",
-                    "uuid": "05deb1a6-8a79-4729-bc70-1da53485b1c9",
+                    "uuid": "70f7a606-afbb-495c-b4cf-e50da20a8595",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -838,7 +972,7 @@
                 ]
               },
               {
-                "uuid": "85283913-6161-424e-b406-ec30033a2e0b",
+                "uuid": "75ade944-2cf5-4319-9e1e-eb1e96fe406c",
                 "control-id": "KONF.10.2",
                 "description": "",
                 "props": [
@@ -876,7 +1010,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a17-m3",
-                    "uuid": "3ac2e8b3-c5ab-47b5-b990-857036cb04ff",
+                    "uuid": "f90daeed-c825-4ee1-99d6-4d24b418a022",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -895,7 +1029,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a17-m4",
-                    "uuid": "ebacfe74-debb-4fb8-9612-a2f37763eeaf",
+                    "uuid": "ce5d8a63-d072-47df-9759-1c91b6470c48",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -914,7 +1048,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a17-m5",
-                    "uuid": "d2483086-43a1-4a16-8e2b-61dcdacdf524",
+                    "uuid": "04aba44d-9b18-4692-9232-4521f90ca3ea",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -934,7 +1068,103 @@
                 ]
               },
               {
-                "uuid": "32adadac-5a18-4535-be8c-45cc63741a62",
+                "uuid": "5e6cfd3e-8056-41e5-9d40-433b497378cf",
+                "control-id": "KONF.11.1",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "SYS",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a6-m1",
+                    "uuid": "1cc78947-628b-41b0-811c-ce5e4c63ccb8",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamische DNS-Updates sind für eine interne Zone aktiviert, die Absicherung erfolgt jedoch nur über eine IP-basierte ACL, die z.B. dem DHCP-Server Updates erlaubt. Es gibt keine kryptographische Authentifizierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In der Zonenkonfiguration des DNS-Servers wird die `allow-update` Direktive mit der IP-Adresse des DHCP-Servers verwendet. Dies ermöglicht es jedem Prozess auf dem DHCP-Server, DNS-Einträge zu ändern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die Konfiguration der DNS-Zone auf die `allow-update` Direktive und prüft, ob diese ausschließlich auf IP-Adressen basiert. Die Sicherheit des als Updater autorisierten Systems (z.B. des DHCP-Servers) wird bewertet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a6-m3",
+                    "uuid": "5a281c31-da88-46bc-bb6b-de7f13ef0bad",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es MUSS sichergestellt werden, dass nur legitimierte IT-Systeme Domain-Informationen ändern dürfen. Es MUSS festgelegt werden, welche Domain-Informationen die IT-Systeme ändern dürfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Dynamische DNS-Updates (DDNS) werden mithilfe von Transaction Signatures (TSIG) abgesichert. Für jedes System oder jede Systemgruppe (z.B. den DHCP-Server oder eine Gruppe von Clients), das Updates durchführen darf, wird ein dedizierter TSIG-Schlüssel erstellt. Die Update-Richtlinien in der DNS-Server-Konfiguration legen genau fest, welche Namen (z.B. nur der eigene Hostname) mit welchem Schlüssel geändert werden dürfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die DNS-Server-Konfiguration auf die Verwendung von TSIG für DDNS. Es wird verifiziert, dass die Update-Richtlinien (`update-policy`) restriktiv sind und das Prinzip der geringsten Rechte befolgen. Die sichere Verteilung und Speicherung der TSIG-Schlüssel auf den Clients wird stichprobenartig geprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a6-m4",
+                    "uuid": "6effb6ee-d71c-43fc-94fd-7ee0e0d15f5f",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Authentifizierung für dynamische DNS-Updates wird in eine zentrale Verzeichnisdienst-Infrastruktur integriert (z.B. GSS-TSIG mit Kerberos in einer Active Directory-Umgebung). Die Berechtigungen zur Durchführung von Updates werden über Gruppenrichtlinien oder ähnliche zentrale Mechanismen verwaltet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der DNS-Server wird so konfiguriert, dass er GSS-TSIG verwendet. Windows-Clients, die in die Domäne eingebunden sind, nutzen automatisch ihre Kerberos-Tickets, um sich beim DNS-Server zu authentifizieren und ihre Einträge sicher zu aktualisieren. Die Berechtigungen werden auf der DNS-Zone in den Active Directory-Sicherheitseinstellungen konfiguriert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor überprüft die DNS-Server- und Zonenkonfiguration auf die Aktivierung von sicheren dynamischen Updates im Modus 'Secure only'. Die ACLs auf den DNS-Zonenobjekten im Active Directory werden auf korrekte und restriktive Berechtigungen geprüft. Die sichere Kommunikation wird mittels Netzwerkanalyse-Tools verifiziert."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f8b69e48-8db7-47b0-bb3e-5fef0572f97d",
                 "control-id": "KONF.11.1.2",
                 "description": "",
                 "props": [
@@ -972,7 +1202,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a18-m3",
-                    "uuid": "3df21aad-aa8b-4e7b-8c59-2dd5bf16a49f",
+                    "uuid": "55336fe6-0d1d-4b9c-acb0-5bd565f29944",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -991,7 +1221,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a18-m4",
-                    "uuid": "da46482f-b550-48f3-8b75-524acf08c826",
+                    "uuid": "206ae704-7e46-4bca-bbd5-ef288fad80bb",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1011,7 +1241,7 @@
                 ]
               },
               {
-                "uuid": "5c0dcac5-2952-4778-b391-092bbe929f3e",
+                "uuid": "a014851d-ba77-4560-9181-ac90bd3f6415",
                 "control-id": "KONF.11.4",
                 "description": "",
                 "props": [
@@ -1049,7 +1279,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a13-m3",
-                    "uuid": "b1163982-289a-4fbf-96cf-8585f86af31d",
+                    "uuid": "32c53645-0d1e-4cc2-9dc0-39f34ab6a563",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1068,7 +1298,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a13-m4",
-                    "uuid": "56d235cb-07ec-4ca9-85f2-810bdf6703a3",
+                    "uuid": "b11fa372-d27a-4b0c-9ea0-cfb52aa3f3b7",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1088,85 +1318,8 @@
                 ]
               },
               {
-                "uuid": "964d1b48-d8c7-4cc3-bf15-e53d5ecdc1d0",
-                "control-id": "KONF.11.8.1",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "5",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "ARCH",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "app.3.6-a21-m3",
-                    "uuid": "ac4ad5ec-35cb-44cd-bede-9191e065308c",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Der primäre Advertising DNS-Server (Master) wird wie die sekundären Server in den öffentlichen NS-Records der Zone aufgeführt und ist aus dem Internet erreichbar."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Sowohl der Master-Server als auch die Slave-Server werden in den NS-Records der Zone eingetragen. Alle Server beantworten öffentliche DNS-Anfragen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor prüft die NS-Records der Zone und stellt fest, ob der als Master konfigurierte Server öffentlich gelistet ist."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "app.3.6-a21-m5",
-                    "uuid": "20407355-c81f-4d78-91bd-3e6dd5ce7ef0",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Um Angriffe auf den primären Advertising DNS-Server zu erschweren, SOLLTE eine sogenannte Hidden-Master-Anordnung vorgenommen werden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der primäre DNS-Server (Master), auf dem die Zonen bearbeitet werden, ist nicht aus dem Internet erreichbar und nicht in den öffentlichen NS-Records der Zone aufgeführt. Er ist nur für die öffentlich erreichbaren sekundären Server (Slaves) erreichbar, um Zonentransfers zu ermöglichen. Die Firewall-Regeln erlauben eingehende Verbindungen zum Master nur von den IP-Adressen der Slaves auf dem DNS-Port."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor überprüft die öffentlichen NS-Einträge und verifiziert, dass die IP-Adresse des Master-Servers dort nicht aufgeführt ist. Die Firewall-Konfiguration vor dem Master-Server wird geprüft, um sicherzustellen, dass der Zugriff auf die IP-Adressen der Slaves beschränkt ist. Ein Erreichbarkeitstest des Masters aus dem öffentlichen Internet wird durchgeführt."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "1b1ed318-bfa6-4ec3-b28d-779bdbd77b45",
-                "control-id": "KONF.12.14",
+                "uuid": "ea276c78-a625-4a27-8bf1-971829bd4410",
+                "control-id": "KONF.11.8",
                 "description": "",
                 "props": [
                   {
@@ -1203,7 +1356,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a4-m2",
-                    "uuid": "ff813562-b0ac-40f0-8591-615fe7b01927",
+                    "uuid": "1a34e665-2edc-4381-b765-ac3e6730ecfd",
                     "description": "Maturity Level 2: Foundational",
                     "props": [
                       {
@@ -1222,7 +1375,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a4-m3",
-                    "uuid": "08c7e8c5-7829-4eaa-8a33-32ef43886f8f",
+                    "uuid": "dacfa5f7-5a3d-4a4d-9518-e2aca749bb35",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1241,7 +1394,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a4-m4",
-                    "uuid": "2bfd9474-7f99-44de-a282-452d52f6eca9",
+                    "uuid": "bfe67e7f-2dc4-4ff5-b321-7b22162a1218",
                     "description": "Maturity Level 4: Enhanced",
                     "props": [
                       {
@@ -1260,7 +1413,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a4-m5",
-                    "uuid": "135ec695-6fab-4a07-bd95-02656d3ed077",
+                    "uuid": "d48acc9d-e4b3-466d-b8e8-ca85e7ccc1fc",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1280,237 +1433,7 @@
                 ]
               },
               {
-                "uuid": "1c17b192-ed9a-4a58-b6a9-be6ca5d97824",
-                "control-id": "KONF.14.3",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "1",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "ARCH",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "app.3.6-a3-m1",
-                    "uuid": "7bf203c7-7bd0-4d6b-b636-f05bb5a08a19",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Ein einziger DNS-Server wird für alle Aufgaben eingesetzt (internes Caching/Resolving und externes Advertising). Eine Trennung wird versucht, durch einfache Access Control Lists (ACLs) zu erreichen, die jedoch unvollständig sind."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Ein BIND-Server ist so konfiguriert, dass er rekursive Abfragen nur für interne IP-Bereiche erlaubt (`allow-recursion`). Er ist jedoch aus dem Internet erreichbar und dient gleichzeitig als autoritativer Server für externe Zonen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor führt eine externe Prüfung durch, um festzustellen, ob der öffentliche DNS-Server rekursive Abfragen beantwortet (Open Resolver). Die Konfigurationsdatei des DNS-Servers wird auf die Vermischung von Resolver- und autoritativen Funktionen überprüft."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "app.3.6-a3-m2",
-                    "uuid": "f79b4d45-daac-46c8-949a-6cfea95a4392",
-                    "description": "Maturity Level 2: Foundational",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Auf derselben Hardware werden getrennte DNS-Server-Prozesse oder virtuelle Maschinen für die Rollen Advertising und Resolving betrieben. Die Clients sind so konfiguriert, dass sie den korrekten Prozess für ihre Anfragen nutzen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Auf einem Server laufen zwei Instanzen eines DNS-Servers (z.B. BIND) auf unterschiedlichen IP-Adressen oder Ports. Eine Instanz ist für das interne Netz als Resolver konfiguriert, die andere für das externe Netz als autoritativer Server. Interne Clients erhalten per DHCP die IP des internen Resolvers."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor prüft die Prozessliste und Netzwerkkonfiguration des Servers, um die Trennung der DNS-Dienste zu verifizieren. Die DHCP-Konfiguration wird überprüft, um sicherzustellen, dass interne Clients ausschließlich den internen Resolver verwenden."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "app.3.6-a3-m3",
-                    "uuid": "45681df0-7782-4b92-9815-77f65ca784ea",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Advertising DNS-Server und Resolving DNS-Server MÜSSEN serverseitig getrennt sein. Die Resolver der internen IT-Systeme DÜRFEN NUR die internen Resolving DNS-Server verwenden."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Es werden dedizierte IT-Systeme für die Rollen Advertising und Resolving eingesetzt. Der Advertising-Server befindet sich in einer DMZ, während der Resolving-Server im internen Netz platziert ist. Firewall-Regeln stellen sicher, dass Clients aus dem internen Netz nur den Resolving-Server erreichen können und nicht direkt externe DNS-Server."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor überprüft die Netzwerkarchitekturpläne und die Firewall-Regelsätze, um die physische oder logische Trennung der Server und die Durchsetzung der Kommunikationspfade zu verifizieren. Stichproben bei Client-Systemen stellen sicher, dass diese korrekt für die Nutzung des internen Resolvers konfiguriert sind (`ipconfig /all` oder `cat /etc/resolv.conf`)."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "app.3.6-a3-m4",
-                    "uuid": "0b7afee2-2f71-448d-ac47-45d58211cfbb",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Trennung von Advertising- und Resolving-Funktionen wird durch den Einsatz unterschiedlicher DNS-Softwareprodukte für die jeweilige Aufgabe weiter gehärtet (z.B. NSD für Advertising, Unbound für Resolving). Die Kommunikation zwischen den internen Resolvern und dem Internet wird durch einen dedizierten DNS-Proxy oder eine Firewall mit DNS-Inspektion kontrolliert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "In der DMZ wird ein autoritativer Only-Server wie NSD oder Knot DNS eingesetzt. Im internen Netz wird ein reiner Caching/Resolving-Server wie Unbound oder PowerDNS Recursor verwendet. Dies reduziert die Angriffsfläche, da jede Software nur den für ihre Aufgabe notwendigen Code enthält."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor prüft die installierte Software auf den DNS-Servern, um die funktionale Spezialisierung zu bestätigen. Die Konfiguration der Firewall oder des DNS-Proxys wird auf Regeln zur Filterung und Protokollierung von DNS-Verkehr überprüft."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "app.3.6-a3-m5",
-                    "uuid": "9eb76c76-295e-4c9a-931e-de0dcef92293",
-                    "description": "Maturity Level 5: Comprehensive",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die interne Resolving-Infrastruktur ist mit einer DNS-Firewall (auch als Response Policy Zone, RPZ, bekannt) ausgestattet, die Anfragen an bekannte bösartige, Phishing- oder Command&Control-Domains proaktiv blockiert oder umleitet. Die Bedrohungsinformationen werden automatisiert und in Echtzeit aktualisiert."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der interne Resolving DNS-Server (z.B. BIND, Unbound, Knot Resolver) wird so konfiguriert, dass er einen oder mehrere RPZ-Feeds von kommerziellen oder Open-Source-Threat-Intelligence-Anbietern abonniert. Die Richtlinien sind so festgelegt, dass Anfragen an gelistete Domains blockiert (NXDOMAIN) oder auf eine interne Warnseite umgeleitet werden."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor überprüft die Konfiguration des Resolving DNS-Servers auf die Einbindung von RPZ-Zonen. Es wird die Aktualität der Threat-Intelligence-Feeds verifiziert. Test-Anfragen an bekannte bösartige Domains werden durchgeführt, um die korrekte Funktion der Blockierung zu bestätigen."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "0e7e81bb-1968-4f35-8d7d-2b56b07725c2",
-                "control-id": "KONF.6.7",
-                "description": "",
-                "props": [
-                  {
-                    "name": "level",
-                    "value": "1",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "phase",
-                    "value": "Implementation",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "practice",
-                    "value": "SYS",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_c",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_i",
-                    "value": "true",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  },
-                  {
-                    "name": "effective_on_a",
-                    "value": "false",
-                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
-                  }
-                ],
-                "statements": [
-                  {
-                    "statement-id": "app.3.6-a6-m1",
-                    "uuid": "7d268c47-e8ad-410a-bc0b-f9901ac5139a",
-                    "description": "Maturity Level 1: Partial",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Dynamische DNS-Updates sind für eine interne Zone aktiviert, die Absicherung erfolgt jedoch nur über eine IP-basierte ACL, die z.B. dem DHCP-Server Updates erlaubt. Es gibt keine kryptographische Authentifizierung."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "In der Zonenkonfiguration des DNS-Servers wird die `allow-update` Direktive mit der IP-Adresse des DHCP-Servers verwendet. Dies ermöglicht es jedem Prozess auf dem DHCP-Server, DNS-Einträge zu ändern."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor überprüft die Konfiguration der DNS-Zone auf die `allow-update` Direktive und prüft, ob diese ausschließlich auf IP-Adressen basiert. Die Sicherheit des als Updater autorisierten Systems (z.B. des DHCP-Servers) wird bewertet."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "app.3.6-a6-m3",
-                    "uuid": "b1a2becc-669e-4fef-8ae4-61d54be6c5eb",
-                    "description": "Maturity Level 3: Defined",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Es MUSS sichergestellt werden, dass nur legitimierte IT-Systeme Domain-Informationen ändern dürfen. Es MUSS festgelegt werden, welche Domain-Informationen die IT-Systeme ändern dürfen."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Dynamische DNS-Updates (DDNS) werden mithilfe von Transaction Signatures (TSIG) abgesichert. Für jedes System oder jede Systemgruppe (z.B. den DHCP-Server oder eine Gruppe von Clients), das Updates durchführen darf, wird ein dedizierter TSIG-Schlüssel erstellt. Die Update-Richtlinien in der DNS-Server-Konfiguration legen genau fest, welche Namen (z.B. nur der eigene Hostname) mit welchem Schlüssel geändert werden dürfen."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor überprüft die DNS-Server-Konfiguration auf die Verwendung von TSIG für DDNS. Es wird verifiziert, dass die Update-Richtlinien (`update-policy`) restriktiv sind und das Prinzip der geringsten Rechte befolgen. Die sichere Verteilung und Speicherung der TSIG-Schlüssel auf den Clients wird stichprobenartig geprüft."
-                      }
-                    ]
-                  },
-                  {
-                    "statement-id": "app.3.6-a6-m4",
-                    "uuid": "74950c76-cc6b-43f6-b8a7-d436a19a6297",
-                    "description": "Maturity Level 4: Enhanced",
-                    "props": [
-                      {
-                        "name": "statement",
-                        "value": "Die Authentifizierung für dynamische DNS-Updates wird in eine zentrale Verzeichnisdienst-Infrastruktur integriert (z.B. GSS-TSIG mit Kerberos in einer Active Directory-Umgebung). Die Berechtigungen zur Durchführung von Updates werden über Gruppenrichtlinien oder ähnliche zentrale Mechanismen verwaltet."
-                      },
-                      {
-                        "name": "guidance",
-                        "value": "Der DNS-Server wird so konfiguriert, dass er GSS-TSIG verwendet. Windows-Clients, die in die Domäne eingebunden sind, nutzen automatisch ihre Kerberos-Tickets, um sich beim DNS-Server zu authentifizieren und ihre Einträge sicher zu aktualisieren. Die Berechtigungen werden auf der DNS-Zone in den Active Directory-Sicherheitseinstellungen konfiguriert."
-                      },
-                      {
-                        "name": "assessment-method",
-                        "value": "Der Auditor überprüft die DNS-Server- und Zonenkonfiguration auf die Aktivierung von sicheren dynamischen Updates im Modus 'Secure only'. Die ACLs auf den DNS-Zonenobjekten im Active Directory werden auf korrekte und restriktive Berechtigungen geprüft. Die sichere Kommunikation wird mittels Netzwerkanalyse-Tools verifiziert."
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                "uuid": "c8ddda6d-bd7e-417b-b64e-303185788011",
+                "uuid": "21c09d14-87fe-40cb-8645-996e9fbe0733",
                 "control-id": "NOT.4.17",
                 "description": "",
                 "props": [
@@ -1548,7 +1471,7 @@
                 "statements": [
                   {
                     "statement-id": "app.3.6-a20-m3",
-                    "uuid": "60bfd0f7-42fb-4ce2-bc5d-2a4c5a6e3d85",
+                    "uuid": "01058d15-9ab0-4ab5-9557-bdf736d12e53",
                     "description": "Maturity Level 3: Defined",
                     "props": [
                       {
@@ -1567,7 +1490,7 @@
                   },
                   {
                     "statement-id": "app.3.6-a20-m5",
-                    "uuid": "78adcfd3-8783-4f61-bf24-ff1cfab9d013",
+                    "uuid": "0c5ad349-d6a2-4f1d-a54a-325ae4870ecd",
                     "description": "Maturity Level 5: Comprehensive",
                     "props": [
                       {
@@ -1581,6 +1504,102 @@
                       {
                         "name": "assessment-method",
                         "value": "Der Auditor prüft die Planungs- und Ergebnisdokumentation der praktischen Notfallübungen. Es wird verifiziert, dass die Übungen regelmäßig stattfinden und dass die daraus gewonnenen Erkenntnisse zu konkreten Verbesserungen am Notfallplan und an den technischen Systemen geführt haben."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a50a9a3a-f2c8-4c12-a22b-b3cf473dccd5",
+                "control-id": "NOT.4.3",
+                "description": "",
+                "props": [
+                  {
+                    "name": "level",
+                    "value": "1",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "NOT",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "false",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "true",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "app.3.6-a9-m2",
+                    "uuid": "7aff9f76-783b-4730-82d1-aa005a7845d7",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert ein allgemeiner IT-Notfallplan, der den Ausfall von DNS als mögliches Szenario erwähnt. Es gibt jedoch keine spezifischen Handlungsanweisungen oder Wiederanlaufpläne für den DNS-Dienst. Die Konfigurationsdateien werden unregelmäßig im Rahmen von System-Backups gesichert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Zonen- und Konfigurationsdateien des DNS-Servers sind Teil eines nächtlichen, dateibasierten Backups des gesamten Servers. Es gibt keinen separaten Prozess, um diese spezifischen Daten zu sichern oder wiederherzustellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft den allgemeinen IT-Notfallplan auf Erwähnung von DNS. Es wird die Konfiguration des Backup-Systems überprüft, um festzustellen, ob und wie die DNS-Serverdaten gesichert werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a9-m3",
+                    "uuid": "3a9b2dd6-e006-4c0d-9714-953435e24146",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Notfallplan für DNS-Server MUSS erstellt werden. Der Notfallplan für DNS-Server MUSS in die bereits vorhandenen Notfallpläne der Institution integriert werden. Im Notfallplan für DNS-Server MUSS ein Datensicherungskonzept für die Zonen- und Konfigurationsdateien beschrieben sein. Das Datensicherungskonzept für die Zonen- und Konfigurationsdateien MUSS in das existierende Datensicherungskonzept der Institution integriert werden. Der Notfallplan für DNS-Server MUSS einen Wiederanlaufplan für alle DNS-Server im Informationsverbund enthalten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein spezifisches Kapitel oder Dokument wird dem allgemeinen Notfallplan hinzugefügt, das den DNS-Dienst behandelt. Es beschreibt die Schritte zur Wiederherstellung eines DNS-Servers aus dem Backup, einschließlich der Wiederherstellung der Zonen- und Konfigurationsdateien. Das Datensicherungskonzept sieht eine tägliche Sicherung dieser kritischen Dateien an einem separaten Ort vor."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz und den Inhalt des DNS-spezifischen Notfallplans. Es wird verifiziert, dass ein Datensicherungs- und ein Wiederanlaufplan für die DNS-Konfigurationen und Zonendateien klar dokumentiert und in die übergeordneten Pläne integriert sind. Die Umsetzung des Backup-Konzepts wird überprüft."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "app.3.6-a9-m4",
+                    "uuid": "4f8c56e5-e6bd-4964-8e16-e5b5fb0328b7",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der DNS-Notfallplan enthält detaillierte, schrittweise Anleitungen (Runbooks) für verschiedene Ausfallszenarien (z.B. Ausfall des primären Servers, Ausfall eines Resolvers, DNS-Cache-Poisoning-Vorfall). Die Konfigurations- und Zonendateien werden in einem versionierten Repository (z.B. Git) gespeichert, was eine schnelle Wiederherstellung eines bekannten guten Zustands ermöglicht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle DNS-Konfigurationsdateien (`.conf`, `.zone`) werden in einem zentralen Git-Repository verwaltet. Änderungen erfordern einen Commit mit einer aussagekräftigen Nachricht. Das Backup sichert zusätzlich das gesamte Git-Repository. Die Runbooks sind im Wiki der IT-Abteilung hinterlegt und verlinkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Der Auditor prüft die Existenz und Qualität der Runbooks für DNS-Notfälle. Das Git-Repository wird auf Vollständigkeit, Aktualität und eine sinnvolle Commit-Historie überprüft. Es wird verifiziert, dass der Wiederanlaufplan die Wiederherstellung aus dem Git-Repository beschreibt."
                       }
                     ]
                   }
