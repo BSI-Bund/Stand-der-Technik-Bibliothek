@@ -14,7 +14,6 @@
         .chevron-icon { transition: transform 0.3s ease; }
         .chevron-icon.open { transform: rotate(90deg); }
         .param-placeholder { color: #60a5fa; font-family: monospace; font-weight: bold; background-color: rgba(30, 58, 138, 0.3); padding: 0 4px; border-radius: 4px; }
-        /* Hinzugefügt für Maturity Radio (falls im Control-Rendering benötigt) */
         .maturity-radio-label:hover { background-color: #334155; }
     </style>
 </head>
@@ -63,17 +62,16 @@
 
     <script>
         // --- Workspace State ---
-        // Speichert den Inhalt aller geladenen Dateien. Key: Dateiname, Value: Geparstes JSON Objekt
         const workspaceFiles = new Map();
-        let sspData = null; // Referenz auf das Haupt-SSP im Workspace
-        let sspFileName = 'edited-ssp.json'; // Name der SSP-Datei beim Speichern
+        let sspData = null; 
+        let sspFileName = 'edited-ssp.json'; 
 
-        // --- Data State (wird bei jeder Verarbeitung neu berechnet) ---
+        // --- Data State ---
         let catalogControlMap = new Map(); 
         let catalogParamMap = new Map();
         let loadedRiskData = [];
-        let componentDefinitions = new Map(); // Key: href/filename, Value: Definition JSON
-        let resourceLoadStatus = []; // Feedback für den Nutzer
+        let componentDefinitions = new Map(); 
+        let resourceLoadStatus = []; 
 
         // --- UI Elemente ---
         const sspUploader = document.getElementById('ssp-uploader');
@@ -85,7 +83,6 @@
         const workspaceStatus = document.getElementById('workspace-status');
 
         // --- Event Listeners ---
-        // Änderungen an den Uploads triggern die Verarbeitung
         sspUploader.addEventListener('change', (e) => handleFileUpload(e, true));
         associatedUploader.addEventListener('change', (e) => handleFileUpload(e, false));
         saveButton.addEventListener('click', handleFileSave);
@@ -98,7 +95,6 @@
             });
         }
 
-        // UTF-8 sicheres Base64 Decoding
         function base64DecodeUnicode(str) {
             try {
                 const percentEncodedStr = atob(str).split('').map(function(c) {
@@ -113,9 +109,6 @@
 
         // --- Workspace Loading & Management ---
 
-        /**
-         * Verarbeitet hochgeladene Dateien und aktualisiert den Workspace.
-         */
         async function handleFileUpload(event, isSsp) {
             const files = event.target.files;
             if (!files.length) return;
@@ -123,25 +116,19 @@
             loadingText.textContent = `Lade ${files.length} Datei(en)...`;
             loadingIndicator.classList.remove('hidden');
             
-            // Wenn ein neues SSP geladen wird, setzen wir den Workspace zurück.
             if (isSsp) {
                 workspaceFiles.clear();
                 sspData = null;
-                // Setze den Dateinamen für das Speichern basierend auf der hochgeladenen Datei
                 sspFileName = files[0].name.replace('.json', '-edited.json') || 'edited-ssp.json';
             }
 
-            // Lese alle Dateien parallel
             const loadPromises = Array.from(files).map(file => {
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onload = (e) => {
                         try {
                             const json = JSON.parse(e.target.result);
-                            // WICHTIG: Wir nutzen den Dateinamen als Key für lokale Referenzen
                             workspaceFiles.set(file.name, json);
-                            
-                            // Wenn dies das SSP ist, setze die globale Variable
                             if (isSsp && file.name === files[0].name) {
                                 sspData = json;
                             }
@@ -159,21 +146,16 @@
             try {
                 await Promise.all(loadPromises);
                 updateWorkspaceStatus();
-                // Starte die Verarbeitung des gesamten Workspace
                 await processWorkspace();
             } catch (error) {
                 alert("Fehler beim Laden der Dateien: " + error);
                 loadingIndicator.classList.add('hidden');
             }
-            // Das finally wird in processWorkspace gehandhabt
         }
 
         function updateWorkspaceStatus() {
             let statusHtml = `<p>Dateien im Workspace (${workspaceFiles.size}):</p><ul class="list-disc list-inside ml-4 mt-1">`;
-            
-            // Hole den Originalnamen des SSPs
             const originalSspName = sspFileName.replace('-edited.json', '.json');
-
             workspaceFiles.forEach((content, name) => {
                 if (name === originalSspName) {
                     statusHtml += `<li><span class="text-blue-300">${name}</span> (Haupt-SSP)</li>`;
@@ -185,20 +167,12 @@
             workspaceStatus.innerHTML = statusHtml;
         }
 
-        /**
-         * Der Kern-Orchestrator. Analysiert das SSP und lädt alle Referenzen.
-         */
         async function processWorkspace() {
-            // UI initial zurücksetzen
             editorDiv.innerHTML = '';
             editorDiv.classList.add('hidden');
             saveButton.disabled = true;
 
             if (!sspData || !sspData['system-security-plan']) {
-                // Kein gültiges SSP geladen, stoppe Verarbeitung (oder warte auf SSP Upload)
-                if (workspaceFiles.size > 0 && !sspData) {
-                   // Warte darauf, dass der Nutzer das SSP hochlädt.
-                }
                 loadingIndicator.classList.add('hidden');
                 return;
             }
@@ -206,7 +180,6 @@
             loadingText.textContent = 'Verarbeite Workspace...';
             loadingIndicator.classList.remove('hidden');
 
-            // Reset Data State für Neuverarbeitung
             catalogControlMap.clear();
             catalogParamMap.clear();
             loadedRiskData = [];
@@ -216,18 +189,12 @@
             const ssp = sspData['system-security-plan'];
 
             try {
-                // 1. Lade verlinkte Profile (Risiken und eingebettete Kataloge)
                 await processLinkedProfiles(ssp);
-                
-                // 2. Lade Komponenten-Definitionen
                 await processComponentDefinitions(ssp);
-
-                // 3. Lade Hauptkatalog
                 await processMainCatalog(ssp);
 
-                // 4. Rendere die UI
                 renderSSP(ssp);
-                renderResourceStatus(); // Zeige dem Nutzer, was geladen wurde
+                renderResourceStatus(); 
                 editorDiv.classList.remove('hidden');
                 saveButton.disabled = false;
 
@@ -240,17 +207,10 @@
             }
         }
 
-        /**
-         * (NEU) Abstraktion zum Laden einer Ressource. Prüft Workspace, dann Netzwerk.
-         */
         async function loadReferencedResource(href) {
             if (!href) return null;
-
-            // OSCAL erlaubt relative Pfade. Für den Workspace-Abgleich ist oft nur der Dateiname relevant.
-            // Wir versuchen den Abgleich sowohl mit dem exakten href als auch mit dem Dateinamen.
             const filename = href.split('/').pop(); 
 
-            // 1. Prüfe, ob es im Workspace ist
             if (workspaceFiles.has(href)) {
                 resourceLoadStatus.push({ href, status: 'success', source: 'workspace' });
                 return workspaceFiles.get(href);
@@ -260,15 +220,10 @@
                 return workspaceFiles.get(filename);
             }
 
-
-            // 2. Prüfe, ob es eine URL ist (Netzwerk)
             if (href.startsWith('http://') || href.startsWith('https://')) {
                 try {
-                    console.log("Lade Ressource vom Netzwerk:", href);
                     const response = await fetch(href);
-                    if (!response.ok) {
-                        throw new Error(`Netzwerk-Status ${response.status}`);
-                    }
+                    if (!response.ok) throw new Error(`Netzwerk-Status ${response.status}`);
                     const json = await response.json();
                     resourceLoadStatus.push({ href, status: 'success', source: 'network' });
                     return json;
@@ -278,18 +233,15 @@
                     return null;
                 }
             }
-
-            // 3. Nicht gefunden (lokale Datei, die nicht hochgeladen wurde)
             resourceLoadStatus.push({ href, status: 'missing', source: 'workspace' });
             return null;
         }
 
-        // --- Data Processing Functions (Adapted for Workspace) ---
+        // --- Data Processing Functions ---
 
         async function processLinkedProfiles(ssp) {
             const links = ssp.metadata?.links || [];
             const profileLinks = links.filter(link => link.rel === 'profile' && link.href);
-
             const loadPromises = profileLinks.map(async (link) => {
                 const profileData = await loadReferencedResource(link.href);
                 if (profileData && profileData.profile) {
@@ -298,54 +250,45 @@
                     extractEmbeddedCatalogs(profile);
                 }
             });
-
             await Promise.all(loadPromises);
         }
 
         async function processComponentDefinitions(ssp) {
             const components = ssp['system-implementation']?.components || [];
             const definitionLinks = new Set();
-
             components.forEach(comp => {
                 const defLink = comp.links?.find(link => link.rel === 'component-definition');
                 if (defLink && defLink.href) definitionLinks.add(defLink.href);
             });
-
             const loadPromises = Array.from(definitionLinks).map(async (href) => {
                 const definitionData = await loadReferencedResource(href);
                 if (definitionData && definitionData['component-definition']) {
                     componentDefinitions.set(href, definitionData);
                 }
             });
-
             await Promise.all(loadPromises);
         }
 
         async function processMainCatalog(ssp) {
             const profileHref = ssp['import-profile']?.href;
             if (!profileHref) return;
-
             const profileData = await loadReferencedResource(profileHref);
             if (profileData && profileData.profile) {
                 const catalogHref = profileData.profile.imports?.[0]?.href;
                 if (catalogHref) {
                     const catalogData = await loadReferencedResource(catalogHref);
-                    if (catalogData && catalogData.catalog) {
-                        // Verarbeite den Hauptkatalog
-                        processCatalogData(catalogData.catalog);
-                    }
+                    if (catalogData && catalogData.catalog) processCatalogData(catalogData.catalog);
                 }
             }
         }
 
-        // --- Data Extraction (Keine Änderungen nötig) ---
+        // --- Data Extraction ---
 
         function extractRiskData(profile, sourceHref) {
             const riskRefProp = profile.metadata?.props?.find(p => p.name === 'risk-analysis-details-ref');
             if (riskRefProp && riskRefProp.value) {
                 const resourceId = riskRefProp.value.replace('#', '');
                 const resource = profile["back-matter"]?.resources?.find(r => r.uuid === resourceId);
-
                 if (resource && resource.attachments && resource.attachments.length > 0) {
                     const attachment = resource.attachments[0];
                     if (attachment.base64 && attachment.base64.value) {
@@ -379,10 +322,7 @@
                             const decodedCatalog = base64DecodeUnicode(attachment.base64.value);
                             if (!decodedCatalog) throw new Error("Katalog-Dekodierung fehlgeschlagen.");
                             const catalogJson = JSON.parse(decodedCatalog);
-                            if (catalogJson.catalog) {
-                                // Füge Controls zur globalen Map hinzu
-                                processCatalogData(catalogJson.catalog);
-                            }
+                            if (catalogJson.catalog) processCatalogData(catalogJson.catalog);
                         } catch (e) {
                             console.error("Fehler beim Parsen des eingebetteten Katalogs:", e);
                         }
@@ -391,22 +331,18 @@
             });
         }
 
-        // Verarbeitet Katalogdaten (aktualisiert globale Maps)
         function processCatalogData(catalog) {
             function scanRecursively(items) {
                 if (!items) return;
                 items.forEach(item => {
-                    // Controls
                     if (item.id && (item.parts || item.class || item.title)) {
                         if (!catalogControlMap.has(item.id)) catalogControlMap.set(item.id, item);
                     }
-                    // Params
                     if (item.params) {
                         item.params.forEach(p => {
                             if(p.id && !catalogParamMap.has(p.id)) catalogParamMap.set(p.id, p);
                         });
                     }
-                    // Rekursion
                     if (item.controls) scanRecursively(item.controls);
                     if (item.groups) scanRecursively(item.groups);
                 });
@@ -420,14 +356,11 @@
         // --- Rendering Functions ---
 
         function renderSSP(ssp) {
-            // NEU: Ressourcen-Status Sektion
             let resourceStatusHtml = createCollapsibleSection('resource-status', 'Ressourcen-Status', '<div id="resource-status-content-inner"></div>', true);
-            
             let riskSectionHtml = '';
             if (loadedRiskData.length > 0) {
                 riskSectionHtml = createCollapsibleSection('risk-analysis', 'Risikoanalyse (aus Profilen)', renderRiskAnalysis(), true);
             }
-
             const implementationOpen = loadedRiskData.length === 0;
 
             editorDiv.innerHTML = `
@@ -442,48 +375,29 @@
             attachFilterListeners();
         }
 
-        /**
-         * (NEU) Rendert den Status der geladenen Ressourcen.
-         */
         function renderResourceStatus() {
             const container = document.getElementById('resource-status-content-inner');
             if (!container) return;
-
             let html = '<div class="space-y-2">';
             if (resourceLoadStatus.length === 0) {
                 html += '<p class="text-slate-400">Keine externen Ressourcen referenziert.</p>';
             } else {
                 resourceLoadStatus.forEach(item => {
-                    let statusClass = '';
-                    let statusText = '';
+                    let statusClass = '', statusText = '';
                     switch (item.status) {
-                        case 'success':
-                            statusClass = 'text-green-400';
-                            statusText = `Geladen (aus ${item.source})`;
-                            break;
-                        case 'error':
-                            statusClass = 'text-red-400';
-                            statusText = `Fehler beim Laden (Netzwerk): ${item.error}`;
-                            break;
-                        case 'missing':
-                            statusClass = 'text-orange-400';
-                            statusText = 'FEHLT: Bitte über "Assoziierte Dateien" hochladen.';
-                            break;
+                        case 'success': statusClass = 'text-green-400'; statusText = `Geladen (aus ${item.source})`; break;
+                        case 'error': statusClass = 'text-red-400'; statusText = `Fehler beim Laden (Netzwerk): ${item.error}`; break;
+                        case 'missing': statusClass = 'text-orange-400'; statusText = 'FEHLT: Bitte über "Assoziierte Dateien" hochladen.'; break;
                     }
-                    html += `
-                        <div class="flex justify-between items-start text-sm p-2 bg-slate-700 rounded-md">
+                    html += `<div class="flex justify-between items-start text-sm p-2 bg-slate-700 rounded-md">
                             <span class="text-slate-300 break-all mr-4">${item.href}</span>
                             <span class="${statusClass} font-medium flex-shrink-0">${statusText}</span>
-                        </div>
-                    `;
+                        </div>`;
                 });
             }
             html += '</div>';
             container.innerHTML = html;
         }
-
-        
-        // --- Boilerplate Rendering & Event Handlers (Größtenteils unverändert zur Vorversion) ---
 
         function createCollapsibleSection(id, title, contentHtml, isOpen = false) {
             const openClass = isOpen ? 'open' : '';
@@ -519,14 +433,19 @@
             });
         }
 
+        // --- UPDATED: Dynamic Filter Listener ---
         function attachFilterListeners() {
-            document.querySelectorAll('.control-class-filter').forEach(select => {
+            document.querySelectorAll('.control-prop-filter').forEach(select => {
                 select.addEventListener('change', (e) => {
-                    const val = e.target.value;
+                    const filterVal = e.target.value.toLowerCase(); 
                     const container = document.querySelector(`.control-list-container[data-comp-uuid="${e.target.dataset.compUuid}"]`);
+                    
                     if (container) {
                         container.querySelectorAll('.control-entry').forEach(c => {
-                            c.style.display = (val === 'all' || c.dataset.controlClass === val) ? 'block' : 'none';
+                            const entryProps = (c.dataset.filterProps || "").toLowerCase();
+                            // Check: Ist 'all' gewählt ODER ist der gesuchte "key:value" im String enthalten?
+                            const matches = (filterVal === 'all') || entryProps.includes(filterVal);
+                            c.style.display = matches ? 'block' : 'none';
                         });
                     }
                 });
@@ -615,6 +534,7 @@
             </div>`;
         }
 
+        // --- UPDATED: Implementation Rendering with Dynamic Filtering ---
         function renderImplementation(ssp) {
             const sspComponents = ssp['system-implementation']?.components || [];
             const sspRequirements = ssp['control-implementation']?.['implemented-requirements'] || [];
@@ -631,7 +551,6 @@
             sspComponents.forEach((sspComp, index) => {
                 const compUuid = sspComp.uuid;
                 const defLink = sspComp.links?.find(link => link.rel === 'component-definition');
-                // Hole Definition aus der Map (die jetzt Workspace und Netzwerkquellen enthält)
                 const compDef = defLink ? componentDefinitions.get(defLink.href) : null;
 
                 const sspControlMap = new Map();
@@ -648,6 +567,26 @@
 
                 const allKeys = new Set([...sspControlMap.keys(), ...defControlMap.keys()]);
                 const sortedKeys = Array.from(allKeys).sort();
+                
+                // --- Dynamic Filter Options ---
+                const uniqueProps = new Set();
+                sortedKeys.forEach(cid => {
+                    const implReq = defControlMap.get(cid);
+                    if (implReq && implReq.props) {
+                        implReq.props.forEach(p => {
+                            uniqueProps.add(`${p.name}:${p.value}`);
+                        });
+                    }
+                    const catCtrl = catalogControlMap.get(cid);
+                    if(catCtrl && catCtrl.class) uniqueProps.add(`class:${catCtrl.class}`);
+                });
+                
+                const sortedPropOptions = Array.from(uniqueProps).sort();
+                let filterOptionsHtml = '<option value="all">Alle anzeigen</option>';
+                sortedPropOptions.forEach(opt => {
+                    const [key, val] = opt.split(':');
+                    filterOptionsHtml += `<option value="${opt.toLowerCase()}">${key}: ${val}</option>`;
+                });
                 
                 let compControlsHtml = `<div class="space-y-4 control-list-container" data-comp-uuid="${compUuid}">`;
                 if (sortedKeys.length > 0) {
@@ -673,13 +612,10 @@
                         </button>
                         <div class="collapsible-content ${openClass} p-4 border-t border-slate-700 bg-slate-800">
                             <div class="flex justify-end mb-4">
-                                <div class="flex items-center space-x-2">
-                                     <label for="${filterId}" class="text-sm text-slate-300">Filter:</label>
-                                    <select id="${filterId}" data-comp-uuid="${sspComp.uuid}" class="control-class-filter rounded border-slate-600 bg-slate-700 text-white text-sm">
-                                        <option value="all">Alle</option>
-                                        <option value="normal-SdT">normal-SdT</option>
-                                        <option value="erhöht">erhöht</option>
-                                        <option value="unknown">Ohne Klasse</option>
+                                <div class="flex items-center space-x-2 bg-slate-700 p-2 rounded border border-slate-600">
+                                     <label for="${filterId}" class="text-sm text-slate-300 font-semibold">Filter:</label>
+                                    <select id="${filterId}" data-comp-uuid="${sspComp.uuid}" class="control-prop-filter rounded border-slate-600 bg-slate-800 text-white text-sm focus:ring-blue-500 focus:border-blue-500">
+                                        ${filterOptionsHtml}
                                     </select>
                                 </div>
                             </div>
@@ -692,6 +628,7 @@
             return html;
         }
 
+        // --- UPDATED: Control Entry Rendering with Props Badge ---
         function renderControlEntry(controlId, sspComponent, byCompEntry, implementedReq, sspParamValuesMap) {
             const compUuid = sspComponent.uuid;
             const uniqueDomId = `${controlId.replace(/[^a-zA-Z0-9]/g, '-')}-${compUuid}`;
@@ -706,6 +643,25 @@
             const catClass = catCtrl?.class || 'unknown';
             const displayClass = catClass !== 'unknown' ? ` <span class="text-sm text-slate-400">(${catClass})</span>` : '';
             
+            // --- PROPS DISPLAY & FILTER STRING GENERATION ---
+            const defProps = implementedReq?.props || [];
+            let propsHtml = '';
+            let filterDataString = `|class:${catClass}|`; 
+
+            if (defProps.length > 0) {
+                propsHtml = '<div class="flex flex-wrap gap-2 mt-2">';
+                defProps.forEach(p => {
+                    const pName = p.name;
+                    const pVal = p.value;
+                    filterDataString += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
+                    
+                    propsHtml += `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-900 text-indigo-100 border border-indigo-700" title="${pName}">
+                        <span class="opacity-70 mr-1">${pName}:</span> ${pVal}
+                    </span>`;
+                });
+                propsHtml += '</div>';
+            }
+
             // --- Params Logic ---
             let paramsHtml = '';
             let referencedParams = new Set();
@@ -748,14 +704,20 @@
             }
 
             const compDesc = implementedReq?.description || '';
-            // Integration der Statements aus der Vorversion
             const statements = implementedReq?.statements || [];
             
             return `
                 <div class="control-entry p-4 border border-slate-600 rounded-lg bg-slate-700 shadow-sm" 
-                     data-control-id="${controlId}" data-comp-uuid="${compUuid}" data-control-class="${catClass}">
+                     data-control-id="${controlId}" data-comp-uuid="${compUuid}" data-control-class="${catClass}"
+                     data-filter-props="${filterDataString}">
                     
-                    <h4 class="text-lg font-bold text-white">${controlId}: ${title} ${displayClass}</h4>
+                    <div class="mb-3">
+                        <h4 class="text-lg font-bold text-white flex items-center flex-wrap gap-2">
+                            <span>${controlId}: ${title}</span>
+                            ${displayClass}
+                        </h4>
+                        ${propsHtml} 
+                    </div>
 
                     ${paramsHtml}
 
@@ -797,7 +759,6 @@
             `;
         }
 
-        // Integration der renderStatementsRadio Funktion
         function renderStatementsRadio(statements, uniqueDomId, currentDesc) {
             if (!statements || statements.length === 0) return '';
             
@@ -848,7 +809,7 @@
 
                 if (!ssp['control-implementation']) ssp['control-implementation'] = {};
                 
-                // --- Parameter speichern ---
+                // Parameter speichern
                 const paramInputs = document.querySelectorAll('.param-input');
                 const setParameters = [];
                 paramInputs.forEach(input => {
@@ -930,7 +891,6 @@
                     }
                 });
 
-                // Speichern mit UTF-8 BOM
                 const dataStr = JSON.stringify(sspData, null, 2);
                 const dataBlob = new Blob(["\uFEFF" + dataStr], { type: 'application/json;charset=utf-8' });
                 const url = URL.createObjectURL(dataBlob);
@@ -943,7 +903,6 @@
                 alert("Fehler beim Speichern: " + error.message);
             }
         }
-
     </script>
 </body>
 </html>
