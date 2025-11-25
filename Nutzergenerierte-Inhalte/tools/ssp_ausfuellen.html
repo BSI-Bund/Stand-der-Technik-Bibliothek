@@ -15,10 +15,15 @@
         .chevron-icon.open { transform: rotate(90deg); }
         .param-placeholder { color: #60a5fa; font-family: monospace; font-weight: bold; background-color: rgba(30, 58, 138, 0.3); padding: 0 4px; border-radius: 4px; }
         .maturity-radio-label:hover { background-color: #334155; }
+        /* Custom Scrollbar for better dark mode look */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
     </style>
 </head>
 <body class="h-full p-4 md:p-8 font-sans text-slate-200">
-    <div class="max-w-6xl mx-auto bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg">
+    <div class="max-w-7xl mx-auto bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg">
 
         <header class="mb-6 pb-6 border-b border-slate-700">
             <h1 class="text-3xl font-bold text-white">OSCAL SSP Editor (Workspace)</h1>
@@ -106,6 +111,31 @@
                 return null;
             }
         }
+
+        // --- ICON HELPER FOR PROPS ---
+        function getPropConfig(name) {
+            const n = name.toLowerCase();
+            const iconClass = "w-3 h-3 mr-1.5";
+            
+            // Icons definition
+            const icons = {
+                confidentiality: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>`,
+                integrity: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+                availability: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+                technical: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>`,
+                phase: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>`,
+                default: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>`
+            };
+
+            if (n.includes('effective_on_c')) return { icon: icons.confidentiality, color: 'text-red-200 bg-red-900 border-red-800', label: 'Confidentiality' };
+            if (n.includes('effective_on_i')) return { icon: icons.integrity, color: 'text-blue-200 bg-blue-900 border-blue-800', label: 'Integrity' };
+            if (n.includes('effective_on_a')) return { icon: icons.availability, color: 'text-yellow-200 bg-yellow-900 border-yellow-800', label: 'Availability' };
+            if (n.includes('phase')) return { icon: icons.phase, color: 'text-purple-200 bg-purple-900 border-purple-800', label: 'Phase' };
+            if (n.includes('class') || n.includes('technical')) return { icon: icons.technical, color: 'text-slate-200 bg-slate-700 border-slate-600', label: 'Class' };
+            
+            return { icon: icons.default, color: 'text-slate-300 bg-slate-800 border-slate-600', label: 'Prop' };
+        }
+
 
         // --- Workspace Loading & Management ---
 
@@ -358,8 +388,9 @@
         function renderSSP(ssp) {
             let resourceStatusHtml = createCollapsibleSection('resource-status', 'Ressourcen-Status', '<div id="resource-status-content-inner"></div>', true);
             let riskSectionHtml = '';
+            
             if (loadedRiskData.length > 0) {
-                riskSectionHtml = createCollapsibleSection('risk-analysis', 'Risikoanalyse (aus Profilen)', renderRiskAnalysis(), true);
+                riskSectionHtml = createCollapsibleSection('risk-analysis', 'Risikoanalyse (aus Profilen)', renderRiskAnalysis(ssp), true);
             }
             const implementationOpen = loadedRiskData.length === 0;
 
@@ -433,27 +464,51 @@
             });
         }
 
-        // --- UPDATED: Dynamic Filter Listener ---
+        // --- UPDATED: Multi-Select Filter Listeners ---
         function attachFilterListeners() {
-            document.querySelectorAll('.control-prop-filter').forEach(select => {
-                select.addEventListener('change', (e) => {
-                    const filterVal = e.target.value.toLowerCase(); 
-                    const container = document.querySelector(`.control-list-container[data-comp-uuid="${e.target.dataset.compUuid}"]`);
-                    
-                    if (container) {
-                        container.querySelectorAll('.control-entry').forEach(c => {
-                            const entryProps = (c.dataset.filterProps || "").toLowerCase();
-                            // Check: Ist 'all' gewählt ODER ist der gesuchte "key:value" im String enthalten?
-                            const matches = (filterVal === 'all') || entryProps.includes(filterVal);
-                            c.style.display = matches ? 'block' : 'none';
+            // Finde alle Filter-Container (pro Komponente)
+            const filterContainers = document.querySelectorAll('.filter-container');
+            
+            filterContainers.forEach(container => {
+                const compUuid = container.dataset.compUuid;
+                const selects = container.querySelectorAll('.control-prop-filter');
+                
+                selects.forEach(select => {
+                    select.addEventListener('change', () => {
+                        // 1. Sammle alle aktiven Filter für diese Komponente
+                        const activeFilters = [];
+                        selects.forEach(s => {
+                            if (s.value !== 'all') {
+                                activeFilters.push({
+                                    type: s.dataset.filterType,
+                                    value: s.value.toLowerCase()
+                                });
+                            }
                         });
-                    }
+
+                        // 2. Finde den Container mit den Controls
+                        const listContainer = document.querySelector(`.control-list-container[data-comp-uuid="${compUuid}"]`);
+                        if (listContainer) {
+                            const entries = listContainer.querySelectorAll('.control-entry');
+                            entries.forEach(entry => {
+                                const entryProps = (entry.dataset.filterProps || "").toLowerCase();
+                                
+                                // 3. Prüfe ALLE aktiven Filter (UND-Verknüpfung)
+                                const matchesAll = activeFilters.every(filter => {
+                                    const searchString = `|${filter.type}:${filter.value}|`;
+                                    return entryProps.includes(searchString);
+                                });
+
+                                entry.style.display = matchesAll ? 'block' : 'none';
+                            });
+                        }
+                    });
                 });
             });
         }
 
         // --- Risk Rendering ---
-        function renderRiskAnalysis() {
+        function renderRiskAnalysis(ssp) {
             let html = '<div class="space-y-6">';
             loadedRiskData.forEach((riskProfile, sourceIndex) => {
                 html += `<div class="p-4 border border-emerald-800 rounded-lg bg-slate-700/30 shadow-md">
@@ -466,7 +521,7 @@
                 } else {
                     riskProfile.risks.forEach((risk, riskIndex) => {
                         const riskId = `risk-${sourceIndex}-${riskIndex}`;
-                        html += createCollapsibleSection(riskId, renderRiskHeader(risk), renderRiskDetails(risk), false);
+                        html += createCollapsibleSection(riskId, renderRiskHeader(risk), renderRiskDetails(risk, ssp), false);
                     });
                 }
                 html += `</div></div>`;
@@ -492,26 +547,77 @@
                 </div>`;
         }
 
-        function renderRiskDetails(risk) {
+        function renderRiskDetails(risk, ssp) {
             let html = `<div class="space-y-4 p-4 bg-slate-900 rounded-lg shadow-inner">
                 <div><h4 class="text-sm font-medium text-slate-300">Beschreibung</h4><p class="text-sm text-slate-200 mt-1 whitespace-pre-wrap">${risk.description || 'N/A'}</p></div>
                 <div><h4 class="text-sm font-medium text-slate-300">Bedrohung (Threat)</h4><p class="text-sm text-slate-200 mt-1 whitespace-pre-wrap">${risk.threat || 'N/A'}</p></div>
                 <hr class="border-slate-700">
-                <div><h4 class="text-lg font-semibold text-white mb-3">Mitigierende Controls (${risk.mitigatingControls.length})</h4><ul class="space-y-2">`;
+                <div><h4 class="text-lg font-semibold text-white mb-3">Mitigierende Controls (${risk.mitigatingControls.length})</h4>
+                <div class="space-y-6">`;
             
+            const sspComponents = ssp['system-implementation']?.components || [];
+            const sspRequirements = ssp['control-implementation']?.['implemented-requirements'] || [];
+            const sspSetParams = ssp['control-implementation']?.['set-parameters'] || [];
+            const sspParamValuesMap = new Map();
+            sspSetParams.forEach(sp => { if(sp.values && sp.values.length > 0) sspParamValuesMap.set(sp['param-id'], sp.values[0]); });
+
             risk.mitigatingControls.forEach(control => {
-                let title = control.id;
-                let badge = '';
-                const catalogEntry = catalogControlMap.get(control.id);
-                if (catalogEntry) title = `${control.id}: ${catalogEntry.title}`;
-                else if (control.title) title = `${control.id}: ${control.title}`;
+                const controlId = control.id;
+                let foundImplementation = false;
+                let controlsHtml = '';
+                let sourceBadge = '';
+                if (control.source === 'custom') sourceBadge = `<span class="ml-2 px-2 text-xs font-semibold rounded-full bg-green-800 text-green-100">Custom</span>`;
+                else if (control.source === 'catalog') sourceBadge = `<span class="ml-2 px-2 text-xs font-semibold rounded-full bg-blue-800 text-blue-100">Katalog</span>`;
 
-                if (control.source === 'custom') badge = `<span class="ml-2 px-2 text-xs font-semibold rounded-full bg-green-800 text-green-100">Custom</span>`;
-                else if (control.source === 'catalog') badge = `<span class="ml-2 px-2 text-xs font-semibold rounded-full bg-blue-800 text-blue-100">Katalog</span>`;
+                html += `<div class="bg-slate-800 rounded p-2 border border-slate-700">
+                         <div class="mb-2 text-sm text-white font-semibold">${controlId} ${sourceBadge}</div>`;
 
-                html += `<li class="p-2 bg-slate-700 rounded-md text-sm text-white">${title} ${badge}</li>`;
+                if (sspComponents.length > 0) {
+                    sspComponents.forEach(comp => {
+                        const reqEntry = sspRequirements.find(r => r['control-id'] === controlId);
+                        const byCompEntry = reqEntry?.['by-components']?.find(bc => bc['component-uuid'] === comp.uuid);
+                        
+                        if (byCompEntry) {
+                            foundImplementation = true;
+                            const defLink = comp.links?.find(link => link.rel === 'component-definition');
+                            const compDef = defLink ? componentDefinitions.get(defLink.href) : null;
+                            let defControlMap = new Map();
+                            if (compDef && compDef['component-definition']?.components?.[0]) {
+                                const impls = compDef['component-definition'].components[0]['control-implementations'] || [];
+                                impls.forEach(i => (i['implemented-requirements'] || []).forEach(req => defControlMap.set(req['control-id'], req)));
+                            }
+
+                            controlsHtml += `<div class="ml-2 pl-4 border-l-2 border-emerald-600 mb-4">
+                                <div class="text-xs text-emerald-400 font-bold mb-2 uppercase tracking-wide">Bereits implementiert in: ${comp.title}</div>
+                                ${renderControlEntry(controlId, comp, byCompEntry, defControlMap.get(controlId), sspParamValuesMap)}
+                            </div>`;
+                        }
+                    });
+
+                    if (!foundImplementation) {
+                        const defaultComp = sspComponents[0];
+                        const defLink = defaultComp.links?.find(link => link.rel === 'component-definition');
+                        const compDef = defLink ? componentDefinitions.get(defLink.href) : null;
+                        let implReq = null;
+                         if (compDef && compDef['component-definition']?.components?.[0]) {
+                            const impls = compDef['component-definition'].components[0]['control-implementations'] || [];
+                             impls.forEach(i => (i['implemented-requirements'] || []).forEach(req => {
+                                 if(req['control-id'] === controlId) implReq = req;
+                             }));
+                        }
+
+                        controlsHtml += `<div class="ml-2 pl-4 border-l-2 border-slate-500 mb-2">
+                            <div class="text-xs text-slate-400 font-bold mb-2 uppercase tracking-wide">Neu anlegen für: ${defaultComp.title}</div>
+                            ${renderControlEntry(controlId, defaultComp, null, implReq, sspParamValuesMap)}
+                        </div>`;
+                    }
+                } else {
+                    controlsHtml += `<p class="text-red-400 text-sm">Keine System-Komponenten definiert. Bitte erst Komponenten im SSP anlegen/laden.</p>`;
+                }
+
+                html += `${controlsHtml}</div>`;
             });
-            html += `</ul></div></div>`;
+            html += `</div></div></div>`;
             return html;
         }
 
@@ -534,7 +640,7 @@
             </div>`;
         }
 
-        // --- UPDATED: Implementation Rendering with Dynamic Filtering ---
+        // --- Implementation Rendering (UPDATED: Multi-Select Filters) ---
         function renderImplementation(ssp) {
             const sspComponents = ssp['system-implementation']?.components || [];
             const sspRequirements = ssp['control-implementation']?.['implemented-requirements'] || [];
@@ -568,25 +674,61 @@
                 const allKeys = new Set([...sspControlMap.keys(), ...defControlMap.keys()]);
                 const sortedKeys = Array.from(allKeys).sort();
                 
-                // --- Dynamic Filter Options ---
-                const uniqueProps = new Set();
+                // --- Gather Filter Data ---
+                const filterOptions = {}; 
+                // Struktur: { "class": Set("technical", "management"), "phase": Set("implementation", ...) }
+
                 sortedKeys.forEach(cid => {
                     const implReq = defControlMap.get(cid);
+                    
+                    // Helper to add to set
+                    const addOpt = (type, val) => {
+                        if(!filterOptions[type]) filterOptions[type] = new Set();
+                        filterOptions[type].add(val);
+                    };
+
                     if (implReq && implReq.props) {
                         implReq.props.forEach(p => {
-                            uniqueProps.add(`${p.name}:${p.value}`);
+                            addOpt(p.name, p.value);
                         });
                     }
                     const catCtrl = catalogControlMap.get(cid);
-                    if(catCtrl && catCtrl.class) uniqueProps.add(`class:${catCtrl.class}`);
+                    if(catCtrl && catCtrl.class) addOpt('class', catCtrl.class);
                 });
                 
-                const sortedPropOptions = Array.from(uniqueProps).sort();
-                let filterOptionsHtml = '<option value="all">Alle anzeigen</option>';
-                sortedPropOptions.forEach(opt => {
-                    const [key, val] = opt.split(':');
-                    filterOptionsHtml += `<option value="${opt.toLowerCase()}">${key}: ${val}</option>`;
+                // --- Generate Filter HTML ---
+                let filterBarHtml = '';
+                const labels = {
+                    'class': 'Class',
+                    'phase': 'Phase',
+                    'effective_on_c': 'Confidentiality',
+                    'effective_on_i': 'Integrity',
+                    'effective_on_a': 'Availability'
+                };
+
+                // Nur für bekannte/relevante Keys Filter erstellen
+                Object.keys(filterOptions).sort().forEach(key => {
+                    // Wir filtern nur nach den "interessanten" Props, um die Leiste nicht zu sprengen
+                    if (labels[key] || key.startsWith('effective') || key === 'phase' || key === 'class') {
+                        const label = labels[key] || key;
+                        const options = Array.from(filterOptions[key]).sort();
+                        
+                        let optsHtml = `<option value="all">Alle</option>`;
+                        options.forEach(opt => {
+                             optsHtml += `<option value="${opt.toLowerCase()}">${opt}</option>`;
+                        });
+
+                        filterBarHtml += `
+                            <div class="flex flex-col">
+                                <label class="text-xs text-slate-400 mb-1 font-semibold uppercase">${label}</label>
+                                <select data-filter-type="${key}" class="control-prop-filter rounded border-slate-600 bg-slate-800 text-white text-xs py-1 pl-2 pr-8 focus:ring-blue-500 focus:border-blue-500">
+                                    ${optsHtml}
+                                </select>
+                            </div>
+                        `;
+                    }
                 });
+
                 
                 let compControlsHtml = `<div class="space-y-4 control-list-container" data-comp-uuid="${compUuid}">`;
                 if (sortedKeys.length > 0) {
@@ -602,7 +744,6 @@
 
                 const isOpen = index === 0; 
                 const openClass = isOpen ? 'open' : '';
-                const filterId = `filter-${sspComp.uuid}`;
                 
                 html += `
                     <div class="border border-slate-700 rounded-lg overflow-hidden bg-slate-800 shadow-sm">
@@ -611,14 +752,18 @@
                             <svg class="chevron-icon ${openClass} w-5 h-5 text-slate-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
                         </button>
                         <div class="collapsible-content ${openClass} p-4 border-t border-slate-700 bg-slate-800">
-                            <div class="flex justify-end mb-4">
-                                <div class="flex items-center space-x-2 bg-slate-700 p-2 rounded border border-slate-600">
-                                     <label for="${filterId}" class="text-sm text-slate-300 font-semibold">Filter:</label>
-                                    <select id="${filterId}" data-comp-uuid="${sspComp.uuid}" class="control-prop-filter rounded border-slate-600 bg-slate-800 text-white text-sm focus:ring-blue-500 focus:border-blue-500">
-                                        ${filterOptionsHtml}
-                                    </select>
+                            
+                            ${filterBarHtml ? `
+                            <div class="mb-6 p-3 bg-slate-700/50 rounded border border-slate-600 filter-container" data-comp-uuid="${sspComp.uuid}">
+                                <div class="text-xs text-slate-400 mb-2 font-bold flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                                    FILTER (UND-Verknüpfung)
                                 </div>
-                            </div>
+                                <div class="flex flex-wrap gap-4">
+                                    ${filterBarHtml}
+                                </div>
+                            </div>` : ''}
+
                             ${compControlsHtml}
                         </div>
                     </div>
@@ -628,7 +773,7 @@
             return html;
         }
 
-        // --- UPDATED: Control Entry Rendering with Props Badge ---
+        // --- Control Entry Rendering (UPDATED) ---
         function renderControlEntry(controlId, sspComponent, byCompEntry, implementedReq, sspParamValuesMap) {
             const compUuid = sspComponent.uuid;
             const uniqueDomId = `${controlId.replace(/[^a-zA-Z0-9]/g, '-')}-${compUuid}`;
@@ -643,9 +788,10 @@
             const catClass = catCtrl?.class || 'unknown';
             const displayClass = catClass !== 'unknown' ? ` <span class="text-sm text-slate-400">(${catClass})</span>` : '';
             
-            // --- PROPS DISPLAY & FILTER STRING GENERATION ---
+            // Props & Filter String
             const defProps = implementedReq?.props || [];
             let propsHtml = '';
+            // Initialer Filter String mit Class
             let filterDataString = `|class:${catClass}|`; 
 
             if (defProps.length > 0) {
@@ -653,16 +799,21 @@
                 defProps.forEach(p => {
                     const pName = p.name;
                     const pVal = p.value;
+                    // Add strict filtering token: |name:value|
                     filterDataString += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
                     
-                    propsHtml += `<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-900 text-indigo-100 border border-indigo-700" title="${pName}">
-                        <span class="opacity-70 mr-1">${pName}:</span> ${pVal}
+                    // Icons nutzen
+                    const conf = getPropConfig(pName);
+                    
+                    propsHtml += `<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium border ${conf.color}" title="${pName}">
+                        ${conf.icon}
+                        ${pVal}
                     </span>`;
                 });
                 propsHtml += '</div>';
             }
 
-            // --- Params Logic ---
+            // Params Logic
             let paramsHtml = '';
             let referencedParams = new Set();
             if (catCtrl && catCtrl.params) catCtrl.params.forEach(p => referencedParams.add(p.id));
@@ -759,34 +910,45 @@
             `;
         }
 
+        // --- UPDATED: Statement Radio (zeigt nun alle Details) ---
         function renderStatementsRadio(statements, uniqueDomId, currentDesc) {
             if (!statements || statements.length === 0) return '';
             
             let manualChecked = true;
             let radiosHtml = statements.map((stmt, idx) => {
-                const stmtText = stmt.props?.find(p => p.name === 'statement')?.value || '';
+                const props = stmt.props || [];
+                const stmtText = props.find(p => p.name === 'statement')?.value || '';
+                const guidance = props.find(p => p.name === 'guidance')?.value || '';
+                const assessment = props.find(p => p.name === 'assessment-method')?.value || '';
+
                 const isChecked = (currentDesc.trim() === stmtText.trim() && stmtText !== '');
                 if (isChecked) manualChecked = false;
                 
                 return `
-                <div class="flex items-start mt-2 maturity-radio-label rounded-md p-1 -m-1">
+                <div class="flex items-start mt-4 maturity-radio-label rounded-md p-2 bg-slate-800/50 border border-slate-700">
                     <input type="radio" id="r-${uniqueDomId}-${idx}" name="mat-${uniqueDomId}" 
                         class="maturity-radio mt-1 bg-slate-700 border-slate-500 text-blue-600 focus:ring-blue-500"
                         data-target-textarea="desc-${uniqueDomId}" data-description="${stmtText.replace(/"/g, '&quot;')}" ${isChecked ? 'checked':''}>
-                    <label for="r-${uniqueDomId}-${idx}" class="ml-2 text-sm text-slate-300 cursor-pointer">
-                        ${stmt.description || 'Statement '+(idx+1)}
-                        <div class="text-xs text-slate-400 mt-1 pl-1 border-l-2 border-slate-600">${stmtText}</div>
+                    
+                    <label for="r-${uniqueDomId}-${idx}" class="ml-3 w-full cursor-pointer">
+                        <div class="text-sm font-bold text-white mb-1">${stmt.description || 'Level '+(idx+1)}</div>
+                        
+                        ${stmtText ? `<div class="text-sm text-slate-300 mb-2">${stmtText}</div>` : ''}
+                        
+                        ${guidance ? `<div class="text-xs text-slate-400 italic mb-1 pl-2 border-l-2 border-slate-600"><span class="font-semibold not-italic text-slate-500">Guidance:</span> ${guidance}</div>` : ''}
+                        
+                        ${assessment ? `<div class="text-xs text-emerald-400/80 mt-1 pl-2 border-l-2 border-emerald-900/50"><span class="font-semibold text-emerald-500/80">Prüfung:</span> ${assessment}</div>` : ''}
                     </label>
                 </div>`;
             }).join('');
 
             return `
-                <div class="mb-2">
-                    <div class="flex items-center maturity-radio-label rounded-md p-1 -m-1">
+                <div class="mb-2 space-y-2">
+                    <div class="flex items-center maturity-radio-label rounded-md p-2 bg-slate-800/50 border border-slate-700">
                         <input type="radio" id="r-man-${uniqueDomId}" name="mat-${uniqueDomId}" 
                             class="maturity-radio bg-slate-700 border-slate-500 text-blue-600 focus:ring-blue-500"
                             data-target-textarea="desc-${uniqueDomId}" data-description="" ${manualChecked?'checked':''}>
-                        <label for="r-man-${uniqueDomId}" class="ml-2 text-sm text-white font-medium cursor-pointer">Manuell</label>
+                        <label for="r-man-${uniqueDomId}" class="ml-3 text-sm text-white font-medium cursor-pointer">Manuelle Eingabe / Abweichung</label>
                     </div>
                     ${radiosHtml}
                 </div>
