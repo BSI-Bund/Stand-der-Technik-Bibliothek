@@ -1,6 +1,6 @@
 # Pilotierung Grundschutz++
 
-Der **Grundschutz++** ist eine umfassende Überarbeitung des bisherigen IT-Grundschutzes des Bundesamtes für Sicherheit in der Informationstechnik (BSI). Ziel dieser Weiterentwicklung ist es, die Inhalte zu modernisieren und den Aufwand für die Umsetzung eines Informationssicherheitsmanagementsystems (ISMS) zu reduzieren—insbesondere durch die Automatisierung wesentlicher Prozesse. 
+Der **Grundschutz++** ist eine umfassende Überarbeitung des bisherigen IT-Grundschutzes des Bundesamtes für Sicherheit in der Informationstechnik (BSI). Ziel dieser Weiterentwicklung ist es, die Inhalte zu modernisieren und den Aufwand für die Umsetzung eines Informationssicherheitsmanagementsystems (ISMS) zu reduzieren – insbesondere durch die Automatisierung wesentlicher Prozesse. 
 
 -----
 
@@ -19,7 +19,7 @@ Sie können die OSCAL-Dateien direkt von diesem GitHub-Repository herunterladen.
 
 ### Schritt 2: OSCAL-kompatible Anwendung verwenden
 
-Kompendien können mit beliebigen JSON- oder XML-kompatiblen Anwendungen geöffnet werden. Um die heruntergeladenen Dateien in einem benutzerfreundlichen Format zu betrachten, empfehlen wir die Nutzung eines spezialisierten [OSCAL-Werkzeugs](https://oscal.io/tools/#:~:text=OSCAL%20Viewer,Geoffrey%20Borough) je nachdem wofür Sie die Datei verwenden möchten.
+Kompendien können mit beliebigen JSON- oder XML-kompatiblen Anwendungen geöffnet werden. Um die heruntergeladenen Dateien in einem benutzerfreundlichen Format zu betrachten, empfehlen wir die Nutzung eines spezialisierten [OSCAL-Werkzeugs](https://oscal.io/tools/#:~:text=OSCAL%20Viewer,Geoffrey%20Borough), je nachdem wofür Sie die Datei verwenden möchten.
 
 ## Weiterführende Informationen
 

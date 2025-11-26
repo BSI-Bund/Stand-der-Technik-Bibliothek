@@ -16,7 +16,7 @@ Unser Ziel ist es, gemeinsam an modernen Sicherheitslösungen zu arbeiten und Wi
 ## **3. Issues, Pull Requests & Code Contributions**  
 - Vor dem Erstellen eines **Issues** bitte prüfen, ob das Problem bereits existiert und unter Einbezug der Editoren innerhalb der AGs lösbar ist.  
 - **Pull Requests** sollten gut dokumentiert sein, klar strukturierte Änderungen enthalten und sich an den Projektstandards orientieren.
-- Das BSI behält sich vor, Pull Requests die nicht aus den offiziellen Forks der auf der BSI-Website gelisteten Arbeitsgruppen stammen, ohne Bearbeitung zu schließen. 
+- Das BSI behält sich vor, Pull Requests die nicht aus den offiziellen Forks der [auf der BSI-Website gelisteten Arbeitsgruppen](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/Informationssicherheitsmanagement/Stand-der-Technik/stand-der-technik_node.html) stammen, ohne Bearbeitung zu schließen. 
 - Änderungen müssen mit sinnvollen **Commit Messages** versehen werden.  
 
 ## **4. Code-Qualität & Dokumentation**  
@@ -29,7 +29,7 @@ Unser Ziel ist es, gemeinsam an modernen Sicherheitslösungen zu arbeiten und Wi
 - Für die Zusammenarbeit in Arbeitsgruppen oder Issues ist es hilfreich, wenn Sie ihrem Account einen sprechenden Namen geben und im GitHub-Profil ihre Institution eintragen.
 - Sollten Sie eine potenzielle Sicherheitslücke in bestimmten Anwendungen oder Skripten entdecken, posten Sie diese bitte nicht öffentlich. Kontaktieren Sie uns stattdessen umgehend unter den [Sicherheitserreichbarkeiten des BSI](https://www.bsi.bund.de/static/security/security.txt).
 
-## **6. Fair Use & Open Source Ethik**  
+## **6. Fair Use & Open-Source-Ethik**  
 - Beiträge sollen dem Open-Source-Gedanken folgen und für die gesamte Community von Nutzen sein.  
 - Lizenzen und Urheberrechte sind stets zu respektieren, insbesondere bei der Nutzung externer Bibliotheken oder Code-Snippets.  
 
