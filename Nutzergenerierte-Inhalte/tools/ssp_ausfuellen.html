@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL SSP Editor + Workspace</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
+    </script>
+    <style>
+        .collapsible-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out; overflow: hidden; max-height: 0; opacity: 0; }
+        .collapsible-content.open { max-height: 30000px; opacity: 1; }
+        .chevron-icon { transition: transform 0.3s ease; }
+        .chevron-icon.open { transform: rotate(90deg); }
+        .param-placeholder { color: #60a5fa; font-family: monospace; font-weight: bold; background-color: rgba(30, 58, 138, 0.3); padding: 0 4px; border-radius: 4px; }
+        .maturity-radio-label:hover { background-color: #334155; }
+        /* Custom Scrollbar for better dark mode look */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="h-full p-4 md:p-8 font-sans text-slate-200">
+    <div class="max-w-7xl mx-auto bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg">
+
+        <header class="mb-6 pb-6 border-b border-slate-700">
+            <h1 class="text-3xl font-bold text-white">OSCAL SSP Editor (Workspace)</h1>
+            <p class="mt-2 text-slate-300">Laden Sie das SSP und alle lokal referenzierten Dateien (z.B. Risiko-Profile, Komponenten), um den Workspace zu initialisieren.</p>
+        </header>
+
+        <div class="mb-6 p-4 bg-slate-700/50 rounded-lg shadow-md border border-slate-600">
+            <h2 class="text-lg font-semibold text-white mb-4">Workspace laden</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="ssp-uploader" class="block text-sm font-medium text-slate-300 mb-2">1. SSP JSON-Datei (Hauptdatei)</label>
+                    <input id="ssp-uploader" type="file" accept=".json" class="block w-full text-sm text-slate-400
+                        file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold
+                        file:bg-blue-800 file:text-blue-200 hover:file:bg-blue-700 cursor-pointer">
+                </div>
+                <div>
+                    <label for="associated-uploader" class="block text-sm font-medium text-slate-300 mb-2">2. Assoziierte Dateien (Profile, Komponenten...)</label>
+                    <input id="associated-uploader" type="file" accept=".json" multiple class="block w-full text-sm text-slate-400
+                        file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold
+                        file:bg-slate-600 file:text-slate-200 hover:file:bg-slate-500 cursor-pointer">
+                </div>
+            </div>
+            <div id="workspace-status" class="text-sm text-slate-400 mt-4">
+                Bereit. Laden Sie Dateien, um zu beginnen. Änderungen starten die Verarbeitung automatisch neu.
+            </div>
+        </div>
+
+        <div class="flex justify-end mb-6">
+            <button id="save-button" class="bg-emerald-600 text-white font-medium py-2 px-6 rounded-lg shadow-md hover:bg-emerald-700 transition duration-150 disabled:bg-slate-600" disabled>
+                SSP speichern
+            </button>
+        </div>
+
+        <div id="ssp-editor" class="hidden space-y-4"></div>
+
+        <div id="loading-indicator" class="hidden text-center py-8">
+            <p id="loading-text" class="text-slate-400 animate-pulse">Verarbeite Workspace...</p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Workspace State ---
+        const workspaceFiles = new Map();
+        let sspData = null; 
+        let sspFileName = 'edited-ssp.json'; 
+
+        // --- Data State ---
+        let catalogControlMap = new Map(); 
+        let catalogParamMap = new Map();
+        let loadedRiskData = [];
+        let componentDefinitions = new Map(); 
+        let resourceLoadStatus = []; 
+
+        // --- UI Elemente ---
+        const sspUploader = document.getElementById('ssp-uploader');
+        const associatedUploader = document.getElementById('associated-uploader');
+        const saveButton = document.getElementById('save-button');
+        const editorDiv = document.getElementById('ssp-editor');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const loadingText = document.getElementById('loading-text');
+        const workspaceStatus = document.getElementById('workspace-status');
+
+        // --- Event Listeners ---
+        sspUploader.addEventListener('change', (e) => handleFileUpload(e, true));
+        associatedUploader.addEventListener('change', (e) => handleFileUpload(e, false));
+        saveButton.addEventListener('click', handleFileSave);
+
+        // --- Helper Functions ---
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function base64DecodeUnicode(str) {
+            try {
+                const percentEncodedStr = atob(str).split('').map(function(c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join('');
+                return decodeURIComponent(percentEncodedStr);
+            } catch (e) {
+                console.error("Base64 Decoding Fehler:", e);
+                return null;
+            }
+        }
+
+        // --- ICON HELPER FOR PROPS ---
+        function getPropConfig(name) {
+            const n = name.toLowerCase();
+            const iconClass = "w-3 h-3 mr-1.5";
+            
+            // Icons definition
+            const icons = {
+                confidentiality: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>`,
+                integrity: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+                availability: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+                technical: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>`,
+                phase: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>`,
+                default: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>`
+            };
+
+            if (n.includes('effective_on_c')) return { icon: icons.confidentiality, color: 'text-red-200 bg-red-900 border-red-800', label: 'Confidentiality' };
+            if (n.includes('effective_on_i')) return { icon: icons.integrity, color: 'text-blue-200 bg-blue-900 border-blue-800', label: 'Integrity' };
+            if (n.includes('effective_on_a')) return { icon: icons.availability, color: 'text-yellow-200 bg-yellow-900 border-yellow-800', label: 'Availability' };
+            if (n.includes('phase')) return { icon: icons.phase, color: 'text-purple-200 bg-purple-900 border-purple-800', label: 'Phase' };
+            if (n.includes('class') || n.includes('technical')) return { icon: icons.technical, color: 'text-slate-200 bg-slate-700 border-slate-600', label: 'Class' };
+            
+            return { icon: icons.default, color: 'text-slate-300 bg-slate-800 border-slate-600', label: 'Prop' };
+        }
+
+
+        // --- Workspace Loading & Management ---
+
+        async function handleFileUpload(event, isSsp) {
+            const files = event.target.files;
+            if (!files.length) return;
+
+            loadingText.textContent = `Lade ${files.length} Datei(en)...`;
+            loadingIndicator.classList.remove('hidden');
+            
+            if (isSsp) {
+                workspaceFiles.clear();
+                sspData = null;
+                sspFileName = files[0].name.replace('.json', '-edited.json') || 'edited-ssp.json';
+            }
+
+            const loadPromises = Array.from(files).map(file => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const json = JSON.parse(e.target.result);
+                            workspaceFiles.set(file.name, json);
+                            if (isSsp && file.name === files[0].name) {
+                                sspData = json;
+                            }
+                            resolve();
+                        } catch (error) {
+                            console.error(`Fehler beim Parsen von ${file.name}:`, error);
+                            reject(`Datei ${file.name} ist kein gültiges JSON.`);
+                        }
+                    };
+                    reader.onerror = () => reject(`Datei ${file.name} konnte nicht gelesen werden.`);
+                    reader.readAsText(file, 'UTF-8');
+                });
+            });
+
+            try {
+                await Promise.all(loadPromises);
+                updateWorkspaceStatus();
+                await processWorkspace();
+            } catch (error) {
+                alert("Fehler beim Laden der Dateien: " + error);
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        function updateWorkspaceStatus() {
+            let statusHtml = `<p>Dateien im Workspace (${workspaceFiles.size}):</p><ul class="list-disc list-inside ml-4 mt-1">`;
+            const originalSspName = sspFileName.replace('-edited.json', '.json');
+            workspaceFiles.forEach((content, name) => {
+                if (name === originalSspName) {
+                    statusHtml += `<li><span class="text-blue-300">${name}</span> (Haupt-SSP)</li>`;
+                } else {
+                    statusHtml += `<li>${name}</li>`;
+                }
+            });
+            statusHtml += '</ul>';
+            workspaceStatus.innerHTML = statusHtml;
+        }
+
+        async function processWorkspace() {
+            editorDiv.innerHTML = '';
+            editorDiv.classList.add('hidden');
+            saveButton.disabled = true;
+
+            if (!sspData || !sspData['system-security-plan']) {
+                loadingIndicator.classList.add('hidden');
+                return;
+            }
+
+            loadingText.textContent = 'Verarbeite Workspace...';
+            loadingIndicator.classList.remove('hidden');
+
+            catalogControlMap.clear();
+            catalogParamMap.clear();
+            loadedRiskData = [];
+            componentDefinitions.clear();
+            resourceLoadStatus = [];
+
+            const ssp = sspData['system-security-plan'];
+
+            try {
+                await processLinkedProfiles(ssp);
+                await processComponentDefinitions(ssp);
+                await processMainCatalog(ssp);
+
+                renderSSP(ssp);
+                renderResourceStatus(); 
+                editorDiv.classList.remove('hidden');
+                saveButton.disabled = false;
+
+            } catch (error) {
+                console.error("Fehler bei der Workspace-Verarbeitung:", error);
+                editorDiv.innerHTML = `<p class="text-red-400">Fehler bei der Verarbeitung: ${error.message}</p>`;
+                editorDiv.classList.remove('hidden');
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        async function loadReferencedResource(href) {
+            if (!href) return null;
+            const filename = href.split('/').pop(); 
+
+            if (workspaceFiles.has(href)) {
+                resourceLoadStatus.push({ href, status: 'success', source: 'workspace' });
+                return workspaceFiles.get(href);
+            }
+            if (workspaceFiles.has(filename)) {
+                resourceLoadStatus.push({ href, status: 'success', source: 'workspace (via filename)' });
+                return workspaceFiles.get(filename);
+            }
+
+            if (href.startsWith('http://') || href.startsWith('https://')) {
+                try {
+                    const response = await fetch(href);
+                    if (!response.ok) throw new Error(`Netzwerk-Status ${response.status}`);
+                    const json = await response.json();
+                    resourceLoadStatus.push({ href, status: 'success', source: 'network' });
+                    return json;
+                } catch (error) {
+                    resourceLoadStatus.push({ href, status: 'error', source: 'network', error: error.message });
+                    console.error(`Netzwerk-Fehler beim Laden von ${href}:`, error);
+                    return null;
+                }
+            }
+            resourceLoadStatus.push({ href, status: 'missing', source: 'workspace' });
+            return null;
+        }
+
+        // --- Data Processing Functions ---
+
+        async function processLinkedProfiles(ssp) {
+            const links = ssp.metadata?.links || [];
+            const profileLinks = links.filter(link => link.rel === 'profile' && link.href);
+            const loadPromises = profileLinks.map(async (link) => {
+                const profileData = await loadReferencedResource(link.href);
+                if (profileData && profileData.profile) {
+                    const profile = profileData.profile;
+                    extractRiskData(profile, link.href);
+                    extractEmbeddedCatalogs(profile);
+                }
+            });
+            await Promise.all(loadPromises);
+        }
+
+        async function processComponentDefinitions(ssp) {
+            const components = ssp['system-implementation']?.components || [];
+            const definitionLinks = new Set();
+            components.forEach(comp => {
+                const defLink = comp.links?.find(link => link.rel === 'component-definition');
+                if (defLink && defLink.href) definitionLinks.add(defLink.href);
+            });
+            const loadPromises = Array.from(definitionLinks).map(async (href) => {
+                const definitionData = await loadReferencedResource(href);
+                if (definitionData && definitionData['component-definition']) {
+                    componentDefinitions.set(href, definitionData);
+                }
+            });
+            await Promise.all(loadPromises);
+        }
+
+        async function processMainCatalog(ssp) {
+            const profileHref = ssp['import-profile']?.href;
+            if (!profileHref) return;
+            const profileData = await loadReferencedResource(profileHref);
+            if (profileData && profileData.profile) {
+                const catalogHref = profileData.profile.imports?.[0]?.href;
+                if (catalogHref) {
+                    const catalogData = await loadReferencedResource(catalogHref);
+                    if (catalogData && catalogData.catalog) processCatalogData(catalogData.catalog);
+                }
+            }
+        }
+
+        // --- Data Extraction ---
+
+        function extractRiskData(profile, sourceHref) {
+            const riskRefProp = profile.metadata?.props?.find(p => p.name === 'risk-analysis-details-ref');
+            if (riskRefProp && riskRefProp.value) {
+                const resourceId = riskRefProp.value.replace('#', '');
+                const resource = profile["back-matter"]?.resources?.find(r => r.uuid === resourceId);
+                if (resource && resource.attachments && resource.attachments.length > 0) {
+                    const attachment = resource.attachments[0];
+                    if (attachment.base64 && attachment.base64.value) {
+                        try {
+                            const decodedData = base64DecodeUnicode(attachment.base64.value);
+                            if (!decodedData) throw new Error("Dekodierung fehlgeschlagen.");
+                            const riskJson = JSON.parse(decodedData);
+                            if (riskJson.risks) {
+                                loadedRiskData.push({
+                                    sourceHref: sourceHref,
+                                    sourceTitle: profile.metadata.title || sourceHref,
+                                    risks: riskJson.risks
+                                });
+                            }
+                        } catch (e) {
+                            console.error(`Fehler beim Parsen der Risiko-Daten aus ${sourceHref}:`, e);
+                        }
+                    }
+                }
+            }
+        }
+
+        function extractEmbeddedCatalogs(profile) {
+            const resources = profile["back-matter"]?.resources || [];
+            resources.forEach(resource => {
+                const isCatalog = resource.rlinks?.some(rlink => rlink["media-type"] === "application/oscal.catalog+json");
+                if (isCatalog && resource.attachments && resource.attachments.length > 0) {
+                    const attachment = resource.attachments[0];
+                    if (attachment.base64 && attachment.base64.value) {
+                            try {
+                            const decodedCatalog = base64DecodeUnicode(attachment.base64.value);
+                            if (!decodedCatalog) throw new Error("Katalog-Dekodierung fehlgeschlagen.");
+                            const catalogJson = JSON.parse(decodedCatalog);
+                            if (catalogJson.catalog) processCatalogData(catalogJson.catalog);
+                        } catch (e) {
+                            console.error("Fehler beim Parsen des eingebetteten Katalogs:", e);
+                        }
+                    }
+                }
+            });
+        }
+
+        function processCatalogData(catalog) {
+            function scanRecursively(items) {
+                if (!items) return;
+                items.forEach(item => {
+                    if (item.id && (item.parts || item.class || item.title)) {
+                        if (!catalogControlMap.has(item.id)) catalogControlMap.set(item.id, item);
+                    }
+                    if (item.params) {
+                        item.params.forEach(p => {
+                            if(p.id && !catalogParamMap.has(p.id)) catalogParamMap.set(p.id, p);
+                        });
+                    }
+                    if (item.controls) scanRecursively(item.controls);
+                    if (item.groups) scanRecursively(item.groups);
+                });
+            }
+            if (catalog) {
+                scanRecursively(catalog.groups);
+                scanRecursively(catalog.controls);
+            }
+        }
+
+        // --- Rendering Functions ---
+
+        function renderSSP(ssp) {
+            let resourceStatusHtml = createCollapsibleSection('resource-status', 'Ressourcen-Status', '<div id="resource-status-content-inner"></div>', true);
+            let riskSectionHtml = '';
+            
+            if (loadedRiskData.length > 0) {
+                riskSectionHtml = createCollapsibleSection('risk-analysis', 'Risikoanalyse (aus Profilen)', renderRiskAnalysis(ssp), true);
+            }
+            const implementationOpen = loadedRiskData.length === 0;
+
+            editorDiv.innerHTML = `
+                ${resourceStatusHtml}
+                ${riskSectionHtml}
+                ${createCollapsibleSection('metadata', 'Metadaten', renderMetadata(ssp.metadata))}
+                ${createCollapsibleSection('system-characteristics', 'System-Charakteristika', renderSystemCharacteristics(ssp['system-characteristics']))}
+                ${createCollapsibleSection('implementation', 'Komponenten-Implementierung', renderImplementation(ssp), implementationOpen)}
+            `;
+            attachCollapsibleListeners();
+            attachEditorListeners();
+            attachFilterListeners();
+        }
+
+        function renderResourceStatus() {
+            const container = document.getElementById('resource-status-content-inner');
+            if (!container) return;
+            let html = '<div class="space-y-2">';
+            if (resourceLoadStatus.length === 0) {
+                html += '<p class="text-slate-400">Keine externen Ressourcen referenziert.</p>';
+            } else {
+                resourceLoadStatus.forEach(item => {
+                    let statusClass = '', statusText = '';
+                    switch (item.status) {
+                        case 'success': statusClass = 'text-green-400'; statusText = `Geladen (aus ${item.source})`; break;
+                        case 'error': statusClass = 'text-red-400'; statusText = `Fehler beim Laden (Netzwerk): ${item.error}`; break;
+                        case 'missing': statusClass = 'text-orange-400'; statusText = 'FEHLT: Bitte über "Assoziierte Dateien" hochladen.'; break;
+                    }
+                    html += `<div class="flex justify-between items-start text-sm p-2 bg-slate-700 rounded-md">
+                            <span class="text-slate-300 break-all mr-4">${item.href}</span>
+                            <span class="${statusClass} font-medium flex-shrink-0">${statusText}</span>
+                        </div>`;
+                });
+            }
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function createCollapsibleSection(id, title, contentHtml, isOpen = false) {
+            const openClass = isOpen ? 'open' : '';
+            return `<div class="border border-slate-700 rounded-lg overflow-hidden" data-section-id="${id}"> 
+                    <button class="collapsible-header w-full flex justify-between items-center p-4 bg-slate-700 hover:bg-slate-600 focus:outline-none text-left">
+                        <h2 class="text-xl font-semibold text-white">${title}</h2>
+                        <svg class="chevron-icon ${openClass} w-5 h-5 text-slate-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                    </button>
+                    <div id="${id}-content" class="collapsible-content ${openClass} p-4 border-t border-slate-700 bg-slate-800">${contentHtml}</div>
+                </div>`;
+        }
+
+        function attachCollapsibleListeners() {
+            document.querySelectorAll('.collapsible-header').forEach(header => {
+                const newHeader = header.cloneNode(true);
+                header.parentNode.replaceChild(newHeader, header);
+                newHeader.addEventListener('click', () => {
+                    const content = newHeader.nextElementSibling;
+                    content.classList.toggle('open');
+                    newHeader.querySelector('.chevron-icon').classList.toggle('open');
+                });
+            });
+        }
+        
+        function attachEditorListeners() {
+             document.querySelectorAll('.maturity-radio').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const ta = document.getElementById(radio.dataset.targetTextarea);
+                    const desc = radio.dataset.description || '';
+                    if (ta && desc !== "") { ta.value = desc; ta.focus(); }
+                    else if (ta) { ta.focus(); }
+                });
+            });
+        }
+
+        // --- UPDATED: Multi-Select Filter Listeners ---
+        function attachFilterListeners() {
+            // Finde alle Filter-Container (pro Komponente)
+            const filterContainers = document.querySelectorAll('.filter-container');
+            
+            filterContainers.forEach(container => {
+                const compUuid = container.dataset.compUuid;
+                const selects = container.querySelectorAll('.control-prop-filter');
+                
+                selects.forEach(select => {
+                    select.addEventListener('change', () => {
+                        // 1. Sammle alle aktiven Filter für diese Komponente
+                        const activeFilters = [];
+                        selects.forEach(s => {
+                            if (s.value !== 'all') {
+                                activeFilters.push({
+                                    type: s.dataset.filterType,
+                                    value: s.value.toLowerCase()
+                                });
+                            }
+                        });
+
+                        // 2. Finde den Container mit den Controls
+                        const listContainer = document.querySelector(`.control-list-container[data-comp-uuid="${compUuid}"]`);
+                        if (listContainer) {
+                            const entries = listContainer.querySelectorAll('.control-entry');
+                            entries.forEach(entry => {
+                                const entryProps = (entry.dataset.filterProps || "").toLowerCase();
+                                
+                                // 3. Prüfe ALLE aktiven Filter (UND-Verknüpfung)
+                                const matchesAll = activeFilters.every(filter => {
+                                    const searchString = `|${filter.type}:${filter.value}|`;
+                                    return entryProps.includes(searchString);
+                                });
+
+                                entry.style.display = matchesAll ? 'block' : 'none';
+                            });
+                        }
+                    });
+                });
+            });
+        }
+
+        // --- Risk Rendering ---
+        function renderRiskAnalysis(ssp) {
+            let html = '<div class="space-y-6">';
+            loadedRiskData.forEach((riskProfile, sourceIndex) => {
+                html += `<div class="p-4 border border-emerald-800 rounded-lg bg-slate-700/30 shadow-md">
+                    <h3 class="text-lg font-bold text-white mb-2">${riskProfile.sourceTitle}</h3>
+                    <p class="text-sm text-slate-400 mb-4">Quelle: <a href="${riskProfile.sourceHref}" target="_blank" class="text-blue-400 hover:underline break-all">${riskProfile.sourceHref}</a></p>
+                    <div class="space-y-4">`;
+
+                if (riskProfile.risks.length === 0) {
+                    html += '<p class="text-slate-400">Keine Risiken in diesem Profil gefunden.</p>';
+                } else {
+                    riskProfile.risks.forEach((risk, riskIndex) => {
+                        const riskId = `risk-${sourceIndex}-${riskIndex}`;
+                        html += createCollapsibleSection(riskId, renderRiskHeader(risk), renderRiskDetails(risk, ssp), false);
+                    });
+                }
+                html += `</div></div>`;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        function renderRiskHeader(risk) {
+            const getBadgeClass = (value) => {
+                switch (value) {
+                    case 'low': return 'bg-green-800 text-green-200';
+                    case 'medium': return 'bg-yellow-800 text-yellow-200';
+                    case 'high': return 'bg-orange-800 text-orange-200';
+                    case 'very-high': return 'bg-red-800 text-red-200';
+                    default: return 'bg-slate-600 text-slate-200';
+                }
+            };
+            return `<div class="flex flex-wrap items-center gap-4">
+                    <span class="text-white font-semibold mr-4">${risk.title}</span>
+                    <span class="text-xs font-medium px-2.5 py-0.5 rounded-full ${getBadgeClass(risk.likelihood)} capitalize">Likelihood: ${risk.likelihood}</span>
+                    <span class="text-xs font-medium px-2.5 py-0.5 rounded-full ${getBadgeClass(risk.impact)} capitalize">Impact: ${risk.impact}</span>
+                </div>`;
+        }
+
+        function renderRiskDetails(risk, ssp) {
+            let html = `<div class="space-y-4 p-4 bg-slate-900 rounded-lg shadow-inner">
+                <div><h4 class="text-sm font-medium text-slate-300">Beschreibung</h4><p class="text-sm text-slate-200 mt-1 whitespace-pre-wrap">${risk.description || 'N/A'}</p></div>
+                <div><h4 class="text-sm font-medium text-slate-300">Bedrohung (Threat)</h4><p class="text-sm text-slate-200 mt-1 whitespace-pre-wrap">${risk.threat || 'N/A'}</p></div>
+                <hr class="border-slate-700">
+                <div><h4 class="text-lg font-semibold text-white mb-3">Mitigierende Controls (${risk.mitigatingControls.length})</h4>
+                <div class="space-y-6">`;
+            
+            const sspComponents = ssp['system-implementation']?.components || [];
+            const sspRequirements = ssp['control-implementation']?.['implemented-requirements'] || [];
+            const sspSetParams = ssp['control-implementation']?.['set-parameters'] || [];
+            const sspParamValuesMap = new Map();
+            sspSetParams.forEach(sp => { if(sp.values && sp.values.length > 0) sspParamValuesMap.set(sp['param-id'], sp.values[0]); });
+
+            risk.mitigatingControls.forEach(control => {
+                const controlId = control.id;
+                let foundImplementation = false;
+                let controlsHtml = '';
+                let sourceBadge = '';
+                if (control.source === 'custom') sourceBadge = `<span class="ml-2 px-2 text-xs font-semibold rounded-full bg-green-800 text-green-100">Custom</span>`;
+                else if (control.source === 'catalog') sourceBadge = `<span class="ml-2 px-2 text-xs font-semibold rounded-full bg-blue-800 text-blue-100">Katalog</span>`;
+
+                html += `<div class="bg-slate-800 rounded p-2 border border-slate-700">
+                         <div class="mb-2 text-sm text-white font-semibold">${controlId} ${sourceBadge}</div>`;
+
+                if (sspComponents.length > 0) {
+                    sspComponents.forEach(comp => {
+                        const reqEntry = sspRequirements.find(r => r['control-id'] === controlId);
+                        const byCompEntry = reqEntry?.['by-components']?.find(bc => bc['component-uuid'] === comp.uuid);
+                        
+                        if (byCompEntry) {
+                            foundImplementation = true;
+                            const defLink = comp.links?.find(link => link.rel === 'component-definition');
+                            const compDef = defLink ? componentDefinitions.get(defLink.href) : null;
+                            let defControlMap = new Map();
+                            if (compDef && compDef['component-definition']?.components?.[0]) {
+                                const impls = compDef['component-definition'].components[0]['control-implementations'] || [];
+                                impls.forEach(i => (i['implemented-requirements'] || []).forEach(req => defControlMap.set(req['control-id'], req)));
+                            }
+
+                            controlsHtml += `<div class="ml-2 pl-4 border-l-2 border-emerald-600 mb-4">
+                                <div class="text-xs text-emerald-400 font-bold mb-2 uppercase tracking-wide">Bereits implementiert in: ${comp.title}</div>
+                                ${renderControlEntry(controlId, comp, byCompEntry, defControlMap.get(controlId), sspParamValuesMap)}
+                            </div>`;
+                        }
+                    });
+
+                    if (!foundImplementation) {
+                        const defaultComp = sspComponents[0];
+                        const defLink = defaultComp.links?.find(link => link.rel === 'component-definition');
+                        const compDef = defLink ? componentDefinitions.get(defLink.href) : null;
+                        let implReq = null;
+                         if (compDef && compDef['component-definition']?.components?.[0]) {
+                            const impls = compDef['component-definition'].components[0]['control-implementations'] || [];
+                             impls.forEach(i => (i['implemented-requirements'] || []).forEach(req => {
+                                 if(req['control-id'] === controlId) implReq = req;
+                             }));
+                        }
+
+                        controlsHtml += `<div class="ml-2 pl-4 border-l-2 border-slate-500 mb-2">
+                            <div class="text-xs text-slate-400 font-bold mb-2 uppercase tracking-wide">Neu anlegen für: ${defaultComp.title}</div>
+                            ${renderControlEntry(controlId, defaultComp, null, implReq, sspParamValuesMap)}
+                        </div>`;
+                    }
+                } else {
+                    controlsHtml += `<p class="text-red-400 text-sm">Keine System-Komponenten definiert. Bitte erst Komponenten im SSP anlegen/laden.</p>`;
+                }
+
+                html += `${controlsHtml}</div>`;
+            });
+            html += `</div></div></div>`;
+            return html;
+        }
+
+        // --- Standard SSP Rendering ---
+        function renderMetadata(metadata) {
+            return `<div class="space-y-3">
+                <div><label class="block text-sm font-medium text-slate-300">Titel</label>
+                <input type="text" id="metadata-title" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white" value="${(metadata.title || '').replace(/"/g, '&quot;')}"></div>
+                <div><span class="block text-sm font-medium text-slate-300">Letzte Änderung (wird beim Speichern aktualisiert)</span>
+                <p class="text-sm text-slate-300">${metadata['last-modified'] || 'N/A'}</p></div>
+            </div>`;
+        }
+
+        function renderSystemCharacteristics(chars) {
+            return `<div class="space-y-3">
+                <div><label class="block text-sm font-medium text-slate-300">System-Name</label>
+                <input type="text" id="system-name" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white" value="${(chars['system-name'] || '').replace(/"/g, '&quot;')}"></div>
+                <div><label class="block text-sm font-medium text-slate-300">Beschreibung</label>
+                <textarea id="system-description" rows="4" class="mt-1 block w-full rounded-md border-slate-600 bg-slate-700 text-white">${chars.description || ''}</textarea></div>
+            </div>`;
+        }
+
+        // --- Implementation Rendering (UPDATED: Multi-Select Filters) ---
+        function renderImplementation(ssp) {
+            const sspComponents = ssp['system-implementation']?.components || [];
+            const sspRequirements = ssp['control-implementation']?.['implemented-requirements'] || [];
+            
+            const sspSetParams = ssp['control-implementation']?.['set-parameters'] || [];
+            const sspParamValuesMap = new Map();
+            sspSetParams.forEach(sp => {
+                if(sp.values && sp.values.length > 0) sspParamValuesMap.set(sp['param-id'], sp.values[0]);
+            });
+
+            if (!sspComponents.length) return '<p class="text-slate-400">Keine Komponenten.</p>';
+
+            let html = '<div class="space-y-4">';
+            sspComponents.forEach((sspComp, index) => {
+                const compUuid = sspComp.uuid;
+                const defLink = sspComp.links?.find(link => link.rel === 'component-definition');
+                const compDef = defLink ? componentDefinitions.get(defLink.href) : null;
+
+                const sspControlMap = new Map();
+                sspRequirements.forEach(r => {
+                    const entry = r['by-components']?.find(bc => bc['component-uuid'] === compUuid);
+                    if (entry) sspControlMap.set(r['control-id'], entry);
+                });
+
+                const defControlMap = new Map();
+                if (compDef && compDef['component-definition']?.components?.[0]) {
+                    const impls = compDef['component-definition'].components[0]['control-implementations'] || [];
+                    impls.forEach(i => (i['implemented-requirements'] || []).forEach(req => defControlMap.set(req['control-id'], req)));
+                }
+
+                const allKeys = new Set([...sspControlMap.keys(), ...defControlMap.keys()]);
+                const sortedKeys = Array.from(allKeys).sort();
+                
+                // --- Gather Filter Data ---
+                const filterOptions = {}; 
+                // Struktur: { "class": Set("technical", "management"), "phase": Set("implementation", ...) }
+
+                sortedKeys.forEach(cid => {
+                    const implReq = defControlMap.get(cid);
+                    
+                    // Helper to add to set
+                    const addOpt = (type, val) => {
+                        if(!filterOptions[type]) filterOptions[type] = new Set();
+                        filterOptions[type].add(val);
+                    };
+
+                    if (implReq && implReq.props) {
+                        implReq.props.forEach(p => {
+                            addOpt(p.name, p.value);
+                        });
+                    }
+                    const catCtrl = catalogControlMap.get(cid);
+                    if(catCtrl && catCtrl.class) addOpt('class', catCtrl.class);
+                });
+                
+                // --- Generate Filter HTML ---
+                let filterBarHtml = '';
+                const labels = {
+                    'class': 'Class',
+                    'phase': 'Phase',
+                    'effective_on_c': 'Confidentiality',
+                    'effective_on_i': 'Integrity',
+                    'effective_on_a': 'Availability'
+                };
+
+                // Nur für bekannte/relevante Keys Filter erstellen
+                Object.keys(filterOptions).sort().forEach(key => {
+                    // Wir filtern nur nach den "interessanten" Props, um die Leiste nicht zu sprengen
+                    if (labels[key] || key.startsWith('effective') || key === 'phase' || key === 'class') {
+                        const label = labels[key] || key;
+                        const options = Array.from(filterOptions[key]).sort();
+                        
+                        let optsHtml = `<option value="all">Alle</option>`;
+                        options.forEach(opt => {
+                             optsHtml += `<option value="${opt.toLowerCase()}">${opt}</option>`;
+                        });
+
+                        filterBarHtml += `
+                            <div class="flex flex-col">
+                                <label class="text-xs text-slate-400 mb-1 font-semibold uppercase">${label}</label>
+                                <select data-filter-type="${key}" class="control-prop-filter rounded border-slate-600 bg-slate-800 text-white text-xs py-1 pl-2 pr-8 focus:ring-blue-500 focus:border-blue-500">
+                                    ${optsHtml}
+                                </select>
+                            </div>
+                        `;
+                    }
+                });
+
+                
+                let compControlsHtml = `<div class="space-y-4 control-list-container" data-comp-uuid="${compUuid}">`;
+                if (sortedKeys.length > 0) {
+                    sortedKeys.forEach(cid => {
+                        compControlsHtml += renderControlEntry(
+                            cid, sspComp, sspControlMap.get(cid), defControlMap.get(cid), sspParamValuesMap
+                        );
+                    });
+                } else {
+                     compControlsHtml += '<p class="text-slate-400 text-sm">Keine Controls gefunden.</p>';
+                }
+                compControlsHtml += '</div>';
+
+                const isOpen = index === 0; 
+                const openClass = isOpen ? 'open' : '';
+                
+                html += `
+                    <div class="border border-slate-700 rounded-lg overflow-hidden bg-slate-800 shadow-sm">
+                        <button class="collapsible-header w-full flex justify-between items-center p-4 hover:bg-slate-700 text-left">
+                            <h3 class="text-lg font-bold text-white">${sspComp.title}</h3>
+                            <svg class="chevron-icon ${openClass} w-5 h-5 text-slate-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                        </button>
+                        <div class="collapsible-content ${openClass} p-4 border-t border-slate-700 bg-slate-800">
+                            
+                            ${filterBarHtml ? `
+                            <div class="mb-6 p-3 bg-slate-700/50 rounded border border-slate-600 filter-container" data-comp-uuid="${sspComp.uuid}">
+                                <div class="text-xs text-slate-400 mb-2 font-bold flex items-center">
+                                    <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                                    FILTER (UND-Verknüpfung)
+                                </div>
+                                <div class="flex flex-wrap gap-4">
+                                    ${filterBarHtml}
+                                </div>
+                            </div>` : ''}
+
+                            ${compControlsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            return html;
+        }
+
+        // --- Control Entry Rendering (UPDATED) ---
+        function renderControlEntry(controlId, sspComponent, byCompEntry, implementedReq, sspParamValuesMap) {
+            const compUuid = sspComponent.uuid;
+            const uniqueDomId = `${controlId.replace(/[^a-zA-Z0-9]/g, '-')}-${compUuid}`;
+            
+            const currentState = byCompEntry?.['implementation-status']?.state || '';
+            const currentDesc = byCompEntry?.description || '';
+            const currentName = byCompEntry?.props?.find(p => p.name === 'implementing-user')?.value || '';
+            const currentDate = byCompEntry?.props?.find(p => p.name === 'implementation-date')?.value || '';
+
+            const catCtrl = catalogControlMap.get(controlId);
+            const title = catCtrl?.title || '(Titel nicht gefunden)'; 
+            const catClass = catCtrl?.class || 'unknown';
+            const displayClass = catClass !== 'unknown' ? ` <span class="text-sm text-slate-400">(${catClass})</span>` : '';
+            
+            // Props & Filter String
+            const defProps = implementedReq?.props || [];
+            let propsHtml = '';
+            // Initialer Filter String mit Class
+            let filterDataString = `|class:${catClass}|`; 
+
+            if (defProps.length > 0) {
+                propsHtml = '<div class="flex flex-wrap gap-2 mt-2">';
+                defProps.forEach(p => {
+                    const pName = p.name;
+                    const pVal = p.value;
+                    // Add strict filtering token: |name:value|
+                    filterDataString += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
+                    
+                    // Icons nutzen
+                    const conf = getPropConfig(pName);
+                    
+                    propsHtml += `<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium border ${conf.color}" title="${pName}">
+                        ${conf.icon}
+                        ${pVal}
+                    </span>`;
+                });
+                propsHtml += '</div>';
+            }
+
+            // Params Logic
+            let paramsHtml = '';
+            let referencedParams = new Set();
+            if (catCtrl && catCtrl.params) catCtrl.params.forEach(p => referencedParams.add(p.id));
+
+            let proseText = catCtrl?.parts?.find(p => p.name === 'statement')?.prose || '';
+            const paramRegex = /{{\s*insert:\s*param,\s*([a-zA-Z0-9._-]+)\s*}}/g;
+            let match;
+            while ((match = paramRegex.exec(proseText)) !== null) referencedParams.add(match[1]);
+
+            proseText = proseText.replace(paramRegex, (match, pId) => {
+                const pDef = catalogParamMap.get(pId);
+                const label = pDef?.label || pId;
+                return `<span class="param-placeholder" title="Parameter: ${pId}">[${label}]</span>`;
+            });
+            
+            const guidanceText = catCtrl?.parts?.find(p => p.name === 'guidance')?.prose || '';
+            
+            if (referencedParams.size > 0) {
+                paramsHtml = `<div class="mt-4 pt-4 border-t border-slate-600 bg-slate-800/50 p-3 rounded-md border border-blue-900/30">
+                    <h5 class="text-sm font-bold text-blue-300 mb-2 flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        Parameter / Variablen
+                    </h5>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+                
+                referencedParams.forEach(paramId => {
+                    const paramDef = catalogParamMap.get(paramId);
+                    const label = paramDef?.label || paramId;
+                    const savedVal = sspParamValuesMap.get(paramId) || ''; 
+                    
+                    paramsHtml += `<div>
+                            <label class="block text-xs text-slate-400 mb-1">${label} (${paramId})</label>
+                            <input type="text" data-param-id="${paramId}"
+                                class="param-input block w-full rounded-md border-slate-600 bg-slate-700 text-white text-sm"
+                                value="${savedVal.replace(/"/g, '&quot;')}" placeholder="Wert...">
+                        </div>`;
+                });
+                paramsHtml += `</div></div>`;
+            }
+
+            const compDesc = implementedReq?.description || '';
+            const statements = implementedReq?.statements || [];
+            
+            return `
+                <div class="control-entry p-4 border border-slate-600 rounded-lg bg-slate-700 shadow-sm" 
+                     data-control-id="${controlId}" data-comp-uuid="${compUuid}" data-control-class="${catClass}"
+                     data-filter-props="${filterDataString}">
+                    
+                    <div class="mb-3">
+                        <h4 class="text-lg font-bold text-white flex items-center flex-wrap gap-2">
+                            <span>${controlId}: ${title}</span>
+                            ${displayClass}
+                        </h4>
+                        ${propsHtml} 
+                    </div>
+
+                    ${paramsHtml}
+
+                    <div class="mt-4 pt-4 border-t border-slate-600 text-sm space-y-3">
+                        ${proseText ? `<div class="p-3 rounded-md bg-slate-800 border border-slate-600 text-slate-200 font-medium">${proseText}</div>` : ''}
+                        ${guidanceText ? `<div class="p-3 rounded-md bg-slate-800 border border-slate-600 mt-2 text-slate-300 italic">${guidanceText}</div>` : ''}
+                        ${(!catCtrl) ? '<p class="text-orange-400 italic">Control nicht im geladenen Katalog/Workspace gefunden.</p>' : ''}
+                    </div>
+
+                    ${compDesc ? `<div class="mt-4 pt-4 border-t border-slate-600 text-sm"><div class="p-3 bg-slate-900 border border-blue-800 text-blue-200 rounded">${compDesc}</div></div>` : ''}
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-slate-600">
+                        <div class="md:col-span-1">
+                            <label class="block text-sm text-slate-300 mb-1">Status</label>
+                            <select id="state-${uniqueDomId}" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm">
+                                <option value="" ${currentState===''?'selected':''}>-- Offen --</option>
+                                <option value="implemented" ${currentState==='implemented'?'selected':''}>Umgesetzt</option>
+                                <option value="partial" ${currentState==='partial'?'selected':''}>Teilweise</option>
+                                <option value="planned" ${currentState==='planned'?'selected':''}>Geplant</option>
+                                <option value="alternative" ${currentState==='alternative'?'selected':''}>Alternative</option>
+                                <option value="not-applicable" ${currentState==='not-applicable'?'selected':''}>Nicht zutreffend</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm text-slate-300 mb-1">Bearbeiter</label>
+                            <input type="text" id="name-${uniqueDomId}" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm" value="${currentName}">
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-sm text-slate-300 mb-1">Datum</label>
+                            <input type="date" id="date-${uniqueDomId}" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm" value="${currentDate}">
+                        </div>
+                        <div class="md:col-span-4">
+                            <label class="block text-sm text-slate-300 mb-1">Kommentar / Umsetzung</label>
+                            ${renderStatementsRadio(statements, uniqueDomId, currentDesc)}
+                            <textarea id="desc-${uniqueDomId}" rows="4" class="w-full rounded bg-slate-800 border-slate-600 text-white text-sm mt-2">${currentDesc}</textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- UPDATED: Statement Radio (zeigt nun alle Details) ---
+        function renderStatementsRadio(statements, uniqueDomId, currentDesc) {
+            if (!statements || statements.length === 0) return '';
+            
+            let manualChecked = true;
+            let radiosHtml = statements.map((stmt, idx) => {
+                const props = stmt.props || [];
+                const stmtText = props.find(p => p.name === 'statement')?.value || '';
+                const guidance = props.find(p => p.name === 'guidance')?.value || '';
+                const assessment = props.find(p => p.name === 'assessment-method')?.value || '';
+
+                const isChecked = (currentDesc.trim() === stmtText.trim() && stmtText !== '');
+                if (isChecked) manualChecked = false;
+                
+                return `
+                <div class="flex items-start mt-4 maturity-radio-label rounded-md p-2 bg-slate-800/50 border border-slate-700">
+                    <input type="radio" id="r-${uniqueDomId}-${idx}" name="mat-${uniqueDomId}" 
+                        class="maturity-radio mt-1 bg-slate-700 border-slate-500 text-blue-600 focus:ring-blue-500"
+                        data-target-textarea="desc-${uniqueDomId}" data-description="${stmtText.replace(/"/g, '&quot;')}" ${isChecked ? 'checked':''}>
+                    
+                    <label for="r-${uniqueDomId}-${idx}" class="ml-3 w-full cursor-pointer">
+                        <div class="text-sm font-bold text-white mb-1">${stmt.description || 'Level '+(idx+1)}</div>
+                        
+                        ${stmtText ? `<div class="text-sm text-slate-300 mb-2">${stmtText}</div>` : ''}
+                        
+                        ${guidance ? `<div class="text-xs text-slate-400 italic mb-1 pl-2 border-l-2 border-slate-600"><span class="font-semibold not-italic text-slate-500">Guidance:</span> ${guidance}</div>` : ''}
+                        
+                        ${assessment ? `<div class="text-xs text-emerald-400/80 mt-1 pl-2 border-l-2 border-emerald-900/50"><span class="font-semibold text-emerald-500/80">Prüfung:</span> ${assessment}</div>` : ''}
+                    </label>
+                </div>`;
+            }).join('');
+
+            return `
+                <div class="mb-2 space-y-2">
+                    <div class="flex items-center maturity-radio-label rounded-md p-2 bg-slate-800/50 border border-slate-700">
+                        <input type="radio" id="r-man-${uniqueDomId}" name="mat-${uniqueDomId}" 
+                            class="maturity-radio bg-slate-700 border-slate-500 text-blue-600 focus:ring-blue-500"
+                            data-target-textarea="desc-${uniqueDomId}" data-description="" ${manualChecked?'checked':''}>
+                        <label for="r-man-${uniqueDomId}" class="ml-3 text-sm text-white font-medium cursor-pointer">Manuelle Eingabe / Abweichung</label>
+                    </div>
+                    ${radiosHtml}
+                </div>
+            `;
+        }
+
+
+        // --- Save Logic ---
+        function handleFileSave() {
+            if (!sspData) return;
+
+            try {
+                const ssp = sspData['system-security-plan'];
+                
+                // 1. Metadaten etc.
+                ssp.metadata.title = document.getElementById('metadata-title').value;
+                ssp['system-characteristics']['system-name'] = document.getElementById('system-name').value;
+                ssp['system-characteristics'].description = document.getElementById('system-description').value;
+                ssp.metadata["last-modified"] = new Date().toISOString();
+
+                if (!ssp['control-implementation']) ssp['control-implementation'] = {};
+                
+                // Parameter speichern
+                const paramInputs = document.querySelectorAll('.param-input');
+                const setParameters = [];
+                paramInputs.forEach(input => {
+                    const val = input.value.trim();
+                    if (val) {
+                        setParameters.push({ "param-id": input.dataset.paramId, "values": [ val ] });
+                    }
+                });
+                ssp['control-implementation']['set-parameters'] = setParameters;
+
+                // 2. Requirements
+                if (!Array.isArray(ssp['control-implementation']['implemented-requirements'])) {
+                    ssp['control-implementation']['implemented-requirements'] = [];
+                }
+                const requirements = ssp['control-implementation']['implemented-requirements'];
+                const controlEntries = document.querySelectorAll('.control-entry');
+
+                controlEntries.forEach(entry => {
+                    const controlId = entry.dataset.controlId;
+                    const compUuid = entry.dataset.compUuid;
+                    const uniqueDomId = `${controlId.replace(/[^a-zA-Z0-9]/g, '-')}-${compUuid}`;
+
+                    const stateEl = entry.querySelector(`#state-${uniqueDomId}`);
+                    const descriptionEl = entry.querySelector(`#desc-${uniqueDomId}`);
+                    const nameEl = entry.querySelector(`#name-${uniqueDomId}`);
+                    const dateEl = entry.querySelector(`#date-${uniqueDomId}`);
+
+                    if (!stateEl) return;
+
+                    const state = stateEl.value;
+                    const description = descriptionEl.value;
+                    const name = nameEl.value;
+                    const date = dateEl.value;
+                    
+                    if (state || description || name || date) {
+                        let req = requirements.find(r => r['control-id'] === controlId);
+                        if (!req) {
+                            req = { "uuid": generateUUID(), "control-id": controlId, "by-components": [] };
+                            requirements.push(req);
+                        }
+                        if (!req['by-components']) req['by-components'] = [];
+
+                        let byCompEntry = req['by-components'].find(bc => bc['component-uuid'] === compUuid);
+                        if (!byCompEntry) {
+                            byCompEntry = {
+                                "uuid": generateUUID(),
+                                "component-uuid": compUuid,
+                                "description": description,
+                                "implementation-status": { "state": state },
+                                "props": []
+                            };
+                            req['by-components'].push(byCompEntry);
+                        } else {
+                            byCompEntry.description = description;
+                            if(!byCompEntry['implementation-status']) byCompEntry['implementation-status'] = {};
+                            byCompEntry['implementation-status'].state = state;
+                            if(!byCompEntry.props) byCompEntry.props = [];
+                        }
+
+                        const setProp = (n, v) => {
+                            let p = byCompEntry.props.find(x => x.name === n);
+                            if(v) { p ? p.value = v : byCompEntry.props.push({ "name": n, "value": v }); }
+                            else { byCompEntry.props = byCompEntry.props.filter(x => x.name !== n); }
+                        };
+                        setProp('implementing-user', name);
+                        setProp('implementation-date', date);
+                        
+                        if (byCompEntry.props.length === 0) delete byCompEntry.props;
+
+                    } else {
+                        // Lösch-Logik
+                        let req = requirements.find(r => r['control-id'] === controlId);
+                        if (req && req['by-components']) {
+                            req['by-components'] = req['by-components'].filter(bc => bc['component-uuid'] !== compUuid);
+                            if (req['by-components'].length === 0) {
+                                ssp['control-implementation']['implemented-requirements'] = requirements.filter(r => r.uuid !== req.uuid);
+                            }
+                        }
+                    }
+                });
+
+                const dataStr = JSON.stringify(sspData, null, 2);
+                const dataBlob = new Blob(["\uFEFF" + dataStr], { type: 'application/json;charset=utf-8' });
+                const url = URL.createObjectURL(dataBlob);
+                const a = document.createElement('a');
+                a.href = url; a.download = sspFileName;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+
+            } catch (error) {
+                console.error(error);
+                alert("Fehler beim Speichern: " + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
