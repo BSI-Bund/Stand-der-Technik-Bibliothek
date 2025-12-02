@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Grundschutz++ – CSV Export & Import</title>
+<style>
+body { font-family: Arial; margin: 2em; background:#f4f4f4; }
+.group,.control,.part { background:white; border-radius:8px; padding:6px 10px; margin:4px 0; box-shadow:0 0 3px rgba(0,0,0,0.1); user-select:none; }
+.group:hover,.control:hover { background:#eef5ff; }
+.group-id,.control-id,.part-id { font-weight:bold;color:#0055a5; }
+.group-title,.control-title { margin-left:8px;color:#333; }
+.part-prose { display:block; margin-left:24px; color:#444; font-style:italic; white-space:pre-wrap; }
+.children { margin-left:25px; display:none; }
+.expanded > .children { display:block; }
+.toggle-symbol {
+  display:inline-block;width:16px;font-weight:bold;text-align:center;margin-right:5px;color:#555;cursor:pointer;
+}
+.control { background:#fafafa;border-left:3px solid #ccc; }
+.part { background:#fcfcfc;border-left:3px solid #aaa; cursor:default; }
+.control-inputs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  margin: 8px 0 4px 30px;
+  padding: 6px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+.control-inputs label {
+  font-size: 0.9em;
+  color: #333;
+  align-self: center;
+}
+.control-inputs select,
+.control-inputs input[type="text"] {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+button { margin-top: 15px; padding: 8px 14px; background-color: #0055a5; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right:6px; }
+button:hover { background-color: #003f7f; }
+.insert-label { color:#006600; font-style:italic; }
+</style>
+</head>
+<body>
+<h1>Grundschutz++ – CSV Export & Import</h1>
+Laden Sie das Kompendium und legen Sie los ...
+<p>
+  <button id="browseBtn">📂 Durchsuchen</button>
+  <button id="exportBtn" disabled>📤 CSV exportieren</button>
+  <button id="importBtn" disabled>📥 CSV laden</button>
+  <input type="file" id="fileInput" accept=".json" style="display:none">
+  <input type="file" id="importFile" accept=".csv" style="display:none">
+</p>
+
+<div id="output" style="margin-top:20px;">Noch keine Datei geladen.</div>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const browseBtn = document.getElementById('browseBtn');
+const output = document.getElementById('output');
+const exportBtn = document.getElementById('exportBtn');
+const importBtn = document.getElementById('importBtn');
+const importFile = document.getElementById('importFile');
+
+let loadedControls = []; 
+
+browseBtn.addEventListener('click', () => fileInput.click());
+
+function translatePartId(id) {
+  if(!id) return '(keine ID)';
+  if(id.endsWith('_stm')) return 'Anforderung';
+  if(id.endsWith('_gdn')) return 'Hinweise';
+  return id;
+}
+
+function collectParams(groups, map = new Map()) {
+  if (!Array.isArray(groups)) return map;
+  for (const g of groups) {
+    if (Array.isArray(g.controls)) {
+      for (const c of g.controls) {
+        if (Array.isArray(c.params)) {
+          for (const p of c.params) {
+            if (p.id && p.label) map.set(p.id.trim(), p.label.trim());
+          }
+        }
+      }
+    }
+    if (Array.isArray(g.groups)) collectParams(g.groups, map);
+  }
+  return map;
+}
+
+function replaceInsertPlaceholders(prose, paramMap) {
+  if (!prose || typeof prose !== 'string') return prose || '';
+  const regex = /\{\{\s*insert\s*:\s*param\s*,\s*([A-Za-z0-9_.\-]+)\s*\}\}/gi;
+  return prose.replace(regex, (match, id) => {
+    const cleanId = id.trim();
+    const label = paramMap.get(cleanId);
+    return label ? `<span class="insert-label">${label}</span>` : match;
+  });
+}
+
+fileInput.addEventListener('change', event => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const groups = data.catalog?.groups || data.groups || [];
+      if (groups.length === 0) {
+        output.textContent = 'Keine Gruppen gefunden.';
+        return;
+      }
+      const paramMap = collectParams(groups);
+      output.innerHTML = '';
+      loadedControls = [];
+      output.appendChild(renderGroups(groups, paramMap));
+      exportBtn.disabled = false;
+      importBtn.disabled = false;
+    } catch (err) {
+      output.textContent = 'Fehler beim Parsen: ' + err.message;
+      console.error(err);
+    }
+  };
+  reader.readAsText(file);
+});
+
+function renderGroups(groups, paramMap) {
+  const container = document.createElement('div');
+  container.className = 'children';
+  container.style.display = 'block';
+
+  groups.forEach(g => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'group expanded';
+
+    const hasGroups = Array.isArray(g.groups) && g.groups.length > 0;
+    const hasControls = Array.isArray(g.controls) && g.controls.length > 0;
+    const hasChildren = hasGroups || hasControls;
+
+    const toggle = document.createElement('span');
+    toggle.className = 'toggle-symbol';
+    toggle.textContent = hasChildren ? '▼' : '•';
+
+    const idSpan = document.createElement('span');
+    idSpan.className = 'group-id';
+    idSpan.textContent = g.id || '(keine ID)';
+
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'group-title';
+    titleSpan.textContent = g.title || '(kein Titel)';
+
+    wrapper.appendChild(toggle);
+    wrapper.appendChild(idSpan);
+    wrapper.appendChild(titleSpan);
+
+    const childContainer = document.createElement('div');
+    childContainer.className = 'children';
+    childContainer.style.display = 'block';
+
+    if (hasGroups) childContainer.appendChild(renderGroups(g.groups, paramMap));
+
+    if (hasControls) {
+      g.controls.forEach(c => {
+        const controlDiv = document.createElement('div');
+        controlDiv.className = 'control expanded';
+        const hasParts = Array.isArray(c.parts) && c.parts.length > 0;
+
+        const controlToggle = document.createElement('span');
+        controlToggle.className = 'toggle-symbol';
+        controlToggle.textContent = hasParts ? '▼' : '•';
+
+        const controlId = document.createElement('span');
+        controlId.className = 'control-id';
+        controlId.textContent = c.id || '(keine ID)';
+
+        const controlTitle = document.createElement('span');
+        controlTitle.className = 'control-title';
+        controlTitle.textContent = c.title || '(kein Titel)';
+
+        controlDiv.appendChild(controlToggle);
+        controlDiv.appendChild(controlId);
+        controlDiv.appendChild(controlTitle);
+
+        let formDiv = null;
+        const partsContainer = document.createElement('div');
+        partsContainer.className = 'children';
+        partsContainer.style.display = 'block';
+
+        if (hasParts) {
+          c.parts.forEach(p => {
+            const partDiv = document.createElement('div');
+            partDiv.className = 'part';
+            const translatedId = translatePartId(p.id);
+            const proseText = replaceInsertPlaceholders(p.prose, paramMap);
+
+            partDiv.innerHTML = `
+              <span class="part-id">${translatedId}</span>
+              ${proseText ? `<span class="part-prose">${proseText}</span>` : ''}
+            `;
+
+            if (p.id && p.id.endsWith('_stm')) {
+              formDiv = createInputForm(c);
+              partDiv.appendChild(formDiv);
+            }
+            partsContainer.appendChild(partDiv);
+          });
+        }
+
+        if (!formDiv) formDiv = createInputForm(c);
+        controlDiv.appendChild(partsContainer);
+        if (!hasParts) controlDiv.appendChild(formDiv);
+
+        controlToggle.addEventListener('click', e => {
+          e.stopPropagation();
+          const expanded = controlDiv.classList.toggle('expanded');
+          partsContainer.style.display = expanded ? 'block' : 'none';
+          controlToggle.textContent = expanded ? '▼' : '▶';
+        });
+
+        childContainer.appendChild(controlDiv);
+        loadedControls.push({ id: c.id, title: c.title, form: formDiv });
+      });
+    }
+
+    wrapper.appendChild(childContainer);
+    toggle.addEventListener('click', e => {
+      e.stopPropagation();
+      const expanded = wrapper.classList.toggle('expanded');
+      childContainer.style.display = expanded ? 'block' : 'none';
+      toggle.textContent = expanded ? '▼' : '▶';
+    });
+
+    container.appendChild(wrapper);
+  });
+
+  return container;
+}
+
+function createInputForm(control) {
+  const formDiv = document.createElement('div');
+  formDiv.className = 'control-inputs';
+  formDiv.innerHTML = `
+    <label>Umsetzung:</label>
+    <select>
+      <option value=""></option>
+      <option>ja</option>
+      <option>nein</option>
+      <option>teilweise</option>
+      <option>entbehrlich</option>
+    </select>
+
+    <label>Begründung:</label>
+    <input type="text" placeholder="Begründung eingeben">
+
+    <label>Zuständig:</label>
+    <input type="text" placeholder="Verantwortliche Person / Rolle">
+
+    <label>Maßnahme:</label>
+    <input type="text" placeholder="Kurzbeschreibung der Maßnahme">
+  `;
+  return formDiv;
+}
+
+// 🔹 CSV Export
+exportBtn.addEventListener('click', () => {
+  if (loadedControls.length === 0) {
+    alert('Keine Daten geladen.');
+    return;
+  }
+
+  const rows = [['Control-ID','Control-Titel','Umsetzung','Begründung','Zuständig','Maßnahme']];
+  for (const c of loadedControls) {
+    if (!c.form) continue;
+    const select = c.form.querySelector('select');
+    const inputs = c.form.querySelectorAll('input');
+    const row = [
+      c.id || '',
+      c.title || '',
+      select?.value || '',
+      inputs[0]?.value || '',
+      inputs[1]?.value || '',
+      inputs[2]?.value || ''
+    ];
+    rows.push(row);
+  }
+
+  const csvContent = rows.map(r => r.map(v => `"${v.replace(/"/g,'""')}"`).join(';')).join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'oscal_export.csv';
+  link.click();
+});
+
+// 🔹 CSV Import
+importBtn.addEventListener('click', () => importFile.click());
+
+importFile.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const text = ev.target.result;
+    const rows = text.split(/\r?\n/).map(r => r.split(';').map(v => v.replace(/^"|"$/g,'').replace(/""/g,'"')));
+    const header = rows.shift();
+    const idIndex = header.indexOf('Control-ID');
+    if(idIndex<0) return;
+    for (const row of rows) {
+      if(row.length < 6) continue;
+      const c = loadedControls.find(c => c.id === row[idIndex]);
+      if (!c || !c.form) continue;
+      const select = c.form.querySelector('select');
+      const inputs = c.form.querySelectorAll('input');
+      select.value = row[2] || '';
+      inputs[0].value = row[3] || '';
+      inputs[1].value = row[4] || '';
+      inputs[2].value = row[5] || '';
+    }
+  };
+  reader.readAsText(file);
+});
+</script>
+</body>
+</html>
