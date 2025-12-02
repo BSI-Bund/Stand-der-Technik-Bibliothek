@@ -12,3 +12,5 @@ Für die Fortsetzung einer Dokumentation:
 2) Lade die gespeicherte CSV-Datei mittels "CSV laden"
 3) Dokumentiere den Stand der Umsetzungsmaßnahmen
 4) Speichere die Umsetzung mittels "CSV exportieren"
+
+Getestet mit der Version 0.9.5 vom 14.10. des GS++ Kompendiums.
