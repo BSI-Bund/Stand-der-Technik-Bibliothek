@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSCAL Blueprint Editor (Complete)</title>
+    <title>OSCAL Blueprint Editor (Bugfix Parameter)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -33,7 +33,7 @@
             <div>
                 <h1 class="text-3xl font-bold text-slate-800">OSCAL Blueprint Editor</h1>
                 <p class="text-slate-600 mt-2">
-                    Profile erstellen, Quellen filtern, <span class="text-blue-600 font-semibold">verschachtelte Controls</span> bearbeiten.
+                    Profile verknüpfen, Controls anpassen (Parameter & Texte).
                 </p>
             </div>
             <div class="flex flex-col items-end gap-2">
@@ -79,7 +79,6 @@
                 <legend class="text-lg font-semibold text-slate-700 px-2 bg-white">2. Importierte Profile / Komponenten</legend>
                 
                 <div class="bg-slate-50 p-4 rounded-md border border-slate-200 space-y-3">
-                    
                     <div>
                         <label for="component-search" class="block text-xs font-bold text-slate-500 uppercase mb-1">Filter</label>
                         <input type="search" id="component-search" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm mb-2" placeholder="Tippen zum Filtern beider Listen...">
@@ -153,12 +152,13 @@
                             <span id="modal-param-prefix" class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm font-mono"></span>
                             <input type="text" id="mod-param-suffix" class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md text-sm font-mono" placeholder="_prm_1">
                         </div>
+                        <p class="text-[10px] text-gray-400 mt-1">Suffix darf nicht leer sein (z.B. "_prm_1").</p>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Neuer Wert (Value)</label>
                         <input type="text" id="mod-param-value" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
                     </div>
-                    <button onclick="addModification('param')" class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-semibold shadow-sm">Parameter setzen (set-parameter)</button>
+                    <button type="button" onclick="addModification('param')" class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-semibold shadow-sm transition">Parameter speichern</button>
                 </div>
 
                 <div id="tab-alter-content" class="hidden space-y-4">
@@ -178,7 +178,7 @@
                         <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Text (Prose)</label>
                         <textarea id="mod-alter-text" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"></textarea>
                     </div>
-                    <button onclick="addModification('alter')" class="w-full py-2 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm font-semibold shadow-sm">Text hinzufügen (alter -> add)</button>
+                    <button type="button" onclick="addModification('alter')" class="w-full py-2 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm font-semibold shadow-sm transition">Text hinzufügen</button>
                 </div>
 
                 <div class="mt-8 pt-4 border-t border-gray-100">
@@ -206,17 +206,15 @@
         let allKnownControlIds = new Set();
         let componentContentCache = new Map();
 
-        // DOM
+        // DOM Elements
         const els = {
             loadingOverlay: document.getElementById('loading-overlay'),
             loadingText: document.getElementById('loading-text'),
             error: document.getElementById('error-message'),
             compError: document.getElementById('component-error-message'),
-            // RESTORED UI ELEMENTS
             ddNutzer: document.getElementById('component-dropdown-nutzergen'),
             ddGplus: document.getElementById('component-dropdown-gplus'),
             search: document.getElementById('component-search'),
-            
             addBtn: document.getElementById('add-component-btn'),
             customName: document.getElementById('component-custom-name'),
             list: document.getElementById('added-component-list'),
@@ -247,19 +245,16 @@
         });
 
         function setupEventListeners() {
-            // RESTORED: Search Filter Listener
             els.search.addEventListener('input', filterDropdowns);
-            // RESTORED: Dropdown Toggle Logic
             els.ddNutzer.addEventListener('change', () => { if(els.ddNutzer.value) els.ddGplus.selectedIndex = 0; });
             els.ddGplus.addEventListener('change', () => { if(els.ddGplus.value) els.ddNutzer.selectedIndex = 0; });
-            
             els.addBtn.addEventListener('click', addComponentFromUI);
             els.list.addEventListener('click', handleListClick);
             els.generateBtn.addEventListener('click', generateArtifacts);
             els.fileUpload.addEventListener('change', handleFileLoad);
         }
 
-        // 1. CATALOG LOADING
+        // CATALOG
         async function fetchCatalog() {
             try {
                 const res = await fetch(CATALOG_URL);
@@ -273,7 +268,6 @@
                 els.catStatus.innerHTML = `⚠️ Katalog Fehler`;
             }
         }
-
         function indexCatalogItems(items) {
             if (!items || !Array.isArray(items)) return;
             items.forEach(item => {
@@ -291,7 +285,7 @@
             });
         }
 
-        // 2. LIBRARY LOADING (Split back into 2 Dropdowns)
+        // LIB LOADING
         async function fetchGitHubData() {
             try {
                 const [r1, r2] = await Promise.all([fetch(API_URL_NUTZERGEN), fetch(API_URL_GPLUS)]);
@@ -304,60 +298,43 @@
             select.innerHTML = `<option value="" disabled selected>Bitte wählen...</option>`;
             data.filter(i => i.name && i.name.endsWith('.json')).forEach(f => select.appendChild(new Option(f.name, f.download_url)));
         }
-
-        // RESTORED: Filter Logic
         function filterDropdowns() {
             const term = els.search.value.toLowerCase();
             [els.ddNutzer, els.ddGplus].forEach(dd => {
-                Array.from(dd.options).forEach((opt, i) => { 
-                    if(i>0) opt.hidden = !opt.textContent.toLowerCase().includes(term); 
-                });
+                Array.from(dd.options).forEach((opt, i) => { if(i>0) opt.hidden = !opt.textContent.toLowerCase().includes(term); });
             });
         }
 
-        // 3. MAIN FILE LOAD
+        // FILE LOADING
         async function handleFileLoad(e) {
             const file = e.target.files[0];
             if (!file) return;
-            
             toggleOverlay(true, "Lade Profil...");
             els.list.innerHTML = ''; els.placeholder = null;
             modificationsStore.clear(); allKnownControlIds.clear();
-
             try {
                 const txt = await file.text();
                 const json = JSON.parse(txt);
                 const profile = json.profile;
                 if(!profile) throw new Error("Ungültiges OSCAL Profil");
-
                 if(profile.metadata) {
                     els.inputs.title.value = profile.metadata.title || "";
                     els.inputs.version.value = profile.metadata.version || "1.0.0";
                 }
-
                 if(profile.imports) {
                     for(const imp of profile.imports) {
                         const href = imp.href;
                         const name = href.split('/').pop();
-                        try {
-                            await fetchAndAddComponent(href, name);
-                        } catch(err) {
-                            renderComponentItem(name, href, [], true);
-                        }
+                        try { await fetchAndAddComponent(href, name); } catch(err) { renderComponentItem(name, href, [], true); }
                     }
                 }
-
                 if(profile.modify) restoreModifications(profile.modify);
                 refreshAllBadges();
-            } catch(err) {
-                alert("Fehler: " + err.message);
-            } finally {
-                toggleOverlay(false);
-                els.fileUpload.value = '';
-            }
+            } catch(err) { alert("Fehler: " + err.message); } 
+            finally { toggleOverlay(false); els.fileUpload.value = ''; }
         }
 
-        // 4. RESOLVE LOCAL FILE
+        // RESOLVE
         function handleListClick(e) {
             if(e.target.closest('.action-resolve-file')) {
                 const fileInput = e.target.closest('div').querySelector('.resolve-input');
@@ -368,7 +345,6 @@
                 openModal(e.target.closest('.action-modify').dataset.controlId);
             }
         }
-
         async function resolveLocalFile(file, liElement) {
             toggleOverlay(true, "Analysiere Datei...");
             try {
@@ -376,46 +352,33 @@
                 const json = JSON.parse(txt);
                 const controls = extractControlsSmart(json);
                 controls.forEach(c => allKnownControlIds.add(c));
-                
                 const contentDiv = liElement.querySelector('.component-body');
                 contentDiv.innerHTML = generateTableHtml(controls);
-                
                 liElement.classList.remove('border-red-300');
                 liElement.classList.add('border-slate-200');
                 if(liElement.querySelector('.status-badge')) liElement.querySelector('.status-badge').remove();
                 if(liElement.querySelector('.resolve-section')) liElement.querySelector('.resolve-section').remove();
-
                 refreshAllBadges();
-            } catch(e) {
-                alert("Fehler: " + e.message);
-            } finally {
-                toggleOverlay(false);
-            }
+            } catch(e) { alert("Fehler: " + e.message); } 
+            finally { toggleOverlay(false); }
         }
 
-        // 5. CORE LOGIC
+        // CORE
         async function addComponentFromUI() {
             els.compError.classList.add('hidden');
-            // Check which dropdown is active
             const selNutzer = els.ddNutzer.options[els.ddNutzer.selectedIndex];
             const selGplus = els.ddGplus.options[els.ddGplus.selectedIndex];
-            
             let url = '', filename = '';
             if (selNutzer && selNutzer.value) { url = selNutzer.value; filename = selNutzer.textContent; }
             else if (selGplus && selGplus.value) { url = selGplus.value; filename = selGplus.textContent; }
-            
             const name = els.customName.value.trim() || filename;
             if (!url) { els.compError.textContent = "Bitte Komponente wählen."; els.compError.classList.remove('hidden'); return; }
-
             toggleOverlay(true, "Lade Komponente...");
             try {
                 await fetchAndAddComponent(url, name);
                 els.customName.value = ''; els.ddNutzer.selectedIndex = 0; els.ddGplus.selectedIndex = 0;
-            } catch (e) {
-                els.compError.textContent = e.message; els.compError.classList.remove('hidden');
-            } finally {
-                toggleOverlay(false);
-            }
+            } catch (e) { els.compError.textContent = e.message; els.compError.classList.remove('hidden'); } 
+            finally { toggleOverlay(false); }
         }
 
         async function fetchAndAddComponent(url, name) {
@@ -430,24 +393,12 @@
             const controls = new Set();
             function recurseImpls(impls) {
                 if(!impls) return;
-                impls.forEach(ci => {
-                    (ci["implemented-requirements"]||[]).forEach(ir => {
-                        if(ir["control-id"]) controls.add(ir["control-id"]);
-                    });
-                });
+                impls.forEach(ci => { (ci["implemented-requirements"]||[]).forEach(ir => { if(ir["control-id"]) controls.add(ir["control-id"]); }); });
             }
             const def = json["component-definition"];
-            if(def && def.components) {
-                def.components.forEach(c => { recurseImpls(c["control-implementations"]); });
-            }
+            if(def && def.components) { def.components.forEach(c => { recurseImpls(c["control-implementations"]); }); }
             const prof = json["profile"];
-            if(prof && prof.imports) {
-                prof.imports.forEach(imp => {
-                    (imp["include-controls"]||[]).forEach(inc => {
-                        if(inc["with-ids"]) inc["with-ids"].forEach(id => controls.add(id));
-                    });
-                });
-            }
+            if(prof && prof.imports) { prof.imports.forEach(imp => { (imp["include-controls"]||[]).forEach(inc => { if(inc["with-ids"]) inc["with-ids"].forEach(id => controls.add(id)); }); }); }
             return Array.from(controls).sort();
         }
 
@@ -455,7 +406,6 @@
             const li = document.createElement('li');
             li.className = `bg-white border ${isOffline ? 'border-red-300' : 'border-slate-200'} rounded-lg shadow-sm overflow-hidden group`;
             li.dataset.profileHref = href;
-
             const header = `
                 <div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex justify-between items-center">
                     <div>
@@ -467,7 +417,6 @@
                     </div>
                     <button class="action-remove text-red-500 hover:text-red-700 font-bold p-2">✕</button>
                 </div>`;
-
             let body = '';
             if(isOffline) {
                 body = `
@@ -476,9 +425,7 @@
                         <p class="text-sm text-red-700 mb-2 font-medium">⚠️ Controls nicht geladen.</p>
                         <div class="flex items-center gap-2">
                             <input type="file" class="resolve-input hidden" accept=".json">
-                            <button class="action-resolve-file px-3 py-1.5 bg-white border border-red-300 text-red-700 text-sm rounded shadow-sm hover:bg-red-50">
-                                📂 Datei "${name}" jetzt hochladen
-                            </button>
+                            <button class="action-resolve-file px-3 py-1.5 bg-white border border-red-300 text-red-700 text-sm rounded shadow-sm hover:bg-red-50">📂 Datei "${name}" hochladen</button>
                         </div>
                     </div>
                     <div class="p-4 text-sm text-gray-400 italic">Keine Controls sichtbar.</div>
@@ -488,18 +435,13 @@
             } else {
                 body = `<div class="component-body">${generateTableHtml(controls)}</div>`;
             }
-
             li.innerHTML = header + body;
             els.list.appendChild(li);
-
             if(isOffline) {
                 const inp = li.querySelector('.resolve-input');
-                inp.addEventListener('change', (e) => {
-                    if(e.target.files[0]) resolveLocalFile(e.target.files[0], li);
-                });
+                inp.addEventListener('change', (e) => { if(e.target.files[0]) resolveLocalFile(e.target.files[0], li); });
             }
         }
-
         function generateTableHtml(controls) {
             return `
             <div class="bg-white p-0"><div class="max-h-60 overflow-y-auto custom-scroll">
@@ -521,7 +463,6 @@
                 </tbody></table>
             </div></div>`;
         }
-
         async function getJson(url) {
             if (componentContentCache.has(url)) return componentContentCache.get(url);
             const res = await fetch(url);
@@ -531,7 +472,7 @@
             return data;
         }
 
-        // 6. RESTORE & UPDATE
+        // RESTORE / UPDATE
         function restoreModifications(modify) {
             if (modify["set-parameters"]) {
                 modify["set-parameters"].forEach(p => {
@@ -555,7 +496,6 @@
                 });
             }
         }
-        
         function addModToStore(cid, mod) {
             const arr = modificationsStore.get(cid) || [];
             if(mod.type === 'set-parameter') {
@@ -565,12 +505,10 @@
             arr.push(mod);
             modificationsStore.set(cid, arr);
         }
-
         function refreshAllBadges() {
             modificationsStore.forEach((_, cid) => updateBadges(cid));
             allKnownControlIds.forEach(cid => updateBadges(cid));
         }
-
         function updateBadges(cid) {
             const count = (modificationsStore.get(cid) || []).length;
             document.querySelectorAll(`.badge-container[data-control-id="${cid}"]`).forEach(el => {
@@ -578,7 +516,7 @@
             });
         }
 
-        // --- MODAL & GENERATE ---
+        // MODAL
         function openModal(cid) {
             currentActiveControlId = cid;
             els.inputs.mControlDisplay.textContent = cid;
@@ -591,6 +529,13 @@
                 els.inputs.mCatalogProse.textContent = "Text nicht verfügbar.";
             }
             els.inputs.mParamPrefix.textContent = cid;
+            
+            // FIX: Set default value for suffix so !s check passes
+            els.inputs.mParamSuffix.value = '_prm_1'; 
+            els.inputs.mParamValue.value = '';
+            els.inputs.mAlterText.value = '';
+            els.inputs.mAlterPos.value = 'ending';
+            
             renderModalModsList();
             els.modal.classList.remove('opacity-0', 'pointer-events-none');
             els.modal.querySelector('.modal-container').classList.remove('scale-95');
@@ -612,25 +557,30 @@
             document.getElementById('tab-param-btn').className = t==='param' ? "flex-1 py-2 text-center text-blue-600 border-b-2 border-blue-600 font-medium" : "flex-1 py-2 text-center text-gray-500 hover:text-blue-600";
             document.getElementById('tab-alter-btn').className = t==='alter' ? "flex-1 py-2 text-center text-blue-600 border-b-2 border-blue-600 font-medium" : "flex-1 py-2 text-center text-gray-500 hover:text-blue-600";
         }
+        
         function addModification(type) {
              const mods = modificationsStore.get(currentActiveControlId) || [];
              if(type === 'param') {
-                 const s = els.inputs.mParamSuffix.value, v = els.inputs.mParamValue.value;
-                 if(!s||!v) return;
+                 // FIX: TRIM VALUES
+                 const s = els.inputs.mParamSuffix.value.trim();
+                 const v = els.inputs.mParamValue.value.trim();
+                 if(!s || !v) return alert("Bitte Suffix und Wert eingeben!");
+                 
                  const pid = `${currentActiveControlId}${s}`;
                  const idx = mods.findIndex(m => m.type==='set-parameter' && m.paramId === pid);
                  if(idx > -1) mods.splice(idx, 1);
                  mods.push({type:'set-parameter', paramId: pid, value: v});
                  els.inputs.mParamValue.value='';
              } else {
-                 const t = els.inputs.mAlterText.value;
-                 if(!t) return;
+                 const t = els.inputs.mAlterText.value.trim();
+                 if(!t) return alert("Bitte Text eingeben!");
                  mods.push({type:'alter', position: els.inputs.mAlterPos.value, text: t});
                  els.inputs.mAlterText.value='';
              }
              modificationsStore.set(currentActiveControlId, mods);
              renderModalModsList();
         }
+
         function renderModalModsList() {
             els.inputs.mList.innerHTML = '';
             (modificationsStore.get(currentActiveControlId)||[]).forEach((m, i) => {
@@ -649,7 +599,7 @@
         
         function generateArtifacts() {
             const items = document.querySelectorAll('#added-component-list li');
-            if(items.length===0) return alert("Leer");
+            if(items.length===0) return alert("Keine Komponenten hinzugefügt.");
             
             const uuid = crypto.randomUUID();
             const time = new Date().toISOString();
@@ -662,7 +612,6 @@
                 });
             });
 
-            // Group alters
             const groupedAlters = [];
             const alterMap = new Map();
             alters.forEach(a => {
