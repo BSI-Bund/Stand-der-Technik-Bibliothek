@@ -72,6 +72,10 @@
                         <label class="block text-sm font-medium text-slate-700 mb-1">Version</label>
                         <input type="text" id="profile-version" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm" value="1.0.0">
                     </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Systembeschreibung (SSP)</label>
+                        <textarea id="ssp-description" rows="2" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm" placeholder="Kurzbeschreibung des Systems für den System Security Plan..."></textarea>
+                    </div>
                 </div>
             </fieldset>
 
@@ -226,6 +230,7 @@
             inputs: {
                 title: document.getElementById('profile-title'),
                 version: document.getElementById('profile-version'),
+                sspDesc: document.getElementById('ssp-description'), // NEU: Referenz auf das neue Feld
                 mControlDisplay: document.getElementById('modal-control-id-display'),
                 mCatalogTitle: document.getElementById('modal-catalog-title'),
                 mCatalogProse: document.getElementById('modal-catalog-prose'),
@@ -603,6 +608,12 @@
             
             const uuid = crypto.randomUUID();
             const time = new Date().toISOString();
+            
+            // DATEN AUS UI FÜR METADATEN (NEU: SSP Desc)
+            const pTitle = els.inputs.title.value || "Profile";
+            const pVersion = els.inputs.version.value || "1.0.0";
+            const pDesc = els.inputs.sspDesc.value || "Automatisch generierte Systembeschreibung.";
+
             const setParams = [], alters = [];
 
             modificationsStore.forEach((mods, cid) => {
@@ -623,7 +634,7 @@
             const profile = {
                 "profile": {
                     "uuid": uuid,
-                    "metadata": { "title": els.inputs.title.value||"Profile", "last-modified": time, "version": els.inputs.version.value, "oscal-version": "1.1.3" },
+                    "metadata": { "title": pTitle, "last-modified": time, "version": pVersion, "oscal-version": "1.1.3" },
                     "imports": Array.from(items).map(li => ({ "href": li.dataset.profileHref })),
                     "modify": { }
                 }
@@ -633,14 +644,46 @@
 
             download(profile, "profile.json");
             
+            // SSP GENERIERUNG (FIX: Schema Validation)
             const ssp = {
                 "system-security-plan": {
                     "uuid": crypto.randomUUID(),
-                    "metadata": { "title": "SSP", "last-modified": time, "version": "1.0", "oscal-version": "1.1.3" },
+                    "metadata": { 
+                        "title": pTitle, 
+                        "last-modified": time, 
+                        "version": pVersion, 
+                        "oscal-version": "1.1.3" 
+                    },
                     "import-profile": { "href": "profile.json" },
-                    "system-characteristics": { "system-ids": [{"id":crypto.randomUUID()}], "status":{"state":"operational"} },
-                    "system-implementation": { "users":[], "components":[] },
-                    "control-implementation": { "description":"Generated", "implemented-requirements":[] }
+                    "system-characteristics": { 
+                        "system-ids": [{"id":crypto.randomUUID()}], 
+                        "system-name": pTitle,
+                        "description": pDesc,
+                        "status": {"state":"operational"} 
+                    },
+                    "system-implementation": { 
+                        // FIX: Leere Users entfernt. Components muss minItems:1 haben.
+                        "components": [
+                            {
+                                "uuid": crypto.randomUUID(),
+                                "type": "software",
+                                "title": "Platzhalter Komponente",
+                                "description": "Generiert um Schema-Validierung (minItems: 1) zu erfüllen.",
+                                "status": { "state": "operational" }
+                            }
+                        ] 
+                    },
+                    "control-implementation": { 
+                        "description": "Generated based on Profile", 
+                        // FIX: Implemented-requirements muss minItems:1 haben.
+                        "implemented-requirements": [
+                            {
+                                "uuid": crypto.randomUUID(),
+                                "control-id": "placeholder-req-1",
+                                "description": "Platzhalter Requirement um Schema-Validierung zu erfüllen."
+                            }
+                        ] 
+                    }
                 }
             };
             setTimeout(() => download(ssp, "ssp.json"), 500);
