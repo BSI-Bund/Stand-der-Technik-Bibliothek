@@ -6,7 +6,7 @@ Diese Bibliothek stellt strukturierte Sammlungen von BSI-Sicherheitsvorschriften
 
 Sie sind in einer Institution mit der Informationssicherheit betraut oder auditieren diese und möchten die Inhalte des BSI dafür nutzen?
 
-**→ Besuchen Sie das [Kompendien](./Kompendien/) Verzeichnis**
+**→ Besuchen Sie das [Kompendien](./Kompendien/)-Verzeichnis**
  
 Hier finden Sie die fertigen Kompendien mit digital strukturierten Vorschriften, die direkt in einer Institution angewendet werden können.
 
@@ -14,7 +14,7 @@ Hier finden Sie die fertigen Kompendien mit digital strukturierten Vorschriften,
 
 Sie arbeiten gemeinsam mit dem BSI an der Entwicklung von Vorschriften und möchten die aktuellen Grundlagendokumente hierfür prüfen oder bearbeiten?
 
-**→ Besuchen Sie das [Quellkataloge](./Quellkataloge/) Verzeichnis**
+**→ Besuchen Sie das [Quellkataloge](./Quellkataloge/)-Verzeichnis**
 
 Hier finden Sie die maschinenlesbaren Quelldaten für die Erstellung und Bearbeitung von Sicherheitsvorschriften im JSON-Format.
 
@@ -36,10 +36,10 @@ Sie können dennoch von der Community eröffnet und für den gegenseitigen Austa
 
 Das BSI behält sich das Recht vor, Beiträge mit unangemessenem oder unzulässigem Inhalt ohne Vorankündigung vollständig zu löschen.
 
-Für allgemeine Fragen & Feedback nutzen Sie bitte das BSI Service Center.
+Für allgemeine Fragen & Feedback nutzen Sie bitte das Service-Center des BSI.
 
-- **Allgemeine Anfragen an das BSI**: [BSI Service Center](https://www.bsi.bund.de/DE/Service-Navi/Kontakt/kontakt_node.html)
-- **Sicherheitsbedenken**: [BSI Sicherheitserreichbarkeiten](https://www.bsi.bund.de/static/security/security.txt)
+- **Allgemeine Anfragen an das BSI**: [Service-Center des BSI](https://www.bsi.bund.de/DE/Service-Navi/Kontakt/kontakt_node.html)
+- **Sicherheitsbedenken**: [Sicherheitserreichbarkeiten des BSI](https://www.bsi.bund.de/static/security/security.txt)
 
 ## 📄 Lizenz
 
