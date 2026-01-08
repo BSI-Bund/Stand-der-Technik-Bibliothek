@@ -3,7 +3,7 @@
 Vielen Dank für Ihr Interesse, zum Stand der Technik in der Informations- und Cybersicherheit beizutragen. Damit helfen Sie, unsere Sicherheit zu stärken und die Widerstandsfähigkeit unserer Prozesse und Systeme zu verbessern.
 
 >[!NOTE]
->Mitwirkende an der Pilotierung sollten erfahrene IT-Grundschützerinnen und -Grundschützer (z.B. [Zertifizierte IT-Grundschutz-Praktiker](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/Zertifizierte-Informationssicherheit/Personenzertifizierung-IT-Grundschutzberater/Schulungen-zum-IT-Grundschutz-Praktiker-und-IT-Grundschutzberater/schulungen-zum-it-grundschutz-praktiker-und-it-grundschutzberater_node.html)) sein und die Einführungsveranstaltung des BSI zum IT-Grundschutz++ besucht haben.
+>Mitwirkende an der Pilotierung sollten erfahrene IT-Grundschützerinnen und -Grundschützer (z. B. [Zertifizierte IT-Grundschutz-Praktiker](https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/Zertifizierte-Informationssicherheit/Personenzertifizierung-IT-Grundschutzberater/Schulungen-zum-IT-Grundschutz-Praktiker-und-IT-Grundschutzberater/schulungen-zum-it-grundschutz-praktiker-und-it-grundschutzberater_node.html)) sein und die Einführungsveranstaltung des BSI zum IT-Grundschutz++ besucht haben.
 
 ---
 
