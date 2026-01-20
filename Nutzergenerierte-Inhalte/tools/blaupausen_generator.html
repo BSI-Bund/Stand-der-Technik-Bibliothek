@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL Blueprint Editor (Bugfix Parameter)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow: hidden; }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-100 min-h-screen p-4 md:p-8">
+
+    <div class="container mx-auto max-w-6xl bg-white rounded-lg shadow-xl p-6 md:p-10 space-y-8">
+        
+        <div class="border-b pb-6 flex flex-col md:flex-row justify-between items-start gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-800">OSCAL Blueprint Editor</h1>
+                <p class="text-slate-600 mt-2">
+                    Profile verknüpfen, Controls anpassen (Parameter & Texte).
+                </p>
+            </div>
+            <div class="flex flex-col items-end gap-2">
+                <div id="catalog-status" class="px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800 flex items-center mb-2">
+                    <span class="w-2 h-2 rounded-full bg-yellow-500 mr-2 animate-pulse"></span>
+                    Lade Katalog...
+                </div>
+                
+                <input type="file" id="file-upload" class="hidden" accept=".json">
+                <button onclick="document.getElementById('file-upload').click()" class="flex items-center px-4 py-2 bg-slate-800 text-white rounded hover:bg-slate-700 transition shadow-sm text-sm font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    Profil laden (.json)
+                </button>
+            </div>
+        </div>
+
+        <div id="loading-overlay" class="fixed inset-0 bg-white/80 z-[100] hidden flex flex-col items-center justify-center">
+            <div class="loader mb-4"></div>
+            <p id="loading-text" class="text-lg font-semibold text-slate-700">Verarbeite Daten...</p>
+        </div>
+        
+        <div id="error-message" class="hidden p-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded shadow-sm"></div>
+
+        <div id="form-container" class="space-y-8">
+            
+            <fieldset class="space-y-4 border border-slate-200 p-5 rounded-lg bg-slate-50">
+                <legend class="text-lg font-semibold text-slate-700 px-2 bg-slate-50">1. Metadaten</legend>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Titel</label>
+                        <input type="text" id="profile-title" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Version</label>
+                        <input type="text" id="profile-version" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm" value="1.0.0">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Systembeschreibung (SSP)</label>
+                        <textarea id="ssp-description" rows="2" class="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm" placeholder="Kurzbeschreibung des Systems für den System Security Plan..."></textarea>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset id="component-fieldset" class="space-y-4 border border-slate-200 p-5 rounded-lg bg-white">
+                <legend class="text-lg font-semibold text-slate-700 px-2 bg-white">2. Importierte Profile / Komponenten</legend>
+                
+                <div class="bg-slate-50 p-4 rounded-md border border-slate-200 space-y-3">
+                    <div>
+                        <label for="component-search" class="block text-xs font-bold text-slate-500 uppercase mb-1">Filter</label>
+                        <input type="search" id="component-search" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm mb-2" placeholder="Tippen zum Filtern beider Listen...">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Quelle 1: Nutzergeneriert</label>
+                            <select id="component-dropdown-nutzergen" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm"><option value="">Lade...</option></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Quelle 2: G++</label>
+                            <select id="component-dropdown-gplus" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm"><option value="">Lade...</option></select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-2 mt-2 pt-2 border-t border-slate-200">
+                        <input type="text" id="component-custom-name" class="w-full sm:flex-1 px-3 py-2 border border-slate-300 rounded-md shadow-sm text-sm" placeholder="Alias Name (Optional)">
+                        <button type="button" id="add-component-btn" class="w-full sm:w-auto px-6 py-2 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700 font-medium whitespace-nowrap">Hinzufügen</button>
+                    </div>
+                    <div id="component-error-message" class="text-red-600 text-sm hidden"></div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="text-sm font-bold text-slate-700 uppercase tracking-wide mb-3">Profil Inhalt:</h4>
+                    <ul id="added-component-list" class="space-y-6">
+                        <li id="no-components-placeholder" class="text-slate-400 text-sm italic text-center py-8 border-2 border-dashed border-slate-200 rounded-lg">Liste ist leer.</li>
+                    </ul>
+                </div>
+            </fieldset>
+
+            <div>
+                <button id="generate-btn" class="w-full py-4 px-4 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow-lg text-xl font-bold transition-transform transform hover:-translate-y-0.5 flex flex-col items-center">
+                    <span>Profile & SSP generieren</span>
+                    <span class="text-xs font-normal opacity-90 mt-1">(Download als .json)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modify-modal" class="modal opacity-0 pointer-events-none fixed inset-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute inset-0 bg-gray-900 opacity-60"></div>
+        <div class="modal-container bg-white w-11/12 md:max-w-2xl mx-auto rounded-lg shadow-2xl z-50 overflow-hidden transform transition-all scale-95 flex flex-col max-h-[90vh]">
+            
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800">Control anpassen</h3>
+                    <p class="text-sm text-gray-500 font-mono" id="modal-control-id-display"></p>
+                </div>
+                <div class="cursor-pointer text-gray-400 hover:text-gray-600 text-2xl" onclick="closeModal()">&times;</div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto custom-scroll p-6">
+                <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-6">
+                    <h4 class="text-xs font-bold text-blue-700 uppercase mb-2">Original-Text aus Katalog</h4>
+                    <div id="modal-catalog-text-container">
+                        <h5 id="modal-catalog-title" class="font-bold text-gray-800 text-sm mb-1">Lade...</h5>
+                        <div id="modal-catalog-prose" class="text-sm text-gray-700 max-h-40 overflow-y-auto custom-scroll whitespace-pre-line leading-relaxed border-l-2 border-blue-300 pl-3"></div>
+                    </div>
+                </div>
+
+                <div class="flex border-b border-gray-200 mb-5">
+                    <button id="tab-param-btn" class="flex-1 py-2 text-center text-blue-600 border-b-2 border-blue-600 font-medium" onclick="switchTab('param')">1. Set Parameter</button>
+                    <button id="tab-alter-btn" class="flex-1 py-2 text-center text-gray-500 hover:text-blue-600" onclick="switchTab('alter')">2. Alter (Add Text)</button>
+                </div>
+
+                <div id="tab-param-content" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Parameter ID</label>
+                        <div class="flex">
+                            <span id="modal-param-prefix" class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm font-mono"></span>
+                            <input type="text" id="mod-param-suffix" class="flex-1 px-3 py-2 border border-gray-300 rounded-r-md text-sm font-mono" placeholder="_prm_1">
+                        </div>
+                        <p class="text-[10px] text-gray-400 mt-1">Suffix darf nicht leer sein (z.B. "_prm_1").</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Neuer Wert (Value)</label>
+                        <input type="text" id="mod-param-value" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
+                    </div>
+                    <button type="button" onclick="addModification('param')" class="w-full py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-semibold shadow-sm transition">Parameter speichern</button>
+                </div>
+
+                <div id="tab-alter-content" class="hidden space-y-4">
+                    <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-800 mb-2">
+                        OSCAL "Alter" Operation: Fügt neuen Inhalt (Prose) an einer bestimmten Position relativ zum Control hinzu.
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Position (Adds)</label>
+                        <select id="mod-alter-position" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm bg-white">
+                            <option value="ending">Am Ende (ending)</option>
+                            <option value="starting">Am Anfang (starting)</option>
+                            <option value="after">Nach dem Control (after)</option>
+                            <option value="before">Vor dem Control (before)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Text (Prose)</label>
+                        <textarea id="mod-alter-text" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"></textarea>
+                    </div>
+                    <button type="button" onclick="addModification('alter')" class="w-full py-2 bg-purple-600 text-white rounded hover:bg-purple-700 text-sm font-semibold shadow-sm transition">Text hinzufügen</button>
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-gray-100">
+                    <h5 class="text-xs font-bold text-gray-500 uppercase mb-2">Gespeicherte Anpassungen:</h5>
+                    <ul id="modal-mod-list" class="space-y-2"></ul>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 px-6 py-3 border-t border-gray-200 flex justify-end flex-shrink-0">
+                <button onclick="closeModal()" class="px-4 py-2 bg-white border border-gray-300 rounded text-gray-700 hover:bg-gray-50 text-sm font-medium">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // CONFIG
+        const API_URL_NUTZERGEN = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/komponenten/DE';
+        const API_URL_GPLUS = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Kompendien/Grundschutz%2B%2B-Kompendium/komponenten';
+        const CATALOG_URL = 'https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Kompendien/Grundschutz%2B%2B-Kompendium/Grundschutz%2B%2B-Kompendium.json';
+
+        // STATE
+        let modificationsStore = new Map(); 
+        let currentActiveControlId = null;
+        let catalogIndex = new Map();
+        let allKnownControlIds = new Set();
+        let componentContentCache = new Map();
+
+        // DOM Elements
+        const els = {
+            loadingOverlay: document.getElementById('loading-overlay'),
+            loadingText: document.getElementById('loading-text'),
+            error: document.getElementById('error-message'),
+            compError: document.getElementById('component-error-message'),
+            ddNutzer: document.getElementById('component-dropdown-nutzergen'),
+            ddGplus: document.getElementById('component-dropdown-gplus'),
+            search: document.getElementById('component-search'),
+            addBtn: document.getElementById('add-component-btn'),
+            customName: document.getElementById('component-custom-name'),
+            list: document.getElementById('added-component-list'),
+            placeholder: document.getElementById('no-components-placeholder'),
+            generateBtn: document.getElementById('generate-btn'),
+            catStatus: document.getElementById('catalog-status'),
+            fileUpload: document.getElementById('file-upload'),
+            modal: document.getElementById('modify-modal'),
+            inputs: {
+                title: document.getElementById('profile-title'),
+                version: document.getElementById('profile-version'),
+                sspDesc: document.getElementById('ssp-description'), // NEU: Referenz auf das neue Feld
+                mControlDisplay: document.getElementById('modal-control-id-display'),
+                mCatalogTitle: document.getElementById('modal-catalog-title'),
+                mCatalogProse: document.getElementById('modal-catalog-prose'),
+                mParamPrefix: document.getElementById('modal-param-prefix'),
+                mParamSuffix: document.getElementById('mod-param-suffix'),
+                mParamValue: document.getElementById('mod-param-value'),
+                mAlterPos: document.getElementById('mod-alter-position'),
+                mAlterText: document.getElementById('mod-alter-text'),
+                mList: document.getElementById('modal-mod-list')
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchGitHubData();
+            fetchCatalog();
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            els.search.addEventListener('input', filterDropdowns);
+            els.ddNutzer.addEventListener('change', () => { if(els.ddNutzer.value) els.ddGplus.selectedIndex = 0; });
+            els.ddGplus.addEventListener('change', () => { if(els.ddGplus.value) els.ddNutzer.selectedIndex = 0; });
+            els.addBtn.addEventListener('click', addComponentFromUI);
+            els.list.addEventListener('click', handleListClick);
+            els.generateBtn.addEventListener('click', generateArtifacts);
+            els.fileUpload.addEventListener('change', handleFileLoad);
+        }
+
+        // CATALOG
+        async function fetchCatalog() {
+            try {
+                const res = await fetch(CATALOG_URL);
+                if(!res.ok) throw new Error("Netzwerkfehler");
+                const json = await res.json();
+                if (json.catalog && json.catalog.groups) indexCatalogItems(json.catalog.groups);
+                els.catStatus.className = "px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-800 flex items-center mb-2";
+                els.catStatus.innerHTML = `✓ Katalog geladen`;
+            } catch (e) {
+                console.warn(e);
+                els.catStatus.innerHTML = `⚠️ Katalog Fehler`;
+            }
+        }
+        function indexCatalogItems(items) {
+            if (!items || !Array.isArray(items)) return;
+            items.forEach(item => {
+                if (item.id) {
+                    let txt = item.title;
+                    if (item.parts) {
+                        const st = item.parts.find(p => p.name === 'statement');
+                        if (st && st.prose) txt = st.prose;
+                        else if (item.parts[0] && item.parts[0].prose) txt = item.parts[0].prose;
+                    }
+                    catalogIndex.set(item.id, { title: item.title, text: txt });
+                }
+                if (item.controls) indexCatalogItems(item.controls);
+                if (item.groups) indexCatalogItems(item.groups);
+            });
+        }
+
+        // LIB LOADING
+        async function fetchGitHubData() {
+            try {
+                const [r1, r2] = await Promise.all([fetch(API_URL_NUTZERGEN), fetch(API_URL_GPLUS)]);
+                const d1 = await r1.json(); const d2 = await r2.json();
+                fillDropdown(els.ddNutzer, d1);
+                fillDropdown(els.ddGplus, d2);
+            } catch(e) { console.error(e); }
+        }
+        function fillDropdown(select, data) {
+            select.innerHTML = `<option value="" disabled selected>Bitte wählen...</option>`;
+            data.filter(i => i.name && i.name.endsWith('.json')).forEach(f => select.appendChild(new Option(f.name, f.download_url)));
+        }
+        function filterDropdowns() {
+            const term = els.search.value.toLowerCase();
+            [els.ddNutzer, els.ddGplus].forEach(dd => {
+                Array.from(dd.options).forEach((opt, i) => { if(i>0) opt.hidden = !opt.textContent.toLowerCase().includes(term); });
+            });
+        }
+
+        // FILE LOADING
+        async function handleFileLoad(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            toggleOverlay(true, "Lade Profil...");
+            els.list.innerHTML = ''; els.placeholder = null;
+            modificationsStore.clear(); allKnownControlIds.clear();
+            try {
+                const txt = await file.text();
+                const json = JSON.parse(txt);
+                const profile = json.profile;
+                if(!profile) throw new Error("Ungültiges OSCAL Profil");
+                if(profile.metadata) {
+                    els.inputs.title.value = profile.metadata.title || "";
+                    els.inputs.version.value = profile.metadata.version || "1.0.0";
+                }
+                if(profile.imports) {
+                    for(const imp of profile.imports) {
+                        const href = imp.href;
+                        const name = href.split('/').pop();
+                        try { await fetchAndAddComponent(href, name); } catch(err) { renderComponentItem(name, href, [], true); }
+                    }
+                }
+                if(profile.modify) restoreModifications(profile.modify);
+                refreshAllBadges();
+            } catch(err) { alert("Fehler: " + err.message); } 
+            finally { toggleOverlay(false); els.fileUpload.value = ''; }
+        }
+
+        // RESOLVE
+        function handleListClick(e) {
+            if(e.target.closest('.action-resolve-file')) {
+                const fileInput = e.target.closest('div').querySelector('.resolve-input');
+                fileInput.click();
+            } else if(e.target.closest('.action-remove')) {
+                e.target.closest('li').remove();
+            } else if(e.target.closest('.action-modify')) {
+                openModal(e.target.closest('.action-modify').dataset.controlId);
+            }
+        }
+        async function resolveLocalFile(file, liElement) {
+            toggleOverlay(true, "Analysiere Datei...");
+            try {
+                const txt = await file.text();
+                const json = JSON.parse(txt);
+                const controls = extractControlsSmart(json);
+                controls.forEach(c => allKnownControlIds.add(c));
+                const contentDiv = liElement.querySelector('.component-body');
+                contentDiv.innerHTML = generateTableHtml(controls);
+                liElement.classList.remove('border-red-300');
+                liElement.classList.add('border-slate-200');
+                if(liElement.querySelector('.status-badge')) liElement.querySelector('.status-badge').remove();
+                if(liElement.querySelector('.resolve-section')) liElement.querySelector('.resolve-section').remove();
+                refreshAllBadges();
+            } catch(e) { alert("Fehler: " + e.message); } 
+            finally { toggleOverlay(false); }
+        }
+
+        // CORE
+        async function addComponentFromUI() {
+            els.compError.classList.add('hidden');
+            const selNutzer = els.ddNutzer.options[els.ddNutzer.selectedIndex];
+            const selGplus = els.ddGplus.options[els.ddGplus.selectedIndex];
+            let url = '', filename = '';
+            if (selNutzer && selNutzer.value) { url = selNutzer.value; filename = selNutzer.textContent; }
+            else if (selGplus && selGplus.value) { url = selGplus.value; filename = selGplus.textContent; }
+            const name = els.customName.value.trim() || filename;
+            if (!url) { els.compError.textContent = "Bitte Komponente wählen."; els.compError.classList.remove('hidden'); return; }
+            toggleOverlay(true, "Lade Komponente...");
+            try {
+                await fetchAndAddComponent(url, name);
+                els.customName.value = ''; els.ddNutzer.selectedIndex = 0; els.ddGplus.selectedIndex = 0;
+            } catch (e) { els.compError.textContent = e.message; els.compError.classList.remove('hidden'); } 
+            finally { toggleOverlay(false); }
+        }
+
+        async function fetchAndAddComponent(url, name) {
+            const json = await getJson(url);
+            const controls = extractControlsSmart(json);
+            controls.forEach(c => allKnownControlIds.add(c));
+            if(els.placeholder) { els.placeholder.remove(); els.placeholder = null; }
+            renderComponentItem(name, url, controls, false);
+        }
+
+        function extractControlsSmart(json) {
+            const controls = new Set();
+            function recurseImpls(impls) {
+                if(!impls) return;
+                impls.forEach(ci => { (ci["implemented-requirements"]||[]).forEach(ir => { if(ir["control-id"]) controls.add(ir["control-id"]); }); });
+            }
+            const def = json["component-definition"];
+            if(def && def.components) { def.components.forEach(c => { recurseImpls(c["control-implementations"]); }); }
+            const prof = json["profile"];
+            if(prof && prof.imports) { prof.imports.forEach(imp => { (imp["include-controls"]||[]).forEach(inc => { if(inc["with-ids"]) inc["with-ids"].forEach(id => controls.add(id)); }); }); }
+            return Array.from(controls).sort();
+        }
+
+        function renderComponentItem(name, href, controls, isOffline) {
+            const li = document.createElement('li');
+            li.className = `bg-white border ${isOffline ? 'border-red-300' : 'border-slate-200'} rounded-lg shadow-sm overflow-hidden group`;
+            li.dataset.profileHref = href;
+            const header = `
+                <div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex justify-between items-center">
+                    <div>
+                        <h5 class="font-bold text-slate-800 flex items-center">
+                            ${name} 
+                            ${isOffline ? '<span class="status-badge ml-2 px-2 py-0.5 rounded text-xs font-bold bg-red-100 text-red-700">Lokal / Offline</span>' : ''}
+                        </h5>
+                        <div class="text-xs text-slate-500 font-mono truncate max-w-md" title="${href}">Import: ${href}</div>
+                    </div>
+                    <button class="action-remove text-red-500 hover:text-red-700 font-bold p-2">✕</button>
+                </div>`;
+            let body = '';
+            if(isOffline) {
+                body = `
+                <div class="component-body">
+                    <div class="resolve-section p-4 bg-red-50">
+                        <p class="text-sm text-red-700 mb-2 font-medium">⚠️ Controls nicht geladen.</p>
+                        <div class="flex items-center gap-2">
+                            <input type="file" class="resolve-input hidden" accept=".json">
+                            <button class="action-resolve-file px-3 py-1.5 bg-white border border-red-300 text-red-700 text-sm rounded shadow-sm hover:bg-red-50">📂 Datei "${name}" hochladen</button>
+                        </div>
+                    </div>
+                    <div class="p-4 text-sm text-gray-400 italic">Keine Controls sichtbar.</div>
+                </div>`;
+            } else if(controls.length === 0) {
+                body = `<div class="component-body p-4 text-sm text-gray-400 italic">Keine expliziten Controls gefunden.</div>`;
+            } else {
+                body = `<div class="component-body">${generateTableHtml(controls)}</div>`;
+            }
+            li.innerHTML = header + body;
+            els.list.appendChild(li);
+            if(isOffline) {
+                const inp = li.querySelector('.resolve-input');
+                inp.addEventListener('change', (e) => { if(e.target.files[0]) resolveLocalFile(e.target.files[0], li); });
+            }
+        }
+        function generateTableHtml(controls) {
+            return `
+            <div class="bg-white p-0"><div class="max-h-60 overflow-y-auto custom-scroll">
+                <table class="min-w-full divide-y divide-gray-100"><tbody class="divide-y divide-gray-50">
+                ${controls.map(cid => {
+                    const info = catalogIndex.get(cid);
+                    return `
+                    <tr class="hover:bg-slate-50 transition-colors">
+                        <td class="px-4 py-2 w-1/4">
+                            <div class="text-sm font-mono font-medium text-slate-700">${cid}</div>
+                            <div class="text-xs text-gray-400 truncate w-48">${info ? info.title : ''}</div>
+                        </td>
+                        <td class="px-4 py-2 w-1/2"><span class="badge-container" data-control-id="${cid}"></span></td>
+                        <td class="px-4 py-2 text-right">
+                            <button class="action-modify px-3 py-1 bg-white border border-blue-200 text-blue-600 text-xs font-semibold rounded hover:bg-blue-50" data-control-id="${cid}">⚙️ Anpassen</button>
+                        </td>
+                    </tr>`;
+                }).join('')}
+                </tbody></table>
+            </div></div>`;
+        }
+        async function getJson(url) {
+            if (componentContentCache.has(url)) return componentContentCache.get(url);
+            const res = await fetch(url);
+            if(!res.ok) throw new Error("Err");
+            const data = await res.json();
+            componentContentCache.set(url, data);
+            return data;
+        }
+
+        // RESTORE / UPDATE
+        function restoreModifications(modify) {
+            if (modify["set-parameters"]) {
+                modify["set-parameters"].forEach(p => {
+                    const pid = p["param-id"];
+                    let bestMatch = "";
+                    for(const cid of allKnownControlIds) {
+                        if(pid.startsWith(cid) && cid.length > bestMatch.length) bestMatch = cid;
+                    }
+                    if(!bestMatch) bestMatch = pid.split('_')[0];
+                    addModToStore(bestMatch, { type: 'set-parameter', paramId: pid, value: p.values ? p.values[0] : "" });
+                });
+            }
+            if (modify["alters"]) {
+                modify["alters"].forEach(a => {
+                    if(a.adds) {
+                        a.adds.forEach(add => {
+                            const txt = add.parts ? add.parts.map(x=>x.prose).join('\n') : "";
+                            addModToStore(a["control-id"], { type: 'alter', position: add.position, text: txt });
+                        });
+                    }
+                });
+            }
+        }
+        function addModToStore(cid, mod) {
+            const arr = modificationsStore.get(cid) || [];
+            if(mod.type === 'set-parameter') {
+                const idx = arr.findIndex(m => m.type === 'set-parameter' && m.paramId === mod.paramId);
+                if(idx > -1) arr.splice(idx, 1);
+            }
+            arr.push(mod);
+            modificationsStore.set(cid, arr);
+        }
+        function refreshAllBadges() {
+            modificationsStore.forEach((_, cid) => updateBadges(cid));
+            allKnownControlIds.forEach(cid => updateBadges(cid));
+        }
+        function updateBadges(cid) {
+            const count = (modificationsStore.get(cid) || []).length;
+            document.querySelectorAll(`.badge-container[data-control-id="${cid}"]`).forEach(el => {
+                el.innerHTML = count > 0 ? `<span class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded border border-green-200">${count} Mod(s)</span>` : '';
+            });
+        }
+
+        // MODAL
+        function openModal(cid) {
+            currentActiveControlId = cid;
+            els.inputs.mControlDisplay.textContent = cid;
+            const info = catalogIndex.get(cid);
+            if(info) {
+                els.inputs.mCatalogTitle.textContent = info.title;
+                els.inputs.mCatalogProse.textContent = info.text;
+            } else {
+                els.inputs.mCatalogTitle.textContent = "Nicht im Katalog gefunden (Verschachtelt?)";
+                els.inputs.mCatalogProse.textContent = "Text nicht verfügbar.";
+            }
+            els.inputs.mParamPrefix.textContent = cid;
+            
+            // FIX: Set default value for suffix so !s check passes
+            els.inputs.mParamSuffix.value = '_prm_1'; 
+            els.inputs.mParamValue.value = '';
+            els.inputs.mAlterText.value = '';
+            els.inputs.mAlterPos.value = 'ending';
+            
+            renderModalModsList();
+            els.modal.classList.remove('opacity-0', 'pointer-events-none');
+            els.modal.querySelector('.modal-container').classList.remove('scale-95');
+            els.modal.querySelector('.modal-container').classList.add('scale-100');
+            document.body.classList.add('modal-active');
+            switchTab('param');
+        }
+        function closeModal() {
+            els.modal.classList.add('opacity-0', 'pointer-events-none');
+            els.modal.querySelector('.modal-container').classList.add('scale-95');
+            els.modal.querySelector('.modal-container').classList.remove('scale-100');
+            document.body.classList.remove('modal-active');
+            if(currentActiveControlId) updateBadges(currentActiveControlId);
+            currentActiveControlId = null;
+        }
+        function switchTab(t) {
+            document.getElementById('tab-param-content').style.display = t==='param'?'block':'none';
+            document.getElementById('tab-alter-content').style.display = t==='alter'?'block':'none';
+            document.getElementById('tab-param-btn').className = t==='param' ? "flex-1 py-2 text-center text-blue-600 border-b-2 border-blue-600 font-medium" : "flex-1 py-2 text-center text-gray-500 hover:text-blue-600";
+            document.getElementById('tab-alter-btn').className = t==='alter' ? "flex-1 py-2 text-center text-blue-600 border-b-2 border-blue-600 font-medium" : "flex-1 py-2 text-center text-gray-500 hover:text-blue-600";
+        }
+        
+        function addModification(type) {
+             const mods = modificationsStore.get(currentActiveControlId) || [];
+             if(type === 'param') {
+                 // FIX: TRIM VALUES
+                 const s = els.inputs.mParamSuffix.value.trim();
+                 const v = els.inputs.mParamValue.value.trim();
+                 if(!s || !v) return alert("Bitte Suffix und Wert eingeben!");
+                 
+                 const pid = `${currentActiveControlId}${s}`;
+                 const idx = mods.findIndex(m => m.type==='set-parameter' && m.paramId === pid);
+                 if(idx > -1) mods.splice(idx, 1);
+                 mods.push({type:'set-parameter', paramId: pid, value: v});
+                 els.inputs.mParamValue.value='';
+             } else {
+                 const t = els.inputs.mAlterText.value.trim();
+                 if(!t) return alert("Bitte Text eingeben!");
+                 mods.push({type:'alter', position: els.inputs.mAlterPos.value, text: t});
+                 els.inputs.mAlterText.value='';
+             }
+             modificationsStore.set(currentActiveControlId, mods);
+             renderModalModsList();
+        }
+
+        function renderModalModsList() {
+            els.inputs.mList.innerHTML = '';
+            (modificationsStore.get(currentActiveControlId)||[]).forEach((m, i) => {
+                const li = document.createElement('li');
+                li.className = "flex justify-between bg-gray-50 p-2 rounded text-sm items-center border border-gray-100";
+                li.innerHTML = `<span>${m.type==='set-parameter' ? `Param <b>${m.paramId}</b>` : `Text (${m.position})`}</span> <button onclick="removeMod(${i})" class="text-red-500 font-bold">✕</button>`;
+                els.inputs.mList.appendChild(li);
+            });
+        }
+        window.removeMod = function(i) {
+            const arr = modificationsStore.get(currentActiveControlId);
+            arr.splice(i, 1);
+            modificationsStore.set(currentActiveControlId, arr);
+            renderModalModsList();
+        }
+        
+        function generateArtifacts() {
+            const items = document.querySelectorAll('#added-component-list li');
+            if(items.length===0) return alert("Keine Komponenten hinzugefügt.");
+            
+            const uuid = crypto.randomUUID();
+            const time = new Date().toISOString();
+            
+            // DATEN AUS UI FÜR METADATEN (NEU: SSP Desc)
+            const pTitle = els.inputs.title.value || "Profile";
+            const pVersion = els.inputs.version.value || "1.0.0";
+            const pDesc = els.inputs.sspDesc.value || "Automatisch generierte Systembeschreibung.";
+
+            const setParams = [], alters = [];
+
+            modificationsStore.forEach((mods, cid) => {
+                mods.forEach(m => {
+                    if(m.type === 'set-parameter') setParams.push({ "param-id": m.paramId, "values": [m.value] });
+                    else alters.push({ "control-id": cid, "adds": [{ "position": m.position, "parts": [{"name":"statement","prose":m.text}] }] });
+                });
+            });
+
+            const groupedAlters = [];
+            const alterMap = new Map();
+            alters.forEach(a => {
+                if(!alterMap.has(a["control-id"])) alterMap.set(a["control-id"], []);
+                alterMap.get(a["control-id"]).push(a["adds"][0]);
+            });
+            alterMap.forEach((adds, cid) => groupedAlters.push({ "control-id": cid, "adds": adds }));
+
+            const profile = {
+                "profile": {
+                    "uuid": uuid,
+                    "metadata": { "title": pTitle, "last-modified": time, "version": pVersion, "oscal-version": "1.1.3" },
+                    "imports": Array.from(items).map(li => ({ "href": li.dataset.profileHref })),
+                    "modify": { }
+                }
+            };
+            if(setParams.length) profile.profile.modify["set-parameters"] = setParams;
+            if(groupedAlters.length) profile.profile.modify["alters"] = groupedAlters;
+
+            download(profile, "profile.json");
+            
+            // SSP GENERIERUNG (FIX: Schema Validation)
+            const ssp = {
+                "system-security-plan": {
+                    "uuid": crypto.randomUUID(),
+                    "metadata": { 
+                        "title": pTitle, 
+                        "last-modified": time, 
+                        "version": pVersion, 
+                        "oscal-version": "1.1.3" 
+                    },
+                    "import-profile": { "href": "profile.json" },
+                    "system-characteristics": { 
+                        "system-ids": [{"id":crypto.randomUUID()}], 
+                        "system-name": pTitle,
+                        "description": pDesc,
+                        "status": {"state":"operational"} 
+                    },
+                    "system-implementation": { 
+                        // FIX: Leere Users entfernt. Components muss minItems:1 haben.
+                        "components": [
+                            {
+                                "uuid": crypto.randomUUID(),
+                                "type": "software",
+                                "title": "Platzhalter Komponente",
+                                "description": "Generiert um Schema-Validierung (minItems: 1) zu erfüllen.",
+                                "status": { "state": "operational" }
+                            }
+                        ] 
+                    },
+                    "control-implementation": { 
+                        "description": "Generated based on Profile", 
+                        // FIX: Implemented-requirements muss minItems:1 haben.
+                        "implemented-requirements": [
+                            {
+                                "uuid": crypto.randomUUID(),
+                                "control-id": "placeholder-req-1",
+                                "description": "Platzhalter Requirement um Schema-Validierung zu erfüllen."
+                            }
+                        ] 
+                    }
+                }
+            };
+            setTimeout(() => download(ssp, "ssp.json"), 500);
+        }
+        function download(obj, name) {
+            const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}));
+            a.download = name; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        }
+        function toggleOverlay(s, t) { els.loadingOverlay.style.display = s?'flex':'none'; if(t) els.loadingText.innerText=t; }
+    </script>
+</body>
+</html>
