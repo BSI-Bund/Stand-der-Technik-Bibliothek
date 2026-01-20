@@ -6,20 +6,20 @@ Der **Grundschutz++** ist eine umfassende Überarbeitung des bisherigen IT-Grund
 
 ## Anleitung zum Öffnen der OSCAL-Dateien 
 
-Diese Anleitung zeigt Ihnen, wie Sie die bereitgestellten OSCAL-Dateien (im JSON- und XML-Format) herunterladen und mit einem kompatiblen Werkzeug betrachten können.
+Diese Anleitung zeigt Ihnen, wie Sie die bereitgestellten OSCAL-Dateien (im JSON-Format) herunterladen und mit einem kompatiblen Werkzeug betrachten können.
 
 ### Schritt 1: OSCAL-Dateien herunterladen
 
-Sie können die OSCAL-Dateien direkt von diesem GitHub-Repository herunterladen. Die Dateien liegen in den Formaten **JSON** (`.json`) und **XML** (`.xml`) vor.
+Sie können die OSCAL-Dateien direkt von diesem GitHub-Repository herunterladen.
 
-1.  **Wählen Sie ein Dateiformat aus:** Die Dateien werden in den Formaten json und xml bereitgestellt. Klicken Sie auf die gewünschte Datei links im Verzeichnisbaum.
+1.  **Wählen Sie ein Dateiformat aus:** Die Dateien werden im JSON-Format bereitgestellt. Klicken Sie auf die gewünschte Datei links im Verzeichnisbaum.
 2.  **Laden Sie die Rohfassung herunter:** Klicken Sie auf der sich öffnenden Seite auf den Button **"Raw"**. Klicken Sie anschließend mit der rechten Maustaste in das Browserfenster und wählen Sie "Speichern unter...", um die Datei lokal auf Ihrem Computer zu sichern.
 
 -----
 
 ### Schritt 2: OSCAL-kompatible Anwendung verwenden
 
-Kompendien können mit beliebigen JSON- oder XML-kompatiblen Anwendungen geöffnet werden. Um die heruntergeladenen Dateien in einem benutzerfreundlichen Format zu betrachten, empfehlen wir die Nutzung eines spezialisierten [OSCAL-Werkzeugs](https://oscal.io/tools/#:~:text=OSCAL%20Viewer,Geoffrey%20Borough) je nachdem wofür Sie die Datei verwenden möchten.
+Kompendien können mit beliebigen JSON-kompatiblen Anwendungen geöffnet werden. Um die heruntergeladenen Dateien in einem benutzerfreundlichen Format zu betrachten, empfehlen wir die Nutzung eines spezialisierten [OSCAL-Werkzeugs](https://oscal.io/tools/#:~:text=OSCAL%20Viewer,Geoffrey%20Borough) je nachdem wofür Sie die Datei verwenden möchten.
 
 ## Weiterführende Informationen
 
