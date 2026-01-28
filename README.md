@@ -6,9 +6,9 @@ Diese Bibliothek stellt strukturierte Sammlungen von BSI-Sicherheitsvorschriften
 
 Sie sind in einer Institution mit der Informationssicherheit betraut oder auditieren diese und möchten die Inhalte des BSI dafür nutzen?
 
-**→ Besuchen Sie das [Kompendien](./Kompendien/) Verzeichnis**
+**→ Besuchen Sie das [Anwenderkataloge](./Anwenderkataloge/) Verzeichnis**
  
-Hier finden Sie die fertigen Kompendien mit digital strukturierten Vorschriften, die direkt in einer Institution angewendet werden können.
+Hier finden Sie die fertigen Anwenderkataloge mit digital strukturierten Vorschriften, die direkt in einer Institution angewendet werden können.
 
 ## ✏️ Für Editoren
 
@@ -16,12 +16,12 @@ Sie arbeiten gemeinsam mit dem BSI an der Entwicklung von Vorschriften und möch
 
 **→ Besuchen Sie das [Quellkataloge](./Quellkataloge/) Verzeichnis**
 
-Hier finden Sie die maschinenlesbaren Quelldaten für die Erstellung und Bearbeitung von Sicherheitsvorschriften in den Formaten json und xml.
+Hier finden Sie die maschinenlesbaren Quelldaten für die Erstellung und Bearbeitung von Sicherheitsvorschriften im JSON-Format.
 
 
 ## 🚀 Erste Schritte
 
-1. **Als Anwender**: Navigieren Sie zu [Kompendien](./Kompendien/) und wählen Sie das für Ihre Institution passende Kompendium.
+1. **Als Anwender**: Navigieren Sie zu [Anwenderkataloge](./Anwenderkataloge/) und wählen Sie den für Ihre Institution passenden Anwenderkatalog.
 2. **Als Editor**: Wenn Sie Interesse an einer Zusammenarbeit mit dem BSI haben, wenden Sie sich bitte an stand-der-technik@bsi.bund.de.
 
 ## 🤝 Mitwirken
