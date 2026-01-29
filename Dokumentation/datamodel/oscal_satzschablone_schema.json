@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Quellkataloge/Kernel/BSI-Stand-der-Technik-Kernel-catalog.json",
+  "$id": "https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Dokumentation/datamodel/oscal_satzschablone_schema.json",
   "title": "BSI OSCAL Catalog Schema",
   "description": "JSON Schema for BSI OSCAL security control catalogs based on OSCAL 1.1.3 with BSI-specific extensions",
   "type": "object",
@@ -47,7 +47,6 @@
       "description": "Catalog metadata information",
       "required": [
         "title",
-        "published",
         "last-modified",
         "version",
         "oscal-version"
@@ -60,7 +59,7 @@
         "published": {
           "type": "string",
           "format": "date-time",
-          "description": "Publication date in ISO 8601 format"
+          "description": "Publication date in ISO 8601 format (optional)"
         },
         "last-modified": {
           "type": "string",
@@ -81,21 +80,23 @@
         },
         "roles": {
           "type": "array",
-          "items": {
-            "$ref": "#/$defs/Role"
-          }
+          "items": { "$ref": "#/$defs/Role" }
         },
         "parties": {
           "type": "array",
-          "items": {
-            "$ref": "#/$defs/Party"
-          }
+          "items": { "$ref": "#/$defs/Party" }
         },
         "responsible-parties": {
           "type": "array",
-          "items": {
-            "$ref": "#/$defs/ResponsibleParty"
-          }
+          "items": { "$ref": "#/$defs/ResponsibleParty" }
+        },
+        "props": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Property" }
+        },
+        "links": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Link" }
         }
       },
       "additionalProperties": false
@@ -187,11 +188,8 @@
         },
         "class": {
           "type": "string",
-          "enum": [
-            "normal-SdT",
-            "erhöht"
-          ],
-          "description": "Sicherheitsniveau des Controls"
+          "pattern": "^[^\\s]+$",
+          "description": "Normalized catalog class derived from metadata.title (no whitespace, machine-friendly)"
         },
         "params": {
           "type": "array",
@@ -257,6 +255,11 @@
           "items": {
             "$ref": "#/$defs/Property"
           }
+        },
+        "values": {
+          "type": "array",
+          "description": "Optional parameter values (as used in the catalog)",
+          "items": { "type": "string" }
         }
       },
       "additionalProperties": false
@@ -289,7 +292,7 @@
     },
     "Property": {
       "type": "object",
-      "description": "Key-value property with optional namespace",
+      "description": "Key-value property. Namespace is optional but recommended for domain-specific extensions.",
       "required": [
         "name",
         "value"
@@ -300,6 +303,7 @@
           "enum": [
             "label",
             "alt-identifier",
+            "sec_level",
             "effort_level",
             "tags",
             "target_objects",
@@ -307,13 +311,20 @@
             "ergebnis",
             "präzisierung",
             "handlungsworte",
-            "modalverb"
+            "modalverb",
+            "resolution-tool",
+            "scope_implements_norm",
+            "keywords",
+            "scope_target_audience",
+            "scope_security_level",
+            "scope_product",
+            "status"
           ]
         },
         "ns": {
           "type": "string",
           "format": "uri",
-          "description": "Namespace URI for the property"
+          "description": "Namespace URI for domain-specific properties (recommended for non-OSCAL core properties)"
         },
         "value": {
           "type": "string",
@@ -417,15 +428,22 @@
     "ResourceLink": {
       "type": "object",
       "description": "Link to a resource",
-      "required": [
-        "href"
-      ],
+      "required": ["href"],
       "properties": {
-        "href": {
-          "type": "string",
-          "format": "uri",
-          "description": "Resource URL"
+        "href": { "type": "string", "format": "uri" },
+        "hashes": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/Hash" }
         }
+      },
+      "additionalProperties": false
+    },
+    "Hash": {
+      "type": "object",
+      "required": ["algorithm", "value"],
+      "properties": {
+        "algorithm": { "type": "string" },
+        "value": { "type": "string" }
       },
       "additionalProperties": false
     },
