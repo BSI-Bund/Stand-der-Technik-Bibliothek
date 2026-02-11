@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL Component Viewer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind Typography Plugin (für schönes Rendering von HTML-Inhalten) -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <!-- Google Font "Inter" -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Basis-Styling mit der Inter-Schriftart */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Styling für die <details>-Elemente, um sie elegant zu machen */
+        
+        /* Standard-Pfeil/Marker entfernen */
+        summary {
+            list-style: none;
+            cursor: pointer;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* Eigenen Pfeil hinzufügen */
+        summary:before {
+            content: '►';
+            font-size: 0.7em; /* Etwas kleiner */
+            margin-right: 0.75rem; /* 12px */
+            display: inline-block;
+            transition: transform 0.2s ease-in-out;
+            color: var(--tw-prose-bullets, #a0aec0); /* Passend zur Textfarbe */
+        }
+
+        /* Pfeil drehen, wenn <details> geöffnet ist */
+        details[open] > summary:before {
+            transform: rotate(90deg);
+        }
+
+        /* Sanfte Animation für das Ein- und Ausklappen (optional, aber elegant) */
+        details > div {
+            transition: opacity 0.3s ease-out;
+        }
+    </style>
+    <script>
+        // Tailwind Dark Mode Konfiguration
+        tailwind.config = {
+            darkMode: 'media', // 'media' respektiert die OS-Einstellung
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300">
+
+    <main class="max-w-5xl mx-auto p-4 md:p-8">
+        <div class="bg-white dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden">
+            <header class="p-6 md:p-8 border-b border-gray-200 dark:border-gray-700">
+                <h1 class="text-3xl font-bold text-blue-600 dark:text-blue-400">OSCAL Component Viewer</h1>
+                <p class="mt-2 text-lg text-gray-600 dark:text-gray-400">
+                    Wählen Sie eine OSCAL-Komponentendatei (JSON) aus, um sie zu visualisieren.
+                </p>
+            </header>
+
+            <div class="p-6 md:p-8">
+                <!-- Dateiauswahl statt Button -->
+                <label for="file-input" class="w-full md:w-auto inline-block text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer">
+                    JSON-Datei auswählen...
+                </label>
+                <input type="file" id="file-input" class="hidden" accept="application/json,.json">
+                
+                <!-- Zeigt den Namen der ausgewählten Datei an -->
+                <p id="file-name" class="mt-4 text-sm text-gray-500 dark:text-gray-400"></p>
+
+                <!-- Container für die gerenderten Daten -->
+                <div id="component-output" class="mt-8">
+                    <!-- Inhalt wird hier per JS eingefügt -->
+                </div>
+            </div>
+        </div>
+        <footer class="text-center mt-6 text-sm text-gray-500 dark:text-gray-400">
+            OSCAL Viewer | Elegant Rendering
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.getElementById('file-input');
+            const outputContainer = document.getElementById('component-output');
+            const fileNameEl = document.getElementById('file-name');
+
+            // Hängt den Event Listener an die Dateiauswahl
+            fileInput.addEventListener('change', handleFileSelect);
+
+            /**
+             * Hauptfunktion: Verarbeitet die ausgewählte Datei.
+             */
+            function handleFileSelect(event) {
+                const file = event.target.files[0];
+                if (!file) {
+                    return;
+                }
+
+                fileNameEl.textContent = `Datei ausgewählt: ${file.name}`;
+                outputContainer.innerHTML = `<p class="text-lg text-gray-700 dark:text-gray-300">Lade und verarbeite Datei...</p>`;
+
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    try {
+                        const content = e.target.result;
+                        const data = JSON.parse(content);
+                        
+                        // Beginne mit dem Rendern
+                        const def = data['component-definition'];
+                        if (!def) {
+                            throw new Error("Stamm-Element 'component-definition' nicht gefunden.");
+                        }
+                        
+                        // Annahme: Wir rendern die erste Komponente in der Liste
+                        const component = def.components && def.components[0];
+                        if (!component) {
+                            throw new Error("Keine Komponente im 'components'-Array gefunden.");
+                        }
+
+                        let html = '';
+                        
+                        // Metadaten & Baustein-Props rendern (zusammengefasst)
+                        html += createCollapsible(`Metadaten & Baustein-Informationen: ${def.metadata.title}`, renderMetadata(def.metadata, component.props), false);
+                        
+                        // Haupt-Props der Komponente (Einleitung, Zielsetzung etc.) rendern
+                        // html += renderComponentProps(component.props); // <-- Entfernt, da jetzt in renderMetadata enthalten
+
+                        // Control Implementations rendern (standardmäßig geöffnet)
+                        html += createCollapsible('Control Implementations', renderControlImplementations(component['control-implementations']), true);
+
+                        outputContainer.innerHTML = html;
+
+                    } catch (error) {
+                        console.error('Fehler beim Parsen oder Rendern:', error);
+                        outputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative dark:bg-red-900 dark:border-red-700 dark:text-red-200" role="alert">
+                            <strong class="font-bold">Fehler:</strong>
+                            <span class="block sm:inline">${error.message}. Ist dies eine gültige OSCAL JSON-Datei?</span>
+                        </div>`;
+                        fileNameEl.textContent = ''; // Dateinamen bei Fehler zurücksetzen
+                    }
+                };
+
+                reader.onerror = (e) => {
+                    console.error('Fehler beim Lesen der Datei:', e);
+                    outputContainer.innerHTML = `<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative dark:bg-red-900 dark:border-red-700 dark:text-red-200" role="alert">
+                        <strong class="font-bold">Fehler:</strong>
+                        <span class="block sm:inline">Datei konnte nicht gelesen werden.</span>
+                    </div>`;
+                    fileNameEl.textContent = '';
+                };
+
+                // Lese die Datei als Text
+                reader.readAsText(file);
+            }
+
+            /**
+             * Erstellt ein einklappbares <details>-Element.
+             * @param {string} title - Der Text für das <summary>-Element.
+             * @param {string} content - Der HTML-Inhalt für den <details>-Block.
+             * @param {boolean} [isOpen=false] - Ob das Element standardmäßig geöffnet sein soll.
+             * @returns {string} - Der HTML-String für das <details>-Element.
+             */
+            function createCollapsible(title, content, isOpen = false) {
+                return `
+                    <details ${isOpen ? 'open' : ''} class="bg-white dark:bg-gray-800 rounded-lg shadow-md mb-4 border border-gray-200 dark:border-gray-700">
+                        <summary class="p-4 font-semibold text-lg text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                            ${title}
+                        </summary>
+                        <div class="p-4 md:p-6 border-t border-gray-200 dark:border-gray-700">
+                            ${content}
+                        </div>
+                    </details>
+                `;
+            }
+
+            /**
+             * Rendert die Metadaten als einfache Liste.
+             * @param {object} metadata - Das Metadaten-Objekt.
+             * @returns {string} - HTML-String.
+             */
+            function renderMetadata(metadata, componentProps) { // componentProps hinzugefügt
+                let metadataHtml = `
+                    <div class="mb-6"> <!-- Wrapper for metadata section -->
+                        <h3 class="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">Metadaten</h3>
+                        <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
+                            <li><strong>Titel:</strong> ${metadata.title}</li>
+                            <li><strong>Letzte Änderung:</strong> ${new Date(metadata['last-modified']).toLocaleString('de-DE')}</li>
+                            <li><strong>Version:</strong> ${metadata.version}</li>
+                            <li><strong>OSCAL-Version:</strong> ${metadata['oscal-version']}</li>
+                        </ul>
+                    </div>
+                `;
+
+                // Get the props content (which is a string of collapsibles)
+                let propsHtml = renderComponentProps(componentProps);
+
+                // Add a heading for the props section
+                let propsSectionHtml = `
+                    <div>
+                        <h3 class="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200 border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">Baustein-Eigenschaften</h3>
+                        ${propsHtml} <!-- This is the string of collapsibles -->
+                    </div>
+                `;
+
+                // Combine them
+                return metadataHtml + propsSectionHtml;
+            }
+
+            /**
+             * Rendert die Haupt-Props (Einleitung etc.) als einzelne einklappbare Blöcke.
+             * @param {Array} props - Das Array der 'props'-Objekte.
+             * @returns {string} - HTML-String.
+             */
+            function renderComponentProps(props) {
+                let content = '';
+                if (!props) return content;
+                
+                props.forEach(prop => {
+                    // Das 'prose'-Plugin rendert das HTML (z.B. <BR>) korrekt.
+                    const propContent = `<div class="prose prose-lg dark:prose-invert max-w-none">${prop.value}</div>`;
+                    content += createCollapsible(prop.name, propContent);
+                });
+                return content;
+            }
+
+            /**
+             * Rendert eine Liste von Control Implementations.
+             * @param {Array} impls - Das Array der 'control-implementations'.
+             * @returns {string} - HTML-String.
+             */
+            function renderControlImplementations(impls) {
+                let content = '';
+                if (!impls) return content;
+                
+                impls.forEach(impl => {
+                    // Inhalt direkt rendern, ohne zusätzliche einklappbare Ebene
+                    const implContent = `
+                        <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                            <p class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">${impl.description}</p>
+                            ${renderRequirements(impl['implemented-requirements'])}
+                        </div>
+                    `;
+                    // Kürze die UUID für eine sauberere Anzeige
+                    // const shortUuid = impl.uuid.split('-')[0]; // Nicht mehr benötigt
+                    // content += createCollapsible(`Implementation (UUID: ...${shortUuid})`, implContent); // Entfernt
+                    content += implContent; // Direkt hinzugefügt
+                });
+                return content;
+            }
+
+            /**
+             * Rendert eine Liste von Implemented Requirements.
+             * @param {Array} reqs - Das Array der 'implemented-requirements'.
+             * @returns {string} - HTML-String.
+             */
+            function renderRequirements(reqs) {
+                let content = '';
+                if (!reqs) return content;
+
+                reqs.forEach(req => {
+                    // B: Erzeuge Tooltip-Inhalt aus req.props
+                    const tooltipHtml = createTooltipContent(req.props);
+
+                    // B: Erzeuge Titel mit Icon und Tooltip
+                    const titleWithTooltip = `
+                        <div class="flex items-center justify-between w-full">
+                            <span>Control ID: ${req['control-id']}</span>
+                            ${tooltipHtml ? `
+                            <div class="relative group ml-2 shrink-0">
+                                <!-- Info Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 hover:text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                                <!-- Tooltip-Box -->
+                                <div class="absolute hidden group-hover:block z-10 w-72 bg-gray-900 text-white text-sm rounded-lg shadow-lg p-4 right-0 bottom-full mb-2 dark:bg-gray-100 dark:text-gray-900">
+                                    <h4 class="font-bold mb-2 text-base">Requirement Properties</h4>
+                                    ${tooltipHtml}
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+
+                    // C: Inhalt ist jetzt *nur* die Liste der Statements
+                    const reqContent = `
+                        ${renderStatements(req.statements)}
+                    `;
+                    
+                    // Übergebe den neuen Titel an createCollapsible
+                    content += createCollapsible(titleWithTooltip, reqContent);
+                });
+                return content;
+            }
+
+            /**
+             * B: Hilfsfunktion zum Erstellen des HTML-Inhalts für den Tooltip.
+             * @param {Array} props - Das 'props'-Array (level, phase etc.).
+             * @returns {string} - HTML-String für das Innere des Tooltips.
+             */
+            function createTooltipContent(props) {
+                if (!props || props.length === 0) return '';
+                let list = '<ul class="space-y-1.5">';
+                props.forEach(prop => {
+                    list += `<li class="flex justify-between items-center space-x-2">
+                                <span class="font-semibold text-gray-400 dark:text-gray-500 capitalize">${prop.name.replace(/_/g, ' ')}:</span>
+                                <span class="text-right text-gray-100 dark:text-gray-800">${prop.value}</span>
+                             </li>`;
+                });
+                list += '</ul>';
+                return list;
+            }
+
+            /**
+             * Rendert eine Liste von Statements.
+             * (C: Rendert jetzt direkt die Maturity Levels ohne "Statements"-Wrapper)
+             * @param {Array} stmts - Das Array der 'statements'.
+             * @returns {string} - HTML-String.
+             */
+            function renderStatements(stmts) {
+                let content = '';
+                if (!stmts) return content;
+
+                stmts.forEach(stmt => {
+                    // A: Rendert Props (statement, guidance) direkt, ohne "Details"-Wrapper
+                    const stmtContent = renderStatementProps(stmt.props);
+                    content += createCollapsible(`${stmt.description} (ID: ${stmt['statement-id']})`, stmtContent);
+                });
+                // C: Keinen 'createCollapsible("Statements", ...)' Wrapper mehr
+                return content;
+            }
+
+            /**
+             * A: Hilfsfunktion zum Rendern der Props *innerhalb* eines Maturity Levels.
+             * (Ersetzt 'renderSimpleProps' für diesen Zweck)
+             * @param {Array} props - Das 'props'-Array (statement, guidance, assessment-method).
+             * @returns {string} - HTML-String.
+             */
+            function renderStatementProps(props) {
+                if (!props || props.length === 0) return '';
+                
+                let content = '<div class="space-y-4">';
+                props.forEach(prop => {
+                    content += `
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
+                            <strong class="block text-sm font-medium text-blue-600 dark:text-blue-400 mb-1 capitalize">${prop.name.replace(/_/g, ' ')}</strong>
+                            <div class="prose dark:prose-invert max-w-none">${prop.value}</div>
+                        </div>
+                    `;
+                });
+                content += '</div>';
+                
+                return content;
+            }
+
+            /**
+             * (Funktion 'renderSimpleProps' wird entfernt, da sie nicht mehr verwendet wird)
+             */
+
+        });
+    </script>
+</body>
+</html>

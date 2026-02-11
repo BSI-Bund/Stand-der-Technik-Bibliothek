@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSI Grundschutz++ Explorer v6.2 (Smart Links)</title>
+    <style>
+        :root {
+            --primary-color: #00529F;
+            --bg-color: #f4f4f4;
+            --border-color: #ddd;
+            --text-color: #333;
+            --guidance-bg: #e8f4fd;
+            --filter-bg: #e3e8ee;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: var(--bg-color); color: var(--text-color); }
+        h1 { color: var(--primary-color); margin-bottom: 10px; }
+
+        /* Inputs */
+        .controls-area { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        input[type="text"] { flex-grow: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: var(--primary-color); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { opacity: 0.9; }
+        .reset-btn { background-color: #6c757d; }
+
+        /* Filter Area */
+        .filter-area { background-color: var(--filter-bg); padding: 15px; border-radius: 8px; border: 1px solid #ced4da; margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end; display: none; }
+        .filter-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 150px; }
+        .filter-group label { font-size: 0.85em; font-weight: bold; color: #555; text-transform: uppercase; }
+        .filter-group select { padding: 6px; border-radius: 4px; border: 1px solid #ccc; width: 100%; }
+
+        /* Catalog Tree */
+        #catalog-container { max-width: 1200px; margin: 0 auto; scroll-behavior: smooth; }
+        
+        .hidden { display: none !important; }
+
+        /* Groups */
+        .group-item { margin-bottom: 10px; border: 1px solid var(--border-color); background: white; border-radius: 4px; overflow: hidden; }
+        .group-header { background-color: #e9ecef; padding: 12px 15px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; user-select: none; }
+        .group-header:hover { background-color: #dde2e6; }
+        .nested-group { margin-left: 20px; margin-top: 10px; border-left: 4px solid var(--primary-color); }
+        .group-content { display: none; padding: 15px; border-top: 1px solid var(--border-color); }
+        .group-content.open { display: block; } 
+
+        /* Control Card */
+        .control-card { border: 1px solid #ccc; background-color: #fff; margin: 20px 0; padding: 20px; border-radius: 6px; border-left: 6px solid #28a745; box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: relative; transition: background-color 0.5s; }
+        
+        /* Highlight Animation for Anchors */
+        @keyframes highlight-pulse {
+            0% { background-color: #fff3cd; transform: scale(1.01); box-shadow: 0 0 15px rgba(255, 193, 7, 0.5); }
+            100% { background-color: #fff; transform: scale(1); }
+        }
+        .highlight-target { animation: highlight-pulse 2s ease-out; }
+
+        .control-nested-container { margin-top: 15px; padding-left: 15px; border-left: 2px dashed #999; background: #fcfcfc; }
+        .control-card.nested-card { margin: 10px 0; border-left-width: 4px; font-size: 0.95em; border-color: #aaa; border-left-color: #17a2b8; }
+
+        .control-header { margin-bottom: 10px; }
+        .id-badge-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .control-id { font-size: 0.9em; color: #333; font-weight: bold; background: #e9ecef; padding: 3px 8px; border-radius: 4px; }
+        .control-class { font-size: 0.8em; color: #fff; background: #6c757d; padding: 3px 8px; border-radius: 4px; font-family: monospace; }
+        .control-title { font-size: 1.3em; margin: 0; color: #222; }
+
+        .meta-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; font-size: 0.85em; }
+        .tag { padding: 4px 10px; border-radius: 12px; font-weight: 600; border: 1px solid transparent; }
+        .tag-sec { background-color: #fff3cd; color: #856404; border-color: #ffeeba; }
+        .tag-effort { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+        .tag-uuid { background-color: #f8f9fa; color: #6c757d; border-color: #dee2e6; font-family: monospace; }
+
+        .statement-box { background-color: #fafafa; border: 1px solid #eee; border-radius: 6px; padding: 15px; margin-bottom: 15px; }
+        .statement-prose { font-size: 1.05em; line-height: 1.6; color: #333; margin-bottom: 15px; }
+        .statement-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; border-top: 1px dashed #ddd; padding-top: 10px; }
+        .breakdown-label { display: block; font-size: 0.75em; color: #777; text-transform: uppercase; margin-bottom: 2px;}
+        .breakdown-value { font-weight: 600; color: #444; background: #fff; border: 1px solid #eee; padding: 4px 8px; border-radius: 4px; display: block;}
+        .val-modal { color: #d63384; } .val-action { color: #0d6efd; }
+        .guidance-box { background-color: var(--guidance-bg); border: 1px solid #b6dbfb; color: #0c5460; padding: 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.95em; position: relative; }
+        .guidance-box::before { content: "ℹ️ Guidance"; display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.85em; opacity: 0.8; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 4px; }
+
+        /* Footer */
+        .control-footer { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #eee; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .links-container { display: flex; gap: 10px; flex-wrap: wrap; }
+        .control-link { color: var(--primary-color); text-decoration: none; font-size: 0.9em; padding: 2px 6px; border-radius: 4px; background: #f0f7ff; border: 1px solid #cce5ff; transition: all 0.2s; }
+        .control-link:hover { background-color: var(--primary-color); color: white; border-color: var(--primary-color); }
+        .btn-detail { background-color: #6c757d; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; font-size: 0.8em; }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal-content { background-color: #fff; margin: 3% auto; padding: 20px; border: 1px solid #888; width: 85%; height: 90%; border-radius: 8px; display: flex; flex-direction: column; }
+        .close { float:right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        pre { background: #f4f4f4; padding: 15px; overflow: auto; flex-grow: 1; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <h1>🛡️ BSI Grundschutz++ Explorer <span style="font-size:0.5em; color:#666">v6.2</span></h1>
+        
+        <div class="controls-area">
+            <div>
+                <label>Quelle:</label>
+                <input type="text" id="urlInput" value="https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json" style="width: 350px;">
+                <button onclick="loadFromURL()">Laden (URL)</button>
+            </div>
+            <div style="border-left: 1px solid #ccc; padding-left: 10px; margin-left: 10px;">
+                <label>Datei:</label>
+                <input type="file" id="fileInput" accept=".json" onchange="loadFromFile()">
+            </div>
+            <div id="meta-info" style="margin-left: auto; font-size: 0.9em; color: #666;"></div>
+        </div>
+
+        <div id="filterContainer" class="filter-area">
+            <div class="filter-group">
+                <label>Klasse</label>
+                <select id="filterClass" onchange="applyFilters()"><option value="all">Alle</option></select>
+            </div>
+            <div class="filter-group">
+                <label>Sicherheitsniveau</label>
+                <select id="filterSec" onchange="applyFilters()"><option value="all">Alle</option></select>
+            </div>
+            <div class="filter-group">
+                <label>Aufwand</label>
+                <select id="filterEffort" onchange="applyFilters()"><option value="all">Alle</option></select>
+            </div>
+            <div class="filter-group">
+                <label>Modalität</label>
+                <select id="filterModal" onchange="applyFilters()"><option value="all">Alle</option></select>
+            </div>
+            <div class="filter-group" style="justify-content: flex-end;">
+                <button class="reset-btn" onclick="resetFilters()">Filter zurücksetzen</button>
+            </div>
+        </div>
+
+        <div id="catalog-container">
+            <p>Bitte Katalog laden.</p>
+        </div>
+    </div>
+
+    <div id="jsonModal" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between;">
+                <h3 id="modalTitle" style="margin-top:0">JSON</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <pre id="modalBody"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Global Filter State
+        let filterOptions = {
+            class: new Set(),
+            sec_level: new Set(),
+            effort_level: new Set(),
+            modalverb: new Set()
+        };
+
+        // --- 1. Load ---
+        async function loadFromURL() {
+            initLoad();
+            try {
+                const res = await fetch(document.getElementById('urlInput').value);
+                if (!res.ok) throw new Error(res.status);
+                processCatalog(await res.json());
+            } catch (e) { showError(e); }
+        }
+
+        function loadFromFile() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) return;
+            initLoad();
+            const r = new FileReader();
+            r.onload = e => { 
+                try { 
+                    processCatalog(JSON.parse(e.target.result)); 
+                } catch (err) { 
+                    alert("JSON Fehler: Datei defekt?"); 
+                    console.error(err);
+                } 
+            };
+            r.readAsText(file);
+        }
+
+        function initLoad() {
+            document.getElementById('catalog-container').innerHTML = 'Lade Daten...';
+            filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set() };
+            document.getElementById('filterContainer').style.display = 'none';
+        }
+
+        function showError(e) {
+            document.getElementById('catalog-container').innerHTML = `<p style="color:red">Fehler: ${e.message}</p>`;
+        }
+
+        // --- 2. Process & Render ---
+
+        function processCatalog(data) {
+            const container = document.getElementById('catalog-container');
+            container.innerHTML = '';
+            
+            if (!data.catalog) {
+                container.innerHTML = '<p style="color:red">Ungültiges Format (kein Catalog).</p>';
+                return;
+            }
+
+            document.getElementById('meta-info').innerHTML = `<strong>${data.catalog.metadata.title}</strong> (v${data.catalog.metadata.version})`;
+
+            if (data.catalog.groups) {
+                data.catalog.groups.forEach(g => container.appendChild(createGroupElement(g, 0)));
+            }
+            if (data.catalog.controls) {
+                data.catalog.controls.forEach(c => container.appendChild(createControlElement(c, false)));
+            }
+
+            populateFilterUI();
+            document.getElementById('filterContainer').style.display = 'flex';
+        }
+
+        function createGroupElement(group, level) {
+            const wrapper = document.createElement('div');
+            wrapper.className = level === 0 ? 'group-item' : 'group-item nested-group';
+            wrapper.classList.add('filterable-container');
+
+            const header = document.createElement('div');
+            header.className = 'group-header';
+            header.innerHTML = `<span><span style="background:#ddd;padding:2px 6px;border-radius:4px;margin-right:6px">${group.id}</span>${escapeHtml(group.title)}</span> <span class="toggle-icon">▼</span>`;
+
+            const content = document.createElement('div');
+            content.className = 'group-content';
+
+            header.onclick = () => {
+                content.classList.toggle('open');
+                header.querySelector('.toggle-icon').textContent = content.classList.contains('open') ? '▲' : '▼';
+            };
+
+            if (group.groups) {
+                group.groups.forEach(g => content.appendChild(createGroupElement(g, level + 1)));
+            }
+            if (group.controls) {
+                group.controls.forEach(c => content.appendChild(createControlElement(c, false)));
+            }
+            if((!group.groups || group.groups.length===0) && (!group.controls || group.controls.length===0)) {
+                content.innerHTML = '<div style="color:#999;font-style:italic;padding:10px;">Keine Inhalte</div>';
+            }
+
+            wrapper.append(header, content);
+            return wrapper;
+        }
+
+        function createControlElement(control, isNested) {
+            const card = document.createElement('div');
+            card.className = isNested ? 'control-card nested-card' : 'control-card';
+            card.id = control.id; // IMPORTANT: The anchor for the HREF
+            card.classList.add('filterable-item'); 
+            if(control.controls && control.controls.length > 0) card.classList.add('filterable-container');
+
+            // Extraction
+            let cClass = control.class || "";
+            let secVal = "", effortVal = "", modalVal = "";
+            if(cClass) filterOptions.class.add(cClass);
+            if (control.props) {
+                const s = control.props.find(p => p.name === 'sec_level');
+                if(s) { secVal = s.value; filterOptions.sec_level.add(secVal); }
+                const e = control.props.find(p => p.name === 'effort_level');
+                if(e) { effortVal = e.value; filterOptions.effort_level.add(effortVal); }
+            }
+            const stmtPart = control.parts?.find(p => p.name === 'statement') || (control.parts ? control.parts[0] : null);
+            if (stmtPart && stmtPart.props) {
+                const m = stmtPart.props.find(p => p.name === 'modalverb');
+                if(m) { modalVal = m.value; filterOptions.modalverb.add(modalVal); }
+            }
+
+            card.dataset.class = cClass;
+            card.dataset.sec = secVal;
+            card.dataset.effort = effortVal;
+            card.dataset.modal = modalVal;
+
+            let html = `
+                <div class="control-header">
+                    <div class="id-badge-wrapper">
+                        <span class="control-id">${control.id}</span>
+                        ${cClass ? `<span class="control-class">${escapeHtml(cClass)}</span>` : ''}
+                    </div>
+                    <h4 class="control-title">${escapeHtml(control.title)}</h4>
+                </div>`;
+            
+            let tagsHtml = '<div class="meta-tags">';
+            if(secVal) tagsHtml += `<span class="tag tag-sec">Niveau: ${escapeHtml(secVal)}</span>`;
+            if(effortVal) tagsHtml += `<span class="tag tag-effort">Aufwand: ${escapeHtml(effortVal)}</span>`;
+            if(control.props?.find(p=>p.name==='alt-identifier')) tagsHtml += `<span class="tag tag-uuid">ID: ${control.props.find(p=>p.name==='alt-identifier').value}</span>`;
+            tagsHtml += '</div>';
+            html += tagsHtml;
+
+            let stmtHtml = '<div class="statement-box">';
+            if (stmtPart && stmtPart.prose) {
+                stmtHtml += `<div class="statement-prose">${convertOscalVariables(stmtPart.prose, control.params)}</div>`;
+                const action = stmtPart.props?.find(p=>p.name==='handlungsworte')?.value;
+                const erg = stmtPart.props?.find(p=>p.name==='ergebnis')?.value;
+                const prz = stmtPart.props?.find(p=>p.name==='präzisierung')?.value;
+                if(modalVal || action || erg) {
+                    stmtHtml += `<div class="statement-breakdown">`;
+                    if(modalVal) stmtHtml += breakdownItem('Modalität', modalVal, 'val-modal');
+                    if(action) stmtHtml += breakdownItem('Handlung', action, 'val-action');
+                    if(erg) stmtHtml += breakdownItem('Ergebnis', erg, '');
+                    if(prz) stmtHtml += breakdownItem('Präzisierung', prz, '');
+                    stmtHtml += `</div>`;
+                }
+            }
+            stmtHtml += '</div>';
+            html += stmtHtml;
+
+            const guide = control.parts?.find(p => p.name === 'guidance');
+            if(guide) html += `<div class="guidance-box">${convertOscalVariables(guide.prose, control.params)}</div>`;
+
+            // Footer / Links - IMPROVED
+            let footer = '<div class="control-footer"><div class="links-container">';
+            if(control.links) {
+                control.links.filter(l => l.rel === 'related').forEach(l => {
+                    const isInternal = l.href.startsWith('#');
+                    const targetId = isInternal ? l.href.substring(1) : l.href;
+                    // If internal, use scrollToControl to handle filtering/groups. If external, new tab.
+                    const clickAttr = isInternal ? `onclick="scrollToControl('${targetId}', event)"` : 'target="_blank"';
+                    
+                    footer += `<a href="${l.href}" class="control-link" ${clickAttr}>🔗 ${escapeHtml(targetId)}</a>`;
+                });
+            }
+            footer += `</div><button class="btn-detail" onclick="openModalById('${control.id}', event)">JSON Details</button></div>`;
+            
+            card.innerHTML = html + footer;
+
+            if (control.controls && control.controls.length > 0) {
+                const nestedContainer = document.createElement('div');
+                nestedContainer.className = 'control-nested-container';
+                nestedContainer.innerHTML = '<div style="font-size:0.8em; color:#666; margin-bottom:5px; text-transform:uppercase; font-weight:bold;">Unter-Maßnahmen:</div>';
+                control.controls.forEach(nestedCtrl => {
+                    nestedContainer.appendChild(createControlElement(nestedCtrl, true));
+                });
+                card.appendChild(nestedContainer);
+            }
+
+            card.dataset.jsonData = JSON.stringify(control);
+            return card;
+        }
+
+        function breakdownItem(lbl, val, cls) {
+            return `<div class="breakdown-item"><span class="breakdown-label">${lbl}</span><span class="breakdown-value ${cls}">${escapeHtml(val)}</span></div>`;
+        }
+
+        // --- 3. Filter & Navigation Logic ---
+
+        function populateFilterUI() {
+            fillSelect('filterClass', filterOptions.class);
+            fillSelect('filterSec', filterOptions.sec_level);
+            fillSelect('filterEffort', filterOptions.effort_level);
+            fillSelect('filterModal', filterOptions.modalverb);
+        }
+
+        function fillSelect(id, set) {
+            const sel = document.getElementById(id);
+            const sorted = Array.from(set).sort();
+            sel.innerHTML = '<option value="all">Alle</option>';
+            sorted.forEach(val => {
+                const opt = document.createElement('option');
+                opt.value = val;
+                opt.textContent = val;
+                sel.appendChild(opt);
+            });
+        }
+
+        function applyFilters() {
+            const fClass = document.getElementById('filterClass').value;
+            const fSec = document.getElementById('filterSec').value;
+            const fEff = document.getElementById('filterEffort').value;
+            const fMod = document.getElementById('filterModal').value;
+
+            document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.group-content').forEach(el => el.style.display = '');
+
+            const allControls = document.querySelectorAll('.control-card');
+            allControls.forEach(card => {
+                const match = 
+                    (fClass === 'all' || card.dataset.class === fClass) &&
+                    (fSec === 'all' || card.dataset.sec === fSec) &&
+                    (fEff === 'all' || card.dataset.effort === fEff) &&
+                    (fMod === 'all' || card.dataset.modal === fMod);
+                
+                if (match) {
+                    card.classList.remove('hidden');
+                    revealParents(card);
+                }
+            });
+        }
+
+        function revealParents(element) {
+            let parent = element.parentElement;
+            while(parent) {
+                if(parent.id === 'catalog-container') break;
+
+                if(parent.classList.contains('filterable-item') || parent.classList.contains('filterable-container')) {
+                    parent.classList.remove('hidden');
+                }
+                
+                // Automatically open groups
+                if(parent.classList.contains('group-content')) {
+                    parent.style.display = 'block'; 
+                    parent.classList.add('open'); // Ensure state consistency
+                    // Update the arrow icon if possible
+                    const prev = parent.previousElementSibling;
+                    if(prev && prev.classList.contains('group-header')) {
+                        const icon = prev.querySelector('.toggle-icon');
+                        if(icon) icon.textContent = '▲';
+                    }
+                }
+                
+                parent = parent.parentElement;
+            }
+        }
+
+        // NEW: Scroll and Highlight Logic
+        function scrollToControl(id, event) {
+            if(event) event.preventDefault();
+            
+            const target = document.getElementById(id);
+            if(!target) {
+                alert("Ziel-Control nicht gefunden: " + id);
+                return;
+            }
+
+            // 1. Unhide target (if filtered out)
+            target.classList.remove('hidden');
+
+            // 2. Open all parents (Accordion)
+            revealParents(target);
+
+            // 3. Scroll
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // 4. Highlight
+            target.classList.remove('highlight-target'); // reset animation
+            void target.offsetWidth; // trigger reflow
+            target.classList.add('highlight-target');
+        }
+
+        function resetFilters() {
+            ['filterClass', 'filterSec', 'filterEffort', 'filterModal'].forEach(id => document.getElementById(id).value = 'all');
+            document.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
+            document.querySelectorAll('.group-content').forEach(g => {
+                g.style.display = ''; 
+                g.classList.remove('open');
+                const prev = g.previousElementSibling;
+                if(prev) prev.querySelector('.toggle-icon').textContent = '▼';
+            });
+        }
+
+        // --- Utils ---
+        function convertOscalVariables(text, params) {
+            if (!text) return "";
+            if (!params) return text; 
+            return text.replace(/\{\{\s*insert:\s*param,\s*([a-zA-Z0-9_.-]+)\s*\}\}/g, (m, id) => {
+                const p = params.find(x => x.id === id);
+                return p?.values ? `<u title="${id}" style="cursor:help;text-decoration-style:dotted">${p.values[0]}</u>` : (p?.label ? `[${p.label}]` : m);
+            });
+        }
+        function escapeHtml(text) { return text ? text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;") : ""; }
+        
+        window.openModalById = function(id, evt) { 
+            if(evt) evt.stopPropagation();
+            const el = document.getElementById(id); 
+            if(el && el.dataset.jsonData) openModal(JSON.parse(el.dataset.jsonData)); 
+        }
+        function openModal(obj) { document.getElementById('modalTitle').textContent=`JSON: ${obj.id}`; document.getElementById('modalBody').textContent=JSON.stringify(obj,null,2); document.getElementById('jsonModal').style.display="block"; }
+        function closeModal() { document.getElementById('jsonModal').style.display="none"; }
+        window.onclick = e => { if(e.target==document.getElementById('jsonModal')) closeModal(); }
+
+    </script>
+</body>
+</html>
