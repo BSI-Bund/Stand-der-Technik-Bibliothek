@@ -62,8 +62,9 @@
 		}
 
 
-		/* Neu: Versteckt KI-Buttons, wenn die Klasse am Body fehlt */
-		body:not(.has-api-key) .ai-actions {
+		/* Neu: Versteckt KI-Elemente, wenn die Klasse am Body fehlt */
+		body:not(.has-api-key) .ai-actions,
+		body:not(.has-api-key) .ai-dependent {
 			display: none !important;
 		}
 		
@@ -198,10 +199,13 @@
             </small>
         </div>
 
-        <div class="sidebar-section">
+        <div class="sidebar-section ai-dependent">
             <span class="section-label">KI Kontext (System Prompt)</span>
-            <textarea id="aiContextInput" class="search-input" style="height: 80px; font-size: 0.85rem; resize: vertical;" placeholder="z.B. Wir sind ein mittelständisches Unternehmen und NIS2 / KRITIS relevant..."></textarea>
+            <textarea id="aiContextInput" class="search-input" style="height: 80px; font-size: 0.85rem; resize: vertical;" placeholder="z.B. Wir sind ein mittelständisches Unternehmen und NIS2 / KRITIS relevant... oder Wir sind eine Stadtverwaltung"></textarea>
             <small style="color: #90a4ae; font-size: 0.7rem; display: block; margin-top: 4px;">Wird bei KI-Anfragen als Kontext berücksichtigt.</small>
+			<button class="reset-btn" onclick="exportAiCache()" style="background: var(--ai-glow); margin-top: 15px;">💾 KI-Antworten exportieren</button>
+			<button class="reset-btn" onclick="document.getElementById('aiCacheInput').click()" style="background: #4caf50; margin-top: 10px;">📂 KI-Antworten importieren</button>
+            <input type="file" id="aiCacheInput" accept=".json" style="display: none;" onchange="importAiCache(event)">
         </div>
 
         <div class="sidebar-section" style="margin-top: auto; border-top: 1px solid #eee; padding-top: 20px;">
@@ -247,7 +251,8 @@
         const apiKey = ""; 
         let filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set() };
         let loadedCatalogs = [];
-
+        let aiCache = {}; // Globaler KI-Cache
+		
         // --- UI Logic ---
         function updateUrlFromSelect() {
             const select = document.getElementById('quickSelect');
@@ -256,13 +261,15 @@
                 input.value = select.value;
             }
         }
-		// 1. Neue Funktion zum Umschalten der Button-Sichtbarkeit
+		// Funktion zum Umschalten der Button-Sichtbarkeit und Speichern des Keys
 		function toggleAiButtons() {
 			const key = document.getElementById('apiKeyInput').value.trim();
 			if (key.length > 0) {
 				document.body.classList.add('has-api-key');
+				localStorage.setItem('gspp_gemini_apikey', key); // Key im Browser speichern
 			} else {
 				document.body.classList.remove('has-api-key');
+				localStorage.removeItem('gspp_gemini_apikey');   // Key löschen, wenn Feld geleert wird
 			}
 		}
         // --- Gemini Integration ---
@@ -275,7 +282,7 @@
 			}
 
 			// Probiere v1beta, da diese oft toleranter bei neuen Modellen ist
-			const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${currentApiKey}`;
+			const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key=${currentApiKey}`;
 			
 			const payload = {
 				contents: [{ parts: [{ text: prompt }] }],
@@ -303,45 +310,109 @@
 			return json.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort.";
 		}
 
-        async function triggerAI(controlId, type) {
+		async function triggerAI(controlId, type, forceRefresh = false) {
             const card = document.getElementById(controlId);
             const responseArea = card.querySelector('.ai-response-area');
             const contentArea = card.querySelector('.ai-response-content');
             const loader = card.querySelector('.ai-loader');
             
             responseArea.classList.add('active');
+			
+           // 1. Cache prüfen (wenn kein Force-Refresh gefordert ist)
+            if (!forceRefresh && aiCache[controlId] && aiCache[controlId][type]) {
+                const cachedRes = aiCache[controlId][type];
+                contentArea.innerHTML = (typeof marked !== 'undefined' ? marked.parse(cachedRes) : cachedRes) + 
+                    `<div style="margin-top:15px; border-top:1px dashed #e1d5ff; padding-top:10px; text-align:right;">
+                        <button onclick="triggerAI('${controlId}', '${type}', true)" style="background:none; border:none; color:var(--ai-glow); cursor:pointer; font-size:0.8rem; font-weight:bold; text-decoration:underline;">🔄 Neu generieren</button>
+                    </div>`;
+                return; // Funktion hier abbrechen, da aus dem Cache geladen
+            }
+
+			
             loader.style.display = 'block';
             contentArea.innerHTML = '<i>KI analysiert...</i>';
 
             const title = card.querySelector('.control-title').textContent;
             const prose = card.querySelector('.statement-prose').textContent;
+			const guidance = card.querySelector('.guidance-box')?.textContent || "";
             
+            // --- RAG: Finde benachbarte Controls (gleicher Präfix, z.B. alles unter "PERF.1.") ---
+            const prefix = controlId.substring(0, controlId.lastIndexOf('.') + 1);
+            let relatedControlsText = "";
+            
+            if (prefix) {
+                const siblings = Array.from(document.querySelectorAll('.control-card'))
+                    .filter(c => c.id.startsWith(prefix) && c.id !== controlId)
+                    .map(c => {
+                        const siblingProse = c.querySelector('.statement-prose')?.textContent || '';
+                        return `- ${c.id}: ${siblingProse}`;
+                    });
+
+                if (siblings.length > 0) {
+                    relatedControlsText = `\n\nBeachte zur inhaltlichen Abgrenzung, dass es im selben Modul auch noch diese ähnlichen Controls gibt. Diese sind HIER NICHT THEMA! Bitte stelle sicher, dass sich deine Antwort inhaltlich nicht mit ihnen überschneidet:\n${siblings.join('\n')}`;
+                }
+            }
+
             let prompt = "";
-			const heute = new Date().toLocaleDateString('de-DE'); // Ergebnis z.B.: "19.02.2026"
-            let system = `Du bist ein Experte für IT-Grundschutz nach dem neuen BSI Grundschutz++. Antworte in strukturierter Markdown-Form (Listen, Fettgedrucktes). Wichtig: Dein Fokus ist nur auf das hier genannte Thema, vermeide abzuschweifen oder den geesamten Kontext zu erklären! Verstehe: Der neue Grundschutz++ nutzt einen granularen Katalog, in dem jede Anforderung nur aus einem Satz besteht und *nur* dieser Satz ist Deine Aufgabe! Andere Aspekte des Themas stehen in anderen Anforderungen! Heute ist der ${heute}.`;
-            
+			const heute = new Date().toLocaleDateString('de-DE'); 
+            let system = `Du bist ein Experte für IT-Sicherheit, ISO 27001, IT-Grundschutz *und* den neuen BSI Grundschutz++. Wo passend referenzierst Du aktuelle Materialen des BSI: C5, Standards, B3S Profile, Technische Richtlinien (TR) und Mindestandards (*keine* Grundschutz Bausteine!)
+Antworte in strukturierter Markdown-Form (Listen, Fettgedrucktes). Wichtig: Dein Fokus liegt ausschließlich auf der in der User-Anfrage genannten Einzelmaßnahme. 
+Verstehe: Der neue Grundschutz++ nutzt einen granularen Katalog, in dem jede Anforderung nur aus einem Satz besteht. Andere Aspekte des Themas stehen in anderen Anforderungen! 
+Keine Einleitenden Worte über deine Rolle oder wie der GRundschutz++ aufgebaut ist. Fokus ist nur die Aufgabe ohne Ausschmückungen. Du Schreibst wie ein Experte, aber nicht wie
+eine KI. Dein Satzbau ist Abwechslungsreich, konkret, präßise und du nutzt keine KI Floskeln. Heute ist der ${heute}.`;
+
+            // Spezieller System-Prompt für den Edition 2023 Abgleich (Erlaubt Bausteine explizit)
+            if (type === 'edition2023') {
+                system = `Du bist ein Experte für den BSI IT-Grundschutz. Deine Aufgabe ist das genaue Mapping zwischen dem neuen Grundschutz++ und den Bausteinen des IT-Grundschutz-Kompendiums Edition 2023. Antworte in strukturierter Markdown-Form ohne unnötige Floskeln.`;
+            }
+
+			            
             const userContext = document.getElementById('aiContextInput').value.trim();
             if (userContext) {
                 system += "\n\nBerücksichtige zwingend folgenden Unternehmenskontext für deine Antwort:\n" + userContext;
             }
-            
+            // Bereite den Guidance-Textbaustein vor
+            const guidanceText = guidance ? `\nZusätzliche Erläuterungen (Guidance): ${guidance}` : "";
+			
             if (type === 'implementation') {
-                prompt = `Erstelle einen Umsetzungsvorschlag für die BSI Maßnahme "${title}". Beschreibung: ${prose}. Nenne 5 praktische Schritte.`;
+                prompt = `Erstelle einen Umsetzungsvorschlag für die BSI Maßnahme "${title}". Beschreibung: ${prose}${guidanceText}. Nenne praktische Schritte. Drei sehr ausführliche Praxis Beispiele die alle Aspekte des Controls abdecken.`;
+            } else if (type === 'edition2023') {
+                prompt = `Suche gründlich nach *allen* passenden Anforderungen aus den IT-Grundschutz Bausteinen der Edition 2023, die zur Maßnahme "${title}" (Beschreibung: ${prose}${guidanceText}) passen. *Wichtig:* Nur Bausteine der Edition 2023, deren PDF haben "2023.pdf" im Namen!
+Nutze für deine Suche zwingend diese Parameter, um in den offiziellen BSI PDFs zu suchen:
+inurl:https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023 filetype:pdf
+
+*Wichtig*: Validiere jeden Namen und die Nummer der genannten Anforderungen und ob der Baustein dazu Wirklich aus der Edition 2023 ist penibel, bevor Du sie einfügst. Erfinde keine IDs! Nutze keine alten Editionen!
+
+Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
+| ID | Name der Anforderung | Begründung |
+|---|---|---|`;
             } else {
-                prompt = `Welche Risiken bestehen bei Nicht-Umsetzung von "${title}"? Beschreibung: ${prose}. Nenne 3 kritische Gefahren.`;
+                prompt = `Welche Risiken bestehen bei Nicht-Umsetzung von "${title}"? Beschreibung: ${prose}. Nenne mindestens Gefahren mit kritischem Schadenspotential und mit hoher eintrittshäufigkeit.`;
             }
+
+            // Füge die benachbarten Controls an den Prompt an
+            prompt += relatedControlsText;
 
             try {
                 const response = await callGemini(prompt, system);
-                contentArea.innerHTML = typeof marked !== 'undefined' ? marked.parse(response) : response;
+                                
+                // 2. In den Cache schreiben
+                if (!aiCache[controlId]) aiCache[controlId] = {};
+                aiCache[controlId][type] = response;
+                localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
+
+                contentArea.innerHTML = (typeof marked !== 'undefined' ? marked.parse(response) : response) + 
+                    `<div style="margin-top:15px; border-top:1px dashed #e1d5ff; padding-top:10px; text-align:right;">
+                        <button onclick="triggerAI('${controlId}', '${type}', true)" style="background:none; border:none; color:var(--ai-glow); cursor:pointer; font-size:0.8rem; font-weight:bold; text-decoration:underline;">🔄 Neu generieren</button>
+                    </div>`;
+
             } catch (e) {
-                // Jetzt mit detaillierter Fehlermeldung in Klammern
 				contentArea.innerHTML = `<span style='color:red'>Fehler bei der KI-Anfrage (${e.message}).</span>`;
             } finally {
                 loader.style.display = 'none';
             }
         }
-
+		
         // --- Loading Logic ---
         async function loadFromURL() {
             try {
@@ -465,6 +536,7 @@
                 <div class="ai-actions">
                     <button class="ai-btn" onclick="triggerAI('${control.id}', 'implementation')">✨ Umsetzung</button>
                     <button class="ai-btn" onclick="triggerAI('${control.id}', 'risk')">✨ Risiko</button>
+					<button class="ai-btn" onclick="triggerAI('${control.id}', 'edition2023')">✨ Abgleich Edition 2023</button>
                     <div class="ai-loader"></div>
                 </div>
                 <div class="ai-response-area"><div class="ai-response-content"></div></div>
@@ -479,6 +551,7 @@
                     <button class="btn-json" onclick="openModalById('${control.id}')">JSON Details</button>
                 </div>
             `;
+			
             card.dataset.jsonData = JSON.stringify(control);
 
             // RESTORED: Check for nested controls and append them recursively
@@ -607,7 +680,56 @@
             document.getElementById('modalBody').textContent = JSON.stringify(data, null, 2);
             document.getElementById('jsonModal').style.display = 'block';
         };
-        function closeModal() { document.getElementById('jsonModal').style.display = 'none'; }
+		function closeModal() { document.getElementById('jsonModal').style.display = 'none'; }
+
+		// --- AI Cache Export ---
+        function exportAiCache() {
+            if (Object.keys(aiCache).length === 0) {
+                alert("Der KI-Cache ist noch leer. Generiere zuerst ein paar Antworten.");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(aiCache, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "gspp_ai_cache_export.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+        function importAiCache(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (typeof importedData !== 'object' || importedData === null) {
+                        throw new Error("Ungültiges JSON-Format.");
+                    }
+
+                    // Cache mit importierten Daten zusammenführen (bestehende überschreiben, neue hinzufügen)
+                    aiCache = { ...aiCache, ...importedData };
+                    localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
+                    
+                    alert("KI-Antworten erfolgreich importiert!");
+                    event.target.value = ''; // Input zurücksetzen
+                } catch (error) {
+                    alert("Fehler beim Importieren: " + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- Init beim Seitenstart ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedKey = localStorage.getItem('gspp_gemini_apikey');
+            if (savedKey) {
+                document.getElementById('apiKeyInput').value = savedKey;
+                toggleAiButtons(); // UI aktualisieren, damit die Buttons direkt erscheinen
+            }
+        });
     </script>
 </body>
 </html>
