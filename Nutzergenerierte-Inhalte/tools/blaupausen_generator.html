@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL Blaupausen & Risk Generator V4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
+    <style>
+        .collapsible-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+        }
+        .collapsible-content.open {
+            max-height: 5000px;
+            opacity: 1;
+            overflow: visible;
+        }
+        .chevron-icon { transition: transform 0.3s ease; }
+        .chevron-icon.open { transform: rotate(90deg); }
+        .search-result-item:hover { background-color: #334155; }
+        
+        .loader {
+            border: 4px solid #334155; border-top: 4px solid #10b981;
+            border-radius: 50%; width: 40px; height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full p-4 md:p-8 font-sans text-slate-200">
+
+    <div class="max-w-6xl mx-auto bg-slate-800 p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700">
+        
+        <header class="mb-8 pb-6 border-b border-slate-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-white">OSCAL Blaupausen Generator</h1>
+                <p class="mt-2 text-slate-400 text-sm max-w-2xl leading-relaxed">
+                    Methodik-GS++ Komplettpaket: ISMS-Pflicht, optionale Muster-Assets, integrierte Risikoanalyse und Generierung von Profile & SSP.
+                </p>
+            </div>
+            <div id="catalog-status" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-300 border border-slate-600 flex items-center shadow-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-3 animate-pulse"></span>
+                Lade Basis-Katalog...
+            </div>
+        </header>
+
+        <div id="loading-overlay" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] hidden flex-col items-center justify-center">
+            <div class="bg-slate-800 p-8 rounded-2xl shadow-2xl flex flex-col items-center border border-slate-700">
+                <div class="loader mb-4"></div>
+                <p id="loading-text" class="text-lg font-semibold text-white">Verarbeite Daten...</p>
+            </div>
+        </div>
+
+        <div id="main-editor" class="space-y-4 hidden">
+            <!-- Sections rendered dynamically here -->
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-700 flex flex-col md:flex-row items-center justify-between gap-6">
+            <label class="flex items-center space-x-3 text-white cursor-pointer bg-slate-900/50 p-4 rounded-xl border border-slate-600 hover:border-emerald-500 transition-colors w-full md:w-auto">
+                <input type="checkbox" id="generate-ssp-checkbox" checked class="form-checkbox h-5 w-5 text-emerald-500 rounded border-slate-600 bg-slate-700 focus:ring-emerald-500 focus:ring-offset-slate-800">
+                <div>
+                    <span class="font-bold block text-sm">Optionalen Muster-SSP generieren</span>
+                    <span class="text-xs text-slate-400 font-normal">Verknüpft Profil, ISMS und Assets zu einem Informationsverbund.</span>
+                </div>
+            </label>
+            <button onclick="generateBlueprintPackage()" class="w-full md:w-auto bg-emerald-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:bg-emerald-500 focus:ring-4 focus:ring-emerald-500/50 transition-all transform hover:-translate-y-0.5">
+                Blaupause Paket generieren
+            </button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- Modal 1: Tailoring & Modify (Profile) -->
+    <div id="modify-modal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[90] overflow-y-auto h-full w-full flex items-center justify-center">
+        <div class="modal-container bg-slate-800 w-11/12 md:max-w-2xl mx-auto rounded-xl shadow-2xl border border-slate-700 flex flex-col max-h-[90vh]">
+            <div class="px-6 py-4 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">
+                <div>
+                    <h3 class="text-xl font-bold text-white">Control anpassen</h3>
+                    <p class="text-sm text-emerald-400 font-mono mt-1 font-semibold" id="m-control-id"></p>
+                    <p class="text-xs text-slate-400 mt-1">Kontext: <span id="m-context-name" class="font-bold text-slate-200"></span></p>
+                </div>
+                <button onclick="closeModifyModal()" class="text-slate-400 hover:text-white text-2xl font-bold transition-colors">&times;</button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto custom-scroll p-6">
+                <div class="bg-slate-900 border border-slate-700 rounded-lg p-4 mb-6">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase mb-2">Original-Text aus Katalog</h4>
+                    <h5 id="m-catalog-title" class="font-bold text-slate-200 text-sm mb-1"></h5>
+                    <div id="m-catalog-prose" class="text-sm text-slate-400 max-h-32 overflow-y-auto custom-scroll whitespace-pre-line leading-relaxed border-l-2 border-slate-600 pl-3"></div>
+                </div>
+
+                <div class="flex border-b border-slate-700 mb-5">
+                    <button id="tab-param-btn" class="flex-1 py-2 text-center text-emerald-400 border-b-2 border-emerald-500 font-bold text-sm transition-colors" onclick="switchModifyTab('param')">Parameter setzen</button>
+                    <button id="tab-alter-btn" class="flex-1 py-2 text-center text-slate-400 hover:text-slate-200 border-b-2 border-transparent font-medium text-sm transition-colors" onclick="switchModifyTab('alter')">Text ergänzen (Alter)</button>
+                </div>
+
+                <div id="tab-param-content" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Parameter ID</label>
+                        <div class="flex rounded-lg overflow-hidden border border-slate-600">
+                            <span id="m-param-prefix" class="px-3 py-2 bg-slate-700 text-slate-400 text-sm font-mono border-r border-slate-600"></span>
+                            <input type="text" id="m-param-suffix" class="flex-1 px-3 py-2 bg-slate-800 text-white text-sm font-mono focus:outline-none" placeholder="_prm_1">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Neuer Wert (Überschreiben)</label>
+                        <input type="text" id="m-param-value" class="w-full px-4 py-2 bg-slate-800 border border-slate-600 rounded-lg text-sm text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <button type="button" onclick="addModification('param')" class="w-full py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-500 text-sm font-bold shadow-md transition-colors">Parameter speichern</button>
+                </div>
+
+                <div id="tab-alter-content" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Position der Ergänzung</label>
+                        <select id="m-alter-pos" class="w-full px-4 py-2 border border-slate-600 rounded-lg text-sm bg-slate-800 text-white focus:ring-2 focus:ring-emerald-500 outline-none">
+                            <option value="ending">Am Ende anfügen (ending)</option>
+                            <option value="starting">Am Anfang einfügen (starting)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Zusätzlicher Text (Prose)</label>
+                        <textarea id="m-alter-text" rows="3" class="w-full px-4 py-2 border border-slate-600 rounded-lg text-sm bg-slate-800 text-white focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+                    </div>
+                    <button type="button" onclick="addModification('alter')" class="w-full py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-500 text-sm font-bold shadow-md transition-colors">Text-Ergänzung speichern</button>
+                </div>
+
+                <div class="mt-8 pt-4 border-t border-slate-700">
+                    <h5 class="text-xs font-bold text-slate-400 uppercase mb-3">Gespeicherte Anpassungen:</h5>
+                    <ul id="m-mod-list" class="space-y-2"></ul>
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-slate-700 flex justify-end bg-slate-800/50">
+                <button onclick="closeModifyModal()" class="px-5 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white hover:bg-slate-600 text-sm font-bold transition-colors">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Risk Control Search & Custom -->
+    <div id="search-modal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm overflow-y-auto h-full w-full z-[95] flex items-center justify-center">
+        <div class="relative mx-auto p-6 border w-full max-w-3xl shadow-2xl rounded-xl bg-slate-800 border-slate-700">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white">Mitigierendes Control hinzufügen</h3>
+                <button id="close-search-modal-button" class="text-slate-400 hover:text-white text-2xl font-bold">&times;</button>
+            </div>
+            
+            <div class="border-b border-slate-700 mb-4">
+                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                    <button id="tab-search" class="tab-button border-emerald-500 text-emerald-400 py-3 px-1 border-b-2 font-medium text-sm transition-colors" data-target="tab-content-search">Katalog-Suche</button>
+                    <button id="tab-custom" class="tab-button border-transparent text-slate-400 hover:text-slate-200 hover:border-slate-600 py-3 px-1 border-b-2 font-medium text-sm transition-colors" data-target="tab-content-custom">Benutzerdefiniert</button>
+                </nav>
+            </div>
+
+            <div id="tab-content-search" class="tab-content">
+                <input type="text" id="catalog-search-input" placeholder="Regex / Suchen nach ID oder Titel..." class="mb-4 block w-full rounded-lg border-slate-600 bg-slate-700 text-white shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm px-4 py-2">
+                <div id="catalog-search-results" class="space-y-2 max-h-80 overflow-y-auto custom-scroll"></div>
+            </div>
+
+            <div id="tab-content-custom" class="tab-content hidden space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Control ID (z.B. CUSTOM.1)</label>
+                    <input type="text" id="custom-control-id" class="block w-full rounded-lg border-slate-600 bg-slate-700 text-white focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm px-4 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Titel</label>
+                    <input type="text" id="custom-control-title" class="block w-full rounded-lg border-slate-600 bg-slate-700 text-white focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm px-4 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Statement (Anforderungstext)</label>
+                    <textarea id="custom-control-statement" rows="4" class="block w-full rounded-lg border-slate-600 bg-slate-700 text-white focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm px-4 py-2"></textarea>
+                </div>
+                <button id="add-custom-control-button" class="w-full bg-emerald-600 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:bg-emerald-500 transition duration-150 mt-2">
+                    Custom Control erstellen & zuweisen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIG & STATE ---
+        const CATALOG_URL_BASE = 'https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json';
+        const API_URL_NUTZERGEN = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/komponenten/DE';
+        const API_URL_GPLUS = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/komponenten';
+        
+        const ISMS_URLS = {
+            standard: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/main/Nutzergenerierte-Inhalte/komponenten/DE/isms_isms-component.json',
+            enhanced: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/main/Nutzergenerierte-Inhalte/komponenten/DE/isms_isms-enhanced-component.json'
+        };
+
+        const bpState = {
+            metadata: { title: "", version: "1.0.0", description: "" },
+            catalogs: [{ href: CATALOG_URL_BASE, name: "BSI Grundschutz++ Katalog" }],
+            controlsIndex: new Map(),
+            isms: { type: 'standard', url: ISMS_URLS.standard, controls: new Set(), uuid: '' },
+            manualControls: new Set(), // Controls manually tailored
+            modifications: new Map(), // Keyed by: sourceId||controlId -> array of mods
+            components: [], // Loaded OSCAL Component Assets
+            riskData: [],
+            customControls: new Map()
+        };
+
+        let currentActiveControlId = null;
+        let currentModifySourceId = null; // Track which component we are modifying
+        let currentRiskUuidForSearch = null;
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            renderMainStructure();
+            await loadBaseCatalog();
+            fetchGitHubComponents();
+            setupSearchListeners();
+            setupRiskTabListeners();
+            document.getElementById('main-editor').classList.remove('hidden');
+            await switchISMS('standard');
+        });
+
+        function toggleLoader(show, text = "Lade...") {
+            const overlay = document.getElementById('loading-overlay');
+            document.getElementById('loading-text').innerText = text;
+            overlay.style.display = show ? 'flex' : 'none';
+        }
+
+        // --- UI STRUCTURE ---
+        function renderMainStructure() {
+            const editor = document.getElementById('main-editor');
+            editor.innerHTML = `
+                ${createCollapsibleSection('sec-meta', '1. Metadaten & Begleitdokumente', renderMetaHTML(), true)}
+                ${createCollapsibleSection('sec-components', '2. ISMS & Muster-Assets', renderComponentsHTML(), true)}
+                ${createCollapsibleSection('sec-tailoring', '3. Tailoring pro Asset & Profil', renderTailoringHTML(), false)}
+                ${createCollapsibleSection('sec-risks', '4. Risikoanalyse (Optional)', renderRiskAnalysisHTML(), false)}
+            `;
+            attachCollapsibleListeners();
+        }
+
+        function createCollapsibleSection(id, title, contentHtml, isOpen = false) {
+            const openClass = isOpen ? 'open' : '';
+            return `
+                <div class="border border-slate-700 rounded-xl overflow-hidden shadow-sm" data-section-id="${id}">
+                    <button class="collapsible-header w-full flex justify-between items-center p-5 bg-slate-800 hover:bg-slate-700 focus:outline-none text-left transition-colors">
+                        <h2 class="text-xl font-bold text-white">${title}</h2>
+                        <svg class="chevron-icon ${openClass} w-6 h-6 text-slate-400 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                    <div class="collapsible-content ${openClass} p-5 border-t border-slate-700 bg-slate-800/50">
+                        ${contentHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function attachCollapsibleListeners() {
+            document.querySelectorAll('.collapsible-header').forEach(header => {
+                const newHeader = header.cloneNode(true);
+                header.parentNode.replaceChild(newHeader, header);
+                newHeader.addEventListener('click', () => {
+                    const content = newHeader.nextElementSibling;
+                    const icon = newHeader.querySelector('.chevron-icon');
+                    content.classList.toggle('open');
+                    icon.classList.toggle('open');
+                });
+            });
+        }
+
+        // --- SECTION 1: META ---
+        function renderMetaHTML() {
+            return `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-1">Titel der Blaupause</label>
+                        <input type="text" id="bp-title" onchange="bpState.metadata.title=this.value" class="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="z.B. Blaupause Krankenhaus">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-300 mb-1">Version</label>
+                        <input type="text" id="bp-version" onchange="bpState.metadata.version=this.value" class="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none" value="1.0.0">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-slate-300 mb-1">Zweck & Geltungsbereich (Rationale)</label>
+                        <textarea id="bp-description" onchange="bpState.metadata.description=this.value" rows="3" class="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Dokumentation fachlicher Entscheidungen..."></textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- CATALOG LOADING ---
+        async function loadBaseCatalog() {
+            const statusEl = document.getElementById('catalog-status');
+            try {
+                const res = await fetch(CATALOG_URL_BASE);
+                const data = await res.json();
+                
+                function indexCat(items) {
+                    if(!items) return;
+                    items.forEach(i => {
+                        if (i.id) {
+                            let text = i.title;
+                            if(i.parts) {
+                                const prosePart = i.parts.find(p => p.name === 'statement' || p.prose);
+                                if(prosePart && prosePart.prose) text = prosePart.prose;
+                            }
+                            bpState.controlsIndex.set(i.id, { title: i.title, text: text });
+                        }
+                        if(i.controls) indexCat(i.controls);
+                        if(i.groups) indexCat(i.groups);
+                    });
+                }
+                indexCat(data.catalog.groups);
+                
+                statusEl.className = "px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center shadow-sm";
+                statusEl.innerHTML = `✓ Katalog aktiv (${bpState.controlsIndex.size} Controls)`;
+            } catch (e) {
+                statusEl.innerHTML = `⚠️ Fehler beim Laden des Katalogs`;
+            }
+        }
+
+        // --- SECTION 2: COMPONENTS (ISMS & Assets) ---
+        function renderComponentsHTML() {
+            return `
+                <div class="mb-6 p-5 bg-slate-900/80 border border-emerald-700/60 rounded-xl shadow-inner">
+                    <h3 class="text-sm font-bold text-emerald-400 uppercase mb-2">1. Zwingendes ISMS-Profil</h3>
+                    <p class="text-xs text-slate-400 mb-4">Jede Blaupause muss ein ISMS-Profil referenzieren.</p>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <label class="flex items-center space-x-2 text-sm text-white cursor-pointer bg-slate-800 p-3 rounded-lg border border-slate-600 hover:border-emerald-500 transition-colors">
+                            <input type="radio" name="isms_type" value="standard" checked onchange="switchISMS('standard')" class="text-emerald-500 bg-slate-900 border-slate-600 focus:ring-emerald-500">
+                            <span class="font-semibold">Standard ISMS</span>
+                        </label>
+                        <label class="flex items-center space-x-2 text-sm text-white cursor-pointer bg-slate-800 p-3 rounded-lg border border-slate-600 hover:border-emerald-500 transition-colors">
+                            <input type="radio" name="isms_type" value="enhanced" onchange="switchISMS('enhanced')" class="text-emerald-500 bg-slate-900 border-slate-600 focus:ring-emerald-500">
+                            <span class="font-semibold">Enhanced ISMS</span>
+                        </label>
+                    </div>
+                    <div id="isms-status" class="mt-3 text-xs text-emerald-300 font-mono font-bold flex items-center">
+                        <span class="animate-pulse mr-2">... lade ...</span>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <h3 class="text-sm font-bold text-slate-300 uppercase mb-2">2. Optionale Muster-Assets</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Nutzergeneriert</label>
+                            <select id="dd-nutzer" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white"><option value="">Lade...</option></select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">G++ Zielobjekte</label>
+                            <select id="dd-gplus" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white"><option value="">Lade...</option></select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Eigener Asset-Name (optional)</label>
+                            <input type="text" id="asset-custom-name" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500" placeholder="Z.B. Linux Server">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Asset Status (OSCAL)</label>
+                            <select id="asset-state" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                                <option value="operational" selected>In Betrieb (Operational)</option>
+                                <option value="under-development">In Entwicklung (Under Development)</option>
+                                <option value="disposition">Außer Betrieb (Disposition)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button onclick="addAssetComponent()" class="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-500 transition-colors text-sm shadow-md mb-4">Asset laden & Controls extrahieren</button>
+                    <ul id="assets-list" class="space-y-2"></ul>
+                </div>
+            `;
+        }
+
+        window.switchISMS = async function(type) {
+            toggleLoader(true, `Lade ${type} ISMS...`);
+            try {
+                const res = await fetch(ISMS_URLS[type]);
+                const data = await res.json();
+                
+                bpState.isms.type = type;
+                bpState.isms.url = ISMS_URLS[type];
+                bpState.isms.controls = new Set();
+                bpState.isms.uuid = data['component-definition']?.uuid || crypto.randomUUID();
+
+                if(data['component-definition'] && data['component-definition'].components) {
+                    data['component-definition'].components.forEach(c => {
+                        if(c['control-implementations']) {
+                            c['control-implementations'].forEach(ci => {
+                                if(ci['implemented-requirements']) {
+                                    ci['implemented-requirements'].forEach(req => {
+                                        bpState.isms.controls.add(req['control-id']);
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+                
+                document.getElementById('isms-status').innerHTML = `✓ ISMS (${type}) geladen und ${bpState.isms.controls.size} Controls dem Profil hinzugefügt.`;
+                renderTailoredList();
+            } catch(e) {
+                document.getElementById('isms-status').innerHTML = `⚠️ Fehler beim Laden des ISMS!`;
+                console.error(e);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        async function fetchGitHubComponents() {
+            try {
+                const [r1, r2] = await Promise.all([fetch(API_URL_NUTZERGEN), fetch(API_URL_GPLUS)]);
+                const d1 = await r1.json(); const d2 = await r2.json();
+                
+                const ddN = document.getElementById('dd-nutzer');
+                const ddG = document.getElementById('dd-gplus');
+                
+                ddN.innerHTML = '<option value="" disabled selected>Asset wählen...</option>';
+                d1.filter(i => i.name.endsWith('.json') && !i.name.includes('isms')).forEach(f => ddN.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
+                
+                ddG.innerHTML = '<option value="" disabled selected>Asset wählen...</option>';
+                d2.filter(i => i.name.endsWith('.json')).forEach(f => ddG.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
+
+                ddN.addEventListener('change', () => ddG.selectedIndex = 0);
+                ddG.addEventListener('change', () => ddN.selectedIndex = 0);
+            } catch(e) {}
+        }
+
+        async function addAssetComponent() {
+            const ddN = document.getElementById('dd-nutzer');
+            const ddG = document.getElementById('dd-gplus');
+            const customNameInput = document.getElementById('asset-custom-name');
+            const stateInput = document.getElementById('asset-state');
+            
+            let url = '', originalName = '';
+            if(ddN.value) { url = ddN.value; originalName = ddN.options[ddN.selectedIndex].text; }
+            else if(ddG.value) { url = ddG.value; originalName = ddG.options[ddG.selectedIndex].text; }
+            else return alert("Bitte wähle ein Asset.");
+
+            const finalName = customNameInput.value.trim() || originalName;
+            const finalState = stateInput.value;
+
+            toggleLoader(true, `Lade ${finalName}...`);
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                const extractedControls = new Set();
+                if(data['component-definition'] && data['component-definition'].components) {
+                    data['component-definition'].components.forEach(c => {
+                        if(c['control-implementations']) {
+                            c['control-implementations'].forEach(ci => {
+                                if(ci['implemented-requirements']) {
+                                    ci['implemented-requirements'].forEach(req => {
+                                        extractedControls.add(req['control-id']);
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+
+                bpState.components.push({ 
+                    id: crypto.randomUUID(), 
+                    name: finalName, 
+                    source: url, 
+                    state: finalState, 
+                    controls: extractedControls
+                });
+                
+                ddN.selectedIndex = 0; ddG.selectedIndex = 0;
+                customNameInput.value = '';
+                stateInput.selectedIndex = 0;
+
+                renderAssetsList();
+                renderTailoredList();
+            } catch(e) {
+                alert("Fehler beim Verarbeiten des Assets: " + e.message);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        function renderAssetsList() {
+            const list = document.getElementById('assets-list');
+            list.innerHTML = '';
+            if(bpState.components.length === 0) {
+                list.innerHTML = `<li class="text-slate-500 text-sm italic">Keine optionalen Assets geladen.</li>`;
+                return;
+            }
+            bpState.components.forEach((c, i) => {
+                const stateBadge = c.state === 'operational' ? 'bg-emerald-900 text-emerald-300' : 'bg-amber-900 text-amber-300';
+                list.innerHTML += `
+                    <li class="flex justify-between items-center p-3 bg-slate-900 border border-slate-700 rounded-lg">
+                        <div>
+                            <div class="flex items-center gap-2 font-bold text-slate-200 text-sm">
+                                📦 ${c.name}
+                                <span class="px-2 py-0.5 rounded text-[10px] uppercase ${stateBadge} border border-slate-600">${c.state}</span>
+                            </div>
+                            <div class="text-xs text-indigo-400 mt-1">+ ${c.controls.size} Controls importiert</div>
+                        </div>
+                        <button onclick="removeAsset(${i})" class="text-red-400 hover:text-red-300 font-bold p-2 text-sm">✕</button>
+                    </li>
+                `;
+            });
+        }
+        window.removeAsset = function(i) { bpState.components.splice(i, 1); renderAssetsList(); renderTailoredList(); }
+
+        // --- SECTION 3: TAILORING (Profile & Components) ---
+        function renderTailoringHTML() {
+            return `
+                <div class="flex flex-col md:flex-row gap-4 mb-4">
+                    <input type="text" id="manual-control-input" class="flex-1 px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white font-mono placeholder-slate-500 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Zusätzliche Control ID manuell anfügen (z.B. SYS.1.1.A1)">
+                    <button onclick="addManualControl()" class="px-6 py-2 bg-slate-700 text-white font-medium rounded-lg hover:bg-slate-600 transition-colors text-sm shadow-md">Hinzufügen</button>
+                </div>
+                <div class="mb-4">
+                    <input type="text" id="tailoring-search-input" oninput="renderTailoredList(this.value)" class="w-full px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-white focus:ring-2 focus:ring-emerald-500 outline-none placeholder-slate-500" placeholder="🔍 Nach Control-ID oder Titel suchen...">
+                </div>
+                <div id="tailored-list" class="max-h-[600px] overflow-y-auto custom-scroll pr-2 space-y-3"></div>
+            `;
+        }
+
+        window.addManualControl = function() {
+            const inp = document.getElementById('manual-control-input');
+            const cid = inp.value.trim().toUpperCase();
+            if(!cid) return;
+            bpState.manualControls.add(cid);
+            inp.value = '';
+            renderTailoredList(document.getElementById('tailoring-search-input')?.value || '');
+        }
+
+        function renderTailoredList(filterTerm = '') {
+            const list = document.getElementById('tailored-list');
+            if(!list) return;
+            list.innerHTML = '';
+
+            const term = filterTerm.toLowerCase().trim();
+
+            function renderGroup(title, badgeHtml, controlsSet, sourceId, isOpenDefault) {
+                if(!controlsSet || controlsSet.size === 0) return '';
+                
+                // Filtern der Controls basierend auf der Suchanfrage
+                const filteredControls = Array.from(controlsSet).sort().filter(cid => {
+                    if (!term) return true;
+                    const info = bpState.controlsIndex.get(cid);
+                    return cid.toLowerCase().includes(term) || (info?.title || '').toLowerCase().includes(term);
+                });
+
+                if (filteredControls.length === 0) return ''; // Gruppe ausblenden, wenn leer nach Filterung
+
+                // Wenn gesucht wird, alles aufklappen, ansonsten Default-Zustand nutzen
+                const shouldBeOpen = term.length > 0 ? true : isOpenDefault;
+                const openClass = shouldBeOpen ? 'open' : '';
+                const displayClass = shouldBeOpen ? 'block' : 'hidden';
+
+                let html = `
+                    <div class="border border-slate-700 rounded-lg overflow-hidden">
+                        <button onclick="toggleSubSection('${sourceId}')" class="w-full flex justify-between items-center p-3 bg-slate-800 hover:bg-slate-700 transition-colors border-b border-slate-700">
+                            <div class="flex items-center gap-2">
+                                ${badgeHtml}
+                                <h4 class="text-sm font-bold text-slate-300 uppercase">${title} (${filteredControls.length})</h4>
+                            </div>
+                            <svg id="icon-${sourceId}" class="chevron-icon ${openClass} w-5 h-5 text-slate-400 transform transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </button>
+                        <ul id="content-${sourceId}" class="${displayClass} p-3 space-y-2 bg-slate-900/50">
+                `;
+                
+                filteredControls.forEach(cid => {
+                    const info = bpState.controlsIndex.get(cid);
+                    const modKey = `${sourceId}||${cid}`;
+                    const mods = bpState.modifications.get(modKey) || [];
+                    const isIsms = sourceId === bpState.isms.uuid;
+
+                    let badges = mods.length > 0 ? `<span class="bg-blue-900/50 text-blue-300 border border-blue-700 text-[10px] px-2 py-0.5 rounded font-bold ml-2">${mods.length} Anpassungen</span>` : '';
+
+                    html += `
+                        <li class="bg-slate-900 border border-slate-700 rounded-lg p-3 flex justify-between items-center group hover:border-slate-500 transition-colors">
+                            <div class="flex-1 min-w-0 pr-4">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="font-bold text-white font-mono text-sm">${cid}</span>
+                                    ${badges}
+                                </div>
+                                <div class="text-xs text-slate-400 truncate">${info?.title || 'Titel nicht im Basis-Katalog'}</div>
+                            </div>
+                            <div class="flex items-center gap-2 flex-shrink-0 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button onclick="openModifyModal('${cid}', '${sourceId}', '${title.replace(/'/g, "\\'")}')" class="px-3 py-1.5 bg-slate-700 text-blue-300 hover:bg-slate-600 rounded text-xs font-bold transition-colors">⚙️ Modify</button>
+                                ${isIsms 
+                                    ? `<button disabled class="px-3 py-1.5 bg-slate-800/50 text-slate-600 border border-slate-700 rounded text-xs font-bold cursor-not-allowed" title="ISMS Controls können hier nicht gelöscht werden">🔒</button>`
+                                    : `<button onclick="removeControl('${cid}', '${sourceId}')" class="px-3 py-1.5 bg-slate-800 text-red-400 hover:bg-slate-700 border border-slate-700 rounded text-xs font-bold transition-colors">✕</button>` 
+                                }
+                            </div>
+                        </li>
+                    `;
+                });
+                html += `</ul></div>`;
+                return html;
+            }
+
+            let fullHtml = '';
+            // ISMS standardmäßig geöffnet, der Rest initial geschlossen
+            fullHtml += renderGroup('Zwingendes Basis ISMS', '<span class="px-2 py-0.5 rounded bg-emerald-900 text-emerald-300 text-[10px] font-bold">🔒 ISMS</span>', bpState.isms.controls, bpState.isms.uuid, true);
+            bpState.components.forEach(c => {
+                fullHtml += renderGroup(`Asset: ${c.name}`, '<span class="px-2 py-0.5 rounded bg-indigo-900 text-indigo-300 text-[10px] font-bold">📦 ASSET</span>', c.controls, c.id, false);
+            });
+            fullHtml += renderGroup('Manuell im Profil (Global)', '<span class="px-2 py-0.5 rounded bg-slate-700 text-slate-300 text-[10px] font-bold">✍️ MANUELL</span>', bpState.manualControls, 'manual', true);
+
+            if(fullHtml === '') fullHtml = `<div class="text-slate-500 text-sm italic p-4 bg-slate-900 rounded-lg border border-slate-700 text-center">Keine Controls vorhanden oder Filter trifft nicht zu.</div>`;
+            list.innerHTML = fullHtml;
+        }
+
+        window.toggleSubSection = function(sourceId) {
+            const content = document.getElementById(`content-${sourceId}`);
+            const icon = document.getElementById(`icon-${sourceId}`);
+            if(content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('open');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('open');
+            }
+        }
+
+        window.removeControl = function(cid, sourceId) { 
+            if(sourceId === 'manual') {
+                bpState.manualControls.delete(cid);
+            } else if(sourceId !== bpState.isms.uuid) {
+                const comp = bpState.components.find(c => c.id === sourceId);
+                if(comp) comp.controls.delete(cid);
+            }
+            bpState.modifications.delete(`${sourceId}||${cid}`); 
+            renderTailoredList(document.getElementById('tailoring-search-input')?.value || ''); 
+        }
+
+        // --- MODIFY MODAL LOGIC ---
+        window.openModifyModal = function(cid, sourceId, sourceName) {
+            currentActiveControlId = cid;
+            currentModifySourceId = sourceId;
+
+            document.getElementById('m-control-id').textContent = cid;
+            document.getElementById('m-context-name').textContent = sourceName;
+
+            const info = bpState.controlsIndex.get(cid);
+            document.getElementById('m-catalog-title').textContent = info?.title || "Details unbekannt";
+            document.getElementById('m-catalog-prose').textContent = info?.text || "Kein Text verfügbar.";
+            document.getElementById('m-param-prefix').textContent = cid;
+            document.getElementById('m-param-suffix').value = '_prm_1';
+            document.getElementById('m-param-value').value = '';
+            document.getElementById('m-alter-text').value = '';
+            
+            refreshModifyList();
+            
+            const modal = document.getElementById('modify-modal');
+            modal.classList.remove('hidden');
+            switchModifyTab('param');
+        }
+
+        window.closeModifyModal = function() {
+            document.getElementById('modify-modal').classList.add('hidden');
+            currentActiveControlId = null;
+            currentModifySourceId = null;
+            renderTailoredList(document.getElementById('tailoring-search-input')?.value || '');
+        }
+
+        window.switchModifyTab = function(t) {
+            document.getElementById('tab-param-content').style.display = t === 'param' ? 'block' : 'none';
+            document.getElementById('tab-alter-content').style.display = t === 'alter' ? 'block' : 'none';
+            document.getElementById('tab-param-btn').className = t === 'param' ? "flex-1 py-2 text-center text-emerald-400 border-b-2 border-emerald-500 font-bold text-sm" : "flex-1 py-2 text-center text-slate-500 hover:text-slate-300 border-b-2 border-transparent font-medium text-sm";
+            document.getElementById('tab-alter-btn').className = t === 'alter' ? "flex-1 py-2 text-center text-emerald-400 border-b-2 border-emerald-500 font-bold text-sm" : "flex-1 py-2 text-center text-slate-500 hover:text-slate-300 border-b-2 border-transparent font-medium text-sm";
+        }
+
+        window.addModification = function(type) {
+            if(!currentActiveControlId || !currentModifySourceId) return;
+            const modKey = `${currentModifySourceId}||${currentActiveControlId}`;
+            const mods = bpState.modifications.get(modKey) || [];
+            
+            if(type === 'param') {
+                const s = document.getElementById('m-param-suffix').value.trim();
+                const v = document.getElementById('m-param-value').value.trim();
+                if(!s || !v) return;
+                const pid = `${currentActiveControlId}${s}`;
+                const idx = mods.findIndex(m => m.type === 'set-parameter' && m.paramId === pid);
+                if(idx > -1) mods.splice(idx, 1);
+                mods.push({ type: 'set-parameter', paramId: pid, value: v });
+                document.getElementById('m-param-value').value = '';
+            } else {
+                const pos = document.getElementById('m-alter-pos').value;
+                const txt = document.getElementById('m-alter-text').value.trim();
+                if(!txt) return;
+                mods.push({ type: 'alter', position: pos, text: txt });
+                document.getElementById('m-alter-text').value = '';
+            }
+            bpState.modifications.set(modKey, mods);
+            refreshModifyList();
+        }
+
+        function refreshModifyList() {
+            const list = document.getElementById('m-mod-list');
+            list.innerHTML = '';
+            const modKey = `${currentModifySourceId}||${currentActiveControlId}`;
+            const mods = bpState.modifications.get(modKey) || [];
+            mods.forEach((m, i) => {
+                const li = document.createElement('li');
+                li.className = "flex justify-between items-center bg-slate-900 p-2.5 rounded border border-slate-700 shadow-sm text-sm";
+                if(m.type === 'set-parameter') {
+                    li.innerHTML = `<div><span class="font-bold text-emerald-400 bg-emerald-900/50 px-1.5 py-0.5 rounded text-[10px] mr-2 uppercase">Param</span> <span class="font-mono text-slate-300">${m.paramId}</span> = <span class="italic text-white">"${m.value}"</span></div>`;
+                } else {
+                    li.innerHTML = `<div><span class="font-bold text-purple-400 bg-purple-900/50 px-1.5 py-0.5 rounded text-[10px] mr-2 uppercase">Alter</span> <span class="text-slate-500 text-xs uppercase">(${m.position})</span> <span class="italic text-slate-300 truncate inline-block max-w-[200px] align-bottom ml-2">"${m.text}"</span></div>`;
+                }
+                li.innerHTML += `<button onclick="removeMod(${i})" class="text-red-400 hover:text-red-300 font-bold px-2 py-1">✕</button>`;
+                list.appendChild(li);
+            });
+        }
+        window.removeMod = function(i) { 
+            bpState.modifications.get(`${currentModifySourceId}||${currentActiveControlId}`).splice(i, 1); 
+            refreshModifyList(); 
+        }
+
+        // --- SECTION 4: RISK ANALYSIS ---
+        function renderRiskAnalysisHTML() {
+            return `
+                <div class="mb-4 flex justify-between items-center">
+                    <p class="text-sm text-slate-400">Controls aus der Risikoanalyse werden global (wie "manuell") dem Profil hinzugefügt.</p>
+                    <button onclick="addNewRisk()" class="bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg shadow-md hover:bg-indigo-500 transition duration-150 text-sm">
+                        + Neues Risiko
+                    </button>
+                </div>
+                <div id="risk-list-container" class="space-y-4"></div>
+            `;
+        }
+
+        window.addNewRisk = function() {
+            bpState.riskData.push({
+                uuid: crypto.randomUUID(), title: "Neues Risiko", description: "", threat: "",
+                likelihood: "medium", impact: "medium", mitigatingControls: []
+            });
+            refreshRiskUI();
+        }
+
+        function refreshRiskUI() {
+            const container = document.getElementById('risk-list-container');
+            if (!container) return;
+            
+            const openSections = new Set();
+            document.querySelectorAll('#risk-list-container .collapsible-content.open').forEach(el => openSections.add(el.id));
+
+            if(bpState.riskData.length === 0) {
+                container.innerHTML = `<p class="text-slate-500 text-sm italic text-center py-6 bg-slate-900 rounded-lg border border-slate-700">Noch keine Risiken definiert.</p>`;
+                return;
+            }
+
+            container.innerHTML = bpState.riskData.map(r => 
+                createCollapsibleSection(`risk-${r.uuid}`, `${r.title} (${r.mitigatingControls.length} Controls)`, renderRiskEditor(r), openSections.has(`risk-${r.uuid}-content`))
+            ).join('');
+            
+            attachCollapsibleListeners();
+        }
+
+        function renderRiskEditor(risk) {
+            const lOpts = ['low', 'medium', 'high', 'very-high'];
+            const escapes = str => (str||'').replace(/"/g, '&quot;');
+            
+            let controlsHtml = risk.mitigatingControls.length === 0 ? '<p class="text-sm text-slate-500 italic">Keine Controls ausgewählt.</p>' : '<ul class="space-y-2">';
+            risk.mitigatingControls.forEach((c, idx) => {
+                let badge = c.source === 'catalog' ? `<span class="ml-2 px-2 text-[10px] uppercase font-bold rounded-full bg-blue-900 text-blue-300 border border-blue-700">Katalog</span>` 
+                                                   : `<span class="ml-2 px-2 text-[10px] uppercase font-bold rounded-full bg-emerald-900 text-emerald-300 border border-emerald-700">Custom</span>`;
+                controlsHtml += `
+                    <li class="flex justify-between items-center p-2.5 bg-slate-900 border border-slate-700 rounded-lg">
+                        <span class="text-sm text-white font-mono">${c.id} ${badge}</span>
+                        <button onclick="removeControlFromRisk('${risk.uuid}', ${idx})" class="text-red-400 hover:text-red-300 font-bold px-2">✕</button>
+                    </li>`;
+            });
+            if(risk.mitigatingControls.length > 0) controlsHtml += '</ul>';
+
+            return `
+                <div class="space-y-5" onchange="updateRiskDetails('${risk.uuid}', this)">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Titel</label>
+                            <input type="text" name="title" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500" value="${escapes(risk.title)}">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Beschreibung</label>
+                            <textarea name="description" rows="2" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">${escapes(risk.description)}</textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Eintrittswahrscheinlichkeit</label>
+                            <select name="likelihood" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                                ${lOpts.map(o => `<option value="${o}" ${risk.likelihood===o?'selected':''}>${o}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Schadenausmaß</label>
+                            <select name="impact" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                                ${lOpts.map(o => `<option value="${o}" ${risk.impact===o?'selected':''}>${o}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-slate-700">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-sm font-semibold text-white">Mitigierende Controls</h4>
+                            <button onclick="openRiskSearchModal('${risk.uuid}')" type="button" class="bg-slate-700 text-emerald-300 text-xs font-bold py-1.5 px-3 rounded hover:bg-slate-600 transition-colors">
+                                + Control
+                            </button>
+                        </div>
+                        ${controlsHtml}
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-700 flex justify-end">
+                        <button onclick="deleteRisk('${risk.uuid}')" type="button" class="text-red-400 hover:text-red-300 text-xs font-bold py-1 px-3 border border-red-900 hover:bg-red-900/30 rounded transition-colors">Risiko löschen</button>
+                    </div>
+                </div>`;
+        }
+
+        window.updateRiskDetails = function(uuid, el) {
+            const risk = bpState.riskData.find(r => r.uuid === uuid);
+            if(!risk) return;
+            risk.title = el.querySelector('[name="title"]').value;
+            risk.description = el.querySelector('[name="description"]').value;
+            risk.likelihood = el.querySelector('[name="likelihood"]').value;
+            risk.impact = el.querySelector('[name="impact"]').value;
+            
+            const section = document.querySelector(`[data-section-id="risk-${uuid}"]`);
+            if(section) section.querySelector('h2').textContent = `${risk.title} (${risk.mitigatingControls.length} Controls)`;
+        }
+
+        window.deleteRisk = function(uuid) {
+            bpState.riskData = bpState.riskData.filter(r => r.uuid !== uuid);
+            refreshRiskUI();
+        }
+
+        window.removeControlFromRisk = function(uuid, idx) {
+            const risk = bpState.riskData.find(r => r.uuid === uuid);
+            if(risk) risk.mitigatingControls.splice(idx, 1);
+            refreshRiskUI();
+        }
+
+        // --- RISK MODAL (SEARCH & CUSTOM) ---
+        window.openRiskSearchModal = function(uuid) {
+            currentRiskUuidForSearch = uuid;
+            document.getElementById('search-modal').classList.remove('hidden');
+            document.getElementById('tab-search').click();
+            document.getElementById('catalog-search-input').value = '';
+            handleRiskCatalogSearch('');
+        }
+
+        document.getElementById('close-search-modal-button').addEventListener('click', () => {
+            document.getElementById('search-modal').classList.add('hidden');
+        });
+
+        function setupRiskTabListeners() {
+            document.querySelectorAll('#search-modal .tab-button').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('#search-modal .tab-button').forEach(b => {
+                        b.classList.remove('border-emerald-500', 'text-emerald-400');
+                        b.classList.add('border-transparent', 'text-slate-400');
+                    });
+                    btn.classList.add('border-emerald-500', 'text-emerald-400');
+                    btn.classList.remove('border-transparent', 'text-slate-400');
+                    document.querySelectorAll('#search-modal .tab-content').forEach(c => c.classList.add('hidden'));
+                    document.getElementById(btn.dataset.target).classList.remove('hidden');
+                });
+            });
+
+            document.getElementById('add-custom-control-button').addEventListener('click', () => {
+                const id = document.getElementById('custom-control-id').value.trim();
+                const title = document.getElementById('custom-control-title').value.trim();
+                const stmt = document.getElementById('custom-control-statement').value.trim();
+                if(!id || !title || !stmt) return alert("Alle Felder ausfüllen.");
+                
+                bpState.customControls.set(id, { id, title, statement: stmt, source: 'custom' });
+                addControlToRisk({ id, source: 'custom' });
+                document.getElementById('search-modal').classList.add('hidden');
+            });
+        }
+
+        function setupSearchListeners() {
+            document.getElementById('catalog-search-input').addEventListener('input', (e) => handleRiskCatalogSearch(e.target.value));
+        }
+
+        function handleRiskCatalogSearch(query) {
+            query = query.toLowerCase().trim();
+            const resultsDiv = document.getElementById('catalog-search-results');
+            const results = [];
+            
+            for (const [id, data] of bpState.controlsIndex.entries()) {
+                if(query.length === 0 || id.toLowerCase().includes(query) || data.title.toLowerCase().includes(query)) {
+                    results.push({ id, title: data.title });
+                }
+            }
+
+            results.sort((a, b) => a.id.localeCompare(b.id));
+            const limit = results.slice(0, 100);
+
+            resultsDiv.innerHTML = limit.length === 0 ? '<p class="text-slate-500 text-sm p-3">Keine gefunden.</p>' : limit.map(r => `
+                <div class="search-result-item p-3 rounded-lg cursor-pointer flex justify-between items-center border-b border-slate-700 last:border-0" onclick="addControlToRisk({id:'${r.id}', source:'catalog'})">
+                    <div>
+                        <p class="font-bold text-white font-mono text-sm">${r.id}</p>
+                        <p class="text-xs text-slate-400 mt-0.5">${r.title}</p>
+                    </div>
+                    <span class="text-emerald-400 font-bold px-2">+</span>
+                </div>
+            `).join('');
+        }
+
+        window.addControlToRisk = function(controlData) {
+            const risk = bpState.riskData.find(r => r.uuid === currentRiskUuidForSearch);
+            if(!risk) return;
+            if(risk.mitigatingControls.some(c => c.id === controlData.id)) return alert("Control bereits zugeordnet.");
+            
+            risk.mitigatingControls.push(controlData);
+            
+            if(controlData.source === 'catalog') {
+                bpState.manualControls.add(controlData.id);
+                renderTailoredList();
+            }
+
+            document.getElementById('search-modal').classList.add('hidden');
+            refreshRiskUI();
+        }
+
+        // --- SECTION 5: EXPORTS (OSCAL GENERATION) ---
+        function generateBlueprintPackage() {
+            const t = bpState.metadata.title || "Blaupause";
+            const profileData = generateProfile(t);
+            
+            const safeName = t.replace(/\s+/g,'_');
+            downloadJSON(profileData, `${safeName}_Profile.json`);
+            
+            // Generate SSP only if checkbox is checked. The SSP now embeds all Component implementations.
+            const generateSSPCheckbox = document.getElementById('generate-ssp-checkbox');
+            if(generateSSPCheckbox && generateSSPCheckbox.checked) {
+                const sspData = generateSSP(t, profileData.profile.uuid);
+                setTimeout(() => downloadJSON(sspData, `${safeName}_SSP.json`), 600);
+            }
+        }
+
+        function base64EncodeUnicode(str) {
+            const utf8Bytes = encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1));
+            return btoa(utf8Bytes);
+        }
+
+        function generateProfile(t) {
+            const ts = new Date().toISOString();
+            const setParams = [], altersMap = new Map();
+
+            // Profile only receives GLOBAL (manual) modifications
+            bpState.modifications.forEach((mods, key) => {
+                const [sourceId, cid] = key.split('||');
+                if(sourceId === 'manual') {
+                    mods.forEach(m => {
+                        if(m.type === 'set-parameter') setParams.push({ "param-id": m.paramId, values: [m.value] });
+                        else {
+                            if(!altersMap.has(cid)) altersMap.set(cid, []);
+                            altersMap.get(cid).push({ position: m.position, parts: [{ name: "statement", prose: m.text }] });
+                        }
+                    });
+                }
+            });
+
+            const alters = [];
+            altersMap.forEach((adds, cid) => alters.push({ "control-id": cid, adds: adds }));
+
+            const profile = {
+                profile: {
+                    uuid: crypto.randomUUID(),
+                    metadata: {
+                        title: `${t} - Profil`,
+                        version: bpState.metadata.version, "last-modified": ts, "oscal-version": "1.1.3",
+                        remarks: bpState.metadata.description,
+                        props: []
+                    },
+                    imports: [{ href: CATALOG_URL_BASE }],
+                    "back-matter": { resources: [] }
+                }
+            };
+
+            // Combine manual, assets, and ISMS controls for the Profile inclusion
+            const allReqIds = new Set([
+                ...bpState.manualControls,
+                ...bpState.isms.controls,
+                ...Array.from(bpState.customControls.keys())
+            ]);
+            bpState.components.forEach(c => c.controls.forEach(cid => allReqIds.add(cid)));
+
+            if(allReqIds.size > 0) {
+                profile.profile.imports[0]["include-controls"] = [{ "with-ids": Array.from(allReqIds).sort() }];
+            }
+
+            // Custom Controls (Risk Analysis)
+            if(bpState.customControls.size > 0) {
+                const catUuid = crypto.randomUUID();
+                const miniCat = {
+                    catalog: {
+                        uuid: crypto.randomUUID(),
+                        metadata: { title: "Custom Controls", "last-modified": ts, version: "1.0", "oscal-version": "1.1.3" },
+                        controls: Array.from(bpState.customControls.values()).map(c => ({ id: c.id, title: c.title, parts: [{ name: "statement", prose: c.statement }] }))
+                    }
+                };
+                profile.profile["back-matter"].resources.push({
+                    uuid: catUuid, title: "Benutzerdefinierte Controls",
+                    rlinks: [{ href: `#${catUuid}-data`, "media-type": "application/oscal.catalog+json" }],
+                    attachments: [{ uuid: `${catUuid}-data`, "media-type": "application/oscal.catalog+json", base64: { filename: "custom-controls.json", value: base64EncodeUnicode(JSON.stringify(miniCat)) } }]
+                });
+                profile.profile.imports.push({ href: `#${catUuid}`, "include-controls": [{ "with-ids": Array.from(bpState.customControls.keys()) }] });
+            }
+
+            // Risk Data Embed
+            if(bpState.riskData.length > 0) {
+                const riskUuid = crypto.randomUUID();
+                profile.profile["back-matter"].resources.push({
+                    uuid: riskUuid, title: "Risikoanalyse", description: "Details der Risikoanalyse",
+                    rlinks: [{ href: `#${riskUuid}-data`, "media-type": "application/json" }],
+                    attachments: [{ uuid: `${riskUuid}-data`, "media-type": "application/json", base64: { filename: "risk-analysis.json", value: base64EncodeUnicode(JSON.stringify({ risks: bpState.riskData })) } }]
+                });
+                profile.profile.metadata.props.push({ name: "risk-analysis-details-ref", value: `#${riskUuid}` });
+            }
+
+            if(setParams.length > 0 || alters.length > 0) {
+                profile.profile.modify = {};
+                if(setParams.length > 0) profile.profile.modify["set-parameters"] = setParams;
+                if(alters.length > 0) profile.profile.modify.alters = alters;
+            }
+
+            return profile;
+        }
+
+        function generateSSP(t, profileUuid) {
+            const sysUuid = crypto.randomUUID(); // Represents the overarching system
+
+            // 1. Build Components List for SSP
+            const sspComponents = [
+                { uuid: sysUuid, type: "this-system", title: `System: ${t}`, status: { state: "operational" }, description: "Das übergeordnete System dieser Blaupause." },
+                { uuid: bpState.isms.uuid, type: "software", title: `Basis ISMS (${bpState.isms.type})`, status: { state: "operational" }, remarks: `Referenced from: ${bpState.isms.url}` }
+            ];
+            
+            bpState.components.forEach(c => {
+                sspComponents.push({ uuid: c.id, type: "software", title: c.name, status: { state: c.state || "operational" }, remarks: `Referenced from: ${c.source}` });
+            });
+
+            // 2. Map Controls to Components (SSP by-components)
+            const allReqIds = new Set([
+                ...bpState.manualControls,
+                ...bpState.isms.controls,
+                ...Array.from(bpState.customControls.keys())
+            ]);
+            bpState.components.forEach(c => c.controls.forEach(cid => allReqIds.add(cid)));
+
+            const reqs = Array.from(allReqIds).sort().map(cid => {
+                const byComps = [];
+
+                // Helper to generate the specific 'by-component' object if a source implements this control
+                const pushByComponent = (sourceId, sourceSet) => {
+                    if(sourceSet && sourceSet.has(cid)) {
+                        const mods = bpState.modifications.get(`${sourceId}||${cid}`) || [];
+                        let desc = "Anforderung durch Komponente umgesetzt.";
+                        const setParams = [];
+
+                        mods.forEach(m => {
+                            if(m.type === 'set-parameter') setParams.push({ "param-id": m.paramId, values: [m.value] });
+                            else if (m.type === 'alter') desc += `\n\n[Ergänzung ${m.position}]: ${m.text}`;
+                        });
+
+                        const bc = { "component-uuid": sourceId, "uuid": crypto.randomUUID(), description: desc };
+                        if(setParams.length > 0) bc["set-parameters"] = setParams;
+                        byComps.push(bc);
+                    }
+                };
+
+                // Check all possible sources for this control
+                pushByComponent(bpState.isms.uuid, bpState.isms.controls);
+                bpState.components.forEach(c => pushByComponent(c.id, c.controls));
+
+                // If control was added manually or via custom risk, map it to the overarching system
+                if(bpState.manualControls.has(cid) || bpState.customControls.has(cid)) {
+                    // Note: Manual parameters go into Profile, so SSP just says it covers it
+                    byComps.push({ "component-uuid": sysUuid, "uuid": crypto.randomUUID(), description: bpState.customControls.has(cid) ? "Benutzerdefiniertes Risiko-Control." : "Global/Manuell der Blaupause hinzugefügt." });
+                }
+
+                return {
+                    uuid: crypto.randomUUID(),
+                    "control-id": cid,
+                    description: "Wird durch verknüpfte Komponenten abgedeckt.",
+                    "by-components": byComps
+                };
+            });
+
+            return {
+                "system-security-plan": {
+                    uuid: crypto.randomUUID(),
+                    metadata: { title: `${t} - Muster-SSP`, version: bpState.metadata.version, "last-modified": new Date().toISOString(), "oscal-version": "1.1.3", remarks: bpState.metadata.description },
+                    "import-profile": { href: `${t.replace(/\s+/g,'_')}_Profile.json` },
+                    "system-characteristics": { "system-ids": [{ id: crypto.randomUUID() }], "system-name": `${t} Muster-Verbund`, description: "Generiert aus Blaupause", status: { state: "operational" } },
+                    "system-implementation": { components: sspComponents },
+                    "control-implementation": { description: "Blueprint implementation", "implemented-requirements": reqs.length > 0 ? reqs : [{ uuid: crypto.randomUUID(), "control-id": "PLACEHOLDER", description: "Empty" }] }
+                }
+            };
+        }
+
+        function downloadJSON(obj, filename) {
+            const a = document.createElement('a');
+            const blob = new Blob(["\uFEFF" + JSON.stringify(obj, null, 2)], { type: 'application/json;charset=utf-8' });
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click(); document.body.removeChild(a); URL.revokeObjectURL(a.href);
+        }
+    </script>
+</body>
+</html>
