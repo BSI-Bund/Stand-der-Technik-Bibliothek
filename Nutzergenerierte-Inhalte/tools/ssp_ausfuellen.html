@@ -414,7 +414,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
 
         // --- Workspace Loading & Management ---
 
-        async function handleFileUpload(event, isSsp) {
+async function handleFileUpload(event, isSsp) {
             const files = event.target.files;
             if (!files.length) return;
 
@@ -437,14 +437,32 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                     reader.onload = (e) => {
                         try {
                             const json = JSON.parse(e.target.result);
+
+                            // --- NEUE TYP-PRÜFUNG ---
+                            if (isSsp) {
+                                // Wenn es das SSP-Upload-Feld ist, MUSS der Root-Knoten "system-security-plan" sein
+                                if (!json['system-security-plan']) {
+                                    throw new Error(`Die Datei "${file.name}" ist kein gültiges SSP! Erwartet wurde ein "system-security-plan", gefunden wurde stattdessen z.B. ein "${Object.keys(json)[0]}".`);
+                                }
+                            } else {
+                                // Bei assoziierten Dateien prüfen wir, ob es sich überhaupt um ein bekanntes OSCAL-Format handelt
+                                const validOscalKeys = ['catalog', 'profile', 'component-definition', 'system-security-plan', 'assessment-plan', 'assessment-results', 'plan-of-action-and-milestones'];
+                                const isOscal = validOscalKeys.some(key => json[key] !== undefined);
+                                if (!isOscal) {
+                                    throw new Error(`Die Datei "${file.name}" scheint keine gültige OSCAL-Datei zu sein (unbekannter Root-Knoten).`);
+                                }
+                            }
+                            // ------------------------
+
                             workspaceFiles.set(file.name, json);
                             if (isSsp && file.name === files[0].name) {
                                 sspData = json;
                             }
                             resolve();
                         } catch (error) {
-                            console.error(`Fehler beim Parsen von ${file.name}:`, error);
-                            reject(`Datei ${file.name} ist kein gültiges JSON.`);
+                            console.error(`Fehler beim Parsen/Prüfen von ${file.name}:`, error);
+                            // Gib die spezifische Fehlermeldung oder einen Standard-Parser-Fehler zurück
+                            reject(error.message || `Datei ${file.name} ist kein gültiges JSON.`);
                         }
                     };
                     reader.onerror = () => reject(`Datei ${file.name} konnte nicht gelesen werden.`);
@@ -457,11 +475,19 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                 updateWorkspaceStatus();
                 await processWorkspace();
             } catch (error) {
-                alert("Fehler beim Laden der Dateien: " + error);
+                // Fehler anzeigen und Lade-Indikator verstecken
+                alert("Fehler beim Laden:\n\n" + error);
                 loadingIndicator.classList.add('hidden');
+                
+                // Input-Feld leeren, damit der Nutzer es sofort nochmal versuchen kann
+                if (isSsp) {
+                    document.getElementById('ssp-uploader').value = '';
+                } else {
+                    document.getElementById('associated-uploader').value = '';
+                }
             }
         }
-
+        
         function updateWorkspaceStatus() {
             let statusHtml = `<p>Dateien im Workspace (${workspaceFiles.size}):</p><ul class="list-disc list-inside ml-4 mt-1">`;
             const originalSspName = sspFileName.replace('-edited.json', '.json');
@@ -1648,3 +1674,4 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
     </script>
 </body>
 </html>
+
