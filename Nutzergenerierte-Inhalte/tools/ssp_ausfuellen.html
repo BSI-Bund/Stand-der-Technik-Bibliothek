@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSCAL SSP Editor + Workspace (Enhanced)</title>
+    <title>OSCAL SSP Editor + Workspace (Enhanced & Multi-AI)</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <!-- Marked.js für Markdown Rendering der KI Antworten -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
     </script>
@@ -20,6 +22,26 @@
         ::-webkit-scrollbar-track { background: #1e293b; }
         ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        /* --- KI CSS --- */
+        body:not(.has-api-key) .ai-actions,
+        body:not(.has-api-key) .ai-dependent {
+            display: none !important;
+        }
+        .ai-loader { display: none; width: 20px; height: 20px; border: 3px solid rgba(168, 85, 247, 0.2); border-top: 3px solid #a855f7; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* KI Markdown Styling für Dark Mode */
+        .ai-response-content { font-size: 0.875rem; line-height: 1.6; color: #e2e8f0; }
+        .ai-response-content h1, .ai-response-content h2, .ai-response-content h3 { color: #f8fafc; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.75em; }
+        .ai-response-content p { margin-bottom: 1em; }
+        .ai-response-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; }
+        .ai-response-content ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; }
+        .ai-response-content strong { color: #f8fafc; font-weight: 600; }
+        .ai-response-content table { width: 100%; border-collapse: collapse; margin-bottom: 1em; border-color: #475569; }
+        .ai-response-content th, .ai-response-content td { border: 1px solid #475569; padding: 0.5em; }
+        .ai-response-content th { background-color: #334155; }
+        .ai-response-content code { background-color: #334155; padding: 0.2em 0.4em; border-radius: 0.25em; font-family: monospace; }
     </style>
 </head>
 <body class="h-full p-4 md:p-8 font-sans text-slate-200">
@@ -29,6 +51,28 @@
             <h1 class="text-3xl font-bold text-white">OSCAL SSP Editor (Workspace)</h1>
             <p class="mt-2 text-slate-300">Laden Sie das SSP und alle lokal referenzierten Dateien (z.B. Risiko-Profile, Komponenten), um den Workspace zu initialisieren.</p>
         </header>
+
+        <!-- KI Einstellungen -->
+        <div class="mb-6 p-4 bg-slate-700/50 rounded-lg shadow-md border border-slate-600">
+            <h2 class="text-lg font-semibold text-white mb-4">✨ KI-Assistent (Gemini)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-2">API Key</label>
+                    <input type="password" id="apiKeyInput" class="block w-full rounded-md border-slate-600 bg-slate-800 text-white shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm font-mono" placeholder="AIzaSy..." oninput="toggleAiButtons()">
+                    <p class="text-xs text-slate-400 mt-2">Wird lokal im Browser gespeichert.</p>
+                </div>
+                <div class="ai-dependent">
+                    <label class="block text-sm font-medium text-slate-300 mb-2">System Kontext (System Prompt)</label>
+                    <textarea id="aiContextInput" rows="2" class="block w-full rounded-md border-slate-600 bg-slate-800 text-white shadow-sm focus:border-purple-500 focus:ring-purple-500 sm:text-sm" placeholder="z.B. Wir sind ein mittelständisches Unternehmen und NIS2 / KRITIS relevant..."></textarea>
+                    <p class="text-xs text-slate-400 mt-2">Wird bei KI-Anfragen als Kontext berücksichtigt.</p>
+                </div>
+            </div>
+            <div class="mt-4 flex flex-wrap gap-4 ai-dependent">
+                <button onclick="exportAiCache()" class="text-sm font-medium bg-purple-900/40 text-purple-300 border border-purple-700/50 px-4 py-2 rounded-md hover:bg-purple-800 transition">💾 KI-Antworten exportieren</button>
+                <button onclick="document.getElementById('aiCacheInput').click()" class="text-sm font-medium bg-emerald-900/40 text-emerald-300 border border-emerald-700/50 px-4 py-2 rounded-md hover:bg-emerald-800 transition">📂 KI-Antworten importieren</button>
+                <input type="file" id="aiCacheInput" accept=".json" class="hidden" onchange="importAiCache(event)">
+            </div>
+        </div>
 
         <div class="mb-6 p-4 bg-slate-700/50 rounded-lg shadow-md border border-slate-600">
             <h2 class="text-lg font-semibold text-white mb-4">Workspace laden</h2>
@@ -67,7 +111,7 @@
 
     <script>
         // --- CONFIG ---
-        // NEU: Fallback URL für den Katalog
+        // Fallback URL für den Katalog
         const GS_PLUS_CATALOG_URL = 'https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json';
 
         // --- Workspace State ---
@@ -78,11 +122,15 @@
         // --- Data State ---
         let catalogControlMap = new Map(); 
         let catalogParamMap = new Map();
-        // NEU: Speichert Modifikationen (Alters, Set-Params) aus dem importierten Profil
+        // Speichert Modifikationen (Alters, Set-Params) aus dem importierten Profil
         let profileModifications = { setParams: new Map(), alters: new Map() }; 
         let loadedRiskData = [];
         let componentDefinitions = new Map(); 
         let resourceLoadStatus = []; 
+
+        // --- KI State ---
+        let aiCache = {};
+        const apiKey = ""; 
 
         // --- UI Elemente ---
         const sspUploader = document.getElementById('ssp-uploader');
@@ -97,6 +145,213 @@
         sspUploader.addEventListener('change', (e) => handleFileUpload(e, true));
         associatedUploader.addEventListener('change', (e) => handleFileUpload(e, false));
         saveButton.addEventListener('click', handleFileSave);
+
+        // --- KI (Gemini) Funktionen ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedKey = localStorage.getItem('gspp_gemini_apikey');
+            if (savedKey) {
+                document.getElementById('apiKeyInput').value = savedKey;
+                toggleAiButtons(); 
+            }
+            const savedContext = localStorage.getItem('gspp_gemini_context');
+            if (savedContext) {
+                document.getElementById('aiContextInput').value = savedContext;
+            }
+            const savedCache = localStorage.getItem('gspp_ai_cache');
+            if (savedCache) {
+                try { aiCache = JSON.parse(savedCache); } catch(e) {}
+            }
+        });
+
+        document.getElementById('aiContextInput').addEventListener('input', (e) => {
+            localStorage.setItem('gspp_gemini_context', e.target.value);
+        });
+
+        function toggleAiButtons() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (key.length > 0) {
+                document.body.classList.add('has-api-key');
+                localStorage.setItem('gspp_gemini_apikey', key); 
+            } else {
+                document.body.classList.remove('has-api-key');
+                localStorage.removeItem('gspp_gemini_apikey');   
+            }
+        }
+
+        async function callGemini(prompt, systemPrompt = "") {
+            let currentApiKey = document.getElementById('apiKeyInput').value.trim();
+            if (!currentApiKey) currentApiKey = apiKey; 
+
+            if (!currentApiKey) {
+                return "⚠️ Fehler: API Key fehlt.";
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key=${currentApiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                tools: [{ google_search: {} }]
+            };
+
+            if (systemPrompt) {
+                payload.system_instruction = { parts: [{ text: systemPrompt }] };
+            }
+
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                console.error("API Fehler Details:", errorData);
+                throw new Error(`Status: ${res.status} - ${errorData.error?.message || 'Unbekannt'}`);
+            }
+            
+            const json = await res.json();
+            return json.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort.";
+        }
+
+        async function triggerAI(uniqueDomId, controlId, type, forceRefresh = false) {
+            const card = document.getElementById('entry-' + uniqueDomId);
+            if (!card) return;
+            
+            const responseArea = card.querySelector('.ai-response-area');
+            const contentArea = card.querySelector('.ai-response-content');
+            const loader = card.querySelector('.ai-loader');
+            
+            responseArea.classList.remove('hidden');
+            
+            // 1. Cache prüfen
+            if (!forceRefresh && aiCache[controlId] && aiCache[controlId][type]) {
+                const cachedRes = aiCache[controlId][type];
+                contentArea.innerHTML = (typeof marked !== 'undefined' ? marked.parse(cachedRes) : cachedRes) + 
+                    `<div class="mt-4 pt-3 border-t border-purple-500/20 text-right">
+                        <button onclick="triggerAI('${uniqueDomId}', '${controlId}', '${type}', true)" class="text-xs text-purple-400 hover:text-purple-300 font-semibold underline">🔄 Neu generieren</button>
+                    </div>`;
+                return;
+            }
+            
+            loader.style.display = 'block';
+            contentArea.innerHTML = '<i class="text-slate-400">KI analysiert...</i>';
+
+            const catCtrl = catalogControlMap.get(controlId);
+            const title = catCtrl?.title || controlId;
+            const statementPart = catCtrl?.parts?.find(p => p.name === 'statement');
+            const prose = statementPart?.prose || '';
+            const guidance = catCtrl?.parts?.find(p => p.name === 'guidance')?.prose || '';
+            
+            // --- RAG: Finde benachbarte Controls (gleicher Präfix) aus dem Katalog ---
+            const prefix = controlId.substring(0, controlId.lastIndexOf('.') + 1);
+            let relatedControlsText = "";
+            
+            if (prefix) {
+                const siblings = [];
+                catalogControlMap.forEach((v, k) => {
+                    if (k.startsWith(prefix) && k !== controlId) {
+                        const sProse = v.parts?.find(p => p.name === 'statement')?.prose || '';
+                        siblings.push(`- ${k}: ${sProse}`);
+                    }
+                });
+
+                if (siblings.length > 0) {
+                    relatedControlsText = `\n\nBeachte zur inhaltlichen Abgrenzung, dass es im selben Modul auch noch diese ähnlichen Controls gibt. Diese sind HIER NICHT THEMA! Bitte stelle sicher, dass sich deine Antwort inhaltlich nicht mit ihnen überschneidet:\n${siblings.slice(0, 10).join('\n')}`;
+                }
+            }
+
+            let prompt = "";
+            const heute = new Date().toLocaleDateString('de-DE'); 
+            let system = `Du bist ein Experte für IT-Sicherheit, ISO 27001, IT-Grundschutz *und* den neuen BSI Grundschutz++. Wo passend referenzierst Du aktuelle Materialen des BSI: C5, Standards, B3S Profile, Technische Richtlinien (TR) und Mindestandards (*keine* Grundschutz Bausteine!)
+Antworte in strukturierter Markdown-Form (Listen, Fettgedrucktes). Wichtig: Dein Fokus liegt ausschließlich auf der in der User-Anfrage genannten Einzelmaßnahme. 
+Verstehe: Der neue Grundschutz++ nutzt einen granularen Katalog, in dem jede Anforderung nur aus einem Satz besteht. Andere Aspekte des Themas stehen in anderen Anforderungen! 
+Keine Einleitenden Worte über deine Rolle oder wie der GRundschutz++ aufgebaut ist. Fokus ist nur die Aufgabe ohne Ausschmückungen. Du Schreibst wie ein Experte, aber nicht wie
+eine KI. Dein Satzbau ist Abwechslungsreich, konkret, präßise und du nutzt keine KI Floskeln. Heute ist der ${heute}.`;
+
+            if (type === 'edition2023') {
+                system = `Du bist ein Experte für den BSI IT-Grundschutz. Deine Aufgabe ist das genaue Mapping zwischen dem neuen Grundschutz++ und den Bausteinen des IT-Grundschutz-Kompendiums Edition 2023. Antworte in strukturierter Markdown-Form ohne unnötige Floskeln.`;
+            }
+                        
+            const userContext = document.getElementById('aiContextInput').value.trim();
+            if (userContext) {
+                system += "\n\nBerücksichtige zwingend folgenden Unternehmenskontext für deine Antwort:\n" + userContext;
+            }
+            const guidanceText = guidance ? `\nZusätzliche Erläuterungen (Guidance): ${guidance}` : "";
+            
+            if (type === 'implementation') {
+                prompt = `Erstelle einen Umsetzungsvorschlag für die BSI Maßnahme "${title}". Beschreibung: ${prose}${guidanceText}. Nenne praktische Schritte. Drei sehr ausführliche Praxis Beispiele die alle Aspekte des Controls abdecken.`;
+            } else if (type === 'edition2023') {
+                prompt = `Suche gründlich nach *allen* passenden Anforderungen aus den IT-Grundschutz Bausteinen der Edition 2023, die zur Maßnahme "${title}" (Beschreibung: ${prose}${guidanceText}) passen. *Wichtig:* Nur Bausteine der Edition 2023, deren PDF haben "2023.pdf" im Namen!
+Nutze für deine Suche zwingend diese Parameter, um in den offiziellen BSI PDFs zu suchen:
+inurl:https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023 filetype:pdf
+
+*Wichtig*: Validiere jeden Namen und die Nummer der genannten Anforderungen und ob der Baustein dazu Wirklich aus der Edition 2023 ist penibel, bevor Du sie einfügst. Erfinde keine IDs! Nutze keine alten Editionen!
+
+Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
+| ID | Name der Anforderung | Begründung |
+|---|---|---|`;
+            } else {
+                prompt = `Welche Risiken bestehen bei Nicht-Umsetzung von "${title}"? Beschreibung: ${prose}. Nenne mindestens Gefahren mit kritischem Schadenspotential und mit hoher eintrittshäufigkeit.`;
+            }
+
+            prompt += relatedControlsText;
+
+            try {
+                const response = await callGemini(prompt, system);
+                                
+                // 2. In den Cache schreiben
+                if (!aiCache[controlId]) aiCache[controlId] = {};
+                aiCache[controlId][type] = response;
+                localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
+
+                contentArea.innerHTML = (typeof marked !== 'undefined' ? marked.parse(response) : response) + 
+                    `<div class="mt-4 pt-3 border-t border-purple-500/20 text-right">
+                        <button onclick="triggerAI('${uniqueDomId}', '${controlId}', '${type}', true)" class="text-xs text-purple-400 hover:text-purple-300 font-semibold underline">🔄 Neu generieren</button>
+                    </div>`;
+
+            } catch (e) {
+                contentArea.innerHTML = `<span class="text-red-400">Fehler bei der KI-Anfrage (${e.message}).</span>`;
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        function exportAiCache() {
+            if (Object.keys(aiCache).length === 0) {
+                alert("Der KI-Cache ist noch leer. Generiere zuerst ein paar Antworten.");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(aiCache, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "gspp_ai_cache_export.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        function importAiCache(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (typeof importedData !== 'object' || importedData === null) throw new Error("Ungültiges JSON-Format.");
+
+                    // Cache mit importierten Daten zusammenführen (bestehende überschreiben, neue hinzufügen)
+                    aiCache = { ...aiCache, ...importedData };
+                    localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
+                    
+                    alert("KI-Antworten erfolgreich importiert!");
+                    event.target.value = ''; // Input zurücksetzen
+                } catch (error) {
+                    alert("Fehler beim Importieren: " + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
 
         // --- Helper Functions ---
         function generateUUID() {
@@ -221,7 +476,6 @@
             workspaceStatus.innerHTML = statusHtml;
         }
 
-        // UPDATE: Added fallback catalog loading
         async function processWorkspace() {
             editorDiv.innerHTML = '';
             editorDiv.classList.add('hidden');
@@ -250,7 +504,7 @@
                 await processComponentDefinitions(ssp);
                 await processMainCatalog(ssp);
 
-                // NEU: Fallback Catalog Loading, falls bisher kein Katalog geladen wurde
+                // Fallback Catalog Loading, falls bisher kein Katalog geladen wurde
                 if (catalogControlMap.size === 0) {
                     loadingText.textContent = 'Lade Fallback-Katalog (Grundschutz++)...';
                     await loadFallbackCatalog();
@@ -306,7 +560,6 @@
 
         // --- Data Processing Functions ---
 
-        // NEU: Funktion zum Laden des Fallback-Katalogs
         async function loadFallbackCatalog() {
             try {
                 // Wir nutzen loadReferencedResource, damit es im Status getrackt wird
@@ -333,7 +586,6 @@
             await Promise.all(loadPromises);
         }
 
-        // UPDATE: Added logic to look for catalogs inside component definitions
         async function processComponentDefinitions(ssp) {
             const components = ssp['system-implementation']?.components || [];
             const definitionLinks = new Set();
@@ -376,7 +628,6 @@
             await Promise.all(catalogLoadPromises);
         }
 
-        // UPDATE: Extrahiert Modifikationen (Alters, Set-Params) aus dem Hauptprofil
         async function processMainCatalog(ssp) {
             const profileHref = ssp['import-profile']?.href;
             if (!profileHref) return;
@@ -385,7 +636,7 @@
             if (profileData && profileData.profile) {
                 const profile = profileData.profile;
 
-                // 1. NEU: Extrahiere Modifikationen
+                // 1. Extrahiere Modifikationen
                 const modify = profile.modify;
                 if (modify) {
                     if (modify['set-parameters']) {
@@ -998,7 +1249,7 @@
             const statementPart = catCtrl?.parts?.find(p => p.name === 'statement');
             let proseText = statementPart?.prose || '';
 
-            // --- NEU: Apply 'Alters' modifications (before, starting, ending, after) ---
+            // --- Apply 'Alters' modifications (before, starting, ending, after) ---
             const alters = profileModifications.alters.get(controlId) || [];
 
             // Helper function to extract prose from parts
@@ -1063,7 +1314,7 @@
                 });
             }
             
-            // --- NEU: Render Params Inputs (Prioritize Profile Mods) ---
+            // --- Render Params Inputs (Prioritize Profile Mods) ---
             // Ensure we also show params defined ONLY in the modifications, even if not in the catalog prose, if they relate to this control
             profileModifications.setParams.forEach((val, pid) => {
                 // Heuristic: BSI params often start with the control ID.
@@ -1114,8 +1365,28 @@
             const compDesc = implementedReq?.description || '';
             const statements = implementedReq?.statements || [];
             
+            // --- KI Sektion (Gemini) ---
+            const aiSectionHtml = `
+                <div class="ai-actions mt-4 pt-4 border-t border-slate-600 flex flex-wrap gap-2">
+                    <button onclick="triggerAI('${uniqueDomId}', '${controlId}', 'implementation')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white text-xs font-semibold transition-colors duration-200 shadow-sm">
+                        ✨ Umsetzungsvorschlag
+                    </button>
+                    <button onclick="triggerAI('${uniqueDomId}', '${controlId}', 'risk')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white text-xs font-semibold transition-colors duration-200 shadow-sm">
+                        ✨ Risikoanalyse
+                    </button>
+                    <button onclick="triggerAI('${uniqueDomId}', '${controlId}', 'edition2023')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white text-xs font-semibold transition-colors duration-200 shadow-sm">
+                        ✨ Abgleich Edition 2023
+                    </button>
+                    <div class="ai-loader ml-2 my-auto"></div>
+                </div>
+                <div class="ai-response-area hidden mt-3 p-4 bg-purple-900/20 border border-purple-500/30 rounded-lg shadow-inner">
+                    <div class="ai-response-content prose prose-invert prose-sm prose-purple max-w-none"></div>
+                </div>
+            `;
+
             return `
                 <div class="control-entry p-4 border border-slate-600 rounded-lg bg-slate-700 shadow-sm mb-4" 
+                     id="entry-${uniqueDomId}"
                      data-control-id="${controlId}" data-comp-uuid="${compUuid}" data-control-class="${catClass}"
                      data-filter-props="${filterDataString}">
                     
@@ -1160,6 +1431,8 @@
                     ${afterHtml}
 
                     ${paramsHtml}
+
+                    ${aiSectionHtml}
 
                     ${compDesc ? `<div class="mt-4 pt-3 border-t border-slate-600 text-sm">
                         <span class="text-[10px] text-blue-300 uppercase font-bold block mb-1">Aktuelle Implementierungs-Beschreibung (aus Definition)</span>
@@ -1375,4 +1648,3 @@
     </script>
 </body>
 </html>
-
