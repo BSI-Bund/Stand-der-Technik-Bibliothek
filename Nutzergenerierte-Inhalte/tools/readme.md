@@ -8,43 +8,31 @@ Und es gibt auch eine Anwendung den Anwenderkatalog zu betrachten: [GSpp-Viewer.
 
 ## Workflow-Übersicht
 
-Der Prozess ist modular aufgebaut. Die folgende Grafik verdeutlicht das Zusammenspiel der einzelnen Werkzeuge:
+Der Prozess ist sehr einfach:
 
+1. Modellierung mit [Blaupausen-Generator](./blaupausen_generator.html)
+  * Erstellt ein Blaupause Profil
+  * Das SSP dazu
+  * Muster-Assets oder die eignen richtigen Assets
+  * Risikoanalyse inkl Custom Controls ist enthalten
+  * Anpassung der Controls (Text und Parameter) eingebaut
 
+2. Grundschutzcheck mit [SSP-Ausfüllen](./ssp_ausfuellen.html) durchführen
+   * Nach Ausfüllen abspeichern
+   * Wenn man weiter daran arbeiten wil, einfach die eben gespeicherte Datei öffnen.
+   * ist eine AI-enabled Anwendung:
+     * man kann fragen wie das Control zu verstehen ist
+     * welche Risiken bestehen
+     * welche Anforderungen aus der BSI Grundschutz Edition 2023 einen bezug zu diesem Control haben
 
-### 1. Blaupausen erstellen (Optional)
-Mit dem [Blaupausen-Generator](./blaupausen_generator.html) können Vorlagen für Sicherheitsanforderungen erstellt werden.
-* **Status:** Funktional, aber derzeit noch nicht direkt im SSP-Generator importierbar.
-* **Tracking:** [Issue #24](https://github.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/issues/24)
-
-### 2. SSP Struktur generieren
-Basierend auf den Anforderungen wird mit dem [SSP-Generator](./ssp_generator.html) das Grundgerüst des Systemsicherheitsprofils erstellt.
-
-### 3. Risikoanalyse integrieren
-Die spezifische Risikoanalyse für das System wird mit dem [Risikoanalyse-Tool](./risikoanalyse_profil_erstellen.html) durchgeführt und in das SSP eingebunden.
-
-### 4. SSP finalisieren & Export
-Im Tool [SSP-Ausfüllen](./ssp_ausfuellen.html) werden alle verbleibenden Details dokumentiert. Das Ergebnis wird als **JSON-Datei** gespeichert, um die Interoperabilität zu gewährleisten.
-
----
-
-## Übersicht der Tools
-
-| Schritt | Werkzeug | Status | Beschreibung |
-| :--- | :--- | :--- | :--- |
-| 1 | [Blaupausen-Generator](./blaupausen_generator.html) | `Optional` | Erstellung von Vorlagen für Sicherheitskontrollen. |
-| 2 | [SSP-Generator](./ssp_generator.html) | `Aktiv` | Generierung der SSP-Grundstruktur. |
-| 3 | [Risikoanalyse-Profil](./risikoanalyse_profil_erstellen.html) | `Aktiv` | Erstellung und Einbau von Risikoprofilen. |
-| 4 | [SSP-Ausfüllen](./ssp_ausfuellen.html) | `Aktiv` | Datenpflege und JSON-Export des fertigen SSP. |
-
----
+*Die anderen Dateien sind zwischenschritte, einfach Ignorieren.*
 
 ## Roadmap & Geplante Erweiterungen
 
 Die folgenden Komponenten befinden sich derzeit in der Planung, um den Zertifizierungszyklus zu schließen:
 
-* **5. Audit & Assessment Results (AR):** Ein Tool zur Durchführung von Audits (intern/extern). Es dient der Feststellung von Gaps und der Erstellung der Assessment Results.
-* **6. Plan of Action and Milestones (POA&M):** Automatisierte Ableitung von Maßnahmenplänen und Meilensteinen aus den im Audit (AR) identifizierten Schwachstellen.
+* **3. Audit & Assessment Results (AR):** Ein Tool zur Durchführung von Audits (intern/extern). Es dient der Feststellung von Gaps und der Erstellung der Assessment Results.
+* **4. Plan of Action and Milestones (POA&M):** Automatisierte Ableitung von Maßnahmenplänen und Meilensteinen aus den im Audit (AR) identifizierten Schwachstellen.
 
 ---
 
