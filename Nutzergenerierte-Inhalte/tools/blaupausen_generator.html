@@ -1046,13 +1046,27 @@
             // 1. Build Components List for SSP
             const sspComponents = [
                 { uuid: sysUuid, type: "this-system", title: `System: ${t}`, status: { state: "operational" }, description: "Das übergeordnete System dieser Blaupause." },
-                { uuid: bpState.isms.uuid, type: "software", title: `Basis ISMS (${bpState.isms.type})`, status: { state: "operational" }, remarks: `Referenced from: ${bpState.isms.url}` }
+                { 
+					uuid: bpState.isms.uuid, 
+					type: "service", 
+					title: `Basis ISMS (${bpState.isms.type})`, 
+					description: `Instanz 'Basis ISMS', basierend auf Komponentendefinition ${bpState.isms.url.split('/').pop()}.`,
+					status: { state: "operational" }, 
+					links: [{ href: bpState.isms.url, rel: "component-definition" }]
+				}
             ];
             
-            bpState.components.forEach(c => {
-                sspComponents.push({ uuid: c.id, type: "software", title: c.name, status: { state: c.state || "operational" }, remarks: `Referenced from: ${c.source}` });
-            });
-
+			bpState.components.forEach(c => {
+				sspComponents.push({ 
+					uuid: c.id, 
+					type: "service", 
+					title: c.name, 
+					description: `Instanz '${c.name}', basierend auf Komponentendefinition ${c.source.split('/').pop()}.`,
+					status: { state: c.state || "operational" }, 
+					links: [{ href: c.source, rel: "component-definition" }]
+				});
+			});
+			
             // 2. Map Controls to Components (SSP by-components)
             const allReqIds = new Set([
                 ...bpState.manualControls,
