@@ -496,6 +496,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                 await processLinkedProfiles(ssp);
                 await processComponentDefinitions(ssp);
                 await processMainCatalog(ssp);
+                extractRiskDataFromSSP(ssp); // Hole Risiken auch aus dem lokalen SSP Back-Matter
 
                 if (catalogControlMap.size === 0) {
                     loadingText.textContent = 'Lade Fallback-Katalog (Grundschutz++)...';
@@ -578,7 +579,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const components = ssp['system-implementation']?.components || [];
             const definitionLinks = new Set();
             components.forEach(comp => {
-                // REGRESSION FIX: Prefer component-definition strictly over source-profile!
                 let defLink = comp.links?.find(link => link.rel === 'component-definition');
                 if (!defLink) defLink = comp.links?.find(link => link.rel === 'source-profile');
                 if (defLink && defLink.href) definitionLinks.add(defLink.href);
@@ -650,6 +650,32 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                     }
                 }
             }
+        }
+
+        function extractRiskDataFromSSP(ssp) {
+            const resources = ssp["back-matter"]?.resources || [];
+            resources.forEach(resource => {
+                if (resource.attachments && resource.attachments.length > 0) {
+                    const attachment = resource.attachments[0];
+                    if (attachment.base64 && attachment.base64.filename === "risk-analysis.json" && attachment.base64.value) {
+                        try {
+                            const decodedData = base64DecodeUnicode(attachment.base64.value);
+                            if (decodedData) {
+                                const riskJson = JSON.parse(decodedData);
+                                if (riskJson.risks) {
+                                    loadedRiskData.push({
+                                        sourceHref: "Lokales SSP (aus Blaupause)",
+                                        sourceTitle: "Risikoanalyse (SSP)",
+                                        risks: riskJson.risks
+                                    });
+                                }
+                            }
+                        } catch (e) {
+                            console.error(`Fehler beim Parsen der Risiko-Daten aus SSP:`, e);
+                        }
+                    }
+                }
+            });
         }
 
         function extractRiskData(profile, sourceHref) {
@@ -726,7 +752,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             let riskSectionHtml = '';
             
             if (loadedRiskData.length > 0) {
-                riskSectionHtml = createCollapsibleSection('risk-analysis', 'Risikoanalyse (aus Profilen)', renderRiskAnalysis(ssp), true);
+                riskSectionHtml = createCollapsibleSection('risk-analysis', 'Risikoanalyse (aus SSP & Profilen)', renderRiskAnalysis(ssp), true);
             }
             const implementationOpen = loadedRiskData.length === 0;
 
@@ -804,8 +830,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
         }
         
         function attachEditorListeners() {
-            // Listener für Maturity-Radio-Buttons (Kopieren von Text) wurde auf Wunsch entfernt
-            // Die Auswahl wird nun nativ über den Radio-Value gespeichert.
+            // Placeholder for text-sync actions
         }
 
 		function attachFilterListeners() {
@@ -942,7 +967,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                         
                         if (byCompEntry) {
                             foundImplementation = true;
-                            // REGRESSION FIX
                             let defLink = comp.links?.find(link => link.rel === 'component-definition');
                             if (!defLink) defLink = comp.links?.find(link => link.rel === 'source-profile');
                             
@@ -965,7 +989,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
 
                     if (!foundImplementation) {
                         const defaultComp = sspComponents[0];
-                        // REGRESSION FIX
                         let defLink = defaultComp.links?.find(link => link.rel === 'component-definition');
                         if (!defLink) defLink = defaultComp.links?.find(link => link.rel === 'source-profile');
                             
@@ -1054,7 +1077,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                     addGlobalOpt('comp_status', compState);
                 }
 
-                // REGRESSION FIX: Prioritize component-definition link
                 let defLink = sspComp.links?.find(link => link.rel === 'component-definition');
                 if (!defLink) defLink = sspComp.links?.find(link => link.rel === 'source-profile');
                 
@@ -1098,7 +1120,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                     const state = sspReq?.['implementation-status']?.state || 'open';
                     addGlobalOpt('status', state);
 
-                    // Add props explicitly defined in component definitions to filters
                     if (implReq && implReq.props) implReq.props.forEach(p => addGlobalOpt(p.name, p.value));
                     
                     if (catCtrl && catCtrl.class) addGlobalOpt('class', catCtrl.class);
@@ -1107,7 +1128,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                     const stmt = catCtrl?.parts?.find(p => p.name === 'statement');
                     if (stmt && stmt.props) stmt.props.forEach(p => addGlobalOpt(p.name, p.value));
 
-                    // Add statement props explicitly defined in component definitions to filters
                     if (implReq && implReq.statements) {
                         implReq.statements.forEach(s => {
                             if (s.props) s.props.forEach(p => addGlobalOpt(p.name, p.value));
@@ -1116,74 +1136,109 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                 });
                 
                 // Component Level HTML generation
-                let compLevelHtml = '';
-                let compSearchText = `${sspComp.title} ${targetDefComp?.description || ''}`;
+                let compLevelHtml = '<div class="mb-6 space-y-4">';
+                let hasCompLevelContent = false;
+                let compSearchText = `${sspComp.title} ${targetDefComp?.description || sspComp.description || ''}`;
 
-                if (targetDefComp) {
-                    compLevelHtml += '<div class="mb-6 space-y-4">';
-                    if (targetDefComp.description) {
-                        compLevelHtml += `<div class="text-sm text-slate-300 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50 leading-relaxed">${targetDefComp.description}</div>`;
-                    }
-                    if (targetDefComp.props && targetDefComp.props.length > 0) {
-                        let generalProps = [];
-                        let riskProps = [];
-                        // REGRESSION FIX: Robust matching for strings like "_2.1._Fehlende..." OR "_2.1. Fehlende..."
-                        const riskRegex = /^_2\.(\d+)\.(.*)$/;
+                if (sspComp.description) {
+                    compLevelHtml += `<div class="text-sm text-slate-300 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50 leading-relaxed">${sspComp.description}</div>`;
+                    hasCompLevelContent = true;
+                } else if (targetDefComp && targetDefComp.description) {
+                    compLevelHtml += `<div class="text-sm text-slate-300 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50 leading-relaxed">${targetDefComp.description}</div>`;
+                    hasCompLevelContent = true;
+                }
 
-                        targetDefComp.props.forEach(p => {
-                            if (!p.value) return;
-                            compSearchText += ` ${p.name} ${p.value}`;
-                            
-                            const match = p.name.match(riskRegex);
-                            if (match) {
-                                riskProps.push({
-                                    num: parseInt(match[1], 10),
-                                    title: match[2].replace(/_/g, ' ').trim(),
-                                    value: p.value
-                                });
-                            } else {
-                                generalProps.push(p);
-                            }
+                if (targetDefComp && targetDefComp.props && targetDefComp.props.length > 0) {
+                    let generalProps = [];
+                    let riskProps = [];
+                    const riskRegex = /^_2\.(\d+)\.(.*)$/;
+
+                    targetDefComp.props.forEach(p => {
+                        if (!p.value) return;
+                        compSearchText += ` ${p.name} ${p.value}`;
+                        
+                        const match = p.name.match(riskRegex);
+                        if (match) {
+                            riskProps.push({
+                                num: parseInt(match[1], 10),
+                                title: match[2].replace(/_/g, ' ').trim(),
+                                value: p.value
+                            });
+                        } else {
+                            generalProps.push(p);
+                        }
+                    });
+
+                    if (generalProps.length > 0) {
+                        let genHtml = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+                        generalProps.forEach(p => {
+                            const propName = (p.name || '').replace(/_/g, ' ');
+                            const colSpan = p.value.length > 200 ? 'md:col-span-2' : 'col-span-1';
+                            genHtml += `
+                            <div class="bg-slate-900/40 p-4 rounded-lg border border-slate-700/50 shadow-sm ${colSpan}">
+                                <h4 class="text-xs font-bold text-blue-400 mb-2 uppercase tracking-wider flex items-center">
+                                    <svg class="w-4 h-4 mr-2 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    ${propName}
+                                </h4>
+                                <div class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">${p.value}</div>
+                            </div>`;
                         });
-
-                        // General Props Render
-                        if (generalProps.length > 0) {
-                            let genHtml = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
-                            generalProps.forEach(p => {
-                                const propName = (p.name || '').replace(/_/g, ' ');
-                                const colSpan = p.value.length > 200 ? 'md:col-span-2' : 'col-span-1';
-                                genHtml += `
-                                <div class="bg-slate-900/40 p-4 rounded-lg border border-slate-700/50 shadow-sm ${colSpan}">
-                                    <h4 class="text-xs font-bold text-blue-400 mb-2 uppercase tracking-wider flex items-center">
-                                        <svg class="w-4 h-4 mr-2 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        ${propName}
-                                    </h4>
-                                    <div class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">${p.value}</div>
-                                </div>`;
-                            });
-                            genHtml += `</div>`;
-                            const descCollapsibleId = `desc-${sspComp.uuid}`;
-                            compLevelHtml += `<div class="mt-2">` + createCollapsibleSection(descCollapsibleId, `Eigenschaften & Beschreibung (${generalProps.length})`, genHtml, false) + `</div>`;
-                        }
-
-                        // Risk Props Render (Collapsible)
-                        if (riskProps.length > 0) {
-                            let riskHtml = `<div class="space-y-4">`;
-                            riskProps.sort((a,b) => a.num - b.num).forEach(r => {
-                                riskHtml += `
-                                <div class="p-4 bg-slate-900/80 rounded-lg border-l-4 border-l-red-500 border border-slate-700 shadow-sm relative overflow-hidden">
-                                    <div class="absolute top-0 right-0 bg-red-900/40 text-red-300 text-[10px] font-bold px-2 py-1 rounded-bl-lg border-b border-l border-red-500/30">RISIKO</div>
-                                    <h5 class="text-sm font-bold text-red-400 mb-2 pr-12"><span class="text-red-500/50 mr-1">#${r.num}</span> ${r.title}</h5>
-                                    <p class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">${r.value}</p>
-                                </div>`;
-                            });
-                            riskHtml += `</div>`;
-
-                            const riskCollapsibleId = `risks-${sspComp.uuid}`;
-                            compLevelHtml += `<div class="mt-2">` + createCollapsibleSection(riskCollapsibleId, `Risiken und Gefährdungen (${riskProps.length})`, riskHtml, false) + `</div>`;
-                        }
+                        genHtml += `</div>`;
+                        const descCollapsibleId = `desc-${sspComp.uuid}`;
+                        compLevelHtml += `<div class="mt-2">` + createCollapsibleSection(descCollapsibleId, `Eigenschaften & Beschreibung (${generalProps.length})`, genHtml, false) + `</div>`;
+                        hasCompLevelContent = true;
                     }
-                    compLevelHtml += '</div><hr class="border-slate-700 mb-6">';
+
+                    if (riskProps.length > 0) {
+                        let riskHtml = `<div class="space-y-4">`;
+                        riskProps.sort((a,b) => a.num - b.num).forEach(r => {
+                            riskHtml += `
+                            <div class="p-4 bg-slate-900/80 rounded-lg border-l-4 border-l-red-500 border border-slate-700 shadow-sm relative overflow-hidden">
+                                <div class="absolute top-0 right-0 bg-red-900/40 text-red-300 text-[10px] font-bold px-2 py-1 rounded-bl-lg border-b border-l border-red-500/30">RISIKO (AUS KOMPONENTE)</div>
+                                <h5 class="text-sm font-bold text-red-400 mb-2 pr-12"><span class="text-red-500/50 mr-1">#${r.num}</span> ${r.title}</h5>
+                                <p class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">${r.value}</p>
+                            </div>`;
+                        });
+                        riskHtml += `</div>`;
+                        const riskCollapsibleId = `risks-${sspComp.uuid}`;
+                        compLevelHtml += `<div class="mt-2">` + createCollapsibleSection(riskCollapsibleId, `Generische Risiken der Komponente (${riskProps.length})`, riskHtml, false) + `</div>`;
+                        hasCompLevelContent = true;
+                    }
+                }
+
+                // SSP Component Properties (identified-risk)
+                let sspRiskProps = [];
+                if (sspComp.props) {
+                    sspComp.props.forEach(p => {
+                        if (p.name === 'identified-risk') {
+                            sspRiskProps.push(p);
+                            compSearchText += ` ${p.value} ${p.remarks || ''}`;
+                        }
+                    });
+                }
+
+                if (sspRiskProps.length > 0) {
+                    let sspRiskHtml = `<div class="space-y-4">`;
+                    sspRiskProps.forEach((r, idx) => {
+                        sspRiskHtml += `
+                        <div class="p-4 bg-slate-900/80 rounded-lg border-l-4 border-l-orange-500 border border-slate-700 shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 right-0 bg-orange-900/40 text-orange-300 text-[10px] font-bold px-2 py-1 rounded-bl-lg border-b border-l border-orange-500/30">RISIKOANALYSE (SSP)</div>
+                            <h5 class="text-sm font-bold text-orange-400 mb-2 pr-12"><span class="text-orange-500/50 mr-1">⚠️</span> ${r.value}</h5>
+                            <p class="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">${r.remarks || ''}</p>
+                        </div>`;
+                    });
+                    sspRiskHtml += `</div>`;
+                    const sspRiskCollapsibleId = `ssp-risks-${sspComp.uuid}`;
+                    // Wir setzen dieses Akkordeon standardmäßig auf "true" (ausgeklappt), damit die Risiken direkt sichtbar sind
+                    compLevelHtml += `<div class="mt-2">` + createCollapsibleSection(sspRiskCollapsibleId, `Identifizierte Risiken für diese Komponente (${sspRiskProps.length})`, sspRiskHtml, true) + `</div>`;
+                    hasCompLevelContent = true;
+                }
+
+                compLevelHtml += '</div>';
+                if (hasCompLevelContent) {
+                    compLevelHtml += '<hr class="border-slate-700 mb-6">';
+                } else {
+                    compLevelHtml = ''; // Falls leer, verbergen wir den Bereich wieder
                 }
 
                 let compControlsHtml = `<div class="space-y-4 control-list-container" data-comp-uuid="${compUuid}">`;
@@ -1192,7 +1247,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                         compControlsHtml += renderControlEntry(cid, sspComp, sspControlMap.get(cid), defControlMap.get(cid), sspParamValuesMap);
                     });
                 } else {
-                     compControlsHtml += '<p class="text-slate-400 text-sm">Keine Controls gefunden oder Katalog nicht geladen.</p>';
+                     compControlsHtml += '<p class="text-slate-400 text-sm">Keine spezifischen Controls für diese Komponente vorgesehen.</p>';
                 }
                 compControlsHtml += '</div>';
 
@@ -1321,7 +1376,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const compState = sspComponent.status?.state || 'unknown';
             let filterDataString = `|class:${catClass}||status:${currentState}||comp_status:${compState}|`; 
 
-            // Robust text extraction for search filter
             let fullSearchText = `${controlId} ${title} ${catClass} ${compDesc}`;
 
             // --- 1. Catalog Control Props ---
