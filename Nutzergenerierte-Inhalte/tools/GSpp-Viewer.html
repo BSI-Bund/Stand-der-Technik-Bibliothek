@@ -46,28 +46,24 @@
         h1 { color: var(--primary-color); font-size: 1.4rem; margin: 0 0 5px 0; }
         .multi-hint { font-size: 0.7rem; color: #607d8b; font-weight: 600; margin-bottom: 20px; display: block; opacity: 0.8; }
         
+        .meta-box { 
+            font-size: 0.8rem; 
+            background: #eceff1; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            color: #546e7a; 
+            min-height: 60px;     
+            overflow-y: auto;     
+            border: 1px solid var(--border-color); 
+            display: block; 
+        }
+
+        body:not(.has-api-key) .ai-actions,
+        body:not(.has-api-key) .ai-dependent {
+            display: none !important;
+        }
         
-		/* In den <style> Sektor einfügen oder ersetzen */
-		.meta-box { 
-			font-size: 0.8rem; 
-			background: #eceff1; 
-			padding: 12px; 
-			border-radius: 8px; 
-			margin-bottom: 20px; 
-			color: #546e7a; 
-			min-height: 60px;     /* Verhindert, dass es zu klein wirkt */
-			overflow-y: auto;     /* B: Scrollbar bei Überlauf */
-			border: 1px solid var(--border-color); 
-			display: block; 
-		}
-
-
-		/* Neu: Versteckt KI-Elemente, wenn die Klasse am Body fehlt */
-		body:not(.has-api-key) .ai-actions,
-		body:not(.has-api-key) .ai-dependent {
-			display: none !important;
-		}
-		
         .meta-item { border-bottom: 1px solid #cfd8dc; padding: 4px 0; }
         .meta-item:last-child { border-bottom: none; }
 
@@ -93,7 +89,6 @@
             transition: all 0.3s ease;
         }
         
-        /* RESTORED: Nested Control Styles */
         .control-nested-container { margin-top: 20px; padding: 15px 15px 5px 15px; border-top: 1px dashed #cfd8dc; background: #fcfcfc; border-radius: 0 0 10px 10px; margin-left: -25px; margin-right: -25px; margin-bottom: -25px; }
         .control-card.nested-card { margin: 10px 0 15px 0; padding: 20px; border-left-width: 4px; font-size: 0.95em; border-color: #cfd8dc; border-left-color: #17a2b8; box-shadow: none; border-radius: 8px; }
 
@@ -158,6 +153,37 @@
         u { text-decoration-style: dotted; color: var(--primary-color); cursor: help; font-weight: 600; }
         .reset-btn { width: 100%; padding: 10px; background: #78909c; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
         .clear-btn { width: 100%; padding: 8px; background: #ef5350; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem; margin-top: 5px; }
+
+        /* NEU: Filter-Anpassung für hierarchisch eingeblendete Eltern-Elemente */
+        .control-card.child-match-only > .tag-list,
+        .control-card.child-match-only > .statement-box,
+        .control-card.child-match-only > .ai-actions,
+        .control-card.child-match-only > .ai-response-area,
+        .control-card.child-match-only > .guidance-box,
+        .control-card.child-match-only > .control-footer {
+            display: none !important;
+        }
+
+        .control-card.child-match-only {
+            border-left-color: #cfd8dc !important;
+            background-color: #fdfdfd;
+            box-shadow: none;
+            padding-bottom: 5px;
+        }
+
+        .control-card.child-match-only > .control-title {
+            color: #78909c;
+            font-size: 1.1rem;
+        }
+
+        .control-card.child-match-only > .control-title::after {
+            content: " (Zeigt gefilterte Unter-Maßnahmen)";
+            font-size: 0.8rem;
+            color: #ff9800;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
 
         /* Modal */
         .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
@@ -251,9 +277,8 @@
         const apiKey = ""; 
         let filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set() };
         let loadedCatalogs = [];
-        let aiCache = {}; // Globaler KI-Cache
+        let aiCache = {};
 		
-        // --- UI Logic ---
         function updateUrlFromSelect() {
             const select = document.getElementById('quickSelect');
             const input = document.getElementById('urlInput');
@@ -261,18 +286,18 @@
                 input.value = select.value;
             }
         }
-		// Funktion zum Umschalten der Button-Sichtbarkeit und Speichern des Keys
+
 		function toggleAiButtons() {
 			const key = document.getElementById('apiKeyInput').value.trim();
 			if (key.length > 0) {
 				document.body.classList.add('has-api-key');
-				localStorage.setItem('gspp_gemini_apikey', key); // Key im Browser speichern
+				localStorage.setItem('gspp_gemini_apikey', key);
 			} else {
 				document.body.classList.remove('has-api-key');
-				localStorage.removeItem('gspp_gemini_apikey');   // Key löschen, wenn Feld geleert wird
+				localStorage.removeItem('gspp_gemini_apikey');
 			}
 		}
-        // --- Gemini Integration ---
+
 		async function callGemini(prompt, systemPrompt = "") {
 			let currentApiKey = document.getElementById('apiKeyInput').value.trim();
 			if (!currentApiKey) currentApiKey = apiKey; 
@@ -281,7 +306,6 @@
 				return "⚠️ Fehler: API Key fehlt.";
 			}
 
-			// Probiere v1beta, da diese oft toleranter bei neuen Modellen ist
 			const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key=${currentApiKey}`;
 			
 			const payload = {
@@ -289,7 +313,6 @@
 				tools: [{ google_search: {} }]
 			};
 
-			// Nur hinzufügen, wenn ein SystemPrompt existiert
 			if (systemPrompt) {
 				payload.system_instruction = { parts: [{ text: systemPrompt }] };
 			}
@@ -318,25 +341,22 @@
             
             responseArea.classList.add('active');
 			
-           // 1. Cache prüfen (wenn kein Force-Refresh gefordert ist)
             if (!forceRefresh && aiCache[controlId] && aiCache[controlId][type]) {
                 const cachedRes = aiCache[controlId][type];
                 contentArea.innerHTML = (typeof marked !== 'undefined' ? marked.parse(cachedRes) : cachedRes) + 
                     `<div style="margin-top:15px; border-top:1px dashed #e1d5ff; padding-top:10px; text-align:right;">
                         <button onclick="triggerAI('${controlId}', '${type}', true)" style="background:none; border:none; color:var(--ai-glow); cursor:pointer; font-size:0.8rem; font-weight:bold; text-decoration:underline;">🔄 Neu generieren</button>
                     </div>`;
-                return; // Funktion hier abbrechen, da aus dem Cache geladen
+                return;
             }
 
-			
             loader.style.display = 'block';
             contentArea.innerHTML = '<i>KI analysiert...</i>';
 
             const title = card.querySelector('.control-title').textContent;
-            const prose = card.querySelector('.statement-prose').textContent;
+            const prose = card.querySelector('.statement-prose')?.textContent || "";
 			const guidance = card.querySelector('.guidance-box')?.textContent || "";
             
-            // --- RAG: Finde benachbarte Controls (gleicher Präfix, z.B. alles unter "PERF.1.") ---
             const prefix = controlId.substring(0, controlId.lastIndexOf('.') + 1);
             let relatedControlsText = "";
             
@@ -361,17 +381,14 @@ Verstehe: Der neue Grundschutz++ nutzt einen granularen Katalog, in dem jede Anf
 Keine Einleitenden Worte über deine Rolle oder wie der GRundschutz++ aufgebaut ist. Fokus ist nur die Aufgabe ohne Ausschmückungen. Du Schreibst wie ein Experte, aber nicht wie
 eine KI. Dein Satzbau ist Abwechslungsreich, konkret, präßise und du nutzt keine KI Floskeln. Heute ist der ${heute}.`;
 
-            // Spezieller System-Prompt für den Edition 2023 Abgleich (Erlaubt Bausteine explizit)
             if (type === 'edition2023') {
                 system = `Du bist ein Experte für den BSI IT-Grundschutz. Deine Aufgabe ist das genaue Mapping zwischen dem neuen Grundschutz++ und den Bausteinen des IT-Grundschutz-Kompendiums Edition 2023. Antworte in strukturierter Markdown-Form ohne unnötige Floskeln.`;
             }
 
-			            
             const userContext = document.getElementById('aiContextInput').value.trim();
             if (userContext) {
                 system += "\n\nBerücksichtige zwingend folgenden Unternehmenskontext für deine Antwort:\n" + userContext;
             }
-            // Bereite den Guidance-Textbaustein vor
             const guidanceText = guidance ? `\nZusätzliche Erläuterungen (Guidance): ${guidance}` : "";
 			
             if (type === 'implementation') {
@@ -390,13 +407,11 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                 prompt = `Welche Risiken bestehen bei Nicht-Umsetzung von "${title}"? Beschreibung: ${prose}. Nenne mindestens Gefahren mit kritischem Schadenspotential und mit hoher eintrittshäufigkeit.`;
             }
 
-            // Füge die benachbarten Controls an den Prompt an
             prompt += relatedControlsText;
 
             try {
                 const response = await callGemini(prompt, system);
                                 
-                // 2. In den Cache schreiben
                 if (!aiCache[controlId]) aiCache[controlId] = {};
                 aiCache[controlId][type] = response;
                 localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
@@ -413,7 +428,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             }
         }
 		
-        // --- Loading Logic ---
         async function loadFromURL() {
             try {
                 const url = document.getElementById('urlInput').value;
@@ -470,7 +484,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             `).join('');
         }
 
-        // --- UI Rendering ---
         function createGroupElement(group) {
             const wrapper = document.createElement('div');
             wrapper.className = 'group-item filterable-container';
@@ -489,10 +502,8 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             return wrapper;
         }
 
-        // RESTORED: isNested parameter added here
         function createControlElement(control, isNested = false) {
             const card = document.createElement('div');
-            // RESTORED: Add nested-card class if applicable
             card.className = isNested ? 'control-card nested-card filterable-item' : 'control-card filterable-item';
             card.id = control.id;
 
@@ -554,9 +565,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
 			
             card.dataset.jsonData = JSON.stringify(control);
 
-            // RESTORED: Check for nested controls and append them recursively
             if (control.controls && control.controls.length > 0) {
-                // Ensure the parent card is marked as a container so it stays visible when children are found
                 card.classList.add('filterable-container'); 
                 
                 const nestedContainer = document.createElement('div');
@@ -573,7 +582,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             return card;
         }
 
-        // --- Logic & Filter ---
+        // --- GEFIXTE FILTER-LOGIK ---
         function applyFilters() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const fClass = document.getElementById('filterClass').value;
@@ -583,22 +592,34 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
 
             const anyFilterActive = (query !== "" || fClass !== "all" || fSec !== "all" || fEff !== "all" || fMod !== "all");
 
-            document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => el.classList.add('hidden'));
+            // 1. Alles verstecken und standardmäßig als "child-match-only" markieren
+            document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => {
+                el.classList.add('hidden');
+                if (el.classList.contains('control-card')) {
+                    el.classList.add('child-match-only'); 
+                }
+            });
 
             if (!anyFilterActive) {
                 collapseAll();
-                document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => el.classList.remove('hidden'));
+                document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => {
+                    el.classList.remove('hidden');
+                    el.classList.remove('child-match-only'); // Kein Filter aktiv -> Alles normal anzeigen
+                });
                 return;
             }
 
+            // 2. Direkte Treffer evaluieren
             document.querySelectorAll('.control-card').forEach(card => {
                 const match = (!query || card.dataset.searchText.includes(query)) &&
                               (fClass === 'all' || card.dataset.class === fClass) &&
                               (fSec === 'all' || card.dataset.sec === fSec) &&
                               (fEff === 'all' || card.dataset.effort === fEff) &&
                               (fMod === 'all' || card.dataset.modal === fMod);
+                
                 if (match) { 
                     card.classList.remove('hidden'); 
+                    card.classList.remove('child-match-only'); // Es ist ein ECHTER Treffer, also Einschränkung aufheben
                     revealParents(card); 
                 }
             });
@@ -607,7 +628,10 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
         function revealParents(el) {
             let p = el.parentElement;
             while (p && p.id !== 'catalog-container') {
-                if (p.classList.contains('filterable-container')) p.classList.remove('hidden');
+                if (p.classList.contains('filterable-container')) {
+                    p.classList.remove('hidden'); 
+                    // Wichtig: 'child-match-only' wird hier absichtlich NICHT entfernt!
+                }
                 if (p.classList.contains('group-content')) { 
                     p.classList.add('open'); 
                     p.style.display = ''; 
@@ -654,7 +678,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             applyFilters();
         }
 
-        // --- Utils ---
         function convertOscal(text, params) {
             if (!text || !params) return text || "";
             return text.replace(/\{\{\s*insert:\s*param,\s*([a-zA-Z0-9_.-]+)\s*\}\}/g, (m, id) => {
@@ -682,7 +705,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
         };
 		function closeModal() { document.getElementById('jsonModal').style.display = 'none'; }
 
-		// --- AI Cache Export ---
         function exportAiCache() {
             if (Object.keys(aiCache).length === 0) {
                 alert("Der KI-Cache ist noch leer. Generiere zuerst ein paar Antworten.");
@@ -709,12 +731,11 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                         throw new Error("Ungültiges JSON-Format.");
                     }
 
-                    // Cache mit importierten Daten zusammenführen (bestehende überschreiben, neue hinzufügen)
                     aiCache = { ...aiCache, ...importedData };
                     localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
                     
                     alert("KI-Antworten erfolgreich importiert!");
-                    event.target.value = ''; // Input zurücksetzen
+                    event.target.value = ''; 
                 } catch (error) {
                     alert("Fehler beim Importieren: " + error.message);
                 }
@@ -722,15 +743,13 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             reader.readAsText(file);
         }
 
-        // --- Init beim Seitenstart ---
         document.addEventListener('DOMContentLoaded', () => {
             const savedKey = localStorage.getItem('gspp_gemini_apikey');
             if (savedKey) {
                 document.getElementById('apiKeyInput').value = savedKey;
-                toggleAiButtons(); // UI aktualisieren, damit die Buttons direkt erscheinen
+                toggleAiButtons(); 
             }
         });
     </script>
 </body>
 </html>
-
