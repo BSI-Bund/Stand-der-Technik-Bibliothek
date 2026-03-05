@@ -109,6 +109,7 @@
         .tag-sec { background: var(--tag-sec); color: #856404; border-color: #ffeeba; }
         .tag-effort { background: var(--tag-effort); color: #155724; border-color: #c3e6cb; }
         .tag-uuid { background: #f8f9fa; color: #78909c; border-color: #dee2e6; font-family: monospace; font-size: 0.7rem; }
+		.tag-tags { background: #e3f2fd; color: #0d47a1; border-color: #bbdefb; }
 
         /* Statement Box */
         .statement-box { background: #fff; border: 1px solid #eee; padding: 18px; border-radius: 8px; margin: 15px 0; }
@@ -213,6 +214,7 @@
                 <select id="filterSec" class="filter-select" onchange="applyFilters()"><option value="all">Alle Niveaus</option></select>
                 <select id="filterEffort" class="filter-select" onchange="applyFilters()"><option value="all">Jeder Aufwand</option></select>
                 <select id="filterModal" class="filter-select" onchange="applyFilters()"><option value="all">Jede Modalität</option></select>
+				<select id="filterTag" class="filter-select" onchange="applyFilters()"><option value="all">Alle Tags</option></select>
                 <button class="reset-btn" onclick="resetFilters()">Filter zurücksetzen</button>
             </div>
         </div>
@@ -275,7 +277,7 @@
 
     <script>
         const apiKey = ""; 
-        let filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set() };
+		let filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set(), tags: new Set() };
         let loadedCatalogs = [];
         let aiCache = {};
 		
@@ -511,7 +513,9 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const sec = control.props?.find(p => p.name === 'sec_level')?.value || "";
             const effort = control.props?.find(p => p.name === 'effort_level')?.value || "";
             const uuid = control.props?.find(p => p.name === 'alt-identifier')?.value || "";
+			const tags = control.props?.find(p => p.name === 'tags')?.value || "";
             
+			if(tags) filterOptions.tags.add(tags);
             if(cClass) filterOptions.class.add(cClass);
             if(sec) filterOptions.sec_level.add(sec);
             if(effort) filterOptions.effort_level.add(effort);
@@ -524,8 +528,8 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const precision = stmtPart?.props?.find(p => p.name === 'präzisierung')?.value || "";
             
             if(modal) filterOptions.modalverb.add(modal);
-            card.dataset.searchText = `${control.id} ${uuid} ${control.title} ${stmtPart?.prose || ""} ${modal}`.toLowerCase();
-            card.dataset.class = cClass; card.dataset.sec = sec; card.dataset.effort = effort; card.dataset.modal = modal;
+            card.dataset.searchText = `${control.id} ${uuid} ${control.title} ${stmtPart?.prose || ""} ${modal} ${tags}`.toLowerCase();
+			card.dataset.class = cClass; card.dataset.sec = sec; card.dataset.effort = effort; card.dataset.modal = modal; card.dataset.tags = tags;
 
             card.innerHTML = `
                 <div class="id-row"><span class="badge-id">${control.id}</span><span class="badge-class">${escapeHtml(cClass)}</span></div>
@@ -534,6 +538,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                     ${sec ? `<span class="tag tag-sec">Niveau: ${sec}</span>` : ''}
                     ${effort ? `<span class="tag tag-effort">Aufwand: ${effort}</span>` : ''}
                     ${uuid ? `<span class="tag tag-uuid">UUID: ${uuid}</span>` : ''}
+					${tags ? `<span class="tag tag-tags">Tag: ${escapeHtml(tags)}</span>` : ''}
                 </div>
                 <div class="statement-box">
                     <div class="statement-prose">${convertOscal(stmtPart?.prose, control.params)}</div>
@@ -589,8 +594,9 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const fSec = document.getElementById('filterSec').value;
             const fEff = document.getElementById('filterEffort').value;
             const fMod = document.getElementById('filterModal').value;
+			const fTag = document.getElementById('filterTag').value;
 
-            const anyFilterActive = (query !== "" || fClass !== "all" || fSec !== "all" || fEff !== "all" || fMod !== "all");
+			const anyFilterActive = (query !== "" || fClass !== "all" || fSec !== "all" || fEff !== "all" || fMod !== "all" || fTag !== "all");
 
             // 1. Alles verstecken und standardmäßig als "child-match-only" markieren
             document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => {
@@ -615,7 +621,8 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                               (fClass === 'all' || card.dataset.class === fClass) &&
                               (fSec === 'all' || card.dataset.sec === fSec) &&
                               (fEff === 'all' || card.dataset.effort === fEff) &&
-                              (fMod === 'all' || card.dataset.modal === fMod);
+                              (fMod === 'all' || card.dataset.modal === fMod)&&
+							  (fTag === 'all' || card.dataset.tags === fTag);
                 
                 if (match) { 
                     card.classList.remove('hidden'); 
@@ -656,6 +663,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             fillSelect('filterSec', filterOptions.sec_level, "Niveau");
             fillSelect('filterEffort', filterOptions.effort_level, "Aufwand");
             fillSelect('filterModal', filterOptions.modalverb, "Modalität");
+			fillSelect('filterTag', filterOptions.tags, "Tag");
         }
 
         function fillSelect(id, set, label) {
@@ -674,7 +682,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
 
         function resetFilters() {
             document.getElementById('searchInput').value = '';
-            ['filterClass', 'filterSec', 'filterEffort', 'filterModal'].forEach(id => document.getElementById(id).value = 'all');
+            ['filterClass', 'filterSec', 'filterEffort', 'filterModal', 'filterTag'].forEach(id => document.getElementById(id).value = 'all');
             applyFilters();
         }
 
