@@ -15,12 +15,12 @@ Jede CSV-Datei entspricht einem eigenen Namespace:
 | `modalverb.csv`                  | Definitionen zu Modalverben (Grad der Verpflichtung oder Möglichkeit) |
 | `praktiken.csv`                  | Definitionen zu Praktiken oder Vorgehensweisen                        |
 | `sicherheitsniveau.csv`          | Definitionen zu Sicherheitsniveaus                                    |
-| `stufen.csv`                     | Definitionen zu Aufwandsstufen                                        |
+| `aufwand.csv`                    | Definitionen zu Aufwandsstufen                                        |
 | `tags.csv`                       | Definitionen zu Schlagwörtern oder thematischen Labels                |
 | `themen.csv`                     | Definitionen zu Themen (= Untergliederung von Praktiken)              |
-| `zielobjekte.csv`                | Definitionen zu Zielobjekten (z. B. IT-Systeme, Anwendungen)          |
+| `zielobjektkategorien.csv`       | Definitionen zu Zielobjektkategorien (z. B. IT-Systeme, Anwendungen)  |
 
-(*) Im Ergebnis verwendete Begriffe werden in der ergebnis.csv aufgenommen, wenn der Begriff weder im Duden noch in der deutschen Wikipedia definiert ist oder eine von der allgemeinen Definition abweichende Definition verwendet wird. Dabei gilt ein Begriff auch dann als durch Duden oder Wikipedia definiert, wenn es sich um einen zusammengesetzten Begriff handelt, dessen Bestandteile alle bereits definiert sind.
+(*) Anders als bei den anderen Namespace-Dokumenten darf im Ergebnis-Feld Freitext innerhalb der Satzschablone verwendet werden. Im Ergebnis verwendete Begriffe werden nur dann in der ergebnis.csv aufgenommen, wenn der Begriff weder im Duden noch in der deutschen Wikipedia definiert ist oder eine von der allgemeinen Definition abweichende Definition verwendet wird. Dies dient als Glossar zum Verständnis der Inhalte, nicht zu Validierung der erlaubten Feldinhalte. Dabei gilt ein Begriff auch dann als durch Duden oder Wikipedia definiert, wenn es sich um einen zusammengesetzten Begriff handelt, dessen Bestandteile alle bereits definiert sind.
 
 ---
 
