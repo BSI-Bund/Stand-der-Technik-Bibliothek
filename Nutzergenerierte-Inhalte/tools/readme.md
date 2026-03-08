@@ -1,6 +1,6 @@
 # Tools der Stand-der-Technik-Bibliothek
 
-Diese Sammlung enthält Werkzeuge zur Erstellung, Verwaltung und Dokumentation von **Systemsicherheitsprofilen (SSP)** im Kontext nutzergenerierter Inhalte. Die Tools sind webbasiert (HTML/JS) und ermöglichen einen durchgängigen Workflow von der Planung bis zur Zertifizierung.
+Diese Sammlung enthält Werkzeuge zur Erstellung, Verwaltung und Dokumentation von **Systemsicherheitsprofilen (SSP)** im Kontext nutzergenerierter Inhalte. Die Tools sind webbasiert (HTML/JS) und ermöglichen einen durchgängigen Workflow von der Planung bis zur Zertifizierung und dem Abarbeiten der Festellungen.
 
 Und es gibt auch eine Anwendung den Anwenderkatalog zu betrachten: [GSpp-Viewer.html](./GSpp-Viewer.html).
 
@@ -37,6 +37,12 @@ Die letzte Phase dient der formalen Prüfung und dem Nachweis der Compliance.
     * **Befundvorschlag**: Die KI analysiert den SSP-Eintrag und schlägt eine Bewertung vor.
     * **Reifegrade**: Der Assistent generiert Prüfungshandlungen für verschiedene Reifegrade.
 * **Ergebnis-Export (AR)**: Sie generieren die formalen Assessment Results (AR) als Beleg für die Wirksamkeit Ihres ISMS.
+
+### 4. Feststellungen Abarbeiten: [POA&M-Generator](./abarbeiten_POAM_generator.html)
+Das Tool überführt ungelöste Mängel in einen verbindlichen Maßnahmenplan, damit keine Sicherheitslücke unbehandelt bleibt.
+* **Mängel-Import**: Sobald du die Assessment Results lädst, übernimmt die Anwendung automatisch alle nicht erfüllten Controls.
+* **Meilenstein-Planung**: Du legst detaillierte Phasenpläne fest, damit die Sanierung der Schwachstellen termingerecht erfolgt.
+* **Dashboard**: Du behältst überfällige Deadlines und den allgemeinen Fortschritt der Mängelbeseitigung permanent im Blick.
 
 # Kurzanleitung: Informationsverbund erstellen (Modellieren, Strukturanalyse, Risiko Analyse - OSCAL Blaupausen Generator)
 
@@ -125,12 +131,68 @@ Dieses Tool dient der Auditierung und Prüfung von Sicherheitskonzepten. Es tran
 * **AP exportieren**: Erzeuge den *Assessment Plan*, der den Prüfumfang und die geplanten Aktivitäten beschreibt.
 * **AR exportieren**: Erzeuge die *Assessment Results*, die alle Befunde, Beobachtungen und Risiken für das offizielle Reporting enthalten.
 
-# Roadmap & Geplante Erweiterungen
+# Kurzanleitung: Beheben der Feststellungen (OSCAL POA&M Generator)
 
-Die folgenden Komponenten befinden sich derzeit in der Planung, um den Zertifizierungszyklus zu schließen:
+Dieses Werkzeug schließt die Lücke zwischen der Feststellung von Mängeln und ihrer systematischen Behebung. Es überführt die Ergebnisse aus dem Assessment direkt in einen verbindlichen Maßnahmenplan.
 
-* **4. Plan of Action and Milestones (POA&M):** Automatisierte Ableitung von Maßnahmenplänen und Meilensteinen aus den im Audit (AR) identifizierten Schwachstellen.
+### 1. Datenimport und Initialisierung
+* **AR laden**: Importieren Sie die Datei `*_AR.json`, um alle Befunde in den POA&M zu überführen.
+* **Automatische Erfassung**: Die Anwendung identifiziert sofort alle als "nicht erfüllt" (not-satisfied) markierten Befunde und legt dafür POA&M-Items an.
+* **Session-Verwaltung**: Speichern Sie Ihren Arbeitsstand regelmäßig als Session-Datei, um die Planung später nahtlos fortzusetzen.
 
+### 2. Metadaten und Zuständigkeiten
+* **Verantwortlichkeiten**: Hinterlegen Sie Namen und E-Mail der verantwortlichen Personen, etwa des ISSO oder System Owners.
+* **Stammdaten**: Passen Sie Titel und Version des Plans an, wobei das Tool den Systemnamen bereits aus dem AR übernimmt.
+
+### 3. Maßnahmenplanung und Überwachung
+* **Priorisierung**: Ordnen Sie jeder Maßnahme eine Priorität (Hoch, Mittel, Niedrig) zu, um die Ressourcensteuerung zu optimieren.
+* **Status-Tracking**: Verfolgen Sie den Fortschritt von "Offen" über "In Arbeit" bis hin zum Abschluss.
+* **Fristenmanagement**: Setzen Sie Deadlines für jede Aufgabe. Das Dashboard warnt Sie visuell bei Überfälligkeit.
+* **Abweichungen**: Dokumentieren Sie Begründungen für Risikoakzeptanz oder genehmigte Abweichungen direkt am betroffenen Item.
+
+### 4. KI-gestützte Sanierung (🤖)
+* **Vorschlag zur Behebung**: Die KI analysiert Anforderung und Risiko, um einen konkreten Text für die Mängelbeseitigung zu formulieren.
+* **Meilenstein-Planer**: Lassen Sie die KI einen zeitlichen Phasenplan mit konkreten Meilensteinen für die Umsetzung erstellen.
+
+### 5. Export
+* **POA&M-Datei**: Generieren Sie die finale `*_POAM.json`. Diese enthält alle Maßnahmen, Meilensteine und Risikoprotokolle im OSCAL-Standard.
+
+---
+# Daten-Management-Guide: Die OSCAL-Toolchain
+
+Verwalte deine OSCAL-Daten wie einen Staffellauf. Jedes Werkzeug übergibt den Stab an das nächste, damit deine Compliance-Kette lückenlos bleibt.
+
+---
+
+## 1. Die Ordnerstruktur
+Trenne die Phasen deines Projekts konsequent. Lege vier nummerierte Verzeichnisse an, da diese Struktur den Lebenszyklus deines Informationsverbunds widerspiegelt.
+
+* **01_Modellierung**: Reserviere diesen Ordner für Profile und initiale SSPs aus dem Blaupausen-Generator.
+* **02_Umsetzung**: Speichere hier deinen aktiv bearbeiteten SSP sowie die zugehörigen KI-Cache-Exporte.
+* **03_Audit**: Dieses Verzeichnis nimmt den Assessment Plan (AP), die Assessment Results (AR) und die Audit-Sessions auf.
+* **04_Sanierung**: Hier verwaltest du den Plan of Action and Milestones (POA&M) und die Sanierungs-Sessions.
+
+---
+
+## 2. Der Dateifluss (Input/Output-Matrix)
+
+Halte dich strikt an diese Übergabepunkte. Falls du die Namen der exportierten JSON-Dateien manuell änderst, riskierst du kaputte interne Referenzen (href) innerhalb des Workspace.
+
+| Phase | Werkzeug | Input | Output (Beispielname) |
+| :--- | :--- | :--- | :--- |
+| **1. Modell** | Blaupausen-Generator | (Katalog-URL) | `*_Profile.json`, `*_SSP.json` |
+| **2. Umsetzung** | SSP-Ausfüllen | `*_SSP.json` + `*_Profile.json` | `*_SSP-edited.json` |
+| **3. Audit** | Assessment Plan/Results | `*_SSP-edited.json` | `*_AP.json`, `*_AR.json` |
+| **4. Sanierung** | POA&M Generator | `*_AR.json` | `*_POAM.json` |
+
+---
+
+## 3. Goldene Regeln für den Workspace
+
+* **Sessions sind Pflicht**: Nutze im Audit- und POA&M-Tool konsequent die Funktion **Session speichern**. Nur die Session-Datei enthält deine gesamten Bearbeitungsstände inklusive aller Kommentare und KI-Analysen.
+* **KI-Cache sichern**: Exportiere im SSP-Tool regelmäßig deinen KI-Cache. Du vermeidest dadurch, dass bei einem Browser-Reset bereits generierte KI-Antworten verloren gehen und Kosten für eine erneute Anfrage verursachen.
+* **Referenz-Integrität**: Lade im Audit-Tool zwingend die `*_SSP-edited.json`, damit die Anwendung die dokumentierten Umsetzungsdetails gegen den Katalog prüfen kann.
+* **Keine manuellen Datei-Eingriffe**: Bearbeite die JSON-Dateien niemals händisch in einem Texteditor. Nutze ausschließlich die grafischen Editoren, um die OSCAL-Konformität zu wahren.
 ---
 
 ## Technische Hinweise

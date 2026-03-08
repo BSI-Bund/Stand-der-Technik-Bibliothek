@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL POA&M Generator v2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.0/marked.min.js"></script>
+    <style>
+        *{box-sizing:border-box}
+        .sidebar{width:320px;min-width:320px;transition:margin-left .3s ease,opacity .3s;overflow-y:auto}
+        .sidebar.collapsed{margin-left:-320px;opacity:0;pointer-events:none}
+        .sb-toggle{position:fixed;top:12px;left:12px;z-index:50;background:#1e293b;border:1px solid #475569;border-radius:.5rem;padding:6px 10px;color:#e2e8f0;cursor:pointer;font-size:18px;transition:left .3s}
+        .sb-toggle.shifted{left:332px}
+        .coll-content{transition:max-height .3s ease-out,opacity .3s;overflow:hidden;max-height:0;opacity:0}
+        .coll-content.open{max-height:50000px;opacity:1;overflow:visible}
+        .chev{transition:transform .3s}.chev.open{transform:rotate(90deg)}
+        .cscroll::-webkit-scrollbar{width:5px}.cscroll::-webkit-scrollbar-track{background:#1e293b}.cscroll::-webkit-scrollbar-thumb{background:#475569;border-radius:3px}
+        .drag-over{border-color:#f59e0b!important;background:rgba(245,158,11,.08)!important}
+        .stat-bar{transition:width .5s cubic-bezier(.4,0,.2,1)}
+        .sb{font-size:10px;padding:2px 7px;border-radius:9999px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;border:1px solid}
+        .lbl{display:block;font-size:.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;margin-bottom:.2rem;letter-spacing:.05em}
+        .inp{padding:.4rem .6rem;background:#0f172a;border:1px solid #475569;border-radius:.4rem;font-size:.8rem;color:#fff;outline:none;width:100%}
+        .inp:focus{border-color:#f59e0b;box-shadow:0 0 0 2px rgba(245,158,11,.15)}
+        .ai-btn{background:linear-gradient(135deg,#7c3aed,#6366f1);color:#fff;font-weight:700;border-radius:.4rem;font-size:10px;padding:3px 8px;border:none;cursor:pointer;transition:all .15s}
+        .ai-btn:hover{filter:brightness(1.15)}.ai-btn:disabled{opacity:.4;cursor:wait}
+        .poam-card{transition:border-color .15s}.poam-card:hover{border-color:#f59e0b}
+        .prio-high{border-left:4px solid #ef4444}.prio-medium{border-left:4px solid #f59e0b}.prio-low{border-left:4px solid #3b82f6}
+        .ms-done{text-decoration:line-through;opacity:.5}
+        .overdue{animation:pred 2s infinite}
+        @keyframes pred{0%,100%{border-color:#7f1d1d}50%{border-color:#ef4444}}
+        .loader-sm{border:2px solid #334155;border-top:2px solid #f59e0b;border-radius:50%;width:14px;height:14px;animation:sp .7s linear infinite;display:inline-block}
+        @keyframes sp{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+        @media(max-width:768px){.sidebar{width:100%;min-width:100%;position:fixed;top:0;left:0;z-index:40;height:100vh;background:#0f172a}.sidebar.collapsed{margin-left:-100%}}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full font-sans text-slate-200">
+
+<button id="sb-btn" class="sb-toggle shifted" onclick="toggleSidebar()">☰</button>
+
+<div class="flex h-full">
+    <!-- ========== SIDEBAR ========== -->
+    <aside id="sidebar" class="sidebar bg-slate-800 border-r border-slate-700 p-4 flex flex-col gap-4 cscroll">
+        <div class="pt-1">
+            <h1 class="text-lg font-bold text-white leading-tight">OSCAL POA&M</h1>
+            <p class="text-[10px] text-slate-500 mt-1">Schritt 4: AR → Maßnahmen → POA&M</p>
+        </div>
+
+        <!-- Status -->
+        <div class="space-y-1.5">
+            <div id="cat-status" class="px-2 py-1 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="loader-sm mr-1.5"></span>Katalog...</div>
+            <div id="ar-status" class="px-2 py-1 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span>Kein AR</div>
+        </div>
+
+        <!-- Import -->
+        <div class="space-y-2">
+            <div class="lbl">Import</div>
+            <div id="dz-ar" class="dz border border-dashed border-slate-600 rounded-lg p-3 text-center cursor-pointer hover:border-amber-500 bg-slate-900/40 text-xs" data-type="ar">
+                📊 AR laden (.json)<input type="file" accept=".json" class="hidden fip" data-type="ar">
+            </div>
+            <div id="dz-state" class="dz border border-dashed border-slate-600 rounded-lg p-3 text-center cursor-pointer hover:border-purple-500 bg-slate-900/40 text-xs" data-type="state">
+                💾 Session laden<input type="file" accept=".json" class="hidden fip" data-type="state">
+            </div>
+        </div>
+
+        <!-- AI -->
+        <div class="border border-slate-700 rounded-lg overflow-hidden">
+            <button onclick="tog('sb-ai')" class="w-full flex justify-between items-center p-2 bg-slate-900/60 text-xs font-bold text-slate-300">
+                🤖 KI <span id="ai-badge" class="sb bg-slate-700 text-slate-500 border-slate-600 hidden ml-1">—</span>
+                <svg id="icon-sb-ai" class="chev w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+            </button>
+            <div id="sb-ai-content" class="coll-content p-2 bg-slate-900/30 space-y-2">
+                <select id="ai-provider" onchange="onProvChange()" class="inp text-xs"><option value="">— Kein —</option><option value="claude">Claude</option><option value="gemini">Gemini</option></select>
+                <input type="password" id="ai-key" placeholder="API-Key" oninput="saveAICfg()" class="inp text-xs">
+                <select id="ai-model" class="inp text-xs" onchange="saveAICfg()"></select>
+                <div class="flex gap-2 text-[9px]"><a href="https://console.anthropic.com/settings/keys" target="_blank" class="text-violet-400 underline">Claude Key</a><a href="https://aistudio.google.com/apikey" target="_blank" class="text-blue-400 underline">Gemini Key</a></div>
+            </div>
+        </div>
+
+        <!-- Meta Navigation -->
+        <div class="border border-slate-700 rounded-lg overflow-hidden">
+            <button onclick="scrollToSec('sec-meta')" class="w-full flex justify-between items-center p-2 bg-slate-900/60 text-xs font-bold text-slate-300 hover:text-amber-400 transition-colors">
+                📝 Metadaten
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="border border-slate-700 rounded-lg overflow-hidden">
+            <button onclick="tog('sb-flt')" class="w-full flex justify-between items-center p-2 bg-slate-900/60 text-xs font-bold text-slate-300">
+                🔍 Filter
+                <svg id="icon-sb-flt" class="chev open w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+            </button>
+            <div id="sb-flt-content" class="coll-content open p-2 bg-slate-900/30 space-y-2">
+                <input type="text" id="flt-txt" oninput="flt()" placeholder="Control / Titel..." class="inp text-xs font-mono">
+                <select id="flt-comp" onchange="flt()" class="inp text-xs"><option value="">Komponente: Alle</option></select>
+                <select id="flt-pr" onchange="flt()" class="inp text-xs"><option value="">Prio: Alle</option><option value="high">Hoch</option><option value="medium">Mittel</option><option value="low">Niedrig</option></select>
+                <select id="flt-st" onchange="flt()" class="inp text-xs"><option value="">Status: Alle</option><option value="open">Offen</option><option value="in-progress">In Arbeit</option><option value="closed">Erledigt</option><option value="deviation-requested">Abw. beantragt</option><option value="deviation-approved">Abw. genehmigt</option><option value="risk-accepted">Risiko akzeptiert</option></select>
+                <label class="flex items-center gap-1 text-[10px] text-red-300 cursor-pointer"><input type="checkbox" id="flt-od" onchange="flt()" class="form-checkbox h-3 w-3 text-red-500 rounded border-slate-600 bg-slate-700">Nur Überfällige</label>
+            </div>
+        </div>
+
+        <!-- Export -->
+        <div class="mt-auto space-y-2 pt-3 border-t border-slate-700">
+            <button onclick="saveSession()" class="w-full bg-purple-700 text-white font-bold py-2 px-3 rounded-lg hover:bg-purple-600 text-xs">💾 Session</button>
+            <button onclick="exportPOAM()" class="w-full bg-amber-600 text-white font-bold py-2.5 px-3 rounded-lg hover:bg-amber-500 text-xs shadow-lg">📋 POA&M Export</button>
+        </div>
+    </aside>
+
+    <!-- ========== MAIN ========== -->
+    <main id="main" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
+        
+        <!-- Metadaten Section -->
+        <div id="sec-meta" class="hidden bg-slate-800 border border-slate-700 rounded-xl p-4 transition-all duration-300">
+            <h2 class="text-sm font-bold text-white mb-3">📝 Metadaten</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div><label class="lbl">Titel</label><input type="text" id="m-title" onchange="P.meta.title=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Version</label><input type="text" id="m-ver" value="1.0.0" onchange="P.meta.version=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Verantwortlicher</label><input type="text" id="m-resp" onchange="P.responsible.name=this.value" class="inp text-xs" placeholder="Name"></div>
+                <div><label class="lbl">Rolle</label><select id="m-role" onchange="P.responsible.role=this.value" class="inp text-xs"><option value="system-owner">System Owner</option><option value="isso">ISSO</option><option value="ciso">CISO</option></select></div>
+                <div><label class="lbl">E-Mail</label><input type="email" id="m-email" onchange="P.responsible.email=this.value" class="inp text-xs"></div>
+            </div>
+        </div>
+
+        <div id="stats-dash"></div>
+        
+        <div id="items-area">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-lg font-bold text-white" id="items-heading">POA&M Items</h2>
+                <button onclick="addMan()" class="text-xs px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-600 font-bold">+ Neuer Eintrag</button>
+            </div>
+            <div id="il" class="space-y-3"></div>
+        </div>
+    </main>
+</div>
+
+<script>
+const P={arFilename:'',sspHref:'',sysName:'',catalog:new Map(),findings:[],observations:[],risks:[],items:[],meta:{title:'',version:'1.0.0',desc:''},responsible:{name:'',role:'system-owner',email:''},aiCache:new Map()};
+const CATALOG_URL='https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json';
+const MODELS={claude:[{id:'claude-opus-4-6-20250514',label:'Opus 4.6'},{id:'claude-sonnet-4-6-20250514',label:'Sonnet 4.6'}],gemini:[{id:'gemini-3.1-pro-preview',label:'3.1 Pro'},{id:'gemini-3.1-flash',label:'3.1 Flash'}]};
+const PM={high:{l:'Hoch',c:'bg-red-900 text-red-300 border-red-700'},medium:{l:'Mittel',c:'bg-amber-900 text-amber-300 border-amber-700'},low:{l:'Niedrig',c:'bg-blue-900 text-blue-300 border-blue-700'}};
+const SM={open:{l:'Offen',c:'bg-red-900/50 text-red-300 border-red-700'},'in-progress':{l:'In Arbeit',c:'bg-amber-900 text-amber-300 border-amber-700'},closed:{l:'Erledigt',c:'bg-emerald-900 text-emerald-300 border-emerald-700'},'deviation-requested':{l:'Abw. beantr.',c:'bg-purple-900 text-purple-300 border-purple-700'},'deviation-approved':{l:'Abw. genehm.',c:'bg-indigo-900 text-indigo-300 border-indigo-700'},'risk-accepted':{l:'Risiko akz.',c:'bg-slate-700 text-slate-300 border-slate-600'}};
+
+function mkItem(fU,rU,cid,title,desc,comp,compUuid,obsTxt,rskTxt,remTxt){return{uuid:crypto.randomUUID(),controlId:cid||'',component:comp||'',componentUuid:compUuid||'',title:title||'',description:desc||'',observationText:obsTxt||'',riskText:rskTxt||'',remarkText:remTxt||'',priority:'medium',status:'open',findingUuids:fU?[fU]:[],riskUuids:rU?[rU]:[],deadline:'',responsible:'',remediation:'',milestones:[],remarks:'',deviationJustification:'',createdAt:new Date().toISOString()}}
+
+// SIDEBAR
+function toggleSidebar(){const sb=document.getElementById('sidebar'),btn=document.getElementById('sb-btn');sb.classList.toggle('collapsed');btn.classList.toggle('shifted')}
+window.tog=id=>{document.getElementById(id+'-content')?.classList.toggle('open');document.getElementById('icon-'+id)?.classList.toggle('open')};
+window.scrollToSec = id => {
+    const el = document.getElementById(id);
+    if(el) {
+        el.scrollIntoView({behavior: 'smooth', block: 'start'});
+        el.classList.add('ring-2', 'ring-amber-500');
+        setTimeout(() => el.classList.remove('ring-2', 'ring-amber-500'), 1500);
+    }
+};
+
+// INIT
+document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('.dz').forEach(dz=>{const fi=dz.querySelector('.fip'),ty=dz.dataset.type;
+        dz.addEventListener('click',()=>fi.click());dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over')});dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
+        dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag-over');if(e.dataTransfer.files.length)loadF(e.dataTransfer.files[0],ty)});
+        fi.addEventListener('change',e=>{if(e.target.files.length)loadF(e.target.files[0],ty)})});
+    loadAICfg();loadCatalog();tryAR()});
+
+// CATALOG
+async function loadCatalog(){const cs=document.getElementById('cat-status');try{const r=await fetch(CATALOG_URL);const d=await r.json();function idx(it){if(!it)return;it.forEach(i=>{if(i.id){let pr='';if(i.parts){const p=i.parts.find(p=>p.name==='statement'||p.prose);if(p&&p.prose)pr=p.prose}P.catalog.set(i.id,{title:i.title||'',prose:pr})}if(i.controls)idx(i.controls);if(i.groups)idx(i.groups)})}idx(d.catalog.groups);cs.className="px-2 py-1 rounded text-[10px] font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center";cs.innerHTML=`✓ ${P.catalog.size} Controls`}catch(e){cs.textContent='Katalog-Fehler'}}
+function ct(cid){return P.catalog.get(cid)||{title:'',prose:''}}
+
+// FILES
+function loadF(f,ty){if(!f.name.endsWith('.json'))return alert('JSON.');const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result.replace(/^\uFEFF/,''));if(ty==='ar')importAR(d,f.name);else restoreS(d)}catch(e){alert(e.message)}};r.readAsText(f)}
+
+// IMPORT AR
+function importAR(d,fn){
+    const ar=d['assessment-results'];if(!ar)return alert('Kein assessment-results.');
+    P.arFilename=fn;P.sspHref=ar['import-ap']?.href||'';
+    const res=ar.results?.[0];if(!res)return alert('Keine results.');
+    
+    P.sysName=(ar.metadata?.title||'').replace(/ - Assessment Results/,'');
+    P.meta.title=`${P.sysName} - POA&M`;
+    document.getElementById('m-title').value=P.meta.title;
+    document.getElementById('sec-meta').classList.remove('hidden');
+
+    P.findings=(res.findings||[]).map(f=>({
+        uuid:f.uuid,
+        title:f.title,
+        description:f.description,
+        remarks:f.remarks||'',
+        targetId:f.target?.['target-id']||'',
+        status:f.target?.status?.state||'',
+        relRisks:(f['related-risks']||[]).map(r=>r['risk-uuid']),
+        relObs:(f['related-observations']||[]).map(o=>o['observation-uuid'])
+    }));
+    
+    P.observations=(res.observations||[]).map(o=>({
+        uuid:o.uuid,
+        title:o.title,
+        description:o.description,
+        methods:o.methods||[],
+        collected:o.collected||'',
+        subjects:o.subjects||[]
+    }));
+    
+    P.risks=(res.risks||[]).map(r=>({uuid:r.uuid,title:r.title,description:r.description,status:r.status||'open'}));
+    
+    P.items=[];
+    P.findings.filter(f=>f.status==='not-satisfied').forEach(f=>{
+        const ru=f.relRisks[0]||'';
+        const rk=P.risks.find(r=>r.uuid===ru);
+        
+        let subjectsList = [];
+        let obsTxt = '';
+        if(f.relObs && f.relObs.length > 0) {
+            const ob = P.observations.find(o => o.uuid === f.relObs[0]);
+            if(ob) {
+                obsTxt = ob.description || '';
+                if(ob.subjects) subjectsList = ob.subjects.filter(s => s.type === 'component');
+            }
+        }
+        
+        const rskTxt = rk?.description || '';
+        const remTxt = f.remarks || f.description || '';
+        const itemTitle = `Maßnahme: ${f.targetId} — ${ct(f.targetId).title||''}`.trim();
+        const fallbackDesc = rskTxt || remTxt;
+        
+        if (subjectsList.length > 0) {
+            subjectsList.forEach(s => {
+                const compName = s.title || s['subject-uuid'];
+                const compUuid = s['subject-uuid'];
+                P.items.push(mkItem(f.uuid,ru,f.targetId,itemTitle,fallbackDesc,compName,compUuid,obsTxt,rskTxt,remTxt));
+            });
+        } else {
+            P.items.push(mkItem(f.uuid,ru,f.targetId,itemTitle,fallbackDesc,'','',obsTxt,rskTxt,remTxt));
+        }
+    });
+    
+    setSt('ar-status',true,`AR: ${P.items.length} Items`);render()
+}
+
+// SESSION
+function ser(){return JSON.stringify({_t:'poam',_v:2,arFilename:P.arFilename,sspHref:P.sspHref,sysName:P.sysName,meta:P.meta,responsible:P.responsible,findings:P.findings,observations:P.observations,risks:P.risks,items:P.items,aiCache:[...P.aiCache.entries()]})}
+function restoreS(d){
+    if(d._t!=='poam')return alert('Keine POA&M-Session.');
+    Object.assign(P,{arFilename:d.arFilename||'',sspHref:d.sspHref||'',sysName:d.sysName||'',meta:d.meta||{title:'',version:'1.0.0',desc:''},responsible:d.responsible||{name:'',role:'system-owner',email:''},findings:d.findings||[],observations:d.observations||[],risks:d.risks||[],items:d.items||[]});
+    P.aiCache=new Map(d.aiCache||[]);
+    document.getElementById('m-title').value=P.meta.title;document.getElementById('m-ver').value=P.meta.version;
+    document.getElementById('m-resp').value=P.responsible.name;document.getElementById('m-email').value=P.responsible.email;
+    document.getElementById('sec-meta').classList.remove('hidden');
+    setSt('ar-status',true,`Session: ${P.items.length} Items`);render()
+}
+window.saveSession=()=>dl(JSON.parse(ser()),`${sn()}_poam_session.json`);
+function autoSave(){try{localStorage.setItem('oscal_poam_v2',ser())}catch(e){}}
+function tryAR(){try{const s=localStorage.getItem('oscal_poam_v2');if(!s)return;const d=JSON.parse(s);if(d._t==='poam'&&d.items?.length&&confirm(`POA&M Autosave (${d.items.length} Items). Laden?`))restoreS(d)}catch(e){}}
+setInterval(()=>{if(P.items.length)autoSave()},30000);
+
+// AI CONFIG
+window.onProvChange=()=>{const p=document.getElementById('ai-provider').value;const s=document.getElementById('ai-model');s.innerHTML='';(MODELS[p]||[]).forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.label;s.appendChild(o)});saveAICfg()};
+window.saveAICfg=()=>{const c={p:document.getElementById('ai-provider').value,k:document.getElementById('ai-key').value,m:document.getElementById('ai-model').value};try{localStorage.setItem('oscal_ai',JSON.stringify(c))}catch(e){}const b=document.getElementById('ai-badge');if(c.p&&c.k){b.classList.remove('hidden');b.className='sb bg-violet-900 text-violet-300 border-violet-700';b.textContent=c.p==='claude'?'Claude':'Gemini'}else b.classList.add('hidden')};
+function loadAICfg(){try{const c=JSON.parse(localStorage.getItem('oscal_ai')||'{}');if(c.p){document.getElementById('ai-provider').value=c.p;onProvChange();if(c.k)document.getElementById('ai-key').value=c.k;if(c.m)document.getElementById('ai-model').value=c.m;saveAICfg()}}catch(e){}}
+function getAI(){const p=document.getElementById('ai-provider').value,k=document.getElementById('ai-key').value,m=document.getElementById('ai-model').value;return(p&&k)?{p,k,m}:null}
+async function callAI(prompt){const ai=getAI();if(!ai)throw new Error('KI konfigurieren.');if(ai.p==='claude'){const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':ai.k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:ai.m,max_tokens:2000,messages:[{role:'user',content:prompt}]})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content?.[0]?.text||''}else{const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ai.m}:generateContent?key=${ai.k}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.3}})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.candidates?.[0]?.content?.parts?.[0]?.text||''}}
+
+// RENDER
+function render(){renderStats();renderItems()}
+
+function renderStats(){
+    const d=document.getElementById('stats-dash'),n=P.items.length;if(!n){d.innerHTML='';return}
+    const bySt={},byPr={};P.items.forEach(i=>{bySt[i.status]=(bySt[i.status]||0)+1;byPr[i.priority]=(byPr[i.priority]||0)+1});
+    const today=new Date().toISOString().split('T')[0];
+    const od=P.items.filter(i=>i.deadline&&i.status!=='closed'&&i.deadline<today).length;
+    const msT=P.items.reduce((s,i)=>s+i.milestones.length,0),msD=P.items.reduce((s,i)=>s+i.milestones.filter(m=>m.done).length,0);
+    let bars='';['open','in-progress','closed','deviation-requested','deviation-approved','risk-accepted'].forEach(st=>{const c=bySt[st];if(!c)return;const m=SM[st];bars+=`<div class="flex items-center gap-2 mb-1"><span class="sb ${m.c} w-28 text-center flex-shrink-0">${m.l}</span><div class="flex-1 bg-slate-900 rounded-full h-3 overflow-hidden border border-slate-700"><div class="stat-bar h-full rounded-full" style="width:${(c/n*100).toFixed(1)}%;background:${st==='closed'?'#10b981':st==='open'?'#ef4444':'#f59e0b'}"></div></div><span class="text-[10px] text-slate-400 w-5 text-right">${c}</span></div>`});
+    d.innerHTML=`<div class="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-xl p-4 shadow-lg"><div class="flex justify-between items-center mb-3"><h2 class="text-sm font-bold text-white">Dashboard</h2><div class="flex gap-4 text-xs"><div class="text-center"><span class="font-bold text-white text-lg">${n}</span><div class="text-[9px] text-slate-500">Items</div></div><div class="text-center"><span class="font-bold ${od?'text-red-400':'text-emerald-400'} text-lg">${od}</span><div class="text-[9px] text-slate-500">Überfällig</div></div><div class="text-center"><span class="font-bold text-amber-400 text-lg">${msD}/${msT}</span><div class="text-[9px] text-slate-500">Milestones</div></div></div></div>${bars}</div>`;
+}
+
+function renderItems(){
+    document.getElementById('items-heading').textContent=`POA&M Items (${P.items.length})`;
+    const el=document.getElementById('il');const today=new Date().toISOString().split('T')[0];
+    if(!P.items.length){el.innerHTML='<p class="text-slate-500 text-sm italic text-center py-8 bg-slate-900 rounded-lg border border-slate-700">Keine Items. AR importieren oder manuell anlegen.</p>';return}
+    let h='';
+    P.items.forEach((it,i)=>{
+        const c=ct(it.controlId);const pm=PM[it.priority]||PM.medium;const sm=SM[it.status]||SM.open;
+        const od=it.deadline&&it.status!=='closed'&&it.deadline<today;
+        const msD=it.milestones.filter(m=>m.done).length,msT=it.milestones.length;
+        const titleText=c.title||it.title;
+        const compEnc=encodeURIComponent(it.component||'');
+
+        h+=`<div class="poam-card bg-slate-900 border border-slate-700 rounded-xl prio-${it.priority} ${od?'overdue':''}" data-i="${i}" data-cid="${(it.controlId||'').toLowerCase()}" data-t="${esc(it.title).toLowerCase()}" data-pr="${it.priority}" data-st="${it.status}" data-od="${od?1:0}" data-comp="${compEnc}">
+            <div class="flex items-center gap-2 p-3 cursor-pointer flex-wrap" onclick="togI(${i})">
+                <span class="sb ${pm.c}">${pm.l}</span>
+                ${it.controlId?`<span class="font-mono font-bold text-white text-xs">${esc(it.controlId)}</span>`:''}
+                <span class="text-xs text-slate-300 truncate max-w-[300px]">${esc(titleText)}</span>
+                ${it.component?`<span class="text-[9px] text-cyan-400 bg-cyan-950/40 px-1.5 py-0.5 rounded border border-cyan-800">📦 ${esc(it.component)}</span>`:''}
+                <span class="sb ${sm.c} ml-auto flex-shrink-0">${sm.l}</span>
+                ${od?'<span class="text-red-400 text-[10px] font-bold">⏰</span>':''}
+                ${msT?`<span class="text-[10px] text-slate-500">${msD}/${msT} MS</span>`:''}
+                ${it.deadline?`<span class="text-[10px] text-slate-500">📅${it.deadline}</span>`:''}
+                <svg class="chev w-3.5 h-3.5 text-slate-500 flex-shrink-0" id="ich-${i}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+            </div>
+            <div class="coll-content px-3 pb-3" id="ib-${i}">
+                ${c.prose?`<div class="text-xs text-slate-500 mb-2 bg-slate-800/60 p-2 rounded border-l-2 border-slate-600">${esc(c.prose).substring(0,400)}${c.prose.length>400?'…':''}</div>`:''}
+                ${it.observationText?`<div class="text-xs text-blue-300/80 mb-1.5 bg-blue-950/20 p-2 rounded border-l-2 border-blue-800">👁️ <strong class="uppercase text-[9px] tracking-wider text-blue-500">Beobachtung:</strong><br>${esc(it.observationText)}</div>`:''}
+                ${it.riskText?`<div class="text-xs text-red-300/80 mb-1.5 bg-red-950/20 p-2 rounded border-l-2 border-red-800">🔴 <strong class="uppercase text-[9px] tracking-wider text-red-500">Risiko:</strong><br>${esc(it.riskText)}</div>`:''}
+                ${it.remarkText?`<div class="text-xs text-slate-300/80 mb-3 bg-slate-800/50 p-2 rounded border-l-2 border-slate-600">💬 <strong class="uppercase text-[9px] tracking-wider text-slate-500">Bemerkung:</strong><br>${esc(it.remarkText)}</div>`:''}
+
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-3">
+                    <div><label class="lbl">Priorität</label><select onchange="upd(${i},'priority',this.value);render()" class="inp text-xs">${['high','medium','low'].map(p=>`<option value="${p}" ${it.priority===p?'selected':''}>${PM[p].l}</option>`).join('')}</select></div>
+                    <div><label class="lbl">Status</label><select onchange="upd(${i},'status',this.value);render()" class="inp text-xs">${Object.entries(SM).map(([k,v])=>`<option value="${k}" ${it.status===k?'selected':''}>${v.l}</option>`).join('')}</select></div>
+                    <div><label class="lbl">Frist</label><input type="date" value="${it.deadline}" onchange="upd(${i},'deadline',this.value);renderStats()" class="inp text-xs"></div>
+                    <div><label class="lbl">Verantwortlich</label><input type="text" value="${esc(it.responsible)}" onchange="upd(${i},'responsible',this.value)" class="inp text-xs"></div>
+                    <div><label class="lbl">Komponente</label><input type="text" value="${esc(it.component||'')}" onchange="upd(${i},'component',this.value);renderItems()" class="inp text-xs" placeholder="z.B. ISMS, App..."></div>
+                </div>
+
+                <div class="mb-3"><div class="flex items-center gap-2 mb-1"><label class="lbl mb-0">Maßnahme</label><button onclick="aiRem(${i})" class="ai-btn" id="air-${i}">🤖 Vorschlag</button></div>
+                    <textarea rows="3" id="rem-${i}" onchange="upd(${i},'remediation',this.value)" class="inp text-xs">${esc(it.remediation)}</textarea></div>
+
+                ${it.status.includes('deviation')||it.status==='risk-accepted'?`<div class="mb-3"><label class="lbl">Begründung Abweichung / Risikoakzeptanz</label><textarea rows="2" onchange="upd(${i},'deviationJustification',this.value)" class="inp text-xs">${esc(it.deviationJustification||'')}</textarea></div>`:''}
+
+                <div class="mb-3"><div class="flex items-center gap-2 mb-2"><label class="lbl mb-0">Meilensteine</label><button onclick="aiMS(${i})" class="ai-btn" id="aim-${i}">🤖 Planen</button><button onclick="addMS(${i})" class="text-[10px] px-2 py-1 bg-slate-700 text-white rounded font-bold">+ Manuell</button></div>
+                    <div class="space-y-1">${it.milestones.map((ms,mi)=>`
+                        <div class="flex items-center gap-2 p-1.5 bg-slate-800 border border-slate-700 rounded ${ms.done?'ms-done':''}">
+                            <input type="checkbox" ${ms.done?'checked':''} onchange="tMS(${i},${mi},this.checked)" class="form-checkbox h-3 w-3 text-amber-500 rounded border-slate-600 bg-slate-700">
+                            <input type="text" value="${esc(ms.title)}" onchange="uMS(${i},${mi},'title',this.value)" class="inp flex-1 text-[11px] py-0.5">
+                            <input type="date" value="${ms.dueDate||''}" onchange="uMS(${i},${mi},'dueDate',this.value)" class="inp w-32 text-[11px] py-0.5">
+                            <button onclick="dMS(${i},${mi})" class="text-red-400 text-xs px-1">✕</button>
+                        </div>`).join('')}</div></div>
+
+                <div class="mb-2"><label class="lbl">Bemerkungen</label><textarea rows="2" onchange="upd(${i},'remarks',this.value)" class="inp text-xs">${esc(it.remarks||'')}</textarea></div>
+                <div class="flex justify-end"><button onclick="delI(${i})" class="text-[10px] px-3 py-1 bg-red-900/50 text-red-300 border border-red-800 rounded hover:bg-red-900 font-bold">🗑 Löschen</button></div>
+            </div></div>`;
+    });
+    el.innerHTML=h;
+    updateCompFilter();
+    window.flt();
+}
+
+function updateCompFilter() {
+    const sel = document.getElementById('flt-comp');
+    if(!sel) return;
+    const cur = sel.value;
+    const comps = new Set();
+    P.items.forEach(i => { if(i.component) comps.add(i.component); });
+    let h = '<option value="">Komponente: Alle</option>';
+    let curValid = false;
+    [...comps].sort().forEach(c => {
+        const enc = encodeURIComponent(c);
+        h += `<option value="${enc}">${esc(c)}</option>`;
+        if(enc === cur) curValid = true;
+    });
+    sel.innerHTML = h;
+    sel.value = curValid ? cur : "";
+}
+
+// Interactions
+window.togI=i=>{document.getElementById('ib-'+i)?.classList.toggle('open');document.getElementById('ich-'+i)?.classList.toggle('open')};
+window.upd=(i,k,v)=>{P.items[i][k]=v};
+window.delI=i=>{if(!confirm('Löschen?'))return;P.items.splice(i,1);render()};
+window.addMan=()=>{P.items.push(mkItem('','','','Neuer Eintrag','','','','','',''));render()};
+window.addMS=i=>{P.items[i].milestones.push({uuid:crypto.randomUUID(),title:'Meilenstein',dueDate:'',done:false});renderItems()};
+window.tMS=(i,mi,d)=>{P.items[i].milestones[mi].done=d;renderStats()};
+window.uMS=(i,mi,k,v)=>{P.items[i].milestones[mi][k]=v};
+window.dMS=(i,mi)=>{P.items[i].milestones.splice(mi,1);renderItems()};
+window.flt=()=>{const t=(document.getElementById('flt-txt')?.value||'').toLowerCase();const fp=document.getElementById('flt-pr')?.value||'';const fs=document.getElementById('flt-st')?.value||'';const fc=document.getElementById('flt-comp')?.value||'';const fo=document.getElementById('flt-od')?.checked;document.querySelectorAll('.poam-card').forEach(c=>{let s=true;if(t&&!c.dataset.cid?.includes(t)&&!c.dataset.t?.includes(t))s=false;if(fp&&c.dataset.pr!==fp)s=false;if(fs&&c.dataset.st!==fs)s=false;if(fc&&c.dataset.comp!==fc)s=false;if(fo&&c.dataset.od!=='1')s=false;c.style.display=s?'':'none'})};
+
+// AI
+window.aiRem=async i=>{if(!getAI())return alert('KI konfigurieren.');const it=P.items[i];const c=ct(it.controlId);const btn=document.getElementById('air-'+i);if(btn){btn.disabled=true;btn.textContent='⏳'}
+try{const txt=await callAI(`IT-Sicherheitsberater. Konkreter Maßnahmenplan:\n\nSystem: ${P.sysName}${it.component?', Komponente: '+it.component:''}\nControl: ${it.controlId} — ${c.title}\n${c.prose?'Anforderung: '+c.prose.substring(0,400):''}\nRisiko: ${it.description}\n${it.remediation?'Bisherig: '+it.remediation:''}\n\nNUR ${it.controlId} bewerten (BSI Grundschutz++ = granulare Controls).\n3-5 Sätze Fließtext, Deutsch, kein Markdown.`);
+P.items[i].remediation=txt.trim();const ta=document.getElementById('rem-'+i);if(ta)ta.value=txt.trim()}catch(e){alert('KI: '+e.message)}finally{if(btn){btn.disabled=false;btn.textContent='🤖 Vorschlag'}}};
+
+window.aiMS=async i=>{if(!getAI())return alert('KI konfigurieren.');const it=P.items[i];const c=ct(it.controlId);const btn=document.getElementById('aim-'+i);if(btn){btn.disabled=true;btn.textContent='⏳'}
+try{const txt=await callAI(`3-5 Meilensteine für IT-Sicherheitsmaßnahme:\n\nSystem: ${P.sysName}${it.component?', Komponente: '+it.component:''}\nControl: ${it.controlId} — ${c.title}\nMaßnahme: ${it.remediation||it.description||'?'}\n\nNUR JSON: [{"title":"...","weeks":2}] (weeks ab heute)`);
+const arr=JSON.parse(txt.replace(/```json\n?|```/g,'').trim());
+if(Array.isArray(arr)){const now=new Date();P.items[i].milestones=arr.map(m=>{const d=new Date(now);d.setDate(d.getDate()+((m.weeks||4)*7));return{uuid:crypto.randomUUID(),title:m.title,dueDate:d.toISOString().split('T')[0],done:false}});renderItems();renderStats()}}catch(e){alert('KI: '+e.message)}finally{if(btn){btn.disabled=false;btn.textContent='🤖 Planen'}}};
+
+// EXPORT
+function exportPOAM(){
+    const ts=new Date().toISOString(),ru=crypto.randomUUID();
+    const oscalRisks=P.items.filter(it=>it.status!=='closed').map(it=>{
+        const r={uuid:it.riskUuids?.[0]||crypto.randomUUID(),title:it.title,description:it.description,status:it.status==='risk-accepted'?'risk-accepted':it.status.includes('deviation')?'deviation-approved':'open'};
+        if(it.remediation){r.remediations=[{uuid:crypto.randomUUID(),lifecycle:it.status==='in-progress'?'implementation':'planned',title:`Remediation: ${it.controlId}`,description:it.remediation,
+            ...(it.milestones.length?{tasks:it.milestones.map(ms=>({uuid:ms.uuid,type:'milestone',title:ms.title,...(ms.dueDate?{timing:{"on-date":{date:`${ms.dueDate}T00:00:00Z`}}}:{}),props:ms.done?[{name:"status",value:"completed"}]:[]}))}:{})}]}
+        if(it.deviationJustification)r['risk-log']={entries:[{uuid:crypto.randomUUID(),title:'Abweichung',description:it.deviationJustification,start:ts}]};return r});
+    const oscalItems=P.items.map(it=>{const item={uuid:it.uuid,title:it.title,description:it.description||`POA&M: ${it.controlId}`,props:[{name:"priority",value:it.priority},{name:"status",value:it.status}]};
+        if(it.deadline)item.props.push({name:"deadline",value:it.deadline});if(it.responsible)item.props.push({name:"responsible",value:it.responsible});
+        if(it.component)item.props.push({name:"component-title",value:it.component});
+        if(it.componentUuid)item.props.push({name:"component-uuid",ns:"http://csrc.nist.gov/ns/oscal",value:it.componentUuid});
+        if(it.findingUuids?.length)item["related-findings"]=it.findingUuids.map(u=>({"finding-uuid":u}));
+        if(it.riskUuids?.length)item["related-risks"]=it.riskUuids.map(u=>({"risk-uuid":u}));
+        if(it.remarks)item.remarks=it.remarks;return item});
+    const poam={"plan-of-action-and-milestones":{uuid:crypto.randomUUID(),metadata:{title:P.meta.title||'POA&M',version:P.meta.version||'1.0.0',"last-modified":ts,"oscal-version":"1.1.3",roles:[{id:"system-owner",title:"System Owner"},{id:"isso",title:"ISSO"}]},"import-ssp":{href:P.sspHref||'SSP.json'},
+        ...(P.observations.length?{observations:P.observations.map(o=>({uuid:o.uuid,title:o.title,description:o.description,methods:o.methods,collected:o.collected}))}:{}),
+        ...(P.findings.length?{findings:P.findings.map(f=>({uuid:f.uuid,title:f.title,description:f.description,target:{type:"objective-id","target-id":f.targetId,status:{state:f.status}}}))}:{}),
+        risks:oscalRisks,"poam-items":oscalItems}};
+    if(P.responsible.name){poam["plan-of-action-and-milestones"].metadata.parties=[{uuid:ru,type:'person',name:P.responsible.name}];if(P.responsible.email)poam["plan-of-action-and-milestones"].metadata.parties[0]["email-addresses"]=[P.responsible.email];poam["plan-of-action-and-milestones"].metadata["responsible-parties"]=[{"role-id":P.responsible.role,"party-uuids":[ru]}]}
+    dl(poam,`${sn()}_POAM.json`);autoSave()}
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function sn(){return(P.meta.title||P.sysName||'System').replace(/[^a-zA-Z0-9äöüÄÖÜß\-]/g,'_').replace(/_+/g,'_')}
+function dl(o,n){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,2)],{type:'application/json;charset=utf-8'}));a.download=n;document.body.appendChild(a);a.click();document.body.removeChild(a)}
+function setSt(id,ok,t){const e=document.getElementById(id);e.className=`px-2 py-1 rounded text-[10px] font-semibold ${ok?'bg-emerald-900/50 text-emerald-400 border border-emerald-700':'bg-slate-700 text-slate-400 border border-slate-600'} flex items-center`;e.innerHTML=`${ok?'✓':'⏳'} ${t}`}
+</script>
+</body>
+</html>

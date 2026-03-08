@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSCAL Assessment Plan & Results Generator v8</title>
+    <title>OSCAL Assessment Plan & Results Generator v9</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.0/marked.min.js"></script>
@@ -33,68 +33,126 @@
         .ai-out ul,.ai-out ol{margin:.3rem 0 .3rem 1.2rem}.ai-out li{margin:.15rem 0}
         .ai-out p{margin:.3rem 0}.ai-out code{background:#312e81;padding:1px 4px;border-radius:3px;font-size:.75rem}
         .ctrl-title{color:#94a3b8;font-size:11px;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .sidebar{width:320px;min-width:320px;transition:margin-left .3s ease,opacity .3s;overflow-y:auto}
+        .sidebar.collapsed{margin-left:-320px;opacity:0;pointer-events:none}
+        .sb-toggle{position:fixed;top:12px;left:12px;z-index:50;background:#1e293b;border:1px solid #475569;border-radius:.5rem;padding:6px 10px;color:#e2e8f0;cursor:pointer;font-size:18px;transition:left .3s}
+        .sb-toggle.shifted{left:332px}
+        @media(max-width:768px){.sidebar{width:100%;min-width:100%;position:fixed;top:0;left:0;z-index:40;height:100vh;background:#0f172a}.sidebar.collapsed{margin-left:-100%}}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="h-full p-4 md:p-8 font-sans text-slate-200">
-<div class="max-w-7xl mx-auto bg-slate-800 p-6 md:p-8 rounded-2xl shadow-2xl border border-slate-700">
-    
-    <header class="mb-6 pb-5 border-b border-slate-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-            <h1 class="text-2xl md:text-3xl font-bold text-white">OSCAL Assessment Plan & Results</h1>
-            <p class="mt-1 text-slate-400 text-sm max-w-2xl">SSP importieren → Katalog + Komp.-Defs nachladen → Prüfen → AP + AR exportieren.</p>
-        </div>
-        <div class="flex flex-col gap-1.5 items-end text-xs">
-            <div id="cat-status" class="px-3 py-1 rounded-lg font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="loader-sm mr-2"></span>Katalog lädt...</div>
-            <div id="ssp-status" class="px-3 py-1 rounded-lg font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="w-2 h-2 rounded-full bg-amber-500 mr-2 animate-pulse"></span>Kein SSP</div>
-            <div id="comp-status" class="px-3 py-1 rounded-lg font-semibold bg-slate-700 text-slate-400 border border-slate-600 items-center hidden"></div>
-        </div>
-    </header>
+<body class="h-full font-sans text-slate-200">
 
-    <!-- AI CONFIG -->
-    <div class="mb-4 border border-slate-700 rounded-xl overflow-hidden">
-        <button onclick="tog('sec-ai')" class="w-full flex justify-between items-center p-3 bg-slate-900/60 hover:bg-slate-800/80 transition-all">
-            <div class="flex items-center gap-2"><span class="text-lg">🤖</span><span class="text-sm font-bold text-slate-300">KI-Unterstützung</span><span id="ai-badge" class="sb bg-slate-700 text-slate-500 border-slate-600 hidden">—</span></div>
-            <svg id="icon-sec-ai" class="chev w-4 h-4 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
-        </button>
-        <div id="sec-ai-content" class="coll-content p-4 bg-slate-900/40">
-            <p class="text-xs text-slate-400 mb-3">🤖 Befundvorschlag · 📖 Control erklären mit 5 Reifegraden + Prüfungshandlungen. Key wird lokal gespeichert.</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div><label class="lbl">Anbieter</label><select id="ai-provider" onchange="onProvChange()" class="inp w-full"><option value="">— Keine KI —</option><option value="claude">Anthropic (Claude)</option><option value="gemini">Google (Gemini)</option></select></div>
-                <div><label class="lbl">API-Key</label><input type="password" id="ai-key" placeholder="sk-ant-... / AIza..." oninput="saveAICfg()" class="inp w-full"></div>
-                <div><label class="lbl">Modell</label><select id="ai-model" class="inp w-full" onchange="saveAICfg()"></select></div>
-            </div>
-            <div class="mt-2 flex flex-wrap gap-3 text-[10px]">
-                <a href="https://console.anthropic.com/settings/keys" target="_blank" class="text-violet-400 hover:text-violet-300 underline">→ Claude API-Key erstellen (console.anthropic.com)</a>
-                <a href="https://aistudio.google.com/apikey" target="_blank" class="text-blue-400 hover:text-blue-300 underline">→ Gemini API-Key erstellen (aistudio.google.com)</a>
+<button id="sb-btn" class="sb-toggle shifted" onclick="document.getElementById('sidebar').classList.toggle('collapsed');this.classList.toggle('shifted')">☰</button>
+
+<div class="flex h-full">
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar bg-slate-800 border-r border-slate-700 p-3 flex flex-col gap-2 cscroll">
+        <div class="pt-1">
+            <h1 class="text-base font-bold text-white leading-tight">OSCAL AP & AR</h1>
+            <p class="text-[10px] text-slate-500 mt-0.5">SSP → Prüfung → AP + AR</p>
+        </div>
+        <div class="space-y-1">
+            <div id="cat-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="loader-sm mr-1.5"></span>Katalog...</div>
+            <div id="ssp-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span>Kein SSP</div>
+            <div id="comp-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 items-center hidden"></div>
+        </div>
+        <!-- Import -->
+        <div class="space-y-1.5">
+            <div id="dz-ssp" class="dz border border-dashed border-slate-600 rounded p-2 text-center cursor-pointer hover:border-emerald-500 bg-slate-900/40 text-[10px]" data-type="ssp">📋 SSP laden<input type="file" accept=".json" class="hidden fip" data-type="ssp"></div>
+            <div id="dz-state" class="dz border border-dashed border-slate-600 rounded p-2 text-center cursor-pointer hover:border-purple-500 bg-slate-900/40 text-[10px]" data-type="state">💾 Session laden<input type="file" accept=".json" class="hidden fip" data-type="state"></div>
+        </div>
+        <!-- AI -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="tog('sb-ai')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300">🤖 KI<span id="ai-badge" class="sb bg-slate-700 text-slate-500 border-slate-600 hidden ml-1">—</span><svg id="icon-sb-ai" class="chev w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg></button>
+            <div id="sb-ai-content" class="coll-content p-2 bg-slate-900/30 space-y-1.5">
+                <select id="ai-provider" onchange="onProvChange()" class="inp text-[10px]"><option value="">— Kein —</option><option value="claude">Claude</option><option value="gemini">Gemini</option></select>
+                <input type="password" id="ai-key" placeholder="API-Key" oninput="saveAICfg()" class="inp text-[10px]">
+                <select id="ai-model" class="inp text-[10px]" onchange="saveAICfg()"></select>
+                <div class="flex gap-2 text-[8px]"><a href="https://console.anthropic.com/settings/keys" target="_blank" class="text-violet-400 underline">Claude</a><a href="https://aistudio.google.com/apikey" target="_blank" class="text-blue-400 underline">Gemini</a></div>
             </div>
         </div>
-    </div>
-
-    <!-- FILE IMPORT -->
-    <div id="import-area" class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div id="dz-ssp" class="dz border-2 border-dashed border-slate-600 rounded-xl p-6 text-center cursor-pointer hover:border-emerald-500 transition-colors bg-slate-900/50" data-type="ssp">
-            <div class="text-3xl mb-2">📋</div><p class="text-white font-bold text-sm">SSP laden (JSON)</p><p class="text-slate-500 text-xs">Die ausgefüllte *_SSP-edited.json</p>
-            <input type="file" accept=".json" class="hidden fip" data-type="ssp">
+        <!-- Terms Navigation -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="scrollToSec('sec-terms')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300 hover:text-emerald-400 transition-colors">📅 Rahmenbedingungen</button>
         </div>
-        <div id="dz-state" class="dz border-2 border-dashed border-slate-600 rounded-xl p-6 text-center cursor-pointer hover:border-purple-500 transition-colors bg-slate-900/50" data-type="state">
-            <div class="text-3xl mb-2">💾</div><p class="text-white font-bold text-sm">Session laden (JSON)</p><p class="text-slate-500 text-xs">Gespeicherte *_session.json wiederherstellen</p>
-            <input type="file" accept=".json" class="hidden fip" data-type="state">
+        <!-- Meta Navigation -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="scrollToSec('sec-meta')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300 hover:text-emerald-400 transition-colors">📝 Metadaten & Assessor</button>
         </div>
-    </div>
-
-    <div id="stats-dash" class="hidden mb-6"></div>
-    <div id="main-editor" class="space-y-4 hidden"></div>
-
-    <div id="export-area" class="mt-8 pt-6 border-t border-slate-700 hidden">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-            <button onclick="saveSession()" class="bg-purple-700 text-white font-bold py-2.5 px-5 rounded-xl hover:bg-purple-600 text-sm">💾 Session speichern</button>
-            <div class="flex gap-3">
-                <button onclick="exportAP()" class="bg-emerald-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg hover:bg-emerald-500 text-sm">📋 AP exportieren</button>
-                <button onclick="exportAR()" class="bg-blue-600 text-white font-bold py-2.5 px-5 rounded-xl shadow-lg hover:bg-blue-500 text-sm">📊 AR exportieren</button>
+        <!-- Filters -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="tog('sb-flt')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300">🔍 Filter<svg id="icon-sb-flt" class="chev open w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg></button>
+            <div id="sb-flt-content" class="coll-content open p-2 bg-slate-900/30 space-y-1.5">
+                <input type="text" id="cf" oninput="fltC()" placeholder="Control / Titel..." class="inp text-[10px] font-mono">
+                <select id="flt-modal" onchange="fltC()" class="inp text-[10px]"><option value="">Modalverb: Alle</option><option value="MUSS">MUSS</option><option value="SOLL">SOLL</option><option value="KANN">KANN</option></select>
+                <select id="flt-class" onchange="fltC()" class="inp text-[10px]"><option value="">Klasse: Alle</option><option value="Technical">Technical</option><option value="Organizational">Organizational</option></select>
+                <select id="flt-sec" onchange="fltC()" class="inp text-[10px]"><option value="">Sicherheitsniv.: Alle</option><option value="normal-SdT">Normal</option><option value="hoch-SdT">Hoch</option><option value="sehr hoch-SdT">Sehr hoch</option></select>
+                <select id="flt-status" onchange="fltC()" class="inp text-[10px]"><option value="">Status: Alle</option><option value="implemented">Impl.</option><option value="partial">Teilw.</option><option value="planned">Geplant</option><option value="alternative">Altern.</option><option value="nicht-angegeben">Kein St.</option><option value="nur-komponente">Nur Def</option></select>
             </div>
         </div>
-    </div>
+        <!-- Component nav (populated dynamically) -->
+        <div id="sb-comp-nav" class="space-y-1 hidden"></div>
+        <!-- Bulk actions -->
+        <div id="sb-bulk" class="hidden space-y-1">
+            <div class="flex flex-wrap gap-1">
+                <button onclick="bulkM('EXAMINE')" class="text-[9px] px-2 py-1 bg-blue-800 text-blue-200 rounded font-bold">+EX</button>
+                <button onclick="bulkM('INTERVIEW')" class="text-[9px] px-2 py-1 bg-amber-800 text-amber-200 rounded font-bold">+IN</button>
+                <button onclick="bulkM('TEST')" class="text-[9px] px-2 py-1 bg-emerald-800 text-emerald-200 rounded font-bold">+TE</button>
+                <button onclick="bulkMC()" class="text-[9px] px-2 py-1 bg-slate-700 text-slate-300 rounded font-bold">Reset</button>
+            </div>
+            <div class="flex gap-1">
+                <button onclick="scopeAll(true)" class="text-[9px] px-2 py-1 bg-emerald-700 text-white rounded font-bold flex-1">Alle ✓</button>
+                <button onclick="scopeAll(false)" class="text-[9px] px-2 py-1 bg-slate-700 text-slate-300 rounded font-bold flex-1">Alle ✗</button>
+            </div>
+            <div class="text-[10px] text-slate-500">Scope: <strong class="text-white" id="scope-n">0</strong> · Bewertet: <strong class="text-emerald-400" id="rated-n">0</strong></div>
+        </div>
+        <!-- Export -->
+        <div class="mt-auto space-y-1.5 pt-2 border-t border-slate-700">
+            <button onclick="saveSession()" class="w-full bg-purple-700 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-purple-600">💾 Session</button>
+            <button onclick="exportAP()" class="w-full bg-emerald-600 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-emerald-500">📋 AP</button>
+            <button onclick="exportAR()" class="w-full bg-blue-600 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-blue-500">📊 AR</button>
+        </div>
+    </aside>
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-6">
+        
+        <!-- Rahmenbedingungen Section -->
+        <div id="sec-terms" class="hidden mb-4 bg-slate-800 border border-slate-700 rounded-xl p-4 transition-all duration-300">
+            <h2 class="text-sm font-bold text-white mb-3">📅 Rahmenbedingungen</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div><label class="lbl">Beginn</label><input type="date" id="sb-ds" onchange="S.dateStart=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Ende</label><input type="date" id="sb-de" onchange="S.dateEnd=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Rules of Engagement</label><textarea rows="2" id="sb-roe" onchange="S.terms.roe=this.value" class="inp text-xs"></textarea></div>
+                <div><label class="lbl">Disclosures</label><textarea rows="2" id="sb-disc" onchange="S.terms.disclosures=this.value" class="inp text-xs"></textarea></div>
+                <div class="md:col-span-2"><label class="lbl">Methodik</label><textarea rows="2" id="sb-meth" onchange="S.terms.methodology=this.value" class="inp text-xs"></textarea></div>
+            </div>
+            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                <label class="lbl">Task hinzufügen</label>
+                <div class="flex gap-2 mb-2">
+                    <input type="text" id="task-t" placeholder="Titel" class="inp text-xs flex-1">
+                    <button onclick="addTask()" class="px-3 py-1.5 bg-indigo-700 text-white rounded text-xs font-bold hover:bg-indigo-600">+</button>
+                </div>
+                <ul id="task-list" class="space-y-1 text-xs"></ul>
+            </div>
+        </div>
+
+        <!-- Metadaten Section -->
+        <div id="sec-meta" class="hidden mb-4 bg-slate-800 border border-slate-700 rounded-xl p-4 transition-all duration-300">
+            <h2 class="text-sm font-bold text-white mb-3">📝 Metadaten & Assessor</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div><label class="lbl">Titel</label><input type="text" id="sb-title" onchange="S.meta.title=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Version</label><input type="text" id="sb-ver" value="1.0.0" onchange="S.meta.version=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Beschreibung</label><input type="text" id="sb-desc" onchange="S.meta.desc=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Assessor Name</label><input type="text" id="sb-aname" onchange="S.assessor.name=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Typ</label><select id="sb-atype" onchange="S.assessor.type=this.value" class="inp text-xs"><option value="organization">Organisation</option><option value="person">Person</option></select></div>
+                <div><label class="lbl">E-Mail</label><input type="email" id="sb-aemail" onchange="S.assessor.email=this.value" class="inp text-xs"></div>
+            </div>
+        </div>
+
+        <div id="stats-dash" class="hidden mb-4"></div>
+        <div id="ctrl-area" class="hidden"></div>
+    </main>
 </div>
 
 <script>
@@ -186,10 +244,10 @@ function loadFile(file,type){
 // ============================================================
 // SESSION
 // ============================================================
-function ser(){return JSON.stringify({_v:8,sspFilename:S.sspFilename,meta:S.meta,assessor:S.assessor,terms:S.terms,tasks:S.tasks,dateStart:S.dateStart,dateEnd:S.dateEnd,excluded:[...S.excluded],methods:[...S.methods.entries()].map(([k,v])=>[k,[...v]]),findings:[...S.findings.entries()],aiCache:[...S.aiCache.entries()],compGroups:[...S.compGroups.entries()].map(([k,m])=>[k,[...m.entries()]]),compMeta:[...S.compMeta.entries()],allCids:[...S.allCids]})}
+function ser(){return JSON.stringify({_v:9,sspFilename:S.sspFilename,meta:S.meta,assessor:S.assessor,terms:S.terms,tasks:S.tasks,dateStart:S.dateStart,dateEnd:S.dateEnd,excluded:[...S.excluded],methods:[...S.methods.entries()].map(([k,v])=>[k,[...v]]),findings:[...S.findings.entries()],aiCache:[...S.aiCache.entries()],compGroups:[...S.compGroups.entries()].map(([k,m])=>[k,[...m.entries()]]),compMeta:[...S.compMeta.entries()],allCids:[...S.allCids]})}
 
 function restoreSession(d){
-    if(!d._v||d._v<6)return alert('Session-Format zu alt oder inkompatibel (v8 benötigt).');
+    if(!d._v||d._v<6)return alert('Session-Format zu alt oder inkompatibel (v9 benötigt).');
     S.sspFilename=d.sspFilename||'';S.meta=d.meta||{title:'',version:'1.0.0',desc:''};S.assessor=d.assessor||{name:'',type:'organization',email:''};
     S.terms=d.terms||{roe:'',disclosures:'',methodology:''};S.tasks=d.tasks||[];S.dateStart=d.dateStart||'';S.dateEnd=d.dateEnd||'';
     S.excluded=new Set(d.excluded||[]);S.methods=new Map((d.methods||[]).map(([k,v])=>[k,new Set(v)]));
@@ -200,8 +258,8 @@ function restoreSession(d){
 }
 
 window.saveSession=()=>dl(JSON.parse(ser()),`${sn()}_session.json`);
-function autoSave(){try{localStorage.setItem('oscal_ap_v8',ser())}catch(e){}}
-function tryAutoRestore(){try{const s=localStorage.getItem('oscal_ap_v8');if(!s)return;const d=JSON.parse(s);if(d._v>=8&&d.allCids?.length>0&&confirm(`Autosave: ${d.allCids.length} Controls (${d.sspFilename}). Wiederherstellen?`))restoreSession(d)}catch(e){}}
+function autoSave(){try{localStorage.setItem('oscal_ap_v9',ser())}catch(e){}}
+function tryAutoRestore(){try{const s=localStorage.getItem('oscal_ap_v9');if(!s)return;const d=JSON.parse(s);if(d._v>=9&&d.allCids?.length>0&&confirm(`Autosave: ${d.allCids.length} Controls (${d.sspFilename}). Wiederherstellen?`))restoreSession(d)}catch(e){}}
 setInterval(()=>{if(S.allCids.size>0)autoSave()},30000);
 
 // ============================================================
@@ -237,7 +295,31 @@ async function initSSP(){
 function ensureGrp(u){if(!S.compGroups.has(u))S.compGroups.set(u,new Map());return S.compGroups.get(u)}
 function mkEntry(st,desc){return{status:st,user:'',date:'',desc:desc||'',stmtId:'',fromDef:false}}
 
-function showUI(){renderStats();renderEditor();['stats-dash','main-editor','export-area'].forEach(id=>document.getElementById(id).classList.remove('hidden'))}
+function showUI(){
+    renderStats();renderControls();
+    document.getElementById('stats-dash').classList.remove('hidden');
+    document.getElementById('ctrl-area').classList.remove('hidden');
+    document.getElementById('sb-comp-nav').classList.remove('hidden');
+    document.getElementById('sb-bulk').classList.remove('hidden');
+    
+    // Reveal top-level sections
+    const sm = document.getElementById('sec-meta'); if(sm) sm.classList.remove('hidden');
+    const st = document.getElementById('sec-terms'); if(st) st.classList.remove('hidden');
+
+    // Populate fields from state
+    document.getElementById('sb-title').value=S.meta.title;
+    document.getElementById('sb-ds').value=S.dateStart;
+    document.getElementById('sb-de').value=S.dateEnd;
+    document.getElementById('sb-roe').value=S.terms.roe;
+    document.getElementById('sb-disc').value=S.terms.disclosures;
+    document.getElementById('sb-meth').value=S.terms.methodology;
+    document.getElementById('sb-aname').value=S.assessor.name;
+    document.getElementById('sb-aemail').value=S.assessor.email;
+    document.getElementById('sb-desc').value=S.meta.desc;
+    document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size;
+    
+    document.getElementById('task-list').innerHTML=tHTML();
+}
 
 // ============================================================
 // COMPONENT DEFINITIONS
@@ -294,7 +376,7 @@ async function loadCompDefs(){
         cs.className="px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center";
         cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>${done} Defs → +${newN} Controls (${S.allCids.size} total)`;
     }
-    renderStats();renderEditor();
+    renderStats();renderControls();
 }
 
 window.retryFailedDefs=async()=>{
@@ -327,7 +409,7 @@ window.retryFailedDefs=async()=>{
         cs.className="px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center";
         cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Alle Defs geladen (${S.allCids.size} total)`;
     }
-    renderStats();renderEditor();
+    renderStats();renderControls();
 };
 
 // ============================================================
@@ -460,50 +542,36 @@ function renderStats(){
 // ============================================================
 // EDITOR
 // ============================================================
-function renderEditor(){
-    document.getElementById('main-editor').innerHTML=`
-        ${mkS('sec-terms','1. Rahmenbedingungen & Zeitplanung',rTerms(),false)}
-        ${mkS('sec-meta','2. Metadaten & Assessor',rMeta(),false)}
-        ${mkS('sec-ctrl','3. Controls — Prüfung & Befunde',rCtrls(),true)}`;
-}
-function mkS(id,t,c,o){return`<div class="border border-slate-700 rounded-xl overflow-hidden shadow-lg"><button onclick="tog('${id}')" class="w-full flex justify-between items-center p-4 bg-gradient-to-r from-slate-800 to-slate-800/80 hover:from-slate-700/80 transition-all"><h2 class="text-base md:text-lg font-bold text-white">${t}</h2><svg id="icon-${id}" class="chev ${o?'open':''} w-5 h-5 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg></button><div id="${id}-content" class="coll-content ${o?'open':''} p-4 bg-slate-800/50">${c}</div></div>`}
-window.tog=id=>{document.getElementById(id+'-content').classList.toggle('open');document.getElementById('icon-'+id).classList.toggle('open')};
+function renderControls(){
+    // 1. Component navigation in sidebar
+    let nav='';
+    S.compGroups.forEach((ctrls,cuuid)=>{
+        const meta=S.compMeta.get(cuuid)||{title:cuuid==='__none'?'Nicht zugewiesen':cuuid,type:'?'};
+        const tb={'this-system':'bg-emerald-900 text-emerald-300 border-emerald-700','service':'bg-indigo-900 text-indigo-300 border-indigo-700','process':'bg-purple-900 text-purple-300 border-purple-700'}[meta.type]||'bg-slate-700 text-slate-300 border-slate-600';
+        const sorted=[...ctrls.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+        const sspN=sorted.filter(([,i])=>!i.fromDef).length,defN=sorted.filter(([,i])=>i.fromDef).length;
+        nav+=`<div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="togC('${cuuid}');document.getElementById('comp-${cuuid}')?.scrollIntoView({behavior:'smooth',block:'start'})" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 hover:bg-slate-800 text-[10px] font-bold text-slate-300">
+                <span class="flex items-center gap-1 truncate"><span class="sb ${tb}" style="font-size:8px;padding:1px 4px">${esc(meta.type).substring(0,4)}</span>${esc(meta.title)}</span>
+                <span class="text-slate-500 flex-shrink-0">${sspN}${defN?'+'+defN:''}</span>
+            </button></div>`;
+    });
+    document.getElementById('sb-comp-nav').innerHTML=nav;
+    document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size;
 
-function rTerms(){return`<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5"><div><label class="lbl">Beginn</label><input type="date" value="${S.dateStart}" onchange="S.dateStart=this.value" class="inp w-full"></div><div><label class="lbl">Ende</label><input type="date" value="${S.dateEnd}" onchange="S.dateEnd=this.value" class="inp w-full"></div></div><div class="space-y-3 mb-5"><div><label class="lbl">Rules of Engagement</label><textarea rows="2" onchange="S.terms.roe=this.value" class="inp w-full">${esc(S.terms.roe)}</textarea></div><div><label class="lbl">Disclosures</label><textarea rows="2" onchange="S.terms.disclosures=this.value" class="inp w-full">${esc(S.terms.disclosures)}</textarea></div><div><label class="lbl">Methodik</label><textarea rows="2" onchange="S.terms.methodology=this.value" class="inp w-full">${esc(S.terms.methodology)}</textarea></div></div><h3 class="text-sm font-bold text-emerald-400 uppercase mb-2">Tasks</h3><div class="flex gap-2 mb-3"><input type="text" id="task-t" placeholder="Task" class="inp flex-1"><select id="task-ty" class="inp w-28"><option value="action">Action</option><option value="milestone">Milestone</option></select><button onclick="addTask()" class="px-4 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-500 text-sm">+</button></div><ul id="task-list" class="space-y-1.5">${tHTML()}</ul>`}
-
-function rMeta(){return`<div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="md:col-span-2"><label class="lbl">Titel</label><input type="text" value="${esc(S.meta.title)}" onchange="S.meta.title=this.value" class="inp w-full"></div><div><label class="lbl">Version</label><input type="text" value="${esc(S.meta.version)}" onchange="S.meta.version=this.value" class="inp w-full"></div><div><label class="lbl">Beschreibung</label><input type="text" value="${esc(S.meta.desc)}" onchange="S.meta.desc=this.value" class="inp w-full"></div></div><div class="mt-5 pt-4 border-t border-slate-700"><h3 class="text-sm font-bold text-emerald-400 uppercase mb-3">Assessor</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div><label class="lbl">Name</label><input type="text" value="${esc(S.assessor.name)}" onchange="S.assessor.name=this.value" class="inp w-full"></div><div><label class="lbl">Typ</label><select onchange="S.assessor.type=this.value" class="inp w-full"><option value="organization" ${S.assessor.type==='organization'?'selected':''}>Organisation</option><option value="person" ${S.assessor.type==='person'?'selected':''}>Person</option></select></div><div><label class="lbl">E-Mail</label><input type="email" value="${esc(S.assessor.email)}" onchange="S.assessor.email=this.value" class="inp w-full"></div></div></div>`}
-
-window.addTask=()=>{const t=document.getElementById('task-t').value.trim();if(!t)return;S.tasks.push({uuid:crypto.randomUUID(),title:t,type:document.getElementById('task-ty').value});document.getElementById('task-t').value='';document.getElementById('task-list').innerHTML=tHTML()};
-function tHTML(){if(!S.tasks.length)return'<li class="text-slate-500 text-sm italic">Keine Tasks.</li>';return S.tasks.map((t,i)=>`<li class="flex justify-between items-center p-2 bg-slate-900 border border-slate-700 rounded-lg"><div class="flex items-center gap-2"><span class="sb ${t.type==='milestone'?'bg-blue-900 text-blue-300 border-blue-700':'bg-amber-900 text-amber-300 border-amber-700'}">${t.type}</span><span class="font-bold text-white text-sm">${esc(t.title)}</span></div><button onclick="S.tasks.splice(${i},1);document.getElementById('task-list').innerHTML=tHTML()" class="text-red-400 font-bold px-2 text-sm">✕</button></li>`).join('')}
-
-// ---- CONTROLS ----
-function rCtrls(){
-    let h=`<div class="mb-3 flex flex-col md:flex-row gap-3 justify-between items-start">
-        <div class="flex flex-wrap gap-2">
-            <button onclick="bulkM('EXAMINE')" class="text-xs px-3 py-1.5 bg-blue-800 text-blue-200 rounded-lg font-bold">+Auswahl: EX</button>
-            <button onclick="bulkM('INTERVIEW')" class="text-xs px-3 py-1.5 bg-amber-800 text-amber-200 rounded-lg font-bold">+Auswahl: IN</button>
-            <button onclick="bulkM('TEST')" class="text-xs px-3 py-1.5 bg-emerald-800 text-emerald-200 rounded-lg font-bold">+Auswahl: TE</button>
-            <button onclick="bulkMC()" class="text-xs px-3 py-1.5 bg-slate-700 text-slate-300 rounded-lg font-bold">Reset</button>
-        </div>
-        <div class="flex gap-2"><button onclick="scopeAll(true)" class="text-xs px-3 py-1.5 bg-emerald-700 text-white rounded-lg font-bold">Alle ✓</button><button onclick="scopeAll(false)" class="text-xs px-3 py-1.5 bg-slate-700 text-slate-300 rounded-lg font-bold">Alle ✗</button></div>
-    </div>
-    <input type="text" id="cf" placeholder="Control-ID oder Titel filtern..." oninput="fltC()" class="inp w-full mb-2 font-mono">
-    <div class="flex flex-wrap gap-2 mb-3">
-        <select id="flt-modal" onchange="fltC()" class="inp text-xs py-1 px-2"><option value="">Modalverb: Alle</option><option value="MUSS">MUSS (Basis)</option><option value="SOLL">SOLL (Standard)</option><option value="KANN">KANN (Erhöht)</option></select>
-        <select id="flt-class" onchange="fltC()" class="inp text-xs py-1 px-2"><option value="">Klasse: Alle</option><option value="Technical">Technical</option><option value="Organizational">Organizational</option></select>
-        <select id="flt-sec" onchange="fltC()" class="inp text-xs py-1 px-2"><option value="">Sicherheitsniveau: Alle</option><option value="normal-SdT">Normal (SdT)</option><option value=="erhöht">erh&ouml;ht (SdT)</option></select>
-        <select id="flt-status" onchange="fltC()" class="inp text-xs py-1 px-2"><option value="">Status: Alle</option><option value="implemented">Implementiert</option><option value="partial">Teilweise</option><option value="planned">Geplant</option><option value="alternative">Alternativ</option><option value="nicht-angegeben">Kein Status</option><option value="nur-komponente">Nur Komp.-Def.</option></select>
-    </div>
-    <div id="cg" class="space-y-3">`;
-
+    // 2. Control cards in main area
+    let h='';
     S.compGroups.forEach((ctrls,cuuid)=>{
         const meta=S.compMeta.get(cuuid)||{title:cuuid==='__none'?'Nicht zugewiesen':cuuid,type:'?'};
         const tb={'this-system':'bg-emerald-900 text-emerald-300 border-emerald-700','service':'bg-indigo-900 text-indigo-300 border-indigo-700','process':'bg-purple-900 text-purple-300 border-purple-700'}[meta.type]||'bg-slate-700 text-slate-300 border-slate-600';
         const sorted=[...ctrls.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
         const sspN=sorted.filter(([,i])=>!i.fromDef).length,defN=sorted.filter(([,i])=>i.fromDef).length;
 
-        h+=`<div class="border border-slate-700 rounded-xl overflow-hidden"><div class="comp-header flex justify-between items-center p-3 bg-slate-900/80 hover:bg-slate-800" onclick="togC('${cuuid}')"><div class="flex items-center gap-2 flex-wrap"><svg id="cc-${cuuid}" class="chev open w-4 h-4 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg><span class="sb ${tb}">${esc(meta.type)}</span><h3 class="comp-title text-sm font-bold text-slate-200">${esc(meta.title)}</h3><span class="text-xs text-slate-500">(${sspN}${defN?' + '+defN+' Def':''})</span>${meta.defLoaded?'<span class="sb bg-cyan-900/50 text-cyan-300 border-cyan-700">Def</span>':''}</div></div>
-        <div id="cb-${cuuid}" class="coll-content open p-2 space-y-1">`;
+        h+=`<div id="comp-${cuuid}" class="border border-slate-700 rounded-xl overflow-hidden mb-3">
+            <div class="comp-header flex justify-between items-center p-2.5 bg-slate-900/80 hover:bg-slate-800" onclick="togC('${cuuid}')">
+                <div class="flex items-center gap-2 flex-wrap"><svg id="cc-${cuuid}" class="chev open w-4 h-4 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg><span class="sb ${tb}">${esc(meta.type)}</span><h3 class="comp-title text-sm font-bold text-slate-200">${esc(meta.title)}</h3><span class="text-xs text-slate-500">(${sspN}${defN?' + '+defN+' Def':''})</span>${meta.defLoaded?'<span class="sb bg-cyan-900/50 text-cyan-300 border-cyan-700">Def</span>':''}</div>
+            </div>
+            <div id="cb-${cuuid}" class="coll-content open p-1.5 space-y-1">`;
 
         sorted.forEach(([cid,info])=>{
             const sm=STM[info.status]||STM['nicht-angegeben'];
@@ -610,10 +678,23 @@ function rCtrls(){
         h+=`</div></div>`;
     });
 
-    h+=`</div><div class="mt-3 pt-3 border-t border-slate-700 text-xs text-slate-500">Scope: <strong class="text-white" id="scope-n">${S.allCids.size-S.excluded.size}</strong>/${S.allCids.size} · Bewertet: <strong class="text-emerald-400" id="rated-n">0</strong></div>`;
-    return h;
+    document.getElementById('ctrl-area').innerHTML=h;
+    document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size;
 }
 
+window.addTask=()=>{const t=document.getElementById('task-t').value.trim();if(!t)return;S.tasks.push({uuid:crypto.randomUUID(),title:t,type:'action'});document.getElementById('task-t').value='';document.getElementById('task-list').innerHTML=tHTML()};
+function tHTML(){if(!S.tasks.length)return'';return S.tasks.map((t,i)=>`<li class="flex justify-between items-center p-1 bg-slate-900 border border-slate-700 rounded"><span class="text-white">${esc(t.title)}</span><button onclick="S.tasks.splice(${i},1);document.getElementById('task-list').innerHTML=tHTML()" class="text-red-400 text-xs px-1">✕</button></li>`).join('')}
+
+window.scrollToSec = id => {
+    const el = document.getElementById(id);
+    if(el) {
+        el.scrollIntoView({behavior: 'smooth', block: 'start'});
+        el.classList.add('ring-2', 'ring-emerald-500');
+        setTimeout(() => el.classList.remove('ring-2', 'ring-emerald-500'), 1500);
+    }
+};
+
+window.tog=id=>{document.getElementById(id+'-content')?.classList.toggle('open');document.getElementById('icon-'+id)?.classList.toggle('open')};
 window.togC=u=>{document.getElementById('cb-'+u)?.classList.toggle('open');document.getElementById('cc-'+u)?.classList.toggle('open')};
 window.togD=rk=>{document.getElementById('cbd-'+rk)?.classList.toggle('open');document.getElementById('cch-'+rk)?.classList.toggle('open')};
 window.togSc=(c,on)=>{if(on)S.excluded.delete(c);else S.excluded.add(c);document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size};
@@ -644,7 +725,7 @@ window.fltC=()=>{
 };
 
 // ============================================================
-// EXPORT AP / AR (unchanged logic from v5)
+// EXPORT AP / AR
 // ============================================================
 function exportAP(){
     const ts=new Date().toISOString(),au=crypto.randomUUID();const cids=[...S.allCids].filter(c=>!S.excluded.has(c)).sort();
@@ -664,11 +745,64 @@ function exportAP(){
 function exportAR(){
     const ts=new Date().toISOString();const cids=[...S.allCids].filter(c=>!S.excluded.has(c)).sort();
     const obs=[],fin=[],rsk=[];
-    cids.forEach(c=>{const f=S.findings.get(c);if(!f||!f.status)return;
-        let ou=null;if(f.observation){ou=crypto.randomUUID();obs.push({uuid:ou,title:`Beobachtung ${c}`,description:f.observation,methods:[...(S.methods.get(c)||['EXAMINE'])],collected:ts})}
-        let ru=null;if(f.risk&&f.status==='not-satisfied'){ru=crypto.randomUUID();rsk.push({uuid:ru,title:`Risiko ${c}`,description:f.risk,status:"open"})}
-        const fd={uuid:crypto.randomUUID(),title:`Befund ${c}`,description:f.remarks||`Bewertung ${c}`,target:{type:"objective-id","target-id":c,status:{state:f.status}}};
-        if(ou)fd["related-observations"]=[{"observation-uuid":ou}];if(ru)fd["related-risks"]=[{"risk-uuid":ru}];fin.push(fd)});
+    
+    cids.forEach(c=>{
+        const f=S.findings.get(c);
+        if(!f||!f.status)return;
+        
+        const comps = [];
+        S.compGroups.forEach((ctrlMap, cuuid) => {
+            if(cuuid !== '__none' && ctrlMap.has(c)) {
+                comps.push({uuid: cuuid, title: S.compMeta.get(cuuid)?.title || cuuid});
+            }
+        });
+
+        if (comps.length === 0) {
+            addTriplet(c, f, null);
+        } else {
+            comps.forEach(comp => {
+                addTriplet(c, f, comp);
+            });
+        }
+
+        function addTriplet(cid, finding, comp) {
+            let ou=null;
+            if(finding.observation){
+                ou=crypto.randomUUID();
+                obs.push({
+                    uuid:ou,
+                    title:`Beobachtung ${cid}${comp ? ' (' + comp.title + ')' : ''}`,
+                    description:finding.observation,
+                    methods:[...(S.methods.get(cid)||['EXAMINE'])],
+                    collected:ts,
+                    ...(comp ? { subjects: [{ "subject-uuid": comp.uuid, type: "component", title: comp.title }] } : {})
+                });
+            }
+            
+            let ru=null;
+            if(finding.risk&&finding.status==='not-satisfied'){
+                ru=crypto.randomUUID();
+                rsk.push({
+                    uuid:ru,
+                    title:`Risiko ${cid}${comp ? ' (' + comp.title + ')' : ''}`,
+                    description:finding.risk,
+                    status:"open"
+                });
+            }
+            
+            const fd={
+                uuid:crypto.randomUUID(),
+                title:`Befund ${cid}${comp ? ' (' + comp.title + ')' : ''}`,
+                description:finding.remarks||`Bewertung ${cid}`,
+                target:{type:"objective-id","target-id":cid,status:{state:finding.status}}
+            };
+            
+            if(ou)fd["related-observations"]=[{"observation-uuid":ou}];
+            if(ru)fd["related-risks"]=[{"risk-uuid":ru}];
+            fin.push(fd);
+        }
+    });
+    
     if(!fin.length)return alert('Keine bewerteten Controls.');
     const ar={"assessment-results":{uuid:crypto.randomUUID(),metadata:{title:`${sn().replace(/_/g,' ')} - Assessment Results`,version:S.meta.version||'1.0.0',"last-modified":ts,"oscal-version":"1.1.3"},"import-ap":{href:`${sn()}_AP.json`},results:[{uuid:crypto.randomUUID(),title:"Assessment-Ergebnis",description:'Ergebnisse',start:S.dateStart?`${S.dateStart}T00:00:00Z`:ts,end:S.dateEnd?`${S.dateEnd}T23:59:59Z`:ts,"reviewed-controls":{"control-selections":[{"include-controls":cids.map(c=>({"control-id":c}))}]},...(obs.length?{observations:obs}:{}),findings:fin,...(rsk.length?{risks:rsk}:{})}]}};
     dl(ar,`${sn()}_AR.json`);autoSave();
