@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSI Grundschutz++ Explorer v9.3 ✨ Multi-AI (Fixed)</title>
+    <title>BSI Grundschutz++ Explorer v9.4 ✨ Multi-AI & Profiles</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         :root {
@@ -71,6 +71,7 @@
         .section-label { font-size: 0.7rem; font-weight: 800; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; display: block; }
         .search-input { width: 100%; padding: 12px; border: 2px solid var(--primary-color); border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
         .filter-select { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid var(--border-color); border-radius: 6px; background: white; font-size: 0.9rem; }
+        .profile-info { font-size: 0.75rem; font-weight: bold; margin-top: -4px; display: block; min-height: 16px; }
 
         /* Groups & Tree */
         .group-item { margin-bottom: 15px; border: 1px solid var(--border-color); background: white; border-radius: 8px; overflow: hidden; }
@@ -109,8 +110,6 @@
         .tag-effort { background: var(--tag-effort); color: #155724; border-color: #c3e6cb; }
         .tag-uuid { background: #f8f9fa; color: #78909c; border-color: #dee2e6; font-family: monospace; font-size: 0.7rem; }
         .tag-tags { background: #e3f2fd; color: #0d47a1; border-color: #bbdefb; }
-        
-        /* NEU: Tags für Modalität und Handlung */
         .tag-modal { background: #fce4ec; color: var(--modal-color); border-color: #f8bbd0; text-transform: uppercase; }
         .tag-action { background: #e3f2fd; color: var(--action-color); border-color: #9ec5fe; }
 
@@ -158,7 +157,6 @@
         .reset-btn { width: 100%; padding: 10px; background: #78909c; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
         .clear-btn { width: 100%; padding: 8px; background: #ef5350; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem; margin-top: 5px; }
 
-        /* Filter-Anpassung für hierarchisch eingeblendete Eltern-Elemente */
         .control-card.child-match-only > .tag-list,
         .control-card.child-match-only > .statement-box,
         .control-card.child-match-only > .ai-actions,
@@ -204,6 +202,14 @@
         <div class="section-label">Geladene Kataloge</div>
         <div id="meta-container" class="meta-box">Kein Katalog geladen</div>
         <button class="clear-btn" id="clearAllBtn" onclick="clearAllCatalogs()" style="display:none">Alle Kataloge entfernen</button>
+
+        <div class="sidebar-section">
+            <span class="section-label">Zielobjekt-Profile laden</span>
+            <select id="profileSelect" class="filter-select" onchange="handleProfileChange()" style="border-color: #ff9800; background-color: #fff8e1;">
+                <option value="">Lade verfügbare Profile...</option>
+            </select>
+            <span id="profileInfo" class="profile-info"></span>
+        </div>
 
         <div class="sidebar-section">
             <span class="section-label">Globale Suche</span>
@@ -284,6 +290,7 @@
         let filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set(), handlung: new Set(), tags: new Set() };
         let loadedCatalogs = [];
         let aiCache = {};
+        let activeProfileIds = null; // Speichert Set mit Control-IDs des aktiven Profils
 		
         function updateUrlFromSelect() {
             const select = document.getElementById('quickSelect');
@@ -433,6 +440,73 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                 loader.style.display = 'none';
             }
         }
+
+        // --- NEU: Profil-Handling ---
+
+        async function fetchProfilesList() {
+            const select = document.getElementById('profileSelect');
+            try {
+                const apiURL = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/profile';
+                const res = await fetch(apiURL);
+                if (!res.ok) throw new Error("API Limit erreicht oder Repo nicht gefunden.");
+                const files = await res.json();
+                
+                select.innerHTML = '<option value="">-- Kein Profil-Filter --</option>';
+                files.filter(f => f.name.endsWith('.json')).forEach(f => {
+                    const opt = document.createElement('option');
+                    opt.value = f.download_url; // Nutzt die direkte Raw-URL der Datei
+                    opt.textContent = f.name.replace('.json', '');
+                    select.appendChild(opt);
+                });
+            } catch (e) {
+                select.innerHTML = '<option value="">Fehler beim Laden der Profilliste</option>';
+                console.error("Profil-Liste konnte nicht geladen werden:", e);
+            }
+        }
+
+        async function handleProfileChange() {
+            const url = document.getElementById('profileSelect').value;
+            const infoSpan = document.getElementById('profileInfo');
+            
+            if (!url) {
+                activeProfileIds = null;
+                infoSpan.textContent = "";
+                applyFilters();
+                return;
+            }
+            
+            try {
+                infoSpan.textContent = "Lade Profil...";
+                infoSpan.style.color = "#90a4ae";
+                const res = await fetch(url);
+                const data = await res.json();
+                const ids = new Set();
+                
+                // Extrahiere IDs aus der OSCAL Profile Struktur
+                if (data.profile && data.profile.imports) {
+                    data.profile.imports.forEach(imp => {
+                        if (imp['include-controls']) {
+                            imp['include-controls'].forEach(inc => {
+                                if (inc['with-ids']) {
+                                    inc['with-ids'].forEach(id => ids.add(id));
+                                }
+                            });
+                        }
+                    });
+                }
+                
+                activeProfileIds = ids;
+                infoSpan.textContent = `${ids.size} Maßnahmen im Profil aktiv.`;
+                infoSpan.style.color = "#28a745";
+                applyFilters();
+            } catch (e) {
+                infoSpan.textContent = "Fehler beim Laden des Profils.";
+                infoSpan.style.color = "red";
+                console.error("OSCAL Profil Parsing Fehler:", e);
+                activeProfileIds = null;
+                applyFilters();
+            }
+        }
 		
         async function loadFromURL() {
             try {
@@ -479,6 +553,9 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             container.appendChild(fragment);
             populateFilterUI();
             document.getElementById('filterControls').style.display = 'block';
+            
+            // Wende aktive Filter (z.B. ein geladenes Profil) direkt auf den neuen Katalog an
+            applyFilters();
         }
 
         function updateMetaDisplay() {
@@ -534,14 +611,14 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const precision = stmtPart?.props?.find(p => p.name === 'präzisierung')?.value || "";
             
             if(modal) filterOptions.modalverb.add(modal);
-            if(action) filterOptions.handlung.add(action); // NEU
+            if(action) filterOptions.handlung.add(action);
             
             card.dataset.searchText = `${control.id} ${uuid} ${control.title} ${stmtPart?.prose || ""} ${modal} ${action} ${tagsArray.join(' ')}`.toLowerCase();
             card.dataset.class = cClass; 
             card.dataset.sec = sec; 
             card.dataset.effort = effort; 
             card.dataset.modal = modal; 
-            card.dataset.handlung = action; // NEU
+            card.dataset.handlung = action; 
             card.dataset.tags = JSON.stringify(tagsArray); 
 
             card.innerHTML = `
@@ -608,10 +685,11 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const fSec = document.getElementById('filterSec').value;
             const fEff = document.getElementById('filterEffort').value;
             const fMod = document.getElementById('filterModal').value;
-            const fHandlung = document.getElementById('filterHandlung').value; // NEU
+            const fHandlung = document.getElementById('filterHandlung').value; 
             const fTag = document.getElementById('filterTag').value;
 
-            const anyFilterActive = (query !== "" || fClass !== "all" || fSec !== "all" || fEff !== "all" || fMod !== "all" || fHandlung !== "all" || fTag !== "all");
+            // Prüfe, ob überhaupt ein Filter (inkl. Profil) aktiv ist
+            const anyFilterActive = (query !== "" || fClass !== "all" || fSec !== "all" || fEff !== "all" || fMod !== "all" || fHandlung !== "all" || fTag !== "all" || activeProfileIds !== null);
 
             document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => {
                 el.classList.add('hidden');
@@ -632,13 +710,15 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             document.querySelectorAll('.control-card').forEach(card => {
                 const cardTags = card.dataset.tags ? JSON.parse(card.dataset.tags) : []; 
                 
+                // Beinhaltet jetzt die Prüfung gegen das Set activeProfileIds
                 const match = (!query || card.dataset.searchText.includes(query)) &&
                               (fClass === 'all' || card.dataset.class === fClass) &&
                               (fSec === 'all' || card.dataset.sec === fSec) &&
                               (fEff === 'all' || card.dataset.effort === fEff) &&
                               (fMod === 'all' || card.dataset.modal === fMod) &&
-                              (fHandlung === 'all' || card.dataset.handlung === fHandlung) && // NEU
-                              (fTag === 'all' || cardTags.includes(fTag)); 
+                              (fHandlung === 'all' || card.dataset.handlung === fHandlung) &&
+                              (fTag === 'all' || cardTags.includes(fTag)) &&
+                              (!activeProfileIds || activeProfileIds.has(card.id)); // NEU: Profil-Filter
                 
                 if (match) { 
                     card.classList.remove('hidden'); 
@@ -678,7 +758,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             fillSelect('filterSec', filterOptions.sec_level, "Niveau");
             fillSelect('filterEffort', filterOptions.effort_level, "Aufwand");
             fillSelect('filterModal', filterOptions.modalverb, "Modalität");
-            fillSelect('filterHandlung', filterOptions.handlung, "Handlung"); // NEU
+            fillSelect('filterHandlung', filterOptions.handlung, "Handlung"); 
             fillSelect('filterTag', filterOptions.tags, "Tag"); 
         }
 
@@ -699,6 +779,11 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
         function resetFilters() {
             document.getElementById('searchInput').value = '';
             ['filterClass', 'filterSec', 'filterEffort', 'filterModal', 'filterHandlung', 'filterTag'].forEach(id => document.getElementById(id).value = 'all');
+            
+            document.getElementById('profileSelect').value = '';
+            document.getElementById('profileInfo').textContent = '';
+            activeProfileIds = null;
+            
             applyFilters();
         }
 
@@ -773,6 +858,9 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                 document.getElementById('apiKeyInput').value = savedKey;
                 toggleAiButtons(); 
             }
+            
+            // Lade die Liste der verfügbaren Profile initial
+            fetchProfilesList();
         });
     </script>
 </body>
