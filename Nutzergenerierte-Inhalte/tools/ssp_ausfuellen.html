@@ -10,8 +10,8 @@
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
     </script>
     <style>
-        .collapsible-content, .coll-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out; overflow: hidden; max-height: 0; opacity: 0; }
-        .collapsible-content.open, .coll-content.open { max-height: 50000px; opacity: 1; overflow: visible; }
+        .collapsible-content, .coll-content { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out; }
+        .collapsible-content.open, .coll-content.open { max-height: none; opacity: 1; overflow: auto; }
         .chevron-icon, .chev { transition: transform 0.3s ease; }
         .chevron-icon.open, .chev.open { transform: rotate(90deg); }
         .param-placeholder { color: #60a5fa; font-family: monospace; font-weight: bold; background-color: rgba(30, 58, 138, 0.3); padding: 0 4px; border-radius: 4px; cursor: help; }
@@ -363,6 +363,9 @@
             const ssp = sspData['system-security-plan'];
             const titleEl = document.getElementById('metadata-title');
             if(titleEl) ssp.metadata.title = titleEl.value;
+
+            const remarksEl = document.getElementById('metadata-remarks');
+            if(remarksEl) ssp.metadata.remarks = remarksEl.value;
             
             const sysNameEl = document.getElementById('system-name');
             if(sysNameEl) ssp['system-characteristics']['system-name'] = sysNameEl.value;
@@ -644,7 +647,7 @@
             sspFileName = files[0].name.replace('.json', '-edited.json') || 'edited-ssp.json';
         }
 
-        const loadPromises = Array.from(files).map(file => {
+        const loadPromises = Array.from(files).map((file, index) => {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -652,7 +655,10 @@
                         const json = JSON.parse(e.target.result);
                         if (type === 'ssp' && !json['system-security-plan']) throw new Error(`Kein gültiges SSP!`);
                         workspaceFiles.set(file.name, json);
-                        if (type === 'ssp' && file.name === files[0].name) sspData = json;
+                        
+                        // FIX: Wir nutzen den Index der Iteration, da das externe files-Objekt bereits geleert wurde
+                        if (type === 'ssp' && index === 0) sspData = json;
+                        
                         resolve();
                     } catch (error) { reject(error.message); }
                 };
@@ -660,7 +666,7 @@
                 reader.readAsText(file, 'UTF-8');
             });
         });
-
+		
         try {
             await Promise.all(loadPromises);
             if(sspData) await processWorkspace();
@@ -808,6 +814,11 @@
             const m = d.profile.modify;
             if (m?.['set-parameters']) m['set-parameters'].forEach(p => { if (p['param-id'] && p.values?.length) profileModifications.setParams.set(p['param-id'], p.values[0]); });
             if (m?.['alters']) m['alters'].forEach(a => { if (a['control-id'] && a.adds) profileModifications.alters.set(a['control-id'], [...(profileModifications.alters.get(a['control-id'])||[]), ...a.adds]); });
+            if (m?.inserts) m.inserts.forEach(ins => {
+                (ins.controls || []).forEach(ctrl => {
+                    if (ctrl && ctrl.id) catalogControlMap.set(ctrl.id, ctrl);
+                });
+            });
             if (d.profile.imports) {
                 for (const imp of d.profile.imports) {
                     const r = await loadReferencedResource(imp.href);
@@ -830,7 +841,7 @@
     }
 
     function extractRiskData(p, src) {
-        const ref = p.metadata?.props?.find(pr => pr.name === 'risk-analysis-details-ref')?.value?.replace('#', '');
+        const ref = p.metadata?.props?.find(pr => pr && pr.name === 'risk-analysis-details-ref')?.value?.replace('#', '');
         const res = p["back-matter"]?.resources?.find(r => r.uuid === ref);
         const att = res?.attachments?.[0];
         if (att?.base64?.value) {
@@ -919,9 +930,12 @@
     }
 
     function renderMetadata(m) {
-        return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Titel</label><input type="text" id="metadata-title" class="inp w-full" value="${(m.title||'').replace(/"/g, '&quot;')}"></div>
-            <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Letzte Änderung</label><input type="text" disabled class="inp w-full opacity-50 cursor-not-allowed" value="${m['last-modified']||'N/A'}"></div>
+        return `<div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Titel</label><input type="text" id="metadata-title" class="inp w-full" value="${(m.title||'').replace(/"/g, '&quot;')}"></div>
+                <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Letzte Änderung</label><input type="text" disabled class="inp w-full opacity-50 cursor-not-allowed" value="${m['last-modified']||'N/A'}"></div>
+            </div>
+            <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Zweck &amp; Geltungsbereich (Rationale)</label><textarea id="metadata-remarks" rows="3" class="inp w-full">${(m.remarks||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea></div>
         </div>`;
     }
 
@@ -975,7 +989,9 @@
 
         let compHtml = '';
         comps.forEach((c, idx) => {
-            navHtml += `<button onclick="scrollToSec('comp-${c.uuid}')" class="w-full text-left p-1.5 text-[10px] font-bold text-slate-300 bg-slate-900/40 hover:bg-slate-800 rounded truncate border border-transparent hover:border-slate-700">🖥️ ${c.title}</button>`;
+            const sNiv = c.props?.find(p => p && p.name === 'sicherheitsniveau')?.value || '';
+            const sNivTag = sNiv ? ` <span class="text-[8px] opacity-60">[${sNiv}]</span>` : '';
+            navHtml += `<button onclick="scrollToSec('comp-${c.uuid}')" class="w-full text-left p-1.5 text-[10px] font-bold text-slate-300 bg-slate-900/40 hover:bg-slate-800 rounded truncate border border-transparent hover:border-slate-700">🖥️ ${c.title}${sNivTag}</button>`;
             
             let dl = c.links?.find(l => l.rel === 'component-definition' || l.rel === 'source-profile');
             const cd = dl ? componentDefinitions.get(dl.href) : null;
@@ -984,33 +1000,38 @@
             reqs.forEach(r => { const e = r['by-components']?.find(bc => bc['component-uuid'] === c.uuid); if(e) sMap.set(r['control-id'], e); });
 
             const dMap = new Map();
-            let tc = cd?.['component-definition']?.components?.find(co => co.title === c.title) || cd?.['component-definition']?.components?.[0];
-            if (tc) {
-                (tc['control-implementations']||[]).forEach(ci => (ci['implemented-requirements']||[]).forEach(r => dMap.set(r['control-id'], r)));
-            } else if (cd?.profile?.imports) {
-                cd.profile.imports.forEach(i => (i["include-controls"]||[]).forEach(ic => (ic["with-ids"]||[]).forEach(id => dMap.set(id, { "control-id": id }))));
-            }
+            let tc = null;
+            try {
+                tc = cd?.['component-definition']?.components?.find(co => co && co.title === c.title) || cd?.['component-definition']?.components?.[0] || null;
+                if (tc) {
+                    (tc['control-implementations']||[]).forEach(ci => { if(ci) (ci['implemented-requirements']||[]).forEach(r => { if(r && r['control-id']) dMap.set(r['control-id'], r); }); });
+                } else if (cd?.profile?.imports) {
+                    cd.profile.imports.forEach(i => { if(i) (i["include-controls"]||[]).forEach(ic => { if(ic) (ic["with-ids"]||[]).forEach(id => { if(id) dMap.set(id, { "control-id": id }); }); }); });
+                }
+            } catch(cdErr) { console.warn('Fehler beim Lesen der Komponentendefinition für', c.title, cdErr); }
 
             const allKeys = new Set([...sMap.keys(), ...dMap.keys(), ...profileModifications.alters.keys()]);
             const sorted = Array.from(allKeys).sort();
 
             // FIX C: Sammle ALLE Filter (Class, Modalverb, Tags etc.)
             sorted.forEach(cid => {
+              try {
                 const st = sMap.get(cid)?.['implementation-status']?.state || 'open';
                 addFilter('status', st);
                 
                 const catCtrl = catalogControlMap.get(cid);
                 if (catCtrl) {
                     if (catCtrl.class) addFilter('class', catCtrl.class);
-                    if (catCtrl.props) catCtrl.props.forEach(p => addFilter(p.name, p.value));
-                    const stmt = catCtrl.parts?.find(p => p.name === 'statement');
-                    if (stmt && stmt.props) stmt.props.forEach(p => addFilter(p.name, p.value));
+                    if (catCtrl.props) catCtrl.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
+                    const stmt = catCtrl.parts?.find(p => p && p.name === 'statement');
+                    if (stmt && stmt.props) stmt.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
                 }
                 const implReq = dMap.get(cid);
-                if (implReq && implReq.props) implReq.props.forEach(p => addFilter(p.name, p.value));
+                if (implReq && implReq.props) implReq.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
                 if (implReq && implReq.statements) implReq.statements.forEach(s => {
-                    if (s.props) s.props.forEach(p => addFilter(p.name, p.value));
+                    if (s && s.props) s.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
                 });
+              } catch(filterErr) { console.warn('Filter-Fehler bei', cid, filterErr); }
             });
 
             // FIX E & B: Sichtbare Component Level Props (Eigenschaften & Risiken)
@@ -1029,7 +1050,9 @@
             // 1. Props aus dem SSP (Komponente)
             if (c.props) {
                 c.props.forEach(p => { 
+                    if (!p || !p.name) return;
                     if (p.name === 'identified-risk') riskProps.push({ source: 'SSP', num: '⚠️', title: p.value, value: p.remarks || '' });
+                    else if (p.name === 'sicherheitsniveau') { /* shown in header badge */ }
                     else generalProps.push({ source: 'SSP', name: p.name, value: p.value });
                 });
             }
@@ -1037,6 +1060,7 @@
             // 2. Props aus der Komponenten-Definition (Blaupause)
             if (tc && tc.props && tc.props.length > 0) {
                 tc.props.forEach(p => {
+                    if (!p || !p.name) return;
                     if (!p.value) return;
                     const match = p.name.match(riskRegex);
                     if (match) riskProps.push({ source: 'Komp.-Def.', num: parseInt(match[1], 10), title: match[2].replace(/_/g, ' ').trim(), value: p.value });
@@ -1072,16 +1096,34 @@
             else compLevelHtml = '';
 
             const openCls = idx === 0 ? 'open' : '';
+            const sichNiv = c.props?.find(p => p && p.name === 'sicherheitsniveau')?.value || '';
+            const sichNivBadge = sichNiv ? (() => {
+                const nivColors = {
+                    'basis': 'bg-green-900 text-green-300 border-green-700',
+                    'normal-SdT': 'bg-blue-900 text-blue-300 border-blue-700',
+                    'standard': 'bg-blue-900 text-blue-300 border-blue-700',
+                    'erhöht': 'bg-orange-900 text-orange-300 border-orange-700',
+                    'hoch': 'bg-red-900 text-red-300 border-red-700'
+                };
+                const cls = nivColors[sichNiv] || 'bg-slate-700 text-slate-300 border-slate-600';
+                return `<span class="sb ${cls} ml-2">🛡️ ${sichNiv}</span>`;
+            })() : '';
             compHtml += `<div id="comp-${c.uuid}" class="border border-slate-700 rounded-lg overflow-hidden bg-slate-800 mb-6 shadow-md comp-card" data-search="${(c.title + ' ' + (c.description||'')).toLowerCase()}">
                 <button class="w-full flex justify-between items-center p-4 hover:bg-slate-700 text-left" onclick="tog('cb-${c.uuid}')">
-                    <h3 class="text-lg font-bold text-white">${c.title} <span class="sb bg-slate-700 text-slate-300 ml-2">${c.status?.state||'unknown'}</span></h3>
+                    <h3 class="text-lg font-bold text-white">${c.title} <span class="sb bg-slate-700 text-slate-300 ml-2">${c.status?.state||'unknown'}</span>${sichNivBadge}</h3>
                     <svg id="icon-cb-${c.uuid}" class="chev ${openCls} w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
                 </button>
                 <div id="cb-${c.uuid}-content" class="coll-content ${openCls} p-4 border-t border-slate-700 bg-slate-900 space-y-4">
                     ${compLevelHtml}
                     <div class="space-y-4">`;
             
-            if(sorted.length > 0) sorted.forEach(cid => { compHtml += renderControlEntry(cid, c, sMap.get(cid), dMap.get(cid), pMap); });
+            if(sorted.length > 0) sorted.forEach(cid => { 
+                try { compHtml += renderControlEntry(cid, c, sMap.get(cid), dMap.get(cid), pMap); }
+                catch(renderErr) { 
+                    console.warn('Render-Fehler bei Control', cid, renderErr);
+                    compHtml += `<div class="ctrl-entry border border-red-700 bg-red-900/20 rounded-lg p-3" data-cid="${cid}" data-comp="${c.uuid}" data-filter="|status:open|" data-search="${cid.toLowerCase()}"><p class="text-red-400 text-xs">⚠️ Render-Fehler bei <strong>${cid}</strong>: ${renderErr.message}</p></div>`;
+                }
+            });
             else compHtml += `<p class="text-xs text-slate-500">Keine spezifischen Controls zugewiesen.</p>`;
             
             compHtml += `</div></div></div>`;
@@ -1123,17 +1165,18 @@
         
         const cc = catalogControlMap.get(cid);
         const title = cc?.title || 'Unbekanntes Control';
-        const pTxt = cc?.parts?.find(p=>p.name==='statement')?.prose || '';
+        const pTxt = cc?.parts?.find(p => p && p.name==='statement')?.prose || '';
         
         let fStr = `|status:${currSt}|class:${cc?.class||''}|`;
         let sStr = `${cid} ${title} ${pTxt}`.toLowerCase();
 
         // 1. Catalog Props
-        const catProps = cc?.props || [];
+        const catProps = (cc?.props || []).filter(Boolean);
         let catPropsHtml = '';
         if (catProps.length > 0) {
             catPropsHtml = '<div class="flex flex-wrap gap-2 mt-2 mb-3">';
             catProps.forEach(p => {
+                if (!p) return;
                 const pName = p.name || ''; const pVal = p.value || '';
                 fStr += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
                 sStr += ` ${pVal.toLowerCase()}`;
@@ -1146,11 +1189,12 @@
         }
 
         // 2. Statement Props
-        const stmtProps = cc?.parts?.find(p=>p.name==='statement')?.props || [];
+        const stmtProps = (cc?.parts?.find(p => p && p.name==='statement')?.props || []).filter(Boolean);
         let stmtPropsHtml = '';
         if (stmtProps.length > 0) {
             stmtPropsHtml = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-600/50">';
             stmtProps.forEach(p => {
+                if (!p) return;
                 const pName = p.name || ''; const pVal = p.value || '';
                 fStr += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
                 sStr += ` ${pVal.toLowerCase()}`;
@@ -1164,11 +1208,12 @@
         }
 
         // 3. Component Definition Props
-        const defProps = dReq?.props || [];
+        const defProps = (dReq?.props || []).filter(Boolean);
         let propsHtml = '';
         if (defProps.length > 0) {
             propsHtml = '<div class="flex flex-wrap gap-2 mt-2 border-t border-slate-700/50 pt-3">';
             defProps.forEach(p => {
+                if (!p) return;
                 const pName = p.name || ''; const pVal = p.value || '';
                 fStr += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
                 sStr += ` ${pVal.toLowerCase()}`;
@@ -1187,9 +1232,12 @@
         
         let pTxtParsed = pTxt.replace(pRegex, (m, pid) => `<span class="param-placeholder" title="${pid}">[${catalogParamMap.get(pid)?.label||pid}]</span>`);
 
-        const stmts = dReq?.statements || [];
-        const selId = sReq?.props?.find(p=>p.name==='implemented-statement-id')?.value || '';
+        const stmts = (dReq?.statements || []).filter(Boolean);
+        const selId = sReq?.props?.find(p => p && p.name==='implemented-statement-id')?.value || '';
         
+        // Safe prop extraction helpers
+        const sReqPropVal = (n) => sReq?.props?.find(p => p && p.name === n)?.value || '';
+
         return `<div class="ctrl-entry border border-slate-700 bg-slate-800 rounded-lg p-3 shadow-sm" data-cid="${cid}" data-comp="${comp.uuid}" data-filter="${fStr}" data-search="${sStr}">
             <div class="flex justify-between items-start mb-2">
                 <h4 class="font-bold text-white text-sm"><span class="text-blue-400 font-mono mr-1">${cid}</span> ${title}</h4>
@@ -1215,15 +1263,15 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
                 <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Kommentar</label><textarea id="desc-${rk}" rows="2" class="inp text-xs w-full p-1.5">${sReq?.description||''}</textarea></div>
                 <div class="flex flex-col gap-2">
-                    <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Bearbeiter</label><input type="text" id="name-${rk}" class="inp text-xs py-1 px-2 w-full" value="${sReq?.props?.find(p=>p.name==='implementing-user')?.value||''}"></div>
-                    <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Datum</label><input type="date" id="date-${rk}" class="inp text-xs py-1 px-2 w-full" value="${sReq?.props?.find(p=>p.name==='implementation-date')?.value||''}"></div>
+                    <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Bearbeiter</label><input type="text" id="name-${rk}" class="inp text-xs py-1 px-2 w-full" value="${sReqPropVal('implementing-user')}"></div>
+                    <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Datum</label><input type="date" id="date-${rk}" class="inp text-xs py-1 px-2 w-full" value="${sReqPropVal('implementation-date')}"></div>
                 </div>
             </div>
 
             ${stmts.length ? `<div class="mb-3 space-y-1.5">
                 <label class="block text-[10px] text-slate-400 uppercase font-bold">Reifegrad (aus Profil)</label>
                 <label class="flex items-center gap-2 p-1.5 bg-slate-900/50 rounded border border-slate-700 cursor-pointer hover:bg-slate-800"><input type="radio" name="mat-${rk}" value="manual" ${!selId?'checked':''} class="form-radio text-emerald-500 h-3 w-3"><span class="text-xs text-slate-300">Manuell (kein Level gewählt)</span></label>
-                ${stmts.map(s => `<label class="flex items-center gap-2 p-1.5 bg-slate-900/50 rounded border border-slate-700 cursor-pointer hover:bg-slate-800"><input type="radio" name="mat-${rk}" value="${s['statement-id']}" ${selId===s['statement-id']?'checked':''} class="form-radio text-emerald-500 h-3 w-3"><div class="text-xs"><span class="font-bold text-emerald-400">${s.description||s['statement-id']}</span> <span class="text-slate-400">${s.props?.find(p=>p.name==='statement')?.value||''}</span></div></label>`).join('')}
+                ${stmts.map(s => `<label class="flex items-center gap-2 p-1.5 bg-slate-900/50 rounded border border-slate-700 cursor-pointer hover:bg-slate-800"><input type="radio" name="mat-${rk}" value="${s['statement-id']||''}" ${selId===s['statement-id']?'checked':''} class="form-radio text-emerald-500 h-3 w-3"><div class="text-xs"><span class="font-bold text-emerald-400">${s.description||s['statement-id']||''}</span> <span class="text-slate-400">${s.props?.find(p => p && p.name==='statement')?.value||''}</span></div></label>`).join('')}
             </div>` : ''}
 
             <div class="border-t border-slate-700 pt-3 flex gap-2 flex-wrap items-center">
@@ -1277,8 +1325,8 @@
 
         const cc = catalogControlMap.get(cid);
         const title = cc?.title || cid;
-        const prose = cc?.parts?.find(p=>p.name==='statement')?.prose || '';
-        const guidance = cc?.parts?.find(p=>p.name==='guidance')?.prose || '';
+        const prose = cc?.parts?.find(p => p && p.name==='statement')?.prose || '';
+        const guidance = cc?.parts?.find(p => p && p.name==='guidance')?.prose || '';
 
         const prefix = cid.substring(0, cid.lastIndexOf('.') + 1);
         let relatedControlsText = "";
@@ -1287,7 +1335,7 @@
             const siblings = [];
             catalogControlMap.forEach((v, k) => {
                 if (k.startsWith(prefix) && k !== cid) {
-                    const sProse = v.parts?.find(p => p.name === 'statement')?.prose || '';
+                    const sProse = v.parts?.find(p => p && p.name === 'statement')?.prose || '';
                     siblings.push(`- ${k}: ${sProse}`);
                 }
             });
