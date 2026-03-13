@@ -1,0 +1,2719 @@
+{
+  "component-definition": {
+    "uuid": "54e636e1-f1a1-479a-a64f-ef441d855024",
+    "metadata": {
+      "title": "INF.2 Serverräume - Benutzerdefiniert",
+      "last-modified": "2026-03-13T15:39:53.886132+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "adb49bcd-f69d-49d8-a911-2a70ab6987ae",
+        "type": "physical",
+        "title": "INF.2 Serverräume",
+        "description": "This component represents the implementation of all controls for Baustein INF.2.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Heute werden fast alle strategischen und operativen Funktionen und Aufgaben durch Informationstechnik (IT) maßgeblich unterstützt oder sind ohne IT nicht ausführbar. Dadurch steigen die Anforderungen an die Leistungsfähigkeit und Verfügbarkeit der IT-Systeme und deren Anbindung an die Netzumgebung stetig. Um diesem Leistungsbedarf gerecht zu werden, um entsprechende Reserven vorzuhalten und um die IT auch wirtschaftlich betreiben zu können, konzentrieren Institutionen jeglicher Größe ihre IT-Landschaft in Rechenzentren.<BR><BR>Ein Rechenzentrum (RZ) ist wie folgt definiert:<BR>1. Hat eine IT-nutzende Institution nur einen zentralen IT-Betriebsbereich, ist dieser gemeinsam mit den erforderlichen Supportbereichen grundsätzlich immer wie ein RZ entsprechend dem Schutzbedarf zu behandeln. Unter „IT-Betriebsbereich“ sind Räume zu verstehen, in denen die Hardware aufgebaut ist und betrieben wird, die der Bereitstellung von Diensten und Daten dient. Das RZ umfasst neben dem IT-Betriebsbereich alle weiteren technischen Supportbereiche (z. B. Stromversorgung, Kälteversorgung, Löschtechnik, Sicherheitstechnik), die dem bestimmungsgemäßen Betrieb und der Sicherheit des IT-Betriebsbereichs dienen.<BR>2. Wird die IT der Institution innerhalb eines Gebäudes oder einer Liegenschaft verteilt in mehreren Bereichen betrieben und sind diese Bereiche untereinander und zu den IT-Benutzenden hin durch hauseigene LAN-Verbindungen angeschlossen, ist mindestens der funktional bedeutendste dieser Bereiche als RZ zu behandeln. Des Weiteren sind Bereiche, von deren ordnungsgemäßem Betrieb 50 % und mehr IT-Benutzenden abhängig sind oder aus denen heraus 50% und mehr an Diensten und Daten (gemessen an der Gesamtheit der Bereiche) bereitgestellt werden, als RZ zu behandeln.<BR>3. Ist die IT-nutzende Institution an mehreren räumlich voneinander getrennten Standorten angesiedelt und sind diese durch andere als hauseigene LAN-Verbindungen miteinander gekoppelt, ist jeder der Standorte entsprechend (1) separat zu betrachten und zu behandeln.<BR>4. Ein IT-Betriebsbereich, in dem für kritische Geschäftsprozesse (Prozesse, deren Störung oder Ausfall zu wesentlichen Beeinträchtigungen der Erledigung primärer Aufgaben einer Institution führen) erforderliche IT angesiedelt ist, ist immer als RZ zu behandeln, unabhängig von Größe oder Anteilsregeln aus Nummer (2).<BR>5. IT-Betriebsbereiche, aus denen heraus Dienste oder Dienstleistungen für Dritte erbracht werden, sind immer als Teil eines RZ zu betrachten. Dabei ist es unerheblich, ob dies gegen Entgelt erfolgt oder nicht.<BR>6. Besteht ein begründetes Interesse, einen IT-Betriebsbereich gemeinsam mit seinem Supportbereich abweichend von den vorgenannten Regelungen als Serverraum zu behandeln, ist dies samt den sich daraus ergebenden Reduzierungen von Sicherheitsanforderungen zu begründen.<BR><BR>Die Auflistung der sechs Punkte bedeutet nicht, dass alle Punkte gemeinsam erfüllt sein müssen, damit ein Bereich als Rechenzentrum betrachtet wird. Vielmehr werden verschiedene Möglichkeiten beschrieben, wann ein Bereich als RZ anzusehen ist. Weicht ein Rechenzentrum von dieser Definition ab, wird der betrachtete IT-Betriebsbereich als Serverraum bezeichnet. Diese Definition orientiert sich ausschließlich an der Bedeutung der IT-Struktur für die Aufgabenerfüllung der nutzenden Institution und steht damit im methodischen Einklang mit der DIN EN 50600.<BR><BR>Soll ein Serverraum abgesichert werden, können die Anforderungen dieses Bausteins entsprechend reduziert werden. Dies muss jedoch stichhaltig und nachvollziehbar begründet werden (6) und es müssen mindestens die Basis-Anforderungen umgesetzt werden."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Dieser Baustein richtet sich einerseits an Institutionen, die ein Rechenzentrum betreiben und im Rahmen einer Revision prüfen möchten, ob sie geeignete Sicherheitsmaßnahmen umgesetzt haben. Andererseits kann der Baustein auch dazu benutzt werden, die Sicherheitsmaßnahmen abzuschätzen, die umgesetzt werden müssen, wenn die IT in einem Rechenzentrum zentralisiert werden soll. Das oberste Ziel der in diesem Baustein beschriebenen Anforderungen ist es, den sicheren Betrieb des Rechenzentrums zu gewährleisten."
+          },
+          {
+            "name": "Abgrenzung_und_Modellierung",
+            "value": "Der Baustein INF.2 Rechenzentrum sowie Serverraum ist auf jedes Rechenzentrum und jeden Serverraum anzuwenden.<BR><BR>Der vorliegende Baustein eignet sich nicht für kleine Informationsverbünde mit z. B. nur einem oder sehr wenigen Servern oder IT-Systemen. Ein Beispiel dafür ist eine kleine Institution mit wenigen IT-Arbeitsplätzen und einem Server, der in einem separaten Raum betrieben wird. In solchen Fällen genügt es oft, den Baustein INF.5 Raum sowie Schrank für technische Infrastruktur umzusetzen.<BR><BR>Anforderungen an Gebäude und die Verkabelung im Allgemeinen sind nicht Teil dieses Bausteins. Diese sind in den Bausteinen INF.1 Allgemeines Gebäude und INF.12 Verkabelung zu finden, die immer auf Räume und Gebäude bzw. die Verkabelung anzuwenden sind.<BR><BR>Um den Baustein überschaubar zu halten, wurde bewusst auf technische Details und planerische Größen verzichtet. Nähere Informationen liefern einschlägige Normen und weitere Veröffentlichungen des BSI."
+          },
+          {
+            "name": "_2.1._Fehlerhafte_Planung",
+            "value": "Wenn ein Rechenzentrum konzipiert und dabei nicht berücksichtigt wird, es gegen elementare Gefährdungen abzusichern, besteht ein sehr hohes Ausfallrisiko. So können z. B. Standortrisiken wie Luftverkehr, Erdbeben oder Hochwasser die Betriebssicherheit und Verfügbarkeit gefährden. Ebenso massiv kann es sich auf den Betrieb eines Rechenzentrums auswirken, wenn durch eine fehlerhafte Konzeptionierung nicht genügend Bandbreite verfügbar ist oder die Energieversorgung am gewählten Standort nicht ausreicht."
+          },
+          {
+            "name": "_2.2._Fehlende_oder_fehlerhafte_Zutrittskontrollen",
+            "value": "Fehlen Zutrittskontrollen oder sind diese unzureichend, erhöht sich die Gefahr, dass unberechtigte Personen das Rechenzentrum betreten und dort fahrlässig, z. B. aufgrund mangelnder Fachkenntnisse, oder vorsätzlich Schaden anrichten. Angreifende können so z. B. schützenswerte Daten entwenden, Geräte stehlen oder Server manipulieren. Unzureichende Zutrittskontrollen wirken sich somit auf die Verfügbarkeit, Vertraulichkeit und die Integrität von Daten und IT-Komponenten aus."
+          },
+          {
+            "name": "_2.3._Unzureichende_Überwachung",
+            "value": "Wird die im Rechenzentrum betriebene IT und Infrastruktur unzureichend überwacht und betreut, können Komponenten unbemerkt ausfallen. Dadurch wird eventuell die Verfügbarkeit und fehlerfreie Funktion des Rechenzentrums stark beeinträchtigt. Ausfälle treten zudem oftmals schleichend ein. Ohne eine aktive Überwachung könnten diese zu spät bemerkt werden. Es ist dann oft nicht mehr möglich, rechtzeitig zu reagieren."
+          },
+          {
+            "name": "_2.4._Unzureichende_Klimatisierung_im_Rechenzentrum",
+            "value": "IT-Komponenten benötigen bestimmte Betriebsbedingungen, um zuverlässig zu funktionieren. Auch setzen sie die von ihnen aufgenommene elektrische Leistung in zusätzliche Wärme um. Wenn in einem IT-Betriebsbereich die Temperatur, die Luftfeuchte oder der Schwebestoffanteil nicht innerhalb der von den Geräteherstellenden vorgegebenen Grenzwerte gehalten werden, kann dies dazu führen, dass technische Komponenten nicht mehr richtig funktionieren oder ausfallen."
+          },
+          {
+            "name": "_2.5._Feuer",
+            "value": "Feuer ist zwar eine Gefahr, die eher selten eintritt. Entsteht aber tatsächlich ein Brand, hat dieser meist schwerwiegende Auswirkungen. Denn durch Feuer und Rauch können große Schäden entstehen. Während innerhalb des IT-Betriebsbereichs Elektrobrände die häufigste Ursache für Feuer sind, kann ein Feuer außerhalb des IT-Betriebsbereichs und insbesondere in Supportbereichen, wie der Energieversorgung (inklusive NEA und USV) oder der Klimaanlage, zahlreiche weitere Ursachen haben. Haben der IT-Betriebsbereich oder die Supportbereiche sowie andere Nachbarbereiche keinen oder nur einen unzureichenden Brandschutz, kann sich ein Feuer schnell ausbreiten. Zudem könnten außerhalb entstehende Brände auf das Rechenzentrum übergreifen."
+          },
+          {
+            "name": "_2.6._Wasser",
+            "value": "Durch undichte Wasserleitungen, Hochwasser, Rohrbruch, defekte Sprinkler- oder Klimaanlagen kann Wasser in das Rechenzentrum eintreten. Hierdurch können Geräte beschädigt werden und nicht mehr funktionieren. Es kann auch ein Kurzschluss ausgelöst werden, durch den einzelne Bereiche des Rechenzentrums ausfallen oder ein Brand entstehen könnte."
+          },
+          {
+            "name": "_2.7._Fehlender_oder_unzureichender_Einbruchschutz",
+            "value": "Selbst wenn eine gut funktionierende Zutrittskontrolle eingerichtet ist, können unbefugte Personen in ein Rechenzentrum eindringen, sofern es nicht ausreichend vor Einbrüchen geschützt wird. Täter und Täterinnen könnten so z. B. IT-Komponenten stehlen oder manipulieren und an vertrauliche Informationen gelangen. Auch könnten sie die Geräte zerstören oder das Rechenzentrum insgesamt beschädigen."
+          },
+          {
+            "name": "_2.8._Ausfall_der_Stromversorgung",
+            "value": "Wenn der Strom ausfällt, kann der Betriebsablauf eines Rechenzentrums und damit der Institution erheblich gestört werden. So sind bei einem Stromausfall eventuell die vom Rechenzentrum bereitgestellten IT-Services plötzlich nicht mehr erreichbar. Ebenso können Daten verloren gehen. Zudem ist es möglich, dass durch einen plötzlichen Stromausfall IT-Systeme, TK-Systeme oder Überwachungstechnik beschädigt werden."
+          },
+          {
+            "name": "_2.9._Verschmutzung",
+            "value": "Staub und andere Verschmutzungen in einem Rechenzentrum können dazu führen, dass technische Komponenten (z. B. Lüfter) nicht mehr funktionieren. Durch Verschmutzungen verschleißen Geräte früher und fallen häufiger aus."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "bb8a61f4-4978-4770-a031-15e43a4caf96",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Nutzergenerierte-Inhalte/Zielobjektkategorien/profile/serverraeume_profile.json",
+            "description": "Implementation for all controls in Baustein INF.2",
+            "implemented-requirements": [
+              {
+                "uuid": "837bb3e8-20f9-45b9-80e6-96ac6e67299b",
+                "control-id": "ASST.7.5",
+                "description": "(BSI Baustein INF.2) Die Installation von Vernichtungseinrichtungen dient dem Schutz sensibler Daten vor unbefugtem Zugriff, Missbrauch oder unkontrollierter Weitergabe. Ziel ist es, die Vertraulichkeit, Integrität und Verfügbarkeit von Informationen auch über ihren gesamten Lebenszyklus hinweg sicherzustellen – einschließlich der ordnungsgemäßen Entsorgung. Unter Vernichtungseinrichtungen versteht man mechanische oder elektronische Geräte, die Dokumente so zerkleinern oder unlesbar machen, dass eine Rekonstruktion unmöglich ist; typische Beispiele sind Aktenvernichter mit Schutzklasse P-4 oder höher oder Entsorgungsbehälter mit gesichertem Zugriff (z.B. abschließbare Sicherheitsbehälter). Dies kann auch so realisiert werden, dass Datenträger gesammelt und zentral gelöscht oder vernichtet werden. Kann durch die Institution selbst oder Dienstleister für die Aktenvernichtung umgesetzt werden. Bei der Verwendung von Dienstleistern ist es sinnvoll, deren Professionalität zu verifzieren, z.B. durch ein Zertifikat. Bei der Umsetzung ist es sinnvoll darauf zu achten, dass solche Einrichtungen nicht nur ausreichend dimensioniert und technisch geeignet sind, sondern auch physisch gegen unbefugten Zugriff geschützt werden – etwa durch Aufstellung in abgeschlossenen Räumen oder durch Zugangskontrolle.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ASST.7.5-m1",
+                    "uuid": "90c79f31-3ebd-4e2e-a1e6-328437d58d59",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vernichtungseinrichtungen für körperliche Dokumente sind nur vereinzelt und ohne feste Vorgaben an wenigen Standorten vorhanden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mitarbeiter nutzen gelegentlich lokale Papierkörbe oder einfache Aktenvernichter, ohne dass eine systematische Bereitstellung oder Wartung erfolgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie durch Interviews und Begehungen stichprobenartig, ob an Standorten mit Dokumentenverarbeitung ad-hoc Möglichkeiten zur sicheren Vernichtung existieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.7.5-m2",
+                    "uuid": "9034f308-d513-4331-82b7-565c9c962073",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vernichtungseinrichtungen werden an den Hauptstandorten manuell und ohne durchgängig standardisierte Sicherheitsklassen bereitgestellt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Bereitstellung von Aktenvernichtern oder Entsorgungsbehältern ist vorhanden, wird jedoch rein operativ und nicht standortübergreifend verwaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Kontrollieren Sie manuell durch visuelle Inspektionen in den Hauptbereichen, ob funktionsfähige Aktenvernichter vorhanden sind und von den Mitarbeitern genutzt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.7.5-m3",
+                    "uuid": "f4268eac-4dc2-4efe-9706-24f3f671de38",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Informationen und Assets für Standorte KANN an allen Standorten, an denen körperliche Dokumente verarbeitet werden, Vernichtungseinrichtungen vor dem "
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Umsetzung muss der folgenden Vorgabe entsprechen: Informationen und Assets für Standorte KANN an allen Standorten, an denen körperliche Dokumente verarbeitet werden, Vernichtungseinrichtungen vor dem "
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Validieren Sie durch Audits die Vorgabe: Informationen und Assets für Standorte KANN an allen Standorten, an denen körperliche Dokumente verarbeitet werden, Vernichtungseinrichtungen vor dem "
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.7.5-m4",
+                    "uuid": "53b2f0f2-af27-4252-960f-fc89a2a33afc",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "An allen Standorten sind standardisierte Vernichtungseinrichtungen mit angemessenen Sicherheitsklassen bereitgestellt und in zentrale Entsorgungskonzepte integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Einrichtungen SOLLTEN regelmäßig gewartet und rechtzeitig entleert werden. Externe Entsorgungsdienstleister sind über Serviceverträge und SLAs engmaschig eingebunden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie Serviceverträge. Automatisiert: Ein Skript (z. B. via API des Facility-Managements) prüft zyklisch die Einhaltung der dokumentierten Wartungs- und Leerungsintervalle."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.7.5-m5",
+                    "uuid": "075e178a-85d1-4281-949f-8de9a0204793",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Dokumentenvernichtung ist ein vollständig integrierter, zentral überwachter Prozess. Sensorgesteuerte Einrichtungen melden proaktiv Füllstände und Wartungsbedarfe."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Durch den Einsatz smarter Aktenvernichter und IoT-Entsorgungsbehälter werden Ressourcen optimal gesteuert. Der gesamte Lebenszyklus von Papierdokumenten wird lückenlos nachverfolgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Führen Sie ein Skript aus, das die Telemetrie- und Füllstandsdaten der IoT-Vernichtungseinrichtungen via API abfragt und Abweichungen von den definierten SLAs sofort automatisiert meldet."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "c61f8240-3dc1-41f9-b4b7-90f20d924d0e",
+                "control-id": "DET.4.19",
+                "description": "(BSI Baustein INF.2) Bleiben unautorisierte Sendeanlagen unbemerkt, so könnten hierüber Abhörversuche stattfinden oder Störungen legitimer Sender und Empfänger auftreten. Bedenklich sind beispielsweise versteckte Wanzen in Büromöbeln, manipulierte Peripheriegeräte mit eingebauten Sendern, ohne Erlaubnis mitgebrachte Access Points, modifizierte Smartphones mit verdeckten Fernzugriffsfunktionen oder getarnte IoT-Geräte mit Netzwerkverbindung, die sensible Informationen abgreifen und nach außen übertragen könnten.   Zum Aufspüren können Wireless Intrusion Detection Systems (WIDS) genutzt werden, welche Sendeanagen auffinden und unbekannte Sender melden. Um unautorisierte Sender effektiv zu erkennen sind auch begleitende Maßnahmen sinnvoll:  Die Implementierung von Zugangsbeschränkungen und Mitnahmeverboten für nicht geprüfte elektronische Geräte; die Schulung des Personals zur Erkennung verdächtiger Objekte; sowie die Dokumentation aller autorisierten Geräte in einem Inventar, um unbekannte Signalquellen schnell identifizieren zu können.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "DET.4.19-m1",
+                    "uuid": "ae9526f3-30fe-4f75-9ad8-8e6a1cdda60e",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Räume werden nur anlassbezogen oder sporadisch auf unautorisierte Sendeanlagen untersucht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keine kontinuierliche Überwachung. Manuelle Suchen oder Sweeps finden nur bei konkretem Verdacht statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung von Protokollen anlassbezogener Suchaktionen. Automatisierung: Nicht möglich, da rein manueller und sporadischer Prozess."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.19-m2",
+                    "uuid": "683a3a9e-1e25-4bca-a28f-8a54f52d305e",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende Überwachung oder regelmäßige manuelle Prüfung auf unautorisierte Sendeanlagen ist etabliert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In festgelegten Intervallen werden empfindliche Bereiche mit Standard-Scannern manuell auf auffällige Funksignale geprüft."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtung der Prüfintervalle und Berichte. Automatisierung: Skript zur Prüfung der termingerechten Ablage von Sweep-Protokollen im Dateisystem."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.19-m3",
+                    "uuid": "be0d1dde-be61-4bff-9979-d29d8945d35e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Detektion für Räume KANN diesen nach unautorisierten Sendeanlagen durch {{ insert: param, det.4.19-prm1 }} überwachen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Vorgabe aus dem Statement wird wie definiert und dokumentiert im Rechenzentrum umgesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Systemkonfiguration und Dokumentation zur Überwachung auf unautorisierte Sendeanlagen gemäß den definierten Parametern."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.19-m4",
+                    "uuid": "ab647fe5-42c1-42b2-86e1-38e5f078be09",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Detektion unautorisierter Sendeanlagen erfolgt automatisiert und kontinuierlich mit Alarmierung bei Anomalien."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Fest installierte Sensoren überwachen das Frequenzspektrum durchgehend. Bei Abweichungen wird sofort das Sicherheitsteam informiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Test der Alarmierungskette. Automatisierung: Einspielen eines Test-Funksignals (z. B. WLAN-Hotspot) und API-Abfrage des Detektionssystems auf Alarmgenerierung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.19-m5",
+                    "uuid": "bbf25331-9844-4d6d-a37b-b69ebf6e98fb",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Überwachung ist in das zentrale SIEM integriert. Anomalien führen zu KI-gestützten Auswertungen und automatisierten Reaktionen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Frequenz-Analysen nutzen Machine Learning zur Erkennung komplexer Tarn-Sender. Physische und logische Sicherheitsreaktionen greifen ineinander."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Audit der SIEM-Regeln. Automatisierung: SIEM-API-Abfrage zur Validierung der Detection-Rules für RF-Anomalien und Prüfung der aktiven Response-Skripte."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "aca9cf5c-5cdd-47e2-8662-3865eabedcee",
+                "control-id": "GEB.8.1.1",
+                "description": "(BSI Baustein INF.2) Geschäftskritische Datenträger lagern in gesicherten, klimatisierten Archiven mit Zugriffskontrolle, Brandschutz und nachvollziehbarer Aus-/Rückgabedokumentation.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.8.1.1-m1",
+                    "uuid": "52b24b72-4201-4970-8676-3a4017d9db52",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Geschäftskritische Speichermedien werden vereinzelt und ohne festen Prozess an sicheren Orten gelagert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Sensibilisieren Sie das Personal für die Wichtigkeit der sicheren Aufbewahrung von Speichermedien."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtung der Lagerorte von Speichermedien. Prüfung auf Vorhandensein kritischer Medien an ungesicherten Orten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.1.1-m2",
+                    "uuid": "35e3effa-b3f2-4ed1-933b-9306788f9b95",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Lagerung geschäftskritischer Speichermedien erfolgt grundsätzlich in dedizierten Archiven, wird aber manuell verwaltet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Definieren Sie grundlegende Aufbewahrungsorte und protokollieren Sie Ein- und Ausgänge manuell."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Stichprobenartige Prüfung der manuellen Bestandslisten gegen die physisch vorhandenen Medien im Archiv."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.1.1-m3",
+                    "uuid": "16efa476-00a3-48e7-8f99-a40fd199152b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN geschäftskritische Speichermedien in Datenträgerarchiven platzieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Implementieren Sie einen dokumentierten und wiederholbaren Prozess für die Einlagerung in Datenträgerarchive."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Prozessdokumentation. Automatisiert: Abgleich von Backup-Logs mit dem digitalen Inventar des Archivs."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.1.1-m4",
+                    "uuid": "ccc2567c-0108-455d-8c67-0cb0b40b5561",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Platzierung in Datenträgerarchiven wird durch Barcodesysteme und Umgebungsüberwachung (Klima) erweitert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie elektronische Asset-Management-Systeme zur lückenlosen Nachverfolgung der Speichermedien."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Audit der Asset-Historie. Automatisiert: API-Abfrage des Asset-Systems auf überfällige oder fehlende Datenträger."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.1.1-m5",
+                    "uuid": "cd901e37-bfd3-4827-b46c-7eb9f84e3231",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Datenträgerarchiv ist vollständig automatisiert, robotikgestützt und in Echtzeit an das zentrale Risikomanagement angebunden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Setzen Sie integrierte Automatisierungslösungen ein, um menschliche Interaktion bei der Archivierung zu minimieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Robotik-Logs. Automatisiert: Kontinuierliche Überwachung der RFID-Tags im Archiv per Dashboard-API."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d91e3fe9-421c-40af-b8e8-7e2a5edf1889",
+                "control-id": "GEB.8.3",
+                "description": "(BSI Baustein INF.2) Datenträgerarchive sind bei Bränden besonders schützenswert, da hier häufig die langzeitig kritischen Daten gelagert werden. Kann durch Brandschutzschränke oder Datensafes umgesetzt werden, die nach DIN EN 1047-1 oder ISO 11799 zertifiziert sind.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.8.3-m1",
+                    "uuid": "454e5359-7875-4bc2-836a-4be7cfcc05fc",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Datenträger werden vereinzelt in simplen, nicht zertifizierten Metallschränken gelagert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Beschaffen Sie erste abschließbare Behältnisse zur physischen Trennung der Datenträger."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Begehung und visuelle Prüfung der verwendeten Behältnisse auf rudimentären Schutz."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.3-m2",
+                    "uuid": "986b6427-bf6f-4433-b03e-66b0424f2f03",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es sind feuerhemmende Safes vorhanden, deren Nutzung jedoch nicht einheitlich geregelt ist."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Stellen Sie sicher, dass alle wichtigen Datenträger in den feuerhemmenden Safes untergebracht werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung, ob kritische Datenträger konsequent in den vorhandenen feuerhemmenden Safes gelagert werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.3-m3",
+                    "uuid": "933e132a-59c5-400b-8aa5-86900c28961a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN feuerfeste Behältnisse nach {{ insert: param, geb.8.3-prm1 }} installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Installieren Sie zertifizierte feuerfeste Behältnisse gemäß der definierten Parameter und Vorgaben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Zertifikatsprüfung der installierten Safes. Abgleich der Schutzklassen mit den Vorgaben aus dem Parameter."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.3-m4",
+                    "uuid": "ed5a5271-6943-49c4-b414-f890de28bcd3",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Feuerfeste Behältnisse sind mit Sensorik (Temperatur, Feuchtigkeit) ausgestattet und an ein Meldesystem angebunden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Integrieren Sie Umgebungssensoren der Behältnisse in das zentrale Gebäudeleitsystem zur proaktiven Überwachung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Alarmtest der Sensoren. Automatisiert: Auswertung der SNMP-Traps oder API-Events der Safe-Sensorik im Monitoring."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.8.3-m5",
+                    "uuid": "fc711bdd-ec21-4774-b3ea-90fd236dc7bf",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Höchstzertifizierte Brand- und Löschschutztresore mit automatischer Schottung und Echtzeit-SIEM-Integration sind im Einsatz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie Tresore, die bei einem Brandereignis autark reagieren und Statusdaten in Echtzeit übertragen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulation eines Brandalarms. Automatisiert: Kontinuierliche Statusabfrage der Tresorschottung via API."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "7c17e6d0-20a1-4c21-be61-6fa59f944e41",
+                "control-id": "GEB.9.1",
+                "description": "(BSI Baustein INF.2) Eine Stromversorgung ist normgerecht, wenn Normen zur Bereitstellung und Verkabelung wie DIN VDE 0100 eingehalten werden. Bedarfsgerecht ist eine Stromversorgung, wenn sie den Strombedarf der IT-Systeme und anderen Geräte im Gebäude deckt und Reserven für Erweiterungen oder Notfälle bietet. Das betrifft sowohl zentrale Versorgungsanschlüsse, Unterverteilungen als auch die Zuleitung in die einzelnen Räume. Die Anforderung ist auch dann erfüllt, wenn eine den Compliance-Vorschriften für Strom entsprechende Versorgung bereits im Gebäude vorhanden ist. Im Fall von Rechenzentren ist auch auf die Möglichkeit der Notabschaltung der Stromversorgung (für einzelne elektrische Verbraucher) zu achten. Hier ist eine sinnvolle Parzellierung und Zielgerichtetheit bei der Notabschaltung von Bedeutung.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.1-m1",
+                    "uuid": "4e939898-6f2e-4cf3-bcb8-1357419a5674",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Stromversorgung ist historisch gewachsen und erfüllt nur sporadisch aktuelle Normen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Erfassen Sie offensichtliche Mängel in der Stromversorgung und -verkabelung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung der Stromverteilung auf offensichtliche Gefahren oder veraltete Komponenten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1-m2",
+                    "uuid": "b233cb55-c559-4b95-af4a-b1db8c8dc6cd",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine grundlegende, normgerechte Installation ist vorhanden, wird jedoch nicht regelmäßig auf Bedarfsgerechtigkeit geprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Beauftragen Sie Elektrofachkräfte mit der Herstellung eines grundlegenden, normkonformen Zustands."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Abnahmeprotokolle durch Elektrofachkräfte auf formale Richtigkeit."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1-m3",
+                    "uuid": "9842f00c-3722-4600-b4d3-5d465cb3472b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte SOLLTE eine norm- und bedarfsgerechte Stromversorgung und -verkabelung installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Stellen Sie durch Fachplanung sicher, dass Installationen normkonform (z. B. VDE) und kapazitiv ausreichend sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Planungsdokumente und Zertifikate. Automatisiert: Abgleich von PDU-Lasten gegen dokumentierte Limits."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1-m4",
+                    "uuid": "6e1e5b96-8db8-43ad-acbd-14dea015699b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Stromversorgung ist vorausschauend dimensioniert, redundant ausgelegt und wird intelligent überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Setzen Sie intelligente PDUs ein, um die Auslastung und Stromqualität proaktiv zu überwachen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auswertung der Power-Metriken. Automatisiert: Skript prüft via SNMP die Auslastung der Smart-PDUs auf Schwellenwerte."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1-m5",
+                    "uuid": "e874856f-09ee-42ba-a8bc-90debe177857",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein voll redundantes, aktiv gemanagtes Stromnetz mit automatisiertem Lastausgleich und predictive Maintenance ist aktiv."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Integrieren Sie AI-basierte Analysetools, um Stromanomalien frühzeitig zu erkennen und Ausfälle zu verhindern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Test des Auto-Failovers. Automatisiert: API-Prüfung der AI-Lösung auf identifizierte Risiken im Stromnetz."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "cf29c602-4b2c-429c-a1bf-23b887303433",
+                "control-id": "GEB.9.1.1",
+                "description": "(BSI Baustein INF.2) Die prädiktive Lastanalyse in Stromversorgungssystemen bezieht sich auf die ausgefeilte Analyse von elektrischen Lastmustern, einschließlich Oberschwingungen der Stromqualität, um den zukünftigen Stromverbrauch und Qualitätsprobleme vorherzusagen, bevor sie auftreten. Sie kann in Bereichen, in denen die Stromversorgung von höchster Bedeutung ist, helfen, die kontinuierliche Verfügbarkeit der IT-Infrastruktur durch Überwachung und Vorhersage potenzieller Stromanomalien sicherzustellen, die die Systemintegrität gefährden könnten. Im Gegensatz zu reaktiven Ansätzen, die Probleme erst nach ihrem Auftreten angehen, werden bei der vorausschauenden Lastanalyse fortschrittliche Algorithmen zur Analyse historischer Stromverbrauchsdaten, harmonischer Verzerrungen und Spannungsschwankungen eingesetzt, um Muster zu erkennen, die auf bevorstehende Stromversorgungsprobleme hinweisen.  Die Implementierung kann mit Netzqualitätsanalysatoren an kritischen Infrastrukturpunkten, Integration mit SCADA-Systemen und durch Analyse mit Algorithmen des maschinellen Lernens, die Netzanomalien mit bestimmten Betriebsbedingungen korrelieren, geschehen. Eine regelmäßige Validierung der Vorhersagemodelle anhand tatsächlicher Vorfälle hilft die Analyse zu verbessern, während die Integration mit automatisierten Energieverwaltungssystemen einen dynamischen Lastausgleich während vorhergesagter Stressperioden ermöglichen kann, wodurch sowohl die Stromqualität, als auch die Systemverfügbarkeit ohne menschliches Eingreifen aufrechterhalten werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.1.1-m1",
+                    "uuid": "7f9434e6-4ef5-4419-9a69-7792787b5b4d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Belastung der Stromversorgung wird nur ad-hoc oder bei akuten Problemen betrachtet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Führen Sie bei Hardware-Neuanschaffungen eine grobe Abschätzung des Strombedarfs durch."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Interview mit den Administratoren zur Vorgehensweise bei der Integration neuer IT-Komponenten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.1-m2",
+                    "uuid": "264b23b4-afa0-4def-ad95-0adb11ae067d",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Manuelle Lastanalysen werden in unregelmäßigen Abständen oder bei größeren Umbauten durchgeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Dokumentieren Sie die aktuelle Auslastung der Stromkreise manuell in einer Übersichtstabelle."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der manuell erstellten Lasttabellen auf Aktualität und Plausibilität."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.1-m3",
+                    "uuid": "f240d7a8-b6f2-4213-b26c-35be73e8efa5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN die bedarfsgerechte Stromversorgung {{ insert: param, geb.9.1.1-prm1 }} vorausschauend überprüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Etablieren Sie einen regelmäßigen, dokumentierten Prozess zur Analyse der Stromlast gemäß der Vorgaben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in die Berichte der Lastanalyse. Automatisiert: Skript vergleicht historische PDU-Daten zur Trendanalyse."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.1-m4",
+                    "uuid": "a24d1a10-8e36-482b-9eb4-1c3b1273a919",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Lastanalyse erfolgt kontinuierlich über ein Monitoring-System, das Trends und Engpässe proaktiv meldet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie DCIM-Software, um Kapazitätstrends grafisch aufzubereiten und Schwellenwerte für Alarme zu definieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der DCIM-Alerts. Automatisiert: API-Abruf des DCIM auf Prognosewarnungen für die nächsten 6 Monate."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.1-m5",
+                    "uuid": "f9ab59b1-63b6-4995-8f2d-3b89d09661fc",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine KI-gestützte, vollautomatisierte Predictive-Analytics-Engine optimiert die Lastverteilung in Echtzeit."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Setzen Sie maschinelles Lernen ein, um den Strombedarf anhand von IT-Workloads exakt vorherzusagen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Evaluation der KI-Modellgenauigkeit. Automatisiert: API-Check der Engine auf automatische Lastverschiebungen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "13523fb7-5258-41a5-8843-2d621d3b6e4b",
+                "control-id": "GEB.9.1.2",
+                "description": "(BSI Baustein INF.2) Eine eigene, direkt aus der NSHV gespeiste Unterverteilung trennt kritische Abgänge (IT/USV/Kälte), stellt Selektivität und eindeutige Kennzeichnung sicher, ermöglicht Zustandsüberwachung und hält Ausbaureserven vor.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.1.2-m1",
+                    "uuid": "0347390a-af49-4f4c-baab-afdb2ab818d9",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Elektrounterverteilung wird mit anderen, nicht IT-relevanten Gebäudebereichen geteilt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Identifizieren Sie, welche Fremdverbraucher an derselben Unterverteilung wie die IT hängen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung der Unterverteilung und der Beschriftungen auf Fremdnutzung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.2-m2",
+                    "uuid": "bce30643-033d-428d-8736-af9bdd5d3778",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine separate Unterverteilung ist vorhanden, aber nicht optimal angebunden oder dokumentiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Trennen Sie die IT-Stromversorgung logisch und physisch von allgemeinen Verbrauchern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Schaltpläne auf exklusive Nutzung der Unterverteilung durch IT-Komponenten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.2-m3",
+                    "uuid": "250ee85d-33f2-47f0-9bf7-0a021c2184a3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN eine ausschließlich für diesen Standort bestimmte Elektrounterverteilung die direkt von der Niederspannungshauptv"
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Schließen Sie die IT-Unterverteilung direkt und exklusiv an die Niederspannungshauptverteilung an."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Einspeisedokumentation auf direkte Anbindung. Abgleich der Leitungswege im Gebäude."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.2-m4",
+                    "uuid": "595358e7-b623-4b5a-8a08-f034ee844ac1",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die dedizierte Unterverteilung verfügt über ein feingranulares, fernauslesbares Strommonitoring pro Abgang."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Rüsten Sie die Unterverteilung mit Smart-Metern aus, um den Verbrauch jedes Racks einzeln zu überwachen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Smart-Meter-Daten. Automatisiert: Skript liest Modbus/TCP-Schnittstellen der Zähler aus."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.2-m5",
+                    "uuid": "4d4bbc02-0d75-4a39-a65c-f4d1174970a8",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zweikreisige, hochverfügbare Unterverteilungen (A/B) mit automatisierten Umschalteinrichtungen (STS) sind Standard."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Implementieren Sie eine fehler tolerante A/B-Architektur bis auf Rack-Ebene mit statischen Transferschaltern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Failover-Test der STS-Komponenten. Automatisiert: SNMP-Abfrage der Transferschalter auf redundante Einspeisung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "db078519-0f05-4701-9ad9-77ac8b715942",
+                "control-id": "GEB.9.1.3",
+                "description": "(BSI Baustein INF.2) Wenn die Stromzufuhr ausfällt, könnten geschäftskritische Anwendungen unerwartet ausfallen oder Daten verlorengehen.   Die Redundanz der Stromquelle kann z.B. durch einen im System integrierten Akku, durch eine eigenständige unterbrechungsfreie Stromversorgung (USV) oder durch die Anbindung an ein sekundäres Stromnetz gewährleistet werden. Bei Bedarf kann sie auch die Übergangszeit bis zum Anlauf einer längerfristigen Netzersatzanlage überbrücken. Beim Betrieb einer USV ist auf die Einhaltung eines akzeptablen Temperaturbereichs der Batterie zu achten. Bei relevanten Änderungen an den Verbrauchern könnte es vorkommen, dass die USV-Systeme nicht mehr ausreichend dimensioniert sind. Da der Leistungsbedarf von Klimaanlagen oft zu hoch für eine USV ist, empfiehlt es sich zumindest die Steuerung der Anlagen an die unterbrechungsfreie Stromversorgung anzuschließen. Eine regelmäßige Wartung (u.U. nach Vorgabe des Herstellers) der USV und eine Trennung der Leistungselektronik von der Batterie ist empfohlen. Bei sehr hohem Schutzbedarf empfiehlt sich eine redundante Auslegung der USV.  Die minimale Stützzeit (Autonomiezeit) ergibt sich als Stützzeit = Wartezeit auf mögliche Wiederkehr der Stromversorung + 2 * Zeit zum Herunterfahren der Komponenten. Bei sehr hohem Schutzbedarf empfiehlt sich eine redundante Auslegung der USV.  Die Verkabelungswege sind redundant, wenn die Leitungen über verschiedene Wege geführt sind, sodass z.B. eine versehentliche Trennung nicht beide Leitungen betrifft.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.1.3-m1",
+                    "uuid": "3e7d2956-54d2-44fc-9321-87373c34c090",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existieren nur vereinzelt kleine, dezentrale USV-Anlagen ohne zentrale Verwaltung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Stellen Sie sicher, dass kritische Server zumindest über eine einfache USV abgesichert sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Visuelle Inspektion ausgewählter Racks auf Vorhandensein lokaler USV-Geräte."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.3-m2",
+                    "uuid": "9fcf7f10-9bf4-4586-a791-be82686c10df",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine zentrale USV ist vorhanden, jedoch fehlt eine vollständige A/B-Redundanz in der Verkabelung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Installieren Sie eine angemessen dimensionierte USV-Anlage für den gesamten IT-Betriebsbereich."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Wartungsprotokolle und Dimensionierung der zentralen USV-Anlage."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.3-m3",
+                    "uuid": "2ca0d3ab-c513-46aa-ad2c-ed2cd626cb99",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN eine redundante Stromversorgung für {{ insert: param, geb.9.1.3-prm1 }} installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Bauen Sie eine redundante Stromversorgung gemäß der spezifischen Parameter auf, um Ausfälle abzufangen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Audit der Redundanzarchitektur. Automatisiert: PING-Test der Management-IPs beider redundanter USV-Stränge."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.3-m4",
+                    "uuid": "bfafe513-fdf5-4f47-91f1-ce2cb1db4776",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die redundante Stromversorgung (N+1 oder 2N) wird kontinuierlich überwacht und automatisch getestet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Implementieren Sie automatisierte Batterietests und integrieren Sie die Statusmeldungen in das IT-Monitoring."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Alarmierung. Automatisiert: Skript ruft via REST-API den Gesundheitsstatus der Batterie-Strings ab."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.3-m5",
+                    "uuid": "a59f383e-35f2-42e7-8fdd-f1a203bf1e9f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vollständig fehlertolerante 2N+1 Stromversorgung mit nahtloser, autonomer Lastübernahme und Microgrid-Integration."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie fortschrittliche Netzleitsysteme, die bei Störungen im Millisekundenbereich umschalten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulation eines Phaselausfalls. Automatisiert: Continuous-Monitoring des Sync-Status beider Einspeisepfade."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d1d31873-b2da-422d-a715-4013fa86bef9",
+                "control-id": "GEB.9.1.4",
+                "description": "(BSI Baustein INF.2) Eine längere Stützzeit bezeichnet im Kontext der Stromversorgung die Fähigkeit, elektrische Energie über einen Zeitraum von mehreren Stunden oder sogar Tagen aufrechtzuerhalten, typischerweise durch den Einsatz einer Netzersatzanlage (NEA) oder vergleichbarer Infrastruktur. Während eine kurzzeitige Überbrückung durch unterbrechungsfreie Stromversorgungen (USV) lediglich Sekunden bis Minuten abdeckt, kann eine NEA längere Stromausfälle abfangen und die Betriebsfähigkeit kritischer Systeme dauerhaft sicherstellen. Risiken bestehen darin, dass ein Standort bei einem längerfristigen Netzausfall ohne redundante Stromversorgung seine sicherheitskritischen Prozesse nicht mehr betreiben könnte, was etwa zu Datenverlusten, Produktionsstillständen oder Ausfällen der Zutrittskontrolle führen könnte. Eine redundante Stromversorgung kann dem entgegenwirken, indem sie kritische Infrastrukturen wie Rechenzentren, Kommunikationssysteme oder Zutrittssysteme auch bei großflächigen Netzstörungen handlungsfähig hält. Zur Betriebsfähigkeit gehört auch die regelmäßige Wartung und Überprüfung des Betriebsmittelvorrats. Eine Institution kann die Anforderung umsetzen, indem sie geeignete technische Maßnahmen einplant: (1) Installation einer Netzersatzanlage mit automatischer Umschaltung auf Diesel- oder Gasgeneratoren, (2) Bereitstellung von Kraftstoffvorräten für eine definierte Stützzeit von beispielsweise 24, 48 oder 72 Stunden, (3) regelmäßige Lasttests, um sicherzustellen, dass die Anlage die notwendige Kapazität unter Realbedingungen liefern kann. Ergänzend kann eine Institution durch redundante Einspeisungen vom Energieversorger oder die Kombination mehrerer NEA-Module eine Ausfallsicherheit erhöhen. Prozessual kann sie Wartungspläne etablieren, die auch die Prüfung von Kraftstoffqualität, Starterbatterien und Umschalteinrichtungen umfassen. Praktische Umsetzungstipps sind etwa, NEA-Anlagen in geschützten Gebäudebereichen mit ausreichender Belüftung und Brandschutz vorzusehen, die Abgasführung nach außen zu gewährleisten und einen sicheren, vor Manipulation geschützten Tankstandort zu wählen.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.1.4-m1",
+                    "uuid": "0a789762-c3a5-4ba7-af5c-c7658cc7a17d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Sekundärversorgung für längere Ausfälle ist nicht vorhanden oder verlässt sich auf externe Provisorien."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Erstellen Sie einen Notfallplan für Stromausfälle, die die Laufzeit der USV überschreiten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Notfallhandbücher auf Maßnahmen bei langanhaltendem Stromausfall."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.4-m2",
+                    "uuid": "1582e09d-5ce6-442a-8903-005454ff2bbf",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein manuell zu startendes Notstromaggregat (NEA) ist vorhanden, Kraftstoffverträge fehlen jedoch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Stellen Sie sicher, dass ein Aggregat einsatzbereit ist und Kraftstoff manuell nachgefüllt werden kann."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung des Aggregats und Überprüfung des aktuellen Tankinhalts."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.4-m3",
+                    "uuid": "ff28d658-3c97-4032-9155-2dffe24b3ffc",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN eine redundante Stromversorgung für {{ insert: param, geb.9.1.4-prm1 }} installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Installieren Sie eine langanhaltende Sekundärversorgung (z.B. NEA) mit automatischem Anlauf und Kraftstoffverträgen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung von NEA-Protokollen und SLA-Verträgen für Diesel. Automatisiert: Auslesen der NEA-Steuerung via SNMP."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.4-m4",
+                    "uuid": "f9f35c2d-c653-4cbd-ae42-058bbe60e2a0",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Sekundärversorgung ist redundant ausgelegt, wird monatlich unter Last getestet und proaktiv fernüberwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Führen Sie regelmäßige, automatisierte Probeläufe des Aggregats unter realer Gebäudelast durch."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auswertung der Lasttest-Reports. Automatisiert: Skript prüft das Monitoring auf erfolgreiche monatliche NEA-Starts."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.1.4-m5",
+                    "uuid": "4fda8208-2fb0-4cc8-8782-3483ff0cc547",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Sekundärversorgung nutzt nachhaltige, vernetzte Systeme (z.B. Brennstoffzellen) mit prädiktiver KI-Wartung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Setzen Sie auf ausfallsichere, emissionsarme Langzeit-Speichermedien, die in das Smart Grid integriert sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Integration. Automatisiert: API-Abfrage des Energiemanagementsystems zur theoretischen Autonomiezeit."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "cca4f434-2b70-4ab4-a5e2-022810f3126c",
+                "control-id": "GEB.9.2",
+                "description": "(BSI Baustein INF.2) Die Maßnahmen richten sich nach den geltenden Anforderungen an die Stromversorgung. Beispiele sind ein monatlicher USV-Selbsttest oder ein halbjährlicher Volllastbetrieb des Generators für mindestens 30 Minuten.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Audit",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.2-m1",
+                    "uuid": "27430e44-3f95-4658-b7ba-fd34efcdb3e4",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Lasttests der Stromversorgung finden nicht oder nur nach größeren ungeplanten Ausfällen statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Führen Sie zumindest nach Hardware-Änderungen einfache Funktionstests durch."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Interview mit Facility Management bezüglich der Durchführung jeglicher Stromtests."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.2-m2",
+                    "uuid": "f141d8f2-7f44-473d-b251-062648283fdb",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Manuelle Lasttests werden unregelmäßig und oft ohne vollständige Dokumentation durch externe Dienstleister durchgeführt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Beauftragen Sie jährlich einen Elektrodienstleister mit der Durchführung und Dokumentation eines Lasttests."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtung der Berichte externer Dienstleister auf Vollständigkeit und Datum des letzten Tests."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.2-m3",
+                    "uuid": "349c8959-847d-4e76-a08e-1e0af9e1d054",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN die Belastbarkeit der Stromversorgung {{ insert: param, geb.9.2-prm1 }} überprüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Etablieren Sie einen routinemäßigen Prozess für standardisierte Lasttests gemäß den definierten Parametern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des Testkonzepts und der Testprotokolle. Automatisiert: Abfrage von PDU-Logs auf Lastspitzen während Tests."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.2-m4",
+                    "uuid": "dbd2e74d-3bcb-4cc0-a248-3ebde124499b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Lasttests sind in das Wartungsfenster integriert und umfassen die automatisierte Simulation von Fehlerszenarien."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie Lastbänke und automatisierte Skripte, um Blackout-Szenarien sicher zu simulieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Failover-Zeiten aus dem letzten Test. Automatisiert: Parse-Skript analysiert Test-Logs aus dem DCIM."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.2-m5",
+                    "uuid": "e5eb5eba-a4ab-49ec-ae74-8f5c8a1a3bf0",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Continuous Resilience Testing wird mittels Digital Twins angewendet, um Lastszenarien risikofrei in Echtzeit zu prüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verwenden Sie digitale Zwillingsmodelle des Rechenzentrums, um kontinuierlich Belastbarkeitssimulationen zu fahren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Audit des Digital-Twin-Modells. Automatisiert: API-Check der Simulations-Engine auf bestandene virtuelle Stresstests."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e31b5feb-07f4-4b52-9381-6ffaced8172c",
+                "control-id": "GEB.9.3",
+                "description": "(BSI Baustein INF.2) Eine Notausschaltung bezeichnet in diesem Kontext eine zentral verfügbare, technisch implementierte Vorrichtung, mit der im Gefahrenfall die Energieversorgung kritischer Versorgungseinrichtungen wie Strom, Gas oder Klimaanlagen unmittelbar und vollständig unterbrochen werden kann. Der Sinn und Zweck einer solchen Einrichtung liegt darin, Gefahren für Menschen, Technik und Informationen schnell eingrenzen zu können: Ein unkontrollierter Brand könnte sich durch weiterlaufende Klimageräte verstärken, ein Stromschlag durch beschädigte Leitungen könnte Menschen gefährden, oder ein Wasserschaden durch defekte Kühlung könnte weitere Systeme zerstören. Gleichzeitig kann eine sofortige Unterbrechung der Energiezufuhr Folgeschäden eindämmen, indem Brandlast reduziert oder die Ausbreitung toxischer Gase verhindert werden kann. Zur Umsetzung kann eine Institution beispielsweise (1) physische Notausschalter an klar gekennzeichneten, jederzeit zugänglichen Stellen nahe den Ausgängen oder im Leitstand installieren, (2) die Schalter so konzipieren, dass sie nur für definierte Versorgungskreise wie IT-Serverräume oder Technikzonen wirken und nicht die gesamte Einrichtung unkontrolliert lahmlegen, und (3) ergänzende visuelle Hinweise oder Leitsymbole anbringen, die die Bedienung im Ernstfall erleichtern.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.3-m1",
+                    "uuid": "1f555e91-e3af-4edc-9a71-fa36f63fda39",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert kein zentraler Notaus; Systeme müssen an den jeweiligen Unterverteilungen einzeln abgeschaltet werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Identifizieren und markieren Sie die Hauptsicherungen klar, um im Notfall schnell reagieren zu können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung der Verteilungen auf eindeutige Beschriftung der Hauptschalter."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.3-m2",
+                    "uuid": "87103ba2-eddc-447e-947e-ccd0636fee1b",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Notaus-Schalter (EPO) ist vorhanden, jedoch nicht gegen versehentliche Auslösung geschützt oder dokumentiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Installieren Sie einen zentralen Notaus und sichern Sie diesen gegen unbeabsichtigtes Drücken (z. B. durch Klappen)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Visuelle Inspektion des EPO-Schalters auf Abdeckungen und korrekte Beschilderung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.3-m3",
+                    "uuid": "397d4000-8f60-4963-8493-83c2793733a4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN eine Notausschaltung für die Versorgungseinrichtungen installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Installieren Sie eine fachgerechte, überwachte Notaus-Schaltung für alle relevanten Energieversorgungssysteme."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Schaltpläne des EPO-Systems. Automatisiert: SNMP-Abfrage des EPO-Statuskontakts im Monitoring-System."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.3-m4",
+                    "uuid": "6bb3f6d1-fb81-4a19-b08d-595862a278dd",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Notaus-Betätigung ist in das zentrale Gebäude- und IT-Alarmierungssystem integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verbinden Sie den Notaus mit dem Alarmsystem, um bei Auslösung sofort Benachrichtigungen an Administratoren zu senden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auslösetest im Wartungsfenster. Automatisiert: Skript prüft SIEM-Logs auf korrekte Event-Generierung des Notaus."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.3-m5",
+                    "uuid": "4b6b5bf7-6a3d-4c0e-9693-9f4e71833ac0",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Notaus-System ist zonenbasiert, KI-überwacht und löst automatisierte, geordnete IT-Shutdown-Sequenzen aus."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Koppeln Sie den physischen Notaus mit Skripten für einen Graceful Shutdown von kritischen VMs vor dem harten Stromverlust."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Shutdown-Skripte. Automatisiert: API-Simulation eines EPO-Events und Prüfung der Hypervisor-Reaktion."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "bc33e543-203c-42f9-b661-e7c7b0e1fb22",
+                "control-id": "GEB.9.4",
+                "description": "(BSI Baustein INF.2) Überspannungsschutzeinrichtungen sind technische Komponenten, die elektrische und elektronische Systeme vor plötzlich auftretenden Spannungsspitzen im Stromnetz oder in Datenleitungen schützen. Sie wirken, indem sie kurzzeitig auftretende Energie in sichere Bahnen ableiten oder begrenzen, sodass angeschlossene Geräte nicht beschädigt werden. Der Sinn und Zweck liegt darin, sensible IT- und Kommunikationssysteme sowie die Infrastruktur der Institution vor Schäden zu bewahren. Ohne Schutz könnte ein Spannungssprung aus dem Stromnetz eine zentrale Serveranlage zerstören oder den Ausfall von Brandmelde- und Zutrittskontrollsystemen verursachen, wohingegen ein korrekt eingesetzter Überspannungsschutz kann die Betriebsfähigkeit und Datenintegrität sicherstellen. Diese Anforderung bezieht sich ausschließlich auf Überspannungen aus dem Netzbetrieb oder aus benachbarten Stromkreisen; für den äußeren Blitzschutz gilt eine verwandte Anforderung. Zur Umsetzung können an kritischen Punkten Überspannungsschutzeinrichtungen installiert werden: (1) in zentralen Verteilungen, um das gesamte Gebäude gegen Netzstörungen abzusichern, (2) in Unterverteilungen oder einzelnen Stromkreisen, die besonders sensible IT-Systeme versorgen, und (3) an Kommunikations- oder Datenleitungen, etwa für Netzwerk- oder Telefonverkabelungen. Eine Institution kann durch gestufte Schutzkonzepte („Grobschutz“ im Hauptverteiler, „Feinschutz“ in Nähe der Endgeräte) eine höhere Wirksamkeit erreichen. Es kann sinnvoll sein, bei Neubauten Steckdosen mit integriertem Feinschutz vorzusehen oder bei Bestandsanlagen nachträglich modulare Schutzgeräte in die Verteilungen einzusetzen. Prozessual kann regelmäßige Prüfung der eingebauten Schutzmodule helfen, da viele Modelle nach einem Ereignis verbraucht sind und ausgetauscht werden müssen. Auch eine Dokumentation der Einbauorte kann den Überblick erleichtern und gewährleisten, dass keine kritischen Systeme ungeschützt bleiben.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.4-m1",
+                    "uuid": "78270222-c0f7-4535-af0b-ba8cb3e21e18",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein Überspannungsschutz ist nur punktuell vorhanden, z.B. in Form einfacher Steckdosenleisten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie zumindest für hochkritische Server Steckdosenleisten mit integriertem Überspannungsschutz."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung ausgewählter IT-Geräte auf Verwendung einfacher Schutzeinrichtungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.4-m2",
+                    "uuid": "08d27421-aeb4-49d2-80a2-577be0e74056",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein grober Überspannungsschutz (Typ 1) ist in der Hauptverteilung installiert, Feinschutz fehlt oft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Stellen Sie sicher, dass am Gebäudeeintritt ein funktionsfähiger Blitz- und Überspannungsschutz existiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Hauptverteilung auf vorhandene Ableiter des Typ 1."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.4-m3",
+                    "uuid": "9e93b83d-30af-44b3-96ee-f57859008148",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte KANN Überspannungsschutzeinrichtungen installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Implementieren Sie ein durchgängiges Überspannungsschutzkonzept (Typ 1, 2 und 3) für Strom- und Datenleitungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Audit des Zonenkonzepts für Überspannung. Automatisiert: Überwachung potenzialfreier Kontakte der Ableiter via PDU."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.4-m4",
+                    "uuid": "a465b9c8-efd6-4705-9bf8-fe03874c9d44",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Überspannungsschutzmodule sind mit Meldekontakten ausgestattet und in das zentrale Monitoring eingebunden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vernetzen Sie die Schutzeinrichtungen, um Defekte an den Ableitern sofort im Dashboard zu erkennen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Meldekette bei Defekt. Automatisiert: Skript fragt den Status der Überspannungs-Relais über Modbus ab."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.4-m5",
+                    "uuid": "70dc3b76-c170-497c-88f9-b73bfc7a469c",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein intelligentes, selbstdiagnostisches Überspannungsschutzsystem mit prädiktiver Ausfallanalyse ist im Einsatz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Setzen Sie smarte SPD (Surge Protective Devices) ein, die Ableitströme messen und ihre verbleibende Lebensdauer melden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der SPD-Lebenszyklusdaten. Automatisiert: REST-API Abruf der verbleibenden Kapazität der Schutzmodule."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "0bae924a-b6e3-4f05-b107-c2f6e004d2d7",
+                "control-id": "GEB.9.5",
+                "description": "(BSI Baustein INF.2) Normgerecht ist eine Datenverkabelung, wenn Normen für Verkabelungssysteme wie DIN EN 50173 und DIN EN 50174, sowie bei Glasfaser DIN EN 60794 eingehalten werden. Sie ist auch bedarfsgerecht, wenn die verwendete Verkabelung ausreicht, um festgelegte Bandbreite und Antwortzeit zu erreichen. Das betrifft sowohl zentrale Netzanschlüsse, als auch Unterverteiler und die Zuleitung in die einzelnen Räume.  Zur Umsetzung ist es sinnvoll ein Kabelverlegungsdiagramm und eine standortspezifische Inspektionscheckliste zu erstellen oder erstellen zu lassen.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.5-m1",
+                    "uuid": "e402b59d-6df4-4d27-adb0-58f894b3dde8",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Datenkabel werden ad-hoc, ohne einheitliches Farbkonzept oder strukturierte Wegeführung verlegt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vermeiden Sie Kabelsalat und bündeln Sie Leitungen mit Klettbindern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung der Racks auf lose, ungeordnete Kabel (Spaghetti-Verkabelung)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5-m2",
+                    "uuid": "6c008b9d-c1ad-4915-bd14-6192f36da04a",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine strukturierte Verkabelung ist in Grundzügen vorhanden, Dokumentation erfolgt manuell und ist oft veraltet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie Patchpanels und führen Sie eine rudimentäre Excel-Liste der Verbindungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Stichprobenartiger Abgleich von gesteckten Ports mit der manuellen Excel-Dokumentation."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5-m3",
+                    "uuid": "2a62453d-db16-44df-a2c1-ecfafa548b21",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte SOLLTE eine norm- und bedarfsgerechte Datenverkabelung installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Installieren Sie eine Verkabelung nach EN 50173, inklusive vollständiger, systemgestützter Dokumentation."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Zertifizierungsprotokolle der Kupfer/Glasfaser-Strecken. Automatisiert: Switch-Port-Status-Abfrage."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5-m4",
+                    "uuid": "363fe068-3266-4000-afcb-f04dd90d1053",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die strukturierte Verkabelung wird durch intelligente Patchpanels (AIM-Systeme) überwacht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Setzen Sie Automated Infrastructure Management (AIM) ein, um Patch-Vorgänge in Echtzeit zu erkennen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Audit der AIM-Software. Automatisiert: SNMP-Traps des AIM-Systems auf unautorisierte Patch-Änderungen prüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5-m5",
+                    "uuid": "5015df9c-2a93-47aa-8261-d33276550234",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vollautomatisches Kabelmanagement mit Policy-as-Code-Integration verhindert unautorisierte Netzwerkanbindungen physisch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Koppeln Sie das AIM-System mit NAC (Network Access Control), um falsch gepatchte Ports sofort logisch zu sperren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Test der NAC-Reaktion. Automatisiert: Skript simuliert neuen MAC-Link und verifiziert sofortige Port-Abschaltung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e9e6b566-6f83-4900-b7f9-c46bb0372840",
+                "control-id": "GEB.9.5.1",
+                "description": "(BSI Baustein INF.2) Freigelegte Glasfaser- oder Kupferleitungen könnten angezapft oder durchtrennt werden.  Die Implementierung kann z.B. Erfolgen durch: Das Verlegen von Backbone-Kabeln in Metallrohren oder verschlossenen Kabelschränken; manipulationssichere Siegel an Stellen, an denen die Kabel die Sicherheitsbereiche verlassen.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.5.1-m1",
+                    "uuid": "bf651d26-ab9b-4816-8cb4-3c041fac931a",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Datenkabel verlaufen teilweise ungeschützt auf dem Boden oder in frei zugänglichen Bereichen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verlegen Sie Kabel nach Möglichkeit außerhalb direkter Tritt- und Fahrwege."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Begehung des Standorts zur Identifikation von Stolperfallen oder ungeschützten Kabelsträngen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5.1-m2",
+                    "uuid": "d90ec1d9-b6b3-4069-b36c-8148359a9a96",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Kabel werden in einfachen, offenen Kabelpritschen geführt, die physisch zugänglich sind."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie Gitterrinnen unter der Decke oder im Doppelboden zur Bündelung der Leitungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung der Kabelpritschen auf korrekte Befestigung und Trennung von Strom/Daten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5.1-m3",
+                    "uuid": "3e29eb2a-202a-4b1c-88aa-408528b4bc56",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Standorte SOLLTE eine geschützte Kabelverlegung installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verwenden Sie geschlossene, mechanisch widerstandsfähige Trassensysteme in kritischen Bereichen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Trassenführung anhand der Baupläne. Visuelle Kontrolle auf geschlossene Deckel."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5.1-m4",
+                    "uuid": "d59379ae-4dd1-4248-a169-314a6c80b4fe",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Kabeltrassen für kritische Verbindungen sind verplombt, abschließbar und werden regelmäßig auf Manipulation geprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Sichern Sie die Kabelwege physisch gegen unbefugtes Öffnen und dokumentieren Sie Zugriffe."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Plomben und Schlösser. Automatisiert: Abgleich von Wartungstickets für Trassenzugriffe."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.5.1-m5",
+                    "uuid": "d52d71e6-56df-4a19-8377-96c98f6a0c61",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Hochsicherheitsverkabelung erfolgt in alarmgesicherten Rohrsystemen mit Drucküberwachung oder Glasfaser-Sensorik."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Implementieren Sie Sensorik, die mechanische Manipulationen oder Druckabfall im Leerrohr sofort als Alarm meldet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulation einer Trassenmanipulation. Automatisiert: Abfrage des Sensormonitorings auf Alarmgenerierung in Echtzeit."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "6b2b9648-7275-4924-887d-07803c751cb8",
+                "control-id": "GEB.9.6",
+                "description": "(BSI Baustein INF.2) HIerzu gehören insbesondere Versorgungsverteiler, z.B. für Netzverteilung, Frischwasser, Abwasser, Stromversorgung und andere zentrale Versorgungseinrichtungen. sind essenziell für die Einsatzfähigkeit und den Schutz des Gebäudes. Der Zugang zu diesen Verteilern kann z.B. durch Schließanlagen, Bewachung und Einbruchmeldesysteme realisiert werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.6-m1",
+                    "uuid": "3952b845-f67d-4a44-b9e7-e27a7af082b8",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zugang zu Technikräumen ist mit einfachen mechanischen Schlüsseln gesichert, die weite Verbreitung haben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Reduzieren Sie die Anzahl der ausgegebenen Schlüssel auf das absolute Minimum."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des manuellen Schlüsselbuchs und Abfrage, wer aktuell im Besitz eines Schlüssels ist."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.6-m2",
+                    "uuid": "c48425d6-0de2-491b-91c0-125cb5492a69",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein elektronisches Zutrittssystem ist vorhanden, aber Berechtigungen werden nicht regelmäßig überprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Erteilen Sie Zutritt nur für personalisierte Ausweise und dokumentieren Sie die Vergabe."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Stichprobenartige Prüfung der ausgegebenen elektronischen Badges gegen die Mitarbeiterliste."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.6-m3",
+                    "uuid": "ac42d1ec-a45d-4b3e-91f7-b368abe55988",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Räume für technische Infrastruktur SOLLTE den Zugang zu Räumen für technische Infrastruktur auf {{ insert: param, geb.9.6-prm1 }"
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Implementieren Sie ein restriktives Zutrittskonzept basierend auf dem Need-to-Know-Prinzip gemäß Parameter."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auditierung der Zutrittsmatrix. Automatisiert: Export und Analyse der Zutritts-Logs des elektronischen Schließsystems."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.6-m4",
+                    "uuid": "aa743b3e-0641-4eff-b7df-897654b2b90c",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Der Zutritt erfordert Multi-Faktor-Authentifizierung (z.B. Karte + PIN) und ist in das SIEM integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verknüpfen Sie Zutrittsevents mit dem zentralen Log-Management zur Erkennung von Anomalien."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der MFA-Konfiguration. Automatisiert: Skript prüft SIEM auf Alarme bei mehrfach fehlgeschlagenen Zutrittsversuchen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.6-m5",
+                    "uuid": "0971d207-2596-472a-b4fa-0986cddd0bab",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Biometrische Zugangskontrolle mit Anti-Tailgating-Schleusen und automatisierter, AD-gekoppelter Provisionierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie biometrische Systeme und Personenvereinzelung, gekoppelt mit HR- und IT-Verzeichnisdiensten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Test der Anti-Tailgating Sensoren. Automatisiert: Skript gleicht AD-Deaktivierungen sofort mit Zutritts-API ab."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b0dd900f-62c7-4ddb-b0cf-e097acda0ee8",
+                "control-id": "GEB.9.7",
+                "description": "(BSI Baustein INF.2) Werden Räume für technische Infrastruktur zu weiteren Zwecken, z.B. als Arbeitsplatz, Durchgangsraum oder Abstellraum genutzt, so erhöht dies das Risiko versehentlicher Schäden oder des Zugriffs Unbefugter auf die Infrastruktur.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Management",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.9.7-m1",
+                    "uuid": "9921bb2b-a806-41ba-82a2-2a927628e29c",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Technikräume werden vereinzelt als Abstellkammern für nicht-IT-Materialien (z.B. Papier, Kartons) missbraucht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Weisen Sie das Personal mündlich an, Technikräume frei von brennbarem Material zu halten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Begehung der Technikräume zur Identifikation von zweckentfremdeten Materialien."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.7-m2",
+                    "uuid": "21210de8-e1dd-48bc-9911-8cf6adad18ef",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es existiert eine Anweisung gegen Zweckentfremdung, Kontrollen finden jedoch nur selten statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Hängen Sie deutliche Warnschilder auf, die das Lagern von Fremdmaterialien verbieten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtprüfung der Beschilderung und stichprobenartige Inspektion der Räume."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.7-m3",
+                    "uuid": "f7dd12bd-8561-4b63-99d0-0663e9d434b4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Räume für technische Infrastruktur SOLLTE die Verwendung der Räume zu anderen Zwecken untersagen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Erstellen Sie eine verbindliche Richtlinie und führen Sie protokollierte, regelmäßige Rauminspektionen durch."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Richtliniendokumentation und der letzten Inspektionsberichte. Automatisiert: Keine direkt möglich."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.7-m4",
+                    "uuid": "6290feec-f463-4a39-9512-d6b16c6659fe",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Videoüberwachung und regelmäßige Audits stellen die Einhaltung des Verbots der Zweckentfremdung sicher."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Setzen Sie Kameras in Technikräumen ein, um das Einbringen von Fremdmaterial proaktiv überwachen zu können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auswertung der Videoaufzeichnungen. Automatisiert: Skript prüft Speicherstatus des Video-Management-Systems."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.9.7-m5",
+                    "uuid": "1abfb1c6-4e4f-400d-84dc-e14b0570cd47",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "KI-gestützte Videoanalyse erkennt automatisch fremde Objekte im Raum und alarmiert das Sicherheitsmanagement."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzen Sie Machine Learning in der Kameraüberwachung, um Kartons oder Fremdgegenstände in Echtzeit zu detektieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Test der Objekterkennung. Automatisiert: API-Abfrage der Video-KI auf detektierte Anomalien (Objekte) im Serverraum."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "30a4c52e-3cbf-4b43-b7be-f0b0bf092308",
+                "control-id": "SENS.8.4",
+                "description": "(BSI Baustein INF.2) Dies dient in erster Linie dazu, unbefugte oder unbeaufsichtigte Zugriffe auf sensible Bereiche, Informationen oder Systeme zu verhindern. Ohne eine solche Begleitung kann es leicht zu Situationen kommen, in denen Externe absichtlich oder versehentlich sicherheitskritische Bereiche betreten, vertrauliche Informationen einsehen oder technische Geräte unsachgemäß manipulieren. Die Begleitung Externer, die wie Interne sicherheitsüberprüft und geschult wurden, ist entbehrlich.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "SENS.8.4-m1",
+                    "uuid": "95630a46-68fb-488a-b0b5-ad960c23a6d0",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Externe werden nur sporadisch begleitet; eine formelle Sensibilisierung der Mitarbeitenden fehlt weitgehend."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Mitarbeitende handeln nach eigenem Ermessen. Es existieren keine klaren Vorgaben zur durchgehenden Begleitung von Gästen, was physische Sicherheitsrisiken birgt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Manuelle Stichproben und Befragungen des Empfangspersonals sowie der Mitarbeitenden zum Umgang mit externen Besuchern."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4-m2",
+                    "uuid": "e41884a7-aca2-40ca-8399-7da10ffe2694",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Grundlegende Verhaltensregeln zur Begleitung Externer existieren, werden aber nur rudimentär und unregelmäßig vermittelt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Neue Mitarbeitende erhalten erste Hinweise beim Onboarding, jedoch fehlt eine regelmäßige Auffrischung oder systematische Kontrolle der Vorgaben."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtung der Onboarding-Dokumente auf entsprechende Richtlinien. Stichprobenartige Befragung von Mitarbeitenden zur Kenntnis der Regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4-m3",
+                    "uuid": "0de36ef4-2c4c-480a-8c17-65b06bf2f5b4",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sensibilisierung für Mitarbeitende von Standorten KANN zur Begleitung von Externen anweisen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Sensibilisierung der Mitarbeitenden fokussiert sich auf die Notwendigkeit, externe Personen an Standorten stets zu begleiten, um unbefugten Zugriff zu verhindern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen der Schulungsunterlagen auf Hinweise zur Begleitung. Automatisiert: Abfrage der Teilnahmequoten im Learning Management System (LMS) über eine API."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4-m4",
+                    "uuid": "3d010cc5-eee1-4df4-abb5-e3282f9b0bfa",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Mitarbeitende werden regelmäßig zielgruppengerecht zur Begleitung Externer geschult und durch Systeme proaktiv daran erinnert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Schulungen erfolgen zyklisch. Besuchermanagementsysteme erinnern zugewiesene Hosts automatisiert an ihre Pflicht zur durchgehenden Begleitung ihrer Gäste."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auswertung der Schulungszyklen. Automatisiert: API-Abfrage des Besuchermanagements zur Überprüfung der Zuweisung und Bestätigung von Hosts für alle Gäste."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4-m5",
+                    "uuid": "3d8681a8-4ce3-4cde-a1ae-2cba9b0d1921",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Sensibilisierung ist vollständig in einen automatisierten, risikobasierten Zugangsprozess mit technischen Restriktionen integriert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zutrittskontrollsysteme erzwingen die Begleitung (z. B. durch Host-Gast-Kopplung bei Badges). Zuwiderhandlungen oder abweichendes Verhalten lösen sofortige SIEM-Alerts aus."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auditierung der Zutrittslogik. Automatisiert: API-Abfrage der Policy-as-Code-Regeln für das Zutrittssystem, um den erzwungenen Host-Zwang für Gast-Badges zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "750a1da4-136e-4aeb-98cd-7a774a2735d0",
+                "control-id": "SENS.8.4.1",
+                "description": "(BSI Baustein INF.2) Erhalten Externe wie z.B. IT-Dienstleister Zugang zu Standorten, an denen sensible Informationen verarbeitet werden, so stellt eine Beaufsichtigung sicher, dass Externe nur soweit Zugriff auf diese Informationen erhalten, wie für die Erledigung der Aufgabe erforderlich.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "SENS.8.4.1-m1",
+                    "uuid": "738c3836-aafa-4f56-9dcd-24db4f23595d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "In sensiblen Bereichen werden Externe nur vereinzelt beaufsichtigt; spezifische Sensibilisierungsmaßnahmen für RZ-Umgebungen fehlen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Notwendigkeit der ständigen Beaufsichtigung in Serverräumen ist nicht flächendeckend bewusst. Dienstleistende arbeiten oft unbeobachtet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befragung von IT-Betriebspersonal zur gängigen Praxis bei der Begleitung von Technikern in Rechenzentren und Serverräumen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4.1-m2",
+                    "uuid": "87fc1fb4-6145-4e60-b571-fb4db3da235f",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Beaufsichtigung Externer in sensiblen IT-Bereichen ist in Richtlinien beschrieben, wird aber kaum aktiv trainiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existieren schriftliche Vorgaben, jedoch verlassen sich Mitarbeitende oft auf blindes Vertrauen, was zu potenziellen Sicherheitslücken führt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Zutrittsrichtlinien für sensible Zonen. Manuelle Überprüfung von Besucher- und Begleitprotokollen auf Vollständigkeit."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4.1-m3",
+                    "uuid": "aa806618-fc2f-4b9b-a39b-211cdf475b88",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sensibilisierung für Mitarbeitende von Standorten SOLLTE zur Beaufsichtigung von Externen in sensiblen Bereichen anweisen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "In sensiblen IT-Betriebsbereichen müssen externe Dienstleistende nicht nur begleitet, sondern während ihrer gesamten Tätigkeit aktiv beaufsichtigt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Kontrolle der Sicherheitsrichtlinien für sensible Zonen. Automatisiert: LMS-API-Check auf den Abschluss spezifischer Module zur Beaufsichtigung im Rechenzentrum."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4.1-m4",
+                    "uuid": "c4979897-6e53-4dc6-a201-203afe37a57a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Beaufsichtigung wird durch strikte Schulungen verankert und mit technischen Hilfsmitteln im Rechenzentrum unterstützt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt klare Eskalationswege. Die Awareness wird aktiv gefördert und durch Co-Location-Prüfungen der Zutrittssysteme technisch gestützt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der RZ-Schulungsmatrix. Automatisiert: Log-Analyse des Zutrittssystems auf gleichzeitige Anwesenheit von Host und Gast im Serverraum (Anti-Passback-Logs)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.4.1-m5",
+                    "uuid": "b95660dd-040c-4fe4-8ab4-5671bfcf48dc",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Beaufsichtigung ist technologisch überwacht; intelligente Systeme analysieren sensible Bereiche auf unbegleitete Personen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Schulungen vermitteln ein Zero-Trust-Mindset. KI-gestützte Videoanalyse oder Sensorik schlägt sofort Alarm, wenn sich Host und Gast im RZ trennen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sicherheits-Audit der RZ-Überwachungstechnik. Automatisiert: Simulation eines unbegleiteten Gastes und API-Validierung der sofortigen Alarmierungskette im SIEM."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "3f5bfd1a-fab6-4060-9ecc-e813b85e8d4b",
+                "control-id": "SENS.8.5",
+                "description": "(BSI Baustein INF.2) Herumliegende vertrauliche Dokumente und Datenträger sind ein leichtes Ziel für Diebe und können versehentlich verloren gehen. Hiergegen hilft die Verwahrung in einem verschlossenen Schrank oder anderweitig entsprechend geschützt. Dies ist besonders wichtig in Räumlichkeiten, welche oft zusammen mit oder ausschließlich von externen Personen genutzt werden, z.B. Konferenz- oder Veranstaltungsräume.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "level",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "practice",
+                    "value": "N/A",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "SENS.8.5-m1",
+                    "uuid": "79f1f5ed-e3ff-4ea7-af12-d183e2ab0337",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die sichere Verwahrung von IT und Datenträgern wird nur ad-hoc kommuniziert; eine formelle Clean-Desk-Policy existiert nicht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzende lassen Laptops und USB-Medien häufig ungesichert am Arbeitsplatz zurück. Physische Informationssicherheit wird kaum thematisiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physischer Rundgang in den Büroräumen nach Feierabend zur stichprobenartigen Identifikation ungesicherter Datenträger oder Hardware."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.5-m2",
+                    "uuid": "8248018d-8868-41b6-85ab-b49ccde81753",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Clean-Desk-Policy existiert auf dem Papier, aber die Sensibilisierung erfolgt nur oberflächlich bei der Einstellung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt grundlegende Anweisungen zur Nutzung verschließbarer Schränke, deren Einhaltung jedoch weder regelmäßig trainiert noch systematisch kontrolliert wird."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sichtung der Richtlinien zur physischen Sicherheit. Befragung von Mitarbeitenden zur vorschriftsmäßigen Verwahrung von vertraulichen Medien."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.5-m3",
+                    "uuid": "7e9d0a0e-85ab-49a4-9ebb-b06286c7bcc3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Sensibilisierung für Nutzende von Räumen SOLLTE zur sicheren Verwahrung von IT-Systemen und Datenträgern sensibilisieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzende müssen über die Risiken ungeschützter Hardware und Datenträger aufgeklärt und zur aktiven Nutzung von Schließfächern und Tresoren angehalten werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsichtnahme in Sensibilisierungsunterlagen zur Clean-Desk-Policy. Automatisiert: Abfrage des LMS nach Abschlussquoten für physische Sicherheitstrainings."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.5-m4",
+                    "uuid": "d2d7dbdd-55bf-4956-925b-631ddd5a6711",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Nutzende werden zyklisch trainiert; die Umsetzung der sicheren Verwahrung wird durch regelmäßige Audits und Kampagnen gefördert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Wiederkehrende Awareness-Kampagnen schärfen das Bewusstsein. Verschlüsselung der Endgeräte wird als zusätzliche Schutzschicht bei Verwahrungsfehlern technisch erzwungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auswertung von Clean-Desk-Audit-Protokollen. Automatisiert: Auslesen von MDM-Logs über eine API zur Verifizierung der Full-Disk-Encryption auf allen Laptops."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "SENS.8.5-m5",
+                    "uuid": "2878d4c7-31af-4581-99ee-d950f55efd56",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Umfassende Sensibilisierung wird durch automatisierte Asset-Verfolgung und intelligente Schließsysteme technisch abgesichert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Höchstes Awareness-Level. Die Verwahrung kritischer IT wird lückenlos durch RFID-Tracking oder smarte Schließfächer überwacht, Abweichungen werden eskaliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auditierung der Asset-Tracking-Prozesse. Automatisiert: Skript-basierter Abgleich von RFID-Sensor-Logs mit den zugewiesenen Verwahrungsorten in der Asset-Datenbank."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
