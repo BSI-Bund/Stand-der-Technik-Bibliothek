@@ -308,14 +308,30 @@
                 
                 function indexCat(items) {
                     if(!items) return;
+                    const MODALVERB_NS = 'https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modalverb.csv';
                     items.forEach(i => {
                         if (i.id) {
                             let text = i.title;
+                            let modalverb = '';
+                            // Modalverb aus props des Controls selbst
+                            if(i.props) {
+                                const mv = i.props.find(p => p.ns === MODALVERB_NS);
+                                if(mv) modalverb = mv.value;
+                            }
                             if(i.parts) {
                                 const prosePart = i.parts.find(p => p.name === 'statement' || p.prose);
                                 if(prosePart && prosePart.prose) text = prosePart.prose;
+                                // Modalverb aus props der Parts (Statement)
+                                if(!modalverb) {
+                                    i.parts.forEach(part => {
+                                        if(part.props && !modalverb) {
+                                            const mv = part.props.find(p => p.ns === MODALVERB_NS);
+                                            if(mv) modalverb = mv.value;
+                                        }
+                                    });
+                                }
                             }
-                            bpState.controlsIndex.set(i.id, { title: i.title, text: text });
+                            bpState.controlsIndex.set(i.id, { title: i.title, text: text, modalverb: modalverb });
                         }
                         if(i.controls) indexCat(i.controls);
                         if(i.groups) indexCat(i.groups);
@@ -377,6 +393,18 @@
                                 <option value="disposition">Außer Betrieb (Disposition)</option>
                             </select>
                         </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Schutzbedarf (BSI Grundschutz)</label>
+                            <select id="asset-schutzbedarf" class="w-full px-3 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:outline-none focus:border-emerald-500">
+                                <option value="normal-SdT" selected>Normal (Standard-Sicherheitsstufe)</option>
+                                <option value="erhöht">Erhöht (Erhöhte Sicherheitsstufe)</option>
+                            </select>
+                            <p class="text-[10px] text-slate-500 mt-1">Wird als OSCAL Property (sicherheitsniveau, BSI-Namespace) pro Komponente im SSP gespeichert.</p>
+                        </div>
+                        <div></div>
                     </div>
 
                     <button onclick="addAssetComponent()" class="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-500 transition-colors text-sm shadow-md mb-4">Asset laden & Controls extrahieren</button>
@@ -452,6 +480,8 @@
 
             const finalName = customNameInput.value.trim() || originalName;
             const finalState = stateInput.value;
+            const schutzbedarfInput = document.getElementById('asset-schutzbedarf');
+            const finalSchutzbedarf = schutzbedarfInput.value;
 
             toggleLoader(true, `Lade ${finalName}...`);
             try {
@@ -478,12 +508,14 @@
                     name: finalName, 
                     source: url, 
                     state: finalState, 
+                    schutzbedarf: finalSchutzbedarf,
                     controls: extractedControls
                 });
                 
                 ddN.selectedIndex = 0; ddG.selectedIndex = 0;
                 customNameInput.value = '';
                 stateInput.selectedIndex = 0;
+                schutzbedarfInput.selectedIndex = 0;
 
                 renderAssetsList();
                 renderTailoredList();
@@ -504,12 +536,14 @@
             }
             bpState.components.forEach((c, i) => {
                 const stateBadge = c.state === 'operational' ? 'bg-emerald-900 text-emerald-300' : 'bg-amber-900 text-amber-300';
+                const schutzBadge = c.schutzbedarf === 'erhöht' ? 'bg-red-900 text-red-300 border-red-700' : 'bg-sky-900 text-sky-300 border-sky-700';
                 list.innerHTML += `
                     <li class="flex justify-between items-center p-3 bg-slate-900 border border-slate-700 rounded-lg">
                         <div>
-                            <div class="flex items-center gap-2 font-bold text-slate-200 text-sm">
+                            <div class="flex items-center gap-2 font-bold text-slate-200 text-sm flex-wrap">
                                 📦 ${c.name}
                                 <span class="px-2 py-0.5 rounded text-[10px] uppercase ${stateBadge} border border-slate-600">${c.state}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] uppercase ${schutzBadge} border">🛡️ ${c.schutzbedarf || 'normal-SdT'}</span>
                             </div>
                             <div class="text-xs text-indigo-400 mt-1">+ ${c.controls.size} Controls importiert</div>
                         </div>
@@ -589,9 +623,10 @@
                     const info = bpState.controlsIndex.get(cid);
                     const modKey = `${sourceId}||${cid}`;
                     const mods = bpState.modifications.get(modKey) || [];
-                    const isIsms = sourceId === bpState.isms.uuid;
+                    const isMuss = info?.modalverb?.toUpperCase() === 'MUSS';
 
                     let badges = mods.length > 0 ? `<span class="bg-blue-900/50 text-blue-300 border border-blue-700 text-[10px] px-2 py-0.5 rounded font-bold ml-2">${mods.length} Anpassungen</span>` : '';
+                    if(isMuss) badges += `<span class="bg-red-900/50 text-red-300 border border-red-700 text-[10px] px-2 py-0.5 rounded font-bold ml-1">MUSS</span>`;
 
                     html += `
                         <li class="bg-slate-900 border border-slate-700 rounded-lg p-3 flex justify-between items-center group hover:border-slate-500 transition-colors">
@@ -604,8 +639,8 @@
                             </div>
                             <div class="flex items-center gap-2 flex-shrink-0 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button onclick="openModifyModal('${cid}', '${sourceId}', '${title.replace(/'/g, "\\'")}')" class="px-3 py-1.5 bg-slate-700 text-blue-300 hover:bg-slate-600 rounded text-xs font-bold transition-colors">⚙️ Modify</button>
-                                ${isIsms 
-                                    ? `<button disabled class="px-3 py-1.5 bg-slate-800/50 text-slate-600 border border-slate-700 rounded text-xs font-bold cursor-not-allowed" title="ISMS Controls können hier nicht gelöscht werden">🔒</button>`
+                                ${isMuss 
+                                    ? `<button disabled class="px-3 py-1.5 bg-slate-800/50 text-slate-600 border border-slate-700 rounded text-xs font-bold cursor-not-allowed" title="MUSS-Anforderung kann nicht entfernt werden">🔒</button>`
                                     : `<button onclick="removeControl('${cid}', '${sourceId}')" class="px-3 py-1.5 bg-slate-800 text-red-400 hover:bg-slate-700 border border-slate-700 rounded text-xs font-bold transition-colors">✕</button>` 
                                 }
                             </div>
@@ -640,9 +675,15 @@
         }
 
         window.removeControl = function(cid, sourceId) { 
+            // Sicherheitscheck: MUSS-Controls dürfen nicht gelöscht werden
+            const info = bpState.controlsIndex.get(cid);
+            if(info?.modalverb?.toUpperCase() === 'MUSS') return;
+
             if(sourceId === 'manual') {
                 bpState.manualControls.delete(cid);
-            } else if(sourceId !== bpState.isms.uuid) {
+            } else if(sourceId === bpState.isms.uuid) {
+                bpState.isms.controls.delete(cid);
+            } else {
                 const comp = bpState.components.find(c => c.id === sourceId);
                 if(comp) comp.controls.delete(cid);
             }
@@ -764,12 +805,34 @@
             const openSections = new Set();
             document.querySelectorAll('#risk-list-container .collapsible-content.open').forEach(el => openSections.add(el.id));
 
+            // Warnung: Assets mit erhöhtem Schutzbedarf ohne Risikoanalyse-Controls
+            const assetsErhoeht = bpState.components.filter(c => c.schutzbedarf === 'erhöht');
+            const unmitigated = assetsErhoeht.filter(c => {
+                const risksForAsset = bpState.riskData.filter(r => r.targetComponent === c.id && r.mitigatingControls.length > 0);
+                return risksForAsset.length === 0;
+            });
+
+            let warningHtml = '';
+            if (unmitigated.length > 0) {
+                const names = unmitigated.map(c => `<strong>${c.name}</strong>`).join(', ');
+                warningHtml = `
+                    <div class="p-4 mb-4 bg-amber-900/40 border border-amber-600 rounded-xl flex items-start gap-3">
+                        <span class="text-amber-400 text-xl leading-none mt-0.5">⚠️</span>
+                        <div>
+                            <p class="text-sm font-bold text-amber-300">Erhöhter Schutzbedarf ohne Risikoanalyse</p>
+                            <p class="text-xs text-amber-200/80 mt-1">Folgende Assets haben Sicherheitsniveau <span class="font-mono font-bold">erhöht</span>, aber es existieren keine Risiken mit mitigierenden Controls dafür: ${names}</p>
+                            <p class="text-[11px] text-amber-200/60 mt-1.5">Gemäß GS++-Methodik ist für Assets mit erhöhtem Schutzbedarf eine Risikoanalyse mit zugewiesenen Controls erforderlich.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
             if(bpState.riskData.length === 0) {
-                container.innerHTML = `<p class="text-slate-500 text-sm italic text-center py-6 bg-slate-900 rounded-lg border border-slate-700">Noch keine Risiken definiert.</p>`;
+                container.innerHTML = warningHtml + `<p class="text-slate-500 text-sm italic text-center py-6 bg-slate-900 rounded-lg border border-slate-700">Noch keine Risiken definiert.</p>`;
                 return;
             }
 
-            container.innerHTML = bpState.riskData.map(r => 
+            container.innerHTML = warningHtml + bpState.riskData.map(r => 
                 createCollapsibleSection(`risk-${r.uuid}`, `${r.title} (${r.mitigatingControls.length} Controls)`, renderRiskEditor(r), openSections.has(`risk-${r.uuid}-content`))
             ).join('');
             
@@ -1146,6 +1209,14 @@
 					title: c.name, 
 					description: `Instanz '${c.name}', basierend auf Komponentendefinition ${c.source.split('/').pop()}.`,
 					status: { state: c.state || "operational" }, 
+					props: [
+						{
+							name: "sicherheitsniveau",
+							ns: "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/sicherheitsniveau.csv",
+							value: c.schutzbedarf || "normal-SdT",
+							remarks: `Schutzbedarf des Assets '${c.name}': ${c.schutzbedarf || 'normal-SdT'}. Festgelegt im Rahmen der Blaupausen-Erstellung.`
+						}
+					],
 					links: [{ href: c.source, rel: "component-definition" }]
 				});
 			});
