@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSCAL Blaupausen & Risk Generator V4</title>
+    <title>OSCAL Blaupausen & Risk Generator V4.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -52,7 +52,7 @@
             <div>
                 <h1 class="text-3xl font-bold text-white">OSCAL Blaupausen Generator</h1>
                 <p class="mt-2 text-slate-400 text-sm max-w-2xl leading-relaxed">
-                    Methodik-GS++ Komplettpaket: ISMS-Pflicht, optionale Muster-Assets, integrierte Risikoanalyse und Generierung von Profile & SSP.
+                    Methodik-GS++ Komplettpaket: Basis-Methodik, Prozesse, Muster-Assets, integrierte Risikoanalyse und Generierung von Profile & SSP.
                 </p>
             </div>
             <div id="catalog-status" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-300 border border-slate-600 flex items-center shadow-sm">
@@ -77,7 +77,7 @@
                 <input type="checkbox" id="generate-ssp-checkbox" checked class="form-checkbox h-5 w-5 text-emerald-500 rounded border-slate-600 bg-slate-700 focus:ring-emerald-500 focus:ring-offset-slate-800">
                 <div>
                     <span class="font-bold block text-sm">Optionalen Muster-SSP generieren</span>
-                    <span class="text-xs text-slate-400 font-normal">Verknüpft Profil, ISMS und Assets zu einem Informationsverbund.</span>
+                    <span class="text-xs text-slate-400 font-normal">Verknüpft Profil, Methodik, Prozesse und Assets.</span>
                 </div>
             </label>
             <button onclick="generateBlueprintPackage()" class="w-full md:w-auto bg-emerald-600 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:bg-emerald-500 focus:ring-4 focus:ring-emerald-500/50 transition-all transform hover:-translate-y-0.5">
@@ -87,7 +87,6 @@
     </div>
 
     <!-- Modals -->
-
     <!-- Modal 1: Tailoring & Modify (Profile) -->
     <div id="modify-modal" class="hidden fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[90] overflow-y-auto h-full w-full flex items-center justify-center">
         <div class="modal-container bg-slate-800 w-11/12 md:max-w-2xl mx-auto rounded-xl shadow-2xl border border-slate-700 flex flex-col max-h-[90vh]">
@@ -198,20 +197,22 @@
         const CATALOG_URL_BASE = 'https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json';
         const API_URL_NUTZERGEN = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/komponenten/DE';
         const API_URL_GPLUS = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/komponenten';
+        const API_URL_PRAKTIKEN = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/profile';
         
-        const ISMS_URLS = {
-            standard: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/main/Nutzergenerierte-Inhalte/komponenten/DE/isms_isms-component.json',
-            enhanced: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/main/Nutzergenerierte-Inhalte/komponenten/DE/isms_isms-enhanced-component.json'
+        const METHODIK_URLS = {
+            standard: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Nutzergenerierte-Inhalte/Zielobjektkategorien/komponenten/methodik-component.json',
+            enhanced: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Nutzergenerierte-Inhalte/komponenten/DE/methodik_isms-component.json'
         };
 
         const bpState = {
             metadata: { title: "", version: "1.0.0", description: "" },
             catalogs: [{ href: CATALOG_URL_BASE, name: "BSI Grundschutz++ Katalog" }],
             controlsIndex: new Map(),
-            isms: { type: 'standard', url: ISMS_URLS.standard, controls: new Set(), uuid: '' },
-            manualControls: new Set(), // Controls manually tailored
-            modifications: new Map(), // Keyed by: sourceId||controlId -> array of mods
-            components: [], // Loaded OSCAL Component Assets
+            methodik: { type: 'standard', url: METHODIK_URLS.standard, controls: new Set(), uuid: '' },
+            praktiken: new Map(), // Speichert gewählte Prozesse { id, name, url, controls: Set() }
+            manualControls: new Set(), 
+            modifications: new Map(), 
+            components: [], 
             riskData: [],
             customControls: new Map()
         };
@@ -225,10 +226,11 @@
             renderMainStructure();
             await loadBaseCatalog();
             fetchGitHubComponents();
+            fetchPraktikenProfiles();
             setupSearchListeners();
             setupRiskTabListeners();
             document.getElementById('main-editor').classList.remove('hidden');
-            await switchISMS('standard');
+            await switchMethodik('standard');
         });
 
         function toggleLoader(show, text = "Lade...") {
@@ -242,7 +244,7 @@
             const editor = document.getElementById('main-editor');
             editor.innerHTML = `
                 ${createCollapsibleSection('sec-meta', '1. Metadaten & Begleitdokumente', renderMetaHTML(), true)}
-                ${createCollapsibleSection('sec-components', '2. ISMS & Muster-Assets', renderComponentsHTML(), true)}
+                ${createCollapsibleSection('sec-components', '2. Methodik, Prozesse & Assets', renderComponentsHTML(), true)}
                 ${createCollapsibleSection('sec-tailoring', '3. Tailoring pro Asset & Profil', renderTailoringHTML(), false)}
                 ${createCollapsibleSection('sec-risks', '4. Risikoanalyse (Optional)', renderRiskAnalysisHTML(), false)}
             `;
@@ -313,7 +315,6 @@
                         if (i.id) {
                             let text = i.title;
                             let modalverb = '';
-                            // Modalverb aus props des Controls selbst
                             if(i.props) {
                                 const mv = i.props.find(p => p.ns === MODALVERB_NS);
                                 if(mv) modalverb = mv.value;
@@ -321,7 +322,6 @@
                             if(i.parts) {
                                 const prosePart = i.parts.find(p => p.name === 'statement' || p.prose);
                                 if(prosePart && prosePart.prose) text = prosePart.prose;
-                                // Modalverb aus props der Parts (Statement)
                                 if(!modalverb) {
                                     i.parts.forEach(part => {
                                         if(part.props && !modalverb) {
@@ -346,29 +346,37 @@
             }
         }
 
-        // --- SECTION 2: COMPONENTS (ISMS & Assets) ---
+        // --- SECTION 2: COMPONENTS (Methodik, Prozesse & Assets) ---
         function renderComponentsHTML() {
             return `
                 <div class="mb-6 p-5 bg-slate-900/80 border border-emerald-700/60 rounded-xl shadow-inner">
-                    <h3 class="text-sm font-bold text-emerald-400 uppercase mb-2">1. Zwingendes ISMS-Profil</h3>
-                    <p class="text-xs text-slate-400 mb-4">Jede Blaupause muss ein ISMS-Profil referenzieren.</p>
+                    <h3 class="text-sm font-bold text-emerald-400 uppercase mb-2">1. Zwingende Basis Methodik</h3>
+                    <p class="text-xs text-slate-400 mb-4">Jede Blaupause muss eine Methodik referenzieren.</p>
                     <div class="flex flex-col md:flex-row gap-4">
                         <label class="flex items-center space-x-2 text-sm text-white cursor-pointer bg-slate-800 p-3 rounded-lg border border-slate-600 hover:border-emerald-500 transition-colors">
-                            <input type="radio" name="isms_type" value="standard" checked onchange="switchISMS('standard')" class="text-emerald-500 bg-slate-900 border-slate-600 focus:ring-emerald-500">
-                            <span class="font-semibold">Standard ISMS</span>
+                            <input type="radio" name="methodik_type" value="standard" checked onchange="switchMethodik('standard')" class="text-emerald-500 bg-slate-900 border-slate-600 focus:ring-emerald-500">
+                            <span class="font-semibold">G++ Standard</span>
                         </label>
                         <label class="flex items-center space-x-2 text-sm text-white cursor-pointer bg-slate-800 p-3 rounded-lg border border-slate-600 hover:border-emerald-500 transition-colors">
-                            <input type="radio" name="isms_type" value="enhanced" onchange="switchISMS('enhanced')" class="text-emerald-500 bg-slate-900 border-slate-600 focus:ring-emerald-500">
-                            <span class="font-semibold">Enhanced ISMS</span>
+                            <input type="radio" name="methodik_type" value="enhanced" onchange="switchMethodik('enhanced')" class="text-emerald-500 bg-slate-900 border-slate-600 focus:ring-emerald-500">
+                            <span class="font-semibold">G++ Erweitert</span>
                         </label>
                     </div>
-                    <div id="isms-status" class="mt-3 text-xs text-emerald-300 font-mono font-bold flex items-center">
+                    <div id="methodik-status" class="mt-3 text-xs text-emerald-300 font-mono font-bold flex items-center">
                         <span class="animate-pulse mr-2">... lade ...</span>
                     </div>
                 </div>
 
+                <div class="mb-6 p-5 bg-slate-900/80 border border-blue-700/60 rounded-xl shadow-inner">
+                    <h3 class="text-sm font-bold text-blue-400 uppercase mb-2">2. Prozesse der Praktiken (Optional)</h3>
+                    <p class="text-xs text-slate-400 mb-4">Wähle spezifische Prozess-Profile, um deren Vorgaben in deine Blaupause aufzunehmen.</p>
+                    <div id="praktiken-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-48 overflow-y-auto custom-scroll pr-2">
+                        <div class="text-sm text-slate-500 italic">Lade Prozesse von GitHub...</div>
+                    </div>
+                </div>
+
                 <div class="pt-2">
-                    <h3 class="text-sm font-bold text-slate-300 uppercase mb-2">2. Optionale Muster-Assets</h3>
+                    <h3 class="text-sm font-bold text-slate-300 uppercase mb-2">3. Optionale Muster-Assets</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Nutzergeneriert</label>
@@ -402,7 +410,6 @@
                                 <option value="normal-SdT" selected>Normal (Standard-Sicherheitsstufe)</option>
                                 <option value="erhöht">Erhöht (Erhöhte Sicherheitsstufe)</option>
                             </select>
-                            <p class="text-[10px] text-slate-500 mt-1">Wird als OSCAL Property (sicherheitsniveau, BSI-Namespace) pro Komponente im SSP gespeichert.</p>
                         </div>
                         <div></div>
                     </div>
@@ -413,16 +420,16 @@
             `;
         }
 
-        window.switchISMS = async function(type) {
-            toggleLoader(true, `Lade ${type} ISMS...`);
+        window.switchMethodik = async function(type) {
+            toggleLoader(true, `Lade ${type} Methodik...`);
             try {
-                const res = await fetch(ISMS_URLS[type]);
+                const res = await fetch(METHODIK_URLS[type]);
                 const data = await res.json();
                 
-                bpState.isms.type = type;
-                bpState.isms.url = ISMS_URLS[type];
-                bpState.isms.controls = new Set();
-                bpState.isms.uuid = data['component-definition']?.uuid || crypto.randomUUID();
+                bpState.methodik.type = type;
+                bpState.methodik.url = METHODIK_URLS[type];
+                bpState.methodik.controls = new Set();
+                bpState.methodik.uuid = data['component-definition']?.uuid || crypto.randomUUID();
 
                 if(data['component-definition'] && data['component-definition'].components) {
                     data['component-definition'].components.forEach(c => {
@@ -430,7 +437,7 @@
                             c['control-implementations'].forEach(ci => {
                                 if(ci['implemented-requirements']) {
                                     ci['implemented-requirements'].forEach(req => {
-                                        bpState.isms.controls.add(req['control-id']);
+                                        bpState.methodik.controls.add(req['control-id']);
                                     });
                                 }
                             });
@@ -438,14 +445,77 @@
                     });
                 }
                 
-                document.getElementById('isms-status').innerHTML = `✓ ISMS (${type}) geladen und ${bpState.isms.controls.size} Controls dem Profil hinzugefügt.`;
+                document.getElementById('methodik-status').innerHTML = `✓ Methodik (${type}) geladen und ${bpState.methodik.controls.size} Controls zugewiesen.`;
                 renderTailoredList();
             } catch(e) {
-                document.getElementById('isms-status').innerHTML = `⚠️ Fehler beim Laden des ISMS!`;
+                document.getElementById('methodik-status').innerHTML = `⚠️ Fehler beim Laden der Methodik!`;
                 console.error(e);
             } finally {
                 toggleLoader(false);
             }
+        }
+
+        async function fetchPraktikenProfiles() {
+            try {
+                const res = await fetch(API_URL_PRAKTIKEN);
+                const data = await res.json();
+                const container = document.getElementById('praktiken-container');
+                
+                const processFiles = data.filter(file => file.name.endsWith('_prozesse_profile.json'));
+                
+                if (processFiles.length === 0) {
+                    container.innerHTML = '<div class="text-slate-500 text-sm">Keine Prozess-Profile gefunden.</div>';
+                    return;
+                }
+
+                container.innerHTML = processFiles.map(file => {
+                    const match = file.name.replace('_prozesse_profile.json', '');
+                    const label = match.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                    const id = crypto.randomUUID();
+                    return `
+                        <label class="flex items-start space-x-3 p-3 bg-slate-800 border border-slate-700 rounded-lg hover:border-blue-500 cursor-pointer transition-colors">
+                            <input type="checkbox" onchange="togglePraktik(this, '${file.download_url}', '${label}', '${id}')" class="mt-0.5 form-checkbox h-4 w-4 text-blue-500 rounded border-slate-600 bg-slate-900 focus:ring-blue-500 focus:ring-offset-slate-800">
+                            <span class="text-sm font-semibold text-slate-200">${label}</span>
+                        </label>
+                    `;
+                }).join('');
+
+            } catch(e) {
+                document.getElementById('praktiken-container').innerHTML = '<div class="text-red-400 text-sm">Fehler beim Laden der Prozesse.</div>';
+            }
+        }
+
+        window.togglePraktik = async function(checkbox, url, label, id) {
+            if(checkbox.checked) {
+                toggleLoader(true, `Lade Prozess: ${label}...`);
+                try {
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    const extractedControls = new Set();
+                    
+                    if(data.profile && data.profile.imports) {
+                        data.profile.imports.forEach(imp => {
+                            if(imp['include-controls']) {
+                                imp['include-controls'].forEach(inc => {
+                                    if(inc['with-ids']) {
+                                        inc['with-ids'].forEach(cid => extractedControls.add(cid));
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    
+                    bpState.praktiken.set(url, { id: id, name: label, url: url, controls: extractedControls });
+                } catch(e) {
+                    alert(`Fehler beim Verarbeiten von ${label}: ` + e.message);
+                    checkbox.checked = false;
+                } finally {
+                    toggleLoader(false);
+                }
+            } else {
+                bpState.praktiken.delete(url);
+            }
+            renderTailoredList();
         }
 
         async function fetchGitHubComponents() {
@@ -457,7 +527,7 @@
                 const ddG = document.getElementById('dd-gplus');
                 
                 ddN.innerHTML = '<option value="" disabled selected>Asset wählen...</option>';
-                d1.filter(i => i.name.endsWith('.json') && !i.name.includes('isms')).forEach(f => ddN.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
+                d1.filter(i => i.name.endsWith('.json') && !i.name.includes('methodik')).forEach(f => ddN.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
                 
                 ddG.innerHTML = '<option value="" disabled selected>Asset wählen...</option>';
                 d2.filter(i => i.name.endsWith('.json')).forEach(f => ddG.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
@@ -519,7 +589,7 @@
 
                 renderAssetsList();
                 renderTailoredList();
-                refreshRiskUI(); // Dropdown in Risikoanalyse aktualisieren
+                refreshRiskUI();
             } catch(e) {
                 alert("Fehler beim Verarbeiten des Assets: " + e.message);
             } finally {
@@ -557,7 +627,7 @@
             bpState.components.splice(i, 1); 
             renderAssetsList(); 
             renderTailoredList(); 
-            refreshRiskUI(); // Dropdown bereinigen
+            refreshRiskUI();
         }
 
         // --- SECTION 3: TAILORING (Profile & Components) ---
@@ -652,10 +722,16 @@
             }
 
             let fullHtml = '';
-            fullHtml += renderGroup('Zwingendes Basis ISMS', '<span class="px-2 py-0.5 rounded bg-emerald-900 text-emerald-300 text-[10px] font-bold">🔒 ISMS</span>', bpState.isms.controls, bpState.isms.uuid, true);
+            fullHtml += renderGroup('Zwingende Basis Methodik', '<span class="px-2 py-0.5 rounded bg-emerald-900 text-emerald-300 text-[10px] font-bold">🔒 BASE</span>', bpState.methodik.controls, bpState.methodik.uuid, true);
+            
+            bpState.praktiken.forEach(p => {
+                fullHtml += renderGroup(`Prozess: ${p.name}`, '<span class="px-2 py-0.5 rounded bg-blue-900 text-blue-300 text-[10px] font-bold">🔄 PRAKTIK</span>', p.controls, p.id, false);
+            });
+            
             bpState.components.forEach(c => {
                 fullHtml += renderGroup(`Asset: ${c.name}`, '<span class="px-2 py-0.5 rounded bg-indigo-900 text-indigo-300 text-[10px] font-bold">📦 ASSET</span>', c.controls, c.id, false);
             });
+            
             fullHtml += renderGroup('Manuell im Profil (Global)', '<span class="px-2 py-0.5 rounded bg-slate-700 text-slate-300 text-[10px] font-bold">✍️ MANUELL</span>', bpState.manualControls, 'manual', true);
 
             if(fullHtml === '') fullHtml = `<div class="text-slate-500 text-sm italic p-4 bg-slate-900 rounded-lg border border-slate-700 text-center">Keine Controls vorhanden oder Filter trifft nicht zu.</div>`;
@@ -675,17 +751,22 @@
         }
 
         window.removeControl = function(cid, sourceId) { 
-            // Sicherheitscheck: MUSS-Controls dürfen nicht gelöscht werden
             const info = bpState.controlsIndex.get(cid);
             if(info?.modalverb?.toUpperCase() === 'MUSS') return;
 
             if(sourceId === 'manual') {
                 bpState.manualControls.delete(cid);
-            } else if(sourceId === bpState.isms.uuid) {
-                bpState.isms.controls.delete(cid);
+            } else if(sourceId === bpState.methodik.uuid) {
+                bpState.methodik.controls.delete(cid);
             } else {
-                const comp = bpState.components.find(c => c.id === sourceId);
-                if(comp) comp.controls.delete(cid);
+                let found = false;
+                for (let [url, p] of bpState.praktiken) {
+                    if (p.id === sourceId) { p.controls.delete(cid); found = true; break; }
+                }
+                if (!found) {
+                    const comp = bpState.components.find(c => c.id === sourceId);
+                    if(comp) comp.controls.delete(cid);
+                }
             }
             bpState.modifications.delete(`${sourceId}||${cid}`); 
             renderTailoredList(document.getElementById('tailoring-search-input')?.value || ''); 
@@ -805,7 +886,6 @@
             const openSections = new Set();
             document.querySelectorAll('#risk-list-container .collapsible-content.open').forEach(el => openSections.add(el.id));
 
-            // Warnung: Assets mit erhöhtem Schutzbedarf ohne Risikoanalyse-Controls
             const assetsErhoeht = bpState.components.filter(c => c.schutzbedarf === 'erhöht');
             const unmitigated = assetsErhoeht.filter(c => {
                 const risksForAsset = bpState.riskData.filter(r => r.targetComponent === c.id && r.mitigatingControls.length > 0);
@@ -913,17 +993,14 @@
 
             const newTarget = el.querySelector('[name="targetComponent"]').value;
 
-            // Move controls gracefully if target changes
             if (risk.targetComponent !== newTarget) {
                 risk.mitigatingControls.forEach(c => {
                     if (c.source === 'catalog') {
-                        // Remove from old
                         if (risk.targetComponent === 'global') bpState.manualControls.delete(c.id);
                         else {
                             const oldC = bpState.components.find(comp => comp.id === risk.targetComponent);
                             if (oldC) oldC.controls.delete(c.id);
                         }
-                        // Add to new
                         if (newTarget === 'global') bpState.manualControls.add(c.id);
                         else {
                             const newC = bpState.components.find(comp => comp.id === newTarget);
@@ -957,7 +1034,6 @@
         window.deleteRisk = function(uuid) {
             const risk = bpState.riskData.find(r => r.uuid === uuid);
             if(risk) {
-                // Ensure catalog controls added by this risk are removed from the profile set 
                 risk.mitigatingControls.forEach(c => {
                     if(c.source === 'catalog') {
                         if(risk.targetComponent === 'global') bpState.manualControls.delete(c.id);
@@ -1137,8 +1213,9 @@
 
             const importReqIds = new Set([
                 ...bpState.manualControls,
-                ...bpState.isms.controls
+                ...bpState.methodik.controls
             ]);
+            bpState.praktiken.forEach(p => p.controls.forEach(cid => importReqIds.add(cid)));
             bpState.components.forEach(c => c.controls.forEach(cid => importReqIds.add(cid)));
 
             if(importReqIds.size > 0) {
@@ -1193,14 +1270,25 @@
                     status: { state: "operational" } 
                 },
                 { 
-					uuid: bpState.isms.uuid, 
+					uuid: bpState.methodik.uuid, 
 					type: "service", 
-					title: `Basis ISMS (${bpState.isms.type})`, 
-					description: `Instanz 'Basis ISMS', basierend auf Komponentendefinition ${bpState.isms.url.split('/').pop()}.`,
+					title: `Basis Methodik (${bpState.methodik.type})`, 
+					description: `Instanz 'Basis Methodik', basierend auf Komponentendefinition ${bpState.methodik.url.split('/').pop()}.`,
 					status: { state: "operational" }, 
-					links: [{ href: bpState.isms.url, rel: "component-definition" }]
+					links: [{ href: bpState.methodik.url, rel: "component-definition" }]
 				}
             ];
+
+            bpState.praktiken.forEach(p => {
+                sspComponents.push({
+                    uuid: p.id,
+                    type: "process",
+                    title: `Prozess: ${p.name}`,
+                    description: `Prozess-Instanz, abgeleitet aus dem Profil: ${p.url.split('/').pop()}.`,
+                    status: { state: "operational" },
+                    links: [{ href: p.url, rel: "profile" }]
+                });
+            });
             
 			bpState.components.forEach(c => {
 				sspComponents.push({ 
@@ -1221,7 +1309,6 @@
 				});
 			});
 			
-            // NEU: Risiken als Properties (OSCAL kompatibel) direkt an die betroffenen Komponenten hängen
             bpState.riskData.forEach(r => {
                 const targetUuid = r.targetComponent === 'global' ? riskCompUuid : r.targetComponent;
                 const comp = sspComponents.find(c => c.uuid === targetUuid);
@@ -1235,7 +1322,6 @@
                 }
             });
 
-            // Tracking der Ziel-Komponenten für Risk-Controls
             const riskControlTargets = new Map();
             bpState.riskData.forEach(r => {
                 r.mitigatingControls.forEach(c => {
@@ -1244,11 +1330,11 @@
                 });
             });
 
-            // NEU: Nur noch Controls aus der Risikoanalyse und manuelle Controls in den SSP aufnehmen
             const sspReqIds = new Set([
                 ...bpState.manualControls,
                 ...Array.from(riskControlTargets.keys())
             ]);
+            bpState.praktiken.forEach(p => p.controls.forEach(cid => sspReqIds.add(cid)));
 
             const reqs = Array.from(sspReqIds).sort().map(cid => {
                 const byComps = [];
@@ -1268,11 +1354,21 @@
                         description: "Manuell hinzugefügte Maßnahme." 
                     });
                 }
+                
+                bpState.praktiken.forEach(p => {
+                    if (p.controls.has(cid)) {
+                        byComps.push({
+                            "component-uuid": p.id,
+                            "uuid": crypto.randomUUID(),
+                            description: "Control direkt aus dem referenzierten Prozess-Profil."
+                        });
+                    }
+                });
 
                 return {
                     uuid: crypto.randomUUID(),
                     "control-id": cid,
-                    description: "Spezifische Zuweisung über die Risikoanalyse oder manuelles Tailoring.",
+                    description: "Spezifische Zuweisung über Risikoanalyse, Tailoring oder Prozesse.",
                     "by-components": byComps
                 };
             });
@@ -1284,11 +1380,10 @@
                     "import-profile": { href: `${t.replace(/\s+/g,'_')}_Profile.json` },
                     "system-characteristics": { "system-ids": [{ id: crypto.randomUUID() }], "system-name": `${t} Muster-Verbund`, description: "Generiert aus Blaupause", status: { state: "operational" } },
                     "system-implementation": { components: sspComponents },
-                    "control-implementation": { description: "Spezifische Risikomitigierung und manuelle Controls", "implemented-requirements": reqs.length > 0 ? reqs : [{ uuid: crypto.randomUUID(), "control-id": "PLACEHOLDER", description: "Empty" }] }
+                    "control-implementation": { description: "Spezifische Risikomitigierung, manuelle Controls und Prozesse", "implemented-requirements": reqs.length > 0 ? reqs : [{ uuid: crypto.randomUUID(), "control-id": "PLACEHOLDER", description: "Empty" }] }
                 }
             };
 
-            // Optionale Einbettung des gesamten Risiko-Logs im back-matter des SSPs
             if(bpState.riskData.length > 0) {
                 const riskUuid = crypto.randomUUID();
                 ssp["system-security-plan"]["back-matter"] = {
