@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL Assessment Plan & Results Generator v9</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/15.0.0/marked.min.js"></script>
+    <style>
+        .coll-content{transition:max-height .35s ease-out,opacity .3s ease-in-out;overflow:hidden;max-height:0;opacity:0}
+        .coll-content.open{max-height:50000px;opacity:1;overflow:visible}
+        .chev{transition:transform .3s ease}.chev.open{transform:rotate(90deg)}
+        .cscroll::-webkit-scrollbar{width:6px;height:6px}.cscroll::-webkit-scrollbar-track{background:#1e293b}.cscroll::-webkit-scrollbar-thumb{background:#475569;border-radius:3px}
+        .drag-over{border-color:#10b981!important;background:rgba(16,185,129,.1)!important}
+        .stat-bar{transition:width .6s cubic-bezier(.4,0,.2,1)}
+        .ctrl-detail{transition:max-height .3s ease-out,opacity .25s ease-in-out,padding .3s ease;max-height:0;opacity:0;padding-top:0;padding-bottom:0;overflow:hidden}
+        .ctrl-detail.open{max-height:1400px;opacity:1;padding-top:.75rem;padding-bottom:.75rem;overflow:visible}
+        .sb{font-size:10px;padding:2px 8px;border-radius:9999px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border:1px solid}
+        .lbl{display:block;font-size:.65rem;font-weight:700;color:#94a3b8;text-transform:uppercase;margin-bottom:.25rem;letter-spacing:.05em}
+        .inp{padding:.5rem .75rem;background:#0f172a;border:1px solid #475569;border-radius:.5rem;font-size:.875rem;color:#fff;outline:none;transition:border .15s}
+        .inp:focus{border-color:#10b981;box-shadow:0 0 0 2px rgba(16,185,129,.2)}
+        .comp-header{cursor:pointer;user-select:none}.comp-header:hover .comp-title{color:#34d399}
+        .loader-sm{border:3px solid #334155;border-top:3px solid #10b981;border-radius:50%;width:16px;height:16px;animation:sp .8s linear infinite;display:inline-block}
+        @keyframes sp{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+        .ai-btn{background:linear-gradient(135deg,#7c3aed,#6366f1);transition:all .2s;color:#fff;font-weight:700;border-radius:.5rem;font-size:11px;padding:2px 8px;border:none;cursor:pointer}
+        .ai-btn:hover{filter:brightness(1.15);transform:translateY(-1px)}.ai-btn:disabled{opacity:.4;transform:none;cursor:wait}
+        .ai-explain{background:linear-gradient(135deg,#0891b2,#0e7490)}.ai-explain:hover{filter:brightness(1.15)}
+        .ai-out{background:#1e1b4b;border:1px solid #4338ca;border-radius:.5rem;padding:.75rem;margin-top:.5rem;font-size:.8rem;color:#e0e7ff;max-height:400px;overflow-y:auto;line-height:1.6}
+        .ai-out h2{font-size:.95rem;font-weight:700;color:#a5b4fc;margin:1rem 0 .4rem;border-bottom:1px solid #3730a3;padding-bottom:.25rem}
+        .ai-out h3{font-size:.85rem;font-weight:700;color:#c7d2fe;margin:.8rem 0 .3rem}
+        .ai-out strong{color:#e0e7ff}.ai-out em{color:#a5b4fc}
+        .ai-out ul,.ai-out ol{margin:.3rem 0 .3rem 1.2rem}.ai-out li{margin:.15rem 0}
+        .ai-out p{margin:.3rem 0}.ai-out code{background:#312e81;padding:1px 4px;border-radius:3px;font-size:.75rem}
+        .ctrl-title{color:#94a3b8;font-size:11px;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .sidebar{width:320px;min-width:320px;transition:margin-left .3s ease,opacity .3s;overflow-y:auto}
+        .sidebar.collapsed{margin-left:-320px;opacity:0;pointer-events:none}
+        .sb-toggle{position:fixed;top:12px;left:12px;z-index:50;background:#1e293b;border:1px solid #475569;border-radius:.5rem;padding:6px 10px;color:#e2e8f0;cursor:pointer;font-size:18px;transition:left .3s}
+        .sb-toggle.shifted{left:332px}
+        @media(max-width:768px){.sidebar{width:100%;min-width:100%;position:fixed;top:0;left:0;z-index:40;height:100vh;background:#0f172a}.sidebar.collapsed{margin-left:-100%}}
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="h-full font-sans text-slate-200">
+
+<button id="sb-btn" class="sb-toggle shifted" onclick="document.getElementById('sidebar').classList.toggle('collapsed');this.classList.toggle('shifted')">☰</button>
+
+<div class="flex h-full">
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar bg-slate-800 border-r border-slate-700 p-3 flex flex-col gap-2 cscroll">
+        <div class="pt-1">
+            <h1 class="text-base font-bold text-white leading-tight">OSCAL AP & AR</h1>
+            <p class="text-[10px] text-slate-500 mt-0.5">SSP → Prüfung → AP + AR</p>
+        </div>
+        <div class="space-y-1">
+            <div id="cat-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="loader-sm mr-1.5"></span>Katalog...</div>
+            <div id="ssp-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span>Kein SSP</div>
+            <div id="comp-status" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 items-center hidden"></div>
+        </div>
+        <!-- Import -->
+        <div class="space-y-1.5">
+            <div id="dz-ssp" class="dz border border-dashed border-slate-600 rounded p-2 text-center cursor-pointer hover:border-emerald-500 bg-slate-900/40 text-[10px]" data-type="ssp">📋 SSP laden<input type="file" accept=".json" class="hidden fip" data-type="ssp"></div>
+            <div id="dz-state" class="dz border border-dashed border-slate-600 rounded p-2 text-center cursor-pointer hover:border-purple-500 bg-slate-900/40 text-[10px]" data-type="state">💾 Session laden<input type="file" accept=".json" class="hidden fip" data-type="state"></div>
+        </div>
+        <!-- AI -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="tog('sb-ai')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300">🤖 KI<span id="ai-badge" class="sb bg-slate-700 text-slate-500 border-slate-600 hidden ml-1">—</span><svg id="icon-sb-ai" class="chev w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg></button>
+            <div id="sb-ai-content" class="coll-content p-2 bg-slate-900/30 space-y-1.5">
+                <select id="ai-provider" onchange="onProvChange()" class="inp text-[10px]"><option value="">— Kein —</option><option value="claude">Claude</option><option value="gemini">Gemini</option></select>
+                <input type="password" id="ai-key" placeholder="API-Key" oninput="saveAICfg()" class="inp text-[10px]">
+                <select id="ai-model" class="inp text-[10px]" onchange="saveAICfg()"></select>
+                <div class="flex gap-2 text-[8px]"><a href="https://console.anthropic.com/settings/keys" target="_blank" class="text-violet-400 underline">Claude</a><a href="https://aistudio.google.com/apikey" target="_blank" class="text-blue-400 underline">Gemini</a></div>
+            </div>
+        </div>
+        <!-- Terms Navigation -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="scrollToSec('sec-terms')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300 hover:text-emerald-400 transition-colors">📅 Rahmenbedingungen</button>
+        </div>
+        <!-- Meta Navigation -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="scrollToSec('sec-meta')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300 hover:text-emerald-400 transition-colors">📝 Metadaten & Assessor</button>
+        </div>
+        <!-- Filters -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="tog('sb-flt')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300">🔍 Filter<svg id="icon-sb-flt" class="chev open w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg></button>
+            <div id="sb-flt-content" class="coll-content open p-2 bg-slate-900/30 space-y-1.5">
+                <input type="text" id="cf" oninput="fltC()" placeholder="Control / Titel..." class="inp text-[10px] font-mono">
+                <select id="flt-modal" onchange="fltC()" class="inp text-[10px]"><option value="">Modalverb: Alle</option><option value="MUSS">MUSS</option><option value="SOLL">SOLL</option><option value="KANN">KANN</option></select>
+                <select id="flt-class" onchange="fltC()" class="inp text-[10px]"><option value="">Klasse: Alle</option><option value="Technical">Technical</option><option value="Organizational">Organizational</option></select>
+                <select id="flt-sec" onchange="fltC()" class="inp text-[10px]"><option value="">Sicherheitsniv.: Alle</option><option value="normal-SdT">Normal</option><option value="hoch-SdT">Hoch</option><option value="sehr hoch-SdT">Sehr hoch</option></select>
+                <select id="flt-status" onchange="fltC()" class="inp text-[10px]"><option value="">Status: Alle</option><option value="implemented">Impl.</option><option value="partial">Teilw.</option><option value="planned">Geplant</option><option value="alternative">Altern.</option><option value="nicht-angegeben">Kein St.</option><option value="nur-komponente">Nur Def</option></select>
+            </div>
+        </div>
+        <!-- Component nav (populated dynamically) -->
+        <div id="sb-comp-nav" class="space-y-1 hidden"></div>
+        <!-- Bulk actions -->
+        <div id="sb-bulk" class="hidden space-y-1">
+            <div class="flex flex-wrap gap-1">
+                <button onclick="bulkM('EXAMINE')" class="text-[9px] px-2 py-1 bg-blue-800 text-blue-200 rounded font-bold">+EX</button>
+                <button onclick="bulkM('INTERVIEW')" class="text-[9px] px-2 py-1 bg-amber-800 text-amber-200 rounded font-bold">+IN</button>
+                <button onclick="bulkM('TEST')" class="text-[9px] px-2 py-1 bg-emerald-800 text-emerald-200 rounded font-bold">+TE</button>
+                <button onclick="bulkMC()" class="text-[9px] px-2 py-1 bg-slate-700 text-slate-300 rounded font-bold">Reset</button>
+            </div>
+            <div class="flex gap-1">
+                <button onclick="scopeAll(true)" class="text-[9px] px-2 py-1 bg-emerald-700 text-white rounded font-bold flex-1">Alle ✓</button>
+                <button onclick="scopeAll(false)" class="text-[9px] px-2 py-1 bg-slate-700 text-slate-300 rounded font-bold flex-1">Alle ✗</button>
+            </div>
+            <div class="text-[10px] text-slate-500">Scope: <strong class="text-white" id="scope-n">0</strong> · Bewertet: <strong class="text-emerald-400" id="rated-n">0</strong></div>
+        </div>
+        <!-- Export -->
+        <div class="mt-auto space-y-1.5 pt-2 border-t border-slate-700">
+            <button onclick="saveSession()" class="w-full bg-purple-700 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-purple-600">💾 Session</button>
+            <button onclick="exportAP()" class="w-full bg-emerald-600 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-emerald-500">📋 AP</button>
+            <button onclick="exportAR()" class="w-full bg-blue-600 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-blue-500">📊 AR</button>
+        </div>
+    </aside>
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-6">
+        
+        <!-- Rahmenbedingungen Section -->
+        <div id="sec-terms" class="hidden mb-4 bg-slate-800 border border-slate-700 rounded-xl p-4 transition-all duration-300">
+            <h2 class="text-sm font-bold text-white mb-3">📅 Rahmenbedingungen</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div><label class="lbl">Beginn</label><input type="date" id="sb-ds" onchange="S.dateStart=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Ende</label><input type="date" id="sb-de" onchange="S.dateEnd=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Rules of Engagement</label><textarea rows="2" id="sb-roe" onchange="S.terms.roe=this.value" class="inp text-xs"></textarea></div>
+                <div><label class="lbl">Disclosures</label><textarea rows="2" id="sb-disc" onchange="S.terms.disclosures=this.value" class="inp text-xs"></textarea></div>
+                <div class="md:col-span-2"><label class="lbl">Methodik</label><textarea rows="2" id="sb-meth" onchange="S.terms.methodology=this.value" class="inp text-xs"></textarea></div>
+            </div>
+            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                <label class="lbl">Task hinzufügen</label>
+                <div class="flex gap-2 mb-2">
+                    <input type="text" id="task-t" placeholder="Titel" class="inp text-xs flex-1">
+                    <button onclick="addTask()" class="px-3 py-1.5 bg-indigo-700 text-white rounded text-xs font-bold hover:bg-indigo-600">+</button>
+                </div>
+                <ul id="task-list" class="space-y-1 text-xs"></ul>
+            </div>
+        </div>
+
+        <!-- Metadaten Section -->
+        <div id="sec-meta" class="hidden mb-4 bg-slate-800 border border-slate-700 rounded-xl p-4 transition-all duration-300">
+            <h2 class="text-sm font-bold text-white mb-3">📝 Metadaten & Assessor</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div><label class="lbl">Titel</label><input type="text" id="sb-title" onchange="S.meta.title=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Version</label><input type="text" id="sb-ver" value="1.0.0" onchange="S.meta.version=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Beschreibung</label><input type="text" id="sb-desc" onchange="S.meta.desc=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Assessor Name</label><input type="text" id="sb-aname" onchange="S.assessor.name=this.value" class="inp text-xs"></div>
+                <div><label class="lbl">Typ</label><select id="sb-atype" onchange="S.assessor.type=this.value" class="inp text-xs"><option value="organization">Organisation</option><option value="person">Person</option></select></div>
+                <div><label class="lbl">E-Mail</label><input type="email" id="sb-aemail" onchange="S.assessor.email=this.value" class="inp text-xs"></div>
+            </div>
+        </div>
+
+        <div id="stats-dash" class="hidden mb-4"></div>
+        <div id="ctrl-area" class="hidden"></div>
+    </main>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+const S={
+    ssp:null,sspFilename:'',
+    catalog:new Map(), // cid -> {title, prose}
+    compMeta:new Map(), compGroups:new Map(), allCids:new Set(),
+    excluded:new Set(), methods:new Map(), findings:new Map(),
+    aiCache:new Map(), // cid -> {explain:'(markdown)'}
+    meta:{title:'',version:'1.0.0',desc:''},
+    assessor:{name:'',type:'organization',email:''},
+    terms:{roe:'',disclosures:'',methodology:''},
+    tasks:[],dateStart:'',dateEnd:'',setParams:[]
+};
+
+const CATALOG_URL='https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json';
+const MODELS={claude:[{id:'claude-opus-4-6-20250514',label:'Claude Opus 4.6 (Top)'},{id:'claude-sonnet-4-6-20250514',label:'Claude Sonnet 4.6 (Fast)'}],gemini:[{id:'gemini-3.1-pro-preview',label:'Gemini 3.1 Pro Preview'},{id:'gemini-3.1-flash',label:'Gemini 3.1 Flash (Prod)'}]};
+const STM={
+    'implemented':{l:'Implementiert',c:'bg-emerald-900 text-emerald-300 border-emerald-700',b:'#10b981'},
+    'partial':{l:'Teilweise',c:'bg-amber-900 text-amber-300 border-amber-700',b:'#f59e0b'},
+    'planned':{l:'Geplant',c:'bg-blue-900 text-blue-300 border-blue-700',b:'#3b82f6'},
+    'alternative':{l:'Alternativ',c:'bg-purple-900 text-purple-300 border-purple-700',b:'#a855f7'},
+    'not-applicable':{l:'N/A',c:'bg-slate-700 text-slate-400 border-slate-600',b:'#64748b'},
+    'nicht-angegeben':{l:'Kein Status',c:'bg-red-900/50 text-red-300 border-red-700',b:'#ef4444'},
+    'nur-komponente':{l:'Nur Komp.-Def.',c:'bg-cyan-900/50 text-cyan-300 border-cyan-700',b:'#06b6d4'}
+};
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('.dz').forEach(dz=>{
+        const fi=dz.querySelector('.fip'),ty=dz.dataset.type;
+        dz.addEventListener('click',()=>fi.click());
+        dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('drag-over')});
+        dz.addEventListener('dragleave',()=>dz.classList.remove('drag-over'));
+        dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('drag-over');if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0],ty)});
+        fi.addEventListener('change',e=>{if(e.target.files.length)loadFile(e.target.files[0],ty)});
+    });
+    loadAICfg();
+    loadCatalog();
+    tryAutoRestore();
+});
+
+// ============================================================
+// CATALOG
+// ============================================================
+async function loadCatalog(){
+    const cs=document.getElementById('cat-status');
+    try{
+        const r=await fetch(CATALOG_URL);const d=await r.json();
+        function idx(items){if(!items)return;items.forEach(i=>{
+            if(i.id){let prose='';if(i.parts){const p=i.parts.find(p=>p.name==='statement'||p.prose);if(p&&p.prose)prose=p.prose}
+                const secLvl=(i.props||[]).find(p=>p.name==='sec_level')?.value||'';
+                const ctrlClass=i.class||'';
+                S.catalog.set(i.id,{title:i.title||'',prose,secLevel:secLvl,ctrlClass})}
+            if(i.controls)idx(i.controls);if(i.groups)idx(i.groups);
+        })}
+        idx(d.catalog.groups);
+        cs.className="px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center";
+        cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Katalog: ${S.catalog.size} Controls`;
+    }catch(e){
+        cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span>Katalog-Fehler`;
+        console.error(e);
+    }
+}
+
+function catInfo(cid){return S.catalog.get(cid)||{title:'',prose:''}}
+
+// ============================================================
+// FILE HANDLING
+// ============================================================
+function loadFile(file,type){
+    if(!file.name.endsWith('.json'))return alert('Bitte JSON.');
+    const r=new FileReader();
+    r.onload=e=>{
+        try{
+            const d=JSON.parse(e.target.result.replace(/^\uFEFF/,''));
+            if(type==='ssp'){if(!d['system-security-plan'])throw new Error('Kein SSP.');S.ssp=d['system-security-plan'];S.sspFilename=file.name;initSSP()}
+            else if(type==='state'){restoreSession(d)}
+        }catch(err){alert('Fehler: '+err.message)}
+    };
+    r.readAsText(file);
+}
+
+// ============================================================
+// SESSION
+// ============================================================
+function ser(){return JSON.stringify({_v:9,sspFilename:S.sspFilename,meta:S.meta,assessor:S.assessor,terms:S.terms,tasks:S.tasks,dateStart:S.dateStart,dateEnd:S.dateEnd,excluded:[...S.excluded],methods:[...S.methods.entries()].map(([k,v])=>[k,[...v]]),findings:[...S.findings.entries()],aiCache:[...S.aiCache.entries()],compGroups:[...S.compGroups.entries()].map(([k,m])=>[k,[...m.entries()]]),compMeta:[...S.compMeta.entries()],allCids:[...S.allCids]})}
+
+function restoreSession(d){
+    if(!d._v||d._v<6)return alert('Session-Format zu alt oder inkompatibel (v9 benötigt).');
+    S.sspFilename=d.sspFilename||'';S.meta=d.meta||{title:'',version:'1.0.0',desc:''};S.assessor=d.assessor||{name:'',type:'organization',email:''};
+    S.terms=d.terms||{roe:'',disclosures:'',methodology:''};S.tasks=d.tasks||[];S.dateStart=d.dateStart||'';S.dateEnd=d.dateEnd||'';
+    S.excluded=new Set(d.excluded||[]);S.methods=new Map((d.methods||[]).map(([k,v])=>[k,new Set(v)]));
+    S.findings=new Map(d.findings||[]);S.aiCache=new Map(d.aiCache||[]);
+    S.compGroups=new Map((d.compGroups||[]).map(([k,arr])=>[k,new Map(arr)]));
+    S.compMeta=new Map(d.compMeta||[]);S.allCids=new Set(d.allCids||[]);
+    setSt('ssp-status',true,`Session: ${S.allCids.size} Controls`);showUI();
+}
+
+window.saveSession=()=>dl(JSON.parse(ser()),`${sn()}_session.json`);
+function autoSave(){try{localStorage.setItem('oscal_ap_v9',ser())}catch(e){}}
+function tryAutoRestore(){try{const s=localStorage.getItem('oscal_ap_v9');if(!s)return;const d=JSON.parse(s);if(d._v>=9&&d.allCids?.length>0&&confirm(`Autosave: ${d.allCids.length} Controls (${d.sspFilename}). Wiederherstellen?`))restoreSession(d)}catch(e){}}
+setInterval(()=>{if(S.allCids.size>0)autoSave()},30000);
+
+// ============================================================
+// INIT FROM SSP
+// ============================================================
+async function initSSP(){
+    const ssp=S.ssp,sn=ssp['system-characteristics']?.['system-name']||'System';
+    S.meta.title=`${sn} - Assessment Plan`;S.setParams=ssp['control-implementation']?.['set-parameters']||[];
+    S.compMeta.clear();S.compGroups.clear();S.allCids.clear();S.excluded.clear();S.methods.clear();S.findings.clear();
+
+    (ssp['system-implementation']?.components||[]).forEach(c=>{
+        const dl=(c.links||[]).find(l=>l.rel==='component-definition');
+        S.compMeta.set(c.uuid,{title:c.title,type:c.type,status:c.status?.state,defUrl:dl?.href||null,defLoaded:false,defN:0});
+        S.compGroups.set(c.uuid,new Map());
+    });
+
+    (ssp['control-implementation']?.['implemented-requirements']||[]).forEach(r=>{
+        const cid=r['control-id'];S.allCids.add(cid);
+        S.methods.set(cid,new Set(['EXAMINE']));S.findings.set(cid,{status:'',observation:'',risk:'',remarks:''});
+        const bcs=r['by-components']||[];
+        if(!bcs.length){ensureGrp('__none').set(cid,mkEntry('nicht-angegeben',r.description))}
+        bcs.forEach(bc=>{ensureGrp(bc['component-uuid']).set(cid,{
+            status:bc['implementation-status']?.state||'nicht-angegeben',
+            user:bc.props?.find(p=>p.name==='implementing-user')?.value||'',
+            date:bc.props?.find(p=>p.name==='implementation-date')?.value||'',
+            desc:bc.description||'',stmtId:bc.props?.find(p=>p.name==='implemented-statement-id')?.value||'',fromDef:false
+        })});
+    });
+
+    setSt('ssp-status',true,`SSP: ${sn} — ${S.allCids.size} Controls`);showUI();await loadCompDefs();
+}
+
+function ensureGrp(u){if(!S.compGroups.has(u))S.compGroups.set(u,new Map());return S.compGroups.get(u)}
+function mkEntry(st,desc){return{status:st,user:'',date:'',desc:desc||'',stmtId:'',fromDef:false}}
+
+function showUI(){
+    renderStats();renderControls();
+    document.getElementById('stats-dash').classList.remove('hidden');
+    document.getElementById('ctrl-area').classList.remove('hidden');
+    document.getElementById('sb-comp-nav').classList.remove('hidden');
+    document.getElementById('sb-bulk').classList.remove('hidden');
+    
+    // Reveal top-level sections
+    const sm = document.getElementById('sec-meta'); if(sm) sm.classList.remove('hidden');
+    const st = document.getElementById('sec-terms'); if(st) st.classList.remove('hidden');
+
+    // Populate fields from state
+    document.getElementById('sb-title').value=S.meta.title;
+    document.getElementById('sb-ds').value=S.dateStart;
+    document.getElementById('sb-de').value=S.dateEnd;
+    document.getElementById('sb-roe').value=S.terms.roe;
+    document.getElementById('sb-disc').value=S.terms.disclosures;
+    document.getElementById('sb-meth').value=S.terms.methodology;
+    document.getElementById('sb-aname').value=S.assessor.name;
+    document.getElementById('sb-aemail').value=S.assessor.email;
+    document.getElementById('sb-desc').value=S.meta.desc;
+    document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size;
+    
+    document.getElementById('task-list').innerHTML=tHTML();
+}
+
+// ============================================================
+// COMPONENT DEFINITIONS
+// ============================================================
+async function loadCompDefs(){
+    const toLoad=[];S.compMeta.forEach((m,u)=>{if(m.defUrl)toLoad.push({uuid:u,url:m.defUrl,title:m.title})});
+    if(!toLoad.length)return;
+    const cs=document.getElementById('comp-status');cs.classList.remove('hidden');cs.style.display='flex';
+    let done=0,newN=0,fails=[];
+    for(const it of toLoad){
+        cs.innerHTML=`<span class="loader-sm mr-2"></span>${esc(it.title)} (${done+1}/${toLoad.length})`;
+        try{
+            const r=await fetch(it.url,{mode:'cors',cache:'no-cache'});
+            if(!r.ok)throw new Error(`HTTP ${r.status} ${r.statusText}`);
+            const txt=await r.text();
+            let d;try{d=JSON.parse(txt.replace(/^\uFEFF/,''))}catch(pe){throw new Error('Kein gültiges JSON: '+pe.message)}
+            const grp=S.compGroups.get(it.uuid)||new Map();let a=0;
+            (d['component-definition']?.components||[]).forEach(comp=>{
+                const compProps=(comp.props||[]).filter(p=>p.name&&p.value);
+                const cm=S.compMeta.get(it.uuid);
+                if(cm&&compProps.length)cm.defProps=compProps;
+                (comp['control-implementations']||[]).forEach(ci=>
+                    (ci['implemented-requirements']||[]).forEach(req=>{
+                        const cid=req['control-id'];if(!cid)return;
+                        const stmts=(req.statements||[]).map(st=>{
+                            const p=Object.fromEntries((st.props||[]).map(pp=>[pp.name,pp.value]));
+                            return{id:st['statement-id'],desc:st.description||'',statement:p.statement||'',guidance:p.guidance||'',assessMethod:p['assessment-method']||''}
+                        });
+                        const cProps=(req.props||[]).filter(p=>p.ns).map(p=>({name:p.name,value:p.value}));
+                        if(!grp.has(cid)){
+                            grp.set(cid,{status:'nur-komponente',user:'',date:'',desc:'',stmtId:'',fromDef:true,
+                                defDesc:req.description||'',defProps:cProps,statements:stmts});
+                            a++;
+                        } else {
+                            const existing=grp.get(cid);
+                            if(!existing.statements||!existing.statements.length)existing.statements=stmts;
+                            if(!existing.defDesc)existing.defDesc=req.description||'';
+                            if(!existing.defProps||!existing.defProps.length)existing.defProps=cProps;
+                        }
+                        if(!S.allCids.has(cid)){S.allCids.add(cid);S.methods.set(cid,new Set(['EXAMINE']));S.findings.set(cid,{status:'',observation:'',risk:'',remarks:''})}
+                    })
+                );
+            });
+            S.compGroups.set(it.uuid,grp);const m=S.compMeta.get(it.uuid);m.defLoaded=true;m.defN=grp.size;newN+=a;
+        }catch(e){
+            console.error(`Fehler bei ${it.title}:`,e);
+            fails.push({title:it.title,err:e.message,url:it.url,uuid:it.uuid});
+        }done++}
+    if(fails.length){
+        cs.className="px-3 py-1 rounded-lg text-xs font-semibold bg-amber-900/50 text-amber-300 border border-amber-700 flex items-center";
+        cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>${done-fails.length}/${done} Defs geladen, +${newN} Controls — <button onclick="retryFailedDefs()" class="ml-2 underline text-amber-200 hover:text-white font-bold">⟳ ${fails.length} fehlgeschlagene neu laden</button>`;
+        S._failedDefs=fails;
+    }else{
+        cs.className="px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center";
+        cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>${done} Defs → +${newN} Controls (${S.allCids.size} total)`;
+    }
+    renderStats();renderControls();
+}
+
+window.retryFailedDefs=async()=>{
+    const fails=S._failedDefs||[];if(!fails.length)return;
+    const cs=document.getElementById('comp-status');
+    let retried=0,newN=0,stillFailing=[];
+    for(const it of fails){
+        cs.innerHTML=`<span class="loader-sm mr-2"></span>Retry: ${esc(it.title)} (${retried+1}/${fails.length})`;
+        try{
+            const r=await fetch(it.url,{mode:'cors',cache:'reload'});
+            if(!r.ok)throw new Error(`HTTP ${r.status}`);
+            const d=JSON.parse((await r.text()).replace(/^\uFEFF/,''));
+            const grp=S.compGroups.get(it.uuid)||new Map();let a=0;
+            (d['component-definition']?.components||[]).forEach(comp=>{
+                (comp['control-implementations']||[]).forEach(ci=>
+                    (ci['implemented-requirements']||[]).forEach(req=>{
+                        const cid=req['control-id'];if(!cid)return;
+                        const stmts=(req.statements||[]).map(st=>{const p=Object.fromEntries((st.props||[]).map(pp=>[pp.name,pp.value]));return{id:st['statement-id'],desc:st.description||'',statement:p.statement||'',guidance:p.guidance||'',assessMethod:p['assessment-method']||''}});
+                        const cProps=(req.props||[]).filter(p=>p.ns).map(p=>({name:p.name,value:p.value}));
+                        if(!grp.has(cid)){grp.set(cid,{status:'nur-komponente',user:'',date:'',desc:'',stmtId:'',fromDef:true,defDesc:req.description||'',defProps:cProps,statements:stmts});a++}
+                        if(!S.allCids.has(cid)){S.allCids.add(cid);S.methods.set(cid,new Set(['EXAMINE']));S.findings.set(cid,{status:'',observation:'',risk:'',remarks:''})}
+                    }));
+            });
+            S.compGroups.set(it.uuid,grp);const m=S.compMeta.get(it.uuid);m.defLoaded=true;m.defN=grp.size;newN+=a;
+        }catch(e){stillFailing.push(it)}retried++}
+    S._failedDefs=stillFailing;
+    if(stillFailing.length){
+        cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span>${stillFailing.length} Defs nicht ladbar: ${stillFailing.map(f=>'<span class="text-red-300">'+esc(f.title)+' ('+esc(f.err)+')</span>').join(', ')}`;
+    }else{
+        cs.className="px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center";
+        cs.innerHTML=`<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>Alle Defs geladen (${S.allCids.size} total)`;
+    }
+    renderStats();renderControls();
+};
+
+// ============================================================
+// AI CONFIG
+// ============================================================
+window.onProvChange=()=>{const p=document.getElementById('ai-provider').value;const s=document.getElementById('ai-model');s.innerHTML='';(MODELS[p]||[]).forEach(m=>{const o=document.createElement('option');o.value=m.id;o.textContent=m.label;s.appendChild(o)});saveAICfg()};
+window.saveAICfg=()=>{const c={p:document.getElementById('ai-provider').value,k:document.getElementById('ai-key').value,m:document.getElementById('ai-model').value};try{localStorage.setItem('oscal_ai',JSON.stringify(c))}catch(e){}const b=document.getElementById('ai-badge');if(c.p&&c.k){b.classList.remove('hidden');b.className='sb bg-violet-900 text-violet-300 border-violet-700';b.textContent=c.p==='claude'?'Claude':'Gemini'}else b.classList.add('hidden')};
+function loadAICfg(){try{const c=JSON.parse(localStorage.getItem('oscal_ai')||'{}');if(c.p){document.getElementById('ai-provider').value=c.p;onProvChange();if(c.k)document.getElementById('ai-key').value=c.k;if(c.m)document.getElementById('ai-model').value=c.m;saveAICfg()}}catch(e){}}
+function getAI(){const p=document.getElementById('ai-provider').value,k=document.getElementById('ai-key').value,m=document.getElementById('ai-model').value;return(p&&k)?{p,k,m}:null}
+
+// ============================================================
+// AI CALLS
+// ============================================================
+async function callAI(prompt){
+    const ai=getAI();if(!ai)throw new Error('Keine KI konfiguriert.');
+    if(ai.p==='claude'){const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':ai.k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:ai.m,max_tokens:2000,messages:[{role:'user',content:prompt}]})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.content?.[0]?.text||''}
+    else{const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ai.m}:generateContent?key=${ai.k}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.3}})});const d=await r.json();if(d.error)throw new Error(d.error.message);return d.candidates?.[0]?.content?.parts?.[0]?.text||''}
+}
+
+function sysCtx(){const sc=S.ssp?.['system-characteristics'];return sc?`System "${sc['system-name']||'?'}": ${sc.description||'keine Beschreibung'}`:'System unbekannt (Session ohne SSP)'}
+function findE(cid){for(const[cu,m]of S.compGroups){if(m.has(cid)){const e={...m.get(cid)};e._comp=S.compMeta.get(cu)?.title||cu;return e}}return null}
+function matCtx(e){if(!e?.statements?.length)return'';return'\nVorhandene Reifegrade aus Komponentendefinition:\n'+e.statements.map(st=>`- ${st.id} (${st.desc}): ${st.statement}${st.assessMethod?' [Prüfung: '+st.assessMethod+']':''}`).join('\n')}
+function sspCtx(e){if(!e||e.fromDef)return'';let s=`\nSSP-Eintrag der Organisation:\n- Status: ${e.status}`;if(e.date)s+=`\n- Datum: ${e.date}`;if(e.stmtId){s+=`\n- Gewählter Reifegrad: ${e.stmtId}`;const ml=(e.statements||[]).find(st=>st.id===e.stmtId);if(ml)s+=` → "${ml.desc}": ${ml.statement}`}if(e.desc)s+=`\n- Kommentar: "${e.desc}"`;return s}
+function siblingNote(cid){const parts=cid.split('.');if(parts.length<2)return'';const prefix=parts.slice(0,-1).join('.');return`\n\nWICHTIG: Bewerte NUR das Control ${cid} isoliert. Das BSI Grundschutz++ hat sehr granulare, detaillierte Controls. Andere Controls derselben Gruppe (${prefix}.*) werden separat geprüft und sind hier nicht Gegenstand.`}
+
+window.aiAssess=async(cid,rk)=>{
+    if(!getAI())return alert('KI konfigurieren (oben).');
+    const e=findE(cid),ci=catInfo(cid),f=S.findings.get(cid)||{};
+    const btn=document.getElementById('ai-a-'+rk);if(btn){btn.disabled=true;btn.textContent='⏳'}
+    const prompt=`Du bist ein erfahrener IT-Sicherheitsauditor. Bewerte das OSCAL-Control.
+
+${sysCtx()}
+Control: ${cid} — ${ci.title||'(Titel unbekannt)'}
+${ci.prose?'Anforderungstext: '+ci.prose.substring(0,500):''}
+Status laut SSP: ${e?.status||'unbekannt'}
+Komponente: ${e?._comp||'?'}
+${e?.desc?'SSP-Beschreibung: '+e.desc:''}${e?.defDesc?' | Komp.-Def.: '+e.defDesc.substring(0,300):''}
+${sspCtx(e)}
+${matCtx(e)}
+${f.observation?'\nBisherige Beobachtung des Assessors: '+f.observation:''}
+${siblingNote(cid)}
+
+Beziehe den SSP-Eintrag der Organisation (Reifegrad, Kommentar, Status) und die Komponentendefinition in deine Bewertung ein. Antworte NUR als JSON:
+{"status":"satisfied|not-satisfied|other","observation":"1-2 Sätze","risk":"1 Satz falls nicht erfüllt, sonst leer","remarks":"1 Satz Hinweis"}`;
+    try{
+        const txt=await callAI(prompt);const res=JSON.parse(txt.replace(/```json\n?|```/g,'').trim());
+        if(res.status){const f2=S.findings.get(cid)||{status:'',observation:'',risk:'',remarks:''};
+            f2.status=res.status;f2.observation=res.observation||f2.observation;f2.risk=res.risk||'';f2.remarks=res.remarks||'';S.findings.set(cid,f2);
+            const s=document.getElementById('f-s-'+rk);if(s)s.value=f2.status;
+            const o=document.getElementById('f-o-'+rk);if(o)o.value=f2.observation;
+            const rk2=document.getElementById('f-r-'+rk);if(rk2)rk2.value=f2.risk;
+            const rm=document.getElementById('f-m-'+rk);if(rm)rm.value=f2.remarks;
+            setF(cid,'status',f2.status)}
+    }catch(e){alert('KI: '+e.message)}finally{if(btn){btn.disabled=false;btn.textContent='🤖'}}
+};
+
+window.aiExplain=async(cid,rk)=>{
+    if(!getAI())return alert('KI konfigurieren (oben).');
+    const cached=S.aiCache.get(cid);
+    const out=document.getElementById('ai-x-'+rk);
+    if(cached?.explain){out.innerHTML=marked.parse(cached.explain);out.style.display='block';return}
+    const btn=document.getElementById('ai-e-'+rk);if(btn){btn.disabled=true;btn.textContent='⏳'}
+    const ci=catInfo(cid);const e=findE(cid);
+    const hasML=(e?.statements||[]).length>0;
+    const prompt=hasML
+        ?`Du bist ein IT-Sicherheitsexperte. Analysiere das Control im Kontext: ${sysCtx()}
+
+Control-ID: ${cid} — ${ci.title||'unbekannt'}
+${ci.prose?'Anforderungstext: '+ci.prose.substring(0,600):''}
+${sspCtx(e)}
+${matCtx(e)}
+
+Es gibt bereits ${e.statements.length} definierte Reifegrade.${e.stmtId?' Die Organisation hat Reifegrad '+e.stmtId+' im SSP gewählt.':' Die Organisation hat noch keinen Reifegrad im SSP gesetzt.'} Ergänze bitte auf Deutsch in Markdown:
+
+## Einordnung und Kontext
+(2-3 Sätze: Warum ist dieses Control wichtig? Typische Schwachstellen)
+
+## Bewertungshinweise je Reifegrad
+(Für jeden vorhandenen Reifegrad: Worauf achten? Was sind Red Flags?${e.stmtId?' Gehe besonders auf den gewählten Reifegrad '+e.stmtId+' ein: Ist die Wahl angemessen für das System? Was muss man prüfen um diesen Reifegrad zu bestätigen?':''})
+
+## Ergänzende Prüfungshandlungen
+- **EXAMINE**: (zusätzliche Dokumente/Nachweise über die Basis-Prüfung hinaus)
+- **INTERVIEW**: (spezifische Gesprächspartner und Fragen)
+- **TEST**: (konkrete technische Tests, Tool-Vorschläge)
+${siblingNote(cid)}`
+
+        :`Du bist ein IT-Sicherheitsexperte. Erkläre das Control im Kontext: ${sysCtx()}
+
+Control-ID: ${cid} — ${ci.title||'unbekannt'}
+${ci.prose?'Anforderungstext: '+ci.prose.substring(0,800):''}
+${sspCtx(e)}
+
+Antworte auf Deutsch in Markdown:
+
+## Was fordert dieses Control?
+(2-3 Sätze)
+
+## 5 Reifegrade der Umsetzung
+1. **Initial**: (minimal nötig)
+2. **Managed**: (Prozesse definiert)
+3. **Defined**: (standardisiert, dokumentiert)
+4. **Quantitatively Managed**: (messbar gesteuert)
+5. **Optimizing**: (kontinuierlich verbessert)
+
+## Empfohlene Prüfungshandlungen
+- **EXAMINE**: (welche Dokumente/Nachweise prüfen)
+- **INTERVIEW**: (wen befragen, welche Fragen stellen)
+- **TEST**: (welche technischen Tests durchführen)
+${siblingNote(cid)}`;
+    try{
+        const txt=await callAI(prompt);
+        S.aiCache.set(cid,{...(S.aiCache.get(cid)||{}),explain:txt});
+        if(out){out.innerHTML=marked.parse(txt);out.style.display='block'}
+    }catch(e){alert('KI: '+e.message)}finally{if(btn){btn.disabled=false;btn.textContent='📖'}}
+};
+
+// ============================================================
+// STATS
+// ============================================================
+function renderStats(){
+    const dash=document.getElementById('stats-dash');const counts={};let total=0;
+    S.compGroups.forEach(m=>m.forEach(i=>{total++;counts[i.status||'nicht-angegeben']=(counts[i.status||'nicht-angegeben']||0)+1}));
+    let bars='';['implemented','partial','planned','alternative','nicht-angegeben','nur-komponente','not-applicable'].forEach(st=>{
+        const n=counts[st];if(!n)return;const m=STM[st];const pct=((n/total)*100).toFixed(1);
+        bars+=`<div class="flex items-center gap-3 mb-1.5"><span class="sb ${m.c} w-28 text-center flex-shrink-0">${m.l}</span><div class="flex-1 bg-slate-900 rounded-full h-4 overflow-hidden border border-slate-700"><div class="stat-bar h-full rounded-full flex items-center justify-end pr-2" style="width:${pct}%;background:${m.b}"><span class="text-[9px] font-bold text-white drop-shadow">${n}</span></div></div><span class="text-xs text-slate-400 w-12 text-right font-mono">${pct}%</span></div>`});
+    let rated=0;S.findings.forEach((f,c)=>{if(!S.excluded.has(c)&&f.status)rated++});
+    dash.innerHTML=`<div class="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-xl p-5 shadow-lg"><div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3 gap-3"><h2 class="text-lg font-bold text-white">Umsetzungsstatus</h2><div class="flex gap-5 text-sm"><div class="text-center"><div class="text-xl font-bold text-white">${S.allCids.size}</div><div class="text-[10px] text-slate-400 uppercase">Controls</div></div><div class="text-center"><div class="text-xl font-bold text-emerald-400" id="stat-rated">${rated}</div><div class="text-[10px] text-slate-400 uppercase">Bewertet</div></div></div></div>${bars}</div>`;
+}
+
+// ============================================================
+// EDITOR
+// ============================================================
+function renderControls(){
+    // 1. Component navigation in sidebar
+    let nav='';
+    S.compGroups.forEach((ctrls,cuuid)=>{
+        const meta=S.compMeta.get(cuuid)||{title:cuuid==='__none'?'Nicht zugewiesen':cuuid,type:'?'};
+        const tb={'this-system':'bg-emerald-900 text-emerald-300 border-emerald-700','service':'bg-indigo-900 text-indigo-300 border-indigo-700','process':'bg-purple-900 text-purple-300 border-purple-700'}[meta.type]||'bg-slate-700 text-slate-300 border-slate-600';
+        const sorted=[...ctrls.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+        const sspN=sorted.filter(([,i])=>!i.fromDef).length,defN=sorted.filter(([,i])=>i.fromDef).length;
+        nav+=`<div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="togC('${cuuid}');document.getElementById('comp-${cuuid}')?.scrollIntoView({behavior:'smooth',block:'start'})" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 hover:bg-slate-800 text-[10px] font-bold text-slate-300">
+                <span class="flex items-center gap-1 truncate"><span class="sb ${tb}" style="font-size:8px;padding:1px 4px">${esc(meta.type).substring(0,4)}</span>${esc(meta.title)}</span>
+                <span class="text-slate-500 flex-shrink-0">${sspN}${defN?'+'+defN:''}</span>
+            </button></div>`;
+    });
+    document.getElementById('sb-comp-nav').innerHTML=nav;
+    document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size;
+
+    // 2. Control cards in main area
+    let h='';
+    S.compGroups.forEach((ctrls,cuuid)=>{
+        const meta=S.compMeta.get(cuuid)||{title:cuuid==='__none'?'Nicht zugewiesen':cuuid,type:'?'};
+        const tb={'this-system':'bg-emerald-900 text-emerald-300 border-emerald-700','service':'bg-indigo-900 text-indigo-300 border-indigo-700','process':'bg-purple-900 text-purple-300 border-purple-700'}[meta.type]||'bg-slate-700 text-slate-300 border-slate-600';
+        const sorted=[...ctrls.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+        const sspN=sorted.filter(([,i])=>!i.fromDef).length,defN=sorted.filter(([,i])=>i.fromDef).length;
+
+        h+=`<div id="comp-${cuuid}" class="border border-slate-700 rounded-xl overflow-hidden mb-3">
+            <div class="comp-header flex justify-between items-center p-2.5 bg-slate-900/80 hover:bg-slate-800" onclick="togC('${cuuid}')">
+                <div class="flex items-center gap-2 flex-wrap"><svg id="cc-${cuuid}" class="chev open w-4 h-4 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg><span class="sb ${tb}">${esc(meta.type)}</span><h3 class="comp-title text-sm font-bold text-slate-200">${esc(meta.title)}</h3><span class="text-xs text-slate-500">(${sspN}${defN?' + '+defN+' Def':''})</span>${meta.defLoaded?'<span class="sb bg-cyan-900/50 text-cyan-300 border-cyan-700">Def</span>':''}</div>
+            </div>
+            <div id="cb-${cuuid}" class="coll-content open p-1.5 space-y-1">`;
+
+        sorted.forEach(([cid,info])=>{
+            const sm=STM[info.status]||STM['nicht-angegeben'];
+            const ci=catInfo(cid);
+            const excl=S.excluded.has(cid);
+            const mth=S.methods.get(cid)||new Set();
+            const f=S.findings.get(cid)||{};
+            // Unique row key to avoid duplicate IDs when same cid in multiple components
+            const rk=(cuuid.substring(0,8)+'_'+cid).replace(/[.\s]/g,'_');
+
+            const prose=ci.prose||'';
+            const modal=prose.match(/\bMUSS\b|\bMÜSSEN\b/)?'MUSS':prose.match(/\bSOLL\b|\bSOLLTE\b|\bSOLLTEN\b/)?'SOLL':prose.match(/\bKANN\b|\bKÖNNEN\b/)?'KANN':'';
+            const ctrlClass=(info.defProps||[]).find(p=>p.name==='control_class')?.value||'';
+            const secLevel=ci.secLevel||'';
+
+            const hasSSPData = !info.fromDef && (info.status!=='nur-komponente');
+            const hasStmtId = !!info.stmtId;
+            const selectedML = hasStmtId && (info.statements||[]).find(st=>st.id===info.stmtId);
+
+            let sspBlock = '';
+            if(hasSSPData) {
+                sspBlock = `<div class="mb-3 p-2.5 bg-emerald-950/30 border border-emerald-800/40 rounded-lg">
+                    <div class="flex items-center gap-1.5 mb-1.5"><span class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">📝 SSP-Eintrag der Organisation</span></div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+                        <div><span class="text-slate-500">Status:</span> <span class="sb ${sm.c}">${sm.l}</span></div>
+                        ${info.user?`<div><span class="text-slate-500">Bearbeiter:</span> <span class="text-white font-semibold">${esc(info.user)}</span></div>`:''}
+                        ${info.date?`<div><span class="text-slate-500">Datum:</span> <span class="text-white">${info.date}</span></div>`:''}
+                        ${hasStmtId?`<div><span class="text-slate-500">Reifegrad:</span> <span class="text-cyan-300 font-mono font-bold">${esc(info.stmtId)}</span></div>`:''}
+                    </div>
+                    ${info.desc?`<div class="mt-1.5 text-xs text-emerald-200/80 italic border-t border-emerald-800/30 pt-1.5">💬 "${esc(info.desc)}"</div>`:''}
+                    ${selectedML?`<div class="mt-1.5 p-2 bg-emerald-900/30 rounded border-l-2 border-emerald-500">
+                        <div class="text-[10px] text-emerald-400 font-bold mb-0.5">Gewählter Reifegrad: ${esc(selectedML.desc)}</div>
+                        ${selectedML.statement?`<div class="text-xs text-emerald-200/90">${esc(selectedML.statement)}</div>`:''}
+                    </div>`:''}
+                </div>`;
+            }
+
+            const params=(S.setParams||[]).filter(p=>p['param-id']?.toLowerCase().startsWith(cid.toLowerCase()));
+
+            h+=`<div class="ctrl-row bg-slate-900 border border-slate-700 rounded-lg" data-cid="${cid}" data-rk="${rk}" data-title="${esc(ci.title).toLowerCase()}" data-modal="${modal}" data-class="${ctrlClass}" data-sec="${secLevel}" data-status="${info.status}">
+                <div class="flex items-center gap-2 p-2 cursor-pointer" onclick="togD('${rk}')">
+                    <input type="checkbox" ${excl?'':'checked'} onclick="event.stopPropagation();togSc('${cid}',this.checked)" class="scb form-checkbox h-3.5 w-3.5 text-emerald-500 rounded border-slate-600 bg-slate-700 flex-shrink-0">
+                    <span class="font-mono font-bold text-white text-xs w-24 flex-shrink-0">${cid}</span>
+                    ${modal?`<span class="text-[9px] font-bold flex-shrink-0 ${modal==='MUSS'?'text-red-400':modal==='SOLL'?'text-yellow-400':'text-slate-400'}">${modal}</span>`:''}
+                    ${secLevel?`<span class="text-[9px] text-slate-500 flex-shrink-0">${esc(secLevel)}</span>`:''}
+                    <span class="ctrl-title flex-shrink-1">${esc(ci.title)||'<span class="text-slate-600 italic">—</span>'}</span>
+                    <span class="sb ${sm.c} flex-shrink-0 ml-auto">${sm.l}</span>
+                    ${hasStmtId?`<span class="text-[9px] text-cyan-400 font-mono flex-shrink-0">${esc(info.stmtId)}</span>`:''}
+                    <div class="flex gap-1 flex-shrink-0" onclick="event.stopPropagation()">
+                        <label class="flex items-center gap-0.5 cursor-pointer"><input type="checkbox" ${mth.has('EXAMINE')?'checked':''} onchange="togM('${cid}','EXAMINE',this.checked)" class="mcb form-checkbox h-3 w-3 text-blue-500 rounded border-slate-600 bg-slate-700"><span class="text-[9px] text-blue-400 font-bold">EX</span></label>
+                        <label class="flex items-center gap-0.5 cursor-pointer"><input type="checkbox" ${mth.has('INTERVIEW')?'checked':''} onchange="togM('${cid}','INTERVIEW',this.checked)" class="mcb form-checkbox h-3 w-3 text-amber-500 rounded border-slate-600 bg-slate-700"><span class="text-[9px] text-amber-400 font-bold">IN</span></label>
+                        <label class="flex items-center gap-0.5 cursor-pointer"><input type="checkbox" ${mth.has('TEST')?'checked':''} onchange="togM('${cid}','TEST',this.checked)" class="mcb form-checkbox h-3 w-3 text-emerald-500 rounded border-slate-600 bg-slate-700"><span class="text-[9px] text-emerald-400 font-bold">TE</span></label>
+                    </div>
+                    <span class="fp text-xs ml-1 ${f.status==='satisfied'?'text-emerald-400':f.status==='not-satisfied'?'text-red-400':f.status==='other'?'text-amber-400':'text-slate-600'}" data-fp="${cid}">${f.status==='satisfied'?'✅':f.status==='not-satisfied'?'❌':f.status==='other'?'⚠️':'○'}</span>
+                    <svg class="chev w-3.5 h-3.5 text-slate-500" id="cch-${rk}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+                </div>
+                <div class="ctrl-detail px-3 border-t border-slate-700/50" id="cbd-${rk}">
+                    ${ci.prose?`<div class="text-xs text-slate-400 mb-2 leading-relaxed bg-slate-800/60 p-2 rounded border-l-2 border-slate-600">${esc(ci.prose).substring(0,600)}${ci.prose.length>600?'…':''}</div>`:''}
+                    ${sspBlock}
+                    ${info.defDesc?`<div class="text-xs text-cyan-200/70 mb-2 leading-relaxed bg-cyan-950/30 p-2 rounded border-l-2 border-cyan-800"><span class="text-[10px] text-cyan-500 font-bold uppercase">Komp.-Def.:</span> ${esc(info.defDesc).substring(0,500)}${(info.defDesc||'').length>500?'…':''}</div>`:''}
+                    ${(info.defProps||[]).length?`<div class="mb-2 flex flex-wrap gap-1">${(info.defProps||[]).map(p=>`<span class="text-[10px] bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-800">${esc(p.name)}: ${esc(p.value)}</span>`).join('')}</div>`:''}
+                    ${params.length?`<div class="mb-2 flex flex-wrap gap-1">${params.map(p=>`<span class="text-xs bg-slate-800 text-cyan-300 px-2 py-0.5 rounded-full border border-cyan-800 font-mono">${esc(p['param-id'])}="${esc(p.values?.[0]||'')}"</span>`).join('')}</div>`:''}
+                    ${info.fromDef&&!info.statements?.length?'<div class="text-xs text-cyan-400 mb-2">ℹ️ Nur Komponentendefinition — kein SSP-Eintrag.</div>':''}
+                    ${(info.statements||[]).length?`
+                    <div class="mb-3 border border-indigo-900/60 rounded-lg overflow-hidden">
+                        <button onclick="event.stopPropagation();document.getElementById('ml-${rk}').classList.toggle('hidden')" class="w-full text-left px-3 py-1.5 bg-indigo-950/50 text-indigo-300 text-xs font-bold hover:bg-indigo-950/80 transition-colors flex items-center gap-2">
+                            <span>📊 ${info.statements.length} Reifegrade</span>${hasStmtId?`<span class="text-emerald-400 text-[10px]">✓ Org. hat ${esc(info.stmtId)} gewählt</span>`:`<span class="text-amber-400 text-[10px]">⚠ Kein Reifegrad im SSP gesetzt</span>`}
+                        </button>
+                        <div id="ml-${rk}" class="${hasStmtId?'hidden':''} p-2 space-y-1.5 bg-indigo-950/20">
+                            ${info.statements.map((st,idx)=>{
+                                const mlColor=['text-red-400','text-amber-400','text-yellow-300','text-emerald-400','text-cyan-300'][idx]||'text-slate-300';
+                                const isSelected = hasStmtId && st.id===info.stmtId;
+                                return`<div class="p-2 rounded border ${isSelected?'bg-emerald-950/40 border-emerald-600 ring-1 ring-emerald-500/30':'bg-slate-900/80 border-slate-700/50'}">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        ${isSelected?'<span class="text-emerald-400 text-xs">▶</span>':''}
+                                        <span class="font-mono text-[10px] text-slate-500">${esc(st.id)}</span>
+                                        <span class="text-xs font-bold ${isSelected?'text-emerald-300':mlColor}">${esc(st.desc)}</span>
+                                        ${isSelected?'<span class="sb bg-emerald-900 text-emerald-300 border-emerald-700">Gewählt</span>':''}
+                                    </div>
+                                    ${st.statement?`<div class="text-xs ${isSelected?'text-emerald-200':'text-slate-300'} mb-1">${esc(st.statement)}</div>`:''}
+                                    ${st.guidance?`<div class="text-[10px] text-slate-500 italic">💡 ${esc(st.guidance)}</div>`:''}
+                                    ${st.assessMethod?`<div class="text-[10px] text-blue-400 mt-0.5">🔍 ${esc(st.assessMethod)}</div>`:''}
+                                </div>`;
+                            }).join('')}
+                        </div>
+                    </div>`:''}
+                    <div class="bg-slate-800 border border-slate-700 rounded-lg p-3">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-bold text-blue-300 uppercase">Befund</span>
+                            <select onchange="setF('${cid}','status',this.value)" id="f-s-${rk}" class="inp text-xs py-1 px-2 w-44"><option value="" ${!f.status?'selected':''}>— offen —</option><option value="satisfied" ${f.status==='satisfied'?'selected':''}>✅ Erfüllt</option><option value="not-satisfied" ${f.status==='not-satisfied'?'selected':''}>❌ Nicht erfüllt</option><option value="other" ${f.status==='other'?'selected':''}>⚠️ Sonstig</option></select>
+                            <button id="ai-a-${rk}" onclick="event.stopPropagation();aiAssess('${cid}','${rk}')" class="ai-btn" title="KI: Befundvorschlag">🤖</button>
+                            <button id="ai-e-${rk}" onclick="event.stopPropagation();aiExplain('${cid}','${rk}')" class="ai-btn ai-explain" title="${(info.statements||[]).length?'KI: Ergänzende Analyse':'KI: Control erklären + Reifegrade'}">📖</button>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                            <div><label class="text-[10px] text-slate-500 uppercase font-bold">Beobachtung</label><textarea rows="2" id="f-o-${rk}" onchange="setF('${cid}','observation',this.value)" class="inp w-full text-xs mt-0.5">${esc(f.observation||'')}</textarea></div>
+                            <div><label class="text-[10px] text-slate-500 uppercase font-bold">Risiko</label><textarea rows="2" id="f-r-${rk}" onchange="setF('${cid}','risk',this.value)" class="inp w-full text-xs mt-0.5">${esc(f.risk||'')}</textarea></div>
+                            <div><label class="text-[10px] text-slate-500 uppercase font-bold">Bemerkungen</label><textarea rows="2" id="f-m-${rk}" onchange="setF('${cid}','remarks',this.value)" class="inp w-full text-xs mt-0.5">${esc(f.remarks||'')}</textarea></div>
+                        </div>
+                        <div id="ai-x-${rk}" class="ai-out cscroll" style="display:none"></div>
+                    </div>
+                </div>
+            </div>`;
+        });
+        h+=`</div></div>`;
+    });
+
+    document.getElementById('ctrl-area').innerHTML=h;
+    document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size;
+}
+
+window.addTask=()=>{const t=document.getElementById('task-t').value.trim();if(!t)return;S.tasks.push({uuid:crypto.randomUUID(),title:t,type:'action'});document.getElementById('task-t').value='';document.getElementById('task-list').innerHTML=tHTML()};
+function tHTML(){if(!S.tasks.length)return'';return S.tasks.map((t,i)=>`<li class="flex justify-between items-center p-1 bg-slate-900 border border-slate-700 rounded"><span class="text-white">${esc(t.title)}</span><button onclick="S.tasks.splice(${i},1);document.getElementById('task-list').innerHTML=tHTML()" class="text-red-400 text-xs px-1">✕</button></li>`).join('')}
+
+window.scrollToSec = id => {
+    const el = document.getElementById(id);
+    if(el) {
+        el.scrollIntoView({behavior: 'smooth', block: 'start'});
+        el.classList.add('ring-2', 'ring-emerald-500');
+        setTimeout(() => el.classList.remove('ring-2', 'ring-emerald-500'), 1500);
+    }
+};
+
+window.tog=id=>{document.getElementById(id+'-content')?.classList.toggle('open');document.getElementById('icon-'+id)?.classList.toggle('open')};
+window.togC=u=>{document.getElementById('cb-'+u)?.classList.toggle('open');document.getElementById('cc-'+u)?.classList.toggle('open')};
+window.togD=rk=>{document.getElementById('cbd-'+rk)?.classList.toggle('open');document.getElementById('cch-'+rk)?.classList.toggle('open')};
+window.togSc=(c,on)=>{if(on)S.excluded.delete(c);else S.excluded.add(c);document.getElementById('scope-n').textContent=S.allCids.size-S.excluded.size};
+window.scopeAll=on=>{if(on)S.excluded.clear();else S.allCids.forEach(c=>S.excluded.add(c));document.querySelectorAll('.scb').forEach(cb=>cb.checked=on);document.getElementById('scope-n').textContent=on?S.allCids.size:0};
+window.togM=(c,m,on)=>{let s=S.methods.get(c);if(!s){s=new Set();S.methods.set(c,s)}on?s.add(m):s.delete(m)};
+window.bulkM=m=>{const l=m==='EXAMINE'?'EX':m==='INTERVIEW'?'IN':'TE';S.allCids.forEach(c=>{if(S.excluded.has(c))return;let s=S.methods.get(c);if(!s){s=new Set();S.methods.set(c,s)}s.add(m)});document.querySelectorAll('.ctrl-row').forEach(r=>{const c=r.dataset.cid;if(!c||S.excluded.has(c))return;r.querySelectorAll('.mcb').forEach(cb=>{if(cb.parentElement.querySelector('span')?.textContent===l)cb.checked=true})})};
+window.bulkMC=()=>{S.allCids.forEach(c=>{if(S.excluded.has(c))return;S.methods.set(c,new Set())});document.querySelectorAll('.mcb').forEach(cb=>cb.checked=false)};
+window.setF=(c,k,v)=>{let f=S.findings.get(c);if(!f){f={status:'',observation:'',risk:'',remarks:''};S.findings.set(c,f)}f[k]=v;
+    document.querySelectorAll(`[data-fp="${c}"]`).forEach(p=>{p.textContent=f.status==='satisfied'?'✅':f.status==='not-satisfied'?'❌':f.status==='other'?'⚠️':'○';p.className=`fp text-xs ml-1 ${f.status==='satisfied'?'text-emerald-400':f.status==='not-satisfied'?'text-red-400':f.status==='other'?'text-amber-400':'text-slate-600'}`});
+    if(k==='status')document.querySelectorAll(`.ctrl-row[data-cid="${c}"] select`).forEach(s=>{if(s.id.startsWith('f-s-'))s.value=v});
+    let n=0;S.findings.forEach((f2,cc)=>{if(!S.excluded.has(cc)&&f2.status)n++});const rn=document.getElementById('rated-n');if(rn)rn.textContent=n;const sr=document.getElementById('stat-rated');if(sr)sr.textContent=n};
+window.fltC=()=>{
+    const t=(document.getElementById('cf')?.value||'').toLowerCase();
+    const fm=document.getElementById('flt-modal')?.value||'';
+    const fc=document.getElementById('flt-class')?.value||'';
+    const fsec=document.getElementById('flt-sec')?.value||'';
+    const fs=document.getElementById('flt-status')?.value||'';
+    document.querySelectorAll('.ctrl-row').forEach(r=>{
+        const cid=r.dataset.cid?.toLowerCase()||'';const title=r.dataset.title||'';
+        let show=true;
+        if(t&&!cid.includes(t)&&!title.includes(t))show=false;
+        if(fm&&r.dataset.modal!==fm)show=false;
+        if(fc&&r.dataset.class!==fc)show=false;
+        if(fsec&&r.dataset.sec!==fsec)show=false;
+        if(fs&&r.dataset.status!==fs)show=false;
+        r.style.display=show?'':'none';
+    })
+};
+
+// ============================================================
+// EXPORT AP / AR
+// ============================================================
+function exportAP(){
+    const ts=new Date().toISOString(),au=crypto.randomUUID();const cids=[...S.allCids].filter(c=>!S.excluded.has(c)).sort();
+    const byM={};cids.forEach(c=>{(S.methods.get(c)||new Set(['EXAMINE'])).forEach(m=>{if(!byM[m])byM[m]={uuid:crypto.randomUUID(),cids:[]};byM[m].cids.push(c)})});
+    const acts=Object.entries(byM).map(([m,a])=>({uuid:a.uuid,title:`${m}-Prüfung`,description:`${m} für ${a.cids.length} Controls.`,props:[{name:"method",ns:"http://csrc.nist.gov/ns/oscal",value:m}],"related-controls":{"control-selections":[{"include-controls":a.cids.map(c=>({"control-id":c}))}]}}));
+    const ap={"assessment-plan":{uuid:crypto.randomUUID(),metadata:{title:S.meta.title||'AP',version:S.meta.version||'1.0.0',"last-modified":ts,"oscal-version":"1.1.3",roles:[{id:"assessor",title:"Assessor"},{id:"system-owner",title:"System Owner"}]},"import-ssp":{href:S.sspFilename},"reviewed-controls":{"control-selections":[{"include-controls":cids.map(c=>({"control-id":c}))}]}}};
+    if(S.meta.desc)ap["assessment-plan"].metadata.remarks=S.meta.desc;
+    if(S.assessor.name){ap["assessment-plan"].metadata.parties=[{uuid:au,type:S.assessor.type,name:S.assessor.name}];if(S.assessor.email)ap["assessment-plan"].metadata.parties[0]["email-addresses"]=[S.assessor.email];ap["assessment-plan"].metadata["responsible-parties"]=[{"role-id":"assessor","party-uuids":[au]}]}
+    if(acts.length)ap["assessment-plan"]["local-definitions"]={activities:acts};
+    const tc=[];if(S.terms.roe)tc.push({name:"rules-of-engagement",prose:S.terms.roe});if(S.terms.disclosures)tc.push({name:"disclosures",prose:S.terms.disclosures});if(S.terms.methodology)tc.push({name:"methodology",prose:S.terms.methodology});if(tc.length)ap["assessment-plan"]["terms-and-conditions"]={parts:tc};
+    ap["assessment-plan"]["assessment-subjects"]=[{type:"component",description:"Systemkomponenten","include-all":{}}];
+    ap["assessment-plan"]["assessment-assets"]={"assessment-platforms":[{uuid:crypto.randomUUID(),title:"Assessment-Plattform"}]};
+    if(S.dateStart||S.dateEnd||S.tasks.length){const t=[];if(S.dateStart&&S.dateEnd)t.push({uuid:crypto.randomUUID(),type:"action",title:"Assessment-Durchführung",timing:{"within-date-range":{start:`${S.dateStart}T00:00:00Z`,end:`${S.dateEnd}T23:59:59Z`}},"associated-activities":Object.values(byM).map(a=>({"activity-uuid":a.uuid,subjects:[{type:"component","include-all":{}}]}))});S.tasks.forEach(tk=>t.push({uuid:tk.uuid,type:tk.type,title:tk.title}));if(t.length)ap["assessment-plan"].tasks=t}
+    dl(ap,`${sn()}_AP.json`);autoSave();
+}
+
+function exportAR(){
+    const ts=new Date().toISOString();const cids=[...S.allCids].filter(c=>!S.excluded.has(c)).sort();
+    const obs=[],fin=[],rsk=[];
+    
+    cids.forEach(c=>{
+        const f=S.findings.get(c);
+        if(!f||!f.status)return;
+        
+        const comps = [];
+        S.compGroups.forEach((ctrlMap, cuuid) => {
+            if(cuuid !== '__none' && ctrlMap.has(c)) {
+                comps.push({uuid: cuuid, title: S.compMeta.get(cuuid)?.title || cuuid});
+            }
+        });
+
+        if (comps.length === 0) {
+            addTriplet(c, f, null);
+        } else {
+            comps.forEach(comp => {
+                addTriplet(c, f, comp);
+            });
+        }
+
+        function addTriplet(cid, finding, comp) {
+            let ou=null;
+            if(finding.observation){
+                ou=crypto.randomUUID();
+                obs.push({
+                    uuid:ou,
+                    title:`Beobachtung ${cid}${comp ? ' (' + comp.title + ')' : ''}`,
+                    description:finding.observation,
+                    methods:[...(S.methods.get(cid)||['EXAMINE'])],
+                    collected:ts,
+                    ...(comp ? { subjects: [{ "subject-uuid": comp.uuid, type: "component", title: comp.title }] } : {})
+                });
+            }
+            
+            let ru=null;
+            if(finding.risk&&finding.status==='not-satisfied'){
+                ru=crypto.randomUUID();
+                rsk.push({
+                    uuid:ru,
+                    title:`Risiko ${cid}${comp ? ' (' + comp.title + ')' : ''}`,
+                    description:finding.risk,
+                    status:"open"
+                });
+            }
+            
+            const fd={
+                uuid:crypto.randomUUID(),
+                title:`Befund ${cid}${comp ? ' (' + comp.title + ')' : ''}`,
+                description:finding.remarks||`Bewertung ${cid}`,
+                target:{type:"objective-id","target-id":cid,status:{state:finding.status}}
+            };
+            
+            if(ou)fd["related-observations"]=[{"observation-uuid":ou}];
+            if(ru)fd["related-risks"]=[{"risk-uuid":ru}];
+            fin.push(fd);
+        }
+    });
+    
+    if(!fin.length)return alert('Keine bewerteten Controls.');
+    const ar={"assessment-results":{uuid:crypto.randomUUID(),metadata:{title:`${sn().replace(/_/g,' ')} - Assessment Results`,version:S.meta.version||'1.0.0',"last-modified":ts,"oscal-version":"1.1.3"},"import-ap":{href:`${sn()}_AP.json`},results:[{uuid:crypto.randomUUID(),title:"Assessment-Ergebnis",description:'Ergebnisse',start:S.dateStart?`${S.dateStart}T00:00:00Z`:ts,end:S.dateEnd?`${S.dateEnd}T23:59:59Z`:ts,"reviewed-controls":{"control-selections":[{"include-controls":cids.map(c=>({"control-id":c}))}]},...(obs.length?{observations:obs}:{}),findings:fin,...(rsk.length?{risks:rsk}:{})}]}};
+    dl(ar,`${sn()}_AR.json`);autoSave();
+}
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function sn(){return(S.meta.title||'System').replace(/[^a-zA-Z0-9äöüÄÖÜß\-]/g,'_').replace(/_+/g,'_')}
+function dl(o,n){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,2)],{type:'application/json;charset=utf-8'}));a.download=n;document.body.appendChild(a);a.click();document.body.removeChild(a)}
+function setSt(id,ok,txt){const e=document.getElementById(id);e.className=`px-3 py-1 rounded-lg text-xs font-semibold ${ok?'bg-emerald-900/50 text-emerald-400 border border-emerald-700':'bg-slate-700 text-slate-400 border border-slate-600'} flex items-center`;e.innerHTML=`<span class="w-2 h-2 rounded-full ${ok?'bg-emerald-500':'bg-amber-500 animate-pulse'} mr-2"></span>${txt}`}
+</script>
+</body>
+</html>

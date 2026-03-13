@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSCAL SSP Editor + Workspace (Enhanced Multi-AI)</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
+    </script>
+    <style>
+        .collapsible-content, .coll-content { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.3s ease-out, opacity 0.3s ease-in-out; }
+        .collapsible-content.open, .coll-content.open { max-height: none; opacity: 1; overflow: auto; }
+        .chevron-icon, .chev { transition: transform 0.3s ease; }
+        .chevron-icon.open, .chev.open { transform: rotate(90deg); }
+        .param-placeholder { color: #60a5fa; font-family: monospace; font-weight: bold; background-color: rgba(30, 58, 138, 0.3); padding: 0 4px; border-radius: 4px; cursor: help; }
+        .maturity-radio-label:hover { background-color: #334155; }
+        
+        ::-webkit-scrollbar, .cscroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track, .cscroll::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb, .cscroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        .drag-over { border-color: #10b981 !important; background: rgba(16, 185, 129, 0.1) !important; }
+        .sb { font-size: 10px; padding: 2px 8px; border-radius: 9999px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; border: 1px solid; }
+        
+        /* FIX A: Harte Überschreibung des Tailwind Forms Plugin für Inputs */
+        input[type="text"].inp, input[type="password"].inp, input[type="email"].inp, input[type="date"].inp, select.inp, textarea.inp {
+            padding: .5rem .75rem !important;
+            background-color: #1e293b !important;
+            border: 1px solid #475569 !important;
+            border-radius: .5rem !important;
+            font-size: .875rem !important;
+            color: #f8fafc !important;
+            outline: none !important;
+            transition: border .15s !important;
+        }
+        input.inp:focus, select.inp:focus, textarea.inp:focus {
+            border-color: #10b981 !important;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, .2) !important;
+        }
+
+        .loader-sm { border: 3px solid #334155; border-top: 3px solid #10b981; border-radius: 50%; width: 16px; height: 16px; animation: sp .8s linear infinite; display: inline-block; }
+        @keyframes sp { 0% { transform: rotate(0) } 100% { transform: rotate(360deg) } }
+
+        /* KI Loader and Formatting */
+        .ai-loader { display: none; width: 16px; height: 16px; border: 3px solid rgba(168, 85, 247, 0.2); border-top: 3px solid #a855f7; border-radius: 50%; animation: sp 1s linear infinite; }
+        .ai-response-content { font-size: 0.875rem; line-height: 1.6; color: #e2e8f0; }
+        .ai-response-content h1, .ai-response-content h2, .ai-response-content h3 { color: #f8fafc; font-weight: 700; margin-top: 1em; margin-bottom: 0.5em; border-bottom: 1px solid rgba(139, 92, 246, 0.3); padding-bottom: 0.25em; }
+        .ai-response-content p { margin-bottom: 1em; }
+        .ai-response-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; }
+        .ai-response-content ol { list-style-type: decimal; padding-left: 1.5em; margin-bottom: 1em; }
+        .ai-response-content strong { color: #f8fafc; font-weight: 600; }
+        .ai-response-content table { width: 100%; border-collapse: collapse; margin-bottom: 1em; border-color: #475569; }
+        .ai-response-content th, .ai-response-content td { border: 1px solid #475569; padding: 0.5em; }
+        .ai-response-content th { background-color: #334155; }
+        .ai-response-content code { background-color: #312e81; padding: 0.2em 0.4em; border-radius: 0.25em; font-family: monospace; }
+
+        /* Sidebar Toggle */
+        .sidebar { width: 320px; min-width: 320px; transition: margin-left .3s ease, opacity .3s; overflow-y: auto; }
+        .sidebar.collapsed { margin-left: -320px; opacity: 0; pointer-events: none; }
+        .sb-toggle { position: fixed; top: 12px; left: 12px; z-index: 50; background: #1e293b; border: 1px solid #475569; border-radius: .5rem; padding: 6px 10px; color: #e2e8f0; cursor: pointer; font-size: 18px; transition: left .3s; }
+        .sb-toggle.shifted { left: 332px; }
+        @media(max-width: 768px) { .sidebar { width: 100%; min-width: 100%; position: fixed; top: 0; left: 0; z-index: 40; height: 100vh; background: #0f172a; } .sidebar.collapsed { margin-left: -100%; } }
+    </style>
+</head>
+<body class="h-full font-sans text-slate-200 overflow-hidden">
+
+<button id="sb-btn" class="sb-toggle shifted" onclick="document.getElementById('sidebar').classList.toggle('collapsed');this.classList.toggle('shifted')">☰</button>
+
+<div class="flex h-full">
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="sidebar bg-slate-800 border-r border-slate-700 p-3 flex flex-col gap-2 cscroll relative z-30">
+        <div class="pt-1">
+            <h1 class="text-base font-bold text-white leading-tight">OSCAL SSP Editor</h1>
+            <p class="text-[10px] text-slate-500 mt-0.5">Workspace & Implementation</p>
+        </div>
+        
+        <!-- Status -->
+        <div class="space-y-1">
+            <div id="ssp-status-ind" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 flex items-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span>Kein SSP geladen
+            </div>
+            <div id="resource-status-ind" class="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-700 text-slate-400 border border-slate-600 items-center hidden"></div>
+        </div>
+
+        <!-- Import / Drag & Drop -->
+        <div class="space-y-1.5">
+            <div id="dz-ssp" class="dz border border-dashed border-slate-600 rounded p-2 text-center cursor-pointer hover:border-blue-500 bg-slate-900/40 text-[10px]" data-type="ssp">
+                📋 1. SSP laden (Main)
+                <input type="file" accept=".json" class="hidden fip" data-type="ssp" id="ssp-uploader">
+            </div>
+            <div id="dz-assoc" class="dz border border-dashed border-slate-600 rounded p-2 text-center cursor-pointer hover:border-emerald-500 bg-slate-900/40 text-[10px]" data-type="assoc">
+                📦 2. Assoziierte laden
+                <input type="file" accept=".json" multiple class="hidden fip" data-type="assoc" id="associated-uploader">
+            </div>
+            <div id="dz-state" class="dz border border-dashed border-slate-600 rounded p-2 text-center cursor-pointer hover:border-purple-500 bg-slate-900/40 text-[10px]" data-type="state">
+                💾 Session (.json) laden
+                <input type="file" accept=".json" class="hidden fip" data-type="state">
+            </div>
+        </div>
+
+        <!-- AI Config -->
+        <div class="border border-slate-700 rounded overflow-hidden">
+            <button onclick="tog('sb-ai')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300">
+                🤖 KI Konfiguration
+                <span id="ai-badge" class="sb bg-slate-700 text-slate-500 border-slate-600 hidden ml-1">—</span>
+                <svg id="icon-sb-ai" class="chev w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+            </button>
+            <div id="sb-ai-content" class="coll-content p-2 bg-slate-900/30 space-y-1.5">
+                <select id="ai-provider" onchange="onProvChange()" class="inp text-[10px] w-full"><option value="">— Kein Provider —</option><option value="claude">Anthropic Claude</option><option value="gemini">Google Gemini</option></select>
+                <input type="password" id="ai-key" placeholder="API-Key" oninput="saveAICfg()" class="inp text-[10px] w-full">
+                <select id="ai-model" class="inp text-[10px] w-full" onchange="saveAICfg()"></select>
+                <label class="block text-[10px] font-bold text-slate-400 mt-2">Unternehmenskontext</label>
+                <textarea id="ai-context" rows="2" class="inp text-[10px] w-full" placeholder="Wir sind KRITIS / NIS2..." oninput="saveAICfg()"></textarea>
+                <div class="flex gap-2 text-[8px] mt-1"><a href="https://console.anthropic.com/" target="_blank" class="text-violet-400 underline">Claude Key</a><a href="https://aistudio.google.com/" target="_blank" class="text-blue-400 underline">Gemini Key</a></div>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="space-y-1 border-t border-slate-700 pt-2">
+            <button onclick="scrollToSec('sec-meta')" class="w-full text-left p-1.5 text-[10px] font-bold text-slate-300 hover:text-emerald-400">📝 Metadaten & Status</button>
+            <button onclick="scrollToSec('sec-chars')" class="w-full text-left p-1.5 text-[10px] font-bold text-slate-300 hover:text-emerald-400">🖥️ Charakteristika</button>
+            <button onclick="scrollToSec('sec-risk')" class="w-full text-left p-1.5 text-[10px] font-bold text-slate-300 hover:text-emerald-400" id="nav-risk" style="display:none">⚠️ Risikoanalyse</button>
+        </div>
+
+        <!-- Global Filters (Injected by JS) -->
+        <div class="border border-slate-700 rounded overflow-hidden mt-1">
+            <button onclick="tog('sb-flt')" class="w-full flex justify-between items-center p-1.5 bg-slate-900/60 text-[10px] font-bold text-slate-300">
+                🔍 Komponenten Filter
+                <svg id="icon-sb-flt" class="chev open w-3 h-3 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+            </button>
+            <div id="sb-flt-content" class="coll-content open p-2 bg-slate-900/30 space-y-1.5">
+                <div id="sb-filters">
+                    <!-- Filers injected here -->
+                    <p class="text-[9px] text-slate-500 italic">Laden Sie ein SSP, um Filter zu sehen.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Component Navigation (Injected by JS) -->
+        <div id="sb-comp-nav" class="space-y-1 mt-1 hidden"></div>
+
+        <!-- Export -->
+        <div class="mt-auto space-y-1.5 pt-2 border-t border-slate-700">
+            <button id="save-session-btn" onclick="saveSessionFile()" class="w-full bg-purple-700 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-purple-600 disabled:bg-slate-700">💾 Session (.json)</button>
+            <button id="save-ssp-btn" onclick="handleFileSave()" class="w-full bg-emerald-600 text-white font-bold py-1.5 px-2 rounded text-[10px] hover:bg-emerald-500 disabled:bg-slate-700" disabled>📋 SSP Export</button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 overflow-y-auto bg-slate-900 relative">
+        <div id="loading-indicator" class="hidden absolute inset-0 z-50 bg-slate-900/80 flex items-center justify-center">
+            <div class="text-center">
+                <div class="loader-sm w-12 h-12 border-4 mb-4 border-slate-600 border-top-emerald-500"></div>
+                <p id="loading-text" class="text-emerald-400 font-bold animate-pulse">Verarbeite Workspace...</p>
+            </div>
+        </div>
+
+        <div class="p-4 md:p-8 max-w-7xl mx-auto space-y-6">
+            
+            <div id="welcome-msg" class="text-center py-12">
+                <h2 class="text-2xl font-bold text-slate-300 mb-4">Willkommen im OSCAL SSP Editor</h2>
+                <p class="text-slate-400 mb-6 max-w-lg mx-auto">Ziehen Sie Ihr <code>system-security-plan.json</code> in die Sidebar oder laden Sie eine bestehende Session, um fortzufahren.</p>
+            </div>
+
+            <div id="ssp-editor" class="hidden space-y-6">
+                <!-- Resource Status -->
+                <div id="sec-resource" class="border border-slate-700 rounded-lg overflow-hidden">
+                    <button class="collapsible-header w-full flex justify-between items-center p-4 bg-slate-800 hover:bg-slate-700 text-left">
+                        <h2 class="text-lg font-bold text-white">Ressourcen-Status (Workspace)</h2>
+                        <svg class="chevron-icon w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                    </button>
+                    <div class="collapsible-content p-4 border-t border-slate-700 bg-slate-900" id="resource-status-content-inner"></div>
+                </div>
+
+                <!-- Risk Analysis -->
+                <div id="sec-risk" class="border border-slate-700 rounded-lg overflow-hidden hidden">
+                    <button class="collapsible-header w-full flex justify-between items-center p-4 bg-slate-800 hover:bg-slate-700 text-left">
+                        <h2 class="text-lg font-bold text-white">Risikoanalyse (aus SSP & Profilen)</h2>
+                        <svg class="chevron-icon open w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                    </button>
+                    <div class="collapsible-content open p-4 border-t border-slate-700 bg-slate-900" id="risk-analysis-content-inner"></div>
+                </div>
+
+                <!-- Metadata -->
+                <div id="sec-meta" class="border border-slate-700 rounded-lg overflow-hidden">
+                    <button class="collapsible-header w-full flex justify-between items-center p-4 bg-slate-800 hover:bg-slate-700 text-left">
+                        <h2 class="text-lg font-bold text-white">Metadaten</h2>
+                        <svg class="chevron-icon w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                    </button>
+                    <div class="collapsible-content p-4 border-t border-slate-700 bg-slate-900" id="metadata-content-inner"></div>
+                </div>
+
+                <!-- System Chars -->
+                <div id="sec-chars" class="border border-slate-700 rounded-lg overflow-hidden">
+                    <button class="collapsible-header w-full flex justify-between items-center p-4 bg-slate-800 hover:bg-slate-700 text-left">
+                        <h2 class="text-lg font-bold text-white">System-Charakteristika</h2>
+                        <svg class="chevron-icon w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                    </button>
+                    <div class="collapsible-content p-4 border-t border-slate-700 bg-slate-900" id="system-chars-content-inner"></div>
+                </div>
+
+                <!-- Implementation Area -->
+                <div id="impl-area"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // ============================================================
+    // CONFIG & STATE
+    // ============================================================
+    const GS_PLUS_CATALOG_URL = 'https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json';
+    const MODELS = {
+        claude: [
+            { id: 'claude-3-5-sonnet-20240620', label: 'Claude 3.5 Sonnet (Standard)' },
+            { id: 'claude-3-opus-20240229', label: 'Claude 3 Opus (Top)' }
+        ],
+        gemini: [
+            { id: 'gemini-3.1-pro-preview', label: 'Gemini 3.1 Pro Preview' },
+            { id: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro (Prod)' }
+        ]
+    };
+
+    const workspaceFiles = new Map();
+    let sspData = null; 
+    let sspFileName = 'edited-ssp.json'; 
+
+    let catalogControlMap = new Map(); 
+    let catalogParamMap = new Map();
+    let profileModifications = { setParams: new Map(), alters: new Map() }; 
+    let loadedRiskData = [];
+    let componentDefinitions = new Map(); 
+    let resourceLoadStatus = []; 
+    let aiCache = {};
+
+    let autoSaveTimer = null;
+
+    // UI Elements
+    const editorDiv = document.getElementById('ssp-editor');
+    const welcomeMsg = document.getElementById('welcome-msg');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const loadingText = document.getElementById('loading-text');
+    const saveSspBtn = document.getElementById('save-ssp-btn');
+
+    // ============================================================
+    // HELPER (FIX C: Properties Config für Filter und Tags)
+    // ============================================================
+    function getPropConfig(name) {
+        const n = (name || '').toLowerCase();
+        const iconClass = "w-3 h-3 mr-1.5 flex-shrink-0";
+        
+        const icons = {
+            shield: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>`,
+            zap: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+            eye: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>`,
+            doc: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 011.414.586l5.414 5.414a1 1 0 01.586 1.414V19a2 2 0 01-2 2z"></path></svg>`,
+            clock: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+            check: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+            alert: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`,
+            tag: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>`,
+            cube: `<svg class="${iconClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>`
+        };
+
+        if (n.includes('effective_on_c')) return { icon: icons.shield, color: 'text-red-200 bg-red-900/50 border-red-800', label: 'Confidentiality' };
+        if (n.includes('effective_on_i')) return { icon: icons.shield, color: 'text-blue-200 bg-blue-900/50 border-blue-800', label: 'Integrity' };
+        if (n.includes('effective_on_a')) return { icon: icons.shield, color: 'text-yellow-200 bg-yellow-900/50 border-yellow-800', label: 'Availability' };
+        if (n.includes('phase')) return { icon: icons.clock, color: 'text-purple-200 bg-purple-900/50 border-purple-800', label: 'Phase' };
+        if (n.includes('class') || n.includes('technical')) return { icon: icons.cube, color: 'text-slate-200 bg-slate-700 border-slate-600', label: 'Class' };
+        if (n.includes('modalverb')) return { icon: icons.alert, color: 'text-fuchsia-200 bg-fuchsia-900/60 border-fuchsia-700', label: 'Modalverb' };
+        if (n.includes('effort_level') || n.includes('aufwand')) return { icon: icons.zap, color: 'text-orange-200 bg-orange-900/60 border-orange-700', label: 'Aufwand' };
+        if (n.includes('documentation') || n.includes('dokumentation')) return { icon: icons.doc, color: 'text-cyan-200 bg-cyan-900/60 border-cyan-700', label: 'Doku' };
+        if (n.includes('ergebnis') || n.includes('result')) return { icon: icons.check, color: 'text-emerald-200 bg-emerald-900/60 border-emerald-700', label: 'Ergebnis' };
+        if (n.includes('handlung')) return { icon: icons.tag, color: 'text-indigo-200 bg-indigo-900/60 border-indigo-700', label: 'Handlung' };
+        if (n.includes('alt-identifier')) return { icon: icons.tag, color: 'text-gray-400 bg-gray-800 border-gray-700', label: 'ID' };
+
+        return { icon: icons.tag, color: 'text-slate-300 bg-slate-800 border-slate-600', label: name };
+    }
+
+    // ============================================================
+    // INIT & EVENT LISTENERS
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        setupDragAndDrop();
+        loadAICfg();
+        tryAutoRestore();
+        
+        // Header Toggles
+        document.querySelectorAll('.collapsible-header').forEach(header => {
+            header.addEventListener('click', () => {
+                header.nextElementSibling.classList.toggle('open');
+                header.querySelector('.chevron-icon')?.classList.toggle('open');
+            });
+        });
+
+        // Auto-save listeners on DOM changes
+        document.querySelector('main').addEventListener('input', scheduleAutoSave);
+        document.querySelector('main').addEventListener('change', scheduleAutoSave);
+    });
+
+    function setupDragAndDrop() {
+        document.querySelectorAll('.dz').forEach(dz => {
+            const fi = dz.querySelector('.fip'), ty = dz.dataset.type;
+            dz.addEventListener('click', () => fi.click());
+            dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over') });
+            dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+            dz.addEventListener('drop', e => {
+                e.preventDefault(); dz.classList.remove('drag-over');
+                if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files, ty);
+            });
+            fi.addEventListener('change', e => {
+                if (e.target.files.length) handleFiles(e.target.files, ty);
+                fi.value = ''; // Reset
+            });
+        });
+    }
+
+    window.tog = id => {
+        document.getElementById(id + '-content')?.classList.toggle('open');
+        document.getElementById('icon-' + id)?.classList.toggle('open');
+    };
+    
+    window.scrollToSec = id => {
+        const el = document.getElementById(id);
+        if(el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            el.nextElementSibling?.classList.add('open');
+            el.querySelector('.chevron-icon')?.classList.add('open');
+            el.parentElement.classList.add('ring-2', 'ring-emerald-500');
+            setTimeout(() => el.parentElement.classList.remove('ring-2', 'ring-emerald-500'), 1500);
+        }
+    };
+
+    // ============================================================
+    // SESSION MANAGEMENT (AUTO SAVE)
+    // ============================================================
+    function scheduleAutoSave(e) {
+        if(!sspData) return;
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(() => {
+            updateSSPFromDOM();
+            autoSave();
+        }, 2000);
+    }
+
+    // FIX D: Updates hidden filter attribute live on change
+    window.updateStatus = (el) => {
+        const entry = el.closest('.ctrl-entry');
+        if (entry) {
+            const newStatus = el.value || 'open';
+            entry.dataset.filter = entry.dataset.filter.replace(/\|status:[^|]+\|/, `|status:${newStatus}|`);
+            applyFilters();
+            scheduleAutoSave();
+        }
+    };
+
+    function updateSSPFromDOM() {
+        if (!sspData) return;
+        try {
+            const ssp = sspData['system-security-plan'];
+            const titleEl = document.getElementById('metadata-title');
+            if(titleEl) ssp.metadata.title = titleEl.value;
+
+            const remarksEl = document.getElementById('metadata-remarks');
+            if(remarksEl) ssp.metadata.remarks = remarksEl.value;
+            
+            const sysNameEl = document.getElementById('system-name');
+            if(sysNameEl) ssp['system-characteristics']['system-name'] = sysNameEl.value;
+            
+            const sysDescEl = document.getElementById('system-description');
+            if(sysDescEl) ssp['system-characteristics'].description = sysDescEl.value;
+            
+            ssp.metadata["last-modified"] = new Date().toISOString();
+
+            const statusEl = document.getElementById('system-status');
+            if (statusEl) {
+                if (!ssp['system-characteristics'].status) ssp['system-characteristics'].status = {};
+                ssp['system-characteristics'].status.state = statusEl.value;
+            }
+
+            if (!ssp['control-implementation']) ssp['control-implementation'] = {};
+            
+            // Params
+            const paramInputs = document.querySelectorAll('.param-input');
+            const setParameters = [];
+            const paramMap = new Map();
+            paramInputs.forEach(input => {
+                const val = input.value.trim();
+                const paramId = input.dataset.paramId;
+                if (val && paramId) paramMap.set(paramId, val);
+            });
+            paramMap.forEach((value, paramId) => {
+                setParameters.push({ "param-id": paramId, "values": [ value ] });
+            });
+            if (setParameters.length > 0) ssp['control-implementation']['set-parameters'] = setParameters;
+            else delete ssp['control-implementation']['set-parameters'];
+            
+            // Requirements
+            if (!Array.isArray(ssp['control-implementation']['implemented-requirements'])) {
+                ssp['control-implementation']['implemented-requirements'] = [];
+            }
+            let requirements = ssp['control-implementation']['implemented-requirements'];
+            const controlEntries = document.querySelectorAll('.ctrl-entry');
+
+            controlEntries.forEach(entry => {
+                const controlId = entry.dataset.cid;
+                const compUuid = entry.dataset.comp;
+                const uniqueDomId = `${controlId.replace(/[^a-zA-Z0-9]/g, '-')}-${compUuid}`;
+
+                const stateEl = entry.querySelector(`#state-${uniqueDomId}`);
+                if (!stateEl) return;
+
+                const state = stateEl.value;
+                const description = entry.querySelector(`#desc-${uniqueDomId}`)?.value || '';
+                const name = entry.querySelector(`#name-${uniqueDomId}`)?.value || '';
+                const date = entry.querySelector(`#date-${uniqueDomId}`)?.value || '';
+                const statementRadio = entry.querySelector(`input[name="mat-${uniqueDomId}"]:checked`);
+                const selectedStmtId = (statementRadio && statementRadio.value !== 'manual') ? statementRadio.value : '';
+                
+                if (state || description || name || date || selectedStmtId) {
+                    let req = requirements.find(r => r['control-id'] === controlId);
+                    if (!req) {
+                        req = { "uuid": crypto.randomUUID(), "control-id": controlId, "by-components": [] };
+                        requirements.push(req);
+                    }
+                    if (!req['by-components']) req['by-components'] = [];
+
+                    let byCompEntry = req['by-components'].find(bc => bc['component-uuid'] === compUuid);
+                    if (!byCompEntry) {
+                        byCompEntry = {
+                            "uuid": crypto.randomUUID(),
+                            "component-uuid": compUuid,
+                            "description": description,
+                            "implementation-status": { "state": state || "partial" }, 
+                            "props": []
+                        };
+                        req['by-components'].push(byCompEntry);
+                    } else {
+                        byCompEntry.description = description;
+                        if(!byCompEntry['implementation-status']) byCompEntry['implementation-status'] = {};
+                        byCompEntry['implementation-status'].state = state || "partial";
+                        if(!byCompEntry.props) byCompEntry.props = [];
+                    }
+
+                    const setProp = (n, v) => {
+                        let p = byCompEntry.props.find(x => x.name === n);
+                        if(v) { p ? p.value = v : byCompEntry.props.push({ "name": n, "value": v }); }
+                        else { byCompEntry.props = byCompEntry.props.filter(x => x.name !== n); }
+                    };
+                    setProp('implementing-user', name);
+                    setProp('implementation-date', date);
+                    setProp('implemented-statement-id', selectedStmtId);
+                    
+                    if (byCompEntry.props.length === 0) delete byCompEntry.props;
+                } else {
+                    let req = requirements.find(r => r['control-id'] === controlId);
+                    if (req && req['by-components']) {
+                        req['by-components'] = req['by-components'].filter(bc => bc['component-uuid'] !== compUuid);
+                    }
+                }
+            });
+
+            requirements = requirements.filter(req => req['by-components'] && req['by-components'].length > 0);
+            ssp['control-implementation']['implemented-requirements'] = requirements;
+        } catch (error) {
+            console.error("DOM Sync Fehler:", error);
+        }
+    }
+
+    function ser() {
+        return JSON.stringify({
+            _v: 2,
+            sspFileName,
+            sspData,
+            aiCache,
+            wsFilesArr: [...workspaceFiles.entries()]
+        });
+    }
+
+    function autoSave() {
+        if(!sspData) return;
+        try {
+            const dataStr = ser();
+            localStorage.setItem('oscal_ssp_editor_v2', dataStr);
+        } catch (e) {
+            console.warn("AutoSave fehlgeschlagen (evtl. Quota exceeded)", e);
+        }
+    }
+
+    async function tryAutoRestore() {
+        try {
+            const s = localStorage.getItem('oscal_ssp_editor_v2');
+            if(!s) return;
+            const d = JSON.parse(s);
+            if(d._v >= 2 && d.sspData && confirm(`Autosave gefunden: ${d.sspFileName}. Wiederherstellen?`)) {
+                await restoreSession(d);
+            }
+        } catch(e) { console.error("Restore Error:", e); }
+    }
+
+    async function restoreSession(d) {
+        sspFileName = d.sspFileName || 'edited-ssp.json';
+        sspData = d.sspData;
+        aiCache = d.aiCache || {};
+        workspaceFiles.clear();
+        if(d.wsFilesArr) {
+            d.wsFilesArr.forEach(([k, v]) => workspaceFiles.set(k, v));
+        }
+        await processWorkspace();
+    }
+
+    window.saveSessionFile = () => {
+        updateSSPFromDOM();
+        const dataStr = ser();
+        const blob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = sspFileName.replace('.json', '_session.json');
+        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    };
+
+    // ============================================================
+    // KI ANBINDUNG (MULTI-AI)
+    // ============================================================
+    window.onProvChange = () => {
+        const p = document.getElementById('ai-provider').value;
+        const s = document.getElementById('ai-model');
+        s.innerHTML = '';
+        (MODELS[p] || []).forEach(m => {
+            const o = document.createElement('option');
+            o.value = m.id; o.textContent = m.label;
+            s.appendChild(o);
+        });
+        saveAICfg();
+    };
+
+    window.saveAICfg = () => {
+        const c = {
+            p: document.getElementById('ai-provider').value,
+            k: document.getElementById('ai-key').value,
+            m: document.getElementById('ai-model').value,
+            ctx: document.getElementById('ai-context').value
+        };
+        try { localStorage.setItem('oscal_ssp_ai', JSON.stringify(c)); } catch(e){}
+        const b = document.getElementById('ai-badge');
+        if (c.p && c.k) {
+            b.classList.remove('hidden');
+            b.className = 'sb bg-violet-900 text-violet-300 border-violet-700';
+            b.textContent = c.p === 'claude' ? 'Claude' : 'Gemini';
+        } else {
+            b.classList.add('hidden');
+        }
+    };
+
+    function loadAICfg() {
+        try {
+            const c = JSON.parse(localStorage.getItem('oscal_ssp_ai') || '{}');
+            if (c.p) {
+                document.getElementById('ai-provider').value = c.p;
+                onProvChange();
+                if (c.k) document.getElementById('ai-key').value = c.k;
+                if (c.m) document.getElementById('ai-model').value = c.m;
+                if (c.ctx) document.getElementById('ai-context').value = c.ctx;
+                saveAICfg();
+            }
+        } catch(e){}
+    }
+
+    function getAI() {
+        const p = document.getElementById('ai-provider').value;
+        const k = document.getElementById('ai-key').value;
+        const m = document.getElementById('ai-model').value;
+        const ctx = document.getElementById('ai-context').value;
+        return (p && k) ? { p, k, m, ctx } : null;
+    }
+
+    async function callAI(prompt, systemPrompt = "") {
+        const ai = getAI();
+        if (!ai) throw new Error('Keine KI konfiguriert (Sidebar checken).');
+
+        if (ai.p === 'claude') {
+            const body = {
+                model: ai.m,
+                max_tokens: 4000,
+                messages: [{ role: 'user', content: prompt }]
+            };
+            if (systemPrompt) body.system = systemPrompt;
+
+            const r = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': ai.k,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify(body)
+            });
+            const d = await r.json();
+            if (d.error) throw new Error(d.error.message);
+            return d.content?.[0]?.text || '';
+        } else {
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: { temperature: 0.3 }
+            };
+            if (systemPrompt) {
+                payload.system_instruction = { parts: [{ text: systemPrompt }] };
+            }
+            const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${ai.m}:generateContent?key=${ai.k}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const d = await r.json();
+            if (d.error) throw new Error(d.error.message);
+            return d.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        }
+    }
+
+    // ============================================================
+    // FILE LOADING LOGIC
+    // ============================================================
+    async function handleFiles(files, type) {
+        if (!files.length) return;
+        loadingText.textContent = `Lade ${files.length} Datei(en)...`;
+        loadingIndicator.classList.remove('hidden');
+
+        if (type === 'state') {
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const d = JSON.parse(e.target.result);
+                    await restoreSession(d);
+                } catch(err) { alert("Session ungültig: " + err.message); loadingIndicator.classList.add('hidden'); }
+            };
+            reader.readAsText(files[0]);
+            return;
+        }
+
+        if (type === 'ssp') {
+            workspaceFiles.clear();
+            sspData = null;
+            sspFileName = files[0].name.replace('.json', '-edited.json') || 'edited-ssp.json';
+        }
+
+        const loadPromises = Array.from(files).map((file, index) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const json = JSON.parse(e.target.result);
+                        if (type === 'ssp' && !json['system-security-plan']) throw new Error(`Kein gültiges SSP!`);
+                        workspaceFiles.set(file.name, json);
+                        
+                        // FIX: Wir nutzen den Index der Iteration, da das externe files-Objekt bereits geleert wurde
+                        if (type === 'ssp' && index === 0) sspData = json;
+                        
+                        resolve();
+                    } catch (error) { reject(error.message); }
+                };
+                reader.onerror = () => reject(`Lesefehler bei ${file.name}`);
+                reader.readAsText(file, 'UTF-8');
+            });
+        });
+		
+        try {
+            await Promise.all(loadPromises);
+            if(sspData) await processWorkspace();
+            else loadingIndicator.classList.add('hidden');
+        } catch (error) {
+            alert("Fehler beim Laden:\n\n" + error);
+            loadingIndicator.classList.add('hidden');
+        }
+    }
+
+    // ============================================================
+    // WORKSPACE PROCESSING
+    // ============================================================
+    async function processWorkspace() {
+        welcomeMsg.style.display = 'none';
+        editorDiv.classList.add('hidden');
+        saveSspBtn.disabled = true;
+
+        if (!sspData || !sspData['system-security-plan']) {
+            loadingIndicator.classList.add('hidden');
+            return;
+        }
+
+        loadingText.textContent = 'Verarbeite Architektur...';
+        loadingIndicator.classList.remove('hidden');
+
+        catalogControlMap.clear(); catalogParamMap.clear();
+        profileModifications = { setParams: new Map(), alters: new Map() };
+        loadedRiskData = []; componentDefinitions.clear(); resourceLoadStatus = [];
+
+        const ssp = sspData['system-security-plan'];
+
+        try {
+            await processLinkedProfiles(ssp);
+            await processComponentDefinitions(ssp);
+            await processMainCatalog(ssp);
+            extractRiskDataFromSSP(ssp);
+
+            if (catalogControlMap.size === 0) {
+                loadingText.textContent = 'Lade Fallback-Katalog (Grundschutz++)...';
+                await loadFallbackCatalog();
+            }
+
+            renderSSP(ssp);
+            renderResourceStatus();
+            
+            document.getElementById('ssp-status-ind').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 mr-2"></span>SSP Aktiv (${sspFileName})`;
+            document.getElementById('ssp-status-ind').classList.replace('border-slate-600', 'border-emerald-700');
+            document.getElementById('ssp-status-ind').classList.replace('text-slate-400', 'text-emerald-400');
+            
+            editorDiv.classList.remove('hidden');
+            saveSspBtn.disabled = false;
+            autoSave();
+        } catch (error) {
+            console.error("Verarbeitungsfehler:", error);
+            alert("Fehler bei der Verarbeitung: " + error.message);
+        } finally {
+            loadingIndicator.classList.add('hidden');
+        }
+    }
+
+    async function loadReferencedResource(href) {
+        if (!href) return null;
+        const filename = href.split('/').pop(); 
+        const existingStatus = resourceLoadStatus.some(r => r.href === href);
+
+        if (workspaceFiles.has(href)) {
+            if (!existingStatus) resourceLoadStatus.push({ href, status: 'success', source: 'workspace' });
+            return workspaceFiles.get(href);
+        }
+        if (workspaceFiles.has(filename)) {
+            if (!existingStatus) resourceLoadStatus.push({ href, status: 'success', source: 'workspace' });
+            return workspaceFiles.get(filename);
+        }
+
+        if (href.startsWith('http')) {
+            try {
+                const response = await fetch(href);
+                if (!response.ok) throw new Error(`Netzwerk-Status ${response.status}`);
+                const json = await response.json();
+                if (!existingStatus) resourceLoadStatus.push({ href, status: 'success', source: 'network' });
+                return json;
+            } catch (error) {
+                if (!existingStatus) resourceLoadStatus.push({ href, status: 'error', source: 'network', error: error.message });
+                return null;
+            }
+        }
+        if (!existingStatus) resourceLoadStatus.push({ href, status: 'missing', source: 'workspace' });
+        return null;
+    }
+
+    // Decoding, Profiles, Catalog scanning remains essentially unchanged logic-wise
+    function base64DecodeUnicode(str) {
+        try { return new TextDecoder().decode(Uint8Array.from(atob(str), c => c.charCodeAt(0))); } 
+        catch (e) { return null; }
+    }
+
+    async function loadFallbackCatalog() {
+        const d = await loadReferencedResource(GS_PLUS_CATALOG_URL);
+        if (d?.catalog) processCatalogData(d.catalog);
+    }
+
+    async function processLinkedProfiles(ssp) {
+        const links = (ssp.metadata?.links || []).filter(l => l.rel === 'profile' && l.href);
+        await Promise.all(links.map(async (link) => {
+            const d = await loadReferencedResource(link.href);
+            if (d?.profile) {
+                extractRiskData(d.profile, link.href);
+                extractEmbeddedCatalogs(d.profile);
+            }
+        }));
+    }
+
+    async function processComponentDefinitions(ssp) {
+        const defLinks = new Set();
+        (ssp['system-implementation']?.components || []).forEach(c => {
+            const dl = c.links?.find(l => l.rel === 'component-definition' || l.rel === 'source-profile');
+            if (dl?.href) defLinks.add(dl.href);
+        });
+
+        const catLinks = new Set(); 
+        await Promise.all(Array.from(defLinks).map(async (href) => {
+            const d = await loadReferencedResource(href);
+            if (d) {
+                componentDefinitions.set(href, d);
+                if (d['component-definition']) {
+                    (d['component-definition'].metadata?.links || []).forEach(l => {
+                        if ((l.rel === 'source-catalog' || l.rel === 'source') && l.href) catLinks.add(l.href);
+                    });
+                }
+            }
+        }));
+
+        await Promise.all(Array.from(catLinks).map(async (href) => {
+            const d = await loadReferencedResource(href);
+            if (d?.catalog) processCatalogData(d.catalog);
+        }));
+    }
+
+    async function processMainCatalog(ssp) {
+        const pHref = ssp['import-profile']?.href;
+        if (!pHref) return;
+        const d = await loadReferencedResource(pHref);
+        if (d?.profile) {
+            const m = d.profile.modify;
+            if (m?.['set-parameters']) m['set-parameters'].forEach(p => { if (p['param-id'] && p.values?.length) profileModifications.setParams.set(p['param-id'], p.values[0]); });
+            if (m?.['alters']) m['alters'].forEach(a => { if (a['control-id'] && a.adds) profileModifications.alters.set(a['control-id'], [...(profileModifications.alters.get(a['control-id'])||[]), ...a.adds]); });
+            if (m?.inserts) m.inserts.forEach(ins => {
+                (ins.controls || []).forEach(ctrl => {
+                    if (ctrl && ctrl.id) catalogControlMap.set(ctrl.id, ctrl);
+                });
+            });
+            if (d.profile.imports) {
+                for (const imp of d.profile.imports) {
+                    const r = await loadReferencedResource(imp.href);
+                    if (r?.catalog) processCatalogData(r.catalog);
+                }
+            }
+        }
+    }
+
+    function extractRiskDataFromSSP(ssp) {
+        (ssp["back-matter"]?.resources || []).forEach(r => {
+            const att = r.attachments?.[0];
+            if (att?.base64?.filename === "risk-analysis.json" && att.base64.value) {
+                try {
+                    const json = JSON.parse(base64DecodeUnicode(att.base64.value));
+                    if (json.risks) loadedRiskData.push({ sourceHref: "SSP", sourceTitle: "SSP Risikoanalyse", risks: json.risks });
+                } catch (e) {}
+            }
+        });
+    }
+
+    function extractRiskData(p, src) {
+        const ref = p.metadata?.props?.find(pr => pr && pr.name === 'risk-analysis-details-ref')?.value?.replace('#', '');
+        const res = p["back-matter"]?.resources?.find(r => r.uuid === ref);
+        const att = res?.attachments?.[0];
+        if (att?.base64?.value) {
+            try {
+                const json = JSON.parse(base64DecodeUnicode(att.base64.value));
+                if (json.risks) loadedRiskData.push({ sourceHref: src, sourceTitle: p.metadata.title || src, risks: json.risks });
+            } catch (e) {}
+        }
+    }
+
+    function extractEmbeddedCatalogs(p) {
+        (p["back-matter"]?.resources || []).forEach(r => {
+            if (r.rlinks?.some(rl => rl["media-type"] === "application/oscal.catalog+json")) {
+                const att = r.attachments?.[0];
+                if (att?.base64?.value) {
+                    try {
+                        const json = JSON.parse(base64DecodeUnicode(att.base64.value));
+                        if (json.catalog) processCatalogData(json.catalog);
+                    } catch (e) {}
+                }
+            }
+        });
+    }
+
+    function processCatalogData(c) {
+        function scan(items) {
+            if (!items) return;
+            items.forEach(i => {
+                if (i.id && (i.parts || i.class || i.title)) catalogControlMap.set(i.id, i);
+                if (i.params) i.params.forEach(p => { if (p.id) catalogParamMap.set(p.id, p); });
+                if (i.controls) scan(i.controls);
+                if (i.groups) scan(i.groups);
+            });
+        }
+        if (c) { scan(c.groups); scan(c.controls); }
+    }
+
+    // ============================================================
+    // RENDERING
+    // ============================================================
+    function renderSSP(ssp) {
+        document.getElementById('metadata-content-inner').innerHTML = renderMetadata(ssp.metadata);
+        document.getElementById('system-chars-content-inner').innerHTML = renderSystemCharacteristics(ssp['system-characteristics']);
+        
+        if (loadedRiskData.length > 0) {
+            document.getElementById('sec-risk').classList.remove('hidden');
+            document.getElementById('nav-risk').style.display = 'block';
+            document.getElementById('risk-analysis-content-inner').innerHTML = renderRiskAnalysis(ssp);
+        } else {
+            document.getElementById('sec-risk').classList.add('hidden');
+            document.getElementById('nav-risk').style.display = 'none';
+        }
+
+        renderImplementation(ssp); // Injects directly into DOM and Sidebar
+    }
+
+    function renderResourceStatus() {
+        const c = document.getElementById('resource-status-content-inner');
+        let h = '<div class="space-y-2">';
+        const unique = new Map();
+        resourceLoadStatus.forEach(i => { if (!unique.has(i.href) || i.status === 'success') unique.set(i.href, i); });
+        
+        const sorted = Array.from(unique.values()).sort((a,b) => (a.status === 'error' ? 0 : a.status === 'missing' ? 1 : 2) - (b.status === 'error' ? 0 : b.status === 'missing' ? 1 : 2));
+        
+        let fails = 0;
+        sorted.forEach(i => {
+            let sc = '', st = '';
+            if (i.status === 'success') { sc = 'text-green-400'; st = `Geladen (${i.source})`; }
+            else if (i.status === 'error') { sc = 'text-red-400'; st = `Fehler: ${i.error}`; fails++; }
+            else { sc = 'text-orange-400'; st = 'Fehlt (Upload nötig)'; fails++; }
+            h += `<div class="flex justify-between items-start text-xs p-2 bg-slate-800 rounded-md border border-slate-700"><span class="text-slate-300 break-all mr-4">${i.href}</span><span class="${sc} font-medium flex-shrink-0">${st}</span></div>`;
+        });
+        h += '</div>';
+        c.innerHTML = h || '<p class="text-slate-500 text-xs">Keine externen Ressourcen.</p>';
+
+        const ri = document.getElementById('resource-status-ind');
+        ri.classList.remove('hidden');
+        ri.style.display = 'flex';
+        if (fails > 0) {
+            ri.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-orange-500 mr-1.5"></span>${fails} Ressource(n) fehlen`;
+            ri.classList.replace('text-slate-400', 'text-orange-400');
+        } else {
+            ri.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>Alle geladen`;
+            ri.classList.replace('text-slate-400', 'text-emerald-400');
+        }
+    }
+
+    function renderMetadata(m) {
+        return `<div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Titel</label><input type="text" id="metadata-title" class="inp w-full" value="${(m.title||'').replace(/"/g, '&quot;')}"></div>
+                <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Letzte Änderung</label><input type="text" disabled class="inp w-full opacity-50 cursor-not-allowed" value="${m['last-modified']||'N/A'}"></div>
+            </div>
+            <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Zweck &amp; Geltungsbereich (Rationale)</label><textarea id="metadata-remarks" rows="3" class="inp w-full">${(m.remarks||'').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</textarea></div>
+        </div>`;
+    }
+
+    function renderSystemCharacteristics(c) {
+        const s = c.status?.state || 'operational';
+        return `<div class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">System-Name</label><input type="text" id="system-name" class="inp w-full" value="${(c['system-name']||'').replace(/"/g, '&quot;')}"></div>
+                <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Status</label><select id="system-status" class="inp w-full"><option value="operational" ${s==='operational'?'selected':''}>Operational</option><option value="under-development" ${s==='under-development'?'selected':''}>Under Development</option><option value="other" ${s==='other'?'selected':''}>Other</option></select></div>
+            </div>
+            <div><label class="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-1">Beschreibung</label><textarea id="system-description" rows="3" class="inp w-full">${c.description||''}</textarea></div>
+        </div>`;
+    }
+
+    function renderRiskAnalysis(ssp) {
+        let h = '<div class="space-y-4">';
+        loadedRiskData.forEach((rp, si) => {
+            h += `<div class="p-4 border border-emerald-800/50 rounded-lg bg-emerald-900/10 shadow-sm"><h3 class="text-sm font-bold text-emerald-400 mb-1">${rp.sourceTitle}</h3><p class="text-[10px] text-slate-500 mb-3 break-all">${rp.sourceHref}</p><div class="space-y-3">`;
+            rp.risks.forEach((r, ri) => {
+                const badge = v => { const b = {'low':'bg-green-900 text-green-300','medium':'bg-yellow-900 text-yellow-300','high':'bg-orange-900 text-orange-300','very-high':'bg-red-900 text-red-300'}[v]||'bg-slate-700 text-slate-300'; return `<span class="sb ${b}">${v}</span>`; };
+                h += `<div class="bg-slate-800 border border-slate-700 rounded p-3"><div class="flex flex-wrap gap-2 mb-2 items-center"><span class="font-bold text-white text-sm">${r.title}</span>${badge(r.likelihood)} ${badge(r.impact)}</div><p class="text-xs text-slate-300 mb-2">${r.description||''}</p><p class="text-[10px] text-slate-400"><strong>Threat:</strong> ${r.threat||'N/A'}</p></div>`;
+            });
+            h += `</div></div>`;
+        });
+        h += '</div>';
+        return h;
+    }
+
+    function renderImplementation(ssp) {
+        const comps = ssp['system-implementation']?.components || [];
+        const reqs = ssp['control-implementation']?.['implemented-requirements'] || [];
+        const setParams = ssp['control-implementation']?.['set-parameters'] || [];
+        const pMap = new Map(); setParams.forEach(p => { if (p.values?.length) pMap.set(p['param-id'], p.values[0]); });
+
+        if (!comps.length) {
+            document.getElementById('impl-area').innerHTML = '<p class="text-slate-400">Keine Systemkomponenten.</p>';
+            return;
+        }
+
+        let navHtml = '';
+        let filterOpts = { status: new Set(['open', 'implemented', 'partial', 'planned', 'alternative', 'not-applicable']) };
+        const allowedFilters = ['status', 'modalverb', 'sec_level', 'class', 'phase', 'tags', 'tag'];
+        const addFilter = (k, v) => { 
+            if(!k || !v) return;
+            const kl = k.toLowerCase();
+            if(allowedFilters.includes(kl)) {
+                if(!filterOpts[kl]) filterOpts[kl] = new Set(); 
+                filterOpts[kl].add(v); 
+            }
+        };
+
+        let compHtml = '';
+        comps.forEach((c, idx) => {
+            const sNiv = c.props?.find(p => p && p.name === 'sicherheitsniveau')?.value || '';
+            const sNivTag = sNiv ? ` <span class="text-[8px] opacity-60">[${sNiv}]</span>` : '';
+            navHtml += `<button onclick="scrollToSec('comp-${c.uuid}')" class="w-full text-left p-1.5 text-[10px] font-bold text-slate-300 bg-slate-900/40 hover:bg-slate-800 rounded truncate border border-transparent hover:border-slate-700">🖥️ ${c.title}${sNivTag}</button>`;
+            
+            let dl = c.links?.find(l => l.rel === 'component-definition' || l.rel === 'source-profile');
+            const cd = dl ? componentDefinitions.get(dl.href) : null;
+            
+            const sMap = new Map();
+            reqs.forEach(r => { const e = r['by-components']?.find(bc => bc['component-uuid'] === c.uuid); if(e) sMap.set(r['control-id'], e); });
+
+            const dMap = new Map();
+            let tc = null;
+            try {
+                tc = cd?.['component-definition']?.components?.find(co => co && co.title === c.title) || cd?.['component-definition']?.components?.[0] || null;
+                if (tc) {
+                    (tc['control-implementations']||[]).forEach(ci => { if(ci) (ci['implemented-requirements']||[]).forEach(r => { if(r && r['control-id']) dMap.set(r['control-id'], r); }); });
+                } else if (cd?.profile?.imports) {
+                    cd.profile.imports.forEach(i => { if(i) (i["include-controls"]||[]).forEach(ic => { if(ic) (ic["with-ids"]||[]).forEach(id => { if(id) dMap.set(id, { "control-id": id }); }); }); });
+                }
+            } catch(cdErr) { console.warn('Fehler beim Lesen der Komponentendefinition für', c.title, cdErr); }
+
+            const allKeys = new Set([...sMap.keys(), ...dMap.keys(), ...profileModifications.alters.keys()]);
+            const sorted = Array.from(allKeys).sort();
+
+            // FIX C: Sammle ALLE Filter (Class, Modalverb, Tags etc.)
+            sorted.forEach(cid => {
+              try {
+                const st = sMap.get(cid)?.['implementation-status']?.state || 'open';
+                addFilter('status', st);
+                
+                const catCtrl = catalogControlMap.get(cid);
+                if (catCtrl) {
+                    if (catCtrl.class) addFilter('class', catCtrl.class);
+                    if (catCtrl.props) catCtrl.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
+                    const stmt = catCtrl.parts?.find(p => p && p.name === 'statement');
+                    if (stmt && stmt.props) stmt.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
+                }
+                const implReq = dMap.get(cid);
+                if (implReq && implReq.props) implReq.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
+                if (implReq && implReq.statements) implReq.statements.forEach(s => {
+                    if (s && s.props) s.props.forEach(p => { if (p && p.name) addFilter(p.name, p.value); });
+                });
+              } catch(filterErr) { console.warn('Filter-Fehler bei', cid, filterErr); }
+            });
+
+            // FIX E & B: Sichtbare Component Level Props (Eigenschaften & Risiken)
+            let compLevelHtml = '<div class="mb-4 space-y-4">';
+            let hasCompLevelContent = false;
+            
+            if (c.description || (tc && tc.description)) {
+                compLevelHtml += `<div class="text-sm text-slate-300 bg-slate-900/50 p-4 rounded-lg border border-slate-700/50 leading-relaxed">${c.description || tc.description}</div>`;
+                hasCompLevelContent = true;
+            }
+
+            let generalProps = []; 
+            let riskProps = [];
+            const riskRegex = /^_2\.(\d+)\.(.*)$/;
+
+            // 1. Props aus dem SSP (Komponente)
+            if (c.props) {
+                c.props.forEach(p => { 
+                    if (!p || !p.name) return;
+                    if (p.name === 'identified-risk') riskProps.push({ source: 'SSP', num: '⚠️', title: p.value, value: p.remarks || '' });
+                    else if (p.name === 'sicherheitsniveau') { /* shown in header badge */ }
+                    else generalProps.push({ source: 'SSP', name: p.name, value: p.value });
+                });
+            }
+
+            // 2. Props aus der Komponenten-Definition (Blaupause)
+            if (tc && tc.props && tc.props.length > 0) {
+                tc.props.forEach(p => {
+                    if (!p || !p.name) return;
+                    if (!p.value) return;
+                    const match = p.name.match(riskRegex);
+                    if (match) riskProps.push({ source: 'Komp.-Def.', num: parseInt(match[1], 10), title: match[2].replace(/_/g, ' ').trim(), value: p.value });
+                    else generalProps.push({ source: 'Komp.-Def.', name: p.name, value: p.value });
+                });
+            }
+
+            if (generalProps.length > 0) {
+                let genHtml = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">`;
+                generalProps.forEach(p => {
+                    const propName = (p.name || '').replace(/_/g, ' ');
+                    genHtml += `<div class="bg-slate-900/60 p-3 rounded-lg border border-slate-700/50 shadow-sm"><div class="flex justify-between items-start mb-1"><h4 class="text-[10px] font-bold text-blue-400 uppercase tracking-wider">${propName}</h4><span class="text-[8px] text-slate-500 uppercase">${p.source}</span></div><div class="text-xs text-slate-300 whitespace-pre-wrap">${p.value}</div></div>`;
+                });
+                genHtml += `</div>`;
+                compLevelHtml += `<div><h4 class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Eigenschaften (${generalProps.length})</h4>${genHtml}</div>`;
+                hasCompLevelContent = true;
+            }
+
+            if (riskProps.length > 0) {
+                let riskHtml = `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">`;
+                riskProps.forEach(r => {
+                    const borderColor = r.source === 'SSP' ? 'border-orange-500' : 'border-red-500';
+                    const badgeColor = r.source === 'SSP' ? 'bg-orange-900/40 text-orange-300 border-orange-500/30' : 'bg-red-900/40 text-red-300 border-red-500/30';
+                    riskHtml += `<div class="p-3 bg-slate-900/80 rounded-lg border-l-4 ${borderColor} border border-slate-700 shadow-sm relative"><div class="absolute top-0 right-0 ${badgeColor} text-[9px] font-bold px-2 py-0.5 rounded-bl border-b border-l">RISIKO (${r.source})</div><h5 class="text-xs font-bold text-slate-200 mb-1 pr-16"><span class="opacity-50 mr-1">${r.num}</span> ${r.title}</h5><p class="text-xs text-slate-400 whitespace-pre-wrap">${r.value}</p></div>`;
+                });
+                riskHtml += `</div>`;
+                compLevelHtml += `<div class="mt-4"><h4 class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide">Identifizierte Risiken (${riskProps.length})</h4>${riskHtml}</div>`;
+                hasCompLevelContent = true;
+            }
+
+            compLevelHtml += '</div>';
+            if(hasCompLevelContent) compLevelHtml += '<hr class="border-slate-700 mb-4">';
+            else compLevelHtml = '';
+
+            const openCls = idx === 0 ? 'open' : '';
+            const sichNiv = c.props?.find(p => p && p.name === 'sicherheitsniveau')?.value || '';
+            const sichNivBadge = sichNiv ? (() => {
+                const nivColors = {
+                    'basis': 'bg-green-900 text-green-300 border-green-700',
+                    'normal-SdT': 'bg-blue-900 text-blue-300 border-blue-700',
+                    'standard': 'bg-blue-900 text-blue-300 border-blue-700',
+                    'erhöht': 'bg-orange-900 text-orange-300 border-orange-700',
+                    'hoch': 'bg-red-900 text-red-300 border-red-700'
+                };
+                const cls = nivColors[sichNiv] || 'bg-slate-700 text-slate-300 border-slate-600';
+                return `<span class="sb ${cls} ml-2">🛡️ ${sichNiv}</span>`;
+            })() : '';
+            compHtml += `<div id="comp-${c.uuid}" class="border border-slate-700 rounded-lg overflow-hidden bg-slate-800 mb-6 shadow-md comp-card" data-search="${(c.title + ' ' + (c.description||'')).toLowerCase()}">
+                <button class="w-full flex justify-between items-center p-4 hover:bg-slate-700 text-left" onclick="tog('cb-${c.uuid}')">
+                    <h3 class="text-lg font-bold text-white">${c.title} <span class="sb bg-slate-700 text-slate-300 ml-2">${c.status?.state||'unknown'}</span>${sichNivBadge}</h3>
+                    <svg id="icon-cb-${c.uuid}" class="chev ${openCls} w-5 h-5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                </button>
+                <div id="cb-${c.uuid}-content" class="coll-content ${openCls} p-4 border-t border-slate-700 bg-slate-900 space-y-4">
+                    ${compLevelHtml}
+                    <div class="space-y-4">`;
+            
+            if(sorted.length > 0) sorted.forEach(cid => { 
+                try { compHtml += renderControlEntry(cid, c, sMap.get(cid), dMap.get(cid), pMap); }
+                catch(renderErr) { 
+                    console.warn('Render-Fehler bei Control', cid, renderErr);
+                    compHtml += `<div class="ctrl-entry border border-red-700 bg-red-900/20 rounded-lg p-3" data-cid="${cid}" data-comp="${c.uuid}" data-filter="|status:open|" data-search="${cid.toLowerCase()}"><p class="text-red-400 text-xs">⚠️ Render-Fehler bei <strong>${cid}</strong>: ${renderErr.message}</p></div>`;
+                }
+            });
+            else compHtml += `<p class="text-xs text-slate-500">Keine spezifischen Controls zugewiesen.</p>`;
+            
+            compHtml += `</div></div></div>`;
+        });
+
+        // Inject HTML
+        document.getElementById('impl-area').innerHTML = compHtml;
+        document.getElementById('sb-comp-nav').innerHTML = navHtml;
+        document.getElementById('sb-comp-nav').classList.remove('hidden');
+
+        // Build Filters mit ConfigMap Bezeichnern
+        const configMap = {
+            'status': 'Umsetzung',
+            'class': 'Klasse',
+            'sec_level': 'Sicherheitslevel',
+            'phase': 'Phase',
+            'modalverb': 'Modalverb',
+            'tags': 'Tags',
+            'tag': 'Tags'
+        };
+
+        let fHtml = `<input type="text" id="global-search" class="inp text-[10px] w-full mb-2 font-mono" placeholder="Suche (Text/ID)..." oninput="applyFilters()">`;
+        Object.keys(filterOpts).sort().forEach(k => {
+            const kl = k.toLowerCase();
+            if(kl === 'alt-identifier') return;
+            const label = configMap[kl] || getPropConfig(kl).label || kl.toUpperCase();
+            fHtml += `<select data-filter="${kl}" class="flt-sel inp text-[10px] w-full mb-1.5" onchange="applyFilters()">
+                <option value="">${label}: Alle</option>
+                ${Array.from(filterOpts[k]).sort().map(v => `<option value="${v}">${v}</option>`).join('')}
+            </select>`;
+        });
+        document.getElementById('sb-filters').innerHTML = fHtml;
+    }
+
+    function renderControlEntry(cid, comp, sReq, dReq, pMap) {
+        const rk = `${cid.replace(/[^a-zA-Z0-9]/g, '-')}-${comp.uuid}`;
+        const st = sReq?.['implementation-status']?.state || '';
+        const currSt = st || 'open';
+        
+        const cc = catalogControlMap.get(cid);
+        const title = cc?.title || 'Unbekanntes Control';
+        const pTxt = cc?.parts?.find(p => p && p.name==='statement')?.prose || '';
+        
+        let fStr = `|status:${currSt}|class:${cc?.class||''}|`;
+        let sStr = `${cid} ${title} ${pTxt}`.toLowerCase();
+
+        // 1. Catalog Props
+        const catProps = (cc?.props || []).filter(Boolean);
+        let catPropsHtml = '';
+        if (catProps.length > 0) {
+            catPropsHtml = '<div class="flex flex-wrap gap-2 mt-2 mb-3">';
+            catProps.forEach(p => {
+                if (!p) return;
+                const pName = p.name || ''; const pVal = p.value || '';
+                fStr += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
+                sStr += ` ${pVal.toLowerCase()}`;
+                const conf = getPropConfig(pName);
+                catPropsHtml += `<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] uppercase tracking-wider font-semibold border ${conf.color}" title="${pName}: ${pVal}">
+                    ${conf.icon}<span class="mr-1 opacity-70">${conf.label}:</span> ${pVal}
+                </span>`;
+            });
+            catPropsHtml += '</div>';
+        }
+
+        // 2. Statement Props
+        const stmtProps = (cc?.parts?.find(p => p && p.name==='statement')?.props || []).filter(Boolean);
+        let stmtPropsHtml = '';
+        if (stmtProps.length > 0) {
+            stmtPropsHtml = '<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-3 border-t border-slate-600/50">';
+            stmtProps.forEach(p => {
+                if (!p) return;
+                const pName = p.name || ''; const pVal = p.value || '';
+                fStr += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
+                sStr += ` ${pVal.toLowerCase()}`;
+                const conf = getPropConfig(pName);
+                stmtPropsHtml += `<div class="flex items-center text-xs p-1.5 rounded bg-slate-900/30 border border-slate-700/50">
+                    <div class="${conf.color.split(' ')[0]} mr-2">${conf.icon}</div>
+                    <div><span class="block text-[10px] uppercase text-slate-500 font-bold leading-tight">${conf.label}</span><span class="text-slate-300 font-medium">${pVal}</span></div>
+                </div>`;
+            });
+            stmtPropsHtml += '</div>';
+        }
+
+        // 3. Component Definition Props
+        const defProps = (dReq?.props || []).filter(Boolean);
+        let propsHtml = '';
+        if (defProps.length > 0) {
+            propsHtml = '<div class="flex flex-wrap gap-2 mt-2 border-t border-slate-700/50 pt-3">';
+            defProps.forEach(p => {
+                if (!p) return;
+                const pName = p.name || ''; const pVal = p.value || '';
+                fStr += `${pName.toLowerCase()}:${pVal.toLowerCase()}|`;
+                sStr += ` ${pVal.toLowerCase()}`;
+                const conf = getPropConfig(pName); 
+                propsHtml += `<span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium border ${conf.color}" title="${pName}">
+                    ${conf.icon}<span class="mr-1 opacity-70">${conf.label}:</span> ${pVal}
+                </span>`;
+            });
+            propsHtml += '</div>';
+        }
+
+        // params
+        let pRef = new Set();
+        const pRegex = /{{\s*insert:\s*param,\s*([a-zA-Z0-9._-]+)\s*}}/g;
+        let match; while((match = pRegex.exec(pTxt)) !== null) pRef.add(match[1]);
+        
+        let pTxtParsed = pTxt.replace(pRegex, (m, pid) => `<span class="param-placeholder" title="${pid}">[${catalogParamMap.get(pid)?.label||pid}]</span>`);
+
+        const stmts = (dReq?.statements || []).filter(Boolean);
+        const selId = sReq?.props?.find(p => p && p.name==='implemented-statement-id')?.value || '';
+        
+        // Safe prop extraction helpers
+        const sReqPropVal = (n) => sReq?.props?.find(p => p && p.name === n)?.value || '';
+
+        return `<div class="ctrl-entry border border-slate-700 bg-slate-800 rounded-lg p-3 shadow-sm" data-cid="${cid}" data-comp="${comp.uuid}" data-filter="${fStr}" data-search="${sStr}">
+            <div class="flex justify-between items-start mb-2">
+                <h4 class="font-bold text-white text-sm"><span class="text-blue-400 font-mono mr-1">${cid}</span> ${title}</h4>
+                <select id="state-${rk}" onchange="updateStatus(this)" class="inp text-xs py-1 px-2 w-32 font-bold ${st==='implemented'?'text-emerald-400':st==='not-applicable'?'text-slate-500':'text-amber-400'}">
+                    <option value="" ${st===''?'selected':''}>Offen</option>
+                    <option value="implemented" ${st==='implemented'?'selected':''}>Umgesetzt</option>
+                    <option value="partial" ${st==='partial'?'selected':''}>Teilweise</option>
+                    <option value="planned" ${st==='planned'?'selected':''}>Geplant</option>
+                    <option value="alternative" ${st==='alternative'?'selected':''}>Alternativ</option>
+                    <option value="not-applicable" ${st==='not-applicable'?'selected':''}>N/A</option>
+                </select>
+            </div>
+            
+            ${catPropsHtml}
+            ${propsHtml}
+
+            ${pTxtParsed ? `<div class="p-2.5 bg-slate-900/50 rounded border border-slate-600 text-xs text-slate-300 leading-relaxed mb-3">${pTxtParsed}${stmtPropsHtml}</div>` : ''}
+            
+            ${pRef.size > 0 ? `<div class="mb-3 p-2 bg-blue-900/10 border border-blue-900/30 rounded grid grid-cols-1 md:grid-cols-2 gap-2">
+                ${Array.from(pRef).map(pid => `<div><label class="block text-[9px] text-blue-400 uppercase font-bold">${catalogParamMap.get(pid)?.label||pid}</label><input type="text" data-param-id="${pid}" class="param-input inp text-xs py-1 px-2 w-full" value="${(pMap.get(pid)||(profileModifications.setParams.get(pid)||'')).replace(/"/g,'&quot;')}"></div>`).join('')}
+            </div>` : ''}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Kommentar</label><textarea id="desc-${rk}" rows="2" class="inp text-xs w-full p-1.5">${sReq?.description||''}</textarea></div>
+                <div class="flex flex-col gap-2">
+                    <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Bearbeiter</label><input type="text" id="name-${rk}" class="inp text-xs py-1 px-2 w-full" value="${sReqPropVal('implementing-user')}"></div>
+                    <div><label class="block text-[10px] text-slate-400 uppercase font-bold mb-0.5">Datum</label><input type="date" id="date-${rk}" class="inp text-xs py-1 px-2 w-full" value="${sReqPropVal('implementation-date')}"></div>
+                </div>
+            </div>
+
+            ${stmts.length ? `<div class="mb-3 space-y-1.5">
+                <label class="block text-[10px] text-slate-400 uppercase font-bold">Reifegrad (aus Profil)</label>
+                <label class="flex items-center gap-2 p-1.5 bg-slate-900/50 rounded border border-slate-700 cursor-pointer hover:bg-slate-800"><input type="radio" name="mat-${rk}" value="manual" ${!selId?'checked':''} class="form-radio text-emerald-500 h-3 w-3"><span class="text-xs text-slate-300">Manuell (kein Level gewählt)</span></label>
+                ${stmts.map(s => `<label class="flex items-center gap-2 p-1.5 bg-slate-900/50 rounded border border-slate-700 cursor-pointer hover:bg-slate-800"><input type="radio" name="mat-${rk}" value="${s['statement-id']||''}" ${selId===s['statement-id']?'checked':''} class="form-radio text-emerald-500 h-3 w-3"><div class="text-xs"><span class="font-bold text-emerald-400">${s.description||s['statement-id']||''}</span> <span class="text-slate-400">${s.props?.find(p => p && p.name==='statement')?.value||''}</span></div></label>`).join('')}
+            </div>` : ''}
+
+            <div class="border-t border-slate-700 pt-3 flex gap-2 flex-wrap items-center">
+                <button onclick="triggerAI('${rk}', '${cid}', 'implementation')" class="px-2 py-1 bg-violet-900/50 hover:bg-violet-800 border border-violet-700/50 text-violet-300 text-[10px] font-bold uppercase rounded flex items-center gap-1 transition-colors">✨ Umsetzungsvorschlag</button>
+                <button onclick="triggerAI('${rk}', '${cid}', 'risk')" class="px-2 py-1 bg-orange-900/50 hover:bg-orange-800 border border-orange-700/50 text-orange-300 text-[10px] font-bold uppercase rounded flex items-center gap-1 transition-colors">✨ Risiken</button>
+                <button onclick="triggerAI('${rk}', '${cid}', 'edition2023')" class="px-2 py-1 bg-blue-900/50 hover:bg-blue-800 border border-blue-700/50 text-blue-300 text-[10px] font-bold uppercase rounded flex items-center gap-1 transition-colors">✨ Abgleich Edition 2023</button>
+                <div id="loader-${rk}" class="ai-loader ml-auto"></div>
+            </div>
+            <div id="ai-out-${rk}" class="hidden mt-3 p-3 bg-slate-900 border border-violet-800/30 rounded ai-response-content max-h-96 overflow-y-auto cscroll"></div>
+        </div>`;
+    }
+
+    window.applyFilters = () => {
+        const term = document.getElementById('global-search')?.value.toLowerCase() || '';
+        const sels = Array.from(document.querySelectorAll('.flt-sel')).map(s => ({ k: s.dataset.filter, v: s.value })).filter(x => x.v);
+
+        document.querySelectorAll('.comp-card').forEach(cc => {
+            const cStr = cc.dataset.search || '';
+            let cMatch = !term || cStr.includes(term);
+            let hasVis = false;
+
+            cc.querySelectorAll('.ctrl-entry').forEach(ce => {
+                const sStr = ce.dataset.search || '';
+                const fStr = ce.dataset.filter || '';
+                let m = (!term || sStr.includes(term)) && sels.every(s => fStr.includes(`|${s.k}:${s.v}|`));
+                ce.style.display = m ? '' : 'none';
+                if (m) hasVis = true;
+            });
+            cc.style.display = (hasVis || cMatch) ? '' : 'none';
+        });
+    };
+
+    // ============================================================
+    // KI ACTIONS (EXAKT WIE IM ORIGINAL, B)
+    // ============================================================
+    window.triggerAI = async (rk, cid, type, forceRefresh = false) => {
+        const out = document.getElementById(`ai-out-${rk}`);
+        const loader = document.getElementById(`loader-${rk}`);
+        out.classList.remove('hidden');
+
+        if (!forceRefresh && aiCache[cid] && aiCache[cid][type]) {
+            out.innerHTML = marked.parse(aiCache[cid][type]) + `<button onclick="triggerAI('${rk}','${cid}','${type}',true)" class="text-[9px] text-violet-400 hover:text-white mt-2 font-bold uppercase block text-right w-full">🔄 Neu generieren</button>`;
+            return;
+        }
+
+        const ai = getAI();
+        if(!ai) return alert("Bitte erst KI-Provider und API Key in der Sidebar konfigurieren.");
+
+        loader.style.display = 'block';
+        out.innerHTML = '<span class="text-slate-400 text-xs italic">KI analysiert...</span>';
+
+        const cc = catalogControlMap.get(cid);
+        const title = cc?.title || cid;
+        const prose = cc?.parts?.find(p => p && p.name==='statement')?.prose || '';
+        const guidance = cc?.parts?.find(p => p && p.name==='guidance')?.prose || '';
+
+        const prefix = cid.substring(0, cid.lastIndexOf('.') + 1);
+        let relatedControlsText = "";
+        
+        if (prefix) {
+            const siblings = [];
+            catalogControlMap.forEach((v, k) => {
+                if (k.startsWith(prefix) && k !== cid) {
+                    const sProse = v.parts?.find(p => p && p.name === 'statement')?.prose || '';
+                    siblings.push(`- ${k}: ${sProse}`);
+                }
+            });
+
+            if (siblings.length > 0) {
+                relatedControlsText = `\n\nBeachte zur inhaltlichen Abgrenzung, dass es im selben Modul auch noch diese ähnlichen Controls gibt. Diese sind HIER NICHT THEMA! Bitte stelle sicher, dass sich deine Antwort inhaltlich nicht mit ihnen überschneidet:\n${siblings.slice(0, 10).join('\n')}`;
+            }
+        }
+
+        let prompt = "";
+        const heute = new Date().toLocaleDateString('de-DE'); 
+        let system = `Du bist ein Experte für IT-Sicherheit, ISO 27001, IT-Grundschutz *und* den neuen BSI Grundschutz++. Wo passend referenzierst Du aktuelle Materialen des BSI: C5, Standards, B3S Profile, Technische Richtlinien (TR) und Mindestandards (*keine* Grundschutz Bausteine!)
+Antworte in strukturierter Markdown-Form (Listen, Fettgedrucktes). Wichtig: Dein Fokus liegt ausschließlich auf der in der User-Anfrage genannten Einzelmaßnahme. 
+Verstehe: Der neue Grundschutz++ nutzt einen granularen Katalog, in dem jede Anforderung nur aus einem Satz besteht. Andere Aspekte des Themas stehen in anderen Anforderungen! 
+Keine Einleitenden Worte über deine Rolle oder wie der GRundschutz++ aufgebaut ist. Fokus ist nur die Aufgabe ohne Ausschmückungen. Du Schreibst wie ein Experte, aber nicht wie
+eine KI. Dein Satzbau ist Abwechslungsreich, konkret, präßise und du nutzt keine KI Floskeln. Heute ist der ${heute}.`;
+
+        if (type === 'edition2023') {
+            system = `Du bist ein Experte für den BSI IT-Grundschutz. Deine Aufgabe ist das genaue Mapping zwischen dem neuen Grundschutz++ und den Bausteinen des IT-Grundschutz-Kompendiums Edition 2023. Antworte in strukturierter Markdown-Form ohne unnötige Floskeln.`;
+        }
+                    
+        const userContext = ai.ctx;
+        if (userContext) {
+            system += "\n\nBerücksichtige zwingend folgenden Unternehmenskontext für deine Antwort:\n" + userContext;
+        }
+        
+        const guidanceText = guidance ? `\nZusätzliche Erläuterungen (Guidance): ${guidance}` : "";
+        
+        if (type === 'implementation') {
+            prompt = `Erstelle einen Umsetzungsvorschlag für die BSI Maßnahme "${title}". Beschreibung: ${prose}${guidanceText}. Nenne praktische Schritte. Drei sehr ausführliche Praxis Beispiele die alle Aspekte des Controls abdecken.`;
+        } else if (type === 'edition2023') {
+            prompt = `Suche gründlich nach *allen* passenden Anforderungen aus den IT-Grundschutz Bausteinen der Edition 2023, die zur Maßnahme "${title}" (Beschreibung: ${prose}${guidanceText}) passen. *Wichtig:* Nur Bausteine der Edition 2023, deren PDF haben "2023.pdf" im Namen!
+Nutze für deine Suche zwingend diese Parameter, um in den offiziellen BSI PDFs zu suchen:
+inurl:https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023 filetype:pdf
+
+*Wichtig*: Validiere jeden Namen und die Nummer der genannten Anforderungen und ob der Baustein dazu Wirklich aus der Edition 2023 ist penibel, bevor Du sie einfügst. Erfinde keine IDs! Nutze keine alten Editionen!
+
+Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
+| ID | Name der Anforderung | Begründung |
+|---|---|---|`;
+        } else {
+            prompt = `Welche Risiken bestehen bei Nicht-Umsetzung von "${title}"? Beschreibung: ${prose}. Nenne mindestens Gefahren mit kritischem Schadenspotential und mit hoher eintrittshäufigkeit.`;
+        }
+
+        prompt += relatedControlsText;
+
+        try {
+            const txt = await callAI(prompt, system);
+            if(!aiCache[cid]) aiCache[cid] = {};
+            aiCache[cid][type] = txt;
+            autoSave();
+            out.innerHTML = marked.parse(txt) + `<button onclick="triggerAI('${rk}','${cid}','${type}',true)" class="text-[9px] text-violet-400 hover:text-white mt-2 font-bold uppercase block text-right w-full">🔄 Neu generieren</button>`;
+        } catch(e) { out.innerHTML = `<span class="text-red-400 text-xs">Fehler: ${e.message}</span>`; }
+        finally { loader.style.display = 'none'; }
+    };
+
+    // ============================================================
+    // SSP EXPORT
+    // ============================================================
+    window.handleFileSave = () => {
+        updateSSPFromDOM();
+        const dataStr = JSON.stringify(sspData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = sspFileName;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    };
+
+</script>
+</body>
+</html>

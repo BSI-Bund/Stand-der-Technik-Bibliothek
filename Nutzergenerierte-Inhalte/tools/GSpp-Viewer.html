@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSI Grundschutz++ Explorer v9.4 ✨ Multi-AI & Profiles</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #00529F;
+            --bg-color: #f4f7f9;
+            --sidebar-bg: #ffffff;
+            --border-color: #cfd8dc;
+            --text-color: #263238;
+            --guidance-bg: #e8f4fd;
+            --tag-sec: #fff3cd;
+            --tag-effort: #d4edda;
+            --modal-color: #d63384;
+            --action-color: #0d6efd;
+            --ai-glow: #7c4dff;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            margin: 0; padding: 0; 
+            background-color: var(--bg-color); 
+            color: var(--text-color);
+            display: flex; height: 100vh; overflow: hidden;
+        }
+
+        /* Layout */
+        .sidebar {
+            width: 360px; background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column;
+            padding: 20px; box-shadow: 4px 0 10px rgba(0,0,0,0.05);
+            overflow-y: auto; flex-shrink: 0; z-index: 10;
+        }
+
+        .main-content {
+            flex-grow: 1; overflow-y: auto;
+            padding: 40px; scroll-behavior: smooth;
+        }
+
+        h1 { color: var(--primary-color); font-size: 1.4rem; margin: 0 0 5px 0; }
+        .multi-hint { font-size: 0.7rem; color: #607d8b; font-weight: 600; margin-bottom: 20px; display: block; opacity: 0.8; }
+        
+        .meta-box { 
+            font-size: 0.8rem; 
+            background: #eceff1; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin-bottom: 20px; 
+            color: #546e7a; 
+            min-height: 60px;     
+            overflow-y: auto;     
+            border: 1px solid var(--border-color); 
+            display: block; 
+        }
+
+        body:not(.has-api-key) .ai-actions,
+        body:not(.has-api-key) .ai-dependent {
+            display: none !important;
+        }
+        
+        .meta-item { border-bottom: 1px solid #cfd8dc; padding: 4px 0; }
+        .meta-item:last-child { border-bottom: none; }
+
+        /* Sidebar UI */
+        .sidebar-section { margin-bottom: 20px; }
+        .section-label { font-size: 0.7rem; font-weight: 800; color: #90a4ae; text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .search-input { width: 100%; padding: 12px; border: 2px solid var(--primary-color); border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        .filter-select { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid var(--border-color); border-radius: 6px; background: white; font-size: 0.9rem; }
+        .profile-info { font-size: 0.75rem; font-weight: bold; margin-top: -4px; display: block; min-height: 16px; }
+
+        /* Groups & Tree */
+        .group-item { margin-bottom: 15px; border: 1px solid var(--border-color); background: white; border-radius: 8px; overflow: hidden; }
+        .group-header { background: #f8f9fa; padding: 12px 18px; cursor: pointer; display: flex; justify-content: space-between; font-weight: 600; }
+        .group-header:hover { background: #f1f3f4; }
+        .group-content { display: none; padding: 15px; border-top: 1px solid var(--border-color); background: #fafafa; }
+        .group-content.open { display: block; }
+
+        /* Control Card */
+        .control-card { 
+            border: 1px solid var(--border-color); background: #fff; 
+            margin: 20px 0; padding: 25px; border-radius: 10px; 
+            border-left: 6px solid #28a745; position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .control-nested-container { margin-top: 20px; padding: 15px 15px 5px 15px; border-top: 1px dashed #cfd8dc; background: #fcfcfc; border-radius: 0 0 10px 10px; margin-left: -25px; margin-right: -25px; margin-bottom: -25px; }
+        .control-card.nested-card { margin: 10px 0 15px 0; padding: 20px; border-left-width: 4px; font-size: 0.95em; border-color: #cfd8dc; border-left-color: #17a2b8; box-shadow: none; border-radius: 8px; }
+
+        .highlight-target { animation: highlight-pulse 2s ease-out; }
+        @keyframes highlight-pulse {
+            0% { background-color: #fff3cd; transform: scale(1.01); box-shadow: 0 0 15px rgba(255, 193, 7, 0.4); }
+            100% { background-color: #fff; transform: scale(1); }
+        }
+
+        .id-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .badge-id { background: #37474f; color: white; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; }
+        .badge-class { background: #607d8b; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; }
+        
+        .control-title { margin: 0 0 15px 0; font-size: 1.4rem; color: #111; }
+        
+        .tag-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tag { padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; border: 1px solid transparent; }
+        .tag-sec { background: var(--tag-sec); color: #856404; border-color: #ffeeba; }
+        .tag-effort { background: var(--tag-effort); color: #155724; border-color: #c3e6cb; }
+        .tag-uuid { background: #f8f9fa; color: #78909c; border-color: #dee2e6; font-family: monospace; font-size: 0.7rem; }
+        .tag-tags { background: #e3f2fd; color: #0d47a1; border-color: #bbdefb; }
+        .tag-modal { background: #fce4ec; color: var(--modal-color); border-color: #f8bbd0; text-transform: uppercase; }
+        .tag-action { background: #e3f2fd; color: var(--action-color); border-color: #9ec5fe; }
+
+        /* Statement Box */
+        .statement-box { background: #fff; border: 1px solid #eee; padding: 18px; border-radius: 8px; margin: 15px 0; }
+        .statement-prose { font-size: 1.1rem; line-height: 1.6; color: #333; margin-bottom: 18px; }
+        
+        .breakdown-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; border-top: 1px dashed #ddd; padding-top: 15px; }
+        .bd-label { font-size: 0.65rem; color: #90a4ae; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 3px; }
+        .bd-value { display: block; background: #fff; border: 1px solid #eceff1; padding: 6px 10px; border-radius: 4px; font-weight: 600; font-size: 0.9rem; }
+        .guidance-box { background-color: var(--guidance-bg); border: 1px solid #b6dbfb; color: #0c5460; padding: 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.95em; position: relative; }
+
+        /* AI Section */
+        .ai-actions { display: flex; gap: 10px; margin: 15px 0; padding-top: 10px; border-top: 1px solid #eee; }
+        .ai-btn { 
+            background: #fff; border: 1px solid var(--ai-glow); color: var(--ai-glow); 
+            padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: 600; 
+            font-size: 0.85rem; transition: all 0.3s; display: flex; align-items: center; gap: 5px;
+        }
+        .ai-btn:hover { background: var(--ai-glow); color: white; box-shadow: 0 4px 10px rgba(124, 77, 255, 0.3); }
+        
+        .ai-response-area { 
+            margin-top: 15px; background: #f9f7ff; border: 1px solid #e1d5ff; border-radius: 8px; 
+            padding: 15px; display: none; position: relative; animation: slideDown 0.3s ease-out;
+        }
+        .ai-response-area.active { display: block; }
+        .ai-response-content { font-size: 0.95rem; line-height: 1.5; color: #4527a0; }
+        .ai-response-content ul, .ai-response-content ol { padding-left: 20px; }
+
+        .ai-loader { display: none; width: 20px; height: 20px; border: 3px solid #f3f3f3; border-top: 3px solid var(--ai-glow); border-radius: 50%; animation: spin 1s linear infinite; }
+        
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Footer */
+        .control-footer { margin-top: 20px; padding-top: 15px; border-top: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; }
+        .links-area { display: flex; gap: 10px; flex-wrap: wrap; }
+        .link-item { text-decoration: none; background: #f0f7ff; color: var(--primary-color); padding: 4px 8px; border-radius: 4px; border: 1px solid #cce5ff; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .link-item:hover { background: var(--primary-color); color: white; }
+        
+        .btn-json { background: #607d8b; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+
+        .hidden { display: none !important; }
+        u { text-decoration-style: dotted; color: var(--primary-color); cursor: help; font-weight: 600; }
+        .reset-btn { width: 100%; padding: 10px; background: #78909c; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .clear-btn { width: 100%; padding: 8px; background: #ef5350; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem; margin-top: 5px; }
+
+        .control-card.child-match-only > .tag-list,
+        .control-card.child-match-only > .statement-box,
+        .control-card.child-match-only > .ai-actions,
+        .control-card.child-match-only > .ai-response-area,
+        .control-card.child-match-only > .guidance-box,
+        .control-card.child-match-only > .control-footer {
+            display: none !important;
+        }
+
+        .control-card.child-match-only {
+            border-left-color: #cfd8dc !important;
+            background-color: #fdfdfd;
+            box-shadow: none;
+            padding-bottom: 5px;
+        }
+
+        .control-card.child-match-only > .control-title {
+            color: #78909c;
+            font-size: 1.1rem;
+        }
+
+        .control-card.child-match-only > .control-title::after {
+            content: " (Zeigt gefilterte Unter-Maßnahmen)";
+            font-size: 0.8rem;
+            color: #ff9800;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+        .modal-content { background: white; margin: 3% auto; padding: 25px; width: 85%; height: 85%; border-radius: 12px; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        pre { flex-grow: 1; overflow: auto; background: #263238; color: #eceff1; padding: 15px; border-radius: 6px; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h1>🛡️ GS++ Explorer ✨</h1>
+        <small class="multi-hint">💡 Sie können mehrere Kataloge laden (werden zusammengeführt).</small>
+
+        <div class="section-label">Geladene Kataloge</div>
+        <div id="meta-container" class="meta-box">Kein Katalog geladen</div>
+        <button class="clear-btn" id="clearAllBtn" onclick="clearAllCatalogs()" style="display:none">Alle Kataloge entfernen</button>
+
+        <div class="sidebar-section">
+            <span class="section-label">Zielobjekt-Profile laden</span>
+            <select id="profileSelect" class="filter-select" onchange="handleProfileChange()" style="border-color: #ff9800; background-color: #fff8e1;">
+                <option value="">Lade verfügbare Profile...</option>
+            </select>
+            <span id="profileInfo" class="profile-info"></span>
+        </div>
+
+        <div class="sidebar-section">
+            <span class="section-label">Globale Suche</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="ID, Titel oder Inhalt..." oninput="applyFilters()">
+        </div>
+
+        <div id="filterControls" style="display:none">
+            <div class="sidebar-section">
+                <span class="section-label">Filterung</span>
+                <select id="filterClass" class="filter-select" onchange="applyFilters()"><option value="all">Alle Klassen</option></select>
+                <select id="filterSec" class="filter-select" onchange="applyFilters()"><option value="all">Alle Niveaus</option></select>
+                <select id="filterEffort" class="filter-select" onchange="applyFilters()"><option value="all">Jeder Aufwand</option></select>
+                <select id="filterModal" class="filter-select" onchange="applyFilters()"><option value="all">Jede Modalität</option></select>
+                <select id="filterHandlung" class="filter-select" onchange="applyFilters()"><option value="all">Alle Handlungen</option></select>
+                <select id="filterTag" class="filter-select" onchange="applyFilters()"><option value="all">Alle Tags</option></select>
+                <button class="reset-btn" onclick="resetFilters()">Filter zurücksetzen</button>
+            </div>
+        </div>
+
+        <div class="sidebar-section">
+            <span class="section-label">Google Gemini API Key</span>
+            <input type="password" id="apiKeyInput" class="search-input" placeholder="AIzaSy..." style="font-family: monospace;" oninput="toggleAiButtons()">
+            <small style="color: #90a4ae; font-size: 0.7rem; display: block; margin-top: 4px;">
+                Wird lokal im Browser gespeichert. <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--primary-color);">Hier API-Key erstellen</a>.
+            </small>
+        </div>
+
+        <div class="sidebar-section ai-dependent">
+            <span class="section-label">KI Kontext (System Prompt)</span>
+            <textarea id="aiContextInput" class="search-input" style="height: 80px; font-size: 0.85rem; resize: vertical;" placeholder="z.B. Wir sind ein mittelständisches Unternehmen und NIS2 / KRITIS relevant... oder Wir sind eine Stadtverwaltung"></textarea>
+            <small style="color: #90a4ae; font-size: 0.7rem; display: block; margin-top: 4px;">Wird bei KI-Anfragen als Kontext berücksichtigt.</small>
+			<button class="reset-btn" onclick="exportAiCache()" style="background: var(--ai-glow); margin-top: 15px;">💾 KI-Antworten exportieren</button>
+			<button class="reset-btn" onclick="document.getElementById('aiCacheInput').click()" style="background: #4caf50; margin-top: 10px;">📂 KI-Antworten importieren</button>
+            <input type="file" id="aiCacheInput" accept=".json" style="display: none;" onchange="importAiCache(event)">
+        </div>
+
+        <div class="sidebar-section" style="margin-top: auto; border-top: 1px solid #eee; padding-top: 20px;">
+            <span class="section-label">Katalog hinzufügen</span>
+            
+            <select id="quickSelect" class="filter-select" onchange="updateUrlFromSelect()" style="margin-bottom: 10px; border-color: var(--primary-color);">
+                <option value="">-- Schnellauswahl --</option>
+                <option value="https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json">Anwenderkatalog (GS++)</option>
+                <option value="https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Quellkataloge/Methodik-Grundschutz%2B%2B/BSI-Methodik-Grundschutz%2B%2B-catalog.json">Methodik (GS++)</option>
+                <option value="https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Quellkataloge/Kernel/BSI-Stand-der-Technik-Kernel-catalog.json">Kernel (SdT)</option>
+            </select>
+
+            <input type="text" id="urlInput" class="filter-select" placeholder="URL zum OSCAL-Katalog..." value="https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json">
+            
+            <button onclick="loadFromURL()" style="width:100%; padding: 10px; background: var(--primary-color); color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">Katalog hinzufügen</button>
+            
+            <div style="text-align:center; padding: 10px 0; font-size: 0.7rem; color: #999;">ODER DATEI WÄHLEN</div>
+            <input type="file" id="fileInput" accept=".json" onchange="loadFromFile()" style="font-size: 0.7rem; width:100%;">
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div id="catalog-container">
+            <div id="welcome-msg" style="text-align: center; margin-top: 100px; color: #b0bec5;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <h2>Multi-Katalog Explorer</h2>
+                <p>Nutzen Sie die Sidebar, um einen oder mehrere BSI-Kataloge zu laden.</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="jsonModal" class="modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
+                <h3 id="modalTitle" style="margin:0">JSON Data</h3>
+                <button onclick="closeModal()" style="padding: 5px 15px; cursor:pointer">Schließen</button>
+            </div>
+            <pre id="modalBody"></pre>
+        </div>
+    </div>
+
+    <script>
+        const apiKey = ""; 
+        let filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set(), handlung: new Set(), tags: new Set() };
+        let loadedCatalogs = [];
+        let aiCache = {};
+        let activeProfileIds = null; // Speichert Set mit Control-IDs des aktiven Profils
+		
+        function updateUrlFromSelect() {
+            const select = document.getElementById('quickSelect');
+            const input = document.getElementById('urlInput');
+            if (select.value) {
+                input.value = select.value;
+            }
+        }
+
+		function toggleAiButtons() {
+			const key = document.getElementById('apiKeyInput').value.trim();
+			if (key.length > 0) {
+				document.body.classList.add('has-api-key');
+				localStorage.setItem('gspp_gemini_apikey', key);
+			} else {
+				document.body.classList.remove('has-api-key');
+				localStorage.removeItem('gspp_gemini_apikey');
+			}
+		}
+
+		async function callGemini(prompt, systemPrompt = "") {
+			let currentApiKey = document.getElementById('apiKeyInput').value.trim();
+			if (!currentApiKey) currentApiKey = apiKey; 
+
+			if (!currentApiKey) {
+				return "⚠️ Fehler: API Key fehlt.";
+			}
+
+			const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key=${currentApiKey}`;
+			
+			const payload = {
+				contents: [{ parts: [{ text: prompt }] }],
+				tools: [{ google_search: {} }]
+			};
+
+			if (systemPrompt) {
+				payload.system_instruction = { parts: [{ text: systemPrompt }] };
+			}
+
+			const res = await fetch(url, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(payload)
+			});
+
+			if (!res.ok) {
+				const errorData = await res.json();
+				console.error("API Fehler Details:", errorData);
+				throw new Error(`Status: ${res.status} - ${errorData.error?.message || 'Unbekannt'}`);
+			}
+			
+			const json = await res.json();
+			return json.candidates?.[0]?.content?.parts?.[0]?.text || "Keine Antwort.";
+		}
+
+		async function triggerAI(controlId, type, forceRefresh = false) {
+            const card = document.getElementById(controlId);
+            const responseArea = card.querySelector('.ai-response-area');
+            const contentArea = card.querySelector('.ai-response-content');
+            const loader = card.querySelector('.ai-loader');
+            
+            responseArea.classList.add('active');
+			
+            if (!forceRefresh && aiCache[controlId] && aiCache[controlId][type]) {
+                const cachedRes = aiCache[controlId][type];
+                contentArea.innerHTML = (typeof marked !== 'undefined' ? marked.parse(cachedRes) : cachedRes) + 
+                    `<div style="margin-top:15px; border-top:1px dashed #e1d5ff; padding-top:10px; text-align:right;">
+                        <button onclick="triggerAI('${controlId}', '${type}', true)" style="background:none; border:none; color:var(--ai-glow); cursor:pointer; font-size:0.8rem; font-weight:bold; text-decoration:underline;">🔄 Neu generieren</button>
+                    </div>`;
+                return;
+            }
+
+            loader.style.display = 'block';
+            contentArea.innerHTML = '<i>KI analysiert...</i>';
+
+            const title = card.querySelector('.control-title').textContent;
+            const prose = card.querySelector('.statement-prose')?.textContent || "";
+			const guidance = card.querySelector('.guidance-box')?.textContent || "";
+            
+            const prefix = controlId.substring(0, controlId.lastIndexOf('.') + 1);
+            let relatedControlsText = "";
+            
+            if (prefix) {
+                const siblings = Array.from(document.querySelectorAll('.control-card'))
+                    .filter(c => c.id.startsWith(prefix) && c.id !== controlId)
+                    .map(c => {
+                        const siblingProse = c.querySelector('.statement-prose')?.textContent || '';
+                        return `- ${c.id}: ${siblingProse}`;
+                    });
+
+                if (siblings.length > 0) {
+                    relatedControlsText = `\n\nBeachte zur inhaltlichen Abgrenzung, dass es im selben Modul auch noch diese ähnlichen Controls gibt. Diese sind HIER NICHT THEMA! Bitte stelle sicher, dass sich deine Antwort inhaltlich nicht mit ihnen überschneidet:\n${siblings.join('\n')}`;
+                }
+            }
+
+            let prompt = "";
+			const heute = new Date().toLocaleDateString('de-DE'); 
+            let system = `Du bist ein Experte für IT-Sicherheit, ISO 27001, IT-Grundschutz *und* den neuen BSI Grundschutz++. Wo passend referenzierst Du aktuelle Materialen des BSI: C5, Standards, B3S Profile, Technische Richtlinien (TR) und Mindestandards (*keine* Grundschutz Bausteine!)
+Antworte in strukturierter Markdown-Form (Listen, Fettgedrucktes). Wichtig: Dein Fokus liegt ausschließlich auf der in der User-Anfrage genannten Einzelmaßnahme. 
+Verstehe: Der neue Grundschutz++ nutzt einen granularen Katalog, in dem jede Anforderung nur aus einem Satz besteht. Andere Aspekte des Themas stehen in anderen Anforderungen! 
+Keine Einleitenden Worte über deine Rolle oder wie der GRundschutz++ aufgebaut ist. Fokus ist nur die Aufgabe ohne Ausschmückungen. Du Schreibst wie ein Experte, aber nicht wie
+eine KI. Dein Satzbau ist Abwechslungsreich, konkret, präßise und du nutzt keine KI Floskeln. Heute ist der ${heute}.`;
+
+            if (type === 'edition2023') {
+                system = `Du bist ein Experte für den BSI IT-Grundschutz. Deine Aufgabe ist das genaue Mapping zwischen dem neuen Grundschutz++ und den Bausteinen des IT-Grundschutz-Kompendiums Edition 2023. Antworte in strukturierter Markdown-Form ohne unnötige Floskeln.`;
+            }
+
+            const userContext = document.getElementById('aiContextInput').value.trim();
+            if (userContext) {
+                system += "\n\nBerücksichtige zwingend folgenden Unternehmenskontext für deine Antwort:\n" + userContext;
+            }
+            const guidanceText = guidance ? `\nZusätzliche Erläuterungen (Guidance): ${guidance}` : "";
+			
+            if (type === 'implementation') {
+                prompt = `Erstelle einen Umsetzungsvorschlag für die BSI Maßnahme "${title}". Beschreibung: ${prose}${guidanceText}. Nenne praktische Schritte. Drei sehr ausführliche Praxis Beispiele die alle Aspekte des Controls abdecken.`;
+            } else if (type === 'edition2023') {
+                prompt = `Suche gründlich nach *allen* passenden Anforderungen aus den IT-Grundschutz Bausteinen der Edition 2023, die zur Maßnahme "${title}" (Beschreibung: ${prose}${guidanceText}) passen. *Wichtig:* Nur Bausteine der Edition 2023, deren PDF haben "2023.pdf" im Namen!
+Nutze für deine Suche zwingend diese Parameter, um in den offiziellen BSI PDFs zu suchen:
+inurl:https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023 filetype:pdf
+
+*Wichtig*: Validiere jeden Namen und die Nummer der genannten Anforderungen und ob der Baustein dazu Wirklich aus der Edition 2023 ist penibel, bevor Du sie einfügst. Erfinde keine IDs! Nutze keine alten Editionen!
+
+Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
+| ID | Name der Anforderung | Begründung |
+|---|---|---|`;
+            } else {
+                prompt = `Welche Risiken bestehen bei Nicht-Umsetzung von "${title}"? Beschreibung: ${prose}. Nenne mindestens Gefahren mit kritischem Schadenspotential und mit hoher eintrittshäufigkeit.`;
+            }
+
+            prompt += relatedControlsText;
+
+            try {
+                const response = await callGemini(prompt, system);
+                                
+                if (!aiCache[controlId]) aiCache[controlId] = {};
+                aiCache[controlId][type] = response;
+                localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
+
+                contentArea.innerHTML = (typeof marked !== 'undefined' ? marked.parse(response) : response) + 
+                    `<div style="margin-top:15px; border-top:1px dashed #e1d5ff; padding-top:10px; text-align:right;">
+                        <button onclick="triggerAI('${controlId}', '${type}', true)" style="background:none; border:none; color:var(--ai-glow); cursor:pointer; font-size:0.8rem; font-weight:bold; text-decoration:underline;">🔄 Neu generieren</button>
+                    </div>`;
+
+            } catch (e) {
+				contentArea.innerHTML = `<span style='color:red'>Fehler bei der KI-Anfrage (${e.message}).</span>`;
+            } finally {
+                loader.style.display = 'none';
+            }
+        }
+
+        // --- NEU: Profil-Handling ---
+
+        async function fetchProfilesList() {
+            const select = document.getElementById('profileSelect');
+            try {
+                const apiURL = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/profile';
+                const res = await fetch(apiURL);
+                if (!res.ok) throw new Error("API Limit erreicht oder Repo nicht gefunden.");
+                const files = await res.json();
+                
+                select.innerHTML = '<option value="">-- Kein Profil-Filter --</option>';
+                files.filter(f => f.name.endsWith('.json')).forEach(f => {
+                    const opt = document.createElement('option');
+                    opt.value = f.download_url; // Nutzt die direkte Raw-URL der Datei
+                    opt.textContent = f.name.replace('.json', '');
+                    select.appendChild(opt);
+                });
+            } catch (e) {
+                select.innerHTML = '<option value="">Fehler beim Laden der Profilliste</option>';
+                console.error("Profil-Liste konnte nicht geladen werden:", e);
+            }
+        }
+
+        async function handleProfileChange() {
+            const url = document.getElementById('profileSelect').value;
+            const infoSpan = document.getElementById('profileInfo');
+            
+            if (!url) {
+                activeProfileIds = null;
+                infoSpan.textContent = "";
+                applyFilters();
+                return;
+            }
+            
+            try {
+                infoSpan.textContent = "Lade Profil...";
+                infoSpan.style.color = "#90a4ae";
+                const res = await fetch(url);
+                const data = await res.json();
+                const ids = new Set();
+                
+                // Extrahiere IDs aus der OSCAL Profile Struktur
+                if (data.profile && data.profile.imports) {
+                    data.profile.imports.forEach(imp => {
+                        if (imp['include-controls']) {
+                            imp['include-controls'].forEach(inc => {
+                                if (inc['with-ids']) {
+                                    inc['with-ids'].forEach(id => ids.add(id));
+                                }
+                            });
+                        }
+                    });
+                }
+                
+                activeProfileIds = ids;
+                infoSpan.textContent = `${ids.size} Maßnahmen im Profil aktiv.`;
+                infoSpan.style.color = "#28a745";
+                applyFilters();
+            } catch (e) {
+                infoSpan.textContent = "Fehler beim Laden des Profils.";
+                infoSpan.style.color = "red";
+                console.error("OSCAL Profil Parsing Fehler:", e);
+                activeProfileIds = null;
+                applyFilters();
+            }
+        }
+		
+        async function loadFromURL() {
+            try {
+                const url = document.getElementById('urlInput').value;
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("Netzwerkantwort war nicht ok");
+                processCatalog(await res.json());
+            } catch (e) { alert("Fehler beim Laden: " + e.message); }
+        }
+
+        function loadFromFile() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) return;
+            const r = new FileReader();
+            r.onload = e => processCatalog(JSON.parse(e.target.result));
+            r.readAsText(file);
+        }
+
+        function clearAllCatalogs() {
+            document.getElementById('catalog-container').innerHTML = '';
+            document.getElementById('meta-container').innerHTML = 'Kein Katalog geladen';
+            document.getElementById('welcome-msg').style.display = 'block';
+            document.getElementById('clearAllBtn').style.display = 'none';
+            document.getElementById('filterControls').style.display = 'none';
+            loadedCatalogs = [];
+            filterOptions = { class: new Set(), sec_level: new Set(), effort_level: new Set(), modalverb: new Set(), handlung: new Set(), tags: new Set() };
+            populateFilterUI();
+        }
+
+        function processCatalog(data) {
+            const container = document.getElementById('catalog-container');
+            const welcome = document.getElementById('welcome-msg');
+            if (welcome) welcome.style.display = 'none';
+            document.getElementById('clearAllBtn').style.display = 'block';
+
+            const catMeta = data.catalog.metadata;
+            loadedCatalogs.push(catMeta);
+            updateMetaDisplay();
+
+            const fragment = document.createDocumentFragment();
+            if (data.catalog.groups) data.catalog.groups.forEach(g => fragment.appendChild(createGroupElement(g)));
+            if (data.catalog.controls) data.catalog.controls.forEach(c => fragment.appendChild(createControlElement(c, false)));
+            
+            container.appendChild(fragment);
+            populateFilterUI();
+            document.getElementById('filterControls').style.display = 'block';
+            
+            // Wende aktive Filter (z.B. ein geladenes Profil) direkt auf den neuen Katalog an
+            applyFilters();
+        }
+
+        function updateMetaDisplay() {
+            const metaBox = document.getElementById('meta-container');
+            metaBox.innerHTML = loadedCatalogs.map(m => `
+                <div class="meta-item">
+                    <strong>${m.title}</strong><br><small>v${m.version}</small>
+                </div>
+            `).join('');
+        }
+
+        function createGroupElement(group) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'group-item filterable-container';
+            const header = document.createElement('div');
+            header.className = 'group-header';
+            header.innerHTML = `<span><small style="color:#90a4ae; margin-right:8px">${group.id}</small> ${escapeHtml(group.title)}</span> <span class="toggle">▼</span>`;
+            const content = document.createElement('div');
+            content.className = 'group-content';
+            header.onclick = () => {
+                const isOpen = content.classList.toggle('open');
+                header.querySelector('.toggle').innerText = isOpen ? '▲' : '▼';
+            };
+            if (group.groups) group.groups.forEach(g => content.appendChild(createGroupElement(g)));
+            if (group.controls) group.controls.forEach(c => content.appendChild(createControlElement(c, false)));
+            wrapper.append(header, content);
+            return wrapper;
+        }
+
+        function createControlElement(control, isNested = false) {
+            const card = document.createElement('div');
+            card.className = isNested ? 'control-card nested-card filterable-item' : 'control-card filterable-item';
+            card.id = control.id;
+
+            const cClass = control.class || "";
+            const sec = control.props?.find(p => p.name === 'sec_level')?.value || "";
+            const effort = control.props?.find(p => p.name === 'effort_level')?.value || "";
+            const uuid = control.props?.find(p => p.name === 'alt-identifier')?.value || "";
+            
+            const tagsRaw = control.props?.find(p => p.name === 'tags')?.value || "";
+            const tagsArray = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(t => t.length > 0) : [];
+            
+            if(cClass) filterOptions.class.add(cClass);
+            if(sec) filterOptions.sec_level.add(sec);
+            if(effort) filterOptions.effort_level.add(effort);
+            tagsArray.forEach(t => filterOptions.tags.add(t));
+
+            const stmtPart = control.parts?.find(p => p.name === 'statement') || (control.parts ? control.parts[0] : null);
+            const guidance = control.parts?.find(p => p.name === 'guidance')?.prose || "";
+            const modal = stmtPart?.props?.find(p => p.name === 'modalverb')?.value || "";
+            const action = stmtPart?.props?.find(p => p.name === 'handlungsworte')?.value || "";
+            const result = stmtPart?.props?.find(p => p.name === 'ergebnis')?.value || "";
+            const precision = stmtPart?.props?.find(p => p.name === 'präzisierung')?.value || "";
+            
+            if(modal) filterOptions.modalverb.add(modal);
+            if(action) filterOptions.handlung.add(action);
+            
+            card.dataset.searchText = `${control.id} ${uuid} ${control.title} ${stmtPart?.prose || ""} ${modal} ${action} ${tagsArray.join(' ')}`.toLowerCase();
+            card.dataset.class = cClass; 
+            card.dataset.sec = sec; 
+            card.dataset.effort = effort; 
+            card.dataset.modal = modal; 
+            card.dataset.handlung = action; 
+            card.dataset.tags = JSON.stringify(tagsArray); 
+
+            card.innerHTML = `
+                <div class="id-row"><span class="badge-id">${control.id}</span><span class="badge-class">${escapeHtml(cClass)}</span></div>
+                <h3 class="control-title">${escapeHtml(control.title)}</h3>
+                <div class="tag-list">
+                    ${sec ? `<span class="tag tag-sec">Niveau: ${sec}</span>` : ''}
+                    ${effort ? `<span class="tag tag-effort">Aufwand: ${effort}</span>` : ''}
+                    ${uuid ? `<span class="tag tag-uuid">UUID: ${uuid}</span>` : ''}
+                    ${modal ? `<span class="tag tag-modal">${escapeHtml(modal)}</span>` : ''}
+                    ${action ? `<span class="tag tag-action">${escapeHtml(action)}</span>` : ''}
+                    ${tagsArray.map(t => `<span class="tag tag-tags">Tag: ${escapeHtml(t)}</span>`).join('')}
+                </div>
+                <div class="statement-box">
+                    <div class="statement-prose">${convertOscal(stmtPart?.prose, control.params)}</div>
+                    ${(result || precision) ? `
+                    <div class="breakdown-grid">
+                        ${result ? `<div class="bd-item"><span class="bd-label">Ergebnis</span><span class="bd-value">${result}</span></div>` : ''}
+                        ${precision ? `<div class="bd-item"><span class="bd-label">Präzisierung</span><span class="bd-value">${precision}</span></div>` : ''}
+                    </div>
+                    ` : ''}
+                </div>
+                <div class="ai-actions">
+                    <button class="ai-btn" onclick="triggerAI('${control.id}', 'implementation')">✨ Umsetzung</button>
+                    <button class="ai-btn" onclick="triggerAI('${control.id}', 'risk')">✨ Risiko</button>
+					<button class="ai-btn" onclick="triggerAI('${control.id}', 'edition2023')">✨ Abgleich Edition 2023</button>
+                    <div class="ai-loader"></div>
+                </div>
+                <div class="ai-response-area"><div class="ai-response-content"></div></div>
+                ${guidance ? `<div class="guidance-box">${convertOscal(guidance, control.params)}</div>` : ''}
+                <div class="control-footer">
+                    <div class="links-area">
+                        ${control.links ? control.links.filter(l => l.rel === 'related').map(l => {
+                            const tid = l.href.startsWith('#') ? l.href.substring(1) : l.href;
+                            return `<a href="${l.href}" class="link-item" onclick="scrollToControl('${tid}', event)">🔗 ${tid}</a>`;
+                        }).join('') : ''}
+                    </div>
+                    <button class="btn-json" onclick="openModalById('${control.id}')">JSON Details</button>
+                </div>
+            `;
+			
+            card.dataset.jsonData = JSON.stringify(control);
+
+            if (control.controls && control.controls.length > 0) {
+                card.classList.add('filterable-container'); 
+                
+                const nestedContainer = document.createElement('div');
+                nestedContainer.className = 'control-nested-container';
+                nestedContainer.innerHTML = '<div style="font-size:0.75rem; color:#78909c; margin-bottom:10px; text-transform:uppercase; font-weight:800;">Unter-Maßnahmen:</div>';
+                
+                control.controls.forEach(nestedCtrl => {
+                    nestedContainer.appendChild(createControlElement(nestedCtrl, true));
+                });
+                
+                card.appendChild(nestedContainer);
+            }
+
+            return card;
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const fClass = document.getElementById('filterClass').value;
+            const fSec = document.getElementById('filterSec').value;
+            const fEff = document.getElementById('filterEffort').value;
+            const fMod = document.getElementById('filterModal').value;
+            const fHandlung = document.getElementById('filterHandlung').value; 
+            const fTag = document.getElementById('filterTag').value;
+
+            // Prüfe, ob überhaupt ein Filter (inkl. Profil) aktiv ist
+            const anyFilterActive = (query !== "" || fClass !== "all" || fSec !== "all" || fEff !== "all" || fMod !== "all" || fHandlung !== "all" || fTag !== "all" || activeProfileIds !== null);
+
+            document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => {
+                el.classList.add('hidden');
+                if (el.classList.contains('control-card')) {
+                    el.classList.add('child-match-only'); 
+                }
+            });
+
+            if (!anyFilterActive) {
+                collapseAll();
+                document.querySelectorAll('.filterable-item, .filterable-container').forEach(el => {
+                    el.classList.remove('hidden');
+                    el.classList.remove('child-match-only'); 
+                });
+                return;
+            }
+
+            document.querySelectorAll('.control-card').forEach(card => {
+                const cardTags = card.dataset.tags ? JSON.parse(card.dataset.tags) : []; 
+                
+                // Beinhaltet jetzt die Prüfung gegen das Set activeProfileIds
+                const match = (!query || card.dataset.searchText.includes(query)) &&
+                              (fClass === 'all' || card.dataset.class === fClass) &&
+                              (fSec === 'all' || card.dataset.sec === fSec) &&
+                              (fEff === 'all' || card.dataset.effort === fEff) &&
+                              (fMod === 'all' || card.dataset.modal === fMod) &&
+                              (fHandlung === 'all' || card.dataset.handlung === fHandlung) &&
+                              (fTag === 'all' || cardTags.includes(fTag)) &&
+                              (!activeProfileIds || activeProfileIds.has(card.id)); // NEU: Profil-Filter
+                
+                if (match) { 
+                    card.classList.remove('hidden'); 
+                    card.classList.remove('child-match-only'); 
+                    revealParents(card); 
+                }
+            });
+        }
+
+        function revealParents(el) {
+            let p = el.parentElement;
+            while (p && p.id !== 'catalog-container') {
+                if (p.classList.contains('filterable-container')) {
+                    p.classList.remove('hidden'); 
+                }
+                if (p.classList.contains('group-content')) { 
+                    p.classList.add('open'); 
+                    p.style.display = ''; 
+                    const header = p.previousElementSibling;
+                    if(header && header.classList.contains('group-header')) header.querySelector('.toggle').innerText = '▲';
+                }
+                p = p.parentElement;
+            }
+        }
+
+        function collapseAll() {
+            document.querySelectorAll('.group-content').forEach(p => {
+                p.classList.remove('open');
+                p.style.display = ''; 
+                const header = p.previousElementSibling;
+                if(header && header.classList.contains('group-header')) header.querySelector('.toggle').innerText = '▼';
+            });
+        }
+
+        function populateFilterUI() {
+            fillSelect('filterClass', filterOptions.class, "Klasse");
+            fillSelect('filterSec', filterOptions.sec_level, "Niveau");
+            fillSelect('filterEffort', filterOptions.effort_level, "Aufwand");
+            fillSelect('filterModal', filterOptions.modalverb, "Modalität");
+            fillSelect('filterHandlung', filterOptions.handlung, "Handlung"); 
+            fillSelect('filterTag', filterOptions.tags, "Tag"); 
+        }
+
+        function fillSelect(id, set, label) {
+            const sel = document.getElementById(id);
+            if (!sel) return;
+            const currentVal = sel.value;
+            sel.innerHTML = `<option value="all">Alle ${label}en</option>`;
+            Array.from(set).sort().forEach(v => {
+                if (!v) return;
+                const o = document.createElement('option');
+                o.value = v; o.textContent = v; sel.appendChild(o);
+            });
+            if (set.has(currentVal)) sel.value = currentVal;
+            else sel.value = 'all';
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            ['filterClass', 'filterSec', 'filterEffort', 'filterModal', 'filterHandlung', 'filterTag'].forEach(id => document.getElementById(id).value = 'all');
+            
+            document.getElementById('profileSelect').value = '';
+            document.getElementById('profileInfo').textContent = '';
+            activeProfileIds = null;
+            
+            applyFilters();
+        }
+
+        function convertOscal(text, params) {
+            if (!text || !params) return text || "";
+            return text.replace(/\{\{\s*insert:\s*param,\s*([a-zA-Z0-9_.-]+)\s*\}\}/g, (m, id) => {
+                const p = params.find(x => x.id === id);
+                return p?.values ? `<u>${p.values[0]}</u>` : (p?.label ? `[${p.label}]` : id);
+            });
+        }
+        function escapeHtml(text) { return text ? text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") : ""; }
+        function scrollToControl(id, event) {
+            if(event) event.preventDefault();
+            const target = document.getElementById(id);
+            if(!target) return;
+            target.classList.remove('hidden');
+            revealParents(target);
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            target.classList.add('highlight-target');
+            setTimeout(() => target.classList.remove('highlight-target'), 2000);
+        }
+        window.openModalById = (id) => {
+            const el = document.getElementById(id);
+            const data = JSON.parse(el.dataset.jsonData);
+            document.getElementById('modalTitle').textContent = `JSON: ${data.id}`;
+            document.getElementById('modalBody').textContent = JSON.stringify(data, null, 2);
+            document.getElementById('jsonModal').style.display = 'block';
+        };
+		function closeModal() { document.getElementById('jsonModal').style.display = 'none'; }
+
+        function exportAiCache() {
+            if (Object.keys(aiCache).length === 0) {
+                alert("Der KI-Cache ist noch leer. Generiere zuerst ein paar Antworten.");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(aiCache, null, 2));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", "gspp_ai_cache_export.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+        function importAiCache(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (typeof importedData !== 'object' || importedData === null) {
+                        throw new Error("Ungültiges JSON-Format.");
+                    }
+
+                    aiCache = { ...aiCache, ...importedData };
+                    localStorage.setItem('gspp_ai_cache', JSON.stringify(aiCache));
+                    
+                    alert("KI-Antworten erfolgreich importiert!");
+                    event.target.value = ''; 
+                } catch (error) {
+                    alert("Fehler beim Importieren: " + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedKey = localStorage.getItem('gspp_gemini_apikey');
+            if (savedKey) {
+                document.getElementById('apiKeyInput').value = savedKey;
+                toggleAiButtons(); 
+            }
+            
+            // Lade die Liste der verfügbaren Profile initial
+            fetchProfilesList();
+        });
+    </script>
+</body>
+</html>

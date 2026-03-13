@@ -1,0 +1,3666 @@
+{
+  "component-definition": {
+    "uuid": "e82d1758-7eb0-4de0-8d40-2c1a4ca18588",
+    "metadata": {
+      "title": "NET.1.1 Netzarchitektur und -design - Benutzerdefiniert",
+      "last-modified": "2025-11-23T15:23:47.404829+00:00",
+      "version": "1.0.0",
+      "oscal-version": "1.1.3"
+    },
+    "components": [
+      {
+        "uuid": "e762675f-9012-41da-84a3-8c7e0f5beb75",
+        "type": "interconnection",
+        "title": "NET.1.1 Netzarchitektur und -design",
+        "description": "This component represents the implementation of all controls for Baustein NET.1.1.",
+        "props": [
+          {
+            "name": "Einleitung",
+            "value": "Die meisten Institutionen benötigen heute für ihren Geschäftsbetrieb und für die Erfüllung ihrer Fachaufgaben Datennetze, über die beispielsweise Informationen und Daten ausgetauscht sowie verteilte Anwendungen realisiert werden. An solche Netze werden nicht nur herkömmliche Endgeräte, das Extranet und das Internet angeschlossen. Sie integrieren zunehmend auch mobile Endgeräte und Elemente, die dem Internet of Things (IoT) zugerechnet werden. Darüber hinaus werden über Datennetze vermehrt auch Cloud-Dienste sowie Dienste für Unified Communication and Collaboration (UCC) genutzt. Die Vorteile, die sich dadurch ergeben, sind unbestritten. Aber durch die vielen Endgeräte und Dienste steigen auch die Risiken. Deshalb ist es wichtig, das eigene Netz bereits durch eine sichere Netzarchitektur zu schützen. Dafür muss zum Beispiel geplant werden, wie ein lokales Netz (Local Area Network, LAN) oder ein Wide Area Network (WAN) sicher aufgebaut werden kann. Ebenso müssen nur eingeschränkt vertrauenswürdige externe Netze, z. B. das Internet oder Netze der Kundschaft, geeignet angebunden werden.<BR>Um ein hohes Sicherheitsniveau zu gewährleisten, sind zusätzliche sicherheitsrelevante Aspekte zu berücksichtigen. Beispiele hierfür sind eine sichere Trennung verschiedener Mandanten und Mandantinnen sowie Gerätegruppen auf Netzebene und die Kontrolle ihrer Kommunikation durch eine Firewall. Ein weiteres wichtiges Sicherheitselement, speziell bei Clients, ist außerdem die Netzzugangskontrolle."
+          },
+          {
+            "name": "Zielsetzung",
+            "value": "Ziel dieses Bausteins ist es, die Informationssicherheit als integralen Bestandteil der Netzarchitektur und des Netzdesigns zu etablieren."
+          },
+          {
+            "name": "Abgrenzung_und_Modellierung",
+            "value": "Der Baustein NET.1.1 Netzarchitektur und -design ist auf das Gesamtnetz einer Institution inklusive aller Teilnetze anzuwenden.<BR>Der Baustein enthält grundsätzliche Anforderungen, die zu beachten und erfüllen sind, wenn Netze geplant, aufgebaut und betrieben werden. Anforderungen für den sicheren Betrieb der entsprechenden Netzkomponenten, inklusive Sicherheitskomponenten wie z. B. Firewalls, sind nicht Gegenstand des vorliegenden Bausteins. Diese werden in der Bausteingruppe NET.3 Netzkomponenten behandelt.<BR>Der Fokus dieses Bausteins liegt auf kabelgebundenen Netzen und der Datenkommunikation. Jedoch müssen allgemeine Anforderungen an die Architektur und das Design, z. B. dass Zonen gegenüber Netzsegmenten immer eine physische Trennung erfordern, für alle Netztechniken beachtet und erfüllt werden.<BR>Weitergehende spezifische Anforderungen für Netzbereiche wie Wireless LAN (WLAN) oder Speichernetze (Storage Area Networks, SAN) werden in der Bausteinschicht NET.2 Funknetze bzw. im Baustein SYS.1.8 Speicherlösungen behandelt. Darüber hinaus wird auch das Thema Voice over IP (VoIP) sowie die dafür zugrundeliegende Sicherheitsinfrastruktur nicht in diesem Baustein erörtert, sondern in dem entsprechenden Baustein NET.4.2 VoIP behandelt.<BR>Spezifische sicherheitstechnische Anforderungen für Virtual Private Clouds und Hybrid Clouds liegen ebenfalls nicht im Fokus dieses Bausteins.<BR>Das Netzmanagement wird im Rahmen der Zonierung und Segmentierung betrachtet, alle weitergehenden Themen des Netzmanagements werden im Baustein NET.1.2 Netzmanagement behandelt."
+          },
+          {
+            "name": "_2.1._Ausfall_oder_unzureichende_Performance_von_Kommunikationsverbindungen",
+            "value": "Sind die Kommunikationsverbindungen unzureichend dimensioniert oder reicht ihre Leistung aufgrund eines technischen Ausfalls oder eines Denial-of-Service-(DoS)-Angriffs nicht mehr aus, können z. B. Clients nur noch eingeschränkt mit Servern kommunizieren. Dadurch erhöhen sich die Zugriffszeiten auf interne und externe Dienste. Diese sind so mitunter nur noch eingeschränkt oder gar nicht mehr nutzbar. Auch sind eventuell institutionsrelevante Informationen nicht mehr verfügbar. In der Folge können essenzielle Geschäftsprozesse oder ganze Produktionsprozesse stillstehen."
+          },
+          {
+            "name": "_2.2._Ungenügend_abgesicherte_Netzzugänge",
+            "value": "Ist das interne Netz mit dem Internet verbunden und der Übergang nicht ausreichend geschützt, z. B. weil keine Firewall eingesetzt wird oder sie falsch konfiguriert ist, können Angreifende auf schützenswerte Informationen der Institution zugreifen und diese kopieren oder manipulieren."
+          },
+          {
+            "name": "_2.3._Unsachgemäßer_Aufbau_von_Netzen",
+            "value": "Wird ein Netz unsachgemäß aufgebaut oder fehlerhaft erweitert, können unsichere Netztopologien entstehen oder Netze unsicher konfiguriert werden. Angreifende können so leichter Sicherheitslücken finden, ins interne Netz der Institution eindringen und dort Informationen stehlen, Daten manipulieren oder auch ganze Produktionssysteme stören. Auch bleiben Angreifende in einem fehlerhaft aufgebauten Netz, das die Sicherheitssysteme nur eingeschränkt überwachen können, länger unerkannt."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "48a08e26-7f2b-487d-83f6-96ebfdacaa3c",
+            "source": "https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Nutzergenerierte-Inhalte/Zielobjektkategorien/profile/netze_profile.json",
+            "description": "Implementation for all controls in Baustein NET.1.1",
+            "implemented-requirements": [
+              {
+                "uuid": "b6da2851-21be-4241-a50a-e5d1c40e8838",
+                "control-id": "ARCH.2.1",
+                "description": "(BSI Baustein NET.1.1) Relevant sind dabei (falls vorhanden) auch WLANs/SSIDs, IoT-Geräte wie vernetzte Kühlschränke, Hausleittechnik, operative Technologien, Industrielle Steuerungssysteme oder Netze zum Zugriff auf Speichersysteme (Storage Area Network, SAN). Die Anforderung gilt auch, wenn die Systeme nur noch als VMs oder Container existieren. Die Segmentierung kann hier in die virtuelle Netzwerk‑Ebene verlagert werden, sodass die Segmentierung weder vom Hypervisor noch von den Workloads umgangen wird. Die Einteilung in Segmente kann anhand einer Klassifizierung von Netzen erfolgen (z.B. nach Schutzbedarf der dort verarbeiteten Daten oder nach Risikoklassen angeschlossener Systeme) erfolgen. Beispiele hierfür sind Internet-Domäne, Endgeräte-Domäne, Domäne für zentrale Serverdienste, Domäne für Systeme hoher Vertraulichkeit. Alternativ können auch organisatorische Domänen verwendet werden, z.B. Personalwesen, Marketing, Finanzverwaltung, Innere Verwaltung. Die Filterkriterien können sich nach den Sicherheitsanforderungen der jeweiligen Netze im Einzelnen oder nach einer vorgenommenen Klassifikation der Netze richten. Hierzu gehören insbesondere die Anforderungen zur Authentifizierung und Autorisierung von Assets.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.1-m1",
+                    "uuid": "5db86456-0012-42af-bfef-b7f7d0c6e991",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Netzwerk wird als flaches Netz betrieben, ohne logische oder physische Unterteilung in Segmente."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alle Geräte befinden sich in einer einzigen Broadcast-Domäne. Es findet keine Trennung nach Sicherheitsbedarf statt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen, ob alle Clients und Server IP-Adressen aus demselben Subnetz beziehen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.1-m2",
+                    "uuid": "f8f926ad-01dc-45a3-b0ff-ad67fca6d2c0",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Netz ist rudimentär in grundlegende Segmente (z.B. Clients, Server) unterteilt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzung von statischen VLANs zur groben Gruppierung von Gerätetypen. Routing ist oft uneingeschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Switch-Konfiguration auf Vorhandensein verschiedener VLANs."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.1-m3",
+                    "uuid": "1f04f139-3f61-4af8-9c2e-5f7e8b694c29",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE eine Unterteilung des internen Netzes in Netzsegmente unter Berücksichtigung der Anforderungen der Institution und des Sc"
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE eine Unterteilung des internen Netzes in Netzsegmente unter Berücksichtigung der Anforderungen der Institution und des Sc"
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE eine Unterteilung des internen Netzes in Netzsegmente unter Berücksichtigung der Anforderungen der Institution und des Sc"
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.1-m4",
+                    "uuid": "dd7a12cd-46a3-46ab-9174-6e46f2717e64",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Segmentierung erfolgt feingranular nach Schutzbedarf und Funktion, inklusive DMZ und Management-Netzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einsatz dedizierter Subnetze für Abteilungen und Anwendungen. Routing-Regeln werden aktiv gepflegt (ACLs)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Routing-Tabellen und ACLs auf logische Trennung der definierten Zonen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.1-m5",
+                    "uuid": "da5af60d-a9e2-47e9-aab9-a8a727329443",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Micro-Segmentierung oder Zero-Trust-Ansätze sind implementiert, die Kommunikation auf Host-Ebene steuern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Automatisierte Zuweisung von Sicherheitsgruppen. Jedes Endgerät darf nur explizit erlaubte Verbindungen aufbauen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Automatischer Scan mittels `nmap` über Segmentgrenzen hinweg, um unerlaubte Erreichbarkeiten zu identifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b954db31-4594-415c-bd6a-c1387a2a1425",
+                "control-id": "ARCH.2.2",
+                "description": "(BSI Baustein NET.1.1) Dient dem Ziel, die Angriffsfläche innerhalb interner und externer Netze zu reduzieren und die Ausbreitung potenzieller Schadsoftware oder unberechtigter Zugriffe einzudämmen. Ohne solche Begrenzungen könnte ein einzelner kompromittierter Bereich direkten Zugriff auf weitere sensible Segmente erhalten und dadurch Geschäftsprozesse massiv beeinträchtigen. Beispielsweise benötigt ein Endgerät Verbindungen zu internen Servern und Druckern, während Gäste lediglich auf den Internetanschluss Zugriff benötigen. Im Blick auf weitreichende Sicherheitsvorfälle ist hier insbesondere die Trennung interner Netzsegmente vom Internet zu beachten. Diese Regeln können auf Kriterien wie Gerätetyp (z. B. Laptop, IoT-Gerät), Benutzerrolle (z. B. Administrator, Gast), physischem Anschlussort oder Uhrzeit basieren. Eine klare Trennung von Benutzergruppen über VLANs oder dynamische ACLs erhöht die Sicherheit und Transparenz. Für die Einführung in eine bestehende Umgebung kann ein gestuftes Vorgehen gewählt werden: (1) Zunächst wird ein Überwachungsmodus (\"Audit-Only\") aktiviert, der protokolliert, welche Zugriffe durch eine strengere Richtlinie verweigert würden, ohne sie tatsächlich zu blockieren. (2) Anschließend werden diese Protokolle analysiert, um legitime, für den Geschäftsbetrieb notwendige Zugriffe zu identifizieren und diese gezielt in die jeweiligen Rollen und Berechtigungsgruppen aufzunehmen. (3) Erst wenn keine legitimen Zugriffe mehr in den Protokollen als \"verweigert\" auftauchen, wird die Richtlinie scharf geschaltet und blockiert aktiv alle nicht explizit erlaubten Zugriffe.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2-m1",
+                    "uuid": "c4f15091-a6de-4555-b716-01148b7fcb23",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verbindungen zwischen Netzsegmenten sind uneingeschränkt möglich (Any-Any Routing)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existieren keine Filterregeln an den Gateways zwischen den VLANs."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch, von einem Client-VLAN auf beliebige Ports im Server-VLAN zuzugreifen (z.B. via `telnet`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2-m2",
+                    "uuid": "aefa2d32-0adc-44b3-91df-346e495b02a1",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Grobe Zugriffskontrolllisten (ACLs) auf Layern 3/4 beschränken den Verkehr statisch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einfache Stateless-Filter auf Core-Switches oder Routern blockieren offensichtlich unnötige Ports."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Review der Router-Konfigurationen auf Vorhandensein von ACLs an den VLAN-Interfaces."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2-m3",
+                    "uuid": "978cb077-97bc-42ef-95c0-5dcbb4e59b07",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Netzsegmenten anhand von {{ insert: param, arch.2.2-prm1 }} einschränken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Netzsegmenten anhand von {{ insert: param, arch.2.2-prm1 }} einschränken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Netzsegmenten anhand von {{ insert: param, arch.2.2-prm1 }} einschränken."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2-m4",
+                    "uuid": "002c406c-b615-48d9-bb11-955af9b3b1e2",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Stateful Firewalls regeln den Verkehr zwischen allen Sicherheitszonen mit 'Default Deny' Prinzip."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verbindungen werden nur bei explizitem Bedarf freigeschaltet. Logging abgewiesener Pakete ist aktiv."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der Firewall-Regelwerke auf 'Any'-Regeln und Validierung des 'Default Deny' am Ende."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2-m5",
+                    "uuid": "43ed4b45-200d-45ef-865d-7d4c6afde0f8",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamische, identitätsbasierte Richtlinien steuern den Verkehr (Next-Generation Firewalling / SDP)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Integration von IPS und Application Control zwischen Segmenten. Automatische Isolation bei Anomalien."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Penetrationstest-Skript (z.B. mit OpenVAS), das die Durchlässigkeit der Segmentierung regelmäßig prüft."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "eb8c525d-d5e7-404c-95d3-1e710302f083",
+                "control-id": "ARCH.2.2.1",
+                "description": "(BSI Baustein NET.1.1) Dient dazu, die Angriffsfläche zu reduzieren, unerwünschte Ein- und Ausleitungen zu begrenzen und das Risiko von Datenabflüssen zu minimieren. Für mobile Systeme kann dies z.B. über das Erzwingen einer VPN-Verbindung ins gefilterte Netz der Institution oder über die Verwendung eines direkten Internetzugangs erfolgen, welcher über einen Direct-Internet-Access Agenten abgesichert ist.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Risk Treatment",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2.1-m1",
+                    "uuid": "9fae1505-1e74-4590-8ecd-e6f0cc85b95b",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Externe Anschlüsse (Internet) sind direkt und ungeschützt mit dem internen Netz verbunden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine zentrale Firewall, lediglich NAT durch den Provider-Router."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Netzwerktopologie am Übergabepunkt des Providers."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.1-m2",
+                    "uuid": "03e7c35c-5300-4975-b5b2-885ebc642135",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine zentrale Firewall filtert eingehenden Verkehr an externen Anschlüssen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Blockieren aller eingehenden Verbindungen, die nicht angefordert wurden (Stateful Inspection)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Portscan von extern auf die öffentliche IP, um offene Ports zu identifizieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.1-m3",
+                    "uuid": "9b386fe2-2bb0-4984-8cfe-c01524656356",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE Verbindungen über externe Netzanschlüsse einschränken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE Verbindungen über externe Netzanschlüsse einschränken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE Verbindungen über externe Netzanschlüsse einschränken."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.1-m4",
+                    "uuid": "bb8a3063-88d8-4c16-8d19-1748a576120f",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Redundante Firewall-Cluster mit strenger Egress-Filterung kontrollieren externe Anschlüsse."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ausgehender Verkehr wird auf legitime Dienste beschränkt. Proxies werden eingesetzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch, ausgehende Verbindungen auf nicht-Standard-Ports aufzubauen, um Egress-Filter zu testen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.1-m5",
+                    "uuid": "d6797205-4642-4204-b418-b670ba643ebd",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Echtzeit-Threat-Intelligence und automatisierte Abwehr steuern externe Verbindungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einsatz von DDos-Mitigation und automatischem Blocking von C&C-Servern (DNS-Sinkholing)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulation von C&C-Traffic (z.B. mittels Test-Tools), um automatische Blockade zu verifizieren."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d4ae4224-01e5-4783-9b7e-dd09050e7114",
+                "control-id": "ARCH.2.2.12",
+                "description": "(BSI Baustein NET.1.1) Obwohl sich eine virtuelle Vernetzung immer größerer Beliebtheit erfreut, können Konfigurationsfehler oder Sicherheitslücken dabei leichter zu einer Umgehung der Netztrennung führen, als wenn die Netze bereits auf physischer Ebene voneinander getrennt werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2.12-m1",
+                    "uuid": "a67a69dc-11f4-4ee6-9e9a-4a5023669449",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Netzwerkdosen und Switches sind in öffentlich zugänglichen Bereichen frei verfügbar."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine physischen Schutzmaßnahmen. Jeder kann Kabel einstecken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Begehung der Räumlichkeiten: Sind aktive Netzwerkports frei zugänglich?"
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.12-m2",
+                    "uuid": "d74ca65f-5f88-4dbe-add1-bf82c046b0ba",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zentrale Komponenten sind in verschlossenen Schränken/Räumen untergebracht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zugang zu Verteilern ist limitiert. Freie Dosen sind aber oft noch gepatched."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Schließmechanismen von Serverschränken und Verteilerräumen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.12-m3",
+                    "uuid": "6c5141d2-6309-4571-9c1b-1ce28d3e2e03",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze KANN den physischen Zugang auf diese einschränken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze KANN den physischen Zugang auf diese einschränken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze KANN den physischen Zugang auf diese einschränken."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.12-m4",
+                    "uuid": "bc504cbe-e420-45e8-8e5f-bfb23fc48328",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Port-Security (MAC-Filter) und Abschaltung ungenutzter Dosen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nur bekannte MAC-Adressen erhalten Link. Nicht genutzte Ports sind 'administratively down'."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einstecken eines fremden Laptops an eine freie Dose -> darf keinen Link erhalten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.12-m5",
+                    "uuid": "3b687d84-9d2f-4eaf-929d-f756f1b379af",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vollständige Network Access Control (NAC, 802.1X) und physische Port-Schlösser."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zertifikatsbasierte Authentifizierung am Port. Alarmierung bei Trennung von Kabeln."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Test mit einem nicht-zertifizierten Gerät: Port muss gesperrt oder in Quarantäne-VLAN landen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2645561b-762a-4ca9-bd57-5633be7f1fb4",
+                "control-id": "ARCH.2.2.2",
+                "description": "(BSI Baustein NET.1.1) Wenn Gäste der Institution sich mit dem internen Netz verbinden, könnten Schadprogramme in das Netz gelangen oder unbeabsichtigte Datenflüsse über die Verbindung fließen. Daher ist es sinnvoll, einen vom übrigen Netz getrennten Gastzugang einzurichten, z.B. in Besprechungs-, Veranstaltungs- und Schulungsräumen. Wenn die Einschränkungen von Gastnetzen lockerer sind als die interner Netze am gleichen Standort, so zeigt die Erfahrung, dass auch interne Mitarbeitende gerne auf Gastnetze zurückgreifen. Dadurch könnte es zur Umgehung der internen Schutzmaßnahmen kommen. Daher ist es empfehlenswert, für das Gastnetz gleiche oder strengere Einschränkungen zu wählen oder die Nutzung des Gastnetzes durch Mitarbeitende technisch oder organisatorisch zu beschränken.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2.2-m1",
+                    "uuid": "75147c46-5ed6-483a-a1c6-500c86f703cf",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gäste nutzen das interne Produktionsnetz (z.B. WLAN mit geteiltem Schlüssel)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine Trennung zwischen Gastgeräten und internen Ressourcen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Verbindung mit dem Gast-WLAN und Ping-Versuch auf interne Server."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.2-m2",
+                    "uuid": "62b144a8-48d2-47a1-9f90-f348ba9d8260",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gäste werden in ein separates VLAN geleitet, das nur Internetzugriff hat."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einfaches Routing ins Internet, Blockieren privater IP-Bereiche (RFC1918) via ACL."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Routing-Regeln für das Gast-Subnetz auf Ziele im internen Netz."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.2-m3",
+                    "uuid": "6b5314c7-845b-4d07-92f5-891c089657f1",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Gastnetz und internem Netz einschränken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Gastnetz und internem Netz einschränken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Gastnetz und internem Netz einschränken."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.2-m4",
+                    "uuid": "9d6d1d6b-5811-47d2-8dc8-9d773215f0fe",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vollständige physische oder logische Isolation (VRF) mit Captive Portal."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Authentifizierung der Gäste, Bandbreitenbegrenzung und Logging der Zugriffe."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung, ob das Gastnetz eine eigene Routing-Tabelle (VRF) oder Hardware nutzt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.2-m5",
+                    "uuid": "3930f5ac-9a86-44e9-90c2-1ef215f15c32",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Client-Isolation innerhalb des Gastnetzes und zeitlich begrenzte Einzel-Credentials."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Gäste können sich auch untereinander nicht sehen (Private VLAN). Automatische Voucher-Erstellung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch eines Scans im Gastnetz, um andere Gastgeräte zu entdecken (sollte fehlschlagen)."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "07520127-a985-47da-af01-24c8f19c090b",
+                "control-id": "ARCH.2.2.4",
+                "description": "(BSI Baustein NET.1.1) Werden sowohl Telefonie als auch andere Daten über dasselbe Netz geführt, so könnte dies bei einem Netzausfall dazu führen, dass keine Kommunikation mehr möglich ist, auch nicht zur Meldung oder Behebung der Störung. Die Wahrscheinlichkeit kann durch getrennt betriebene Voice- und Datennetze verringert werden. Für weitere Details siehe „Kompendium für organisationsinterne Telekommunikationssysteme mit erhöhtem Schutzbedarf\".",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2.4-m1",
+                    "uuid": "8e436335-b7ed-49c0-a69d-2aba10141303",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "VoIP-Telefone und PCs nutzen dasselbe VLAN ohne Priorisierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Sprachdaten konkurrieren direkt mit Datentransfer, Sicherheitstrennung fehlt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung an einem Switch-Port, ob PC und Telefon im selben VLAN ungetagged laufen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.4-m2",
+                    "uuid": "c4f23bf9-a005-49b6-bd65-36abc58628db",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einsatz eines dedizierten Voice-VLANs (tagged) auf den Access-Ports."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Logische Trennung auf Layer 2, um Broadcasts zu minimieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auslesen der Switch-Konfiguration (`show running-config`) nach Voice-VLAN Einstellungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.4-m3",
+                    "uuid": "1219128d-d6e7-4a2b-871d-cd3bc084c0d3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze KANN eine oder mehrere separate Netzdomänen zur Trennung von Daten- und VoIP-Kommunikation installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze KANN eine oder mehrere separate Netzdomänen zur Trennung von Daten- und VoIP-Kommunikation installieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze KANN eine oder mehrere separate Netzdomänen zur Trennung von Daten- und VoIP-Kommunikation installieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.4-m4",
+                    "uuid": "6c3e6c90-f625-4b96-85fe-ecc0c640283d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Durchgängige QoS-Policies und Abschottung des VoIP-Servers durch Firewalls."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Sprachpakete werden priorisiert (DSCP). Zugriff auf VoIP-Server nur aus Voice-VLAN erlaubt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Messung von Jitter/Latency und Überprüfung der Firewall-Regeln zum PBX-System."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.4-m5",
+                    "uuid": "0a813270-26fd-4973-a07a-48498aca6763",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verschlüsselte VoIP-Kommunikation (SRTP/TLS) in isolierter Netzdomäne."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einsatz von Session Border Controllern (SBC) mit Deep Packet Inspection für SIP."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Wireshark-Capture eines Telefonats prüfen, ob Signalisierung und Payload verschlüsselt sind."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "c4b995ab-09eb-4016-bcca-6cfdb41c7bb2",
+                "control-id": "ARCH.2.2.6",
+                "description": "(BSI Baustein NET.1.1) Unter einer Demilitarisierten Zone versteht man in diesem Kontext ein logisch oder physisch getrenntes Teilnetz, in dem Systeme mit exponierten Diensten – wie Webserver, Mail-Gateways oder VPN-Endpunkte – betrieben werden. Systeme der Institution, die sowohl aus dem öffentlichen Netz als auch aus dem internen Netz erreichbar sind, werden in einer demilitarisierten Zone (DMZ) so betrieben, dass (1) der Netzverkehr zwischen dem System und dem öffentlichen Netz gefiltert wird und (2) der Netzverkehr zwischen dem System und anderen internen Netzen gefiltert wird. Eine DMZ kann sowohl durch dedizierte Hardware-Firewalls als auch durch virtuelle Netzwerksegmente umgesetzt werden. Ohne eine solche Trennung könnte ein kompromittierter Webserver direkt als Sprungbrett ins interne Netz dienen oder Schadsoftware könnte sich ungehindert auf sensible Systeme ausbreiten. Mit einer DMZ kann eine Institution hingegen erreichen, dass kompromittierte Systeme isoliert bleiben und sicherheitskritische interne Netze weiterhin geschützt sind.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2.6-m1",
+                    "uuid": "c952f26a-9c8a-4cb9-bd7a-84bb942338d5",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Öffentliche Dienste (Webserver) stehen direkt im internen LAN (Port-Forwarding)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Kompromittierung des Dienstes ermöglicht direkten Zugriff auf das interne Netz."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Ziel-IPs von NAT-Regeln auf Zugehörigkeit zum internen Client/Server-Subnetz."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.6-m2",
+                    "uuid": "c36a0fbc-c7a2-4548-830c-4531ba8dd994",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einrichtung einer einfachen DMZ an einem separaten Firewall-Interface."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Server mit Internetkontakt stehen in einem eigenen Subnetz. Zugriff ins LAN ist beschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Verifikation, dass DMZ-Hosts keine neuen Verbindungen ins interne LAN aufbauen können."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.6-m3",
+                    "uuid": "392e1c95-3b19-47cb-ae0a-7c3def41b32c",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE eine demilitarisierte Zone installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE eine demilitarisierte Zone installieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE eine demilitarisierte Zone installieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.6-m4",
+                    "uuid": "5cea4b81-f6a7-4b3c-8b8c-ab570b0a47bd",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Mehrstufige DMZ-Konzepte (Front-End/Back-End Trennung) sind umgesetzt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Webserver in DMZ, Datenbank im Backend-Netz. Kommunikation streng reglementiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Review der Architektur auf Trennung von Präsentations- und Datenschicht."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.6-m5",
+                    "uuid": "66ae35cd-420f-49ba-b6f3-68de6139ce44",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Micro-Segmentierte DMZ-Workloads mit Reverse-Proxies und WAF."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jeder Dienst läuft isoliert (z.B. Container). Web Application Firewall filtert Layer 7."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Automatisierte Angriffe gegen die Webanwendung zur Prüfung der WAF-Effektivität."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ac7cf25e-6ba6-4052-b452-a64cdfe8e66b",
+                "control-id": "ARCH.2.2.7",
+                "description": "(BSI Baustein NET.1.1) Ein Management-Netz ist ein physisch oder durch Netzfilter separiertes Netzsegment, das dediziert für die Überwachung, Verwaltung und Wartung von IT-Systemen bestimmt ist. Es ist von anderen Produktions- und Datennetzen getrennt, um den Zugriff auf kritische Verwaltungsfunktionen zu schützen und die Verfügbarkeit dieser Zugänge auch bei Problemen im restlichen Netz zu sichern. Dies gilt auch für virtualisierte Systeme. Im Kontext der Containerisierung empfiehlt es sich, administrative Zugänge auf Applikations-Container immer über die Container-Runtime erfolgen zu lassen.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2.7-m1",
+                    "uuid": "3aa974ff-4419-4171-b607-b013070dc1bc",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Administration erfolgt über das normale Produktionsnetz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Management-Interfaces (SSH, Web-GUI) sind aus dem Client-Netz erreichbar."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch des Aufrufs der Firewall-GUI von einem Standard-Arbeitsplatz."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.7-m2",
+                    "uuid": "fbed03c4-624d-4b3d-b774-43b2ac04116d",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Logisch getrenntes Management-VLAN, erreichbar über Jump-Host."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Geräte-Management-IPs liegen in einem separaten Subnetz. Zugriff ist eingeschränkt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der ACLs: Zugriff auf Management-VLAN nur vom Jump-Host erlaubt."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.7-m3",
+                    "uuid": "2c4c37b0-b815-49c6-b29f-efcd2e62530a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE ein oder mehrere Management-Netze installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE ein oder mehrere Management-Netze installieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE ein oder mehrere Management-Netze installieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.7-m4",
+                    "uuid": "93673f82-b947-4255-8ab3-b21961cddce6",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Physisch getrenntes Out-of-Band (OOB) Management-Netzwerk."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Dedizierte Switches/Ports für Management. Keine Verbindung zum Datentransport-Netz."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Physische Inspektion der Verkabelung der Management-Ports."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.7-m5",
+                    "uuid": "04d1379f-9f41-4f8a-87cf-d789c089392c",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Hochsicherer OOB-Zugang nur via Privileged Access Workstation (PAW) und MFA."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vollständige Protokollierung aller Admin-Zugriffe. Automatische Anomalieerkennung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Audit-Logs prüfen, ob MFA für jeden administrativen Zugriff erzwungen wurde."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2701dec1-c870-46a4-9737-b4290b90e482",
+                "control-id": "ARCH.2.2.8",
+                "description": "(BSI Baustein NET.1.1) Entwicklungs-, Staging- und Testumgebungen haben oft geringere Sicherheitsvorkehrungen als Produktivsysteme. Eine saubere Trennung zwischen Test- und Produktivumgebung verhindert Übergriffe auf das Produktivsystem und vermeidet Ressourcenkonflikte.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.2.8-m1",
+                    "uuid": "e448b85b-c3f7-4366-8960-4bfbed557718",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Test- und Entwicklungssysteme laufen im gleichen Netz wie die Produktion."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Gefahr der Beeinflussung von produktiven Daten durch fehlerhafte Tests."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen, ob Testserver IP-Adressen im Produktions-Subnetz haben."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.8-m2",
+                    "uuid": "37e27acc-f8cd-4e64-992f-15be2cf855e0",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Logische Trennung durch VLANs, Routing teilweise noch offen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Testumgebung hat eigenes Subnetz, Zugriff auf Produktion ist aber technisch möglich."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Ping-Test von einem Testsystem auf einen Datenbankserver der Produktion."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.8-m3",
+                    "uuid": "89bd3ccb-a277-4d54-91a0-b3765831bbd3",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Testumgebungen und Betrieb einschränken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Testumgebungen und Betrieb einschränken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen Testumgebungen und Betrieb einschränken."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.8-m4",
+                    "uuid": "2ae9cabf-b73b-4516-a631-f7ed27a95b53",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Strikte Firewall-Trennung. Testsysteme haben keinen Zugriff auf Echtdaten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Kopieren von Daten nur anonymisiert und über kontrollierte Wege (Data Diode Konzept)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Review der Firewall-Regeln zwischen Test- und Prod-Zone (Must be 'Deny All')."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.2.8-m5",
+                    "uuid": "2508a56e-b273-4eff-b572-d631975d39d2",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verwendung ephemerer Umgebungen (Infrastructure as Code), die nach Tests gelöscht werden."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vollständig isolierte Sandbox-Umgebungen, die dynamisch bereitgestellt werden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der CI/CD-Pipeline auf automatisierten Aufbau und Abbau von Testumgebungen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "3480e367-9b85-46e9-93d5-c421ae24fa0a",
+                "control-id": "ARCH.2.3",
+                "description": "(BSI Baustein NET.1.1) Ein Netzplan (engl. network diagram) stellt eine schematische Darstellung der logischen und physischen Struktur von Kommunikationsnetzen dar und bildet die Grundlage für Transparenz im Betrieb. Er kann einen zentralen Beitrag zur Informationssicherheit leisten, da er Transparenz über die Struktur, Verbindungen und Schutzbedarfe einer Netzwerkumgebung schafft. Ein aktueller Netzplan, aus dem sich gut die Netzstruktur erkennen lässt, ermöglicht es Anschlüssen mit hohem Risiko oder von einzelnen Ausfallstellen (Single Points of Failure) auf einen Blick zu erkennen. Die Aufteilung in Netzdomänen ermöglicht es, verschiedene Zonen mit unterschiedlichen Schutzanforderungen – z. B. Büro-IT, Produktionsnetz, Managementnetz – getrennt zu betrachten und gezielt zu schützen. Die Erfassung externer Netzanschlüsse – etwa zu Partnernetzen, Cloud-Diensten oder dem Internet – hilft, potenzielle Angriffspunkte zu identifizieren und gezielte Schutzmaßnahmen zu planen. Beispiele für interne Netzsegmente können klassische Trennungen wie IT-Office-Netze, SCADA-/Leittechnik-Netze oder DMZs für externe Zugriffe sein. Dabei sollten auch virtuelle Netze und virtuelle Switches berücksichtigt werden, ebenso wie Container-Infrastrukturen. Als externe Netzanschlüsse kommen etwa VPN-Gateways, dedizierte Providerverbindungen, Fernwartungszugänge oder Cloud-Endpunkte in Frage. Dabei sind nicht nur die auf den ersten Blick relevanten Datennetze, sondern auch andere Telekommunikationsanbindungen wie ISDN-Leitungen, Mobilfunkausweichstrecken oder WLAN-Roaming von Clients relevant. Der Verwendungszweck beschreibt, warum ein Segment oder Anschluss existiert – etwa für Produktivsysteme, Entwicklung, Administration oder Gastzugänge. Der Zweck von Netzsegmenten kann durch einen sprechenden Namen dokumentiert werden, z. B. Management-Netz, OT-Netz, Internetanschluss, Netz der Finanzverwaltung. Dies hilft, Zuständigkeiten und Zugriffsrechte klar zuzuordnen, z. B. anhand von Geschäftsprozessen, Organisationseinheiten oder Zielgruppen (z. B. Gäste, Vertrieb, Leitung). Dabei sind, falls vorhanden, auch WLANs/SSIDs, IoT-Geräte wie vernetzte Kühlschränke, Hausleittechnik, operative Technologien oder Industrielle Steuerungssysteme zu berücksichtigen. Für die Umsetzung ist es nicht erforderlich, jedes Subnetz einzeln in einer Grafik zu visualisieren. Vielmehr kann es hilfreich sein, Netzpläne auf einem abstrahierten Level zu halten, z. B. als logische Übersicht mit Domänen, Segmenten und Übergängen (bereinigter Netzplan). Eine Visualisierung als Layer-Modell (z. B. Infrastruktur-, Kommunikations- und Applikationsebene) kann zusätzliche Einblicke schaffen. Informationen können aus Netzwerkmanagementsystemen, Konfigurationsdateien oder Asset-Management-Tools gewonnen werden. Die Pflege kann als wiederkehrende Aufgabe in Prozesse eingebettet oder im Rahmen von Änderungen (z. B. Change Management) angestoßen werden. Auch eine einfache Pflege in Tabellenform oder als visuelle Skizze kann sinnvoll sein – entscheidend ist die Klarheit und Aktualität.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Management",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.3-m1",
+                    "uuid": "9abb5828-a6e3-49a4-8801-4c4078bf86ed",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Netzpläne existieren nicht oder nur als handgezeichnete Skizzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Wissen über Topologie ist nur in den Köpfen der Admins vorhanden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Interview mit Administratoren nach aktuellen Dokumenten."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.3-m2",
+                    "uuid": "a1278a80-8299-47d8-b561-0f9a289ecbe3",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Statische Dokumentation (z.B. Visio, Excel) vorhanden, aber oft veraltet."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Manuelle Pflege der Pläne bei Änderungen. Versionierung oft unklar."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Vergleich des vorliegenden Netzplans mit der tatsächlichen Konfiguration (Stichprobe)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.3-m3",
+                    "uuid": "cfb5c63c-485c-4bb3-9f77-1975fcfeea39",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE einen Netzplan einschließlich interner Segmente, externer Netzanschlüsse und deren Verwendungszweck dokumentieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE einen Netzplan einschließlich interner Segmente, externer Netzanschlüsse und deren Verwendungszweck dokumentieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE einen Netzplan einschließlich interner Segmente, externer Netzanschlüsse und deren Verwendungszweck dokumentieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.3-m4",
+                    "uuid": "47eeb364-3509-4b28-bbab-913f54ab5708",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Digitale, gepflegte Dokumentation in einer CMDB mit regelmäßigen Updates."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zentrale Ablage aller Segment-Informationen. Änderungen werden protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung des 'Last Updated' Zeitstempels in der CMDB/Dokumentation."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.3-m5",
+                    "uuid": "2478fc39-16e0-4682-be4f-caddc5113b0e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Automatisierte Topologie-Erkennung und dynamische Karten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools (z.B. NetBox, OpenNMS) scannen das Netz und generieren Live-Pläne."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Vergleich der generierten Karte mit der Realität (LLDP-Nachbarschaften)."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "858ce351-8f37-4e09-aef3-8e9d9bbeeab9",
+                "control-id": "ARCH.2.4",
+                "description": "(BSI Baustein NET.1.1) Unbeabsichtigte Netzverbindungen können z.B. über falsch gesteckte Kabel, WLAN auf Clients oder Modems im öffentlichen Telefonnetz (PSTN) an einer TK-Anlage entstehen. Die Anforderung kann durch Netzscans, Software zur Topologieüberwachung oder Protokollanalyse umgesetzt werden. Hierbei sind auch virtualisierte Systeme auf VM-Hosts zu berücksichtigen.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.2.4-m1",
+                    "uuid": "21931ca2-1630-47d1-a175-aecac959a96d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Keine aktive Überwachung der Topologie. Änderungen fallen erst bei Fehlern auf."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ad-hoc Fehlersuche bei Problemen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Frage nach dem Prozess zur Erkennung von nicht autorisierten Switchen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.4-m2",
+                    "uuid": "7302f3b4-9560-4c43-8d68-77f12761f884",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Regelmäßige manuelle Sichtprüfung der Konfigurationen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Administratoren prüfen sporadisch, ob die Verkabelung und Konfig noch stimmt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einsicht in Protokolle der manuellen Reviews."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.4-m3",
+                    "uuid": "34c74ac0-9f55-462a-94ac-da152e717f49",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE die Einhaltung der Netzarchitektur {{ insert: param, arch.2.4-prm1 }} überprüfen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE die Einhaltung der Netzarchitektur {{ insert: param, arch.2.4-prm1 }} überprüfen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE die Einhaltung der Netzarchitektur {{ insert: param, arch.2.4-prm1 }} überprüfen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.4-m4",
+                    "uuid": "d101c858-9c58-42ac-9c42-eef0e6f6b7f2",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zentrales Logging (Syslog/SIEM) meldet Topologieänderungen (Link Up/Down)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Alarmierung bei Änderungen an Core-Links oder Spanning-Tree-Events."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auslösen eines Link-Events und Überprüfung, ob ein Alarm generiert wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.2.4-m5",
+                    "uuid": "224fae7a-a080-4652-9661-e47a23bc851f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Automatisierte Konformitätsprüfung (Configuration Compliance) und Drift-Detection."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Tools wie 'Oxidized' sichern Konfigs und alarmieren bei Abweichung vom Soll-Zustand."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Änderung einer Beschreibung auf einem Interface und Prüfung auf automatische Diff-Benachrichtigung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e5821bcd-f895-44a7-9b8e-f8baa11ed67d",
+                "control-id": "ARCH.4.2",
+                "description": "(BSI Baustein NET.1.1) Dient der Kontrolle von Netzarchitekturen, um unbeabsichtigte oder böswillige Änderungen zu verhindern. Ohne eine solche Freigabe könnte ein Angreifer durch unbemerkte Manipulation von Routing-Einträgen den Datenverkehr umleiten, abhören oder blockieren; auch ein ungeschulter Administrator könnte versehentlich falsche Routen konfigurieren, wodurch kritische Dienste ausfallen könnten. Die Autorisierung kann sicherstellen, dass jede Änderung nachvollziehbar geprüft, dokumentiert und nur nach sachgerechter Bewertung umgesetzt wird, wodurch die Integrität und Verfügbarkeit der Netze erhöht werden kann.  Im konkreten Kontext bedeutet „Routing-Verbindungen“ die Konfiguration von Pfaden, über die Datenpakete zwischen Netzsegmenten oder über Gateways weitergeleitet werden. „Autorisieren“ bedeutet hier die formale Freigabe nach einer sachlichen und fachlichen Prüfung, typischerweise durch Rollen wie (1) Netzwerkarchitekt, (2) IT-Sicherheitsbeauftragter oder (3) Leiter IT-Betrieb. Eine Institution kann dies umsetzen, indem sie (1) eine dokumentierte Freigabeprozedur für alle Routing-Änderungen etabliert, (2) Änderungen technisch über ein Ticket- oder Change-Management-System prüfen und protokollieren lässt, (3) rollenbasierte Zugriffsrechte in Routern und Firewalls so einschränken kann, dass nur autorisierte Personen Konfigurationsänderungen durchführen, und (4) automatisierte Plausibilitätsprüfungen oder Peer-Reviews nutzen kann, um fehlerhafte oder unsichere Routen frühzeitig zu erkennen.  Die Autorisierung kann entweder einzelne Routen (z.B. für Netz A zwischen Router B und C), als auch bestimmte Routing-Regeln (z.B. Default-Routing über die zentrale Firewall) autorisieren. Sinnvoll ist es dabei das Prinzip \"so allgemein wie für den Betrieb nötig, so spezifisch wie für die Sicherheit möglich\" als Faustregel anzuwenden. Bei der Verwendung dynamischer Routing-Algorithmen kann die Anforderung umgesetzt werden, indem eingeschränkte Bereiche freigegeben werden, z.B. \"dynamisches Routing im Bereich 10.x.x.x)\".",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.4.2-m1",
+                    "uuid": "8134d453-201b-4838-910b-7a45659ab9f8",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamisches Routing ist ohne jegliche Authentifizierung aktiviert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Jeder Router kann Routing-Updates einspeisen (z.B. offenes RIP/OSPF)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Routing-Protokoll-Konfig auf fehlende `auth`-Befehle."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.2-m2",
+                    "uuid": "be60c2a6-89c9-4718-9ca8-bd7355abacdd",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verwendung statischer Routen oder einfacher Nachbarschaftsdefinitionen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Manuelle Kontrolle der Routing-Wege, keine Automatisierung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Review der Routing-Tabelle auf statische Einträge."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.2-m3",
+                    "uuid": "bdaad32f-19c9-4044-b122-1ca78a86d09a",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE Routing-Verbindungen durch {{ insert: param, arch.4.2-prm1 }} autorisieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE Routing-Verbindungen durch {{ insert: param, arch.4.2-prm1 }} autorisieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE Routing-Verbindungen durch {{ insert: param, arch.4.2-prm1 }} autorisieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.2-m4",
+                    "uuid": "7c3884ca-b2cb-4f68-bba6-4577e26b6c8a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einsatz von Authentifizierung (MD5/SHA) für Routing-Protokolle."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Routing-Nachbarn müssen sich mit einem Pre-Shared Key authentifizieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Befehl (z.B. `show ip ospf neighbor detail`) zur Prüfung der Auth-Methode."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.2-m5",
+                    "uuid": "125cbc63-e428-4ae1-950a-1b0e6810ac9a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Strikte Routen-Filterung und kryptografische Validierung (RPKI für BGP)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Automatisierte Überprüfung der Herkunft von Routen (Origin Validation)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der RPKI-Validierungsstatus auf den Border-Routern."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a66dbc03-4ec8-4fc0-8301-d8f1e05ca6ee",
+                "control-id": "ARCH.4.3",
+                "description": "(BSI Baustein NET.1.1) Hierzu zählt z.B. die Authentifizierung von BGP/OSPF-Sitzungen zur Verhinderung von Route Hijacking, BGP origin validation with RPKI oder OSPF/ISIS/BGP MD5 or TTL+hMAC authentication. Die Formulierung \"im Einklang mit den Festlegungen des Identitäts- und Berechtigungsmanagements\" bedeutet, dass die Authentifizierung so erfolgt, wie in der Praktik IDM festgelegt. Hierzu gehört insbesondere die Verwendung aktueller kryptographischer Verfahren, wie sie im Thema Kryptographie zu finden ist.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.4.3-m1",
+                    "uuid": "6c3a8901-c183-4524-81b3-1c2f7a7513c6",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Routing-Informationen werden ungeprüft von jedem Nachbarn akzeptiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine Überprüfung der Integrität der Routing-Updates."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einspeisen einer falschen Route in einer Testumgebung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.3-m2",
+                    "uuid": "cb0547b1-f10e-413a-8ed6-4a549b1cb52c",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einfache Passwort-Authentifizierung (Cleartext) bei Routing-Updates."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Schwach geschützte Nachbarschaftsbeziehungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Sniffing des Routing-Verkehrs, um Passwörter im Klartext zu finden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.3-m3",
+                    "uuid": "1049d80e-c12b-4bb6-9b7a-a266980534b5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE Änderungen an Routing-Tabellen im Einklang mit den zugehörigen Anforderungen des Identitäts- und Berechtigungsmanagements"
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE Änderungen an Routing-Tabellen im Einklang mit den zugehörigen Anforderungen des Identitäts- und Berechtigungsmanagements"
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE Änderungen an Routing-Tabellen im Einklang mit den zugehörigen Anforderungen des Identitäts- und Berechtigungsmanagements"
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.3-m4",
+                    "uuid": "442a9441-baa1-4067-8da1-934e0a13054a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Key-Rotation für Routing-Secrets und zentrales Logging von Änderungen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Regelmäßiger Wechsel der MD5/SHA-Keys. Änderungen an Tabellen generieren Logs."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Log-Dateien nach 'Neighbor Up/Down' und Routen-Änderungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.4.3-m5",
+                    "uuid": "7f6be166-fefb-4ffc-af52-d2cd61107e92",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "PKI-basierte Router-Authentifizierung und Integritätsschutz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Nutzung von Zertifikaten für IPsec-Tunnel zwischen Routern für OSPFv3/BGP."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfung der IPsec-Security-Associations (SA) zwischen den Routern."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "90e43bf0-ac78-490b-9796-93865b7053be",
+                "control-id": "ARCH.5.1",
+                "description": "(BSI Baustein NET.1.1) Über Netverbindungen können unbeabsichtigte Verbindungen aufgebaut werden oder netzbasierte Angriffe über das Internet gegen die Institution erfolgen. Unerwünschter Datenverkehr nach außen können z.B. private IP-Adressen (RFC 1918 leakage), Multicasting, TCP/UDP Ports für veraltete, angreifbare Protokolle oder ICMP-Verkehr sein. Die Beschränkung der Verbindung zwischen IT-Systemen kann sowohl durch zustandsbehaftete Paketfilter, als auch mit Application Layer Gateways umgesetzt werden. Empfehlenswert ist eine Kombination aus Allowlisting, IP-Reputationslisten, Deep Packet Inspection und Durchsatzratenbegrenzung. Hierbei können Verbindungen auch nach Kategorien autorisiert werden (z.B. anhand von IP-Subnetzen oder Voraussetzungen wie per Zertifikat authentifzierten IT-Systemen). Damit dabei keine unnötigen Verbindungen zugelassen werden, ist es wichtig, die Kategorisierung möglich genau zu wählen (z.B. möglichst einzelne Subnetze statt des ganzen Netzes oder nur bestimmte Ports oder Anwendungen zuzulassen).",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.5.1-m1",
+                    "uuid": "951cfb54-4048-41c3-af45-eca7f087ae0f",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Weitgehend offene Kommunikation (Any-Any) zwischen Systemen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Sicherheit verlässt sich nur auf Host-Firewalls oder gar keinen Schutz."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Portscan quer durch das Netzwerk."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1-m2",
+                    "uuid": "a86209f1-13da-4eee-9e8f-80b624dc247f",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Portbasierte Filterung an zentralen Punkten (Layer 3/4)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Firewall blockiert ungenutzte Ports, inspiziert aber keine Inhalte."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Testen, ob Verkehr über erlaubte Ports (z.B. 80) ungeprüft passiert."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1-m3",
+                    "uuid": "1d8e8674-88b8-4bfd-89f8-ebcd5c0216a2",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen IT-Systemen einschränken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen IT-Systemen einschränken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE Verbindungen zwischen IT-Systemen einschränken."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1-m4",
+                    "uuid": "28d4d592-b37f-487d-abae-9778d2f53691",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Applikationserkennung (Layer 7) und IPS-Einsatz."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Firewall erkennt die Applikation unabhängig vom Port und prüft auf Angriffe."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Senden von SSH-Traffic über Port 80 -> muss von L7-Firewall blockiert werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1-m5",
+                    "uuid": "8d5916d8-6c0d-4241-9098-5a665ae9c360",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Zero-Trust-Modell mit SSL-Interception und Deep Packet Inspection."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vollständige Sichtbarkeit auch in verschlüsseltem Verkehr. Verhaltensbasierte Blockade."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Download einer EICAR-Testdatei über HTTPS -> muss erkannt und blockiert werden."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a13d60c8-dce3-4687-8023-27a2feca04fd",
+                "control-id": "ARCH.5.1.1",
+                "description": "(BSI Baustein NET.1.1) Anfällig sind Netzprotokolle, wenn sie veraltete oder gar keine Algorithmen zur Verschlüsselung oder Integritätsprüfung verwenden. Hierzu gehören Protokolle wie Telnet, SMB v1, SNMP v1/v2c. Für aktuelle Verschlüsselungsalgorithmen siehe BSI TR 02102.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Risk Treatment",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.5.1.1-m1",
+                    "uuid": "f33461dc-cd5a-4ec5-9090-137dd4f794a5",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Veraltete und unsichere Protokolle (Telnet, FTP, SMBv1) sind aktiv."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Klarnamen-Passwörter werden über das Netz übertragen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Scan nach Port 23 (Telnet) und 21 (FTP) im internen Netz."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.1-m2",
+                    "uuid": "aeb95e1b-07df-4d57-a8c5-9a271b3195be",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Organisatorische Vorgabe zum Verzicht auf unsichere Protokolle."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine technische Erzwingung, aber Richtlinie existiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Interview mit Admins über Nutzung von SSH statt Telnet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.1-m3",
+                    "uuid": "7a620dbc-7cfa-42f3-9c86-2b1adccdbf4f",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE anfällige Netzwerkprotokolle blockieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE anfällige Netzwerkprotokolle blockieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE anfällige Netzwerkprotokolle blockieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.1-m4",
+                    "uuid": "c9a5a20a-2bb3-4392-bfdb-a403ac412896",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Technische Blockade bekannter unsicherer Ports an Firewalls."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "ACLs verbieten Telnet, RSH, unverschlüsseltes HTTP wo möglich."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch, eine Telnet-Verbindung durch die Firewall aufzubauen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.1-m5",
+                    "uuid": "94d3de9d-9c90-4d0f-854a-4bfcefe94861",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Netzwerkweite Deaktivierung und Alarmierung bei Nutzungsversuch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "SDN-Policies oder GPOs deaktivieren Protokolle auch clientseitig. SIEM alarmiert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Auswertung der SIEM-Logs nach 'Policy Violation' für Legacy-Protokolle."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "ebb8c91a-f273-4a20-b5b1-979c926e4dc6",
+                "control-id": "ARCH.5.1.2",
+                "description": "(BSI Baustein NET.1.1) Netzbasierte Angriffe verwenden Netzwerktechnologien (typischerweise auf OSI Layer 2-3), z.B. Fragmentierungsangriffe. Beispiele für mögliche Maßnahmen sind DHCP snooping, ARP/Dynamic ARP Inspection, IP-source guard, BPDU guard, root guard, port-security (sticky MAC).",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.5.1.2-m1",
+                    "uuid": "83f5d4d0-b467-4497-a54b-7e101b6a7295",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Kein Schutz vor netzbasierten Angriffen implementiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Angriffe wie ARP-Spoofing oder IP-Spoofing sind möglich."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Durchführung eines ARP-Spoofing Tests in einer Testumgebung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.2-m2",
+                    "uuid": "e981b9d0-e932-48b5-a620-b374b39303e7",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Grundlegende Schutzmechanismen im Switch aktiviert (z.B. DHCP Snooping)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verhinderung einfacher L2-Angriffe."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Switch-Features (`show ip dhcp snooping`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.2-m3",
+                    "uuid": "4f6e99c2-e81f-4967-922d-2cafa6f5d6d5",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE bekannte netzbasierte Angriffsmethoden blockieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE bekannte netzbasierte Angriffsmethoden blockieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE bekannte netzbasierte Angriffsmethoden blockieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.2-m4",
+                    "uuid": "9c34091b-5cc9-4a4d-906c-542a08a140d7",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "IDS/IPS Systeme mit aktuellen Signaturen an zentralen Punkten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Erkennung und Blockade von Exploits basierend auf Mustern."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Abspielen eines PCAP mit Angriffsmustern (z.B. via `tcpreplay`) gegen das IPS."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.2-m5",
+                    "uuid": "5b742525-206d-4643-80db-174f9680f324",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Network Behavior Analysis (NBA) und automatische Quarantäne."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "KI-gestützte Erkennung von Anomalien im Verkehrsfluss. Sofortige Isolation des Hosts."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulation von abnormalem Traffic-Verhalten und Messung der Reaktionszeit."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "0870c15f-6a09-402f-aa4d-c74d6d97cbbd",
+                "control-id": "ARCH.5.1.3",
+                "description": "(BSI Baustein NET.1.1) TCP ist das am meisten verwendete Protokoll für die zuverlässige Datenübertragung. Durch TCP-basierte Angriffe können IT-Systeme gehackt oder Daten unbemerkt ausgeleitet werden. Beispiele sind TCP Session Hijacking (ACK-number guessing), Overlapping-Segment Attacks, TCP Reset (RST) Injection, Xmas-tree Scanning. Die Anforderung kann durch Blockieren solcher Verbindungen oder nur bestimmter Mechanismen umgesetzt werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.5.1.3-m1",
+                    "uuid": "ef15e2ff-127a-44ea-94a0-6306ca0304d5",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Standard TCP-Stack Einstellungen der Betriebssysteme."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine dedizierte Abwehr von TCP-Anomalien."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung auf SYN-Cookies Konfiguration auf Servern."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.3-m2",
+                    "uuid": "261832b1-8df2-47b2-87b0-0429774a9f02",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Firewall verwirft Pakete mit ungültigen TCP-Flag-Kombinationen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Stateless Check auf 'Christmas Tree' oder 'Null' Packets."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Senden von invaliden TCP-Paketen (z.B. mit `hping3`) und Prüfen auf Drop."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.3-m3",
+                    "uuid": "50982a9d-ef44-412b-9662-b3f0f7b54f2d",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE bekannte TCP-basierte Angriffsmethoden blockieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE bekannte TCP-basierte Angriffsmethoden blockieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE bekannte TCP-basierte Angriffsmethoden blockieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.3-m4",
+                    "uuid": "3630c192-cf14-4524-911c-f6d4a06107ab",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "SYN-Flood Protection (Proxy/Cookie) auf der Firewall aktiviert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Firewall beantwortet SYN-Anfragen stellvertretend, um Server zu schützen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Durchführung eines kontrollierten SYN-Flood Tests gegen eine Test-IP."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.3-m5",
+                    "uuid": "2c149264-15ab-47d9-856e-74b960c10972",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Hardware-beschleunigte TCP-Normalisierung und Anti-DDoS."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Schutz vor komplexen Angriffen (z.B. Slowloris) durch spezialisierte Appliances."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Lasttest mit Tools wie `Slowhttptest` zur Verifikation der Mitigation."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2e82a897-1c00-4a4a-90fb-0b7e75389524",
+                "control-id": "ARCH.5.1.4",
+                "description": "(BSI Baustein NET.1.1) UDP-basierte Angriffsmethoden (englisch: known UDP-based attack vectors) sind hierbei Techniken zu verstehen, die das User Datagram Protocol (UDP) ausnutzen. UDP ist das am meisten verwendete Protokoll für die Übertragung von Datenstreams. Aufgrund seiner verbindungslosen Eigenschaft ermöglicht UDP eine sehr schnelle Datenübertragung und wird daher oft für zeitkritische Anwendungen wie Videostreaming, VoIP oder DNS-Anfragen verwendet. Genau diese Eigenschaft macht es jedoch anfällig für Missbrauch, da die Absenderadresse leicht gefälscht werden kann (IP-Spoofing).  Beispiele für Angriffe sind Sequence Number Guessing, DHCP Starvation und UDP Hole-Punching Abuse. Die Anforderung kann durch Blockieren solcher Verbindungen oder nur bestimmter Mechanismen umgesetzt werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.5.1.4-m1",
+                    "uuid": "55940ca3-b73d-44ca-af6a-b6c7a792eb90",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "UDP-Dienste sind ungeschützt und offen aus dem Internet erreichbar."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Gefahr von Reflection/Amplification Angriffen (z.B. NTP, DNS)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Scan nach offenen UDP Ports 123 oder 53 von extern."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.4-m2",
+                    "uuid": "1b697a48-8459-4b64-87de-0929f768ebf1",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Rate Limiting für UDP-Verkehr auf Routern/Firewalls."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Begrenzung der Pakete pro Sekunde für UDP."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der QoS/Policing Einstellungen am Edge-Router."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.4-m3",
+                    "uuid": "8a148183-fd03-451c-a674-cbb0b5b28435",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE bekannte UDP-basierte Angriffsmethoden blockieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE bekannte UDP-basierte Angriffsmethoden blockieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE bekannte UDP-basierte Angriffsmethoden blockieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.4-m4",
+                    "uuid": "96b41f78-4263-4f88-a170-84ab2b47a8d7",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Applikationsspezifische Validierung (DNS Guard, SIP Inspection)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Firewall prüft, ob UDP-Pakete zu einer validen Sitzung gehören."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuch, gespoofte UDP-Pakete einzuschleusen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.5.1.4-m5",
+                    "uuid": "11bd91ae-3e05-42cc-bfa0-5b8f51e3cf98",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamische Filterung von Amplification-Angriffen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Automatisches Erkennen und Verwerfen von Reflection-Antworten ohne Anforderung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulation einer NTP-Amplification Attacke im Laboraufbau."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b3697b52-ca92-4985-919d-64eb97f83077",
+                "control-id": "ARCH.8.1",
+                "description": "(BSI Baustein NET.1.1) Ziel hierbei ist es, dass beim Ausfall eines Systems oder einer Systemkomponente die Netzanbindung stets weiterhin funktionsfähig bleibt (Single-Point-of-Failure).",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.8.1-m1",
+                    "uuid": "ed9cc7a2-26c2-4810-9ecf-99a9db0d32ed",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Kernnetz besteht aus Einzelgeräten (Single Point of Failure)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ausfall des Core-Switches legt das gesamte Netz lahm."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Identifikation des Core-Switches und Prüfung auf Redundanz."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.8.1-m2",
+                    "uuid": "db655a71-e912-498c-9c55-f6fb62a0d847",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Kalt-Standby Geräte sind vor Ort verfügbar."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Manuelles Umstecken bei Ausfall notwendig (hohe Ausfallzeit)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Existenzprüfung der Ersatzhardware im Lager."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.8.1-m3",
+                    "uuid": "69b1da44-4e43-4542-8a68-f32d661ae052",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE für das Kernnetz redundante Netzkomponenten installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE für das Kernnetz redundante Netzkomponenten installieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE für das Kernnetz redundante Netzkomponenten installieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.8.1-m4",
+                    "uuid": "91aa130d-42c7-4560-9599-f18360f2e8a1",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Aktiv/Passiv Cluster (VRRP/HSRP) oder Stacking."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Automatischer Failover bei Geräteausfall, kurze Unterbrechung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Stromlosmachen des primären Core-Nodes und Messung des Ping-Verlusts."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.8.1-m5",
+                    "uuid": "f87e9caf-34fe-4d8a-80dd-3e2268c22deb",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Aktiv/Aktiv Fabric (ECMP, VXLAN) ohne SPOF."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Lastverteilung über alle Pfade. Ausfall eines Knotens reduziert nur Kapazität, keine Unterbrechung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Routing-Tabelle auf Multipath-Routen (ECMP)."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "8adc966d-c06f-46aa-a7e9-6d16505ae87f",
+                "control-id": "ARCH.9.1",
+                "description": "(BSI Baustein NET.1.1) Für die Verfügbarkeit und Leistungsfähigkeit kritischer Geschäfts‑ und Fachverfahren ist eine bedarfsgerechte Netzanbindung erforderlich. Durch das strukturierte Erfassen des Bedarfes kann eine Institution frühzeitig Engpässe erkennen, Ausfallrisiken minimieren und eine wirtschaftliche Auslegung ihrer Anschlüsse erreichen. Gleichzeitig lässt sich so eine belastbare Grundlage für Kapazitäts‑, Notfall‑ und Budget‑Planungen schaffen, ohne sich allein auf starre Hersteller‑ oder Provider‑Vorgaben zu verlassen. Relevant ist hierbei die gesamte Netzstrecke zwischen Servern und IT-Clients, zumindest bis zum Internet-Anschluss der Institution. Beispiele für den Anwendungsbereich können sehr unterschiedlich ausfallen: In einem Call‑Center kann sich der Bedarf aus der Anzahl zeitgleich aktiver Soft‑Phones ableiten, deren Codec‑Bandbreite sowie der gewünschten Gesprächsqualität (Latenz < Antwortzeit in ms). In einem Forschungslabor kann die Anbindung darauf basieren, dass täglich große Datensätze mit einer bestimmten maximalen Bandbreite in Gbit/s zu Kooperationspartnern repliziert werden. Auch eine E‑Learning‑Plattform kann berücksichtigen, dass zu Semesterbeginn Studierende gleichzeitig parallele Video‑Streams in HD abrufen, während administrative Dienste weiterhin innerhalb einer bestimmten Antwortzeit in ms reagieren sollen. Dabei ist es sinnvoll, die Netzanbindung an realistische Belastungsszenarien anzupassen.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Initiation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.9.1-m1",
+                    "uuid": "3b68994a-9793-4b1f-82c9-6af5c6f9d8fa",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Bandbreite basiert auf Budget, nicht Bedarf. Engpässe sind häufig."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine Analyse der Verkehrsmuster."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Auslastungsgraphen (falls vorhanden) auf 'Flatlining'."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.1-m2",
+                    "uuid": "8315b193-5739-4db5-8903-57ccfac946bf",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dimensionierung nach Schätzwerten und Durchschnittslast."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Manuelle Upgrades bei Beschwerden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Vergleich der vertraglichen Bandbreite mit Nutzerzahlen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.1-m3",
+                    "uuid": "837244b0-9026-4dbe-aa8f-3f137bf2c89b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze SOLLTE eine bedarfsgerechte Netzanbindung installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze SOLLTE eine bedarfsgerechte Netzanbindung installieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze SOLLTE eine bedarfsgerechte Netzanbindung installieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.1-m4",
+                    "uuid": "3dff2dc5-d2c6-4225-8c5a-9dc832133448",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Regelmäßiges Capacity Management und QoS-Implementierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Priorisierung geschäftskritischer Daten. Proaktive Erweiterung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Review der QoS-Policy-Maps und Capacity-Reports."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.1-m5",
+                    "uuid": "2d0115fc-64f5-4015-a0e8-66f6710d00b2",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamische Bandbreitenanpassung (SD-WAN, Cloud-Bursting)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "KI-gestützte Vorhersage von Lastspitzen und automatische Zuschaltung von Leitungen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulation von Lastspitzen und Beobachtung der Link-Auslastungsverteilung."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "9730c578-93c7-42d2-b038-b9c51bfc4d30",
+                "control-id": "ARCH.9.5",
+                "description": "(BSI Baustein NET.1.1) Volumetrische Angriffe können z.B. durch die Verwendung von Anycast-DNS, Upstream Rate Limiting, On-Premise- oder Cloud-Scrubbing, BGP FlowSpec-Filter, Auto-Null-Routing oder Remotely Triggered Blackholing abgewehrt werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Risk Treatment",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ARCH.9.5-m1",
+                    "uuid": "1394e3e5-d4e7-4a86-8534-4274854126aa",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Kein spezifischer DoS-Schutz. Verlass auf ISP-Standard."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Angriffe führen sofort zur Überlastung der Anbindung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der ISP-Verträge auf DDoS-Klauseln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.5-m2",
+                    "uuid": "bf25074f-d8d2-4510-bb91-3161732188e9",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Firewall-Limits für Verbindungen (Rate Limiting)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Schutz vor Überlastung der Firewall-Session-Table."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfung der Connection-Limits in der Firewall-Config."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.5-m3",
+                    "uuid": "1b087e8c-652a-4041-aba5-9a4188a5c84e",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Architektur für Netze KANN Schutzmaßnahmen gegen volumetrische DoS-Angriffe aktivieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Architektur für Netze KANN Schutzmaßnahmen gegen volumetrische DoS-Angriffe aktivieren."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Architektur für Netze KANN Schutzmaßnahmen gegen volumetrische DoS-Angriffe aktivieren."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.5-m4",
+                    "uuid": "bd50ae94-1dde-4737-b2ac-ca6d53a8401e",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vertrag mit DDoS-Mitigation-Service (Scrubbing Center)."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Verkehrsumleitung bei Angriffserkennung zur Reinigung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Nachweis über funktionierenden BGP-Route-Swing zum Scrubbing-Center."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ARCH.9.5-m5",
+                    "uuid": "1f681b2b-ccc5-4fd1-ba8b-fb40c40be6a9",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Automatisiertes BGP Flowspec und Hybrid-Mitigation."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Router verwerfen Angriffstraffic direkt am Edge basierend auf dynamischen Regeln."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Einspeisen einer Flowspec-Regel und Prüfung der Filterung am Router."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "65f6d677-9007-4894-a6f4-777b42e81c40",
+                "control-id": "ASST.2.2.1",
+                "description": "(BSI Baustein NET.1.1) Ziel ist sicherzustellen, dass keine unautorisierten Assets im Informationsverbund betrieben werden. Hierzu können z.B. aktive Netzscans (z.B. mit Nmap), passive Analysen des Netzwerkverkehrs oder spezielle Werkzeuge zur Erkennung von unbekannten WLAN-Access-Points (z.B. Kismet) genutzt werden. Zur Behandlung können die gefundenen IT-Systeme beispielsweise aus dem Netz entfernt, in eine Quarantäne verschoben oder nach Überprüfung autorisiert werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "ASST.2.2.1-m1",
+                    "uuid": "5a3b3857-835c-4dc1-b1d5-5faf0bfc9549",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Identifikation unautorisierter IT-Systeme erfolgt rein anlassbezogen oder zufällig durch manuelle Beobachtung der Administratoren ohne definierten Prozess."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keine festen Vorgaben. Administratoren prüfen bei Verdachtsmomenten oder Störungen manuell Switch-Logs oder ARP-Tabellen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Interviewen Sie das Personal, ob und wie sporadisch nach fremden Geräten gesucht wird. Prüfen Sie, ob ad-hoc Maßnahmen dokumentiert wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.2.2.1-m2",
+                    "uuid": "86b54e8e-4d49-4a5e-afbc-86f4c1893787",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Es findet ein regelmäßiger, manueller Abgleich der aktiven Netzwerkkomponenten mit einer Inventarliste statt, um Abweichungen festzustellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Periodische Exporte von DHCP-Leases oder ARP-Caches (z. B. monatlich) werden visuell mit der Asset-Datenbank verglichen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie die Protokolle der letzten manuellen Abgleiche. Führen Sie stichprobenartig `nmap -sn [Subnetz]` aus und vergleichen Sie das Ergebnis mit der Inventarliste."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.2.2.1-m3",
+                    "uuid": "716d2cf7-ae3e-4b14-b9a8-2b3e3e78b1dc",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Informationen und Assets für Netze SOLLTE das Aufdecken unautorisierter IT-Systeme verankern."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Prozess zum Aufdecken unautorisierter Systeme ist schriftlich fixiert. Es ist festgelegt, welche Tools oder Methoden genutzt werden, um fremde Hardware im Netz zu erkennen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie die Richtlinien daraufhin, ob das Aufdecken unautorisierter Systeme als Anforderung definiert ist. Kontrollieren Sie die Prozessdokumentation auf konkrete Handlungsanweisungen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.2.2.1-m4",
+                    "uuid": "49399414-c006-4b4a-b47c-b117c4a39302",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Automatisierte Monitoring-Tools überwachen das Netzwerk kontinuierlich auf neue MAC-Adressen und alarmieren die Administration bei unbekannten Geräten aktiv."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einsatz von Lösungen wie Arpwatch oder Netzwerk-Scannern, die Änderungen an der Topologie sofort melden (Push-Benachrichtigung)."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Konfiguration des Monitoring-Tools auf Alarmierungseinstellungen. Test: Schließen Sie ein unbekanntes Gerät an und messen Sie die Zeit bis zum Alarm (z. B. via `tail -f /var/log/syslog | grep arpwatch`)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "ASST.2.2.1-m5",
+                    "uuid": "58a9af4c-267f-45a1-a440-0a0c5a688d3e",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine Network Access Control (NAC) Lösung unterbindet technisch den Zugriff unautorisierter Geräte in Echtzeit und isoliert diese automatisch."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Vollständige Implementierung von 802.1X oder MAC-Authentication-Bypass. Fremdgeräte landen automatisch in einem Quarantäne-VLAN oder der Port wird abgeschaltet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Versuchen Sie, ein nicht-registriertes Gerät an einer Netzwerkdose anzuschließen. Prüfen Sie mittels Paketmitschnitt oder Switch-Status (`show port-security`), ob der Zugriff sofort blockiert wird."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "c177a0c7-df63-4878-a6ba-6b7f1090c857",
+                "control-id": "DET.4.10",
+                "description": "(BSI Baustein NET.1.1) Beispiele sind ausgehende Netzverbindungen zu als bösartig bekannten oder gänzlich unbekannten DNS-Domains oder IP-Adressen, Anzeichen für DNS-Tunneling (ungewöhnlich lange Subdomains oder Spitzenwerte für TXT-Mengen), ungewöhnlich hohes Datenvolumen zu Cloud-Speicherlösungen, sowie unautorisierte Portscans oder Brute Force Angriffe auf Fernwartungsschnittstellen wie RDP oder SSH sein. Hierdurch können Verbindungen zu Angreiferservern (C2 Beacons), die Ausbreitung von Angriffen über das Netz, oder Datenabflüsse erkannt werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "DET.4.10-m1",
+                    "uuid": "811c446c-9c8b-4361-a82e-47eb05ff9920",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Eine sporadische, manuelle Durchsicht von Netzwerk-Logs findet statt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existiert kein formaler Prozess. Administratoren prüfen Logs oft nur anlassbezogen bei Fehlern. Eine systematische Erkennung von Anomalien fehlt weitgehend."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie, ob Log-Dateien existieren und wann diese zuletzt manuell eingesehen wurden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10-m2",
+                    "uuid": "6c20dc0e-b8d7-4857-add3-9c0d6ed38019",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Grundlegende Protokollierung ist aktiviert und wird reaktiv analysiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Firewalls und Router protokollieren Verkehr. Die Auswertung erfolgt jedoch meist manuell oder erst nach einem Sicherheitsvorfall."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Kontrollieren Sie die Konfiguration der Netzwerkgeräte auf aktivierte Logging-Funktionen (z.B. Syslog)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10-m3",
+                    "uuid": "e04b1d54-9a4e-4e3a-b740-88ed899ad4aa",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Detektion für Netze SOLLTE den Netzwerkverkehr auf Anomalien überwachen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es existiert ein definierter Prozess zur Überwachung. Anomalien (z.B. ungewöhnliche Ports, Protokolle oder Datenmengen) werden erkannt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie, ob Mechanismen zur Anomalieerkennung implementiert sind und ob Alarme generiert werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10-m4",
+                    "uuid": "c29eec5b-b6a4-4590-99e2-d070407e49d5",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einsatz automatisierter IDS/IPS-Systeme mit definierten Regelsätzen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Der Verkehr wird kontinuierlich durch ein Intrusion Detection System (IDS) analysiert. Signaturen werden regelmäßig aktualisiert und kritische Events automatisch gemeldet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Führen Sie einen Testangriff (z.B. Portscan) durch und prüfen Sie, ob das IDS diesen erkennt und meldet. Prüfen Sie die Aktualität der IDS-Regeln."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10-m5",
+                    "uuid": "93f222c9-4d1a-4a9e-8e49-175916cde79a",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Vollautomatisierte Verhaltensanalyse (NBA) und Integration in SOAR-Prozesse."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einsatz von KI/ML zur Erkennung unbekannter Muster. Integration in Security Orchestration (SOAR) zur automatischen Isolierung verdächtiger Endpunkte."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Validieren Sie die automatisierte Reaktion des Systems auf simulierte Verhaltensanomalien ohne bekannte Signaturen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "bb64c837-004a-499c-921d-5d970189fe87",
+                "control-id": "DET.4.10.2",
+                "description": "(BSI Baustein NET.1.1) Honeypots sind Systeme, die das Verhalten eines Betriebsservers simulieren, um bei netzbasierten Angriffen Informationen über den Angriff zu erhalten. Geeignet sind z.B. vermeintliche Rechnungsbearbeitungssysteme oder Datenbank-Server. Alarmierungsereignisse können hier z.B. Login-Versuche oder unerwartete API-Abfragen sein. Allerdings kann es hierbei zu falsch-positiv Vorfallsmeldungen kommen, insbesondere wenn die Honeypots dort platziert werden, wo sie für legitime Nutzende leicht zugänglich sind oder wenn legitime Netzwerkscans bereits eine Alarmierung auslösen. Daher ist es sinnvoll die konkreten Einsatzgegebenheiten mit den",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "DET.4.10.2-m1",
+                    "uuid": "21263206-0b20-481f-877b-360de0f0708c",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Das Konzept von Honeypots ist bekannt, aber nicht implementiert."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt keine Täuschungssysteme im Netzwerk. Angreifer interagieren direkt mit produktiven Systemen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Interview mit den Administratoren zum Kenntnisstand über Täuschungstechnologien."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.2-m2",
+                    "uuid": "31ce6fc2-4e2c-4ae0-b6f2-a7591f8840b2",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Ein einfacher Low-Interaction Honeypot wird zu Testzwecken betrieben."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein isoliertes System simuliert grundlegende Dienste, ist aber nicht in das zentrale Monitoring eingebunden oder wird nicht konsequent gewartet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie, ob ein Test-Honeypot im Netz erreichbar ist (z.B. mittels nmap Scan auf Standard-Honeypot-Ports)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.2-m3",
+                    "uuid": "126c657b-abac-4ce5-a0f4-dcb5eda4bf19",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Detektion für Netze KANN Netzwerk-Honeypots installieren."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Honeypots werden gezielt eingesetzt, um Angreifer frühzeitig zu erkennen und deren Methoden zu analysieren, ohne produktive Systeme zu gefährden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Dokumentation und Konfiguration der installierten Honeypots."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.2-m4",
+                    "uuid": "43703343-c91e-4270-baee-9d474c124d4d",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einsatz von High-Interaction Honeypots mit zentraler Alarmierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Honeypots simulieren komplexe Betriebssysteme und Anwendungen. Alarme werden direkt an das SIEM weitergeleitet und priorisiert behandelt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Lösen Sie einen Alarm auf dem Honeypot aus und verifizieren Sie den Eingang im zentralen Managementsystem."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.2-m5",
+                    "uuid": "6e22a3df-aadc-4a69-9bc4-04aa8b1c5d07",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Dynamische Honeynets mit automatischer Anpassung an Bedrohungslage."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Täuschungsnetzwerk passt sich dynamisch der Infrastruktur an. Automatisierte Analyse der Angreiferdaten fließt in die Härtung der produktiven Systeme ein."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Automatisierungsskripte zur Bereitstellung und Anpassung der Honeynets."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "a9f8600d-f232-4fa8-968b-36a5ca49160a",
+                "control-id": "DET.4.10.3",
+                "description": "(BSI Baustein NET.1.1) Ein Netzverkehrsfluss ist eine Aufzeichnung von Verkehrsdaten einer Netzwerkverbindung (wie Quell-/Ziel-IP, Ports, Protokoll, übertragene Datenmenge und Zeitdauer). Die Aufzeichnung des gesamten Verkehrs (Packet Capture) des vollständigen Inhalts aller Datenpakete ist hierzu nicht erforderlich, sodass die zu untersuchende Datenmenge überschaubar bleibt. Allerdings sind hier Compliance-Anforderungen zur Datenspeicherung relevant. Für datenschutzrechtliche Fragen zu Verkehrsdaten kann der BfDI Leitfaden Speicherung Verkehrsdaten als Grundlage genutzt werden. Beispiele für Kriterien sind die Aufzeichnung an wichtigen Netzgrenzen (DMS-Internet), in kritischen Netzen, zwischen Serversystemen oder bei Leistungsproblemen.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "DET.4.10.3-m1",
+                    "uuid": "a4c43e95-36fc-44ba-b354-25556e62168d",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Verkehrsflüsse werden nur bei akuten Problemen stichprobenartig geprüft."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine systematische Erfassung von Metadaten. Analyse erfolgt meist über Paketmitschnitte (tcpdump) im Fehlerfall."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Fragen Sie nach dem Vorgehen bei der Analyse von Netzwerkproblemen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.3-m2",
+                    "uuid": "68f8eb28-fe7f-4b1b-8b94-37bb90f79805",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Erfassung von Netflow-Daten ohne automatische Auswertung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Flow-Daten (NetFlow, sFlow) werden von Routern exportiert und gespeichert, aber nur manuell ausgewertet."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie die Konfiguration der Router/Switches auf NetFlow-Exportziele."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.3-m3",
+                    "uuid": "67c6067d-389d-4b4a-aa57-3c0ce3217acc",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Detektion für Netze KANN auf kritische Netzverkehrsflüsse anhand von {{ insert: param, det.4.10.3-prm1 }} überwachen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Definierte kritische Verkehrsbeziehungen (z.B. Datenbankzugriffe aus dem Internet) werden überwacht und protokolliert."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie, ob die definierten Parameter (z.B. Protokolle, Quell-/Ziel-IPs) in der Überwachung konfiguriert sind."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.3-m4",
+                    "uuid": "d8296f5b-216e-4318-9b80-9e32b001fb9e",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Schwellwertbasierte Alarmierung für Verkehrsflüsse."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Systeme alarmieren automatisch bei Überschreitung von Bandbreiten oder Verbindungsanzahlen für definierte kritische Pfade."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Simulieren Sie einen erhöhten Verkehrsfluss und prüfen Sie, ob ein Schwellwertalarm ausgelöst wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.10.3-m5",
+                    "uuid": "eaa71244-ca4d-4433-8e49-cdb493439cde",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Echtzeit-Flow-Analyse mit verhaltensbasierter Anomalieerkennung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Einsatz spezialisierter Analyse-Tools, die den Normalzustand (Baseline) lernen und Abweichungen in Echtzeit melden und blockieren können."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Baseline-Konfiguration und testen Sie die Erkennung subtiler Abweichungen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "65ceda89-db6f-40ed-b441-d150c37d5324",
+                "control-id": "DET.4.11",
+                "description": "(BSI Baustein NET.1.1) Die Verfügbarkeit von Netzen, insbesondere des Internetanschlusses, sowie im Kern- und Verteilernetz, ist von zentraler Bedeutung für die Verfügbarkeit von IT-Infrastrukturen. Ein Monitoring ermöglicht es dem Betriebspersonal, bei Netzproblemen reagieren zu können, bevor Beschwerden von Nutzenden aufkommen. Kann durch Hello-Packete von Netzkomponenten oder die Erreichbarkeit von Diensten über das Netz umgesetzt werden.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "DET.4.11-m1",
+                    "uuid": "51156c3b-f415-4ee3-a661-638a6bf8c312",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Netzverfügbarkeit wird durch Nutzerbeschwerden festgestellt."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Kein aktives Monitoring. Ausfälle fallen erst auf, wenn Dienste nicht mehr erreichbar sind."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Ermitteln Sie, wie IT-Personal über Netzausfälle informiert wird."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11-m2",
+                    "uuid": "05d77319-f064-4fb3-a6ec-62a0b318e35a",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Einfaches Up/Down-Monitoring (Ping) für Kernkomponenten."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Zentrale Router und Switche werden regelmäßig angepingt. Keine detaillierten Metriken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie das Monitoring-Tool auf Checks für die Erreichbarkeit der Core-Komponenten (ICMP Echo Request)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11-m3",
+                    "uuid": "b67cea01-e763-4eab-91aa-d4b852759a02",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Detektion für Netze SOLLTE die Verfügbarkeit des Netzes anhand von {{ insert: param, det.4.11-prm1 }} überwachen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die Verfügbarkeit wird anhand definierter Kriterien (z.B. Paketverlust, Jitter, Latenz) systematisch überwacht."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Monitoring-Konfiguration auf die definierten Parameter zur Verfügbarkeitsmessung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11-m4",
+                    "uuid": "96240cb4-f6f3-4108-821c-129e0fc9ba9b",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Detailliertes SLA-Monitoring und Trendanalyse."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Überwachung spezifischer Service Level Agreements (SLAs). Historische Daten werden für Trendanalysen genutzt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie Berichte zur Einhaltung von SLAs und Trendanalysen der letzten Monate."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11-m5",
+                    "uuid": "12fae235-d729-4cff-aa26-99c7653c5afa",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Prädiktive Verfügbarkeitsanalysen und Self-Healing."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "KI-gestützte Vorhersage von Ausfällen. Automatische Umschaltung von Routen oder Instanziierung von Redundanzen bei drohender Überlastung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Validieren Sie Failover-Szenarien und die automatisierte Wiederherstellung der Verfügbarkeit."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "64ba26f3-5e23-4b9a-a08d-3baf9f13d04f",
+                "control-id": "DET.4.11.1",
+                "description": "(BSI Baustein NET.1.1) Die Überwachung der Netzauslastung ermöglicht eine schnelle Reaktion bei Verfügbarkeitsproblemen. Wichtige Indikatoren sind Auslastung der verfügbaren Bandbreite, Netzlatenz und Packverluste. Unerwartet hoher Datenverkehr kann auch ein Indiz für einen unautorisierten Zugriff auf große Datenmengen sein. Zur Umsetzung ist es zweckmäßig zunächst Normwerte zu ermitteln (Baselining).",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Technical",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Operation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "low",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "DET.4.11.1-m1",
+                    "uuid": "a365e085-aea8-4437-a394-70bdcdfd0b29",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Überprüfung der Auslastung erfolgt nur bei spürbaren Performance-Engpässen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Keine kontinuierliche Erfassung. Ad-hoc Prüfung mittels CLI-Befehlen auf Geräten."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Fragen Sie Administratoren nach den Befehlen, die zur Diagnose bei langsamem Netz genutzt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11.1-m2",
+                    "uuid": "8cd3ecb9-dc2e-4397-bd72-eb49b08c32d8",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Periodische Erfassung von Interface-Statistiken."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Auslesen von SNMP-Countern (Octets In/Out) in regelmäßigen Abständen, oft ohne direkte Alarmierung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie mittels `snmpwalk`, ob Netzwerkgeräte Statistikdaten bereitstellen."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11.1-m3",
+                    "uuid": "069b0306-7902-48c6-b481-78c08e7c0b54",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Detektion für Netze KANN die Auslastung des Netzes anhand von {{ insert: param, det.4.11.1-prm1 }} überwachen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Definierte Parameter (z.B. Bandbreitennutzung, CPU-Last der Router) werden überwacht, um Überlastungen zu erkennen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Kontrollieren Sie im Monitoring-System die Graphen und Werte für die Netzauslastung."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11.1-m4",
+                    "uuid": "fc5c09f7-9ca5-43e6-be2f-3fe84a850a7a",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Proaktive Kapazitätsplanung und Warnschwellen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Warnungen bei Erreichen von z.B. 80% Auslastung. Regelmäßige Reports zur Kapazitätsplanung."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Prüfen Sie definierte Schwellwerte im Monitoring und existierende Kapazitätsreports."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "DET.4.11.1-m5",
+                    "uuid": "2b867e0f-17df-4334-8105-4973fe85931f",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Automatisiertes Traffic-Shaping und dynamische Skalierung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Das Netz reagiert automatisch auf hohe Last, priorisiert QoS-Klassen neu oder schaltet zusätzliche Bandbreiten (SD-WAN) hinzu."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die QoS-Konfiguration und simulieren Sie Lastspitzen, um die dynamische Anpassung zu testen."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "d42dda6e-b6d4-4c65-9193-881ecc183390",
+                "control-id": "GEB.7.3",
+                "description": "(BSI Baustein NET.1.1) „Für die Funktionsfähigkeit des Netzes erforderliche Systeme“ sind in diesem Kontext alle physischen und logischen Komponenten, deren Betrieb direkt die Verfügbarkeit, Integrität oder Steuerbarkeit von Netzwerken beeinflusst — etwa aktive Netzwerkkomponenten (engl. network devices) wie Router, Switches, Firewalls oder Netzwerkmanagementsysteme (engl. Network Management Systems, NMS). Die Definition von „Räumen für technische Infrastruktur“ ist in den Definitionen für Zielobjekte zu finden. Diese Räume sind typischerweise mit einer kontrollierten physischen Zugangsbeschränkung, Klimatisierung, Brandfrüherkennung und einer stabilen Stromversorgung (z. B. über USV-Anlagen) ausgestattet. Die Anforderung gewährleistet somit, dass netzkritische Systeme räumlich von allgemeinen Arbeits- oder Aufenthaltsbereichen getrennt sind, um deren Sicherheit und Stabilität zu gewährleisten.",
+                "props": [
+                  {
+                    "name": "control_class",
+                    "value": "Operational",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "phase",
+                    "value": "Implementation",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_c",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_i",
+                    "value": "medium",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  },
+                  {
+                    "name": "effective_on_a",
+                    "value": "high",
+                    "ns": "https://www.bsi.bund.de/ns/grundschutz"
+                  }
+                ],
+                "statements": [
+                  {
+                    "statement-id": "GEB.7.3-m1",
+                    "uuid": "2667c44a-415f-405d-b29c-bd3b18ca964a",
+                    "description": "Maturity Level 1: Partial",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Kritische Netzkomponenten werden vereinzelt in abschließbaren Büros oder Schränken untergebracht, es fehlt jedoch ein konsistentes Konzept für technische Räume."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Es gibt erste Bemühungen, Netzwerkhardware nicht offen zugänglich aufzustellen. Die Umsetzung erfolgt jedoch oft ad-hoc und nutzt gemischt genutzte Räume anstelle dedizierter technischer Infrastruktur."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Führen Sie eine stichprobenartige Begehung durch, um zu prüfen, ob Netzkomponenten zumindest vor offensichtlichem unbefugtem Zugriff geschützt sind (z.B. in verschlossenen Schränken)."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.7.3-m2",
+                    "uuid": "0166b416-0ab1-4183-8cec-15c7269a8795",
+                    "description": "Maturity Level 2: Foundational",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Für den Netzbetrieb wesentliche Systeme sind grundsätzlich in separaten, abschließbaren Verteilerräumen oder dedizierten Serverschränken untergebracht."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Eine grundlegende physische Trennung von regulären Arbeitsbereichen ist etabliert. Der Zugang zu diesen Bereichen wird manuell (z.B. über Schlüsselverwaltung) geregelt."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Raumpläne und Schließlisten. Führen Sie eine Begehung durch, um sicherzustellen, dass Technikräume verschlossen sind und keine bürofremde Nutzung stattfindet."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.7.3-m3",
+                    "uuid": "982923ab-b315-4264-a8eb-db5b1131f27b",
+                    "description": "Maturity Level 3: Defined",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Gebäudemanagement für Netze SOLLTE für die Funktionsfähigkeit des Netzes erforderliche Systeme ausschließlich in Räumen für technische Infrastruktur p"
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Diese Anforderung spezifiziert, dass betriebskritische Netzkomponenten zwingend in Räumen untergebracht werden sollten, die explizit für technische Infrastruktur vorgesehen sind (z.B. Serverräume, Verteilerknoten). Dies minimiert physikalische Risiken."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Validieren Sie, dass alle für die Netzfunktion kritischen Systeme in dedizierten Technikräumen platziert sind. Prüfen Sie das Inventarverzeichnis gegen die Standortpläne."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.7.3-m4",
+                    "uuid": "02217165-9591-44e2-9c2f-e7c7d283a771",
+                    "description": "Maturity Level 4: Enhanced",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Alle netzrelevanten Systeme befinden sich in zutrittsüberwachten Technikräumen, die zusätzlich über Umweltmonitoring (Temperatur, Feuchtigkeit) verfügen."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Die physische Sicherheit wird durch technische Maßnahmen erweitert. Der Zutritt wird protokolliert und Umweltgefahren werden proaktiv überwacht, um Ausfälle zu vermeiden."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Überprüfen Sie die Funktion der Umweltüberwachung durch Abfrage der Sensordaten (z.B. mittels SNMP 'snmpwalk' auf Monitoring-Geräte oder via Zabbix/Prometheus Checks). Kontrollieren Sie die Zutrittsprotokolle auf Anomalien."
+                      }
+                    ]
+                  },
+                  {
+                    "statement-id": "GEB.7.3-m5",
+                    "uuid": "03761c06-8445-4f3f-bc74-eb268de61cdf",
+                    "description": "Maturity Level 5: Comprehensive",
+                    "props": [
+                      {
+                        "name": "statement",
+                        "value": "Die Unterbringung erfolgt in Hochsicherheitsbereichen mit vollautomatischer Zutrittskontrolle, Redundanz und nahtloser Integration in ein zentrales SIEM zur Anomalieerkennung."
+                      },
+                      {
+                        "name": "guidance",
+                        "value": "Ein best-practice Ansatz umfasst biometrische Zutrittskontrollen, Videoüberwachung und eine Echtzeit-Korrelation von physischen Zutrittsereignissen mit logischen Netzwerkzugriffen."
+                      },
+                      {
+                        "name": "assessment-method",
+                        "value": "Führen Sie ein Audit der physischen Sicherheitsintegration durch. Simulieren Sie unbefugte Zutrittsversuche und verifizieren Sie, dass Alarme automatisch im Security Operations Center (SOC) auflaufen und korreliert werden."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
