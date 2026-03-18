@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSCAL Blaupausen & Risk Generator V4.1</title>
+    <title>OSCAL SSP & Risk Generator with multi catalog option V5.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -204,9 +204,26 @@
             enhanced: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Nutzergenerierte-Inhalte/komponenten/DE/methodik_isms-component.json'
         };
 
+        const PRESET_ADDITIONAL_CATALOGS = [
+            {
+                name: 'KRITIS OSCAL Katalog',
+                href: 'https://github.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/blob/main/Nutzergenerierte-Inhalte/hilfsdateien/kritis_oscal_catalog.json'
+            },
+            {
+                name: 'DSGVO OSCAL Katalog',
+                href: 'https://github.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/blob/main/Nutzergenerierte-Inhalte/hilfsdateien/dsgvo_oscal_catalog.json'
+            }
+        ];
+
+        const OSCAL_NAMESPACES = {
+            importedCatalog: 'https://csrc.nist.gov/ns/oscal',
+            sourceProfile: 'https://csrc.nist.gov/ns/oscal/profile',
+            sourceCatalog: 'https://csrc.nist.gov/ns/oscal/catalog'
+        };
+
         const bpState = {
             metadata: { title: "", version: "1.0.0", description: "" },
-            catalogs: [{ href: CATALOG_URL_BASE, name: "BSI Grundschutz++ Katalog" }],
+            catalogs: [{ id: 'catalog-base', href: CATALOG_URL_BASE, name: "BSI Grundschutz++ Katalog", kind: 'catalog', imported: true, controls: new Set() }],
             controlsIndex: new Map(),
             methodik: { type: 'standard', url: METHODIK_URLS.standard, controls: new Set(), uuid: '' },
             praktiken: new Map(), // Speichert gewählte Prozesse { id, name, url, controls: Set() }
@@ -225,6 +242,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             renderMainStructure();
             await loadBaseCatalog();
+            renderCatalogsList();
             fetchGitHubComponents();
             fetchPraktikenProfiles();
             setupSearchListeners();
@@ -302,48 +320,214 @@
         }
 
         // --- CATALOG LOADING ---
+        function extractCatalogControls(catalogData, catalogRef = {}) {
+            const controls = new Map();
+            const MODALVERB_NS = 'https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modalverb.csv';
+
+            function indexCat(items) {
+                if(!items) return;
+                items.forEach(i => {
+                    if (i.id) {
+                        let text = i.title;
+                        let modalverb = '';
+                        if(i.props) {
+                            const mv = i.props.find(p => p.ns === MODALVERB_NS);
+                            if(mv) modalverb = mv.value;
+                        }
+                        if(i.parts) {
+                            const prosePart = i.parts.find(p => p.name === 'statement' || p.prose);
+                            if(prosePart && prosePart.prose) text = prosePart.prose;
+                            if(!modalverb) {
+                                i.parts.forEach(part => {
+                                    if(part.props && !modalverb) {
+                                        const mv = part.props.find(p => p.ns === MODALVERB_NS);
+                                        if(mv) modalverb = mv.value;
+                                    }
+                                });
+                            }
+                        }
+                        controls.set(i.id, {
+                            title: i.title,
+                            text: text,
+                            modalverb: modalverb,
+                            catalogHref: catalogRef.href || '',
+                            catalogName: catalogRef.name || catalogData?.catalog?.metadata?.title || 'OSCAL Katalog'
+                        });
+                    }
+                    if(i.controls) indexCat(i.controls);
+                    if(i.groups) indexCat(i.groups);
+                });
+            }
+
+            indexCat(catalogData?.catalog?.groups);
+            indexCat(catalogData?.catalog?.controls);
+            return controls;
+        }
+
+        function mergeControlsIntoIndex(controlEntries) {
+            controlEntries.forEach((entry, id) => {
+                const existing = bpState.controlsIndex.get(id) || {};
+                bpState.controlsIndex.set(id, {
+                    ...existing,
+                    ...entry,
+                    catalogs: Array.from(new Set([...(existing.catalogs || []), entry.catalogHref].filter(Boolean)))
+                });
+            });
+        }
+
         async function loadBaseCatalog() {
             const statusEl = document.getElementById('catalog-status');
             try {
                 const res = await fetch(CATALOG_URL_BASE);
                 const data = await res.json();
-                
-                function indexCat(items) {
-                    if(!items) return;
-                    const MODALVERB_NS = 'https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modalverb.csv';
-                    items.forEach(i => {
-                        if (i.id) {
-                            let text = i.title;
-                            let modalverb = '';
-                            if(i.props) {
-                                const mv = i.props.find(p => p.ns === MODALVERB_NS);
-                                if(mv) modalverb = mv.value;
-                            }
-                            if(i.parts) {
-                                const prosePart = i.parts.find(p => p.name === 'statement' || p.prose);
-                                if(prosePart && prosePart.prose) text = prosePart.prose;
-                                if(!modalverb) {
-                                    i.parts.forEach(part => {
-                                        if(part.props && !modalverb) {
-                                            const mv = part.props.find(p => p.ns === MODALVERB_NS);
-                                            if(mv) modalverb = mv.value;
-                                        }
-                                    });
-                                }
-                            }
-                            bpState.controlsIndex.set(i.id, { title: i.title, text: text, modalverb: modalverb });
-                        }
-                        if(i.controls) indexCat(i.controls);
-                        if(i.groups) indexCat(i.groups);
-                    });
-                }
-                indexCat(data.catalog.groups);
+                const baseCatalog = bpState.catalogs[0];
+                const controlEntries = extractCatalogControls(data, baseCatalog);
+                baseCatalog.controls = new Set(controlEntries.keys());
+                mergeControlsIntoIndex(controlEntries);
                 
                 statusEl.className = "px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center shadow-sm";
                 statusEl.innerHTML = `✓ Katalog aktiv (${bpState.controlsIndex.size} Controls)`;
             } catch (e) {
                 statusEl.innerHTML = `⚠️ Fehler beim Laden des Katalogs`;
             }
+        }
+
+        function normalizeGitHubCatalogUrl(url) {
+            if (!url) return '';
+            try {
+                const parsed = new URL(url.trim());
+                if (parsed.hostname === 'github.com') {
+                    const parts = parsed.pathname.split('/').filter(Boolean);
+                    const blobIndex = parts.indexOf('blob');
+                    if (parts.length >= 5 && blobIndex === 2) {
+                        const owner = parts[0];
+                        const repo = parts[1];
+                        const branch = parts[3];
+                        const filePath = parts.slice(4).join('/');
+                        return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`;
+                    }
+                }
+                return parsed.toString();
+            } catch {
+                return url.trim();
+            }
+        }
+
+        function inferCatalogNameFromUrl(url) {
+            try {
+                const parsed = new URL(url);
+                const filename = parsed.pathname.split('/').filter(Boolean).pop() || 'catalog.json';
+                return decodeURIComponent(filename.replace(/\.json$/i, '').replace(/[_-]+/g, ' '));
+            } catch {
+                return 'Zusätzlicher OSCAL Katalog';
+            }
+        }
+
+        function catalogAlreadyPresent(href) {
+            return bpState.catalogs.some(c => c.href === href);
+        }
+
+        async function validateCatalogUrl(url) {
+            const normalizedUrl = normalizeGitHubCatalogUrl(url);
+            const res = await fetch(normalizedUrl);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            if (!data || !data.catalog) throw new Error('Datei ist kein OSCAL Catalog');
+            const title = data.catalog?.metadata?.title || data.catalog?.uuid || inferCatalogNameFromUrl(normalizedUrl);
+            const id = `catalog-${crypto.randomUUID()}`;
+            const controlEntries = extractCatalogControls(data, { href: normalizedUrl, name: title });
+            return {
+                id,
+                href: normalizedUrl,
+                originalHref: url,
+                name: title,
+                kind: 'catalog',
+                imported: true,
+                uuid: data.catalog?.uuid || crypto.randomUUID(),
+                controls: new Set(controlEntries.keys()),
+                controlEntries
+            };
+        }
+
+        function renderCatalogsList() {
+            const list = document.getElementById('catalogs-list');
+            if (!list) return;
+            list.innerHTML = '';
+            bpState.catalogs.forEach((catalog, index) => {
+                const isBase = index === 0;
+                list.innerHTML += `
+                    <li class="flex justify-between items-start gap-3 p-3 bg-slate-900 border border-slate-700 rounded-lg">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="font-bold text-slate-200 text-sm">📚 ${catalog.name || 'OSCAL Katalog'}</span>
+                                ${isBase ? '<span class="px-2 py-0.5 rounded text-[10px] uppercase bg-emerald-900 text-emerald-300 border border-emerald-700">Basis</span>' : '<span class="px-2 py-0.5 rounded text-[10px] uppercase bg-cyan-900 text-cyan-300 border border-cyan-700">Zusätzlich</span>'}
+                            </div>
+                            <div class="text-xs text-cyan-400 mt-1 break-all">${catalog.href}</div>
+                        </div>
+                        ${isBase ? '' : `<button onclick="removeCatalog(${index})" class="text-red-400 hover:text-red-300 font-bold p-2 text-sm">✕</button>`}
+                    </li>
+                `;
+            });
+        }
+
+        window.addCatalogFromInput = async function() {
+            const input = document.getElementById('catalog-url-input');
+            const rawUrl = input.value.trim();
+            if (!rawUrl) return alert('Bitte eine Katalog-URL eingeben.');
+            toggleLoader(true, 'Validiere zusätzlichen Katalog...');
+            try {
+                const catalog = await validateCatalogUrl(rawUrl);
+                if (catalogAlreadyPresent(catalog.href)) {
+                    alert('Dieser Katalog ist bereits vorhanden.');
+                    return;
+                }
+                mergeControlsIntoIndex(catalog.controlEntries || new Map());
+                bpState.catalogs.push(catalog);
+                input.value = '';
+                renderCatalogsList();
+                renderTailoredList(document.getElementById('tailoring-search-input')?.value || '');
+                refreshRiskUI();
+            } catch (e) {
+                alert('Katalog konnte nicht geladen werden: ' + e.message);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        window.addPresetCatalog = async function(index) {
+            const preset = PRESET_ADDITIONAL_CATALOGS[index];
+            if (!preset) return;
+            if (catalogAlreadyPresent(normalizeGitHubCatalogUrl(preset.href))) {
+                alert('Dieser Katalog ist bereits vorhanden.');
+                return;
+            }
+            toggleLoader(true, `Lade Katalog: ${preset.name}...`);
+            try {
+                const catalog = await validateCatalogUrl(preset.href);
+                catalog.name = preset.name;
+                mergeControlsIntoIndex(catalog.controlEntries || new Map());
+                bpState.catalogs.push(catalog);
+                renderCatalogsList();
+                renderTailoredList(document.getElementById('tailoring-search-input')?.value || '');
+                refreshRiskUI();
+            } catch (e) {
+                alert(`Katalog konnte nicht geladen werden: ${preset.name} (${e.message})`);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        window.removeCatalog = function(index) {
+            if (index <= 0) return;
+            const removed = bpState.catalogs[index];
+            if (!removed) return;
+            bpState.catalogs.splice(index, 1);
+            bpState.modifications.forEach((_, key) => {
+                if (key.startsWith(`${removed.id}||`)) bpState.modifications.delete(key);
+            });
+            renderCatalogsList();
+            renderTailoredList(document.getElementById('tailoring-search-input')?.value || '');
+            refreshRiskUI();
         }
 
         // --- SECTION 2: COMPONENTS (Methodik, Prozesse & Assets) ---
@@ -367,8 +551,22 @@
                     </div>
                 </div>
 
+                <div class="mb-6 p-5 bg-slate-900/80 border border-cyan-700/60 rounded-xl shadow-inner">
+                    <h3 class="text-sm font-bold text-cyan-400 uppercase mb-2">2. Zusätzliche Kataloge (Optional)</h3>
+                    <p class="text-xs text-slate-400 mb-4">Füge weitere OSCAL-Kataloge hinzu. Diese werden OSCAL-konform im Profil importiert und im SSP referenziert.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 mb-3">
+                        <input type="url" id="catalog-url-input" class="w-full px-4 py-2 bg-slate-900 border border-slate-600 rounded-lg text-sm text-white focus:ring-2 focus:ring-cyan-500 outline-none" placeholder="GitHub-URL auf eine OSCAL-Katalogdatei einfügen...">
+                        <button onclick="addCatalogFromInput()" class="px-5 py-2 bg-cyan-600 text-white font-medium rounded-lg hover:bg-cyan-500 transition-colors text-sm shadow-md">Katalog hinzufügen</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <button onclick="addPresetCatalog(0)" class="px-4 py-2 bg-slate-700 text-cyan-300 border border-cyan-700 rounded-lg hover:bg-slate-600 transition-colors text-sm font-semibold">+ KRITIS</button>
+                        <button onclick="addPresetCatalog(1)" class="px-4 py-2 bg-slate-700 text-cyan-300 border border-cyan-700 rounded-lg hover:bg-slate-600 transition-colors text-sm font-semibold">+ DSGVO</button>
+                    </div>
+                    <ul id="catalogs-list" class="space-y-2"></ul>
+                </div>
+
                 <div class="mb-6 p-5 bg-slate-900/80 border border-blue-700/60 rounded-xl shadow-inner">
-                    <h3 class="text-sm font-bold text-blue-400 uppercase mb-2">2. Prozesse der Praktiken (Optional)</h3>
+                    <h3 class="text-sm font-bold text-blue-400 uppercase mb-2">3. Prozesse der Praktiken (Optional)</h3>
                     <p class="text-xs text-slate-400 mb-4">Wähle spezifische Prozess-Profile, um deren Vorgaben in deine Blaupause aufzunehmen.</p>
                     <div id="praktiken-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-48 overflow-y-auto custom-scroll pr-2">
                         <div class="text-sm text-slate-500 italic">Lade Prozesse von GitHub...</div>
@@ -376,7 +574,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <h3 class="text-sm font-bold text-slate-300 uppercase mb-2">3. Optionale Muster-Assets</h3>
+                    <h3 class="text-sm font-bold text-slate-300 uppercase mb-2">4. Optionale Muster-Assets</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Nutzergeneriert</label>
@@ -732,6 +930,10 @@
                 fullHtml += renderGroup(`Asset: ${c.name}`, '<span class="px-2 py-0.5 rounded bg-indigo-900 text-indigo-300 text-[10px] font-bold">📦 ASSET</span>', c.controls, c.id, false);
             });
             
+            bpState.catalogs.slice(1).forEach(catalog => {
+                fullHtml += renderGroup(`Katalog: ${catalog.name}`, '<span class="px-2 py-0.5 rounded bg-cyan-900 text-cyan-300 text-[10px] font-bold">📚 KATALOG</span>', catalog.controls, catalog.id, false);
+            });
+
             fullHtml += renderGroup('Manuell im Profil (Global)', '<span class="px-2 py-0.5 rounded bg-slate-700 text-slate-300 text-[10px] font-bold">✍️ MANUELL</span>', bpState.manualControls, 'manual', true);
 
             if(fullHtml === '') fullHtml = `<div class="text-slate-500 text-sm italic p-4 bg-slate-900 rounded-lg border border-slate-700 text-center">Keine Controls vorhanden oder Filter trifft nicht zu.</div>`;
@@ -762,6 +964,10 @@
                 let found = false;
                 for (let [url, p] of bpState.praktiken) {
                     if (p.id === sourceId) { p.controls.delete(cid); found = true; break; }
+                }
+                if (!found) {
+                    const catalog = bpState.catalogs.find(c => c.id === sourceId);
+                    if(catalog) { catalog.controls.delete(cid); found = true; }
                 }
                 if (!found) {
                     const comp = bpState.components.find(c => c.id === sourceId);
@@ -1183,15 +1389,15 @@
 
             bpState.modifications.forEach((mods, key) => {
                 const [sourceId, cid] = key.split('||');
-                if(sourceId === 'manual') {
-                    mods.forEach(m => {
-                        if(m.type === 'set-parameter') setParams.push({ "param-id": m.paramId, values: [m.value] });
-                        else {
-                            if(!altersMap.has(cid)) altersMap.set(cid, []);
-                            altersMap.get(cid).push({ position: m.position, parts: [{ name: "statement", prose: m.text }] });
-                        }
-                    });
-                }
+                const validSource = sourceId === 'manual' || sourceId === bpState.methodik.uuid || Array.from(bpState.praktiken.values()).some(p => p.id === sourceId) || bpState.catalogs.some(c => c.id === sourceId) || bpState.components.some(c => c.id === sourceId);
+                if(!validSource) return;
+                mods.forEach(m => {
+                    if(m.type === 'set-parameter') setParams.push({ "param-id": m.paramId, values: [m.value] });
+                    else {
+                        if(!altersMap.has(cid)) altersMap.set(cid, []);
+                        altersMap.get(cid).push({ position: m.position, parts: [{ name: "statement", prose: m.text }] });
+                    }
+                });
             });
 
             const alters = [];
@@ -1206,21 +1412,36 @@
                         remarks: bpState.metadata.description,
                         props: []
                     },
-                    imports: [{ href: CATALOG_URL_BASE }],
+                    imports: bpState.catalogs.map(catalog => ({ href: catalog.href })),
                     "back-matter": { resources: [] }
                 }
             };
 
-            const importReqIds = new Set([
+            const baseImportReqIds = new Set([
                 ...bpState.manualControls,
                 ...bpState.methodik.controls
             ]);
-            bpState.praktiken.forEach(p => p.controls.forEach(cid => importReqIds.add(cid)));
-            bpState.components.forEach(c => c.controls.forEach(cid => importReqIds.add(cid)));
+            bpState.praktiken.forEach(p => p.controls.forEach(cid => baseImportReqIds.add(cid)));
+            bpState.components.forEach(c => c.controls.forEach(cid => baseImportReqIds.add(cid)));
 
-            if(importReqIds.size > 0) {
-                profile.profile.imports[0]["include-controls"] = [{ "with-ids": Array.from(importReqIds).sort() }];
+            if(baseImportReqIds.size > 0 && profile.profile.imports.length > 0) {
+                profile.profile.imports[0]["include-controls"] = [{ "with-ids": Array.from(baseImportReqIds).sort() }];
             }
+
+            bpState.catalogs.slice(1).forEach((catalog, index) => {
+                if (catalog.controls && catalog.controls.size > 0 && profile.profile.imports[index + 1]) {
+                    profile.profile.imports[index + 1]["include-controls"] = [{ "with-ids": Array.from(catalog.controls).sort() }];
+                }
+            });
+
+            bpState.catalogs.slice(1).forEach(catalog => {
+                profile.profile.metadata.props.push({
+                    name: 'imported-catalog',
+                    ns: OSCAL_NAMESPACES.importedCatalog,
+                    value: catalog.href,
+                    remarks: catalog.name || 'Zusätzlicher OSCAL Katalog'
+                });
+            });
 
             if(bpState.riskData.length > 0) {
                 const riskUuid = crypto.randomUUID();
@@ -1376,9 +1597,9 @@
             const ssp = {
                 "system-security-plan": {
                     uuid: crypto.randomUUID(),
-                    metadata: { title: `${t} - Muster-SSP`, version: bpState.metadata.version, "last-modified": new Date().toISOString(), "oscal-version": "1.1.3", remarks: bpState.metadata.description },
+                    metadata: { title: `${t} - Muster-SSP`, version: bpState.metadata.version, "last-modified": new Date().toISOString(), "oscal-version": "1.1.3", remarks: bpState.metadata.description, props: bpState.catalogs.slice(1).map(catalog => ({ name: 'source-catalog', ns: OSCAL_NAMESPACES.sourceProfile, value: catalog.href, remarks: catalog.name || 'Zusätzlicher OSCAL Katalog' })) },
                     "import-profile": { href: `${t.replace(/\s+/g,'_')}_Profile.json` },
-                    "system-characteristics": { "system-ids": [{ id: crypto.randomUUID() }], "system-name": `${t} Muster-Verbund`, description: "Generiert aus Blaupause", status: { state: "operational" } },
+                    "system-characteristics": { "system-ids": [{ id: crypto.randomUUID() }], "system-name": `${t} Muster-Verbund`, description: "Generiert aus Blaupause", status: { state: "operational" }, props: bpState.catalogs.slice(1).map(catalog => ({ name: 'referenced-catalog', ns: OSCAL_NAMESPACES.sourceCatalog, value: catalog.href, remarks: catalog.name || 'Zusätzlicher OSCAL Katalog' })) },
                     "system-implementation": { components: sspComponents },
                     "control-implementation": { description: "Spezifische Risikomitigierung, manuelle Controls und Prozesse", "implemented-requirements": reqs.length > 0 ? reqs : [{ uuid: crypto.randomUUID(), "control-id": "PLACEHOLDER", description: "Empty" }] }
                 }
