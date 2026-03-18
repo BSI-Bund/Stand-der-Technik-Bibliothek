@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSCAL SSP & Risk Generator with multi catalog option V5.0</title>
+    <title>OSCAL Blaupausen & Risk Generator with multi catalog option V5.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -1480,6 +1480,7 @@
         function generateSSP(t, profileUuid) {
             const sysUuid = crypto.randomUUID(); 
             const riskCompUuid = crypto.randomUUID();
+            const additionalCatalogs = bpState.catalogs.slice(1);
 
             const sspComponents = [
                 { uuid: sysUuid, type: "this-system", title: `System: ${t}`, status: { state: "operational" }, description: "Das übergeordnete System dieser Blaupause." },
@@ -1529,6 +1530,25 @@
 					links: [{ href: c.source, rel: "component-definition" }]
 				});
 			});
+
+            additionalCatalogs.forEach(catalog => {
+                sspComponents.push({
+                    uuid: catalog.id,
+                    type: "service",
+                    title: `Katalog-Umsetzung: ${catalog.name}`,
+                    description: `Implementierungsscope für Controls aus dem zusätzlich importierten OSCAL-Katalog ${catalog.name}.`,
+                    status: { state: "operational" },
+                    props: [
+                        {
+                            name: "catalog-role",
+                            ns: OSCAL_NAMESPACES.sourceCatalog,
+                            value: "catalog-implementation",
+                            remarks: `Diese Komponente bündelt die Umsetzung der aus ${catalog.name} übernommenen Controls.`
+                        }
+                    ],
+                    links: [{ href: catalog.href, rel: "catalog" }]
+                });
+            });
 			
             bpState.riskData.forEach(r => {
                 const targetUuid = r.targetComponent === 'global' ? riskCompUuid : r.targetComponent;
@@ -1551,48 +1571,63 @@
                 });
             });
 
+            const catalogControlTargets = new Map();
+            additionalCatalogs.forEach(catalog => {
+                (catalog.controls || new Set()).forEach(cid => {
+                    if (!catalogControlTargets.has(cid)) catalogControlTargets.set(cid, new Set());
+                    catalogControlTargets.get(cid).add(catalog.id);
+                });
+            });
+
             const sspReqIds = new Set([
                 ...bpState.manualControls,
                 ...Array.from(riskControlTargets.keys())
             ]);
             bpState.praktiken.forEach(p => p.controls.forEach(cid => sspReqIds.add(cid)));
+            additionalCatalogs.forEach(catalog => (catalog.controls || new Set()).forEach(cid => sspReqIds.add(cid)));
 
             const reqs = Array.from(sspReqIds).sort().map(cid => {
                 const byComps = [];
+                const seenCompUuids = new Set();
+                const addByComp = (componentUuid, description) => {
+                    if (!componentUuid || seenCompUuids.has(componentUuid)) return;
+                    seenCompUuids.add(componentUuid);
+                    byComps.push({
+                        "component-uuid": componentUuid,
+                        "uuid": crypto.randomUUID(),
+                        description
+                    });
+                };
 
                 if (riskControlTargets.has(cid)) {
                     riskControlTargets.get(cid).forEach(targetUuid => {
-                        byComps.push({ 
-                            "component-uuid": targetUuid, 
-                            "uuid": crypto.randomUUID(), 
-                            description: bpState.customControls.has(cid) ? "Benutzerdefiniertes Risiko-Control." : "Katalog-Control zur Risikomitigierung." 
-                        });
+                        addByComp(targetUuid, bpState.customControls.has(cid) ? "Benutzerdefiniertes Risiko-Control." : "Katalog-Control zur Risikomitigierung."
+                        );
                     });
                 } else if (bpState.manualControls.has(cid)) {
-                    byComps.push({ 
-                        "component-uuid": riskCompUuid, 
-                        "uuid": crypto.randomUUID(), 
-                        description: "Manuell hinzugefügte Maßnahme." 
-                    });
+                    addByComp(riskCompUuid, "Manuell hinzugefügte Maßnahme.");
                 }
                 
                 bpState.praktiken.forEach(p => {
                     if (p.controls.has(cid)) {
-                        byComps.push({
-                            "component-uuid": p.id,
-                            "uuid": crypto.randomUUID(),
-                            description: "Control direkt aus dem referenzierten Prozess-Profil."
-                        });
+                        addByComp(p.id, "Control direkt aus dem referenzierten Prozess-Profil.");
                     }
                 });
+
+                if (catalogControlTargets.has(cid)) {
+                    catalogControlTargets.get(cid).forEach(catalogUuid => {
+                        const catalog = additionalCatalogs.find(entry => entry.id === catalogUuid);
+                        addByComp(catalogUuid, `Control aus zusätzlichem Katalog${catalog?.name ? ` ${catalog.name}` : ''}.`);
+                    });
+                }
 
                 return {
                     uuid: crypto.randomUUID(),
                     "control-id": cid,
-                    description: "Spezifische Zuweisung über Risikoanalyse, Tailoring oder Prozesse.",
+                    description: "Spezifische Zuweisung über Risikoanalyse, Tailoring, Prozesse oder zusätzliche Kataloge.",
                     "by-components": byComps
                 };
-            });
+            }).filter(req => req["by-components"].length > 0);
 
             const ssp = {
                 "system-security-plan": {
