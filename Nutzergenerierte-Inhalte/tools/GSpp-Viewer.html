@@ -605,10 +605,10 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
 
             const stmtPart = control.parts?.find(p => p.name === 'statement') || (control.parts ? control.parts[0] : null);
             const guidance = control.parts?.find(p => p.name === 'guidance')?.prose || "";
-            const modal = stmtPart?.props?.find(p => p.name === 'modalverb')?.value || "";
-            const action = stmtPart?.props?.find(p => p.name === 'handlungsworte')?.value || "";
-            const result = stmtPart?.props?.find(p => p.name === 'ergebnis')?.value || "";
-            const precision = stmtPart?.props?.find(p => p.name === 'präzisierung')?.value || "";
+            const modal = stmtPart?.props?.find(p => p.name === 'modal_verb')?.value || "";
+			const action = stmtPart?.props?.find(p => p.name === 'action_word')?.value || "";
+			const result = stmtPart?.props?.find(p => p.name === 'result')?.value || "";
+			const precision = stmtPart?.props?.find(p => p.name === 'precision')?.value || "";
             
             if(modal) filterOptions.modalverb.add(modal);
             if(action) filterOptions.handlung.add(action);
@@ -766,7 +766,6 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
             const sel = document.getElementById(id);
             if (!sel) return;
             const currentVal = sel.value;
-            sel.innerHTML = `<option value="all">Alle ${label}en</option>`;
             Array.from(set).sort().forEach(v => {
                 if (!v) return;
                 const o = document.createElement('option');
