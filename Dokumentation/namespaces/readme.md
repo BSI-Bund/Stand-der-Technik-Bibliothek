@@ -9,13 +9,13 @@ Jede CSV-Datei entspricht einem eigenen Namespace:
 
 | Datei                            | Beschreibung                                                          |
 | -------------------------------- | --------------------------------------------------------------------- |
-| `documentation_guidance.csv`     | Definitionen zu empfohlenen Dokumentationen                           |
+| `documentation_guidelines.csv`   | Definitionen zu empfohlenen Dokumentationen                           |
 | `result.csv`                     | Definitionen zu sonstigen in Anforderungen verwendeten Begriffen*     |
 | `action_words.csv`               | Definitionen zu Handlungs- bzw. Tätigkeitsverben                      |
 | `modal_verbs.csv`                | Definitionen zu Modalverben (Grad der Verpflichtung oder Möglichkeit) |
 | `practices.csv`                  | Definitionen zu Praktiken oder Vorgehensweisen                        |
 | `security_level.csv`             | Definitionen zu Sicherheitsniveaus                                    |
-| `effort.csv`                     | Definitionen zu Aufwandsstufen                                        |
+| `effort_level.csv`               | Definitionen zu Aufwandsstufen                                        |
 | `tags.csv`                       | Definitionen zu Schlagwörtern oder thematischen Labels                |
 | `topics.csv`                     | Definitionen zu Themen (= Untergliederung von Praktiken)              |
 | `target_object_categories.csv`   | Definitionen zu Zielobjektkategorien (z. B. IT-Systeme, Anwendungen)  |
