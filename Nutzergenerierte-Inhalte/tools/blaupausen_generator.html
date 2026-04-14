@@ -55,9 +55,15 @@
                     Methodik-GS++ Komplettpaket: Basis-Methodik, Prozesse, Muster-Assets, integrierte Risikoanalyse und Generierung von Profile & SSP.
                 </p>
             </div>
-            <div id="catalog-status" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-300 border border-slate-600 flex items-center shadow-sm">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-3 animate-pulse"></span>
-                Lade Basis-Katalog...
+            <div class="flex items-center gap-3 flex-wrap">
+                <input type="file" id="ssp-file-input" accept=".json,application/json" multiple class="hidden" onchange="handleSSPFileLoad(event)">
+                <button onclick="document.getElementById('ssp-file-input').click()" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 hover:bg-slate-600 text-slate-200 border border-slate-600 flex items-center shadow-sm transition-colors">
+                    📂 Bestehenden SSP öffnen
+                </button>
+                <div id="catalog-status" class="px-4 py-2 rounded-lg text-sm font-semibold bg-slate-700 text-slate-300 border border-slate-600 flex items-center shadow-sm">
+                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-3 animate-pulse"></span>
+                    Lade Basis-Katalog...
+                </div>
             </div>
         </header>
 
@@ -197,7 +203,8 @@
         const CATALOG_URL_BASE = 'https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/refs/heads/main/Anwenderkataloge/Grundschutz%2B%2B/Grundschutz%2B%2B-catalog.json';
         const API_URL_NUTZERGEN = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/komponenten/DE';
         const API_URL_GPLUS = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/komponenten';
-        const API_URL_PRAKTIKEN = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/profile';
+        const API_URL_PRAKTIKEN = 'https://api.github.com/repos/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/contents/Nutzergenerierte-Inhalte/Zielobjektkategorien/komponenten';
+        const PRAKTIKEN_FILE_SUFFIX = 'prozesse-component.json';
         
         const METHODIK_URLS = {
             standard: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Nutzergenerierte-Inhalte/Zielobjektkategorien/komponenten/methodik-component.json',
@@ -212,6 +219,10 @@
             {
                 name: 'DSGVO OSCAL Katalog',
                 href: 'https://github.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/blob/main/Nutzergenerierte-Inhalte/hilfsdateien/dsgvo_oscal_catalog.json'
+            },
+            {
+                name: 'C5:2026 OSCAL Katalog',
+                href: 'https://raw.githubusercontent.com/AG-3-Nutzergenerierte-Inhalte/Stand-der-Technik-Bibliothek/refs/heads/main/Nutzergenerierte-Inhalte/hilfsdateien/c5-2026-oscal-catalog.json'
             }
         ];
 
@@ -225,6 +236,7 @@
             metadata: { title: "", version: "1.0.0", description: "" },
             catalogs: [{ id: 'catalog-base', href: CATALOG_URL_BASE, name: "BSI Grundschutz++ Katalog", kind: 'catalog', imported: true, controls: new Set() }],
             controlsIndex: new Map(),
+            groupTitles: new Map(), // Gruppen-ID (upper) → Titel aus Basis-Katalog
             methodik: { type: 'standard', url: METHODIK_URLS.standard, controls: new Set(), uuid: '' },
             praktiken: new Map(), // Speichert gewählte Prozesse { id, name, url, controls: Set() }
             manualControls: new Set(), 
@@ -375,6 +387,19 @@
             });
         }
 
+        function indexCatalogGroups(catalogData) {
+            function walk(items) {
+                if (!items) return;
+                items.forEach(i => {
+                    if (i.id && i.title) {
+                        bpState.groupTitles.set(String(i.id).toUpperCase(), i.title);
+                    }
+                    if (i.groups) walk(i.groups);
+                });
+            }
+            walk(catalogData?.catalog?.groups);
+        }
+
         async function loadBaseCatalog() {
             const statusEl = document.getElementById('catalog-status');
             try {
@@ -384,6 +409,7 @@
                 const controlEntries = extractCatalogControls(data, baseCatalog);
                 baseCatalog.controls = new Set(controlEntries.keys());
                 mergeControlsIntoIndex(controlEntries);
+                indexCatalogGroups(data);
                 
                 statusEl.className = "px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-900/50 text-emerald-400 border border-emerald-700 flex items-center shadow-sm";
                 statusEl.innerHTML = `✓ Katalog aktiv (${bpState.controlsIndex.size} Controls)`;
@@ -561,6 +587,7 @@
                     <div class="flex flex-wrap gap-2 mb-4">
                         <button onclick="addPresetCatalog(0)" class="px-4 py-2 bg-slate-700 text-cyan-300 border border-cyan-700 rounded-lg hover:bg-slate-600 transition-colors text-sm font-semibold">+ KRITIS</button>
                         <button onclick="addPresetCatalog(1)" class="px-4 py-2 bg-slate-700 text-cyan-300 border border-cyan-700 rounded-lg hover:bg-slate-600 transition-colors text-sm font-semibold">+ DSGVO</button>
+                        <button onclick="addPresetCatalog(2)" class="px-4 py-2 bg-slate-700 text-cyan-300 border border-cyan-700 rounded-lg hover:bg-slate-600 transition-colors text-sm font-semibold">+ C5:2026</button>
                     </div>
                     <ul id="catalogs-list" class="space-y-2"></ul>
                 </div>
@@ -659,16 +686,22 @@
                 const data = await res.json();
                 const container = document.getElementById('praktiken-container');
                 
-                const processFiles = data.filter(file => file.name.endsWith('_prozesse_profile.json'));
+                const processFiles = data.filter(file => file.name.endsWith(PRAKTIKEN_FILE_SUFFIX));
                 
                 if (processFiles.length === 0) {
-                    container.innerHTML = '<div class="text-slate-500 text-sm">Keine Prozess-Profile gefunden.</div>';
+                    container.innerHTML = '<div class="text-slate-500 text-sm">Keine Prozess-Komponenten gefunden.</div>';
                     return;
                 }
 
                 container.innerHTML = processFiles.map(file => {
-                    const match = file.name.replace('_prozesse_profile.json', '');
-                    const label = match.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                    // Filenames follow "<prefix>prozesse-component.json" — e.g. archprozesse → ARCH
+                    const stem = file.name.replace(/-component\.json$/, '');
+                    const prefixMatch = stem.match(/^(.*?)prozesse$/i);
+                    const prefix = prefixMatch ? prefixMatch[1].toUpperCase() : '';
+                    const groupTitle = prefix ? bpState.groupTitles.get(prefix) : null;
+                    const label = groupTitle
+                        ? `${groupTitle} (${prefix})`
+                        : (stem.split(/[_-]/).filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') || stem);
                     const id = crypto.randomUUID();
                     return `
                         <label class="flex items-start space-x-3 p-3 bg-slate-800 border border-slate-700 rounded-lg hover:border-blue-500 cursor-pointer transition-colors">
@@ -690,19 +723,26 @@
                     const res = await fetch(url);
                     const data = await res.json();
                     const extractedControls = new Set();
-                    
-                    if(data.profile && data.profile.imports) {
-                        data.profile.imports.forEach(imp => {
-                            if(imp['include-controls']) {
-                                imp['include-controls'].forEach(inc => {
-                                    if(inc['with-ids']) {
-                                        inc['with-ids'].forEach(cid => extractedControls.add(cid));
-                                    }
+
+                    // New schema: OSCAL component-definition
+                    if (data['component-definition'] && data['component-definition'].components) {
+                        data['component-definition'].components.forEach(c => {
+                            (c['control-implementations'] || []).forEach(ci => {
+                                (ci['implemented-requirements'] || []).forEach(req => {
+                                    if (req['control-id']) extractedControls.add(req['control-id']);
                                 });
-                            }
+                            });
                         });
                     }
-                    
+                    // Legacy schema fallback: profile with imports
+                    else if (data.profile && data.profile.imports) {
+                        data.profile.imports.forEach(imp => {
+                            (imp['include-controls'] || []).forEach(inc => {
+                                (inc['with-ids'] || []).forEach(cid => extractedControls.add(cid));
+                            });
+                        });
+                    }
+
                     bpState.praktiken.set(url, { id: id, name: label, url: url, controls: extractedControls });
                 } catch(e) {
                     alert(`Fehler beim Verarbeiten von ${label}: ` + e.message);
@@ -728,7 +768,7 @@
                 d1.filter(i => i.name.endsWith('.json') && !i.name.includes('methodik')).forEach(f => ddN.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
                 
                 ddG.innerHTML = '<option value="" disabled selected>Asset wählen...</option>';
-                d2.filter(i => i.name.endsWith('.json')).forEach(f => ddG.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
+                d2.filter(i => i.name.endsWith('.json') && !i.name.endsWith(PRAKTIKEN_FILE_SUFFIX)).forEach(f => ddG.appendChild(new Option(f.name.replace('.json',''), f.download_url)));
 
                 ddN.addEventListener('change', () => ddG.selectedIndex = 0);
                 ddG.addEventListener('change', () => ddN.selectedIndex = 0);
@@ -1364,6 +1404,332 @@
         }
 
         // --- SECTION 5: EXPORTS (OSCAL GENERATION) ---
+
+        // --- SSP / PROFILE IMPORT (open existing and continue working on it) ---
+        window.handleSSPFileLoad = async function(event) {
+            const files = Array.from(event.target.files || []);
+            event.target.value = ''; // allow re-selecting same file later
+            if (files.length === 0) return;
+
+            toggleLoader(true, 'Lese Dateien...');
+            try {
+                let ssp = null, profile = null;
+                for (const f of files) {
+                    const txt = await f.text();
+                    // strip BOM if present
+                    const clean = txt.replace(/^\uFEFF/, '');
+                    const data = JSON.parse(clean);
+                    if (data['system-security-plan']) ssp = data['system-security-plan'];
+                    else if (data.profile) profile = data.profile;
+                    else throw new Error(`Datei ${f.name} ist weder SSP noch Profile.`);
+                }
+                if (!ssp && !profile) throw new Error('Keine gültige SSP- oder Profile-Datei gefunden.');
+                await importFromSSPAndProfile(ssp, profile);
+                alert('Import erfolgreich. Du kannst jetzt weiterarbeiten und neu generieren.');
+            } catch (e) {
+                console.error(e);
+                alert('Import fehlgeschlagen: ' + e.message);
+            } finally {
+                toggleLoader(false);
+            }
+        }
+
+        function base64DecodeUnicode(str) {
+            try {
+                const binary = atob(str);
+                const percent = Array.from(binary).map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('');
+                return decodeURIComponent(percent);
+            } catch { return ''; }
+        }
+
+        async function importFromSSPAndProfile(ssp, profile) {
+            // Reset mutable parts of state (keep base catalog + its index)
+            const baseCatalog = bpState.catalogs[0];
+            bpState.catalogs = [baseCatalog];
+            bpState.controlsIndex = new Map();
+            bpState.groupTitles = new Map();
+            // Re-index base catalog
+            try {
+                const res = await fetch(baseCatalog.href);
+                const data = await res.json();
+                const entries = extractCatalogControls(data, baseCatalog);
+                baseCatalog.controls = new Set(entries.keys());
+                mergeControlsIntoIndex(entries);
+                indexCatalogGroups(data);
+            } catch(e) { console.warn('Basis-Katalog konnte nicht neu indiziert werden', e); }
+
+            bpState.praktiken = new Map();
+            bpState.manualControls = new Set();
+            bpState.modifications = new Map();
+            bpState.components = [];
+            bpState.riskData = [];
+            bpState.customControls = new Map();
+
+            // --- Metadata ---
+            const srcMeta = (ssp && ssp.metadata) || (profile && profile.metadata) || {};
+            let title = srcMeta.title || '';
+            title = title.replace(/\s*-\s*(Muster-SSP|Profil)\s*$/i, '').trim();
+            bpState.metadata.title = title;
+            bpState.metadata.version = srcMeta.version || '1.0.0';
+            bpState.metadata.description = srcMeta.remarks || '';
+            const tInp = document.getElementById('bp-title'); if (tInp) tInp.value = bpState.metadata.title;
+            const vInp = document.getElementById('bp-version'); if (vInp) vInp.value = bpState.metadata.version;
+            const dInp = document.getElementById('bp-description'); if (dInp) dInp.value = bpState.metadata.description;
+
+            // --- Additional catalogs ---
+            // Preferred source: profile.imports (skip first = base). Fallback: SSP system-characteristics props.
+            let additionalHrefs = [];
+            if (profile && Array.isArray(profile.imports)) {
+                additionalHrefs = profile.imports.slice(1).map(i => i.href).filter(Boolean);
+            } else if (ssp) {
+                const chars = ssp['system-characteristics'] || {};
+                (chars.props || []).forEach(p => { if (p.name === 'referenced-catalog' && p.value) additionalHrefs.push(p.value); });
+                (srcMeta.props || []).forEach(p => { if (p.name === 'source-catalog' && p.value) additionalHrefs.push(p.value); });
+            }
+            additionalHrefs = Array.from(new Set(additionalHrefs));
+
+            // Match catalog components in SSP by title to reuse their UUIDs
+            const sspComponents = (ssp && ssp['system-implementation'] && ssp['system-implementation'].components) || [];
+            const catalogComponentByName = new Map();
+            sspComponents.forEach(c => {
+                if (c.title && c.title.startsWith('Katalog-Umsetzung:')) {
+                    const name = c.title.replace('Katalog-Umsetzung:', '').trim();
+                    catalogComponentByName.set(name, c.uuid);
+                }
+                // Also try match by link href
+                if (c.links) {
+                    const catLink = c.links.find(l => l.rel === 'catalog');
+                    if (catLink) catalogComponentByName.set(catLink.href, c.uuid);
+                }
+            });
+
+            for (const href of additionalHrefs) {
+                try {
+                    const catalog = await validateCatalogUrl(href);
+                    if (catalogAlreadyPresent(catalog.href)) continue;
+                    // Try to reuse SSP component uuid so implemented-requirements still line up
+                    const reuseUuid = catalogComponentByName.get(catalog.name) || catalogComponentByName.get(catalog.href) || catalogComponentByName.get(href);
+                    if (reuseUuid) catalog.id = reuseUuid;
+                    mergeControlsIntoIndex(catalog.controlEntries || new Map());
+                    bpState.catalogs.push(catalog);
+                } catch(e) {
+                    console.warn('Zusätzlicher Katalog konnte nicht geladen werden:', href, e);
+                }
+            }
+
+            // --- Methodik, Praktiken, Assets (from SSP components) ---
+            if (ssp) {
+                for (const c of sspComponents) {
+                    if (!c.title) continue;
+                    if (c.type === 'this-system') continue;
+                    if (c.title === 'Risikoanalyse Controls') continue;
+                    if (c.title.startsWith('Katalog-Umsetzung:')) continue;
+
+                    const link = (c.links || [])[0];
+                    const href = link && link.href;
+
+                    // Methodik
+                    const mMatch = c.title.match(/^Basis Methodik \((standard|enhanced)\)/);
+                    if (mMatch) {
+                        const type = mMatch[1];
+                        try {
+                            const url = METHODIK_URLS[type] || href;
+                            const res = await fetch(url);
+                            const data = await res.json();
+                            const controls = new Set();
+                            (data['component-definition']?.components || []).forEach(comp => {
+                                (comp['control-implementations'] || []).forEach(ci => {
+                                    (ci['implemented-requirements'] || []).forEach(req => controls.add(req['control-id']));
+                                });
+                            });
+                            bpState.methodik.type = type;
+                            bpState.methodik.url = url;
+                            bpState.methodik.controls = controls;
+                            bpState.methodik.uuid = c.uuid; // preserve uuid from SSP
+                            const radio = document.querySelector(`input[name="methodik_type"][value="${type}"]`);
+                            if (radio) radio.checked = true;
+                            const statusEl = document.getElementById('methodik-status');
+                            if (statusEl) statusEl.innerHTML = `✓ Methodik (${type}) geladen und ${controls.size} Controls zugewiesen.`;
+                        } catch(e) { console.warn('Methodik konnte nicht geladen werden', e); }
+                        continue;
+                    }
+
+                    // Praktik (process component — new schema — or legacy process profile)
+                    if (c.title.startsWith('Prozess:') && href) {
+                        const name = c.title.replace('Prozess:', '').trim();
+                        try {
+                            const res = await fetch(href);
+                            const data = await res.json();
+                            const controls = new Set();
+                            if (data['component-definition']?.components) {
+                                data['component-definition'].components.forEach(comp => {
+                                    (comp['control-implementations'] || []).forEach(ci => {
+                                        (ci['implemented-requirements'] || []).forEach(req => {
+                                            if (req['control-id']) controls.add(req['control-id']);
+                                        });
+                                    });
+                                });
+                            } else if (data.profile?.imports) {
+                                data.profile.imports.forEach(imp => {
+                                    (imp['include-controls'] || []).forEach(inc => {
+                                        (inc['with-ids'] || []).forEach(cid => controls.add(cid));
+                                    });
+                                });
+                            }
+                            bpState.praktiken.set(href, { id: c.uuid, name, url: href, controls });
+                        } catch(e) { console.warn('Praktik konnte nicht geladen werden', href, e); }
+                        continue;
+                    }
+
+                    // Asset component (service + component-definition link)
+                    if (c.type === 'service' && href) {
+                        try {
+                            const res = await fetch(href);
+                            const data = await res.json();
+                            const controls = new Set();
+                            (data['component-definition']?.components || []).forEach(comp => {
+                                (comp['control-implementations'] || []).forEach(ci => {
+                                    (ci['implemented-requirements'] || []).forEach(req => controls.add(req['control-id']));
+                                });
+                            });
+                            const schutzProp = (c.props || []).find(p => p.name === 'sicherheitsniveau');
+                            bpState.components.push({
+                                id: c.uuid,
+                                name: c.title,
+                                source: href,
+                                state: c.status?.state || 'operational',
+                                schutzbedarf: schutzProp?.value || 'normal-SdT',
+                                controls
+                            });
+                        } catch(e) { console.warn('Asset konnte nicht geladen werden', href, e); }
+                    }
+                }
+
+                // --- Manual controls: implemented-requirements whose by-components target the risk component
+                //     AND which aren't covered by methodik / praktiken / assets / catalogs.
+                const reqs = ssp['control-implementation']?.['implemented-requirements'] || [];
+                const knownCids = new Set();
+                bpState.methodik.controls.forEach(c => knownCids.add(c));
+                bpState.praktiken.forEach(p => p.controls.forEach(c => knownCids.add(c)));
+                bpState.components.forEach(c => c.controls.forEach(cid => knownCids.add(cid)));
+                bpState.catalogs.slice(1).forEach(cat => (cat.controls || new Set()).forEach(cid => knownCids.add(cid)));
+
+                reqs.forEach(r => {
+                    const cid = r['control-id'];
+                    if (!cid || cid === 'PLACEHOLDER') return;
+                    if (!knownCids.has(cid)) bpState.manualControls.add(cid);
+                });
+
+                // --- Risk data from SSP back-matter ---
+                const resources = ssp['back-matter']?.resources || [];
+                resources.forEach(r => {
+                    (r.attachments || []).forEach(a => {
+                        if (a['media-type'] === 'application/json' && a.base64?.value) {
+                            try {
+                                const decoded = base64DecodeUnicode(a.base64.value);
+                                const parsed = JSON.parse(decoded);
+                                if (Array.isArray(parsed.risks)) bpState.riskData = parsed.risks;
+                            } catch(e) { console.warn('Risk-Attachment konnte nicht dekodiert werden', e); }
+                        }
+                    });
+                });
+            }
+
+            // --- Profile-specific data: modifications + custom controls + risk fallback ---
+            if (profile) {
+                // Custom controls (inserted)
+                const inserts = profile.modify?.inserts || [];
+                inserts.forEach(ins => {
+                    (ins.controls || []).forEach(cc => {
+                        const statementPart = (cc.parts || []).find(p => p.name === 'statement');
+                        bpState.customControls.set(cc.id, {
+                            id: cc.id,
+                            title: cc.title || cc.id,
+                            statement: statementPart?.prose || ''
+                        });
+                        // Custom controls live in manualControls of the profile
+                        bpState.manualControls.add(cc.id);
+                    });
+                });
+
+                // set-parameters and alters: we don't know the original sourceId mapping.
+                // Best effort: attach to the first source that includes the control-id.
+                const findSourceId = (cid) => {
+                    if (bpState.methodik.controls.has(cid)) return bpState.methodik.uuid;
+                    for (const p of bpState.praktiken.values()) if (p.controls.has(cid)) return p.id;
+                    for (const comp of bpState.components) if (comp.controls.has(cid)) return comp.id;
+                    for (const cat of bpState.catalogs.slice(1)) if ((cat.controls || new Set()).has(cid)) return cat.id;
+                    if (bpState.manualControls.has(cid)) return 'manual';
+                    return 'manual';
+                };
+
+                const setParams = profile.modify?.['set-parameters'] || [];
+                setParams.forEach(sp => {
+                    const paramId = sp['param-id'];
+                    if (!paramId) return;
+                    // Derive control-id: everything before "_prm_" (best-effort)
+                    const m = paramId.match(/^(.*?)_prm_/);
+                    const cid = m ? m[1] : paramId;
+                    const sourceId = findSourceId(cid);
+                    const key = `${sourceId}||${cid}`;
+                    if (!bpState.modifications.has(key)) bpState.modifications.set(key, []);
+                    bpState.modifications.get(key).push({
+                        type: 'set-parameter',
+                        paramId,
+                        value: Array.isArray(sp.values) ? sp.values[0] : ''
+                    });
+                });
+
+                const alters = profile.modify?.alters || [];
+                alters.forEach(a => {
+                    const cid = a['control-id'];
+                    if (!cid) return;
+                    const sourceId = findSourceId(cid);
+                    const key = `${sourceId}||${cid}`;
+                    (a.adds || []).forEach(add => {
+                        const prosePart = (add.parts || []).find(p => p.name === 'statement');
+                        if (!bpState.modifications.has(key)) bpState.modifications.set(key, []);
+                        bpState.modifications.get(key).push({
+                            type: 'add',
+                            position: add.position || 'ending',
+                            text: prosePart?.prose || ''
+                        });
+                    });
+                });
+
+                // Risk fallback from profile back-matter (only if SSP didn't already provide)
+                if (bpState.riskData.length === 0) {
+                    const resources = profile['back-matter']?.resources || [];
+                    resources.forEach(r => {
+                        (r.attachments || []).forEach(a => {
+                            if (a['media-type'] === 'application/json' && a.base64?.value) {
+                                try {
+                                    const decoded = base64DecodeUnicode(a.base64.value);
+                                    const parsed = JSON.parse(decoded);
+                                    if (Array.isArray(parsed.risks)) bpState.riskData = parsed.risks;
+                                } catch(e) {}
+                            }
+                        });
+                    });
+                }
+            }
+
+            // --- Re-render UI ---
+            renderCatalogsList();
+            renderAssetsList();
+            // Re-check praktik checkboxes that matched
+            document.querySelectorAll('#praktiken-container input[type="checkbox"]').forEach(cb => {
+                const handler = cb.getAttribute('onchange') || '';
+                // URLs live inside the onchange attribute string — match against loaded praktiken
+                for (const url of bpState.praktiken.keys()) {
+                    if (handler.includes(url)) { cb.checked = true; break; }
+                }
+            });
+            renderTailoredList();
+            refreshRiskUI();
+        }
+
+        // --- SECTION 5: EXPORTS (OSCAL GENERATION) ---
         function generateBlueprintPackage() {
             const t = bpState.metadata.title || "Blaupause";
             const profileData = generateProfile(t);
@@ -1506,9 +1872,9 @@
                     uuid: p.id,
                     type: "process",
                     title: `Prozess: ${p.name}`,
-                    description: `Prozess-Instanz, abgeleitet aus dem Profil: ${p.url.split('/').pop()}.`,
+                    description: `Prozess-Instanz, basierend auf Komponentendefinition ${p.url.split('/').pop()}.`,
                     status: { state: "operational" },
-                    links: [{ href: p.url, rel: "profile" }]
+                    links: [{ href: p.url, rel: "component-definition" }]
                 });
             });
             
