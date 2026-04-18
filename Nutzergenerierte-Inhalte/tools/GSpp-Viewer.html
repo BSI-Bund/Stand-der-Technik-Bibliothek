@@ -112,6 +112,7 @@
         .tag-tags { background: #e3f2fd; color: #0d47a1; border-color: #bbdefb; }
         .tag-modal { background: #fce4ec; color: var(--modal-color); border-color: #f8bbd0; text-transform: uppercase; }
         .tag-action { background: #e3f2fd; color: var(--action-color); border-color: #9ec5fe; }
+        .tag-target { background: #f3e5f5; color: #6a1b9a; border-color: #ce93d8; }
 
         /* Statement Box */
         .statement-box { background: #fff; border: 1px solid #eee; padding: 18px; border-radius: 8px; margin: 15px 0; }
@@ -613,11 +614,12 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
 			const action = stmtPart?.props?.find(p => p.name === 'action_word')?.value || "";
 			const result = stmtPart?.props?.find(p => p.name === 'result')?.value || "";
 			const precision = stmtPart?.props?.find(p => p.name === 'precision')?.value || "";
+			const targetObj = stmtPart?.props?.find(p => p.name === 'target_object_categories')?.value || "";
             
             if(modal) filterOptions.modalverb.add(modal);
             if(action) filterOptions.handlung.add(action);
             
-            card.dataset.searchText = `${control.id} ${uuid} ${control.title} ${stmtPart?.prose || ""} ${modal} ${action} ${tagsArray.join(' ')}`.toLowerCase();
+            card.dataset.searchText = `${control.id} ${uuid} ${control.title} ${stmtPart?.prose || ""} ${modal} ${action} ${targetObj} ${tagsArray.join(' ')}`.toLowerCase();
             card.dataset.class = cClass; 
             card.dataset.sec = sec; 
             card.dataset.effort = effort; 
@@ -634,6 +636,7 @@ Gib das Ergebnis ausschließlich als Markdown-Tabelle mit folgendem Format aus:
                     ${uuid ? `<span class="tag tag-uuid">UUID: ${uuid}</span>` : ''}
                     ${modal ? `<span class="tag tag-modal">${escapeHtml(modal)}</span>` : ''}
                     ${action ? `<span class="tag tag-action">${escapeHtml(action)}</span>` : ''}
+                    ${targetObj ? `<span class="tag tag-target">🎯 ${escapeHtml(targetObj)}</span>` : ''}
                     ${tagsArray.map(t => `<span class="tag tag-tags">Tag: ${escapeHtml(t)}</span>`).join('')}
                 </div>
                 <div class="statement-box">
