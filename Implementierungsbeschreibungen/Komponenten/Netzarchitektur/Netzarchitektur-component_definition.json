@@ -1,0 +1,1643 @@
+{
+  "component-definition": {
+    "uuid": "fb8084fc-fe4a-4ea1-b798-e30515991fd3",
+    "metadata": {
+      "title": "Implementierungsvorschläge Netzarchitektur",
+      "version": "2026-04-20",
+      "oscal-version": "1.2.1",
+      "last-modified": "2026-04-20T07:12:24Z"
+    },
+    "components": [
+      {
+        "uuid": "55ff2f3c-c812-55cd-ad63-04de9efa6bb3",
+        "type": "interconnection",
+        "title": "Einschränkung und Inspektion von Verbindungen",
+        "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+        "control-implementations": [
+          {
+            "uuid": "76fd7ad1-b16c-54b3-bec8-105ac5640dab",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung und Inspektion von Verbindungen",
+            "implemented-requirements": [
+              {
+                "uuid": "5e9c8eed-c285-5bda-b894-ea7dda49b478",
+                "control-id": "_025c298a-7c8d-441d-b9d5-a1422556c6e1",
+                "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Dokumentieren Sie Annahmen, Abhängigkeiten und Schnittstellen zu angrenzenden Kontrollen (Identitäts‑, Segmentierungs‑, Monitoring‑ und Betriebsprozesse). Validieren Sie die Umsetzung mit einem Testplan, halten Sie Ergebnisse nachvollziehbar fest und planen Sie regelmäßige Überprüfungen ein, um Konfigurationsdrift zu vermeiden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "c7c6d8da-7798-5501-91aa-8a0d13f4ef56",
+        "type": "interconnection",
+        "title": "Einschränkung und Inspektion von Verbindungen",
+        "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+        "control-implementations": [
+          {
+            "uuid": "c1dbab3b-8e69-5054-97d8-da6706321603",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung und Inspektion von Verbindungen",
+            "implemented-requirements": [
+              {
+                "uuid": "0289ae2c-ed5d-5994-bbc6-4734c78c5ecb",
+                "control-id": "_025c298a-7c8d-441d-b9d5-a1422556c6e1",
+                "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "c3189e7c-727d-5e82-ab1e-ecce4676ed85",
+        "type": "interconnection",
+        "title": "Einschränkung und Inspektion von Verbindungen",
+        "description": "Für alle Perimeter- und Übergabepunkte betreibt die Institution ein mehrstufiges Konzept zur Einschränkung und Inspektion von Verbindungen, das klassische Firewalls, Anwendungsgateways, Proxies und IDS/IPS sinnvoll kombiniert.",
+        "control-implementations": [
+          {
+            "uuid": "816454db-f6b3-5c13-b14e-1dc01662f964",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung und Inspektion von Verbindungen",
+            "implemented-requirements": [
+              {
+                "uuid": "645d08b4-7379-5ed5-a3c7-cceecbfcbc20",
+                "control-id": "_025c298a-7c8d-441d-b9d5-a1422556c6e1",
+                "description": "Für alle Perimeter- und Übergabepunkte betreibt die Institution ein mehrstufiges Konzept zur Einschränkung und Inspektion von Verbindungen, das klassische Firewalls, Anwendungsgateways, Proxies und IDS/IPS sinnvoll kombiniert.",
+                "remarks": "Über Netverbindungen können unbeabsichtigte Verbindungen aufgebaut werden oder netzbasierte Angriffe über das Internet gegen die Institution erfolgen. Unerwünschter Datenverkehr nach außen können z.B. private IP-Adressen (RFC 1918 leakage), Multicasting, TCP/UDP Ports für veraltete, angreifbare Protokolle oder ICMP-Verkehr sein. Die Beschränkung der Verbindung zwischen IT-Systemen kann sowohl durch zustandsbehaftete Paketfilter, als auch mit Application Layer Gateways umgesetzt werden. Empfehlenswert ist eine Kombination aus Allowlisting, IP-Reputationslisten, Deep Packet Inspection und Durchsatzratenbegrenzung. Hierbei können Verbindungen auch nach Kategorien autorisiert werden (z.B. anhand von IP-Subnetzen oder Voraussetzungen wie per Zertifikat authentifzierten IT-Systemen). Damit dabei keine unnötigen Verbindungen zugelassen werden, ist es wichtig, die Kategorisierung möglich genau zu wählen (z.B. möglichst einzelne Subnetze statt des ganzen Netzes oder nur bestimmte Ports oder Anwendungen zuzulassen)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ce7e029c-79fb-5bf8-b6f4-3c9e550542cb",
+        "type": "interconnection",
+        "title": "Einschränkung und Inspektion von Verbindungen",
+        "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+        "control-implementations": [
+          {
+            "uuid": "a0962b4e-69f2-5494-a777-1f814212396c",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung und Inspektion von Verbindungen",
+            "implemented-requirements": [
+              {
+                "uuid": "74ee70bb-461d-5766-9bb5-e777ba1cd3fd",
+                "control-id": "_025c298a-7c8d-441d-b9d5-a1422556c6e1",
+                "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Gästezugänge gehören in getrennte SSIDs/VLANs mit aktivierter Client‑Isolation und restriktiven Egress‑Regeln. Ein Captive‑Portal kann rechtliche Hinweise und Nutzungsbedingungen abbilden; beschränken Sie dabei Zugriffe auf interne Ressourcen konsequent und begrenzen Sie die Bandbreite, um Produktivdienste zu schützen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "b62936e6-ce50-5ff6-9a5d-38be9c89ec22",
+        "type": "software",
+        "title": "Aufdecken unautorisierter IT-Systeme",
+        "description": "Die Institution setzt Netzscans, Network-Access-Control oder ähnliche Verfahren ein, um unautorisierte IT-Systeme im Netz zu erkennen, deren Anschluss zu unterbinden und verantwortliche Stellen automatisch zu informieren.",
+        "control-implementations": [
+          {
+            "uuid": "7e702141-6728-5640-877b-af193a6d198d",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Aufdecken unautorisierter IT-Systeme",
+            "implemented-requirements": [
+              {
+                "uuid": "ba194e2d-bc6b-5e9c-baeb-b81aa5b4c63a",
+                "control-id": "_02a49908-868b-45de-9ce5-56cb230ab8ee",
+                "description": "Die Institution setzt Netzscans, Network-Access-Control oder ähnliche Verfahren ein, um unautorisierte IT-Systeme im Netz zu erkennen, deren Anschluss zu unterbinden und verantwortliche Stellen automatisch zu informieren.",
+                "remarks": "Ziel ist sicherzustellen, dass keine unautorisierten Assets im Informationsverbund betrieben werden. Hierzu können z.B. aktive Netzscans (z.B. mit Nmap), passive Analysen des Netzwerkverkehrs oder spezielle Werkzeuge zur Erkennung von unbekannten WLAN-Access-Points (z.B. Kismet) genutzt werden. Zur Behandlung können die gefundenen IT-Systeme beispielsweise aus dem Netz entfernt, in eine Quarantäne verschoben oder nach Überprüfung autorisiert werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "5bf426da-81e1-5cec-b14e-49612e059e99",
+        "type": "interconnection",
+        "title": "VoIP-Netz",
+        "description": "Die Institution hat eine separate VoIP-SSID und ein VoIP-VLAN mit priorisierter 5-/6-GHz-Nutzung installiert, WMM/802.11e aktiviert und DSCP EF/46 auf AC_VO gemappt und Call Admission Control eingeschaltet.",
+        "control-implementations": [
+          {
+            "uuid": "9b8b4d39-16ba-5a1a-a72b-bad40d0cdc2f",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for VoIP-Netz",
+            "implemented-requirements": [
+              {
+                "uuid": "ec05d159-89a7-5f4e-b7e4-8b10b2c30d2c",
+                "control-id": "_02cac8a8-60e3-481d-96bf-3fa484afea78",
+                "description": "Die Institution hat eine separate VoIP-SSID und ein VoIP-VLAN mit priorisierter 5-/6-GHz-Nutzung installiert, WMM/802.11e aktiviert und DSCP EF/46 auf AC_VO gemappt und Call Admission Control eingeschaltet.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Für latenzkritische Voice‑Dienste sollten Sie WMM/802.11e aktivieren, DSCP EF (46) auf AC_VO mappen und Call Admission Control einschalten, damit Sprachverkehr nicht durch Hintergrundlast verdrängt wird. Planen Sie eine Zellüberlappung von ca. 15–25 % bei −67 dBm, setzen Sie Mindest‑PHY‑Raten für Roaming und validieren Sie Jitter/Packet‑Loss in typischen Gesprächspfaden. Für größere Umgebungen ist Fast‑Roaming (802.11r/k/v) ratsam. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "48d4ecbf-e753-5de0-8f7c-cb693a26cf44",
+        "type": "interconnection",
+        "title": "VoIP-Netz",
+        "description": "Die Institution hat dedizierte VoIP-SSIDs/VLANs ausschließlich auf 5/6-GHz mit Fast-Roaming (802.11r/k/v), Mindest-RSSI/PHY-Raten und aktivem CAC installiert und SRTP/TLS erzwungen.",
+        "control-implementations": [
+          {
+            "uuid": "559072ca-7426-5dc9-ac46-384392b65cc4",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for VoIP-Netz",
+            "implemented-requirements": [
+              {
+                "uuid": "7f723d67-a738-521e-a9b1-670d46de2497",
+                "control-id": "_02cac8a8-60e3-481d-96bf-3fa484afea78",
+                "description": "Die Institution hat dedizierte VoIP-SSIDs/VLANs ausschließlich auf 5/6-GHz mit Fast-Roaming (802.11r/k/v), Mindest-RSSI/PHY-Raten und aktivem CAC installiert und SRTP/TLS erzwungen.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Für ein belastbares Authentisierungs- und Verschlüsselungskonzept empfiehlt sich WPA3‑Enterprise mit 802.1X (bevorzugt EAP‑TLS) und verpflichtendem Protected Management Frames (PMF). Hinterlegen Sie Zertifikate über eine interne PKI, prüfen Sie OCSP/CRL und deaktivieren Sie Übergangsmodi (WPA2‑PSK‑Fallback, TKIP). Achten Sie auf konsistente Cipher‑Suiten, schalten Sie WPS ab und testen Sie die Supplicant‑Profile auf allen relevanten Betriebssystemen. Für IoT‑Szenarien ohne 802.1X bieten sich isolierte SSIDs mit Multi‑PSK/OWE und strengen Egress‑Regeln an. Für latenzkritische Voice‑Dienste sollten Sie WMM/802.11e aktivieren, DSCP EF (46) auf AC_VO mappen und Call Admission Control einschalten, damit Sprachverkehr nicht durch Hintergrundlast verdrängt wird. Planen Sie eine Zellüberlappung von ca. 15–25 % bei −67 dBm, setzen Sie Mindest‑PHY‑Raten für Roaming und validieren Sie Jitter/Packet‑Loss in typischen Gesprächspfaden. Für größere Umgebungen ist Fast‑Roaming (802.11r/k/v) ratsam. Die Netzabdeckung prüfen Sie zweckmäßig mit einer Kombination aus passiven und aktiven Surveys je Band (2,4/5/6 GHz). Zielwerte liegen erfahrungsgemäß bei RSSI ≥ −67 dBm (Daten) bzw. ≥ −65 dBm (Voice) und SNR ≥ 25–30 dB. Dokumentieren Sie Heatmaps pro Nutzungszone, messen Sie Durchsatz und Latenz an repräsentativen Punkten und analysieren Sie die Kanalbelegung inklusive Spektrumanalyse. Passen Sie Kanalbreiten und Sendeleistungen so an, dass Co‑Channel‑Interferenzen minimiert und stabile Roaming‑Zellen erhalten bleiben. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "1384af9e-1a2f-5d05-9b18-977b42dfa2e9",
+        "type": "interconnection",
+        "title": "VoIP-Netz",
+        "description": "VoIP-Endgeräte und -Server sind in eigenen Sprach- und Signalisierungssegmenten angeordnet; Firewalls und SBCs begrenzen die Verbindungen auf notwendige Protokolle und Ports und schützen VoIP-Dienste vor Zugriffen aus unsicheren Netzen.",
+        "control-implementations": [
+          {
+            "uuid": "e550db1f-6b53-541c-9218-77877c51af3d",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for VoIP-Netz",
+            "implemented-requirements": [
+              {
+                "uuid": "b157c236-6828-5430-8676-65b6d266dc13",
+                "control-id": "_02cac8a8-60e3-481d-96bf-3fa484afea78",
+                "description": "VoIP-Endgeräte und -Server sind in eigenen Sprach- und Signalisierungssegmenten angeordnet; Firewalls und SBCs begrenzen die Verbindungen auf notwendige Protokolle und Ports und schützen VoIP-Dienste vor Zugriffen aus unsicheren Netzen.",
+                "remarks": "Werden sowohl Telefonie als auch andere Daten über dasselbe Netz geführt, so könnte dies bei einem Netzausfall dazu führen, dass keine Kommunikation mehr möglich ist, auch nicht zur Meldung oder Behebung der Störung. Die Wahrscheinlichkeit kann durch getrennt betriebene Voice- und Datennetze verringert werden. Für weitere Details siehe „Kompendium für organisationsinterne Telekommunikationssysteme mit erhöhtem Schutzbedarf\"."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "7246f62c-b087-5285-95d2-90f3c0a0823b",
+        "type": "interconnection",
+        "title": "Netzbasierte Angriffe",
+        "description": "Firewalls, IDS/IPS und gegebenenfalls WAFs erkennen typische netzbasierte Angriffe und unterbinden diese automatisiert; Signaturen und Erkennungsregeln werden regelmäßig aktualisiert und an die eigene Bedrohungslage angepasst.",
+        "control-implementations": [
+          {
+            "uuid": "199ea1f6-20bc-5879-a1d6-52e3bea3fae9",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Netzbasierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "9d022b54-52e3-5325-8fca-a15f76432a92",
+                "control-id": "_09d37d0c-fda7-4f38-9aa6-f8cbae7d878d",
+                "description": "Firewalls, IDS/IPS und gegebenenfalls WAFs erkennen typische netzbasierte Angriffe und unterbinden diese automatisiert; Signaturen und Erkennungsregeln werden regelmäßig aktualisiert und an die eigene Bedrohungslage angepasst.",
+                "remarks": "Netzbasierte Angriffe verwenden Netzwerktechnologien (typischerweise auf OSI Layer 2-3), z.B. Fragmentierungsangriffe. Beispiele für mögliche Maßnahmen sind DHCP snooping, ARP/Dynamic ARP Inspection, IP-source guard, BPDU guard, root guard, port-security (sticky MAC)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "0bd51fcc-2a2c-5b2b-bb91-d6812e163d76",
+        "type": "software",
+        "title": "Netzbasierte Angriffe",
+        "description": "Der Haushalt hat am Heimrouter DoS-Schutz aktiviert, UPnP/Portweiterleitungen deaktiviert und ausgehende UDP-Discovery-Protokolle zum Internet gesperrt.",
+        "control-implementations": [
+          {
+            "uuid": "dfa527cb-2435-527d-8696-c35c37c0a6bc",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Netzbasierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "040de5a9-207a-5526-8cd7-0b48bf2844fd",
+                "control-id": "_09d37d0c-fda7-4f38-9aa6-f8cbae7d878d",
+                "description": "Der Haushalt hat am Heimrouter DoS-Schutz aktiviert, UPnP/Portweiterleitungen deaktiviert und ausgehende UDP-Discovery-Protokolle zum Internet gesperrt.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "c0290d60-71a3-5cfc-9ebf-583391ca220d",
+        "type": "interconnection",
+        "title": "Netzbasierte Angriffe",
+        "description": "Die Institution hat auf WLAN-Controller/Firewall egress-ACLs für UDP-Discovery-Dienste umgesetzt und stateful TCP-Schutz (SYN-Cookies, Embryonic-Limits, Invalid-Flag-Drops) aktiviert.",
+        "control-implementations": [
+          {
+            "uuid": "aad17341-694f-5f09-97dd-fe111c7fdd4b",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Netzbasierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "8555cef9-8f83-5676-ac12-3ecc1949a8dc",
+                "control-id": "_09d37d0c-fda7-4f38-9aa6-f8cbae7d878d",
+                "description": "Die Institution hat auf WLAN-Controller/Firewall egress-ACLs für UDP-Discovery-Dienste umgesetzt und stateful TCP-Schutz (SYN-Cookies, Embryonic-Limits, Invalid-Flag-Drops) aktiviert.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "631d48ce-042f-5370-96fc-55976e67a10d",
+        "type": "interconnection",
+        "title": "Netzbasierte Angriffe",
+        "description": "Die Institution hat netzweit UDP-Discovery-Protokolle per egress-Policies blockiert und TCP-SYN-Proxy/Flowspec-/RTBH-basierter DDoS-Schutz an Netzkanten und vorgelagerten Scrubbing-Systemen implementiert.",
+        "control-implementations": [
+          {
+            "uuid": "7100c703-e99c-5d75-868f-14fdc7550f29",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Netzbasierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "d1291992-2b8b-58a2-bc16-0a60973d01cf",
+                "control-id": "_09d37d0c-fda7-4f38-9aa6-f8cbae7d878d",
+                "description": "Die Institution hat netzweit UDP-Discovery-Protokolle per egress-Policies blockiert und TCP-SYN-Proxy/Flowspec-/RTBH-basierter DDoS-Schutz an Netzkanten und vorgelagerten Scrubbing-Systemen implementiert.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last. Für volumetrische Angriffe sind Upstream‑Schutzmechanismen entscheidend. Binden Sie Provider‑seitige Scrubbing‑Dienste an, hinterlegen Sie RTBH/Flowspec bzw. API‑basierte Auslösewege und üben Sie den Ernstfall mit klaren Playbooks. Führen Sie WLAN‑Egress‑Segmente über den geschützten Pfad und dokumentieren Sie Rückführung und Kapazitätsgrenzen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "916eda00-202c-5f24-9930-e636ad356227",
+        "type": "interconnection",
+        "title": "Redundante TK-Anbindung",
+        "description": "Die Institution betreibt redundante TK- oder Internetanbindungen über unterschiedliche Pfade oder Provider und testet Failover-Szenarien regelmäßig, um bei Leitungsstörungen arbeitsfähige Restkapazitäten sicherzustellen.",
+        "control-implementations": [
+          {
+            "uuid": "7b0a6b4e-ee30-5e8b-81b2-c0ad1c2f6e95",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Redundante TK-Anbindung",
+            "implemented-requirements": [
+              {
+                "uuid": "27c36db0-883c-5d18-8992-e71a30b613d2",
+                "control-id": "_11904e1d-22f5-4855-b2b4-5b82a423c2d7",
+                "description": "Die Institution betreibt redundante TK- oder Internetanbindungen über unterschiedliche Pfade oder Provider und testet Failover-Szenarien regelmäßig, um bei Leitungsstörungen arbeitsfähige Restkapazitäten sicherzustellen.",
+                "remarks": "Telekommunikationsanbindungen sind z.B. SIP-Trunks zum öffentlichen Telefonnetz (PSTN). Für weitere Details siehe „Kompendium für organisationsinterne Telekommunikationssysteme mit erhöhtem Schutzbedarf\"."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "8449e6cb-b1e4-5dd3-b177-4d925e7b137d",
+        "type": "interconnection",
+        "title": "Verschlüsselung von Weiterverkehrsverbindungen",
+        "description": "Für Weiterverkehrsverbindungen setzt die Institution verbindlich auf state-of-the-art Verschlüsselung, zum Beispiel IPSec- oder TLS-basierte Tunnel, und stellt sicher, dass Schlüsselmaterial sicher verwaltet und regelmäßig erneuert wird.",
+        "control-implementations": [
+          {
+            "uuid": "f6b08349-81e4-5755-8167-37d508511802",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Verschlüsselung von Weiterverkehrsverbindungen",
+            "implemented-requirements": [
+              {
+                "uuid": "87a4d2a1-ae1e-53fc-966a-d99cf841e31d",
+                "control-id": "_1999335e-7d66-4dc5-8960-8115234e8e23",
+                "description": "Für Weiterverkehrsverbindungen setzt die Institution verbindlich auf state-of-the-art Verschlüsselung, zum Beispiel IPSec- oder TLS-basierte Tunnel, und stellt sicher, dass Schlüsselmaterial sicher verwaltet und regelmäßig erneuert wird.",
+                "remarks": "Ohne ein etabliertes Verschlüsselungsverfahren könnte sensible Kommunikation im Klartext übertragen werden, was Angreifern ein einfaches Mitlesen ermöglichen könnte – etwa durch Abhören in einem öffentlichen WLAN, durch kompromittierte Router eines Providers oder durch staatliche Massenüberwachung. Auch die unbemerkte Manipulation von Datenpaketen auf dem Weg zwischen Institution und Gegenstelle könnte die Integrität der übermittelten Inhalte gefährden und beispielsweise zu manipulierten Geschäftsdaten oder Schadcode-Einschleusungen führen. Der Einsatz von anerkannten Standards zur Verschlüsselung kann Vertraulichkeit und Integrität wahren, indem die Inhalte für Unbefugte unlesbar bleiben und Kommunikationspartner einander zuverlässig identifizieren können. So kann beispielsweise sichergestellt werden, dass eine entfernte Niederlassung tatsächlich mit der Zentrale verbunden ist und nicht mit einem Angreifer, der den Datenverkehr umleitet. Im Kontext externer Netzanschlüsse bezeichnet „Weitverkehrsnetz“ typischerweise öffentliche Netze wie das Internet oder auch gemietete WAN-Verbindungen über Telekommunikationsanbieter, die institutionsextern betrieben und potenziell unsicher sind. Anerkannte Standards sind z.B. TLS, IPsec oder WireGuard, die regelmäßig überprüft und weit verbreitet eingesetzt werden. Eine Institution kann diese Anforderung durch konkrete Maßnahmen umsetzen, z. B. indem sie Site-to-Site-VPNs zwischen Standorten einrichtet, Remote-Zugriffe von Mitarbeitenden ausschließlich über VPN-Gateways mit Zwei-Faktor-Authentisierung ermöglicht und auch Cloud-Dienste konsequent über gesicherte Verbindungen anbindet."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ad57c7f3-e4bf-5c1c-adc9-76b0d879e8c9",
+        "type": "software",
+        "title": "Authentifizierungsversuche an externen Schnittstellen",
+        "description": "Authentifizierungsversuche an externen Schnittstellen werden zentral protokolliert und auf Anomalien wie Häufung, Fehlversuche oder ungewöhnliche Herkunft geprüft, um Angriffe frühzeitig zu erkennen.",
+        "control-implementations": [
+          {
+            "uuid": "b2331a1e-5e3a-59ef-a440-1865d7a32862",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Authentifizierungsversuche an externen Schnittstellen",
+            "implemented-requirements": [
+              {
+                "uuid": "2a0ae964-8795-5d9c-90e3-b35720342525",
+                "control-id": "_1fc84b56-0931-439d-9b5a-4642926e0d04",
+                "description": "Authentifizierungsversuche an externen Schnittstellen werden zentral protokolliert und auf Anomalien wie Häufung, Fehlversuche oder ungewöhnliche Herkunft geprüft, um Angriffe frühzeitig zu erkennen.",
+                "remarks": "Ohne solche Überprüfungen könnte ein Angreifer unbemerkt wiederholt Zugangsdaten erraten (Brute-Force- oder Wörterbuchangriffe) oder unautorisierte Geräte an Schnittstellen wie VPN-Gateways, Firewalls oder externen Modems anbinden. Auch ein unbemerktes Einschleusen von Schadsoftware über offene Remote-Desktop- oder SSH-Verbindungen könnte langfristig unentdeckt bleiben. Eine kontinuierliche Auswertung von Anmeldeversuchen kann dagegen Auffälligkeiten wie ungewöhnlich viele Fehlversuche, Anmeldungen aus geografisch atypischen Regionen oder Verbindungsaufbau außerhalb üblicher Betriebszeiten aufzeigen und so eine wirksame Schutzwirkung entfalten. Als Frist können Intervalle wie \"täglich\", \"wöchentlich\" oder \"in Echtzeit\" je nach Kritikalität des Anschlusses angemessen sein. Verbindungen sind hier unautorisiert, wenn Anzeichen vorliegen, dass sie von unautorisierten Personen oder von unautorisierten Systemen stammen. Die Überprüfung kann manuell oder durch automatische Analyse von Logdateien erfolgen. Empfehlenswert ist eine kontinuierliche Überwachung. Dabei kann z.B. nach ungewöhnlichen vielen fehlgeschlagenen Anmeldungen, veralteten Berechtigungen, Einwahlen von Adminaccounts, ungewöhnlichen Einwahlorten/IP-Adressbereichen/User Agents oder Uhrzeiten gesucht werden. Als Reaktion kommen z.B. Sperren betroffener Adressbereiche, die Abschaltung angegriffener Schnittstellen oder stärkere Authentifizierungsmechanismen wie Mehr-Faktor-Authentifizierung in Betracht."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "20edac57-78d2-5c7e-8e67-863c7a271a67",
+        "type": "interconnection",
+        "title": "Speicherdienste",
+        "description": "Der Zugriff auf externe Speicherdienste ist auf freigegebene Anbieter und Nutzungsszenarien beschränkt; Uploads und Synchronisationen werden protokolliert und soweit möglich auf dienstliche Accounts und verschlüsselte Verbindungen begrenzt.",
+        "control-implementations": [
+          {
+            "uuid": "e28d9906-3019-51ea-9303-39bc67604369",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Speicherdienste",
+            "implemented-requirements": [
+              {
+                "uuid": "1fb4eda9-396d-5b98-9360-732f8ea2fee7",
+                "control-id": "_205d7828-80e7-4f02-963c-582a8a38eb4d",
+                "description": "Der Zugriff auf externe Speicherdienste ist auf freigegebene Anbieter und Nutzungsszenarien beschränkt; Uploads und Synchronisationen werden protokolliert und soweit möglich auf dienstliche Accounts und verschlüsselte Verbindungen begrenzt.",
+                "remarks": "Ausnahmen können sinnvoll sein, wenn es nach den Geschäftsprozessen erforderlich ist, die Daten öffentlich zur Verfügung zu stellen oder diese mit anderen Institutionen über den Speicherdienst auszutauschen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "0041c347-8c15-5876-a244-cb52ea187eb9",
+        "type": "interconnection",
+        "title": "Webfilterung",
+        "description": "Webzugriffe aus dem internen Netz laufen über zentrale Web-Proxies oder Secure-Web-Gateways, die URL-Filterung, Inhaltsanalyse und Logging implementieren und so unerwünschte oder riskante Ziele verhindern.",
+        "control-implementations": [
+          {
+            "uuid": "51fce0a0-bb33-55b1-b58c-232d6fdfe04d",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Webfilterung",
+            "implemented-requirements": [
+              {
+                "uuid": "0c99d1be-8000-5205-8e95-9cf873d691ee",
+                "control-id": "_327ca27d-e60f-47d1-8840-5bcb09340030",
+                "description": "Webzugriffe aus dem internen Netz laufen über zentrale Web-Proxies oder Secure-Web-Gateways, die URL-Filterung, Inhaltsanalyse und Logging implementieren und so unerwünschte oder riskante Ziele verhindern.",
+                "remarks": "Das World Wide Web ist für zahlreiche Geschäftsprozesse essenziell. Andererseits wird das Web von Angreifern auch für die Verbreitung von illegalen Inhalten, Schadprogrammen oder Phishing verwendet. Durch unkontrollierten Webzugriff könnten etwa Schadcode, Phishing oder Datenabfluss in die Institution gelangen. Kriterien meint hier die festgelegten Maßstäbe, nach denen externe Verbindungen zu Webinhalten gefiltert oder eingeschränkt werden. Im Fachjargon spricht man von filtering criteria oder access control policies. Solche Kriterien können beispielsweise Inhaltskategorien (z. B. Glücksspiel, soziale Netzwerke, Streaming), Reputationsbewertungen von Domains (z. B. „malicious“ oder „suspicious“ laut Threat-Intelligence-Feeds), oder technische Eigenschaften (z. B. bekannte IP-Ranges, Länderzugehörigkeit, verwendete Protokolle/Ports, Signaturen) sein. Sinnvoll ist eine Kombination verschiedener Kriterien. Die Anforderung kann über Filterung im Browser, auf Systemen oder an Netzgrenzen umgesetzt werden (z.B. durch Firewalls, Sicherheitsproxies oder VPN-Gateways)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "873c428c-944f-5502-a025-7d36d202cc93",
+        "type": "interconnection",
+        "title": "Redundanz im Kernnetz",
+        "description": "Im Kernnetz sind zentrale Router, Switches und Firewalls redundant ausgelegt; automatische Umschaltmechanismen und regelmäßige Tests stellen sicher, dass beim Ausfall einzelner Komponenten die Netzverfügbarkeit erhalten bleibt.",
+        "control-implementations": [
+          {
+            "uuid": "e0dd53de-d8fe-5587-9258-b8bb851f01c7",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Redundanz im Kernnetz",
+            "implemented-requirements": [
+              {
+                "uuid": "7f861918-06f9-5fe5-a0be-82f3a57dbd2f",
+                "control-id": "_37f932b2-e132-4bf0-b8c3-eed73eadc680",
+                "description": "Im Kernnetz sind zentrale Router, Switches und Firewalls redundant ausgelegt; automatische Umschaltmechanismen und regelmäßige Tests stellen sicher, dass beim Ausfall einzelner Komponenten die Netzverfügbarkeit erhalten bleibt.",
+                "remarks": "Ziel hierbei ist es, dass beim Ausfall eines Systems oder einer Systemkomponente die Netzanbindung stets weiterhin funktionsfähig bleibt (Single-Point-of-Failure)."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "8645df75-b560-50a8-9f56-adcc102e6539",
+        "type": "interconnection",
+        "title": "Bekannte schädliche Inhalte",
+        "description": "Filterlösungen blockieren den Abruf bekannter schädlicher Inhalte anhand von Reputationslisten, Malware-Scans und Kategoriefiltern und verhindern die Ausführung aktiver Inhalte, die bekannte Angriffskanäle nutzen.",
+        "control-implementations": [
+          {
+            "uuid": "683ec2cf-fce0-593d-a3b9-159a21980f73",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Bekannte schädliche Inhalte",
+            "implemented-requirements": [
+              {
+                "uuid": "302e849b-8ddc-5b01-b7b4-78e06675a61b",
+                "control-id": "_3eb3dc59-6fdb-41d2-80da-65490c0156d7",
+                "description": "Filterlösungen blockieren den Abruf bekannter schädlicher Inhalte anhand von Reputationslisten, Malware-Scans und Kategoriefiltern und verhindern die Ausführung aktiver Inhalte, die bekannte Angriffskanäle nutzen.",
+                "remarks": "Hierzu gehören beispielsweise Schadprogramme, Phishing, Malware Command & Control Server. Zur Einschränkung kann auf öffentlich verfügbare Sperrlisten für solche Webseiten, auf Filtersysteme spezialisierter Hersteller von Firewalls und ähnlichen Systemen oder auf Daten aus der Threat Intelligence zurückgegriffen werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "86b35c9e-bdc9-5bc5-ba8b-0489fbe9108e",
+        "type": "interconnection",
+        "title": "Filterung von DNS",
+        "description": "DNS-Anfragen werden zentral über abgesicherte Resolver oder DNS-Proxies geführt, die schädliche Domains filtern, DNSSEC validieren und die Nutzung externer, nicht autorisierter Resolver blockieren.",
+        "control-implementations": [
+          {
+            "uuid": "d8d25d84-4c4e-5ae4-bba6-e30057d9bde6",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Filterung von DNS",
+            "implemented-requirements": [
+              {
+                "uuid": "6c7eca60-f626-5b03-ad38-e70fd1364ab2",
+                "control-id": "_4938a7c4-fdbb-4ca8-a33c-87d177d25f8b",
+                "description": "DNS-Anfragen werden zentral über abgesicherte Resolver oder DNS-Proxies geführt, die schädliche Domains filtern, DNSSEC validieren und die Nutzung externer, nicht autorisierter Resolver blockieren.",
+                "remarks": "Unerwünschte Inhalte sind DNS-Anfragen oder -Antworten, die für Geschäftsprozesse unnötige oder sogar schädliche Daten enthalten, z.B. Verbindungen zu bekannten Malware-Domains oder zu Werbe- oder Telemetriediensten. Dies kann entweder nach dem Allowlist- oder Denylist-Ansatz erfolgen. Listen bekannter schädlicher Domains können über Threat Intelligence-Feeds oder spezielle DNS-Lösungen wie Pihole bezogen werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "66369d23-26c3-539b-8ece-1fd954f20914",
+        "type": "interconnection",
+        "title": "Segmentierung von Test und Betrieb",
+        "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+        "control-implementations": [
+          {
+            "uuid": "ccb1225d-d6cc-51fa-907b-a9d302dc1ecf",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Segmentierung von Test und Betrieb",
+            "implemented-requirements": [
+              {
+                "uuid": "31cf5c68-5bb5-5364-97a7-cbc4aa26ea70",
+                "control-id": "_53ea67c4-1ee1-47f3-abc2-0f2462c57cd1",
+                "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "c31f9481-13f6-5275-8cbb-1aa8be559744",
+        "type": "interconnection",
+        "title": "Segmentierung von Test und Betrieb",
+        "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+        "control-implementations": [
+          {
+            "uuid": "7e2e4def-f41d-5b4f-8cfb-91ec0f6e1110",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Segmentierung von Test und Betrieb",
+            "implemented-requirements": [
+              {
+                "uuid": "0750ac53-acfb-5fe5-a46a-a5dbfdf3a122",
+                "control-id": "_53ea67c4-1ee1-47f3-abc2-0f2462c57cd1",
+                "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Dokumentieren Sie Annahmen, Abhängigkeiten und Schnittstellen zu angrenzenden Kontrollen (Identitäts‑, Segmentierungs‑, Monitoring‑ und Betriebsprozesse). Validieren Sie die Umsetzung mit einem Testplan, halten Sie Ergebnisse nachvollziehbar fest und planen Sie regelmäßige Überprüfungen ein, um Konfigurationsdrift zu vermeiden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "894d52af-6609-563e-a986-6df045794ab9",
+        "type": "interconnection",
+        "title": "Segmentierung von Test und Betrieb",
+        "description": "Entwicklungs-, Test- und Staging-Umgebungen sind von produktiven Netzen getrennt; nur klar definierte und protokollierte Verbindungen, etwa für Datenimporte oder Monitoring, sind zugelassen und regelmäßig zu überprüfen.",
+        "control-implementations": [
+          {
+            "uuid": "9297e757-f992-5664-bbcf-27a81c9f32a9",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Segmentierung von Test und Betrieb",
+            "implemented-requirements": [
+              {
+                "uuid": "a7460958-4e66-5714-85f8-a834e0d7da31",
+                "control-id": "_53ea67c4-1ee1-47f3-abc2-0f2462c57cd1",
+                "description": "Entwicklungs-, Test- und Staging-Umgebungen sind von produktiven Netzen getrennt; nur klar definierte und protokollierte Verbindungen, etwa für Datenimporte oder Monitoring, sind zugelassen und regelmäßig zu überprüfen.",
+                "remarks": "Entwicklungs-, Staging- und Testumgebungen haben oft geringere Sicherheitsvorkehrungen als Produktivsysteme. Eine saubere Trennung zwischen Test- und Produktivumgebung verhindert Übergriffe auf das Produktivsystem und vermeidet Ressourcenkonflikte."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "01fe2a51-c01f-5692-820b-a38d99676cc2",
+        "type": "interconnection",
+        "title": "Segmentierung von Test und Betrieb",
+        "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+        "control-implementations": [
+          {
+            "uuid": "32bdf9fb-7d4a-5cef-82ce-9218394a762f",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Segmentierung von Test und Betrieb",
+            "implemented-requirements": [
+              {
+                "uuid": "8eab2247-3298-5c55-b927-05ed7360a9f3",
+                "control-id": "_53ea67c4-1ee1-47f3-abc2-0f2462c57cd1",
+                "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Gästezugänge gehören in getrennte SSIDs/VLANs mit aktivierter Client‑Isolation und restriktiven Egress‑Regeln. Ein Captive‑Portal kann rechtliche Hinweise und Nutzungsbedingungen abbilden; beschränken Sie dabei Zugriffe auf interne Ressourcen konsequent und begrenzen Sie die Bandbreite, um Produktivdienste zu schützen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "9d6f99d9-edd0-5c94-a3a8-b7deb11daef3",
+        "type": "interconnection",
+        "title": "Externe Netzanschlüsse",
+        "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+        "control-implementations": [
+          {
+            "uuid": "65bf7456-b7f5-5405-ba24-2e13e8eee2f2",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Externe Netzanschlüsse",
+            "implemented-requirements": [
+              {
+                "uuid": "edc7883c-060e-5da3-a855-81983f7d84b5",
+                "control-id": "_56a54bba-30a4-478f-8464-bc5194cae49f",
+                "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Gästezugänge gehören in getrennte SSIDs/VLANs mit aktivierter Client‑Isolation und restriktiven Egress‑Regeln. Ein Captive‑Portal kann rechtliche Hinweise und Nutzungsbedingungen abbilden; beschränken Sie dabei Zugriffe auf interne Ressourcen konsequent und begrenzen Sie die Bandbreite, um Produktivdienste zu schützen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "2f1e2110-4728-534a-88f9-d7b5c68df572",
+        "type": "interconnection",
+        "title": "Externe Netzanschlüsse",
+        "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+        "control-implementations": [
+          {
+            "uuid": "f5ab2370-82df-508a-a150-fac602dddc81",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Externe Netzanschlüsse",
+            "implemented-requirements": [
+              {
+                "uuid": "c6eb559a-f831-519a-bf4c-60e489724a07",
+                "control-id": "_56a54bba-30a4-478f-8464-bc5194cae49f",
+                "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "1600d100-c85f-585e-ba4c-d6ff4ead2af4",
+        "type": "interconnection",
+        "title": "Externe Netzanschlüsse",
+        "description": "Alle externen Netzanschlüsse enden an dedizierten Perimeter-Komponenten, auf denen ein restriktives Regelwerk für ein- und ausgehende Verbindungen etabliert ist, sodass nur definierte Dienste und Ziele erreichbar sind.",
+        "control-implementations": [
+          {
+            "uuid": "658d9469-cc16-5449-bea5-5a5aed7f2ca3",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Externe Netzanschlüsse",
+            "implemented-requirements": [
+              {
+                "uuid": "950a3dd8-ea2c-5289-8ca1-c780f9c0d944",
+                "control-id": "_56a54bba-30a4-478f-8464-bc5194cae49f",
+                "description": "Alle externen Netzanschlüsse enden an dedizierten Perimeter-Komponenten, auf denen ein restriktives Regelwerk für ein- und ausgehende Verbindungen etabliert ist, sodass nur definierte Dienste und Ziele erreichbar sind.",
+                "remarks": "Dient dazu, die Angriffsfläche zu reduzieren, unerwünschte Ein- und Ausleitungen zu begrenzen und das Risiko von Datenabflüssen zu minimieren. Für mobile Systeme kann dies z.B. über das Erzwingen einer VPN-Verbindung ins gefilterte Netz der Institution oder über die Verwendung eines direkten Internetzugangs erfolgen, welcher über einen Direct-Internet-Access Agenten abgesichert ist."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "25b0c4b1-0077-5cc1-86fa-51bee79d16ad",
+        "type": "interconnection",
+        "title": "Externe Netzanschlüsse",
+        "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+        "control-implementations": [
+          {
+            "uuid": "e6aefa43-a540-572a-8658-653f21a5ed59",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Externe Netzanschlüsse",
+            "implemented-requirements": [
+              {
+                "uuid": "bf395888-6748-5422-a274-8617012898d9",
+                "control-id": "_56a54bba-30a4-478f-8464-bc5194cae49f",
+                "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Dokumentieren Sie Annahmen, Abhängigkeiten und Schnittstellen zu angrenzenden Kontrollen (Identitäts‑, Segmentierungs‑, Monitoring‑ und Betriebsprozesse). Validieren Sie die Umsetzung mit einem Testplan, halten Sie Ergebnisse nachvollziehbar fest und planen Sie regelmäßige Überprüfungen ein, um Konfigurationsdrift zu vermeiden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ec05b9e8-e0b8-5430-ac79-6fea0699fa35",
+        "type": "interconnection",
+        "title": "Inspektion verschlüsselter Verbindungen",
+        "description": "Die Institution nutzt dort, wo rechtlich und organisatorisch zulässig, Verfahren zur Inspektion verschlüsselter Verbindungen wie TLS-Interception an definierten Gateways und stellt gleichzeitig sicher, dass besonders schutzbedürftige Verbindungen hiervon ausgenommen sind.",
+        "control-implementations": [
+          {
+            "uuid": "a063dade-f1eb-5871-b689-8d6dfefb68ab",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Inspektion verschlüsselter Verbindungen",
+            "implemented-requirements": [
+              {
+                "uuid": "74915078-d614-543d-8542-75873308da70",
+                "control-id": "_657f0690-9aaf-42fb-8474-3986a22277c8",
+                "description": "Die Institution nutzt dort, wo rechtlich und organisatorisch zulässig, Verfahren zur Inspektion verschlüsselter Verbindungen wie TLS-Interception an definierten Gateways und stellt gleichzeitig sicher, dass besonders schutzbedürftige Verbindungen hiervon ausgenommen sind.",
+                "remarks": "Verschlüsselte Verbindungen wie VoIP über TLS oder HTTPS-Anfragen können über Sicherheitsproxies oder die Inspektion auf den Endstellen der Verbindungen inspiziert werden. Ein Proxy bzw. Proxy-Server ist ein Vermittler im Netz, der zwischen dem Client und einer Netzressource, wie einer Webseite, fungiert. Er dient als Brücke zwischen dem Client und dem Server, wobei Anfragen und Antworten stellvertretend abgewickelt werden. Proxys können Datenverkehr filtern, blockieren, oder auch speichern, um die Netzwerkleistung zu optimieren. Systeme zur Filterung von Webinhalten gehören zu den häufigsten Arten von Proxyservern, die zur Vermittlung des Internetzugangs eingesetzt werden. Diese Server können TCP-Sitzungen protokollieren und die Zugriffskontrolle durch Blockieren bestimmter URLs, IP-Adressen oder Domänennamen erzwingen. Institutionen können Web-Proxys mit benutzerdefinierten Erlaubnis- und Sperrlisten konfigurieren, um den Zugriff auf der Grundlage von Richtlinien zu regeln. Es ist jedoch zu beachten, dass Proxyserver die Nutzung virtueller privater Netzwerke (VPN) beeinträchtigen und je nach Implementierung Risiken wie Man-in-the-Middle-Angriffe (MitM) mit sich bringen können. Beispiel-Implementierungen sind Squid, Nginx, Privoxy."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "ffad16e8-9908-51f4-8c2e-c3e8335f701d",
+        "type": "interconnection",
+        "title": "Einschränkung von Verbindungen zwischen Segmenten",
+        "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+        "control-implementations": [
+          {
+            "uuid": "5d19c798-0bba-5d07-a221-1d58b111c568",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung von Verbindungen zwischen Segmenten",
+            "implemented-requirements": [
+              {
+                "uuid": "5e336ba3-6aa7-5201-a5f8-7643b2b7559a",
+                "control-id": "_6ff2de76-4a01-42cc-a794-1a6ec9313f46",
+                "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "71c50e18-8f01-5e25-b6b5-5316f64afa3e",
+        "type": "interconnection",
+        "title": "Einschränkung von Verbindungen zwischen Segmenten",
+        "description": "Die Institution definiert zulässige Verbindungen zwischen Netzsegmenten nach dem Minimalprinzip und setzt diese über Routing, Firewalls und ACLs so um, dass nur explizit freigegebene Kommunikationsbeziehungen möglich sind.",
+        "control-implementations": [
+          {
+            "uuid": "818b624c-6b27-5819-9ce6-fa9eb9891f6e",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung von Verbindungen zwischen Segmenten",
+            "implemented-requirements": [
+              {
+                "uuid": "89efde04-dd28-5a7d-adbe-5602dd26978d",
+                "control-id": "_6ff2de76-4a01-42cc-a794-1a6ec9313f46",
+                "description": "Die Institution definiert zulässige Verbindungen zwischen Netzsegmenten nach dem Minimalprinzip und setzt diese über Routing, Firewalls und ACLs so um, dass nur explizit freigegebene Kommunikationsbeziehungen möglich sind.",
+                "remarks": "Dient dem Ziel, die Angriffsfläche innerhalb interner und externer Netze zu reduzieren und die Ausbreitung potenzieller Schadsoftware oder unberechtigter Zugriffe einzudämmen. Ohne solche Begrenzungen könnte ein einzelner kompromittierter Bereich direkten Zugriff auf weitere sensible Segmente erhalten und dadurch Geschäftsprozesse massiv beeinträchtigen. Beispielsweise benötigt ein Endgerät Verbindungen zu internen Servern und Druckern, während Gäste lediglich auf den Internetanschluss Zugriff benötigen. Im Blick auf weitreichende Sicherheitsvorfälle ist hier insbesondere die Trennung interner Netzsegmente vom Internet zu beachten. Diese Regeln können auf Kriterien wie Gerätetyp (z. B. Laptop, IoT-Gerät), Benutzerrolle (z. B. Administrator, Gast), physischem Anschlussort oder Uhrzeit basieren. Eine klare Trennung von Benutzergruppen über VLANs oder dynamische ACLs erhöht die Sicherheit und Transparenz. Für die Einführung in eine bestehende Umgebung kann ein gestuftes Vorgehen gewählt werden: (1) Zunächst wird ein Überwachungsmodus (\"Audit-Only\") aktiviert, der protokolliert, welche Zugriffe durch eine strengere Richtlinie verweigert würden, ohne sie tatsächlich zu blockieren. (2) Anschließend werden diese Protokolle analysiert, um legitime, für den Geschäftsbetrieb notwendige Zugriffe zu identifizieren und diese gezielt in die jeweiligen Rollen und Berechtigungsgruppen aufzunehmen. (3) Erst wenn keine legitimen Zugriffe mehr in den Protokollen als \"verweigert\" auftauchen, wird die Richtlinie scharf geschaltet und blockiert aktiv alle nicht explizit erlaubten Zugriffe."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "eb8d9fbc-d132-522b-b914-4852497aadf7",
+        "type": "interconnection",
+        "title": "Einschränkung von Verbindungen zwischen Segmenten",
+        "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+        "control-implementations": [
+          {
+            "uuid": "47232783-b672-5b44-8c92-d9b0078c1591",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung von Verbindungen zwischen Segmenten",
+            "implemented-requirements": [
+              {
+                "uuid": "edd420a3-ff3e-5903-b8ea-f0468eb3133c",
+                "control-id": "_6ff2de76-4a01-42cc-a794-1a6ec9313f46",
+                "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Dokumentieren Sie Annahmen, Abhängigkeiten und Schnittstellen zu angrenzenden Kontrollen (Identitäts‑, Segmentierungs‑, Monitoring‑ und Betriebsprozesse). Validieren Sie die Umsetzung mit einem Testplan, halten Sie Ergebnisse nachvollziehbar fest und planen Sie regelmäßige Überprüfungen ein, um Konfigurationsdrift zu vermeiden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "d072f4cf-dc50-521c-a65e-be00a46f37b7",
+        "type": "interconnection",
+        "title": "Einschränkung von Verbindungen zwischen Segmenten",
+        "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+        "control-implementations": [
+          {
+            "uuid": "58b92769-c1e0-5772-a585-229dc02bc25f",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Einschränkung von Verbindungen zwischen Segmenten",
+            "implemented-requirements": [
+              {
+                "uuid": "32324b23-7f57-5d1b-84ce-37476a7a7a08",
+                "control-id": "_6ff2de76-4a01-42cc-a794-1a6ec9313f46",
+                "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Gästezugänge gehören in getrennte SSIDs/VLANs mit aktivierter Client‑Isolation und restriktiven Egress‑Regeln. Ein Captive‑Portal kann rechtliche Hinweise und Nutzungsbedingungen abbilden; beschränken Sie dabei Zugriffe auf interne Ressourcen konsequent und begrenzen Sie die Bandbreite, um Produktivdienste zu schützen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "0f0b8ee1-3089-5657-afb1-d0060c6d815b",
+        "type": "policy",
+        "title": "Authentifizierung von Routingprotokollen",
+        "description": "Die Institution hat eAP-TLS mit hardwaregebundenen Zertifikaten aus der internen PKI für alle produktiven Endgeräte vorgeschrieben und Compliance-Checks im RADIUS-Policy-Set erzwungen.",
+        "control-implementations": [
+          {
+            "uuid": "d5c33abc-7a87-5809-9557-a98707286b4b",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Authentifizierung von Routingprotokollen",
+            "implemented-requirements": [
+              {
+                "uuid": "9a98e9c8-448b-5b3a-ac1d-dd23948f33c4",
+                "control-id": "_739ad3ad-cbbc-4809-9f20-1c59e85c864b",
+                "description": "Die Institution hat eAP-TLS mit hardwaregebundenen Zertifikaten aus der internen PKI für alle produktiven Endgeräte vorgeschrieben und Compliance-Checks im RADIUS-Policy-Set erzwungen.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Für ein belastbares Authentisierungs- und Verschlüsselungskonzept empfiehlt sich WPA3‑Enterprise mit 802.1X (bevorzugt EAP‑TLS) und verpflichtendem Protected Management Frames (PMF). Hinterlegen Sie Zertifikate über eine interne PKI, prüfen Sie OCSP/CRL und deaktivieren Sie Übergangsmodi (WPA2‑PSK‑Fallback, TKIP). Achten Sie auf konsistente Cipher‑Suiten, schalten Sie WPS ab und testen Sie die Supplicant‑Profile auf allen relevanten Betriebssystemen. Für IoT‑Szenarien ohne 802.1X bieten sich isolierte SSIDs mit Multi‑PSK/OWE und strengen Egress‑Regeln an."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "7c7eb1fb-7af6-5c98-bba1-9e85fc068fe6",
+        "type": "interconnection",
+        "title": "Authentifizierung von Routingprotokollen",
+        "description": "Die Institution hat 802.1X mit EAP-TLS für Mitarbeitende eingeführt und Gast- sowie IoT-Zugänge in getrennten SSIDs mit RADIUS-Policies und rollenbasierten VLAN-Zuweisungen umgesetzt.",
+        "control-implementations": [
+          {
+            "uuid": "b314bb89-9e64-50f8-8b12-d156a2d3b832",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Authentifizierung von Routingprotokollen",
+            "implemented-requirements": [
+              {
+                "uuid": "1bc74267-1fc3-52bd-a903-3a3f2b36fcf1",
+                "control-id": "_739ad3ad-cbbc-4809-9f20-1c59e85c864b",
+                "description": "Die Institution hat 802.1X mit EAP-TLS für Mitarbeitende eingeführt und Gast- sowie IoT-Zugänge in getrennten SSIDs mit RADIUS-Policies und rollenbasierten VLAN-Zuweisungen umgesetzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Für ein belastbares Authentisierungs- und Verschlüsselungskonzept empfiehlt sich WPA3‑Enterprise mit 802.1X (bevorzugt EAP‑TLS) und verpflichtendem Protected Management Frames (PMF). Hinterlegen Sie Zertifikate über eine interne PKI, prüfen Sie OCSP/CRL und deaktivieren Sie Übergangsmodi (WPA2‑PSK‑Fallback, TKIP). Achten Sie auf konsistente Cipher‑Suiten, schalten Sie WPS ab und testen Sie die Supplicant‑Profile auf allen relevanten Betriebssystemen. Für IoT‑Szenarien ohne 802.1X bieten sich isolierte SSIDs mit Multi‑PSK/OWE und strengen Egress‑Regeln an. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher. Gästezugänge gehören in getrennte SSIDs/VLANs mit aktivierter Client‑Isolation und restriktiven Egress‑Regeln. Ein Captive‑Portal kann rechtliche Hinweise und Nutzungsbedingungen abbilden; beschränken Sie dabei Zugriffe auf interne Ressourcen konsequent und begrenzen Sie die Bandbreite, um Produktivdienste zu schützen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "61e76cba-e863-5667-ba25-bfcc46eecc7a",
+        "type": "interconnection",
+        "title": "Authentifizierung von Routingprotokollen",
+        "description": "Die Institution schützt dynamische Routingprotokolle durch Authentifizierung, Integritätsschutz und restriktive Nachbarbeziehungen, sodass nur explizit zugelassene Router Routinginformationen austauschen können.",
+        "control-implementations": [
+          {
+            "uuid": "4800e154-21f5-5b20-8150-3931867dbcb9",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Authentifizierung von Routingprotokollen",
+            "implemented-requirements": [
+              {
+                "uuid": "392f4bde-3020-5467-b4d5-82d79b7677d7",
+                "control-id": "_739ad3ad-cbbc-4809-9f20-1c59e85c864b",
+                "description": "Die Institution schützt dynamische Routingprotokolle durch Authentifizierung, Integritätsschutz und restriktive Nachbarbeziehungen, sodass nur explizit zugelassene Router Routinginformationen austauschen können.",
+                "remarks": "Hierzu zählt z.B. die Authentifizierung von BGP/OSPF-Sitzungen zur Verhinderung von Route Hijacking, BGP origin validation with RPKI oder OSPF/ISIS/BGP MD5 or TTL+hMAC authentication. Die Formulierung \"im Einklang mit den Festlegungen des Identitäts- und Berechtigungsmanagements\" bedeutet, dass die Authentifizierung so erfolgt, wie in der Praktik IDM festgelegt. Hierzu gehört insbesondere die Verwendung aktueller kryptographischer Verfahren, wie sie im Thema Kryptographie zu finden ist."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "7d913532-5a8a-5339-b779-7dbe47ad06c3",
+        "type": "interconnection",
+        "title": "Gastnetz",
+        "description": "Das Gastnetz ist logisch oder physisch vom internen Netz getrennt, erhält nur Internetzugang über definierte Übergänge und wird durch ein separates Firewall- und Adressierungskonzept so konfiguriert, dass keine Kommunikation zu internen Segmenten möglich ist.",
+        "control-implementations": [
+          {
+            "uuid": "86782c51-2179-59c3-89dd-84e62e7da293",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Gastnetz",
+            "implemented-requirements": [
+              {
+                "uuid": "c8073ce7-1f8e-5c30-b093-33bf46f8a079",
+                "control-id": "_73c9c122-d3f6-42f9-a6f1-6b454a8b1853",
+                "description": "Das Gastnetz ist logisch oder physisch vom internen Netz getrennt, erhält nur Internetzugang über definierte Übergänge und wird durch ein separates Firewall- und Adressierungskonzept so konfiguriert, dass keine Kommunikation zu internen Segmenten möglich ist.",
+                "remarks": "Wenn Gäste der Institution sich mit dem internen Netz verbinden, könnten Schadprogramme in das Netz gelangen oder unbeabsichtigte Datenflüsse über die Verbindung fließen. Daher ist es sinnvoll, einen vom übrigen Netz getrennten Gastzugang einzurichten, z.B. in Besprechungs-, Veranstaltungs- und Schulungsräumen. Wenn die Einschränkungen von Gastnetzen lockerer sind als die interner Netze am gleichen Standort, so zeigt die Erfahrung, dass auch interne Mitarbeitende gerne auf Gastnetze zurückgreifen. Dadurch könnte es zur Umgehung der internen Schutzmaßnahmen kommen. Daher ist es empfehlenswert, für das Gastnetz gleiche oder strengere Einschränkungen zu wählen oder die Nutzung des Gastnetzes durch Mitarbeitende technisch oder organisatorisch zu beschränken."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "bccf8636-36b1-571a-bbab-c5444eca3b08",
+        "type": "interconnection",
+        "title": "Gastnetz",
+        "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+        "control-implementations": [
+          {
+            "uuid": "2bb9222c-49e8-5c9f-bd0b-be186b99e64d",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Gastnetz",
+            "implemented-requirements": [
+              {
+                "uuid": "ba006dbc-ad22-5ae6-843a-823e46466435",
+                "control-id": "_73c9c122-d3f6-42f9-a6f1-6b454a8b1853",
+                "description": "Die Institution hat produktiv- und Gäste- und IoT-SSIDs separaten VLANs zugeordnet und Ost-West-Verkehr per Firewall-Policies sowie DNS/Web-Filtern auf notwendige Ziele begrenzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e82b3417-f151-5be5-b33a-f6ddb74a3625",
+        "type": "interconnection",
+        "title": "Gastnetz",
+        "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+        "control-implementations": [
+          {
+            "uuid": "39ef248d-7b22-5372-9e45-c45a0b955900",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Gastnetz",
+            "implemented-requirements": [
+              {
+                "uuid": "a45addb3-e899-50b3-8e0a-61d5181df2f8",
+                "control-id": "_73c9c122-d3f6-42f9-a6f1-6b454a8b1853",
+                "description": "Der Haushalt hat eine Gäste-SSID mit Isolation aktiviert und der Zugriff auf lokale Geräte per Router-Regel unterbunden.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Gästezugänge gehören in getrennte SSIDs/VLANs mit aktivierter Client‑Isolation und restriktiven Egress‑Regeln. Ein Captive‑Portal kann rechtliche Hinweise und Nutzungsbedingungen abbilden; beschränken Sie dabei Zugriffe auf interne Ressourcen konsequent und begrenzen Sie die Bandbreite, um Produktivdienste zu schützen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "9fd7daf3-bc11-50e8-8077-e17491a7613f",
+        "type": "interconnection",
+        "title": "Gastnetz",
+        "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+        "control-implementations": [
+          {
+            "uuid": "2ff19263-e0d3-51b5-8abe-41c2846fbc33",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Gastnetz",
+            "implemented-requirements": [
+              {
+                "uuid": "34f0d4e6-f707-527f-a72c-1ed761f83f79",
+                "control-id": "_73c9c122-d3f6-42f9-a6f1-6b454a8b1853",
+                "description": "Die Institution hat zugriffe über externe Netzanschlüsse ausschließlich über erzwungenen VPN-Pfad oder gehärteten Direct-Internet-Access mit SWG/CASB und Positivliste erlaubt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Dokumentieren Sie Annahmen, Abhängigkeiten und Schnittstellen zu angrenzenden Kontrollen (Identitäts‑, Segmentierungs‑, Monitoring‑ und Betriebsprozesse). Validieren Sie die Umsetzung mit einem Testplan, halten Sie Ergebnisse nachvollziehbar fest und planen Sie regelmäßige Überprüfungen ein, um Konfigurationsdrift zu vermeiden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "0e9fe178-7a41-587f-be24-90b1b2b54a4e",
+        "type": "interconnection",
+        "title": "Autorisiertes Routing",
+        "description": "Die Institution hat rollenbasierte Zugriffsrechte für SSIDs/VLANs definiert und per RADIUS-Policies sowie Controller-ACLs technisch durchgesetzt.",
+        "control-implementations": [
+          {
+            "uuid": "97777d5e-8012-5409-8cef-5764922722a9",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Autorisiertes Routing",
+            "implemented-requirements": [
+              {
+                "uuid": "ec20bead-f3de-5fbd-9e4b-ad84313655c7",
+                "control-id": "_77aebab8-462b-4849-aaa2-9c939af5e1dc",
+                "description": "Die Institution hat rollenbasierte Zugriffsrechte für SSIDs/VLANs definiert und per RADIUS-Policies sowie Controller-ACLs technisch durchgesetzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "3fba1eb2-2d9b-58d4-8909-32d672bf2bee",
+        "type": "interconnection",
+        "title": "Autorisiertes Routing",
+        "description": "Die Institution hat feingranulare Rollen-/Attribut-Policies (RBAC/ABAC) für SSIDs/VLANs zentral definiert und über RADIUS/Controller-ACLs enforced.",
+        "control-implementations": [
+          {
+            "uuid": "8b4c004d-074e-5ec2-bad9-9a6c1a12ff20",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Autorisiertes Routing",
+            "implemented-requirements": [
+              {
+                "uuid": "9c8b284d-d1b2-54b0-8c1c-6eb9a3be7679",
+                "control-id": "_77aebab8-462b-4849-aaa2-9c939af5e1dc",
+                "description": "Die Institution hat feingranulare Rollen-/Attribut-Policies (RBAC/ABAC) für SSIDs/VLANs zentral definiert und über RADIUS/Controller-ACLs enforced.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "a20dd3a5-59e9-53fa-8dd1-204ba6c47d80",
+        "type": "interconnection",
+        "title": "Autorisiertes Routing",
+        "description": "Routing-Entscheidungen werden an definierten Kern- und Perimeter-Routern zentral gesteuert; nur autorisierte Administratoren dürfen Routingtabellen ändern und alle dynamischen Routen werden durch feste Policies und Filter abgesichert.",
+        "control-implementations": [
+          {
+            "uuid": "f4c85c80-3087-5f58-9984-dc0bf0368bce",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Autorisiertes Routing",
+            "implemented-requirements": [
+              {
+                "uuid": "d2cf11d4-d8a1-5f29-93b7-dface0c157c0",
+                "control-id": "_77aebab8-462b-4849-aaa2-9c939af5e1dc",
+                "description": "Routing-Entscheidungen werden an definierten Kern- und Perimeter-Routern zentral gesteuert; nur autorisierte Administratoren dürfen Routingtabellen ändern und alle dynamischen Routen werden durch feste Policies und Filter abgesichert.",
+                "remarks": "Dient der Kontrolle von Netzarchitekturen, um unbeabsichtigte oder böswillige Änderungen zu verhindern. Ohne eine solche Freigabe könnte ein Angreifer durch unbemerkte Manipulation von Routing-Einträgen den Datenverkehr umleiten, abhören oder blockieren; auch ein ungeschulter Administrator könnte versehentlich falsche Routen konfigurieren, wodurch kritische Dienste ausfallen könnten. Die Autorisierung kann sicherstellen, dass jede Änderung nachvollziehbar geprüft, dokumentiert und nur nach sachgerechter Bewertung umgesetzt wird, wodurch die Integrität und Verfügbarkeit der Netze erhöht werden kann.  Im konkreten Kontext bedeutet „Routing-Verbindungen“ die Konfiguration von Pfaden, über die Datenpakete zwischen Netzsegmenten oder über Gateways weitergeleitet werden. „Autorisieren“ bedeutet hier die formale Freigabe nach einer sachlichen und fachlichen Prüfung, typischerweise durch Rollen wie (1) Netzwerkarchitekt, (2) IT-Sicherheitsbeauftragter oder (3) Leiter IT-Betrieb. Eine Institution kann dies umsetzen, indem sie (1) eine dokumentierte Freigabeprozedur für alle Routing-Änderungen etabliert, (2) Änderungen technisch über ein Ticket- oder Change-Management-System prüfen und protokollieren lässt, (3) rollenbasierte Zugriffsrechte in Routern und Firewalls so einschränken kann, dass nur autorisierte Personen Konfigurationsänderungen durchführen, und (4) automatisierte Plausibilitätsprüfungen oder Peer-Reviews nutzen kann, um fehlerhafte oder unsichere Routen frühzeitig zu erkennen.  Die Autorisierung kann entweder einzelne Routen (z.B. für Netz A zwischen Router B und C), als auch bestimmte Routing-Regeln (z.B. Default-Routing über die zentrale Firewall) autorisieren. Sinnvoll ist es dabei das Prinzip \"so allgemein wie für den Betrieb nötig, so spezifisch wie für die Sicherheit möglich\" als Faustregel anzuwenden. Bei der Verwendung dynamischer Routing-Algorithmen kann die Anforderung umgesetzt werden, indem eingeschränkte Bereiche freigegeben werden, z.B. \"dynamisches Routing im Bereich 10.x.x.x)\"."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "7220a055-5942-5867-b189-25388acc605e",
+        "type": "interconnection",
+        "title": "Deaktivierung von Split Tunneling",
+        "description": "Remote-Zugriffe aus VPNs oder Clients mit Mehrfachanbindung sind so konfiguriert, dass keine gleichzeitige direkte Internetverbindung besteht; Split Tunneling ist deaktiviert oder auf klar begrenzte, kontrollierte Szenarien reduziert.",
+        "control-implementations": [
+          {
+            "uuid": "673492c0-8fd4-5cee-a7bb-83f6f098023a",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Deaktivierung von Split Tunneling",
+            "implemented-requirements": [
+              {
+                "uuid": "788e5f61-f407-5727-b8d4-c2641b7aeb38",
+                "control-id": "_7ff5e3bc-64e8-4487-a77a-c4897f97431d",
+                "description": "Remote-Zugriffe aus VPNs oder Clients mit Mehrfachanbindung sind so konfiguriert, dass keine gleichzeitige direkte Internetverbindung besteht; Split Tunneling ist deaktiviert oder auf klar begrenzte, kontrollierte Szenarien reduziert.",
+                "remarks": "Um eine durchgehende Kontrolle und Absicherung des Netzverkehrs zu gewährleisten, muss verhindert werden, dass IT-Clients während einer aktiven Verbindung zum internen Netz gleichzeitig ungeschützten Zugriff auf das öffentliche Internet oder andere Netzwerke haben. Dies schließt sogenannte „Split Tunneling“-Konfigurationen aus, bei denen nur ausgewählter Datenverkehr über das VPN geleitet wird, während anderer Datenverkehr (z. B. Webzugriffe) über das lokale Netzwerk oder die Internetverbindung des Clients erfolgt."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "c5dee195-9fd0-5d55-bfe4-b283ae91f665",
+        "type": "interconnection",
+        "title": "Dimensionierung der Netzanbindung",
+        "description": "Die Anbindungskapazität des Netzes wird auf Basis aktueller und prognostizierter Last bemessen; Monitoringdaten und regelmäßige Reviews bilden die Grundlage für rechtzeitige Aufrüstung oder Optimierung.",
+        "control-implementations": [
+          {
+            "uuid": "d6e66d8d-7191-5f2e-9f33-3af71ea08f5a",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Dimensionierung der Netzanbindung",
+            "implemented-requirements": [
+              {
+                "uuid": "3deaa25c-84d1-5ef2-ab3c-6a867cc9b4ce",
+                "control-id": "_82cfd8da-b3d8-4b87-8770-f39aaf7de728",
+                "description": "Die Anbindungskapazität des Netzes wird auf Basis aktueller und prognostizierter Last bemessen; Monitoringdaten und regelmäßige Reviews bilden die Grundlage für rechtzeitige Aufrüstung oder Optimierung.",
+                "remarks": "Für die Verfügbarkeit und Leistungsfähigkeit kritischer Geschäfts‑ und Fachverfahren ist eine bedarfsgerechte Netzanbindung erforderlich. Durch das strukturierte Erfassen des Bedarfes kann eine Institution frühzeitig Engpässe erkennen, Ausfallrisiken minimieren und eine wirtschaftliche Auslegung ihrer Anschlüsse erreichen. Gleichzeitig lässt sich so eine belastbare Grundlage für Kapazitäts‑, Notfall‑ und Budget‑Planungen schaffen, ohne sich allein auf starre Hersteller‑ oder Provider‑Vorgaben zu verlassen. Relevant ist hierbei die gesamte Netzstrecke zwischen Servern und IT-Clients, zumindest bis zum Internet-Anschluss der Institution. Beispiele für den Anwendungsbereich können sehr unterschiedlich ausfallen: In einem Call‑Center kann sich der Bedarf aus der Anzahl zeitgleich aktiver Soft‑Phones ableiten, deren Codec‑Bandbreite sowie der gewünschten Gesprächsqualität (Latenz < Antwortzeit in ms). In einem Forschungslabor kann die Anbindung darauf basieren, dass täglich große Datensätze mit einer bestimmten maximalen Bandbreite in Gbit/s zu Kooperationspartnern repliziert werden. Auch eine E‑Learning‑Plattform kann berücksichtigen, dass zu Semesterbeginn Studierende gleichzeitig parallele Video‑Streams in HD abrufen, während administrative Dienste weiterhin innerhalb einer bestimmten Antwortzeit in ms reagieren sollen. Dabei ist es sinnvoll, die Netzanbindung an realistische Belastungsszenarien anzupassen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "d1b0e0d7-ee09-5546-b8b1-cfb56b2feb97",
+        "type": "interconnection",
+        "title": "Blockieren direkter Management-Verbindungen",
+        "description": "Direkte Management-Verbindungen aus unsicheren oder externen Netzen zu administrativen Schnittstellen sind deaktiviert; der Zugriff erfolgt ausschließlich über definierte Jump-Hosts, VPN-Gateways oder Bastion-Systeme.",
+        "control-implementations": [
+          {
+            "uuid": "49e39f19-b50f-5a12-a553-3f56e32397f6",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Blockieren direkter Management-Verbindungen",
+            "implemented-requirements": [
+              {
+                "uuid": "03fa1f83-2f7f-5e87-92b7-0425cce18f67",
+                "control-id": "_9e1420ba-9cc0-4d0d-a127-36881c1b90e5",
+                "description": "Direkte Management-Verbindungen aus unsicheren oder externen Netzen zu administrativen Schnittstellen sind deaktiviert; der Zugriff erfolgt ausschließlich über definierte Jump-Hosts, VPN-Gateways oder Bastion-Systeme.",
+                "remarks": "Zum Internet offene Management-Schnittstellen werden von Angreifern durch Scans leicht gefunden und sind häufig Ziel von Angriffen. Deshalb ist es sinnvoll, alle eingehenden Verbindungen zu Management-Schnittstellen aus externen Netzen zu blockieren, einschließlich der Verwaltung von VPN- und Firewallsystemen selbst. Wenn eine Administration dieser Systeme aus der Ferne erforderlich ist, so kann dieser Zugriff stattdessen über ein VPN in das interne Netz hergestellt werden, wobei auch hiermit ein erhöhten Risiko für Angriffe einhergeht."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "4bf51e7d-1563-592f-a912-3221659c8030",
+        "type": "validation",
+        "title": "Schutz gegen volumetrische DoS-Angriffe",
+        "description": "Die Institution hat für die über SSIDs/VLANs ausgeleiteten WLAN‑Segmente Provider‑seitige volumetrische DoS‑Schutzdienste (z. B. Scrubbing‑Center/Upstream‑Filter) aktiviert und der Internet‑Egress der WLAN‑VLANs über den geschützten Pfad geführt.\nEs werden für den DDoS‑Ernstfall BGP‑basierte Signalisierungsverfahren (z. B. RTBH/Flowspec) oder API‑Trigger des Providers zur Traffic‑Umlenkung hinterlegt und die Auslösung regelmäßig getestet.",
+        "control-implementations": [
+          {
+            "uuid": "bfbe24c5-fa93-5036-8c93-c91d612e72c2",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Schutz gegen volumetrische DoS-Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "8f8b7db0-24b3-5603-8fd2-621b6858db71",
+                "control-id": "_ac441ef0-08de-40c4-b600-8be20d8a55b1",
+                "description": "Die Institution hat für die über SSIDs/VLANs ausgeleiteten WLAN‑Segmente Provider‑seitige volumetrische DoS‑Schutzdienste (z. B. Scrubbing‑Center/Upstream‑Filter) aktiviert und der Internet‑Egress der WLAN‑VLANs über den geschützten Pfad geführt.\nEs werden für den DDoS‑Ernstfall BGP‑basierte Signalisierungsverfahren (z. B. RTBH/Flowspec) oder API‑Trigger des Providers zur Traffic‑Umlenkung hinterlegt und die Auslösung regelmäßig getestet.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher. Für volumetrische Angriffe sind Upstream‑Schutzmechanismen entscheidend. Binden Sie Provider‑seitige Scrubbing‑Dienste an, hinterlegen Sie RTBH/Flowspec bzw. API‑basierte Auslösewege und üben Sie den Ernstfall mit klaren Playbooks. Führen Sie WLAN‑Egress‑Segmente über den geschützten Pfad und dokumentieren Sie Rückführung und Kapazitätsgrenzen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "733eb61a-5fdb-5154-b232-cbb6ea51f0ca",
+        "type": "interconnection",
+        "title": "Schutz gegen volumetrische DoS-Angriffe",
+        "description": "Zum Schutz gegen volumetrische DoS-Angriffe nutzt die Institution abgestimmte Maßnahmen mit dem Provider, etwa Scrubbing-Center oder Blackholing, sowie eigene Filter- und Rate-Limiting-Mechanismen an Perimeter-Komponenten.",
+        "control-implementations": [
+          {
+            "uuid": "437f702b-4b76-51f7-a930-675290350cc2",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Schutz gegen volumetrische DoS-Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "2d1b216a-a43e-5b53-a5fa-b664fe9e0c93",
+                "control-id": "_ac441ef0-08de-40c4-b600-8be20d8a55b1",
+                "description": "Zum Schutz gegen volumetrische DoS-Angriffe nutzt die Institution abgestimmte Maßnahmen mit dem Provider, etwa Scrubbing-Center oder Blackholing, sowie eigene Filter- und Rate-Limiting-Mechanismen an Perimeter-Komponenten.",
+                "remarks": "Volumetrische Angriffe können z.B. durch die Verwendung von Anycast-DNS, Upstream Rate Limiting, On-Premise- oder Cloud-Scrubbing, BGP FlowSpec-Filter, Auto-Null-Routing oder Remotely Triggered Blackholing abgewehrt werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "13cbd5b7-d46f-5276-b8d0-2824cc41245c",
+        "type": "interconnection",
+        "title": "Schutz gegen volumetrische DoS-Angriffe",
+        "description": "Die Institution hat für WLAN‑Egress‑Zonen Always‑On‑DDoS‑Schutz mit Scrubbing‑Anbindung und kapazitätsbasierten Rate‑Limits auf Provider‑/Edge‑Firewalls aktiviert und die Rückführung über saubere GRE/BGP‑Tunnels sichergestellt.\nEs werden automatische Auslösewege über NOC/SIEM/SOAR für RTBH/Flowspec/API‑Trigger eingerichtet und Playbooks für die Abschaltung nicht geschäftskritischer WLAN‑Dienste unter Last hinterlegt.",
+        "control-implementations": [
+          {
+            "uuid": "e159ecb4-b238-5b24-9c49-f071a7d10dd4",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Schutz gegen volumetrische DoS-Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "c438633b-205b-5758-8009-3e389499d9bf",
+                "control-id": "_ac441ef0-08de-40c4-b600-8be20d8a55b1",
+                "description": "Die Institution hat für WLAN‑Egress‑Zonen Always‑On‑DDoS‑Schutz mit Scrubbing‑Anbindung und kapazitätsbasierten Rate‑Limits auf Provider‑/Edge‑Firewalls aktiviert und die Rückführung über saubere GRE/BGP‑Tunnels sichergestellt.\nEs werden automatische Auslösewege über NOC/SIEM/SOAR für RTBH/Flowspec/API‑Trigger eingerichtet und Playbooks für die Abschaltung nicht geschäftskritischer WLAN‑Dienste unter Last hinterlegt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Für volumetrische Angriffe sind Upstream‑Schutzmechanismen entscheidend. Binden Sie Provider‑seitige Scrubbing‑Dienste an, hinterlegen Sie RTBH/Flowspec bzw. API‑basierte Auslösewege und üben Sie den Ernstfall mit klaren Playbooks. Führen Sie WLAN‑Egress‑Segmente über den geschützten Pfad und dokumentieren Sie Rückführung und Kapazitätsgrenzen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "1a9c68aa-1ab0-5832-962d-ab86efd7a009",
+        "type": "interconnection",
+        "title": "Kontrollierte Verbindungsführung",
+        "description": "Weiterverkehrsverbindungen zwischen Standorten oder in externe Netze werden über definierte Übergabepunkte mit zentral gesteuerter Routenführung realisiert; unkontrollierte Punkt-zu-Punkt-Verbindungen sind untersagt.",
+        "control-implementations": [
+          {
+            "uuid": "abc59cf2-dbfd-58b4-aeb0-ffd8ac1007a7",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Kontrollierte Verbindungsführung",
+            "implemented-requirements": [
+              {
+                "uuid": "a3586351-b0ba-5a6a-a3c3-ae79ebd7afcb",
+                "control-id": "_acd884af-7aad-470c-bfcf-216cff90e9be",
+                "description": "Weiterverkehrsverbindungen zwischen Standorten oder in externe Netze werden über definierte Übergabepunkte mit zentral gesteuerter Routenführung realisiert; unkontrollierte Punkt-zu-Punkt-Verbindungen sind untersagt.",
+                "remarks": "Unter einer physisch kontrollierten Verbindungsführung kann in diesem Kontext die Verwendung dedizierter Leitungswege (Dark Fiber), sowie Hardware-Komponenten wie Router, Firewalls oder Trennstellen verstanden werden, die den Zugriff auf Leitungen oder Ports unmittelbar begrenzen. Eine logisch kontrollierte Verbindungsführung kann durch softwarebasierte Mechanismen wie VLANs, VPN-Tunnel oder Routing-Regeln erfolgen, die den Datenverkehr unabhängig von der physischen Leitung steuern. Ohne eine kontrollierte Verbindungsführung könnte ein Angreifer über eine ungeschützte oder direkt angebundene Leitung in interne Systeme eindringen und dort Schadsoftware platzieren, Daten manipulieren oder vertrauliche Informationen abziehen. Ebenso könnte durch eine unzureichend kontrollierte Verbindung ein Ausfall der Netzstabilität eintreten, etwa wenn über eine falsch konfigurierte Schnittstelle großflächiger Datenverkehr einbricht und produktive Systeme beeinträchtigt. Eine kontrollierte Architektur kann dagegen Angriffsflächen reduzieren, Datenströme nachvollziehbar machen und die Sicherheit der Informationsflüsse zwischen Institution und externen Partnern oder Netzanbietern erhöhen. Die Umsetzung kann beispielsweise durch klar definierte Übergabepunkte zum externen Netz erfolgen, an denen sämtliche eingehenden und ausgehenden Verbindungen zentral zusammenlaufen und durch Filter- oder Segmentierungsmechanismen geprüft werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "d498c8a4-822e-5482-80c8-9112ed2b6776",
+        "type": "interconnection",
+        "title": "Blockieren anfälliger Netzprotokolle",
+        "description": "Die Institution hat netzweit UDP-Discovery-Protokolle per egress-Policies blockiert und TCP-SYN-Proxy/Flowspec-/RTBH-basierter DDoS-Schutz an Netzkanten und vorgelagerten Scrubbing-Systemen implementiert.",
+        "control-implementations": [
+          {
+            "uuid": "c9da5130-0f5d-5a2a-a87c-c39ee935c809",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Blockieren anfälliger Netzprotokolle",
+            "implemented-requirements": [
+              {
+                "uuid": "9de5cf2b-696b-5803-857f-f392ca4196e3",
+                "control-id": "_b4977fc1-727c-41c8-a397-f84ba68fc11a",
+                "description": "Die Institution hat netzweit UDP-Discovery-Protokolle per egress-Policies blockiert und TCP-SYN-Proxy/Flowspec-/RTBH-basierter DDoS-Schutz an Netzkanten und vorgelagerten Scrubbing-Systemen implementiert.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last. Für volumetrische Angriffe sind Upstream‑Schutzmechanismen entscheidend. Binden Sie Provider‑seitige Scrubbing‑Dienste an, hinterlegen Sie RTBH/Flowspec bzw. API‑basierte Auslösewege und üben Sie den Ernstfall mit klaren Playbooks. Führen Sie WLAN‑Egress‑Segmente über den geschützten Pfad und dokumentieren Sie Rückführung und Kapazitätsgrenzen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "26d47e7b-e19a-51fc-86ea-c71e32acc15b",
+        "type": "software",
+        "title": "Blockieren anfälliger Netzprotokolle",
+        "description": "Der Haushalt hat am Heimrouter DoS-Schutz aktiviert, UPnP/Portweiterleitungen deaktiviert und ausgehende UDP-Discovery-Protokolle zum Internet gesperrt.",
+        "control-implementations": [
+          {
+            "uuid": "248a02a4-c2f8-539c-9035-9ca82e13a336",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Blockieren anfälliger Netzprotokolle",
+            "implemented-requirements": [
+              {
+                "uuid": "759034af-b86d-50c8-a641-ca90977e96dd",
+                "control-id": "_b4977fc1-727c-41c8-a397-f84ba68fc11a",
+                "description": "Der Haushalt hat am Heimrouter DoS-Schutz aktiviert, UPnP/Portweiterleitungen deaktiviert und ausgehende UDP-Discovery-Protokolle zum Internet gesperrt.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e816d19c-7f72-524e-869a-a92ad4a28ac6",
+        "type": "interconnection",
+        "title": "Blockieren anfälliger Netzprotokolle",
+        "description": "Die Institution hat auf WLAN-Controller/Firewall egress-ACLs für UDP-Discovery-Dienste umgesetzt und stateful TCP-Schutz (SYN-Cookies, Embryonic-Limits, Invalid-Flag-Drops) aktiviert.",
+        "control-implementations": [
+          {
+            "uuid": "a650df86-f4a6-58e6-98ed-74f42e5012a5",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Blockieren anfälliger Netzprotokolle",
+            "implemented-requirements": [
+              {
+                "uuid": "5a8d73fc-451f-586c-aff3-4534497a1e44",
+                "control-id": "_b4977fc1-727c-41c8-a397-f84ba68fc11a",
+                "description": "Die Institution hat auf WLAN-Controller/Firewall egress-ACLs für UDP-Discovery-Dienste umgesetzt und stateful TCP-Schutz (SYN-Cookies, Embryonic-Limits, Invalid-Flag-Drops) aktiviert.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "8d49c372-5f9f-586a-8434-d64c42aa81cc",
+        "type": "interconnection",
+        "title": "Blockieren anfälliger Netzprotokolle",
+        "description": "Die Institution identifiziert veraltete oder unsichere Netzprotokolle und blockiert diese standardmäßig an den Filterkomponenten, wobei notwendige Altprotokolle nur nach Risikoanalyse und mit zusätzlichen Schutzmaßnahmen zugelassen werden.",
+        "control-implementations": [
+          {
+            "uuid": "f7d2711e-db33-5d4e-9091-8a175ca60c5a",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Blockieren anfälliger Netzprotokolle",
+            "implemented-requirements": [
+              {
+                "uuid": "3c6b7b03-c548-54f3-a852-c3d5d2ad7163",
+                "control-id": "_b4977fc1-727c-41c8-a397-f84ba68fc11a",
+                "description": "Die Institution identifiziert veraltete oder unsichere Netzprotokolle und blockiert diese standardmäßig an den Filterkomponenten, wobei notwendige Altprotokolle nur nach Risikoanalyse und mit zusätzlichen Schutzmaßnahmen zugelassen werden.",
+                "remarks": "Anfällig sind Netzprotokolle, wenn sie veraltete oder gar keine Algorithmen zur Verschlüsselung oder Integritätsprüfung verwenden. Hierzu gehören Protokolle wie Telnet, SMB v1, SNMP v1/v2c. Für aktuelle Verschlüsselungsalgorithmen siehe BSI TR 02102."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "c17a3c99-d2cb-5751-9461-9305e6f59176",
+        "type": "interconnection",
+        "title": "Edge-Routing",
+        "description": "Edge-Routing wird so umgesetzt, dass eingehender Verkehr nur zu definierten Perimeter-Komponenten gelangt; öffentliche Netze können interne Adressbereiche nicht direkt routen und Rückwege sind auf notwendige Pfade eingeschränkt.",
+        "control-implementations": [
+          {
+            "uuid": "311778f6-bb15-5f70-bd9e-4503330324b3",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Edge-Routing",
+            "implemented-requirements": [
+              {
+                "uuid": "bafd5293-41c6-5d95-8a10-8290ffb8dfb9",
+                "control-id": "_b9019268-f8d4-4820-b744-2c79c31ce75a",
+                "description": "Edge-Routing wird so umgesetzt, dass eingehender Verkehr nur zu definierten Perimeter-Komponenten gelangt; öffentliche Netze können interne Adressbereiche nicht direkt routen und Rückwege sind auf notwendige Pfade eingeschränkt.",
+                "remarks": "Dynamische Routingprotokolle könnten versehentlich oder durch Angriffe unerwünschte Verbindungen ermöglichen. An den Übergangen zu externen Netzen sind statische Default-Routen deshalb die bessere Alternative."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "dae7da2c-f793-5967-b548-7f1af8d0dc0b",
+        "type": "interconnection",
+        "title": "P-A-P-Struktur",
+        "description": "Die Institution realisiert eine P-A-P-Struktur, bei der vorgelagerte Filter- und Proxy-Ebenen den Verkehr entkoppeln, Protokolle terminieren und nur bereinigten Weiterverkehr an interne Netze weiterreichen.",
+        "control-implementations": [
+          {
+            "uuid": "b4073ada-f20f-576f-a1e9-cb73782fad05",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for P-A-P-Struktur",
+            "implemented-requirements": [
+              {
+                "uuid": "362eb06f-24c0-5e75-b6ac-72f6e667b39b",
+                "control-id": "_bd23cb10-ab1e-42b2-81bc-b7c1705fb16a",
+                "description": "Die Institution realisiert eine P-A-P-Struktur, bei der vorgelagerte Filter- und Proxy-Ebenen den Verkehr entkoppeln, Protokolle terminieren und nur bereinigten Weiterverkehr an interne Netze weiterreichen.",
+                "remarks": "Die P-A-P-Struktur besteht aus 2 Paketfiltern (P) und einem Filter auf Anwendungsebene (A), die durch Hardware getrennt sind und alle Verbindungen auf Anwendungsebene filtern. In Hardware getrennte Systeme sind hier solche, die jeweils über eigene Rechenkomponenten (CPU, RAM, etc.) verfügen und nur über Netzverbindungen zusammenhängen. Dies minimiert die Angriffsfläche für übergreifende Angriffe wie Covert Channel oder Side Channel."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "50c8396f-b5e0-5b93-a742-1d47dc9350af",
+        "type": "interconnection",
+        "title": "Bekannte illegale Inhalte",
+        "description": "Die Institution nutzt Webfilter, die den Zugriff auf bekannte illegale Inhalte anhand gepflegter Kategorien und Blacklists unterbinden und bei erkannten Verstößen definierte Melde- und Eskalationswege anstoßen.",
+        "control-implementations": [
+          {
+            "uuid": "aa77fb2c-9a22-5464-9ab7-501228607f2f",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Bekannte illegale Inhalte",
+            "implemented-requirements": [
+              {
+                "uuid": "2b252f64-1495-55b3-898d-2b3794def90d",
+                "control-id": "_c776fdb1-92b7-4f11-be53-41104fdd71f7",
+                "description": "Die Institution nutzt Webfilter, die den Zugriff auf bekannte illegale Inhalte anhand gepflegter Kategorien und Blacklists unterbinden und bei erkannten Verstößen definierte Melde- und Eskalationswege anstoßen.",
+                "remarks": "Gerade bei größeren Webdiensten kann es vorkommen, dass hierüber immer wieder vereinzelt illegale Inhalte verbreitet werden, obwohl der Dienst selbst von einer legitimen Institution betrieben wird. In solchen Fällen empfiehlt es sich, die Filterung möglich passgenau vorzunehmen (also soweit möglich nur bestimmte Seiten, Seitenbereiche oder Subdomains zu filtern) und den Anbieter über die illegalen Inhalte zu informieren."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "bd999e17-52d7-5fce-941b-c658ae9d4ecc",
+        "type": "interconnection",
+        "title": "Sprungserver",
+        "description": "Die Institution hat out-of-Band-Managementnetze mit starken ACLs und verpflichtender MFA installiert und der Zugriff ausschließlich über gehärtete Bastion-Hosts erlaubt.",
+        "control-implementations": [
+          {
+            "uuid": "1541b8e8-a8f7-5ab2-9a85-8d1993e2237c",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Sprungserver",
+            "implemented-requirements": [
+              {
+                "uuid": "4268df0e-7477-50f4-a57a-31666c8f38fa",
+                "control-id": "_c907e5e0-bccc-4467-9962-7f4972b0ad8f",
+                "description": "Die Institution hat out-of-Band-Managementnetze mit starken ACLs und verpflichtender MFA installiert und der Zugriff ausschließlich über gehärtete Bastion-Hosts erlaubt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Administrationszugriffe auf Controller und Access‑Points sollten ausschließlich über einen gehärteten Sprungserver erfolgen. Erzwingen Sie MFA, setzen Sie Just‑in‑Time‑Freigaben über ein PAM‑System um und zeichnen Sie Sitzungen revisionssicher auf. Verbieten Sie direkte Admin‑Verbindungen aus Benutzer‑ oder Gäste‑VLANs technisch, beschränken Sie erlaubte Management‑Protokolle auf SSH/HTTPS/SNMPv3 und pflegen Sie eine enge Trennung von Management‑ und Produktionsnetzen. Trennen Sie Management‑Netze strikt vom Nutzdatenverkehr. Erlauben Sie Verwaltungszugänge nur aus dedizierten Admin‑Netzen oder über OOB‑Wege, verwenden Sie SNMPv3/SSH/HTTPS mit starken Cipher‑Suiten und deaktivieren Sie unsichere Protokolle. Logging und Konfigurations‑Versionierung erleichtern die Nachvollziehbarkeit."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "d419825e-0c47-572d-ae56-ac2b259f8387",
+        "type": "interconnection",
+        "title": "Sprungserver",
+        "description": "Die Institution hat dedizierte Management-Netze/VLANs für WLAN-Controller und Access-Points installiert und Verwaltungszugriffe ausschließlich über ein Admin-Netz mit Jump-Host/VPN zugelassen.",
+        "control-implementations": [
+          {
+            "uuid": "df0810f2-c0c2-5bfd-8d58-f0299af92800",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Sprungserver",
+            "implemented-requirements": [
+              {
+                "uuid": "e93ed70e-aea4-59d1-83d6-363276548111",
+                "control-id": "_c907e5e0-bccc-4467-9962-7f4972b0ad8f",
+                "description": "Die Institution hat dedizierte Management-Netze/VLANs für WLAN-Controller und Access-Points installiert und Verwaltungszugriffe ausschließlich über ein Admin-Netz mit Jump-Host/VPN zugelassen.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Administrationszugriffe auf Controller und Access‑Points sollten ausschließlich über einen gehärteten Sprungserver erfolgen. Erzwingen Sie MFA, setzen Sie Just‑in‑Time‑Freigaben über ein PAM‑System um und zeichnen Sie Sitzungen revisionssicher auf. Verbieten Sie direkte Admin‑Verbindungen aus Benutzer‑ oder Gäste‑VLANs technisch, beschränken Sie erlaubte Management‑Protokolle auf SSH/HTTPS/SNMPv3 und pflegen Sie eine enge Trennung von Management‑ und Produktionsnetzen. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher. Trennen Sie Management‑Netze strikt vom Nutzdatenverkehr. Erlauben Sie Verwaltungszugänge nur aus dedizierten Admin‑Netzen oder über OOB‑Wege, verwenden Sie SNMPv3/SSH/HTTPS mit starken Cipher‑Suiten und deaktivieren Sie unsichere Protokolle. Logging und Konfigurations‑Versionierung erleichtern die Nachvollziehbarkeit."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "1ad1c56e-906a-5c88-820a-62674c50b6de",
+        "type": "interconnection",
+        "title": "TCP-basierte Angriffe",
+        "description": "Die Institution hat auf WLAN-Controller/Firewall stateful TCP-Schutzmechanismen aktiviert (SYN-Cookies, Embryonic-Connection-Limits, Rate-Limiting), TCP-Normalisierung/Invalid-Flag-Drops eingeschaltet und eingehende Verwaltung/unsichere Dienste per ACL auf autorisierte Netze beschränkt.",
+        "control-implementations": [
+          {
+            "uuid": "c4b8e01c-1e80-5ee7-9a88-6bd7d1f64c11",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for TCP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "9f3d8aaa-009b-5f15-b6c3-6d62ae4843d5",
+                "control-id": "_cc1cf52d-6be3-4e7d-a5c0-6ecce6c282b1",
+                "description": "Die Institution hat auf WLAN-Controller/Firewall stateful TCP-Schutzmechanismen aktiviert (SYN-Cookies, Embryonic-Connection-Limits, Rate-Limiting), TCP-Normalisierung/Invalid-Flag-Drops eingeschaltet und eingehende Verwaltung/unsichere Dienste per ACL auf autorisierte Netze beschränkt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "3d86b6dd-0b1f-5fea-ac26-0f4c66f05ac7",
+        "type": "interconnection",
+        "title": "TCP-basierte Angriffe",
+        "description": "Die Institution hat tCP-basierte Angriffe durch SYN-Proxy/SYN-Cookies, verbindungs-/quellenbasierte Limits und Flowspec/RTBH abgewehrt und kritische Dienste über vorgelagerte Scrubbing-/L4-DDoS-Schutzsysteme geschützt.",
+        "control-implementations": [
+          {
+            "uuid": "19ab9ca3-3a90-5518-be1d-ac2519ebe7fb",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for TCP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "162c5732-43ad-54f7-813e-ac37608308ae",
+                "control-id": "_cc1cf52d-6be3-4e7d-a5c0-6ecce6c282b1",
+                "description": "Die Institution hat tCP-basierte Angriffe durch SYN-Proxy/SYN-Cookies, verbindungs-/quellenbasierte Limits und Flowspec/RTBH abgewehrt und kritische Dienste über vorgelagerte Scrubbing-/L4-DDoS-Schutzsysteme geschützt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last. Für volumetrische Angriffe sind Upstream‑Schutzmechanismen entscheidend. Binden Sie Provider‑seitige Scrubbing‑Dienste an, hinterlegen Sie RTBH/Flowspec bzw. API‑basierte Auslösewege und üben Sie den Ernstfall mit klaren Playbooks. Führen Sie WLAN‑Egress‑Segmente über den geschützten Pfad und dokumentieren Sie Rückführung und Kapazitätsgrenzen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e49c103a-5624-535e-bbe4-6c5f4c7283ec",
+        "type": "interconnection",
+        "title": "TCP-basierte Angriffe",
+        "description": "Die Institution schützt TCP-Dienste durch Stateful Inspection, strenge Portfilter, Schutz vor Portscans und Maßnahmen gegen SYN-, ACK- und Session-Exhaustion-Angriffe, ergänzt um Härtung der Serverkonfiguration.",
+        "control-implementations": [
+          {
+            "uuid": "ddff6d76-f031-5836-a469-fb80b8a0a462",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for TCP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "a8bd2dd9-9dbc-53bc-8449-0aec480514ff",
+                "control-id": "_cc1cf52d-6be3-4e7d-a5c0-6ecce6c282b1",
+                "description": "Die Institution schützt TCP-Dienste durch Stateful Inspection, strenge Portfilter, Schutz vor Portscans und Maßnahmen gegen SYN-, ACK- und Session-Exhaustion-Angriffe, ergänzt um Härtung der Serverkonfiguration.",
+                "remarks": "TCP ist das am meisten verwendete Protokoll für die zuverlässige Datenübertragung. Durch TCP-basierte Angriffe können IT-Systeme gehackt oder Daten unbemerkt ausgeleitet werden. Beispiele sind TCP Session Hijacking (ACK-number guessing), Overlapping-Segment Attacks, TCP Reset (RST) Injection, Xmas-tree Scanning. Die Anforderung kann durch Blockieren solcher Verbindungen oder nur bestimmter Mechanismen umgesetzt werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "fd1998dd-7c64-54d2-9bdb-ee2f1ebfd898",
+        "type": "software",
+        "title": "TCP-basierte Angriffe",
+        "description": "Der Haushalt hat am Heimrouter UPnP/Portweiterleitungen deaktiviert, eingehende Fernzugriffe aus dem Internet unterbunden und DoS-Schutz gegen TCP-SYN-/ACK-/RST-Floods (z. B. SYN-Cookies) aktiviert.",
+        "control-implementations": [
+          {
+            "uuid": "31681164-2dcd-5fc7-9e9b-e535adcd6b0c",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for TCP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "6c9b7368-a778-5af0-a9b7-5e7aa901c173",
+                "control-id": "_cc1cf52d-6be3-4e7d-a5c0-6ecce6c282b1",
+                "description": "Der Haushalt hat am Heimrouter UPnP/Portweiterleitungen deaktiviert, eingehende Fernzugriffe aus dem Internet unterbunden und DoS-Schutz gegen TCP-SYN-/ACK-/RST-Floods (z. B. SYN-Cookies) aktiviert.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "cb289f56-fecb-51a1-a261-038ee0669a75",
+        "type": "interconnection",
+        "title": "Management-Netz",
+        "description": "Die Institution hat dedizierte Management-Netze/VLANs für WLAN-Controller und Access-Points installiert und Verwaltungszugriffe ausschließlich über ein Admin-Netz mit Jump-Host/VPN zugelassen.",
+        "control-implementations": [
+          {
+            "uuid": "c147a255-daca-528f-9923-e14e8b96601a",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Management-Netz",
+            "implemented-requirements": [
+              {
+                "uuid": "4e5d6a11-bdf6-5bf8-a982-47f481ef9021",
+                "control-id": "_d02f23d0-9c15-4811-838f-6440ee744334",
+                "description": "Die Institution hat dedizierte Management-Netze/VLANs für WLAN-Controller und Access-Points installiert und Verwaltungszugriffe ausschließlich über ein Admin-Netz mit Jump-Host/VPN zugelassen.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Administrationszugriffe auf Controller und Access‑Points sollten ausschließlich über einen gehärteten Sprungserver erfolgen. Erzwingen Sie MFA, setzen Sie Just‑in‑Time‑Freigaben über ein PAM‑System um und zeichnen Sie Sitzungen revisionssicher auf. Verbieten Sie direkte Admin‑Verbindungen aus Benutzer‑ oder Gäste‑VLANs technisch, beschränken Sie erlaubte Management‑Protokolle auf SSH/HTTPS/SNMPv3 und pflegen Sie eine enge Trennung von Management‑ und Produktionsnetzen. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher. Trennen Sie Management‑Netze strikt vom Nutzdatenverkehr. Erlauben Sie Verwaltungszugänge nur aus dedizierten Admin‑Netzen oder über OOB‑Wege, verwenden Sie SNMPv3/SSH/HTTPS mit starken Cipher‑Suiten und deaktivieren Sie unsichere Protokolle. Logging und Konfigurations‑Versionierung erleichtern die Nachvollziehbarkeit."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "9c03927d-85ee-5516-bcff-a07d65858f7d",
+        "type": "interconnection",
+        "title": "Management-Netz",
+        "description": "Die Institution hat out-of-Band-Managementnetze mit starken ACLs und verpflichtender MFA installiert und der Zugriff ausschließlich über gehärtete Bastion-Hosts erlaubt.",
+        "control-implementations": [
+          {
+            "uuid": "770c1083-54c6-504c-9586-47106208d179",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Management-Netz",
+            "implemented-requirements": [
+              {
+                "uuid": "db18b26a-356a-5519-93ba-cafa68b54f95",
+                "control-id": "_d02f23d0-9c15-4811-838f-6440ee744334",
+                "description": "Die Institution hat out-of-Band-Managementnetze mit starken ACLs und verpflichtender MFA installiert und der Zugriff ausschließlich über gehärtete Bastion-Hosts erlaubt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Administrationszugriffe auf Controller und Access‑Points sollten ausschließlich über einen gehärteten Sprungserver erfolgen. Erzwingen Sie MFA, setzen Sie Just‑in‑Time‑Freigaben über ein PAM‑System um und zeichnen Sie Sitzungen revisionssicher auf. Verbieten Sie direkte Admin‑Verbindungen aus Benutzer‑ oder Gäste‑VLANs technisch, beschränken Sie erlaubte Management‑Protokolle auf SSH/HTTPS/SNMPv3 und pflegen Sie eine enge Trennung von Management‑ und Produktionsnetzen. Trennen Sie Management‑Netze strikt vom Nutzdatenverkehr. Erlauben Sie Verwaltungszugänge nur aus dedizierten Admin‑Netzen oder über OOB‑Wege, verwenden Sie SNMPv3/SSH/HTTPS mit starken Cipher‑Suiten und deaktivieren Sie unsichere Protokolle. Logging und Konfigurations‑Versionierung erleichtern die Nachvollziehbarkeit."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "9b98fee3-0c79-5d12-ad95-20c1d2dcdb16",
+        "type": "interconnection",
+        "title": "Management-Netz",
+        "description": "Verwaltungszugänge zu Netz- und Sicherheitskomponenten erfolgen ausschließlich über ein dediziertes, streng geschütztes Management-Netz mit gehärteten Admin-Systemen, begrenzten Protokollen und starker Authentisierung.",
+        "control-implementations": [
+          {
+            "uuid": "f6006164-197f-5509-b163-b84bf25ded91",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Management-Netz",
+            "implemented-requirements": [
+              {
+                "uuid": "5dc46989-75e6-58df-8f5d-88c3a01790c7",
+                "control-id": "_d02f23d0-9c15-4811-838f-6440ee744334",
+                "description": "Verwaltungszugänge zu Netz- und Sicherheitskomponenten erfolgen ausschließlich über ein dediziertes, streng geschütztes Management-Netz mit gehärteten Admin-Systemen, begrenzten Protokollen und starker Authentisierung.",
+                "remarks": "Ein Management-Netz ist ein physisch oder durch Netzfilter separiertes Netzsegment, das dediziert für die Überwachung, Verwaltung und Wartung von IT-Systemen bestimmt ist. Es ist von anderen Produktions- und Datennetzen getrennt, um den Zugriff auf kritische Verwaltungsfunktionen zu schützen und die Verfügbarkeit dieser Zugänge auch bei Problemen im restlichen Netz zu sichern. Dies gilt auch für virtualisierte Systeme. Im Kontext der Containerisierung empfiehlt es sich, administrative Zugänge auf Applikations-Container immer über die Container-Runtime erfolgen zu lassen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "871500b5-0788-543d-8bb6-d7cdcac0327b",
+        "type": "interconnection",
+        "title": "UDP-basierte Angriffe",
+        "description": "Die Institution hat netzweit UDP-basierte Verstärkungs-/Discovery-Protokolle per egress-Policies blockiert, DNS strikt auf interne Resolver erzwungen, BCP-38/Ingress-Filter umgesetzt und volumetrische UDP-Angriffe über DDoS-Schutz/RTBH mit dem Provider abgewehrt.",
+        "control-implementations": [
+          {
+            "uuid": "86c365dc-a60f-5e0d-8749-49e603b74b13",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for UDP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "020b7413-0695-5e28-826f-b9d36d9173df",
+                "control-id": "_d2b4e523-ee05-47ae-8d5e-95f30015dce2",
+                "description": "Die Institution hat netzweit UDP-basierte Verstärkungs-/Discovery-Protokolle per egress-Policies blockiert, DNS strikt auf interne Resolver erzwungen, BCP-38/Ingress-Filter umgesetzt und volumetrische UDP-Angriffe über DDoS-Schutz/RTBH mit dem Provider abgewehrt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last. Für volumetrische Angriffe sind Upstream‑Schutzmechanismen entscheidend. Binden Sie Provider‑seitige Scrubbing‑Dienste an, hinterlegen Sie RTBH/Flowspec bzw. API‑basierte Auslösewege und üben Sie den Ernstfall mit klaren Playbooks. Führen Sie WLAN‑Egress‑Segmente über den geschützten Pfad und dokumentieren Sie Rückführung und Kapazitätsgrenzen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "0a0ba5a4-e52c-521a-abfe-3c1d9c6c2069",
+        "type": "interconnection",
+        "title": "UDP-basierte Angriffe",
+        "description": "UDP-basierte Dienste werden auf wenige, klar definierte Anwendungen beschränkt; Firewalls und Proxies setzen Rate-Limiting, Paketvalidierung und gegebenenfalls Protokoll-Gateways ein, um Missbrauch und Reflection-Angriffe zu erschweren.",
+        "control-implementations": [
+          {
+            "uuid": "b0b4cae2-38dc-5449-85f2-cfc663971c93",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for UDP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "8503caeb-d5e0-5472-a632-bae9623fd58d",
+                "control-id": "_d2b4e523-ee05-47ae-8d5e-95f30015dce2",
+                "description": "UDP-basierte Dienste werden auf wenige, klar definierte Anwendungen beschränkt; Firewalls und Proxies setzen Rate-Limiting, Paketvalidierung und gegebenenfalls Protokoll-Gateways ein, um Missbrauch und Reflection-Angriffe zu erschweren.",
+                "remarks": "UDP-basierte Angriffsmethoden (englisch: known UDP-based attack vectors) sind hierbei Techniken zu verstehen, die das User Datagram Protocol (UDP) ausnutzen. UDP ist das am meisten verwendete Protokoll für die Übertragung von Datenstreams. Aufgrund seiner verbindungslosen Eigenschaft ermöglicht UDP eine sehr schnelle Datenübertragung und wird daher oft für zeitkritische Anwendungen wie Videostreaming, VoIP oder DNS-Anfragen verwendet. Genau diese Eigenschaft macht es jedoch anfällig für Missbrauch, da die Absenderadresse leicht gefälscht werden kann (IP-Spoofing).  Beispiele für Angriffe sind Sequence Number Guessing, DHCP Starvation und UDP Hole-Punching Abuse. Die Anforderung kann durch Blockieren solcher Verbindungen oder nur bestimmter Mechanismen umgesetzt werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "104d92b8-5cbb-53f0-aa11-05214cfc308e",
+        "type": "interconnection",
+        "title": "UDP-basierte Angriffe",
+        "description": "Der Haushalt hat am Heimrouter ausgehende UDP-Verbindungen zu bekannten Verstärkungs-/Discovery-Protokollen (z. B. SSDP/1900, mDNS/5353, NTP/123) zum Internet gesperrt und DNS ausschließlich über den Router/Provider-Resolver zugelassen.",
+        "control-implementations": [
+          {
+            "uuid": "4c949009-5b2e-5d7a-a381-110eb82d834d",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for UDP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "55ecfee7-f9a9-5225-9cda-bfc0c73bf122",
+                "control-id": "_d2b4e523-ee05-47ae-8d5e-95f30015dce2",
+                "description": "Der Haushalt hat am Heimrouter ausgehende UDP-Verbindungen zu bekannten Verstärkungs-/Discovery-Protokollen (z. B. SSDP/1900, mDNS/5353, NTP/123) zum Internet gesperrt und DNS ausschließlich über den Router/Provider-Resolver zugelassen.",
+                "remarks": "Diese Maßnahme erhöht die Sicherheit des heimischen WLANs unmittelbar, indem häufige Angriffswege reduziert und Fehlkonfigurationen vermieden werden. Die Umsetzung ist mit üblichen Heimroutern praktikabel und erfordert in der Regel keine Spezialhardware. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein. Gegen TCP‑basierte DoS‑Varianten helfen SYN‑Cookies bzw. SYN‑Proxy, Embryonic‑Connection‑Limits und das Verwerfen ungültiger Flag‑Kombinationen. Deaktivieren Sie unnötige Portweiterleitungen und UPnP, beschränken Sie eingehende Verwaltungsschnittstellen konsequent und validieren Sie State‑Tables unter Last."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "5aa7c0d3-f64a-585a-bf25-e6601f09786b",
+        "type": "interconnection",
+        "title": "UDP-basierte Angriffe",
+        "description": "Die Institution hat auf WLAN-Controller/Firewall egress-ACLs für UDP-basierte Amplification- und Discovery-Dienste umgesetzt (u. a. Chargen/19, DNS nur zu autorisierten Resolvern/53, NTP/123, NetBIOS/137-139, CLDAP/389, SSDP/1900, mDNS/5353, Memcached/11211) und UDP-Flood-Rates begrenzt.",
+        "control-implementations": [
+          {
+            "uuid": "d56314fc-3276-5169-b757-ee932008a75e",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for UDP-basierte Angriffe",
+            "implemented-requirements": [
+              {
+                "uuid": "006d09f4-f5d6-57a9-9849-22cd712d5074",
+                "control-id": "_d2b4e523-ee05-47ae-8d5e-95f30015dce2",
+                "description": "Die Institution hat auf WLAN-Controller/Firewall egress-ACLs für UDP-basierte Amplification- und Discovery-Dienste umgesetzt (u. a. Chargen/19, DNS nur zu autorisierten Resolvern/53, NTP/123, NetBIOS/137-139, CLDAP/389, SSDP/1900, mDNS/5353, Memcached/11211) und UDP-Flood-Rates begrenzt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Für latenzkritische Voice‑Dienste sollten Sie WMM/802.11e aktivieren, DSCP EF (46) auf AC_VO mappen und Call Admission Control einschalten, damit Sprachverkehr nicht durch Hintergrundlast verdrängt wird. Planen Sie eine Zellüberlappung von ca. 15–25 % bei −67 dBm, setzen Sie Mindest‑PHY‑Raten für Roaming und validieren Sie Jitter/Packet‑Loss in typischen Gesprächspfaden. Für größere Umgebungen ist Fast‑Roaming (802.11r/k/v) ratsam. Zur Abwehr verstärkender UDP‑Angriffe empfiehlt sich eine strikte Egress‑Kontrolle: Sperren Sie aus dem WLAN nach extern u. a. SSDP/1900, mDNS/5353, CLDAP/389, Memcached/11211 und erlauben Sie DNS ausschließlich zu autorisierten Resolvern. Limitieren Sie NTP auf definierte Server und setzen Sie Rate‑Limits gegen UDP‑Floods. Ergänzend sollten BCP‑38‑Ingress‑Filter und, falls verfügbar, Upstream‑Maßnahmen (Scrubbing, RTBH/Flowspec) vorbereitet sein."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "4553ceac-5286-5d2c-a10b-935aeef5f174",
+        "type": "validation",
+        "title": "Anomalien in Netzen und am Perimeter",
+        "description": "Die Institution hat kontinuierliche Funk-Anomalieerkennung mit WIPS-Signaturen/Spektrumanalyse betrieben und Alarme im SIEM korreliert.",
+        "control-implementations": [
+          {
+            "uuid": "09069942-b1a0-5b0a-9222-3eb606fed1c4",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Anomalien in Netzen und am Perimeter",
+            "implemented-requirements": [
+              {
+                "uuid": "0c47958f-bd6e-5db9-b038-ff63861e2039",
+                "control-id": "_e6cf2c48-c49f-4c10-9cca-252d903b0979",
+                "description": "Die Institution hat kontinuierliche Funk-Anomalieerkennung mit WIPS-Signaturen/Spektrumanalyse betrieben und Alarme im SIEM korreliert.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Die Netzabdeckung prüfen Sie zweckmäßig mit einer Kombination aus passiven und aktiven Surveys je Band (2,4/5/6 GHz). Zielwerte liegen erfahrungsgemäß bei RSSI ≥ −67 dBm (Daten) bzw. ≥ −65 dBm (Voice) und SNR ≥ 25–30 dB. Dokumentieren Sie Heatmaps pro Nutzungszone, messen Sie Durchsatz und Latenz an repräsentativen Punkten und analysieren Sie die Kanalbelegung inklusive Spektrumanalyse. Passen Sie Kanalbreiten und Sendeleistungen so an, dass Co‑Channel‑Interferenzen minimiert und stabile Roaming‑Zellen erhalten bleiben. Ein aktives WIDS/WIPS überwacht die Funkumgebung auf Rogue‑APs, Deauth‑/Disassoc‑Angriffe und störende Quellen. Pflegen Sie eine genehmigte AP‑Liste, definieren Sie sinnvolle Schwellwerte, automatisieren Sie Alarm‑zu‑Ticket‑Prozesse und führen Sie regelmäßige Tuning‑Zyklen durch, um Fehlalarme zu minimieren."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "3127d161-11da-5464-a94c-e6a7735b6085",
+        "type": "software",
+        "title": "Anomalien in Netzen und am Perimeter",
+        "description": "Die Institution betreibt ein zentrales Monitoring für Netze und Perimeter, das Logdaten, Metriken und Alarme korreliert und sicherstellt, dass auffällige Ereignisse zeitnah analysiert und behandelt werden.",
+        "control-implementations": [
+          {
+            "uuid": "b5394b50-bc6c-57e7-a694-1c17363d6a0d",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Anomalien in Netzen und am Perimeter",
+            "implemented-requirements": [
+              {
+                "uuid": "7d4b23a3-e673-5670-afa7-60e69328e14f",
+                "control-id": "_e6cf2c48-c49f-4c10-9cca-252d903b0979",
+                "description": "Die Institution betreibt ein zentrales Monitoring für Netze und Perimeter, das Logdaten, Metriken und Alarme korreliert und sicherstellt, dass auffällige Ereignisse zeitnah analysiert und behandelt werden.",
+                "remarks": "Beispiele sind ausgehende Netzverbindungen zu als bösartig bekannten oder gänzlich unbekannten DNS-Domains oder IP-Adressen, Anzeichen für DNS-Tunneling (ungewöhnlich lange Subdomains oder Spitzenwerte für TXT-Mengen), ungewöhnlich hohes Datenvolumen zu Cloud-Speicherlösungen, sowie unautorisierte Portscans oder Brute Force Angriffe auf Fernwartungsschnittstellen wie RDP oder SSH sein. Hierdurch können Verbindungen zu Angreiferservern (C2 Beacons), die Ausbreitung von Angriffen über das Netz, oder Datenabflüsse erkannt werden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "56dc1427-cbe0-519d-81e9-ac85890c0e55",
+        "type": "interconnection",
+        "title": "Anomalien in Netzen und am Perimeter",
+        "description": "Die Institution hat wIDS/WIPS-Funktionen des WLAN-Controllers für Rogue-AP/-Client-Erkennung, Deauth-Angriffe und Interferenzen aktiviert und Alarme in Tickets überführt.",
+        "control-implementations": [
+          {
+            "uuid": "af1bfb4c-0f42-5804-a769-1fe92351cf76",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Anomalien in Netzen und am Perimeter",
+            "implemented-requirements": [
+              {
+                "uuid": "313aad14-272a-5fb8-9de1-c74bb044a6ab",
+                "control-id": "_e6cf2c48-c49f-4c10-9cca-252d903b0979",
+                "description": "Die Institution hat wIDS/WIPS-Funktionen des WLAN-Controllers für Rogue-AP/-Client-Erkennung, Deauth-Angriffe und Interferenzen aktiviert und Alarme in Tickets überführt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. Ein aktives WIDS/WIPS überwacht die Funkumgebung auf Rogue‑APs, Deauth‑/Disassoc‑Angriffe und störende Quellen. Pflegen Sie eine genehmigte AP‑Liste, definieren Sie sinnvolle Schwellwerte, automatisieren Sie Alarm‑zu‑Ticket‑Prozesse und führen Sie regelmäßige Tuning‑Zyklen durch, um Fehlalarme zu minimieren."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e58be7fd-49da-5756-a50d-80a8f856714a",
+        "type": "interconnection",
+        "title": "Netzsegmente",
+        "description": "Die Institution strukturiert das interne Netz in klar abgegrenzte Segmente für Clients, Server, Management, Sicherheits- und Sonderzonen und dokumentiert die Segmentierung konsistent in Netzplan, IP-Adresskonzept und Firewall-Zonenmodell.",
+        "control-implementations": [
+          {
+            "uuid": "6a1b67c4-4126-5170-baf8-956a34b76329",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Netzsegmente",
+            "implemented-requirements": [
+              {
+                "uuid": "c7065df3-c52c-5c0a-863e-4fe98beafe27",
+                "control-id": "_ec31da4c-f5bd-43f5-b94f-f0fb7a5e1a18",
+                "description": "Die Institution strukturiert das interne Netz in klar abgegrenzte Segmente für Clients, Server, Management, Sicherheits- und Sonderzonen und dokumentiert die Segmentierung konsistent in Netzplan, IP-Adresskonzept und Firewall-Zonenmodell.",
+                "remarks": "Die Aufteilung in Netzsegmente (auch Netzdomänen oder Subnetze genannt) ermöglicht es, verschiedene Zonen mit unterschiedlichen Schutzanforderungen – z. B. Büro-IT, Produktionsnetz, Managementnetz – getrennt zu betrachten und gezielt zu schützen. Relevant sind dabei (falls vorhanden) auch WLANs/SSIDs, IoT-Geräte wie vernetzte Kühlschränke, Hausleittechnik, operative Technologien, Industrielle Steuerungssysteme oder Netze zum Zugriff auf Speichersysteme (Storage Area Network, SAN). Die Anforderung gilt auch, wenn die Systeme nur noch als VMs oder Container existieren. Die Segmentierung kann hier in die virtuelle Netzwerk‑Ebene verlagert werden, sodass die Segmentierung weder vom Hypervisor noch von den Workloads umgangen wird. Die Einteilung in Segmente kann anhand einer Klassifizierung von Netzen erfolgen (z.B. nach Schutzbedarf der dort verarbeiteten Daten oder nach Risikoklassen angeschlossener Systeme) erfolgen. Beispiele hierfür sind Internet-Domäne, Endgeräte-Domäne, Domäne für zentrale Serverdienste, Domäne für Systeme hoher Vertraulichkeit. Alternativ können auch organisatorische Domänen verwendet werden, z.B. Personalwesen, Marketing, Finanzverwaltung, Innere Verwaltung. Die Filterkriterien können sich nach den Sicherheitsanforderungen der jeweiligen Netze im Einzelnen oder nach einer vorgenommenen Klassifikation der Netze richten. Hierzu gehören insbesondere die Anforderungen zur Authentifizierung und Autorisierung von Assets."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "7110c63a-bfed-5662-a636-a3658bc44e51",
+        "type": "interconnection",
+        "title": "Demilitarisierte Zone",
+        "description": "Die Institution hat portale/Proxys in einer gehärteten DMZ mit Reverse-Proxy/WAF installiert und strikt über segmentierende Firewalls von internen Netzen getrennt.",
+        "control-implementations": [
+          {
+            "uuid": "391b8d10-d6ed-5592-bb37-27b8023b5982",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Demilitarisierte Zone",
+            "implemented-requirements": [
+              {
+                "uuid": "97133fee-d9d0-596c-938e-46fcf064ba3a",
+                "control-id": "_f9e8c80d-0043-42ac-a71b-73ff1e6cad50",
+                "description": "Die Institution hat portale/Proxys in einer gehärteten DMZ mit Reverse-Proxy/WAF installiert und strikt über segmentierende Firewalls von internen Netzen getrennt.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. WLAN‑exponierte Webdienste wie Captive‑/Guest‑Portale gehören in eine DMZ mit strikt segmentierenden Firewalls. Nutzen Sie einen Reverse‑Proxy bzw. eine WAF für TLS‑Terminierung, HSTS und Eingangsvalidierung, halten Sie Zertifikate aktuell und beschränken Sie Rückwege in interne Netze auf das notwendige Minimum. Protokollieren Sie Anmelde‑ und Fehlerereignisse nachvollziehbar und verbinden Sie das Monitoring mit Alarmierungsprozessen. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e1959027-fd3b-5cd3-a990-34bc338d10ef",
+        "type": "interconnection",
+        "title": "Demilitarisierte Zone",
+        "description": "Die Institution hat wLAN-exponierte Dienste wie Captive-/Guest-Portal und Gast-DHCP/DNS in einer demilitarisierten Zone installiert und per Firewall ausschließlich aus dem Gäste-VLAN erreichbar gemacht.",
+        "control-implementations": [
+          {
+            "uuid": "cbb73466-5527-54fc-a97a-684239d71975",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Demilitarisierte Zone",
+            "implemented-requirements": [
+              {
+                "uuid": "171a791a-3c6a-5677-8a46-d5c682af8ca5",
+                "control-id": "_f9e8c80d-0043-42ac-a71b-73ff1e6cad50",
+                "description": "Die Institution hat wLAN-exponierte Dienste wie Captive-/Guest-Portal und Gast-DHCP/DNS in einer demilitarisierten Zone installiert und per Firewall ausschließlich aus dem Gäste-VLAN erreichbar gemacht.",
+                "remarks": "Die Maßnahme reduziert das Angriffsrisiko im WLAN-Bereich nachhaltig, erhöht die Resilienz gegen Fehlkonfigurationen und unterstützt Nachweis- und Compliance-Anforderungen im Betrieb. Die beschriebenen Schritte lassen sich in standardisierten Change- und Betriebsprozessen verankern. WLAN‑exponierte Webdienste wie Captive‑/Guest‑Portale gehören in eine DMZ mit strikt segmentierenden Firewalls. Nutzen Sie einen Reverse‑Proxy bzw. eine WAF für TLS‑Terminierung, HSTS und Eingangsvalidierung, halten Sie Zertifikate aktuell und beschränken Sie Rückwege in interne Netze auf das notwendige Minimum. Protokollieren Sie Anmelde‑ und Fehlerereignisse nachvollziehbar und verbinden Sie das Monitoring mit Alarmierungsprozessen. Ein vollständiger WLAN‑Netzplan umfasst SSIDs samt Verwendungszweck, VLAN‑IDs/Subnetze, AP‑Standorte, Kanal‑/Leistungs‑Profile, Controller‑/RADIUS‑/PKI‑Anbindungen, Segment‑ und Vertrauensgrenzen sowie externe Übergabepunkte. Versionieren Sie diese Artefakte im ISMS und stellen Sie Änderungs‑ und Freigabeprozesse sicher. Gästezugänge gehören in getrennte SSIDs/VLANs mit aktivierter Client‑Isolation und restriktiven Egress‑Regeln. Ein Captive‑Portal kann rechtliche Hinweise und Nutzungsbedingungen abbilden; beschränken Sie dabei Zugriffe auf interne Ressourcen konsequent und begrenzen Sie die Bandbreite, um Produktivdienste zu schützen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "540db0e5-07de-5ec3-bc00-4f11df413b1b",
+        "type": "interconnection",
+        "title": "Demilitarisierte Zone",
+        "description": "Öffentlich erreichbare Dienste werden in einer DMZ betrieben, die sowohl gegenüber dem Internet als auch gegenüber internen Netzen durch separate Filterstufen abgesichert ist, sodass kompromittierte Systeme nicht direkt auf interne Ressourcen zugreifen können.",
+        "control-implementations": [
+          {
+            "uuid": "3e5b9de3-6dc0-5dc9-a5a3-38ce0f4f226d",
+            "source": "#ca733263-65a2-4ee4-9941-41dd2c306cd1",
+            "description": "Control implementation for Demilitarisierte Zone",
+            "implemented-requirements": [
+              {
+                "uuid": "e919de13-f2cf-5de1-b220-31192a5d1cdb",
+                "control-id": "_f9e8c80d-0043-42ac-a71b-73ff1e6cad50",
+                "description": "Öffentlich erreichbare Dienste werden in einer DMZ betrieben, die sowohl gegenüber dem Internet als auch gegenüber internen Netzen durch separate Filterstufen abgesichert ist, sodass kompromittierte Systeme nicht direkt auf interne Ressourcen zugreifen können.",
+                "remarks": "Unter einer Demilitarisierten Zone versteht man in diesem Kontext ein logisch oder physisch getrenntes Teilnetz, in dem Systeme mit exponierten Diensten – wie Webserver, Mail-Gateways oder VPN-Endpunkte – betrieben werden. Systeme der Institution, die sowohl aus dem öffentlichen Netz als auch aus dem internen Netz erreichbar sind, werden in einer demilitarisierten Zone (DMZ) so betrieben, dass (1) der Netzverkehr zwischen dem System und dem öffentlichen Netz gefiltert wird und (2) der Netzverkehr zwischen dem System und anderen internen Netzen gefiltert wird. Eine DMZ kann sowohl durch dedizierte Hardware-Firewalls als auch durch virtuelle Netzwerksegmente umgesetzt werden. Ohne eine solche Trennung könnte ein kompromittierter Webserver direkt als Sprungbrett ins interne Netz dienen oder Schadsoftware könnte sich ungehindert auf sensible Systeme ausbreiten. Mit einer DMZ kann eine Institution hingegen erreichen, dass kompromittierte Systeme isoliert bleiben und sicherheitskritische interne Netze weiterhin geschützt sind."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "ca733263-65a2-4ee4-9941-41dd2c306cd1",
+          "description": "BSI Stand der Technik Kernel Catalog",
+          "rlinks": [
+            {
+              "href": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/Quellkataloge/Kernel/BSI-Stand-der-Technik-Kernel-catalog.json"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

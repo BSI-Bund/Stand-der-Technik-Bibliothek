@@ -1,0 +1,1525 @@
+{
+  "component-definition": {
+    "uuid": "b2075044-8fe6-4edc-a436-b5eb621729ec",
+    "metadata": {
+      "title": "AWS IAM Komponenten für Grundschutz++",
+      "last-modified": "2026-04-16T07:42:27Z",
+      "version": "0.2.0-review",
+      "oscal-version": "1.1.3",
+      "roles": [
+        {
+          "id": "creator",
+          "title": "Ersteller"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "32f52533-08a7-451e-8602-f3829ecca261",
+          "type": "organization",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "creator",
+          "party-uuids": [
+            "32f52533-08a7-451e-8602-f3829ecca261"
+          ]
+        }
+      ],
+      "props": [
+        {
+          "name": "profile",
+          "ns": "https://bsi.bund.de/ns/oscal/component-props",
+          "value": "aws-iam"
+        },
+        {
+          "name": "catalog-uuid",
+          "ns": "https://bsi.bund.de/ns/oscal/component-props",
+          "value": "bf5d3cde-1c6b-4329-9a10-fdbe84279177"
+        },
+        {
+          "name": "catalog-version",
+          "ns": "https://bsi.bund.de/ns/oscal/component-props",
+          "value": "2026-03-05T08:08:12.116338+00:00"
+        },
+        {
+          "name": "artifact-type",
+          "ns": "https://bsi.bund.de/ns/oscal/component-props",
+          "value": "component-definition"
+        }
+      ],
+      "links": [
+        {
+          "href": "#11111111-1111-4111-8111-111111111111",
+          "rel": "reference",
+          "text": "Grundschutz++-Katalog"
+        },
+        {
+          "href": "#07970f70-ef32-4b6b-8c7e-0014b7048056",
+          "rel": "reference",
+          "text": "NIST-OSCAL-Referenz zur Komponentendefinition"
+        },
+        {
+          "href": "#cd57124b-1459-4b7d-b719-b5396a9ea467",
+          "rel": "reference",
+          "text": "AWS IAM bewährte Verfahren"
+        }
+      ],
+      "remarks": "Diese Komponentendefinition beschreibt wiederverwendbare, produktspezifische AWS-IAM-Umsetzungsmuster für abstrakte Grundschutz++-Anforderungen. Die Fassung wurde fachlich und formal nachgeschärft: Die Control-Zuordnungen wurden erneut gegen den hochgeladenen Grundschutz++-Katalog geprüft, interne nur lokal sinnvolle Traceability-Props wurden entfernt und die einzelnen Komponenten enthalten nun technische Umsetzungswege mit konkreten Konsolenpfaden, CLI-Befehlen und Beispielkonfigurationen. Die Komponenten beschreiben Soll-Umsetzungen für AWS IAM und nicht den bloßen Ist-Zustand einer einzelnen Umgebung."
+    },
+    "components": [
+      {
+        "uuid": "1030c034-b363-4d41-90bb-084c3cefad09",
+        "type": "process-procedure",
+        "title": "AWS IAM Root-Zugang absichern und MFA erzwingen",
+        "description": "Härtet den Root-Zugang bzw. Root-äquivalente Notfallpfade und erzwingt starke Mehr-Faktor-Authentisierung für weitreichende Berechtigungen. Die Komponente ist bewusst wiederverwendbar formuliert: Sie beschreibt einen generischen AWS-IAM-Standard und nicht einen lokalen Projektstand.",
+        "purpose": "Minimiert das Risiko kompromittierter privilegierter Zugänge, begrenzt Root-Nutzung auf klar geregelte Notfälle und stellt eine nachvollziehbare Alarmierung bei Nutzung oder Fehlversuchen sicher.",
+        "links": [
+          {
+            "href": "#cd57124b-1459-4b7d-b719-b5396a9ea467",
+            "rel": "reference",
+            "text": "AWS IAM bewährte Verfahren"
+          },
+          {
+            "href": "#a7533953-f98b-405e-9c6f-96787ce36411",
+            "rel": "reference",
+            "text": "Bewährte Verfahren für den AWS-Root-Benutzer"
+          },
+          {
+            "href": "#39406276-3de4-44d4-84f0-47d30ec7a91a",
+            "rel": "reference",
+            "text": "Zentralisierter AWS-Root-Zugang für Mitgliedskonten"
+          },
+          {
+            "href": "#48bf5d20-42da-42bb-a280-ecda8b8c6bd6",
+            "rel": "reference",
+            "text": "Abgesicherter AWS-API-Zugriff mit MFA"
+          },
+          {
+            "href": "#94f47806-b261-4370-b720-32b6d27398a8",
+            "rel": "reference",
+            "text": "AWS-CloudTrail-Integration für IAM und STS"
+          },
+          {
+            "href": "#63760f22-09ac-4ef5-a140-d13abc122597",
+            "rel": "reference",
+            "text": "AWS Root-Benutzer: MFA aktivieren"
+          },
+          {
+            "href": "#afb9b6ea-d6a6-4d60-94c5-ec758387f0e3",
+            "rel": "reference",
+            "text": "AWS Root-Benutzer: Access Keys löschen"
+          },
+          {
+            "href": "#9a119583-b7b5-4091-a448-50ab9571e059",
+            "rel": "reference",
+            "text": "AWS MFA in IAM"
+          },
+          {
+            "href": "#78708eaf-9054-42d8-abaa-7a5d53651581",
+            "rel": "reference",
+            "text": "AWS STS AssumeRole"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): 1) Als Root-Benutzer anmelden. 2) Oben rechts Kontoname/-nummer wählen -> `Security credentials`. 3) Im Abschnitt `Multi-factor authentication (MFA)` -> `Assign MFA device` und einen Hardware- oder virtuellen MFA-Faktor registrieren. 4) Im Abschnitt `Access keys` alle Root-Access-Keys auswählen und unter `Actions` löschen. 5) In AWS Organizations zusätzlich prüfen, ob in Mitgliedskonten Root-Anmeldedaten zentral entfernt werden können. 6) Für tägliche Administration keine Root-Anmeldung nutzen, sondern eine separate Administratorrolle.\nTechnische Umsetzung (CLI/API): Für MFA-geschützte Rollenannahme z. B. `aws sts assume-role --role-arn arn:aws:iam::<KONTO_ID>:role/AdminRole --role-session-name admin-mfa --serial-number arn:aws:iam::<KONTO_ID>:mfa/<BENUTZER> --token-code 123456`.\nBeispiel für eine Trust-Policy, die Rollenannahme durch einen IAM-Benutzer nur mit MFA zulässt:\n`{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::<KONTO_ID>:user/<BENUTZER>\"},\"Action\":\"sts:AssumeRole\",\"Condition\":{\"Bool\":{\"aws:MultiFactorAuthPresent\":\"true\"}}}]}`\nMonitoring: CloudTrail- bzw. EventBridge-/SIEM-Regeln auf Root-ConsoleLogin, CreateAccessKey, DeleteAccessKey, DeactivateMFADevice und DeleteVirtualMFADevice einrichten.",
+        "control-implementations": [
+          {
+            "uuid": "ab3ab2de-9c6e-4c09-b08c-63b50cfad389",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "9cbeaa97-e369-4fa6-ac62-a1155beaa2aa",
+                "control-id": "_55b70084-f446-42af-908b-0f514a72f380",
+                "description": "Für alle Zugänge mit weitreichenden Berechtigungen wird MFA verpflichtend umgesetzt. In der AWS Management Console wird für den Root-Benutzer unter 'Security credentials' mindestens ein starker zweiter Faktor registriert; für Administrierende werden privilegierte Rollen nur nach erfolgreicher MFA oder gleichwertiger föderierter MFA freigegeben.",
+                "statements": [
+                  {
+                    "statement-id": "BER.6.5_stm",
+                    "uuid": "0f815ba5-d092-4a5b-a697-4c330423b889",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Root-Zugänge und andere hochprivilegierte Zugänge nur mit MFA nutzbar sind. Für benutzerassumierbare Rollen wird MFA in der Vertrauensrichtlinie bzw. im vorgelagerten Identitätsbroker erzwungen; tägliche Administration erfolgt nicht mit Root, sondern über separate privilegierte Rollen."
+                  }
+                ]
+              },
+              {
+                "uuid": "6a18c5b6-7805-4db9-8ca1-5e24ca4622f7",
+                "control-id": "_4791c533-f811-48cf-9957-6e1d438028f5",
+                "description": "Privilegierte Tätigkeiten werden über eigene Administrationskonten oder -rollen durchgeführt. Root ist kein Alltagskonto, sondern ein eng geregelter Notfallpfad mit dokumentierter Freigabe, Aufbewahrung und Nachkontrolle.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.5_stm",
+                    "uuid": "7bcc8dd0-0054-41d8-a982-c33c4323520f",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem privilegierte Verwaltungsaufgaben ausschließlich über dedizierte Administratorrollen oder föderierte Administratorzugänge ausgeführt werden. Root oder andere Notfall-Zugänge werden organisatorisch getrennt, technisch abgesichert und nur für wenige dokumentierte Ausnahmefälle freigeschaltet."
+                  }
+                ]
+              },
+              {
+                "uuid": "b1b0b980-d9c3-442d-9c5a-cfecc70a0ae0",
+                "control-id": "_c25354d3-ed8f-4bac-ad0c-f0641d1b7f84",
+                "description": "CloudTrail protokolliert erfolgreiche und fehlgeschlagene Authentifizierungen, insbesondere Root-Konsolenanmeldungen, fehlgeschlagene MFA-Eingaben und privilegierte Anmeldeereignisse. Darauf aufbauend werden CloudWatch-/SIEM-Alarme mit kurzer Reaktionszeit eingerichtet.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1.1_stm",
+                    "uuid": "c1b42e6d-7f46-4b36-ae96-733df50b88a7",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem ConsoleLogin-Ereignisse, fehlgeschlagene Authentifizierungen und Root-Nutzung zentral ausgewertet und alarmiert werden. Die Alarmierung enthält mindestens Prinzipal, Quell-IP, Region, Zeitpunkt und die betroffene Aktion."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "969d4307-d0b4-41c7-9aa0-d2e86e51b2fc",
+        "type": "process-procedure",
+        "title": "AWS IAM Temporäre Anmeldedaten und Rollen statt Langzeitschlüssel",
+        "description": "Etabliert Rollen und AWS STS als Standardzugangsmuster für Menschen und Workloads. IAM-Benutzer mit Langzeit-Zugangsschlüsseln werden nur in eng begründeten Ausnahmefällen verwendet und systematisch abgebaut.",
+        "purpose": "Reduziert Missbrauchsrisiken durch langlebige Zugangsdaten, stärkt Nachvollziehbarkeit und erleichtert den Entzug oder Ablauf von Berechtigungen.",
+        "links": [
+          {
+            "href": "#cd57124b-1459-4b7d-b719-b5396a9ea467",
+            "rel": "reference",
+            "text": "AWS IAM bewährte Verfahren"
+          },
+          {
+            "href": "#5bfe8323-035f-49cd-bf8f-98d48bc6400f",
+            "rel": "reference",
+            "text": "Temporäre AWS-Sicherheitsanmeldedaten in IAM"
+          },
+          {
+            "href": "#78708eaf-9054-42d8-abaa-7a5d53651581",
+            "rel": "reference",
+            "text": "AWS STS AssumeRole"
+          },
+          {
+            "href": "#3d3a298a-9845-42c7-96a7-59b50e2456c7",
+            "rel": "reference",
+            "text": "AWS IAM Rollen erstellen"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "1448c561-190c-4b76-a6db-d73f9eb696c8",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "b828ac58-8b74-4939-82f1-8c41ac53c1fe",
+                "control-id": "_a9aa521b-e610-40ae-80d0-f1dd3b4ec47f",
+                "description": "Menschen erhalten Zugriff bevorzugt über föderierte Anmeldung und rollenbasierte Berechtigungen, z. B. über IAM Identity Center oder externe IdPs. Neue Berechtigungen werden als Rollen modelliert; direkte Einzelkonten mit dauerhaftem API-Schlüssel werden nicht als Standard bereitgestellt.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1.1_stm",
+                    "uuid": "acc159cc-3edd-4ef0-a0cf-283fd7c95aca",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Berechtigungen in AWS über Rollen modelliert und Nutzenden nur über diese Rollen zugewiesen werden. Die Rollen werden nach Aufgabenprofil, Systemkontext und Schutzbedarf getrennt; direkte Dauerberechtigungen an Einzelkonten werden vermieden."
+                  }
+                ]
+              },
+              {
+                "uuid": "ad40c45a-23e4-4fda-80d1-763fdf992eed",
+                "control-id": "_403fac1f-a78a-4548-858e-a06168253dea",
+                "description": "Maschinenidentitäten verwenden Instanzprofile, Task-Rollen, Diensterollen oder andere kurzlebige Token-Mechanismen statt statischer IAM-Benutzer-Keys. Wo technische Altverfahren vorübergehend Langzeitschlüssel benötigen, wird deren Eigentümer, Zweck, Rotationsverfahren und Abschaltplan dokumentiert.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.20_stm",
+                    "uuid": "d61b6503-fa5d-4f57-8371-869c542aa692",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Dienste- und Maschinenzugänge auf automatisch verwaltete oder kurzlebige Zugangsdaten umgestellt werden. Statische Secrets werden nur als übergangsweise Ausnahme mit definierter Rotation und Monitoring weiterbetrieben."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Technische Umsetzung (Menschen): In IAM Identity Center bzw. im föderierten IdP Gruppen/Rollen definieren und Zugriffe nur über Rollen zuweisen; keine neuen IAM-Benutzer mit Langzeit-Keys bereitstellen. Konsolenpfad für klassische Rollen: IAM -> Roles -> Create role; danach Trust-Policy und Berechtigungspolicy zuweisen.\nTechnische Umsetzung (CLI): Rollenannahme mit STS, z. B. `aws sts assume-role --role-arn arn:aws:iam::<KONTO_ID>:role/ReadOnlyRole --role-session-name readonly-ops`.\nTechnische Umsetzung (Workloads): EC2 -> Instances -> Actions -> Security -> Modify IAM role; Lambda -> Function -> Configuration -> Permissions -> Execution role; ECS-Task-Definition mit `taskRoleArn` und `executionRoleArn`; EKS über IRSA/Pod-Identity statt statischer Keys. Bestehende Access Keys inventarisieren, deaktivieren und löschen, sobald die Rollenpfade funktionsfähig sind."
+      },
+      {
+        "uuid": "fa754ee9-edf6-4743-b63e-5c3c96088a3e",
+        "type": "policy",
+        "title": "AWS IAM Minimalberechtigungs-Policies mit Ressourcenbindung",
+        "description": "Beschreibt die Erstellung eng begrenzter IAM-Policies mit expliziter Ressourcenbindung, passenden Bedingungen und vorgelagerten Sicherheitstests. Die Komponente löst bewusst lokale 'nicht umsetzbar'-Bewertungen aus dem Ausgangsdokument in wiederverwendbare Anwendbarkeitsregeln auf.",
+        "purpose": "Begrenzt Berechtigungen auf das minimal erforderliche Maß und verhindert fehlerhafte oder zu breite Freigaben vor der produktiven Verwendung.",
+        "links": [
+          {
+            "href": "#cd57124b-1459-4b7d-b719-b5396a9ea467",
+            "rel": "reference",
+            "text": "AWS IAM bewährte Verfahren"
+          },
+          {
+            "href": "#60c39fff-755a-4d65-8a7d-4d80b3cc9603",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer Policy-Validierung"
+          },
+          {
+            "href": "#49713a71-8a27-4452-8e8f-04be099ed711",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer Policy-Generierung"
+          },
+          {
+            "href": "#1c684905-9f52-4e15-b4ce-eaaf76198f9a",
+            "rel": "reference",
+            "text": "Beispiel für den AWS-Condition-Key aws:RequestedRegion"
+          },
+          {
+            "href": "#e5bcfdd8-e806-4df5-a698-b2011683d247",
+            "rel": "reference",
+            "text": "AWS CLI: ValidatePolicy"
+          },
+          {
+            "href": "#b94e63ab-daad-4766-aaef-c3105a60ecd7",
+            "rel": "reference",
+            "text": "AWS CLI: SimulatePrincipalPolicy"
+          },
+          {
+            "href": "#7cf6ba72-57ce-40b0-be23-604319e8d1b9",
+            "rel": "reference",
+            "text": "AWS IAM Policy Simulator"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): IAM -> Policies -> Create policy -> JSON. Aktionen nur für konkrete Ressourcen-ARNs freigeben und Conditions nur dort setzen, wo der Anfragekontext stabil ist. Beispiel:\n`{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"s3:GetObject\"],\"Resource\":[\"arn:aws:s3:::mein-bucket/*\"],\"Condition\":{\"StringEquals\":{\"aws:RequestedRegion\":\"eu-central-1\"}}}]}`\nTechnische Umsetzung (CLI): Policy vor Freigabe validieren mit `aws accessanalyzer validate-policy --policy-document file://policy.json --policy-type IDENTITY_POLICY`.\nRechtesimulation mit konkretem Prinzipal und Ressource, z. B. `aws iam simulate-principal-policy --policy-source-arn arn:aws:iam::<KONTO_ID>:role/AppRole --action-names s3:GetObject --resource-arns arn:aws:s3:::mein-bucket/test.txt`.\nBei Kontextbedingungen zusätzlich die erforderlichen Context Keys vorab bestimmen und Testfälle für Allow- sowie Deny-Szenarien dokumentieren.",
+        "control-implementations": [
+          {
+            "uuid": "c1e25160-89ec-4ecb-898d-d1ab92a62fa5",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "7caf7cb7-a5da-4489-b3eb-7d22ad7f0508",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "Policies enthalten nur benötigte Aktionen und nur die betroffenen Ressourcen. Platzhalter für Aktionen oder Ressourcen werden vermieden, sofern die jeweilige AWS-API nicht zwingend eine ungebundene Ressource erfordert. Zusätzliche Condition-Keys wie Tags, aws:PrinzipalOrgID, aws:RequestedRegion oder weitere kontextbezogene Schlüssel werden dort eingesetzt, wo der Anfragekontext stabil und fachlich geeignet ist.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1_stm",
+                    "uuid": "b4565a4f-d016-4c94-b96b-f146d4f2fb74",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem IAM-Policies grundsätzlich nach Minimalberechtigungs modelliert, Ressourcen konkret gebunden und allgemeine Allow-Statements auf '*' nur nach dokumentierter Ausnahme zugelassen werden. Kontextbedingungen werden gezielt dort genutzt, wo sie technisch zuverlässig ausgewertet werden können."
+                  }
+                ]
+              },
+              {
+                "uuid": "f3e382bc-91ff-42da-9389-ad180a4c14da",
+                "control-id": "_2edf4a68-0d86-4da9-ada4-9939c2508f2c",
+                "description": "Vor Freigabe einer neuen oder geänderten Policy wird die Einhaltung der Sicherheitsanforderungen getestet. Dazu gehören mindestens Policy-Validation mit IAM Access Analyzer, eine repräsentative Simulation oder ein Access Preview sowie Negativtests für unerwünschte Aktionen.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.3.1_stm",
+                    "uuid": "d0c0b298-c539-4a15-bd32-536ce1d64f98",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem vor Inbetriebnahme jeder wesentlichen Policy-Änderung technische Sicherheitstests durchgeführt werden. Die Tests prüfen sowohl erlaubte Soll-Zugriffe als auch verbotene Eskalations- oder Datenzugriffsszenarien."
+                  }
+                ]
+              },
+              {
+                "uuid": "3d437f29-53f6-4a03-a5a2-e06898c424da",
+                "control-id": "_b7a747d3-cb11-46ce-8d0c-c57cc31d5ad5",
+                "description": "Die Ergebnisse der Policy-Simulation und -Validierung werden revisionsfähig dokumentiert, einschließlich Testfall, getesteter Identität oder Rolle, erwarteter Entscheidung und tatsächlichem Ergebnis.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.3.1.1_stm",
+                    "uuid": "13dbe363-2d96-4d15-a3e2-7a649b6a32a2",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Policy-Tests, Prüfschritte und Korrekturen in einem nachverfolgbaren Änderungsartefakt dokumentiert werden. Ohne dokumentierte Ergebnisse darf keine produktive Freigabe erfolgen."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "14b6c601-d6ca-41b2-a9c0-3d7bce650df5",
+        "type": "policy",
+        "title": "AWS IAM Vertrauensrichtlinien und Rollenvertrauen strikt einschränken",
+        "description": "Beschreibt wiederverwendbare Härtungsmuster für Vertrauensrichtlinien von Rollen, kontenübergreifende Zugriffe und föderierte Rollenübernahme.",
+        "purpose": "Verhindert ungewollte Rollenübernahme, reduziert Angriffsflächen in Vertrauensrichtlinien und erschwert kontenübergreifenden Missbrauch.",
+        "links": [
+          {
+            "href": "#dbe0d4cc-844e-47dd-b5cf-f47908f6df07",
+            "rel": "reference",
+            "text": "AWS Vertrauensrichtlinie: nicht unterstütztes Platzhalter-Muster in Prinzipal"
+          },
+          {
+            "href": "#a8c98839-43ba-4522-a433-f3dd73229923",
+            "rel": "reference",
+            "text": "AWS globaler Condition-Key aws:PrinzipalOrgID"
+          },
+          {
+            "href": "#9f70ca4b-da11-4478-b4fe-cc67bc34695d",
+            "rel": "reference",
+            "text": "AWS Confused-Deputy-Problem und External ID"
+          },
+          {
+            "href": "#48bf5d20-42da-42bb-a280-ecda8b8c6bd6",
+            "rel": "reference",
+            "text": "Abgesicherter AWS-API-Zugriff mit MFA"
+          },
+          {
+            "href": "#17081fba-5e5f-4fcc-9cc9-ce9166f432b4",
+            "rel": "reference",
+            "text": "AWS CLI: UpdateAssumeRolePolicy"
+          },
+          {
+            "href": "#78708eaf-9054-42d8-abaa-7a5d53651581",
+            "rel": "reference",
+            "text": "AWS STS AssumeRole"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): IAM -> Roles -> <Rolle> -> Trust relationships -> Edit trust policy. Keine Platzhalter-Prinzipale verwenden, sondern konkrete AWS-Konten, Rollen oder föderierte Provider. Für organisationsinterne Zugriffe `aws:PrincipalOrgID` und für Drittparteien `sts:ExternalId` setzen.\nBeispiel Trust-Policy:\n`{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::<TRUSTED_ACCOUNT_ID>:role/DeploymentRole\"},\"Action\":\"sts:AssumeRole\",\"Condition\":{\"StringEquals\":{\"aws:PrincipalOrgID\":\"o-abc123xyz\",\"sts:ExternalId\":\"<FESTE_EXTERNAL_ID>\"}}}]}`\nTechnische Umsetzung (CLI): `aws iam update-assume-role-policy --role-name <ROLLE> --policy-document file://trust.json`.\nWenn menschliche IAM-Benutzer eine Rolle direkt annehmen, kann in derselben Trust-Policy zusätzlich `\"Bool\":{\"aws:MultiFactorAuthPresent\":\"true\"}` verlangt werden. Für föderierte SSO-Pfade ist MFA stattdessen im IdP bzw. im vorgelagerten Broker zu erzwingen.",
+        "control-implementations": [
+          {
+            "uuid": "19a1d6ed-d6c7-4f79-9c59-70c1a8ada05b",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "95478296-9c55-47fb-b4cb-e7bdde4e1ca7",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "Jede Vertrauensrichtlinie benennt die zulässigen Prinzipale so eng wie möglich. Unzulässige Platzhalter im Prinzipal werden vermieden; stattdessen werden konkrete Konten, Rollen, föderierte Provider oder organisatorische Grenzen angegeben. Für Drittparteien werden zusätzliche Bedingungen wie sts:ExternalId verwendet; für organisationsinterne Nutzung werden nach Möglichkeit AWS-Organizations-Bedingungen eingesetzt.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1_stm",
+                    "uuid": "49f558eb-2f66-4e64-81f7-4cf17185641c",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Vertrauensrichtlinien ausschließlich exakt erforderliche Prinzipale und Schutzbedingungen enthalten. Dadurch wird die Rollenübernahme auf klar definierte Aufrufer und Kontexte beschränkt."
+                  }
+                ]
+              },
+              {
+                "uuid": "484f7306-ecd1-4075-877a-7e9a24f6f826",
+                "control-id": "_a9aa521b-e610-40ae-80d0-f1dd3b4ec47f",
+                "description": "Rollen werden nach klaren fachlichen Verwendungszwecken getrennt, z. B. Betriebsrolle, Deployment-Rolle, Audit-Rolle oder Notfallrolle. Jede Rolle erhält eine eigene Vertrauensrichtlinie und eine eigenständige Berechtigungsgrenze statt eines gemeinsam genutzten Sammelzugangs.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1.1_stm",
+                    "uuid": "ff9cabae-4051-486b-be28-44d6391827ff",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Rollen nicht als universelle Sammelidentitäten, sondern als getrennte Berechtigungscontainer mit spezifischem Vertrauensmodell betrieben werden. Die Zuweisung und Annahme der Rollen folgt einem nachvollziehbaren Rollenkonzept."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "2a8cfc56-0389-4f4d-bbd2-e96ca11563c9",
+        "type": "policy",
+        "title": "AWS IAM iam:PassRole und privilegierte Rollenerstellung beschränken",
+        "description": "Begrenzt Eskalationspfade durch iam:PassRole sowie durch das Erstellen oder Ändern privilegierter Rollen und Policies.",
+        "purpose": "Verhindert, dass Berechtigte über Rollendurchreichung oder Policy-Manipulation indirekt höhere Rechte erlangen als vorgesehen.",
+        "links": [
+          {
+            "href": "#cd57124b-1459-4b7d-b719-b5396a9ea467",
+            "rel": "reference",
+            "text": "AWS IAM bewährte Verfahren"
+          },
+          {
+            "href": "#60c39fff-755a-4d65-8a7d-4d80b3cc9603",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer Policy-Validierung"
+          },
+          {
+            "href": "#94f47806-b261-4370-b720-32b6d27398a8",
+            "rel": "reference",
+            "text": "AWS-CloudTrail-Integration für IAM und STS"
+          },
+          {
+            "href": "#2537db82-2ad4-4478-82a4-8a81b0648bba",
+            "rel": "reference",
+            "text": "AWS IAM: PassRole an bestimmten Dienst"
+          },
+          {
+            "href": "#3025745f-2de2-4775-8261-d2ccf2a8cb18",
+            "rel": "reference",
+            "text": "AWS IAM: PassRole verwenden"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "02ddab72-919e-4df2-9b0b-0d1deccb2739",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "4036b319-98c4-4599-a920-209f9c0fbd94",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "iam:PassRole wird ausschließlich für explizit freigegebene Zielrollen erlaubt. Ergänzend werden Bedingungen wie Rollenpfade, Namensmuster, Tags oder dienstspezifische Einschränkungen genutzt, sodass kein unerwartetes Durchreichen anderer Rollen möglich ist. Hochprivilegierte IAM-Aktionen wie CreateRole, UpdateAssumeRolePolicy, PutRolePolicy, AttachRolePolicy, CreatePolicyVersion oder SetDefaultPolicyVersion sind auf einen kleinen Administratorenkreis oder Pipeline-Prinzipale beschränkt.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1_stm",
+                    "uuid": "3f42e191-e5c1-414b-8ca8-3c1385d9b6ca",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem indirekte Rechteausweitung über iam:PassRole und privilegierte IAM-Änderungen technisch eingegrenzt wird. Rollen und Policies mit Eskalationspotenzial werden nicht allgemein freigegeben."
+                  }
+                ]
+              },
+              {
+                "uuid": "27ca9a4d-a221-466f-836e-e717e82374fa",
+                "control-id": "_4791c533-f811-48cf-9957-6e1d438028f5",
+                "description": "Nur dedizierte Administrationsrollen dürfen privilegierte Rollen und deren Policies anlegen oder ändern. Operative Fach- oder Laufzeitrollen erhalten keine IAM-Administrationsrechte, außer dies ist eng begründet und zusätzlich überwacht.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.5_stm",
+                    "uuid": "d7fba102-a5d5-42e8-971a-0e21d70edc24",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem privilegierte Verwaltungsrechte ausschließlich in separaten Administrationsrollen gebündelt werden. So werden Änderungen an Identitäten und Berechtigungen organisatorisch und technisch von der normalen Nutzung getrennt."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Technische Umsetzung (Policy): `iam:PassRole` nie auf `*`, sondern nur auf explizite Zielrollen-ARNs erlauben und `iam:PassedToService` nutzen. Beispiel:\n`{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Action\":[\"iam:PassRole\"],\"Resource\":[\"arn:aws:iam::<KONTO_ID>:role/service-role/lambda-*\"],\"Condition\":{\"StringEquals\":{\"iam:PassedToService\":\"lambda.amazonaws.com\"}}}]}`\nRollenerstellung und Policy-Änderungen (`iam:CreateRole`, `iam:UpdateAssumeRolePolicy`, `iam:AttachRolePolicy`, `iam:PutRolePolicy`, `iam:CreatePolicyVersion`, `iam:SetDefaultPolicyVersion`) nur dedizierten Administratorrollen oder CI/CD-Rollen geben. Änderungen über CloudTrail protokollieren und auf `PassRole` sowie Trust-Policy-Änderungen alarmieren."
+      },
+      {
+        "uuid": "eb6700f2-89a2-448e-9b98-d77ee6feafd4",
+        "type": "policy",
+        "title": "AWS IAM Permission Boundaries für delegierte Rollenerstellung",
+        "description": "Beschreibt den Einsatz von Permission Boundaries als obere Berechtigungsgrenze für delegiert oder automatisiert erzeugte Rollen.",
+        "purpose": "Stellt sicher, dass delegierte Provisionierungswege keine Rollen mit unzulässig hohen Effektivrechten erzeugen können.",
+        "links": [
+          {
+            "href": "#6d0b1ce6-9e09-443c-85c1-c309161780f7",
+            "rel": "reference",
+            "text": "AWS Permission Boundaries für IAM-Entitäten"
+          },
+          {
+            "href": "#cd57124b-1459-4b7d-b719-b5396a9ea467",
+            "rel": "reference",
+            "text": "AWS IAM bewährte Verfahren"
+          },
+          {
+            "href": "#65867879-56a8-4856-9397-bc82e30e942f",
+            "rel": "reference",
+            "text": "AWS CLI: PutRolePermissionsBoundary"
+          },
+          {
+            "href": "#1ce83b16-5e9f-4799-be1e-498479d2c8ec",
+            "rel": "reference",
+            "text": "AWS CLI: CreateRole"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): IAM -> Policies -> Create policy; dort eine Boundary-Policy mit den maximal zulässigen Aktionen pflegen. Danach IAM -> Roles -> Create role oder <Rolle> -> Edit und unter `Permissions boundary` die Boundary auswählen. In der Rollenerstellung kann die Boundary bereits beim Anlegen gesetzt werden.\nTechnische Umsetzung (CLI): `aws iam put-role-permissions-boundary --permissions-boundary arn:aws:iam::<KONTO_ID>:policy/Boundary-DelegatedRole --role-name <ROLLE>`.\nAlternativ beim Anlegen: `aws iam create-role --role-name <ROLLE> --assume-role-policy-document file://trust.json --permissions-boundary arn:aws:iam::<KONTO_ID>:policy/Boundary-DelegatedRole`.\nBeachten: Für service-linked roles lässt sich keine Permissions Boundary setzen. In solchen Fällen sind dokumentierte Ersatzkontrollen wie SCPs oder plattformseitige Guardrails nötig.",
+        "control-implementations": [
+          {
+            "uuid": "ae375b85-efa6-4295-a779-60953d6934ba",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "fc6f725a-ac78-4303-af24-839f08f0eba8",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "Für delegiert erzeugte oder per Pipeline bereitgestellte Rollen wird eine zentrale Boundary-Policy als Pflichtvorgabe hinterlegt. Die Boundary enthält mindestens Verbote für hochriskante IAM-Aktionen, unerwünschte Platzhalter und nicht freigegebene Services. Vor produktiver Nutzung wird geprüft, dass die Boundary gesetzt ist und die effektiven Rechte die definierte Maximalgrenze nicht überschreiten.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1_stm",
+                    "uuid": "b968bf57-5593-4e45-a967-4b1a21ca93e1",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem delegierte IAM-Rollen nicht nur durch ihre Identitätspolicies, sondern zusätzlich durch eine technische Obergrenze beschränkt werden. Dadurch bleibt auch bei fehlerhafter Policy-Zuweisung die maximale Berechtigung kontrolliert."
+                  }
+                ]
+              },
+              {
+                "uuid": "8464f301-7059-4bfe-a26d-66be46dde410",
+                "control-id": "_1aa8319f-93fb-4236-991a-d799ab69e0c2",
+                "description": "Die Autorisierung einer kritisch eingestuften Rollenänderung ist an das Kriterium gebunden, dass die vorgeschriebene Permission Boundary vorhanden, korrekt referenziert und fachlich geprüft ist.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.4.1_stm",
+                    "uuid": "64ffc19b-44cb-4376-9e7e-07268b25d156",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem kritische Änderungen an Rollen nur dann freigegeben werden, wenn die Boundary-Prüfung Teil des formalen Änderungs- oder Pipeline-Gates ist."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "c8cc0455-03c0-499a-809a-9f77a0bb2eb6",
+        "type": "policy",
+        "title": "AWS IAM Sitzungsdauer und Sitzungskontexte begrenzen",
+        "description": "Reduziert das Risiko lang andauernder oder aus unerwarteten Kontexten genutzter Sessions durch kurze Maximaldauern, session-spezifische Einschränkungen und kontextgebundene Conditions.",
+        "purpose": "Verkürzt Missbrauchsfenster kompromittierter Sessions und begrenzt privilegierte Zugriffe auf erwartete Kontexte.",
+        "links": [
+          {
+            "href": "#cf13ff35-46de-4100-a8d0-033d48c264bc",
+            "rel": "reference",
+            "text": "AWS IAM Rollensitzungsdauer"
+          },
+          {
+            "href": "#ef3825cc-5482-4bce-87e8-2328d1e3d5e6",
+            "rel": "reference",
+            "text": "AWS IAM Identity Center Sitzungsdauer"
+          },
+          {
+            "href": "#1c684905-9f52-4e15-b4ce-eaaf76198f9a",
+            "rel": "reference",
+            "text": "Beispiel für den AWS-Condition-Key aws:RequestedRegion"
+          },
+          {
+            "href": "#5bfe8323-035f-49cd-bf8f-98d48bc6400f",
+            "rel": "reference",
+            "text": "Temporäre AWS-Sicherheitsanmeldedaten in IAM"
+          },
+          {
+            "href": "#32a16c85-5e8f-4379-afb5-f50f84635361",
+            "rel": "reference",
+            "text": "AWS CLI: UpdateRole"
+          },
+          {
+            "href": "#ad272474-4c0a-41dd-8f0c-b3f44586942b",
+            "rel": "reference",
+            "text": "AWS IAM Rollen-Einstellungen"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): IAM -> Roles -> <Rolle> -> Edit -> Maximum CLI/API session duration. Für besonders kritische Rollen 3600 Sekunden oder den minimal fachlich tragbaren Wert setzen.\nTechnische Umsetzung (CLI): `aws iam update-role --role-name <ROLLE> --max-session-duration 3600`.\nDie annehmende Partei darf nur bei Bedarf eine längere Dauer anfordern, z. B. `aws sts assume-role --role-arn arn:aws:iam::<KONTO_ID>:role/BreakGlassRole --role-session-name bg-incident --duration-seconds 3600`.\nZusätzliche Kontextbindung: In Trust- oder Berechtigungspolicies nur stabile Kontextmerkmale verwenden, z. B. `aws:RequestedRegion`, `aws:SourceIp`, `aws:PrincipalTag/<TAG>` oder Sitzungstags. Vor Einsatz über SimulatePrincipalPolicy gegen repräsentative Kontexte testen.",
+        "control-implementations": [
+          {
+            "uuid": "c6b6350a-eca9-40bc-8d0c-3870d4840687",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "8cab446c-0e77-4b45-8894-601dd0b996b0",
+                "control-id": "_e549f464-b2fb-42a1-83b9-21bd3bb0f3cf",
+                "description": "Für besonders kritische Rollen wird die maximale Sitzungsdauer auf das minimal fachlich vertretbare Maß gesetzt, typischerweise 1 Stunde oder weniger, sofern der Zugriffspfad dies unterstützt. Wo technisch möglich, werden zusätzlich Sitzungs-Policies eingesetzt, um den Umfang einer konkreten Sitzung gegenüber der Grundrolle weiter zu reduzieren.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1.2_stm",
+                    "uuid": "725eceb9-93e8-449a-9f3a-1a5392833bad",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem privilegierte Zugriffe zeitlich begrenzt und bei Bedarf just-in-time aktiviert werden. Kritische Verwaltungsrechte werden nicht als langlaufende Dauersitzung bereitgestellt."
+                  }
+                ]
+              },
+              {
+                "uuid": "57f6b973-458c-4c4e-ac85-89ff8c86ab87",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "Zusätzliche Conditions wie aws:RequestedRegion, definierte Quell-IP-Bereiche, bekannte VPC-Endpunkte, Sitzungs-Tags oder andere stabile Kontextmerkmale werden für Rollen mit erhöhtem Missbrauchspotenzial eingesetzt, wenn der jeweilige Zugriffspfad einen verlässlichen Anfragekontext liefert.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1_stm",
+                    "uuid": "6c6d1297-7057-4bbc-88a2-259591519e87",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Minimalberechtigungs nicht nur auf Aktionen und Ressourcen, sondern auch auf den zulässigen Nutzungskontext der Sitzung angewandt wird."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "42d48dbb-9ac8-41dc-8b60-a638949ac05a",
+        "type": "process-procedure",
+        "title": "AWS IAM Änderungen und privilegierte Ereignisse protokollieren, alarmieren und einordnen",
+        "description": "Fasst die Protokollierung, zentrale Ausleitung, Alarmierung und Erstreaktion für AWS-IAM- und STS-bezogene Sicherheitsereignisse zusammen.",
+        "purpose": "Ermöglicht schnelle Erkennung und geordnete Reaktion auf missbräuchliche oder fehlerhafte IAM-Änderungen und privilegierte Zugriffe.",
+        "links": [
+          {
+            "href": "#94f47806-b261-4370-b720-32b6d27398a8",
+            "rel": "reference",
+            "text": "AWS-CloudTrail-Integration für IAM und STS"
+          },
+          {
+            "href": "#1381697b-7271-4825-a6d1-9d7e87c95e7d",
+            "rel": "reference",
+            "text": "AWS CloudTrail-Trail-Erstellung und Logdatei-Validierung"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "01db1725-1d5c-459d-ad10-b09edbd40e5e",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "dd1bb1b0-ee7c-4d0e-beb4-c2705d242902",
+                "control-id": "_744a1a50-616b-4092-91f6-b2b4b1b0aa01",
+                "description": "Aktionen an Zugangskonten und Berechtigungen werden revisionsfähig protokolliert. Dazu zählen insbesondere das Erstellen, Ändern, Deaktivieren und Löschen von IAM-Benutzern, Rollen, Policies, Zugriffsschlüssel, Vertrauensrichtlinien und verwandten Berechtigungsobjekten.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.3_stm",
+                    "uuid": "5a03cdfc-d2b6-42c5-8015-885395758804",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem alle wesentlichen Änderungen an Identitäten und Berechtigungen über CloudTrail revisionsfähig aufgezeichnet und zentral aufbewahrt werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "2c49ddbf-54c9-47a3-a63a-446de3fc8216",
+                "control-id": "_dc58d353-86e1-4070-9f86-b7f0e0f93305",
+                "description": "Sicherheitsrelevante IAM-Ereignisse werden in allen relevanten Konten und Regionen fortlaufend protokolliert. Die Protokolle werden in ein zentrales, gegen nachträgliche Manipulation geschütztes Ziel ausgeleitet; nach Möglichkeit sind Log-File-Validation und weitere Integritätsschutzmechanismen aktiviert.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1_stm",
+                    "uuid": "4e01c67a-09cc-4674-bfa5-9cc0378aaeea",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem IAM- und STS-relevante Sicherheitsereignisse institutionsweit zentral gesammelt und über die definierte Mindestfrist verfügbar gehalten werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "71c60de3-8ae3-4918-be42-6182f5157655",
+                "control-id": "_c25354d3-ed8f-4bac-ad0c-f0641d1b7f84",
+                "description": "Authentifizierungen bei Erfolg und Fehlschlag werden erfasst und alarmierbar gemacht. Das schließt ConsoleLogin, Root-Anmeldungen, fehlgeschlagene MFA und auffällige Anmeldeereignisse ein.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1.1_stm",
+                    "uuid": "52e21895-4742-4d65-ac09-3c43cf75b4ec",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Anmeldeereignisse zentral protokolliert und für Detektion, Korrelation und Alarmierung nutzbar gemacht werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "924d4175-3910-4b07-97ea-bc6b94e80135",
+                "control-id": "_e7d500ff-393c-4c14-baed-c87b676efe5c",
+                "description": "Privilegierte Ereignisse wie CreateRole, UpdateAssumeRolePolicy, AttachRolePolicy, PutRolePolicy, CreatePolicyVersion, SetDefaultPolicyVersion, PassRole, CreateAccessKey oder root-bezogene Aktionen werden mit erhöhter Priorität ausgewertet.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1.8_stm",
+                    "uuid": "9cca43e5-8b08-4bba-b1ed-d68958c4ca40",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem privilegierte oder sicherheitskritische IAM-Aktionen gesondert überwacht und mit zielgerichteten Alarmregeln versehen werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "427925f8-7ed3-4c92-acb0-ea8d88d72ada",
+                "control-id": "_681494bd-8d1d-4b34-84f6-abab2f4ea751",
+                "description": "Cloud-Ereignisse aus AWS werden in das institutionsweite Audit-Log bzw. SIEM integriert, damit Cloud-seitige Missbrauchsszenarien nicht isoliert außerhalb der zentralen Detektion verbleiben.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1.13_stm",
+                    "uuid": "fa332d8c-5d2b-4db9-9662-5b484c691d9e",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem AWS-IAM- und STS-Ereignisse in die zentrale Protokollierung und Korrelation der Institution einbezogen werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "04f28da7-8dac-4e48-88dc-53c6535957f3",
+                "control-id": "_988a898a-f7c3-4e6c-9746-8b20e2e85ecd",
+                "description": "Für IAM-Alarme existiert ein kurzes Triage- und Erstreaktions-Runbook. Es enthält mindestens Priorisierung, Sofortmaßnahmen, Rücknahme kritischer Änderungen, Sicherung relevanter Logs und die Eskalationswege an Betrieb, SOC und forensische Stellen.",
+                "statements": [
+                  {
+                    "statement-id": "REA.2.1_stm",
+                    "uuid": "4a52d85d-50dc-4f93-90d4-b296ce8d61a6",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem alarmierte IAM-Ereignisse nicht nur erkannt, sondern anhand definierter Priorisierung und Sofortmaßnahmen unmittelbar bearbeitet werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): CloudTrail -> Trails -> org-weiten Trail verwenden oder anlegen, Multi-Region- bzw. organisationsweite Erfassung aktivieren, Log file validation aktivieren, Ziel-Bucket mit SSE-KMS und restriktiver Bucket-Policy absichern. Danach EventBridge -> Rules -> Create rule mit Event source `aws.iam` und `detail-type = \"AWS API Call via CloudTrail\"`; als `detail.eventName` mindestens `CreateRole`, `UpdateAssumeRolePolicy`, `AttachRolePolicy`, `PutRolePolicy`, `CreatePolicyVersion`, `SetDefaultPolicyVersion`, `PassRole`, `CreateAccessKey`, `DeleteAccessKey`, `ConsoleLogin` überwachen.\nTechnische Umsetzung (Reaktion): Ein kurzes Runbook hinterlegen: betroffene Rolle/Policy identifizieren, letzte Änderung rückgängig machen, verdächtige Access Keys deaktivieren, CloudTrail-/EventBridge-Ereignisse sichern, Betroffene informieren und Incident eskalieren."
+      },
+      {
+        "uuid": "9961d9ac-469f-4426-8679-08dc743e8738",
+        "type": "process-procedure",
+        "title": "AWS IAM Anmeldedatenhygiene und Schlüsselrotation",
+        "description": "Beschreibt eine wiederverwendbare Betriebsroutine zur Erkennung, Deaktivierung, Rotation und Überwachung langlebiger AWS-Zugangsdaten.",
+        "purpose": "Reduziert Missbrauchsrisiken durch veraltete, ungenutzte oder kompromittierte Zugangsdaten.",
+        "links": [
+          {
+            "href": "#33bb6400-f9e3-499c-9def-716213389e59",
+            "rel": "reference",
+            "text": "AWS IAM Anmeldedatenberichte"
+          },
+          {
+            "href": "#c0f66ac9-20fb-44ab-9c2c-830d7b59ac61",
+            "rel": "reference",
+            "text": "AWS dienstspezifische Anmeldedaten"
+          },
+          {
+            "href": "#9ba1f9c7-4c9a-438b-9bdf-d20a51f2c8ec",
+            "rel": "reference",
+            "text": "AWS ungenutzte Anmeldedaten ermitteln"
+          },
+          {
+            "href": "#221dd1eb-8c8f-4537-91a7-d4303d332696",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer"
+          },
+          {
+            "href": "#a70a047d-d6dc-4932-93a0-fb4d5e22aa7f",
+            "rel": "reference",
+            "text": "AWS CLI: GenerateCredentialReport"
+          },
+          {
+            "href": "#e5a97ff2-df86-44a5-85b2-081920e34e41",
+            "rel": "reference",
+            "text": "AWS CLI: GetCredentialReport"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): IAM -> Credential report -> Download report. Den Report regelmäßig auswerten und veraltete Passwörter, MFA-lose Benutzer, inaktive oder alte Access Keys behandeln.\nTechnische Umsetzung (CLI): `aws iam generate-credential-report` und anschließend `aws iam get-credential-report --query Content --output text | base64 --decode > credential-report.csv`.\nVerdächtige oder veraltete Keys zunächst deaktivieren, dann löschen, z. B. `aws iam update-access-key --user-name <BENUTZER> --access-key-id <KEY_ID> --status Inactive` und `aws iam delete-access-key --user-name <BENUTZER> --access-key-id <KEY_ID>`.\nWenn Langzeit-Keys ausnahmsweise nötig sind, Eigentümer, Einsatzzweck, maximale Lebensdauer, Rotationsintervall und Monitoring verbindlich dokumentieren.",
+        "control-implementations": [
+          {
+            "uuid": "4ba6d8a3-1202-4112-88c1-b5973c1093f7",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "4082815f-a3dd-408b-8f79-2b04c3df238b",
+                "control-id": "_4785649d-561d-4757-9421-4d0db14ee4df",
+                "description": "Anmeldedatenberichte, Last-Used-Informationen, IAM Access Analyzer und ergänzende API-Abfragen werden als automatisierter Mechanismus genutzt, um kompromittierte, ungenutzte oder überalterte Zugangsdaten frühzeitig zu erkennen. Aus Befunde folgen definierte Maßnahmen wie Deaktivierung, Rotation, Löschung oder Incident-Eskalation.",
+                "statements": [
+                  {
+                    "statement-id": "BER.6.10_stm",
+                    "uuid": "6a01ba7f-eadc-408b-a8c7-4749f8c3e131",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Zugangsdaten systematisch auf Auffälligkeiten, Alter, Nichtnutzung und bekannte Kompromittierungsindikatoren überwacht werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "188f7834-aabf-4714-a1a3-aed287800fa7",
+                "control-id": "_4123f246-95b2-4785-9714-17a5e68462c5",
+                "description": "Vergebene Zugangsdaten und die ihnen zugeordneten Berechtigungen werden regelmäßig und anlassbezogen auf Erforderlichkeit geprüft. Dazu gehört insbesondere, ob ein IAM-Benutzer, ein Zugriffsschlüssel oder ein dienstspezifisches Anmeldedaten überhaupt noch fachlich benötigt wird.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.3_stm",
+                    "uuid": "7de28721-469b-4b37-bbb6-96e9936886c6",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem langlebige Zugangsdaten nicht nur technisch existieren dürfen, sondern in festen Zyklen und bei relevanten Änderungen auf ihre Erforderlichkeit überprüft werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "82272be9-d195-4fe2-bf75-8b5447fcbca8",
+                "control-id": "_403fac1f-a78a-4548-858e-a06168253dea",
+                "description": "Wo technische Ausnahmen für Maschinenidentitäten vorübergehend Langzeit-Anmeldedaten erfordern, werden Rotation, Eigentümer, zulässige Dienste, Aufbewahrungsort und Monitoring formal festgelegt. Zielbild bleibt der Ersatz durch Rollen oder automatisch verwaltete Secrets.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.20_stm",
+                    "uuid": "641e8fca-4bfd-4b65-aeaa-46866305915c",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Dienstekonten und maschinelle Zugänge mit einer kontrollierten, möglichst automatisierten Verwaltung ihrer Zugangsdaten betrieben werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "8399087f-9803-43f2-8b39-35c31c062a1a",
+        "type": "process-procedure",
+        "title": "AWS IAM Standardvorlagen, Versionshistorie und Policy-Validierung",
+        "description": "Nutzt standardisierte Vorlagen und einen nachvollziehbaren Änderungsprozess für IAM-Rollen und Policies.",
+        "purpose": "Reduziert Konfigurationsfehler, verbessert Wiederholbarkeit und stellt nachweisbare Sicherheitsprüfungen vor produktiven Änderungen sicher.",
+        "links": [
+          {
+            "href": "#60c39fff-755a-4d65-8a7d-4d80b3cc9603",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer Policy-Validierung"
+          },
+          {
+            "href": "#49713a71-8a27-4452-8e8f-04be099ed711",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer Policy-Generierung"
+          },
+          {
+            "href": "#e5bcfdd8-e806-4df5-a698-b2011683d247",
+            "rel": "reference",
+            "text": "AWS CLI: ValidatePolicy"
+          },
+          {
+            "href": "#7cf6ba72-57ce-40b0-be23-604319e8d1b9",
+            "rel": "reference",
+            "text": "AWS IAM Policy Simulator"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "3cfef6c9-b443-4766-9373-80333832ad88",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "0388d70b-07b7-48f5-9ef5-775f7972b8af",
+                "control-id": "_4fb97f16-4d41-49cb-99fe-ff623b2a2874",
+                "description": "Vorlagen für Rollen, Vertrauensrichtlinien und Berechtigungspolicies werden versioniert in einer nachvollziehbaren Historie geführt. Jede wesentliche Änderung enthält Autor, Freigabe, Änderungsgrund und Bezug zur Sicherheitsanforderung.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.2.1_stm",
+                    "uuid": "4f1db0cb-dc96-4053-9b77-752f2745c2bb",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem IAM-Artefakte nicht ad hoc in der Konsole gepflegt, sondern aus versionierten Vorlagen und nachvollziehbaren Änderungsständen bereitgestellt werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "7d3a265d-b6b1-4752-ad58-d27593b01ed7",
+                "control-id": "_b7a747d3-cb11-46ce-8d0c-c57cc31d5ad5",
+                "description": "Vorlagenänderungen werden mit den Ergebnissen technischer Prüfungen dokumentiert, z. B. Policy-Validation, Simulationsläufen, Access-Analyzer-Erkenntnissen oder Drift-Vergleichen gegen produktive Artefakte.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.3.1.1_stm",
+                    "uuid": "4b3e6ceb-951e-4ba8-a5d7-6a0970225691",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Prüfschritte, Testergebnisse und Korrekturen zu IAM-Änderungen dokumentiert werden und als Freigabenachweis verfügbar bleiben."
+                  }
+                ]
+              },
+              {
+                "uuid": "0daa731b-9e8d-4081-a4f0-6be99f1e8abf",
+                "control-id": "_1aa8319f-93fb-4236-991a-d799ab69e0c2",
+                "description": "Kritische Änderungen an Rollen und Policies werden nur nach Code-Überprüfung, sicherheitlicher Bewertung und formaler Autorisierung freigegeben. Produktive Artefakte werden regelmäßig mit den autorisierten Vorlagen abgeglichen.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.4.1_stm",
+                    "uuid": "e80256ca-ca2b-41ce-ba47-cc6fd930f71b",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem sicherheitsrelevante IAM-Änderungen einem formalen Freigabegate unterliegen und nur autorisierte, geprüfte Änderungen produktiv werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Technische Umsetzung: Rollen-Trust-Policies, Permission Policies und Boundary-Policies als versionierte JSON-Dateien im Repository halten. Vor Merge mindestens 1) Policy-Validation mit `aws accessanalyzer validate-policy --policy-document file://policy.json --policy-type IDENTITY_POLICY`, 2) eine Rechte-Simulation und 3) ein Vier-Augen-Code-Review durchführen. Branch-Protection und verpflichtende Reviews im Git-Repository aktivieren. Nach Deployment produktive Artefakte regelmäßig mit `aws iam get-role`, `aws iam list-attached-role-policies` und `aws iam get-role-policy` gegen die autorisierten Vorlagen abgleichen."
+      },
+      {
+        "uuid": "3a6ad092-f7ec-4f02-860b-0c544bb2c791",
+        "type": "process-procedure",
+        "title": "AWS IAM Notfallzugang mit starker Kontrolle",
+        "description": "Beschreibt einen hochkontrollierten Notfall-Zugang für AWS-Administrationsnotfälle. Die Komponente ist produkt- und institutionsübergreifend wiederverwendbar und bildet sowohl dedizierte Notfallrollen als auch zentral verwaltete Root- oder Management-Account-Notfallpfade ab.",
+        "purpose": "Ermöglicht sicheren Notfallzugriff bei Ausfall regulärer Administrationspfade, ohne einen dauerhaften privilegierten Schattenzugang zu etablieren.",
+        "links": [
+          {
+            "href": "#a7533953-f98b-405e-9c6f-96787ce36411",
+            "rel": "reference",
+            "text": "Bewährte Verfahren für den AWS-Root-Benutzer"
+          },
+          {
+            "href": "#39406276-3de4-44d4-84f0-47d30ec7a91a",
+            "rel": "reference",
+            "text": "Zentralisierter AWS-Root-Zugang für Mitgliedskonten"
+          },
+          {
+            "href": "#cf13ff35-46de-4100-a8d0-033d48c264bc",
+            "rel": "reference",
+            "text": "AWS IAM Rollensitzungsdauer"
+          },
+          {
+            "href": "#1ce83b16-5e9f-4799-be1e-498479d2c8ec",
+            "rel": "reference",
+            "text": "AWS CLI: CreateRole"
+          },
+          {
+            "href": "#32a16c85-5e8f-4379-afb5-f50f84635361",
+            "rel": "reference",
+            "text": "AWS CLI: UpdateRole"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "2b2d77ac-ded9-40b6-acbf-f22de9c6ab2e",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "805ddfde-e729-4391-a548-e8cb52658e64",
+                "control-id": "_abdd8f32-ec02-491a-a39b-7b0b25a597ca",
+                "description": "Es wird ein dokumentierter Notfallzugang vorgehalten, entweder als dedizierte Notfall-Rolle mit Minimalrechten oder als zentral verwalteter Notfallpfad im Management- oder Root-Kontext. Die Nutzung ist nur für klar definierte Ausfall- und Wiederherstellungsszenarien zulässig.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.21_stm",
+                    "uuid": "fab6d4b2-ab99-4807-adf4-663bd9f32f56",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem ein funktionsfähiger, getesteter Notfallzugang vorhanden ist, der außerhalb der normalen Betriebsrolle nur für dokumentierte Notfälle verwendet wird."
+                  }
+                ]
+              },
+              {
+                "uuid": "fddf50e7-eb64-4b15-8256-d5ab6e9410cf",
+                "control-id": "_55b70084-f446-42af-908b-0f514a72f380",
+                "description": "Der Notfallzugang ist mit starker MFA abgesichert, bevorzugt hardwarebasiert oder phishing-resistent. Die Sitzungsdauer wird so kurz wie möglich gehalten; jede Nutzung wird sofort alarmiert und im Nachgang überprüft.",
+                "statements": [
+                  {
+                    "statement-id": "BER.6.5_stm",
+                    "uuid": "82687f6c-7094-42d3-8b6d-31e5ec2ec26a",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem hochprivilegierte Notfallzugänge nur unter MFA und mit strengen Sitzungsparametern verfügbar sind."
+                  }
+                ]
+              },
+              {
+                "uuid": "a2df4646-2e01-42c1-ab0c-60cae092a8ef",
+                "control-id": "_cc01c015-42f4-4e42-a986-ad7c954733db",
+                "description": "Wo Schutzbedarf und Betriebsmodell dies erfordern, wird die Freigabe oder Aktivierung des Notfallzugangs an ein Vier-Augen- oder Dual-Anforderung-Verfahren gebunden, etwa über getrennte Freigabe- und Nutzungsrollen.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.14_stm",
+                    "uuid": "bb6f9f4b-8b93-4e73-b402-34d15e936bf8",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem besonders sensible Notfallzugänge nicht durch eine Einzelperson allein aktiviert oder verwendet werden können."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): IAM -> Roles -> Create role; nur die minimal erforderlichen Notfallrechte zuweisen, Trust-Policy auf wenige Notfall-Prinzipale oder eine dedizierte IdP-Gruppe beschränken, Maximum session duration auf 3600 Sekunden oder weniger setzen und MFA in der Trust-Policy oder im IdP erzwingen.\nTechnische Umsetzung (CLI): Rolle mit kurzer Sitzungsdauer anlegen bzw. nachschärfen, z. B. `aws iam create-role --role-name BreakGlassRole --assume-role-policy-document file://breakglass-trust.json --max-session-duration 3600` oder nachträglich `aws iam update-role --role-name BreakGlassRole --max-session-duration 3600`.\nMonitoring: EventBridge-/SIEM-Regel auf `AssumeRole` für `BreakGlassRole`; nach jeder Nutzung sofortige Prüfung, Dokumentation, ggf. Widerruf laufender Sessions und Rotation betroffener Secrets."
+      },
+      {
+        "uuid": "6d78ba9e-f266-4d5e-8943-7201fcb32381",
+        "type": "process-procedure",
+        "title": "AWS IAM Access Analyzer und regelmäßige Berechtigungsüberprüfungen",
+        "description": "Ergänzende Best-Practice-Komponente für kontinuierliche Überprüfung realer AWS-IAM-Berechtigungen und unerwarteter Freigaben. Dieser Punkt war im Ausgangsdokument nur teilweise abgedeckt und wird daher bewusst zusätzlich aufgenommen.",
+        "purpose": "Erkennt ungenutzte, überbreite oder externe Freigaben frühzeitig und schließt die Lücke zwischen dokumentierter Soll-Berechtigung und tatsächlicher Ist-Berechtigung.",
+        "links": [
+          {
+            "href": "#221dd1eb-8c8f-4537-91a7-d4303d332696",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer"
+          },
+          {
+            "href": "#9ba1f9c7-4c9a-438b-9bdf-d20a51f2c8ec",
+            "rel": "reference",
+            "text": "AWS ungenutzte Anmeldedaten ermitteln"
+          },
+          {
+            "href": "#49713a71-8a27-4452-8e8f-04be099ed711",
+            "rel": "reference",
+            "text": "AWS IAM Access Analyzer Policy-Generierung"
+          },
+          {
+            "href": "#e5bcfdd8-e806-4df5-a698-b2011683d247",
+            "rel": "reference",
+            "text": "AWS CLI: ValidatePolicy"
+          },
+          {
+            "href": "#a70a047d-d6dc-4932-93a0-fb4d5e22aa7f",
+            "rel": "reference",
+            "text": "AWS CLI: GenerateCredentialReport"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "8cc0d3f5-9131-4361-829d-110f5ccc52c7",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-IAM-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "8c7f29f3-82d1-4790-8734-2855782962be",
+                "control-id": "_4123f246-95b2-4785-9714-17a5e68462c5",
+                "description": "Berechtigungen werden mindestens regelmäßig und zusätzlich nach wesentlichen Änderungen überprüft. Die Überprüfung umfasst Rollen, Policies, Zugriffsschlüssel, ungenutzte Services bzw. Aktionen, externe Zugriffe und kontenübergreifende Freigaben.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.3_stm",
+                    "uuid": "e4e1a079-3193-4ddf-95f6-91cb0ba5f441",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem AWS-IAM-Berechtigungen in festen Zyklen und anlassbezogen gegen ihren fachlichen Bedarf geprüft werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "40d86888-e6c9-447e-9d1e-371f790edcf2",
+                "control-id": "_4e815b01-7a59-4e8c-bbcc-e4998f342e68",
+                "description": "Dokumentierte Soll-Berechtigungen werden mit der tatsächlichen technischen Vergabe abgeglichen. Dazu werden IAM Access Analyzer Befunde, Last-Accessed-Informationen, Anmeldedatenberichte und stichprobenartige oder automatisierte Policy-Prüfungen herangezogen.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.3.1_stm",
+                    "uuid": "64f126d0-afc6-42af-9287-ece4fc564f99",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem dokumentierte Berechtigungskonzepte und reale AWS-IAM-Zustände systematisch auf Übereinstimmung überprüft und Abweichungen bereinigt werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): IAM -> Access Analyzer -> Analyzer anlegen und externe Zugriffspfade, öffentliche oder organisationsfremde Freigaben regelmäßig prüfen. Zusätzlich in IAM -> Access reports / Last accessed bzw. entsprechenden Auswertungen prüfen, welche Aktionen und Services tatsächlich genutzt wurden.\nTechnische Umsetzung (CLI): Richtlinienqualität mit `aws accessanalyzer validate-policy --policy-document file://policy.json --policy-type IDENTITY_POLICY` prüfen; Credential-Report und tatsächliche Rollen-/Policy-Zuweisungen regelmäßig auslesen. Findings, Access-Analyzer-Befunde und dokumentierte Soll-Berechtigungen gemeinsam reviewen und Abweichungen nachverfolgt abbauen."
+      }
+    ],
+    "capabilities": [
+      {
+        "uuid": "bab72622-4de3-4eaf-bf30-19dd5f1bc21f",
+        "name": "aws-iam-security-baseline",
+        "description": "Gruppiert die wiederverwendbaren AWS-IAM-Umsetzungsmuster zu einer zusammenhängenden Sicherheitsbaseline für Identitäten, Rollen, Trust-Beziehungen, privilegierte Zugänge, Protokollierung, Credential-Hygiene und regelmäßige Überprüfungen.",
+        "incorporates-components": [
+          {
+            "component-uuid": "1030c034-b363-4d41-90bb-084c3cefad09",
+            "description": "AWS IAM Root-Zugang absichern und MFA erzwingen"
+          },
+          {
+            "component-uuid": "969d4307-d0b4-41c7-9aa0-d2e86e51b2fc",
+            "description": "AWS IAM Temporäre Anmeldedaten und Rollen statt Langzeitschlüssel"
+          },
+          {
+            "component-uuid": "fa754ee9-edf6-4743-b63e-5c3c96088a3e",
+            "description": "AWS IAM Minimalberechtigungs-Policies mit Ressourcenbindung"
+          },
+          {
+            "component-uuid": "14b6c601-d6ca-41b2-a9c0-3d7bce650df5",
+            "description": "AWS IAM Vertrauensrichtlinien und Rollenvertrauen strikt einschränken"
+          },
+          {
+            "component-uuid": "2a8cfc56-0389-4f4d-bbd2-e96ca11563c9",
+            "description": "AWS IAM iam:PassRole und privilegierte Rollenerstellung beschränken"
+          },
+          {
+            "component-uuid": "eb6700f2-89a2-448e-9b98-d77ee6feafd4",
+            "description": "AWS IAM Permission Boundaries für delegierte Rollenerstellung"
+          },
+          {
+            "component-uuid": "c8cc0455-03c0-499a-809a-9f77a0bb2eb6",
+            "description": "AWS IAM Sitzungsdauer und Sitzungskontexte begrenzen"
+          },
+          {
+            "component-uuid": "42d48dbb-9ac8-41dc-8b60-a638949ac05a",
+            "description": "AWS IAM Änderungen und privilegierte Ereignisse protokollieren, alarmieren und einordnen"
+          },
+          {
+            "component-uuid": "9961d9ac-469f-4426-8679-08dc743e8738",
+            "description": "AWS IAM Anmeldedatenhygiene und Schlüsselrotation"
+          },
+          {
+            "component-uuid": "8399087f-9803-43f2-8b39-35c31c062a1a",
+            "description": "AWS IAM Standardvorlagen, Versionshistorie und Policy-Validierung"
+          },
+          {
+            "component-uuid": "3a6ad092-f7ec-4f02-860b-0c544bb2c791",
+            "description": "AWS IAM Notfallzugang mit starker Kontrolle"
+          },
+          {
+            "component-uuid": "6d78ba9e-f266-4d5e-8943-7201fcb32381",
+            "description": "AWS IAM Access Analyzer und regelmäßige Berechtigungsüberprüfungen"
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "11111111-1111-4111-8111-111111111111",
+          "title": "BSI Stand der Technik Kernel Catalog",
+          "description": "Öffentlich referenzierter Kernel-Katalog des Grundschutz++.",
+          "rlinks": [
+            {
+              "href": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/Quellkataloge/Kernel/BSI-Stand-der-Technik-Kernel-catalog.json",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "22222222-2222-4222-8222-222222222222",
+          "title": "BSI Methodik Grundschutz++ Catalog",
+          "description": "Öffentlich referenzierter Methodik-Katalog des Grundschutz++.",
+          "rlinks": [
+            {
+              "href": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/Quellkataloge/Methodik-Grundschutz%2B%2B/BSI-Methodik-Grundschutz%2B%2B-catalog.json",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "07970f70-ef32-4b6b-8c7e-0014b7048056",
+          "title": "NIST-OSCAL-Referenz zum Komponentendefinitionsmodell v1.1.3 (JSON)",
+          "description": "NIST-OSCAL-Referenz zum Komponentendefinitionsmodell v1.1.3 (JSON)",
+          "rlinks": [
+            {
+              "href": "https://pages.nist.gov/OSCAL-Reference/models/v1.1.3/component-definition/json-reference/",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "83a962b4-a685-47db-90b9-9722f2d41df0",
+          "title": "NIST-OSCAL-Gliederung zum Komponentendefinitionsmodell v1.1.3 (JSON)",
+          "description": "NIST-OSCAL-Gliederung zum Komponentendefinitionsmodell v1.1.3 (JSON)",
+          "rlinks": [
+            {
+              "href": "https://pages.nist.gov/OSCAL-Reference/models/v1.1.3/component-definition/json-outline/",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "cd57124b-1459-4b7d-b719-b5396a9ea467",
+          "title": "AWS IAM bewährte Verfahren",
+          "description": "AWS IAM bewährte Verfahren",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "a7533953-f98b-405e-9c6f-96787ce36411",
+          "title": "Bewährte Verfahren für den AWS-Root-Benutzer",
+          "description": "Bewährte Verfahren für den AWS-Root-Benutzer",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/root-user-best-practices.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "39406276-3de4-44d4-84f0-47d30ec7a91a",
+          "title": "Zentralisierter AWS-Root-Zugang für Mitgliedskonten",
+          "description": "Zentralisierter AWS-Root-Zugang für Mitgliedskonten",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-enable-root-access.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "5bfe8323-035f-49cd-bf8f-98d48bc6400f",
+          "title": "Temporäre AWS-Sicherheitsanmeldedaten in IAM",
+          "description": "Temporäre AWS-Sicherheitsanmeldedaten in IAM",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "6d0b1ce6-9e09-443c-85c1-c309161780f7",
+          "title": "AWS Permission Boundaries für IAM-Entitäten",
+          "description": "AWS Permission Boundaries für IAM-Entitäten",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "48bf5d20-42da-42bb-a280-ecda8b8c6bd6",
+          "title": "Abgesicherter AWS-API-Zugriff mit MFA",
+          "description": "Abgesicherter AWS-API-Zugriff mit MFA",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_configure-api-require.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "94f47806-b261-4370-b720-32b6d27398a8",
+          "title": "AWS-CloudTrail-Integration für IAM und STS",
+          "description": "AWS-CloudTrail-Integration für IAM und STS",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/cloudtrail-integration.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "1381697b-7271-4825-a6d1-9d7e87c95e7d",
+          "title": "AWS CloudTrail-Trail-Erstellung und Logdatei-Validierung",
+          "description": "AWS CloudTrail-Trail-Erstellung und Logdatei-Validierung",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail-by-using-the-aws-cli.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "33bb6400-f9e3-499c-9def-716213389e59",
+          "title": "AWS IAM Anmeldedatenberichte",
+          "description": "AWS IAM Anmeldedatenberichte",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_getting-report.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "c0f66ac9-20fb-44ab-9c2c-830d7b59ac61",
+          "title": "AWS dienstspezifische Anmeldedaten",
+          "description": "AWS dienstspezifische Anmeldedaten",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_service-specific-creds.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "221dd1eb-8c8f-4537-91a7-d4303d332696",
+          "title": "AWS IAM Access Analyzer",
+          "description": "AWS IAM Access Analyzer",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "60c39fff-755a-4d65-8a7d-4d80b3cc9603",
+          "title": "AWS IAM Access Analyzer Policy-Validierung",
+          "description": "AWS IAM Access Analyzer Policy-Validierung",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-validation.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "49713a71-8a27-4452-8e8f-04be099ed711",
+          "title": "AWS IAM Access Analyzer Policy-Generierung",
+          "description": "AWS IAM Access Analyzer Policy-Generierung",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-policy-generation.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "a8c98839-43ba-4522-a433-f3dd73229923",
+          "title": "AWS globaler Condition-Key aws:PrinzipalOrgID",
+          "description": "AWS globaler Condition-Key aws:PrinzipalOrgID",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_condition-keys.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "dbe0d4cc-844e-47dd-b5cf-f47908f6df07",
+          "title": "AWS Vertrauensrichtlinie: nicht unterstütztes Platzhalter-Muster in Prinzipal",
+          "description": "AWS Vertrauensrichtlinie: nicht unterstütztes Platzhalter-Muster in Prinzipal",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/de_de/IAM/latest/UserGuide/access-analyzer-reference-policy-checks.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "9f70ca4b-da11-4478-b4fe-cc67bc34695d",
+          "title": "AWS Confused-Deputy-Problem und External ID",
+          "description": "AWS Confused-Deputy-Problem und External ID",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "1c684905-9f52-4e15-b4ce-eaaf76198f9a",
+          "title": "Beispiel für den AWS-Condition-Key aws:RequestedRegion",
+          "description": "Beispiel für den AWS-Condition-Key aws:RequestedRegion",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_deny-requested-region.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "cf13ff35-46de-4100-a8d0-033d48c264bc",
+          "title": "AWS IAM Rollensitzungsdauer",
+          "description": "AWS IAM Rollensitzungsdauer",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "ef3825cc-5482-4bce-87e8-2328d1e3d5e6",
+          "title": "AWS IAM Identity Center Sitzungsdauer",
+          "description": "AWS IAM Identity Center Sitzungsdauer",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/singlesignon/latest/userguide/howtosessionduration.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "9ba1f9c7-4c9a-438b-9bdf-d20a51f2c8ec",
+          "title": "AWS ungenutzte Anmeldedaten ermitteln",
+          "description": "AWS ungenutzte Anmeldedaten ermitteln",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_finding-unused.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "63760f22-09ac-4ef5-a140-d13abc122597",
+          "title": "AWS Root-Benutzer: MFA für den Root-Benutzer",
+          "description": "AWS Root-Benutzer: MFA für den Root-Benutzer",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/enable-mfa-for-root.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "afb9b6ea-d6a6-4d60-94c5-ec758387f0e3",
+          "title": "AWS Root-Benutzer: Access Keys löschen",
+          "description": "AWS Root-Benutzer: Access Keys löschen",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user_manage_delete-key.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "9a119583-b7b5-4091-a448-50ab9571e059",
+          "title": "AWS MFA in IAM",
+          "description": "AWS MFA in IAM",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "78708eaf-9054-42d8-abaa-7a5d53651581",
+          "title": "AWS STS AssumeRole",
+          "description": "AWS STS AssumeRole",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/STS/latest/APIReference/API_AssumeRole.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "17081fba-5e5f-4fcc-9cc9-ce9166f432b4",
+          "title": "AWS CLI: UpdateAssumeRolePolicy",
+          "description": "AWS CLI: UpdateAssumeRolePolicy",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/iam/update-assume-role-policy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "2537db82-2ad4-4478-82a4-8a81b0648bba",
+          "title": "AWS IAM: PassRole an bestimmten Dienst",
+          "description": "AWS IAM: PassRole an bestimmten Dienst",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_iam-passrole-service.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "3025745f-2de2-4775-8261-d2ccf2a8cb18",
+          "title": "AWS IAM: PassRole verwenden",
+          "description": "AWS IAM: PassRole verwenden",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "65867879-56a8-4856-9397-bc82e30e942f",
+          "title": "AWS CLI: PutRolePermissionsBoundary",
+          "description": "AWS CLI: PutRolePermissionsBoundary",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/iam_example_iam_PutRolePermissionsBoundary_section.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "1ce83b16-5e9f-4799-be1e-498479d2c8ec",
+          "title": "AWS CLI: CreateRole",
+          "description": "AWS CLI: CreateRole",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/iam/create-role.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "32a16c85-5e8f-4379-afb5-f50f84635361",
+          "title": "AWS CLI: UpdateRole",
+          "description": "AWS CLI: UpdateRole",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/iam/update-role.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "a70a047d-d6dc-4932-93a0-fb4d5e22aa7f",
+          "title": "AWS CLI: GenerateCredentialReport",
+          "description": "AWS CLI: GenerateCredentialReport",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/iam/generate-credential-report.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "e5a97ff2-df86-44a5-85b2-081920e34e41",
+          "title": "AWS CLI: GetCredentialReport",
+          "description": "AWS CLI: GetCredentialReport",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/iam/get-credential-report.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "b94e63ab-daad-4766-aaef-c3105a60ecd7",
+          "title": "AWS CLI: SimulatePrincipalPolicy",
+          "description": "AWS CLI: SimulatePrincipalPolicy",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/iam/simulate-principal-policy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "7cf6ba72-57ce-40b0-be23-604319e8d1b9",
+          "title": "AWS IAM Policy Simulator",
+          "description": "AWS IAM Policy Simulator",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "e5bcfdd8-e806-4df5-a698-b2011683d247",
+          "title": "AWS CLI: ValidatePolicy",
+          "description": "AWS CLI: ValidatePolicy",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/validate-policy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "ad272474-4c0a-41dd-8f0c-b3f44586942b",
+          "title": "AWS IAM Rollen-Einstellungen",
+          "description": "AWS IAM Rollen-Einstellungen",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_update-role-settings.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "3d3a298a-9845-42c7-96a7-59b50e2456c7",
+          "title": "AWS IAM Rollen für Benutzer erstellen",
+          "description": "AWS IAM Rollen für Benutzer erstellen",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user.html",
+              "media-type": "text/html"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

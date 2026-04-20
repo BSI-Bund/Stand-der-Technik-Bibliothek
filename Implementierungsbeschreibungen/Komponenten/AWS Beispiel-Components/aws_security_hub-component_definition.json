@@ -1,0 +1,1467 @@
+{
+  "component-definition": {
+    "uuid": "497071e3-5281-48fa-83ec-a255ecf4f238",
+    "metadata": {
+      "title": "AWS Security Hub Komponenten für Grundschutz++",
+      "last-modified": "2026-04-16T07:42:27Z",
+      "version": "0.2.0-review",
+      "oscal-version": "1.1.3",
+      "roles": [
+        {
+          "id": "creator",
+          "title": "Ersteller"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "3a5a8eb5-a046-422d-8553-9d7758b9cc46",
+          "type": "organization",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "creator",
+          "party-uuids": [
+            "3a5a8eb5-a046-422d-8553-9d7758b9cc46"
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "#11111111-1111-4111-8111-111111111111",
+          "rel": "reference",
+          "text": "Grundschutz++-Katalog"
+        },
+        {
+          "href": "#ec172389-44e0-57d9-b64c-6435aa84b60f",
+          "rel": "reference",
+          "text": "NIST-OSCAL-Referenz zum Komponentendefinitionsmodell"
+        },
+        {
+          "href": "#29f11e3b-c1c1-5518-8d91-29539dc8f620",
+          "rel": "reference",
+          "text": "AWS Security Hub Benutzerhandbuch"
+        }
+      ],
+      "remarks": "Diese Komponentendefinition beschreibt wiederverwendbare AWS-Security-Hub-Umsetzungsmuster für Grundschutz++-Anforderungen. Die Fassung wurde fachlich nachgeschärft: Die Control-Zuordnungen wurden erneut gegen den hochgeladenen Katalog geprüft, die technischen Umsetzungsbeschreibungen wurden mit konkreten Konsolenpfaden, AWS-CLI-Befehlen, Event-Mustern und Konfigurationshinweisen verdichtet, und jede technische Komponente verweist nun auf möglichst direkte AWS-Quellen. Die Komponenten beschreiben Soll-Umsetzungen für Security Hub in Mehrkonten-/Mehrregionen-Umgebungen und nicht bloß einen lokalen Ist-Zustand."
+    },
+    "components": [
+      {
+        "uuid": "88346dfd-f922-42f3-b323-f6c23e72ea5e",
+        "type": "process-procedure",
+        "title": "AWS Security Hub organisationsweit aktivieren und zentral steuern",
+        "description": "Aktiviert AWS Security Hub organisationsweit über einen delegierten Administrations-Account, legt eine Heimatregion mit regionsübergreifender Aggregation fest und erzwingt eine zentrale Konfigurationssteuerung für Organisationseinheiten und Konten.",
+        "purpose": "Stellt sicher, dass Findings, Standards, Controls und Konfigurationsentscheidungen nicht konto- oder regionsweise auseinanderlaufen, sondern über eine zentrale, nachvollziehbare Sicherheitssteuerung konsistent verwaltet werden.",
+        "links": [
+          {
+            "href": "#2ae2aa7b-4f10-541f-822f-01c57de490c8",
+            "rel": "reference",
+            "text": "Integration von Security Hub CSPM mit AWS Organizations"
+          },
+          {
+            "href": "#944523f1-4072-5289-9ed2-313726748c55",
+            "rel": "reference",
+            "text": "Einführung in die zentrale Konfiguration in Security Hub CSPM"
+          },
+          {
+            "href": "#de06ba44-035b-5ff2-beaf-dad72a5f05ff",
+            "rel": "reference",
+            "text": "Erstellen und Zuweisen von Konfigurationsrichtlinien"
+          },
+          {
+            "href": "#3fe4e466-bd86-515a-a576-364b74737f97",
+            "rel": "reference",
+            "text": "Regionsübergreifende Aggregation in Security Hub aktivieren"
+          },
+          {
+            "href": "#6f93cb18-300b-5395-9889-188cc42c5206",
+            "rel": "reference",
+            "text": "AWS CLI: enable-organization-admin-account"
+          },
+          {
+            "href": "#b0e74b51-88ae-40cf-ad96-c0d7567a0fd5",
+            "rel": "reference",
+            "text": "AWS CLI: zentrale Konfiguration aktivieren"
+          },
+          {
+            "href": "#8bd0cd65-b1cb-49ad-8408-52f92a01a348",
+            "rel": "reference",
+            "text": "AWS Security Hub: Delegated Administrator setzen"
+          },
+          {
+            "href": "#a4c04ba9-d46a-48bd-ae04-e3fdeec11775",
+            "rel": "reference",
+            "text": "AWS CLI: Finding Aggregator"
+          },
+          {
+            "href": "#9fb68b4c-8506-4329-a74c-46a48f0db2f5",
+            "rel": "reference",
+            "text": "AWS CLI: Policy-Assoziation"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Management-Account): Security Hub-Konsole `https://console.aws.amazon.com/securityhub/v2/home` öffnen -> Navigation `General` -> `Delegated administrator` -> `Configure` und das dedizierte Security-Konto auswählen. Alternativ per CLI: `aws securityhub enable-organization-admin-account --admin-account-id <SECURITY_ACCOUNT_ID> --feature SecurityHubV2`.\nTechnische Umsetzung (delegierter Administrator, Home Region): zentrale Konfiguration aktivieren mit `aws securityhub update-organization-configuration --no-auto-enable --organization-configuration '{\"ConfigurationType\":\"CENTRAL\"}' --region <HOME_REGION>`.\nRegionsübergreifende Aggregation einschalten mit `aws securityhub create-finding-aggregator --region <HOME_REGION> --region-linking-mode ALL_REGIONS` oder `SPECIFIED_REGIONS --regions eu-west-1,eu-central-1`.\nKonfigurationsrichtlinie anlegen und an Root, OU oder Konto binden, z. B. `aws securityhub create-configuration-policy --name \"SecHub-Prod\" --description \"Security Hub Prod Baseline\" --configuration-policy file://configuration-policy.json --region <HOME_REGION>` und anschließend `aws securityhub start-configuration-policy-association --configuration-policy-identifier <POLICY_ARN> --target '{\"OrganizationalUnitId\":\"<OU_ID>\"}' --region <HOME_REGION>`.\nKonsole für Assoziationsprüfung: Security Hub -> Settings -> Configuration policies; CLI zusätzlich `aws securityhub get-configuration-policy-association --target '{\"OrganizationalUnitId\":\"<OU_ID>\"}' --region <HOME_REGION>`.",
+        "control-implementations": [
+          {
+            "uuid": "54ea2551-1041-46a3-b4c5-fb35051809f2",
+            "source": "#22222222-2222-4222-8222-222222222222",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "540e33f0-1434-4b8a-8a0c-366d4b6ddb77",
+                "control-id": "_17e221bd-3b74-453a-ad4e-e2cb346b6af5",
+                "description": "Für die institutionsweite Überwachung der Informationssicherheit wird Security Hub als zentrales Monitoring- und Aggregationswerkzeug organisationsweit eingeführt und technisch konsistent betrieben.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1_stm",
+                    "uuid": "a072a81e-6fec-4288-a3f8-f144c16bbeaf",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security Hub als zentrales Monitoring-Werkzeug für sicherheitsrelevante Findings über alle relevanten AWS-Konten und -Regionen verankert wird. Die Aktivierung erfolgt nicht punktuell manuell pro Konto, sondern zentral über delegierte Administration, Heimatregion und Konfigurationsrichtlinien."
+                  }
+                ]
+              },
+              {
+                "uuid": "136ef21c-60d2-457c-91ee-cb25dca1d075",
+                "control-id": "_3c76f9bf-7a52-4ba4-a9dd-f351e543ca9f",
+                "description": "Sicherheitsvorfälle und sicherheitsrelevante Befunde werden zentral statt fragmentiert überwacht; Findings aus Mitgliedskonten und verknüpften Regionen laufen in einem gemeinsamen Lagebild zusammen.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1.1_stm",
+                    "uuid": "b951d6f2-8ba0-46bd-97d3-aa9c97544f80",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem neue und bestehende Konten organisationsweit an Security Hub angebunden und Findings in der Heimatregion zentral aggregiert werden. Dadurch entsteht ein konsolidiertes Lagebild für Vorfälle und Fehlkonfigurationen."
+                  }
+                ]
+              },
+              {
+                "uuid": "5f407edb-cd6e-4cd1-b123-8a2a98a6a118",
+                "control-id": "_4b2b03f6-103d-4435-9edc-27cd961e2361",
+                "description": "Die Verfahrensweise für Aktivierung, zentrale Verwaltung, Onboarding neuer Konten, Ziel-Regionen und Zuständigkeiten wird dokumentiert und verbindlich festgelegt.",
+                "statements": [
+                  {
+                    "statement-id": "GC.10.1_stm",
+                    "uuid": "b9f9c44a-e002-4463-9263-07a3e25f0e2e",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem die Institution festlegt, welches Konto delegierter Administrator ist, welche Region als Heimatregion fungiert, welche OUs oder Konten zentral verwaltet werden und wie das Onboarding neuer Konten automatisiert erfolgt."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "1e81ae0b-6927-4034-ac9f-be4d834f2b56",
+        "type": "process-procedure",
+        "title": "AWS Security Hub Kern-Integrationen und Voraussetzungen absichern",
+        "description": "Aktiviert und überwacht die für Security Hub wesentlichen Datenquellen und Voraussetzungen, insbesondere AWS Config für Kontroll-Findings sowie ausgewählte integrierte AWS-Dienste und Produktintegrationen.",
+        "purpose": "Verhindert ein unvollständiges oder irreführendes Lagebild durch fehlende Datenquellen, deaktivierte Integrationen oder unerkannte Ausfälle in der Findings-Zulieferung.",
+        "links": [
+          {
+            "href": "#c5e7224a-c0d2-5a87-a293-c7471a99b6d8",
+            "rel": "reference",
+            "text": "AWS Config als Voraussetzung für Kontroll-Findings"
+          },
+          {
+            "href": "#82d5b73a-bf3a-559e-9db0-226599a6ca2e",
+            "rel": "reference",
+            "text": "Findings-Fluss aus Integrationen aktivieren"
+          },
+          {
+            "href": "#e1b4281c-5ca6-568d-8954-bdcdfcfb8a8e",
+            "rel": "reference",
+            "text": "EventBridge-Regeln für alle Findings"
+          },
+          {
+            "href": "#38e3baac-a77c-59ca-a0f0-776ca65c0440",
+            "rel": "reference",
+            "text": "Findings und ASFF in Security Hub"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Voraussetzung AWS Config): In allen Konten/Regionen, in denen Security-Hub-Control-Findings erwartet werden, AWS Config Recorder und Delivery Channel aktivieren; ohne AWS Config entstehen für viele Controls keine Findings. In der AWS-Config-Konsole `Configuration recorder` aktivieren und die erforderlichen Ressourcen aufzeichnen.\nTechnische Umsetzung (Integrationen): Security Hub-Konsole -> `Integrations`; dort für relevante AWS-Dienste und Drittprodukte die Integration aktivieren bzw. den Integrationsstatus prüfen. Für integrierte AWS-Dienste, die Findings an Security Hub liefern, zusätzlich in den Quellservices den aktiven Betriebszustand überwachen.\nHealth-Prüfung: täglich oder mehrmals täglich prüfen, ob 1) Security Hub aktiviert ist, 2) Standards/Controls nicht unerwartet deaktiviert wurden, 3) neue Findings aus GuardDuty, Config, IAM Access Analyzer etc. eintreffen. Bei Ausfall oder Null-Volumen trotz aktivem Scope alarmieren.",
+        "control-implementations": [
+          {
+            "uuid": "a76baccd-e136-4516-aef0-4e6dc1cab9f9",
+            "source": "#22222222-2222-4222-8222-222222222222",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "966f66d9-7c91-491d-9083-0b2f66a6b325",
+                "control-id": "_3c76f9bf-7a52-4ba4-a9dd-f351e543ca9f",
+                "description": "Die Institution stellt sicher, dass relevante Sicherheitsvorfälle und Fehlkonfigurationen in Security Hub tatsächlich ankommen und nicht durch fehlende Integrationen unsichtbar bleiben.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1.1_stm",
+                    "uuid": "bc59a1cb-60e2-44cd-a037-804b9bf31c64",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem alle für den Scope relevanten Findings-Quellen angebunden und ihr Betriebszustand überwacht werden. Fällt eine zuliefernde Integration aus oder wird sie deaktiviert, wird dies erkannt und eskaliert."
+                  }
+                ]
+              },
+              {
+                "uuid": "a25efb64-c4ad-4c53-bf65-fbfd2b442316",
+                "control-id": "_4f185314-4f6f-4539-b14e-d230c84ecd4d",
+                "description": "Schwachstellen- und Kontroll-Findings werden nur dann verlässlich überwacht, wenn die technischen Voraussetzungen wie AWS Config in allen erforderlichen Regionen aktiv sind.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1.2_stm",
+                    "uuid": "2a5c8621-f4a3-4aa0-9847-1486b7297698",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem die Institution für Security-Hub-Kontroll-Findings AWS Config in allen relevanten Konten und Regionen aktiviert und Integrationen zu den benötigten Schwachstellen- und Sicherheitsdiensten konsistent verwaltet."
+                  }
+                ]
+              },
+              {
+                "uuid": "082cec63-12a6-446b-9f3f-418eca3406d9",
+                "control-id": "_4599c41b-8c08-46cc-a88d-3a2ab141994c",
+                "description": "Neue oder geänderte Bedrohungslagen können nur angemessen erkannt werden, wenn neue relevante Findings-Quellen und Produktintegrationen bewertet und bei Bedarf eingebunden werden.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1.3_stm",
+                    "uuid": "c531f8c6-dcfb-431a-8194-e7ed47898dbf",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem neue Integrationen, neue Quellenarten oder geänderte service-spezifische Risiken regelmäßig auf ihre Relevanz für Security Hub geprüft und bei Bedarf kontrolliert aktiviert werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "0d3e115a-ab3b-4f1c-8ae3-661e2a34235f",
+        "type": "policy",
+        "title": "AWS Security Hub Standards, Controls und Ausnahmen risikoorientiert steuern",
+        "description": "Definiert, welche Security-Standards, Controls und Parameter in Security Hub aktiviert werden, wie unpassende Controls deaktiviert werden und unter welchen dokumentierten Bedingungen Ausnahmen oder Suppressions zulässig sind.",
+        "purpose": "Reduziert Findungsrauschen kontrolliert, verhindert fachlich unbegründete Suppressions und stellt sicher, dass Standards und Controls zur tatsächlichen Compliance- und Risikolage der Institution passen.",
+        "links": [
+          {
+            "href": "#a149878b-e408-51e8-bd6f-c4f4719c70b2",
+            "rel": "reference",
+            "text": "Controls in Security Hub CSPM verwalten"
+          },
+          {
+            "href": "#3fa78929-861e-58f9-86b4-7097c84496ee",
+            "rel": "reference",
+            "text": "Konfigurationsrichtlinien für Standards und Controls"
+          },
+          {
+            "href": "#84483073-4486-5477-9d8e-c3a5d961726f",
+            "rel": "reference",
+            "text": "Controls deaktivieren"
+          },
+          {
+            "href": "#ae85c3a2-57f6-50e8-88cd-afff416ac7d8",
+            "rel": "reference",
+            "text": "Automatisierungsregeln in Security Hub"
+          },
+          {
+            "href": "#ee999cb0-b754-528e-92a5-fa5581c71a7e",
+            "rel": "reference",
+            "text": "Kontroll-Findings erzeugen und aktualisieren"
+          },
+          {
+            "href": "#9f2cb5e1-2808-5e12-b74e-680400f16e0d",
+            "rel": "reference",
+            "text": "Control-Parameter anpassen"
+          },
+          {
+            "href": "#b035e789-1685-4f51-8d94-6aff5077570e",
+            "rel": "reference",
+            "text": "AWS CLI: Standards aktivieren"
+          },
+          {
+            "href": "#bf25d976-582f-480a-9134-b9a2e4713501",
+            "rel": "reference",
+            "text": "AWS CLI: Controls standardbezogen aktivieren/deaktivieren"
+          },
+          {
+            "href": "#376e03c2-17fd-4ad5-8fcd-f8060622e9fc",
+            "rel": "reference",
+            "text": "AWS CLI: create-insight"
+          },
+          {
+            "href": "#e74fcc62-9b22-5838-8b2b-909ba21ea295",
+            "rel": "reference",
+            "text": "AWS Security Hub: eigene Insights erstellen"
+          }
+        ],
+        "remarks": "Technische Umsetzung (zentral empfohlen): Standards und Controls über zentrale Konfigurationsrichtlinien steuern. Beim Erstellen/Aktualisieren der Policy die vollständige Liste der zu aktivierenden Standards sowie aktivierten oder deaktivierten Controls mitliefern. Beispiel:\n`aws securityhub create-configuration-policy --name \"FSBP-CIS-Prod\" --description \"Produktivbaseline\" --configuration-policy '{\"SecurityHub\":{\"ServiceEnabled\":true,\"EnabledStandardIdentifiers\":[\"arn:aws:securityhub:eu-central-1::standards/aws-foundational-security-best-practices/v/1.0.0\",\"arn:aws:securityhub:::ruleset/cis-aws-foundations-benchmark/v/1.2.0\"],\"SecurityControlsConfiguration\":{\"DisabledSecurityControlIdentifiers\":[\"CloudTrail.2\"]}}}' --region <HOME_REGION>`.\nTechnische Umsetzung (self-managed/einzelnes Konto): Standards mit `describe-standards` ermitteln und mit `aws securityhub batch-enable-standards --standards-subscription-requests StandardsArn=<STANDARD_ARN> --region <REGION>` aktivieren. Einzelne Controls standardbezogen deaktivieren mit `aws securityhub list-standards-control-associations --security-control-id CloudTrail.1 --region <REGION>` und danach `aws securityhub batch-update-standards-control-associations --standards-control-association-updates '[{\"SecurityControlId\":\"CloudTrail.1\",\"StandardsArn\":\"<STANDARD_ARN>\",\"AssociationStatus\":\"DISABLED\",\"UpdatedReason\":\"Nicht anwendbar auf Umgebung\"}]' --region <REGION>`.\nAusnahmeregel: Controls nicht pauschal unterdrücken; Deaktivierungen/Suppressions nur mit Owner, Ticket, Business-Begründung, Gültigkeitsdauer und Review-Zyklus. Für arbeitsrelevante Sichten eigene Insights anlegen, z. B. `aws securityhub create-insight --name \"Offene High Findings nach Konto\" --filters '{\"SeverityLabel\":[{\"Value\":\"HIGH\",\"Comparison\":\"EQUALS\"}],\"WorkflowStatus\":[{\"Value\":\"NEW\",\"Comparison\":\"EQUALS\"}]}' --group-by-attribute AwsAccountId`.",
+        "control-implementations": [
+          {
+            "uuid": "aac2ab88-057a-410b-a0c4-bdf8ba04d491",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "9852e6a9-3e53-4605-9a67-9da11aa80354",
+                "control-id": "_9bb16672-4394-4ce9-bd14-12a080233f7a",
+                "description": "Die Aktivierung und Parametrisierung von Standards und Controls wird an Verpflichtungen, Geltungsbereich und Compliance-Ziele der Institution ausgerichtet und regelmäßig überprüft.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.2.1_stm",
+                    "uuid": "74771b0a-9c61-4252-8e48-aa5daa51c1c1",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Standards und -Controls nicht pauschal, sondern anhand institutioneller Verpflichtungen, des Scopes und der geltenden Sicherheitsziele ausgewählt, aktiviert, parametriert und regelmäßig überprüft werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "8ffc701b-1441-44c4-bc78-68ab8b22c4cc",
+                "control-id": "_1d6e2d9d-a9b9-46cb-9079-a2587c90c661",
+                "description": "Aktive Controls, Deaktivierungen, Ausnahmen und Parameterwerte werden regelmäßig auf Aktualität und weitere Eignung überprüft.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.7.1_stm",
+                    "uuid": "ce79fe81-b95b-427a-b2bf-928dbeb4eb47",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem die Institution mindestens regelmäßig überprüft, ob aktivierte Controls, deaktivierte Controls, zentrale Parameterwerte und dokumentierte Ausnahmen weiterhin aktuell, angemessen und für den modellierten Informationsverbund passend sind."
+                  }
+                ]
+              },
+              {
+                "uuid": "ba8df59a-70a2-4ae5-bd73-91626850b838",
+                "control-id": "_1aa8319f-93fb-4236-991a-d799ab69e0c2",
+                "description": "Kritische Änderungen an Standards, Control-Parametern und Ausnahme- oder Suppressionsregeln dürfen nur autorisiert erfolgen.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.4.1_stm",
+                    "uuid": "79f65921-c99b-4e12-89d7-b670cadc2f2c",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Aktivierungen, Deaktivierungen, Parameteränderungen und generische Suppressionsregeln als kritische Änderungen behandelt und nur nach fachlicher Autorisierung produktiv gesetzt werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "55b7b407-010e-4c6a-a955-e1a09c1b3af5",
+        "type": "policy",
+        "title": "AWS Security Hub Administration mit Least Privilege, Rollentrennung und MFA absichern",
+        "description": "Trennt Rollen für Administration, Read-only-Auswertung und Automatisierung, begrenzt Berechtigungen auf notwendige Security-Hub-Aktionen und erzwingt MFA sowie kurze Sitzungszeiten für privilegierte Zugänge.",
+        "purpose": "Schützt das zentrale Sicherheitslagebild vor unbefugten Änderungen, reduziert Missbrauchsrisiken privilegierter Security-Hub-Zugänge und stellt nachvollziehbare Administration sicher.",
+        "links": [
+          {
+            "href": "#b21be184-3767-584c-852c-2127c9af1281",
+            "rel": "reference",
+            "text": "AWS Security Hub IAM-Aktionen, Ressourcen und Condition Keys"
+          },
+          {
+            "href": "#d432a297-c9a6-5a38-8564-bb06f2be9d90",
+            "rel": "reference",
+            "text": "Workflow-Status von Findings"
+          },
+          {
+            "href": "#8788dc07-8c8f-5de0-91b9-1a6d76826190",
+            "rel": "reference",
+            "text": "BatchUpdateFindings in Security Hub"
+          },
+          {
+            "href": "#a8640728-bea8-5741-b338-c563eda718e6",
+            "rel": "reference",
+            "text": "Automations in Security Hub"
+          }
+        ],
+        "remarks": "Technische Umsetzung: Separate IAM-Rollen für 1) zentrale Security-Hub-Administration, 2) Read-only-Auswertung, 3) Automatisierung/Remediation und 4) Auditing definieren. In IAM nur die tatsächlich benötigten `securityhub:*`, `organizations:*`, `events:*`, `lambda:InvokeFunction`, `sns:Publish` oder Ticketing-Aktionen freigeben. Für reine Auswertung genügen typischerweise `securityhub:Get*`, `Describe*`, `List*` und `GetFindings`.\nKonsole: IAM -> Roles -> Create role bzw. <Rolle> -> Permissions / Trust relationships. Admin-Trust nur für privilegierte Gruppen; MFA in der Trust-Policy oder im IdP erzwingen; MaxSessionDuration für Admin-Rollen kurz halten (z. B. 3600 Sekunden).\nBeispiel für eine restriktive Read-only-Rolle: nur `securityhub:GetFindings`, `GetInsights`, `GetEnabledStandards`, `DescribeStandardsControls`, `List*`, `Describe*`. Schreibrechte für `BatchUpdateFindings`, `CreateAutomationRule`, `UpdateConfigurationPolicy`, `BatchUpdateStandardsControlAssociations` nur an klar getrennte Rollen vergeben.",
+        "control-implementations": [
+          {
+            "uuid": "7dac770b-dea7-48e8-ad3a-d39c6680337f",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "51b42adc-9dff-4d47-b6a1-e43c314dbe57",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "Berechtigungen für Security Hub werden nach dem Prinzip der geringsten Berechtigungen beschränkt.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1_stm",
+                    "uuid": "3af45b2f-6378-48ca-b639-d4a8a8319c29",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Berechtigungen nur für benötigte Aktionen, Regionen und Ressourcen vergeben werden. Rechte zum Ändern von Standards, Automatisierungen, Findings oder Aggregation werden nicht in breiten Sammelrollen gebündelt."
+                  }
+                ]
+              },
+              {
+                "uuid": "c0874706-e287-4d53-b789-9f7d4581fb4d",
+                "control-id": "_a9aa521b-e610-40ae-80d0-f1dd3b4ec47f",
+                "description": "Security-Hub-Berechtigungen werden rollenbasiert statt direkt an Einzelkonten vergeben.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1.1_stm",
+                    "uuid": "838c58c1-1435-4798-93bc-843ca054b5c4",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem getrennte Rollen für Administration, Analyse und Automatisierung verwendet werden. Direkte Dauerberechtigungen an persönliche Konten oder gemeinsam genutzte Administrationszugänge werden vermieden."
+                  }
+                ]
+              },
+              {
+                "uuid": "d997f4c0-1563-4826-bfca-9e225329ddfb",
+                "control-id": "_4791c533-f811-48cf-9957-6e1d438028f5",
+                "description": "Privilegierte Tätigkeiten an Security Hub erfolgen über separate Administrationskonten oder -rollen.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.5_stm",
+                    "uuid": "747a981f-d86b-4168-a658-9af6b99a1d77",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Konfigurationsänderungen an Security Hub nur über dedizierte Administrationsrollen mit erhöhtem Schutzniveau erfolgen und nicht über normale Arbeitskonten."
+                  }
+                ]
+              },
+              {
+                "uuid": "9f938ffc-b3e1-4630-821c-3d99efa36b28",
+                "control-id": "_55b70084-f446-42af-908b-0f514a72f380",
+                "description": "Weitreichende Security-Hub-Berechtigungen werden mit Mehr-Faktor-Authentisierung abgesichert.",
+                "statements": [
+                  {
+                    "statement-id": "BER.6.5_stm",
+                    "uuid": "158fa4f6-8ff6-45f2-a765-da32e56d8fb0",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Rollen mit Rechten zum Ändern von Security-Hub-Konfiguration, Standards, Controls, Aggregation und Findings nur mit MFA nutzbar sind."
+                  }
+                ]
+              },
+              {
+                "uuid": "c14cd344-c57f-4db9-bc81-3e895c0474b7",
+                "control-id": "_e549f464-b2fb-42a1-83b9-21bd3bb0f3cf",
+                "description": "Privilegierte Security-Hub-Berechtigungen werden nach Möglichkeit nur just-in-time und zeitlich begrenzt aktiviert.",
+                "statements": [
+                  {
+                    "statement-id": "BER.5.1.2_stm",
+                    "uuid": "c7073776-f464-40a1-93cc-1c96a0b72a07",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem hochprivilegierte Administrationsrechte für Security Hub nur zeitlich begrenzt oder genehmigungsbasiert bereitgestellt werden, statt dauerhaft aktiv zu sein."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "2aef3e7c-bd49-490e-b6d2-0dfa436dc79f",
+        "type": "process-procedure",
+        "title": "AWS Security Hub Findings priorisieren, automatisiert routen und erstreagieren",
+        "description": "Leitet relevante Findings anhand definierter Kriterien automatisiert an passende Zielsysteme oder Reaktionspfade weiter und verbindet Security Hub mit Triage, Ticketing, SOC- oder SOAR-Prozessen.",
+        "purpose": "Verhindert Alarmmüdigkeit durch ungezielte Massenbenachrichtigungen und stellt sicher, dass nur sinnvoll gefilterte Findings in strukturierte Bearbeitungswege gelangen.",
+        "links": [
+          {
+            "href": "#e1b4281c-5ca6-568d-8954-bdcdfcfb8a8e",
+            "rel": "reference",
+            "text": "EventBridge-Regeln für importierte Findings"
+          },
+          {
+            "href": "#a8640728-bea8-5741-b338-c563eda718e6",
+            "rel": "reference",
+            "text": "Automatisierte Änderungen und Aktionen auf Findings"
+          },
+          {
+            "href": "#8813423c-1c1f-5c3a-8787-60b73bf9255c",
+            "rel": "reference",
+            "text": "Automatisierungsregeln erstellen"
+          },
+          {
+            "href": "#e6afc0ba-975d-5a88-878f-c5176c734b22",
+            "rel": "reference",
+            "text": "Custom Actions für EventBridge"
+          },
+          {
+            "href": "#8788dc07-8c8f-5de0-91b9-1a6d76826190",
+            "rel": "reference",
+            "text": "BatchUpdateFindings für Kunden"
+          },
+          {
+            "href": "#422b950b-6540-451a-a57b-b9719285dfee",
+            "rel": "reference",
+            "text": "AWS CLI: create-automation-rule"
+          },
+          {
+            "href": "#c4b4c430-49ec-452f-bfc9-2b866591eee5",
+            "rel": "reference",
+            "text": "AWS CLI: create-action-target"
+          },
+          {
+            "href": "#83efa41d-9891-4f02-9143-717fceeaffb7",
+            "rel": "reference",
+            "text": "AWS CLI: batch-update-findings"
+          },
+          {
+            "href": "#e1b4281c-5ca6-568d-8954-bdcdfcfb8a8e",
+            "rel": "reference",
+            "text": "AWS Security Hub: EventBridge-Regeln für Findings"
+          },
+          {
+            "href": "#d432a297-c9a6-5a38-8564-bb06f2be9d90",
+            "rel": "reference",
+            "text": "AWS Security Hub: Workflow-Status"
+          }
+        ],
+        "remarks": "Technische Umsetzung (automatische Vorverarbeitung): Im Administrator-Konto Automation Rules definieren, z. B. mit `aws securityhub create-automation-rule --actions '[{\"Type\":\"FINDING_FIELDS_UPDATE\",\"FindingFieldsUpdate\":{\"Severity\":{\"Label\":\"HIGH\"},\"Note\":{\"Text\":\"Automatisch priorisiert\",\"UpdatedBy\":\"securityhub-automation\"}}}]' --criteria '{\"SeverityLabel\":[{\"Value\":\"CRITICAL\",\"Comparison\":\"EQUALS\"}]}' --rule-name \"mark-critical\"`.\nTechnische Umsetzung (benutzerdefinierte Eskalation): Custom Action anlegen mit `aws securityhub create-action-target --name \"SendToSOC\" --description \"Weiterleitung an SOC/ITSM\" --id \"SendToSOC\"`; danach in EventBridge eine Regel auf `source = aws.securityhub` und `detail-type = Security Hub Findings - Imported` oder `Security Hub Findings - Custom Action` anlegen. Beispiel-Pattern für High/Critical Findings:\n`{\"source\":[\"aws.securityhub\"],\"detail-type\":[\"Security Hub Findings - Imported\"],\"detail\":{\"findings\":{\"Severity\":{\"Label\":[\"HIGH\",\"CRITICAL\"]},\"RecordState\":[\"ACTIVE\"]}}}`\nZielsysteme: Lambda, SNS/SQS mit DLQ, Step Functions, API Destination, Jira/ServiceNow. Workflow-Status für Einzelfindings per Konsole (`Findings` -> Findings auswählen -> `Workflow status`) oder CLI setzen: `aws securityhub batch-update-findings --finding-identifiers Id=\"<FINDING_ID>\",ProductArn=\"arn:aws:securityhub:<REGION>::product/aws/securityhub\" --workflow Status=\"NOTIFIED\"`.\nWichtige Qualitätsregel: keine pauschale E-Mail-Flut. Routing immer nach Severity, Typ, Provider, Konto, Region, Asset-Kritikalität, Workflow-Status und ggf. Business-Kontext differenzieren.",
+        "control-implementations": [
+          {
+            "uuid": "169eefa9-00f9-4764-ab65-ba19eb77d31d",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "454df96a-8797-433d-9d92-821c2e1d84e7",
+                "control-id": "_d1646dc3-5cdb-44a5-999a-d41785bdd34b",
+                "description": "Für Findings aus Security Hub existiert ein geregeltes Melde- und Routingverfahren mit klaren Kriterien, Zielsystemen und Zuständigkeiten.",
+                "statements": [
+                  {
+                    "statement-id": "DET.2.1_stm",
+                    "uuid": "8b030ca1-9cf0-431d-bc98-4831e52788e2",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Findings anhand definierter Kriterien automatisiert oder manuell an die zuständigen Stellen gemeldet werden. Das Verfahren legt fest, welche Findings wohin weitergeleitet, wie sie priorisiert und wie Fehlleitungen behandelt werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "7569ae99-ab82-405e-ab60-f6debc01d233",
+                "control-id": "_1af88c3b-a13c-4d74-a099-f230c9f71f55",
+                "description": "Falls ein SOC zuständig ist, werden Erkennung, Erstbeurteilung und initiale Behandlung passender Findings an das SOC bzw. eine äquivalente Betriebsfunktion angebunden.",
+                "statements": [
+                  {
+                    "statement-id": "DET.2.2_stm",
+                    "uuid": "e2da1999-89e1-4ec6-a293-41b957736d62",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Findings, die in den Zuständigkeitsbereich des SOC oder einer vergleichbaren Stelle fallen, automatisiert oder geregelt zur initialen Behandlung übergeben werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "34e8b262-386d-43a1-bf99-c057d439194b",
+                "control-id": "_988a898a-f7c3-4e6c-9746-8b20e2e85ecd",
+                "description": "Security-Hub-Meldungen erhalten eine strukturierte Triage mit Priorisierung und definierten Sofortmaßnahmen.",
+                "statements": [
+                  {
+                    "statement-id": "REA.2.1_stm",
+                    "uuid": "88e1b687-5e01-441d-9fdf-0328915f3dd7",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Findings aus Security Hub einer Priorität zugewiesen und anhand eines Runbooks initial eingeordnet werden. Kriterien sind mindestens Schweregrad, Asset-Kritikalität, Provider, betroffene Konten/Regionen und ob bereits ein bekannter Ausnahmefall vorliegt."
+                  }
+                ]
+              },
+              {
+                "uuid": "ee7e7002-f417-4179-8c69-e2f6260d9af3",
+                "control-id": "_3c124fd5-bd24-4864-a931-b3a226177f2e",
+                "description": "Für ausgewählte Finding-Klassen können automatische Erstreaktionen ausgelöst werden.",
+                "statements": [
+                  {
+                    "statement-id": "REA.2.2_stm",
+                    "uuid": "78622936-8c52-4fff-8b6d-fa8d145df022",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem für klar definierte Finding-Typen automatische Erstreaktionen möglich sind, etwa das Erzeugen eines Tickets, das Setzen eines Workflow-Status, das Auslösen eines Playbooks oder das Anstoßen einer isolierenden Gegenmaßnahme."
+                  }
+                ]
+              },
+              {
+                "uuid": "1e2be1e1-7309-4f3d-916c-91047f98b8e6",
+                "control-id": "_3c76f9bf-7a52-4ba4-a9dd-f351e543ca9f",
+                "description": "Sicherheitsvorfälle werden nicht nur angezeigt, sondern in überwachbare und bearbeitbare Reaktionspfade überführt.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1.1_stm",
+                    "uuid": "0692f14c-79c9-494a-9340-28c016178c04",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Findings als überwachte Vorfalls- oder Vorfallsvorstufen behandelt und in nachvollziehbare Bearbeitungswege überführt werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "3a331a3e-7275-4841-a4ca-964b761136aa",
+        "type": "process-procedure",
+        "title": "AWS Security Hub Änderungen revisionssicher protokollieren und sicherheitskritische API-Ereignisse alarmieren",
+        "description": "Protokolliert Änderungen an Security Hub, Standards, Controls, Aggregation und Findings revisionssicher über CloudTrail, speichert Protokolle manipulationsarm und alarmiert auf sicherheitskritische API-Ereignisse.",
+        "purpose": "Ermöglicht Nachvollziehbarkeit, Missbrauchserkennung und forensische Auswertung bei Änderungen an der zentralen Sicherheitssteuerung.",
+        "links": [
+          {
+            "href": "#69951403-1f0b-5074-b34d-a7869baf0545",
+            "rel": "reference",
+            "text": "CloudTrail-Integration für Security Hub"
+          },
+          {
+            "href": "#018ffb80-ca56-5a7a-b92e-716d662f4a13",
+            "rel": "reference",
+            "text": "CloudTrail-Trail erstellen und Log-Datei-Validierung"
+          },
+          {
+            "href": "#e1b4281c-5ca6-568d-8954-bdcdfcfb8a8e",
+            "rel": "reference",
+            "text": "EventBridge-Regeln auf Findings"
+          },
+          {
+            "href": "#2e263617-16a4-57b2-86d0-11559e9db373",
+            "rel": "reference",
+            "text": "Aggregationskonfiguration anzeigen"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Protokollierung): CloudTrail -> Trails -> org-weiten Multi-Region-Trail mit dediziertem S3-Log-Bucket, SSE-KMS, Bucket-Versionierung und aktivierter Log-File-Validation betreiben. Security-Hub-API-Events werden dadurch zusammen mit anderen AWS-Management-Events protokolliert.\nTechnische Umsetzung (Alarmierung): EventBridge-Regel auf `detail.eventSource = securityhub.amazonaws.com` und mindestens folgende `detail.eventName` überwachen: `UpdateOrganizationConfiguration`, `CreateConfigurationPolicy`, `UpdateConfigurationPolicy`, `StartConfigurationPolicyAssociation`, `StartConfigurationPolicyDisassociation`, `BatchUpdateStandardsControlAssociations`, `BatchDisableStandards`, `CreateAutomationRule`, `DeleteAutomationRule`, `BatchUpdateFindings`, `CreateActionTarget`, `DeleteActionTarget`, `CreateInsight`, `DeleteInsight`.\nRegeln in EventBridge -> Rules -> Create rule oder über SIEM/SOC technisch umsetzen und bei Deaktivierung von Standards, Massen-Suppressions oder Policy-Disassociations mit hoher Priorität alarmieren.",
+        "control-implementations": [
+          {
+            "uuid": "f0584769-e430-42c1-8dea-d9af96a8e4e9",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "20b39df4-94b7-443d-ac53-6a72f655e00c",
+                "control-id": "_744a1a50-616b-4092-91f6-b2b4b1b0aa01",
+                "description": "Aktionen an Zugangskonten und sicherheitsrelevanten Verwaltungsobjekten von Security Hub werden revisionsfähig protokolliert.",
+                "statements": [
+                  {
+                    "statement-id": "BER.3.3_stm",
+                    "uuid": "9f809449-8e75-4f5e-835d-9eeb425f4779",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub- und zugehörige Administrationsänderungen revisionsfähig über CloudTrail protokolliert und zentral aufbewahrt werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "1e6e598e-16ad-495f-a4a1-4744a80046a8",
+                "control-id": "_dc58d353-86e1-4070-9f86-b7f0e0f93305",
+                "description": "Sicherheitsrelevante Security-Hub-Ereignisse werden mindestens für eine definierte Frist protokolliert.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1_stm",
+                    "uuid": "d4dfef06-121c-4012-b8f3-baad00bafe1f",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem sicherheitsrelevante Events aus Security Hub, insbesondere Konfigurations- und Verwaltungsaktionen, protokolliert und für Detektion und Nachvollziehbarkeit vorgehalten werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "e317ed64-a1f6-40cf-8d69-aca43a492d00",
+                "control-id": "_e7d500ff-393c-4c14-baed-c87b676efe5c",
+                "description": "Privilegierte oder sicherheitskritische Ereignisse an Security Hub werden besonders überwacht.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1.8_stm",
+                    "uuid": "b05dff72-b322-4b94-ad97-755065fafb85",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem privilegierte Security-Hub-Ereignisse wie das Deaktivieren von Standards oder Controls, das Löschen oder Ändern des Finding-Aggregators, Massenänderungen an Findings oder das Ändern von Organisationskonfigurationen gesondert protokolliert und alarmiert werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "1921fdf4-0599-41f5-bfb0-3df9f583dcbd",
+                "control-id": "_681494bd-8d1d-4b34-84f6-abab2f4ea751",
+                "description": "Cloud-Ereignisse aus Security Hub werden in das institutionsweite Audit-Log bzw. SIEM integriert.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1.13_stm",
+                    "uuid": "728d8a87-ba8d-4f99-b931-e651572af0b8",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-bezogene Cloud-Ereignisse nicht isoliert in AWS verbleiben, sondern an das zentrale Audit-Log oder SIEM der Institution angebunden werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "9b1c8682-f6c8-40f8-9335-6bcc00783ce4",
+        "type": "process-procedure",
+        "title": "AWS Security Hub als Code verwalten und Änderungen mit unabhängiger Freigabe absichern",
+        "description": "Verwaltet Security-Hub-Konfigurationen, Standards, Controls, Insights und Automatisierungen als Infrastructure as Code und setzt Code-Review, Branch-Schutz, Testnachweise und Rollback-Pfade für produktive Änderungen durch.",
+        "purpose": "Reduziert Fehlkonfigurationen, verhindert unautorisierte Änderungen an der Sicherheitssteuerung und macht Änderungen nachvollziehbar reproduzierbar.",
+        "links": [
+          {
+            "href": "#4526df3d-7016-5ce3-b168-fe5512650aa5",
+            "rel": "reference",
+            "text": "Konfigurationsrichtlinien per CLI erstellen"
+          },
+          {
+            "href": "#c4dd651d-567c-55d4-8fbd-462de1e20411",
+            "rel": "reference",
+            "text": "Konfigurationsrichtlinien aktualisieren"
+          },
+          {
+            "href": "#8813423c-1c1f-5c3a-8787-60b73bf9255c",
+            "rel": "reference",
+            "text": "Automatisierungsregeln erstellen"
+          },
+          {
+            "href": "#e74fcc62-9b22-5838-8b2b-909ba21ea295",
+            "rel": "reference",
+            "text": "Custom Insights erstellen"
+          }
+        ],
+        "remarks": "Technische Umsetzung: Security-Hub-Einstellungen, Konfigurationsrichtlinien, Automation Rules, EventBridge-Regeln, Custom Actions und ggf. Insights als IaC (z. B. CDK, CloudFormation, Terraform) verwalten. Änderungen nur über Pull Requests mit Branch-Protection, Review-Pflicht und dokumentiertem Freigabegate produktiv setzen.\nVor produktiver Änderung mindestens prüfen: 1) JSON-/Schema-Konsistenz, 2) erfolgreiche Erstellung/Aktualisierung der Konfigurationsrichtlinie, 3) Assoziationsstatus (`PENDING` -> `SUCCESS`), 4) Wirksamkeit von Automation Rules und EventBridge-Zielen, 5) Smoke-Test mit repräsentativen Findings.\nCLI-Prüfpunkte: `aws securityhub list-configuration-policies`, `aws securityhub get-configuration-policy-association --target '{\"OrganizationalUnitId\":\"<OU_ID>\"}'`, `aws securityhub get-findings --filters file://filters.json`.",
+        "control-implementations": [
+          {
+            "uuid": "8f187f15-8df4-4c2d-b69a-9be794b80759",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "ebc3f00d-dd72-4ee6-8d3c-48c9be18d9fa",
+                "control-id": "_2edf4a68-0d86-4da9-ada4-9939c2508f2c",
+                "description": "Vor wesentlichen Änderungen an der Security-Hub-Konfiguration werden Sicherheitstests und Konsistenzprüfungen durchgeführt.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.3.1_stm",
+                    "uuid": "9fa2b806-6337-4db5-8815-5156bd3342ff",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem wesentliche Änderungen an Standards, Controls, Aggregation, Insights, Automatisierungsregeln oder EventBridge-Routing vor Produktivsetzung getestet werden. Dazu gehören mindestens Syntax- bzw. Deployability-Prüfungen, Sicherheitsanforderungs-Checks und repräsentative Funktionsprüfungen."
+                  }
+                ]
+              },
+              {
+                "uuid": "6aea1af1-ab0a-4219-b236-664f1680be26",
+                "control-id": "_b7a747d3-cb11-46ce-8d0c-c57cc31d5ad5",
+                "description": "Prüfschritte, Ergebnisse und Korrekturen zu Änderungen an Security Hub werden dokumentiert.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.3.1.1_stm",
+                    "uuid": "63b93c87-22de-4cf8-91db-4c7dacd5f298",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Prüfschritte, Testergebnisse, erkannte Abweichungen und vorgenommene Korrekturen zu Security-Hub-Änderungen im Änderungsartefakt oder CI/CD-Nachweis dokumentiert werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "df8027d4-aa18-4f8b-b942-5eec95cbe604",
+                "control-id": "_1aa8319f-93fb-4236-991a-d799ab69e0c2",
+                "description": "Kritische Änderungen an der Security-Hub-Konfiguration werden autorisiert.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.4.1_stm",
+                    "uuid": "5a841ae5-c4ef-43f0-be8d-d2881337b1cb",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem kritische Änderungen an zentraler Security-Hub-Steuerung – etwa Aktivierung/Deaktivierung von Standards, Änderungen an Automationsregeln, Policy-Anpassungen oder Änderungen am Aggregator – nur nach formaler Freigabe produktiv gehen."
+                  }
+                ]
+              },
+              {
+                "uuid": "048e2218-662c-4841-8302-bc0bfa78f0b0",
+                "control-id": "_a0cd7536-0e8f-4658-99d4-c04f93dad878",
+                "description": "Die Freigabe kritischer Änderungen erfolgt durch eine von der Implementierung unabhängige Person.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.4.1.1_stm",
+                    "uuid": "4f5751dd-885b-4590-a3a2-12cf14cb9518",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem produktive Security-Hub-Änderungen von einer qualifizierten, aber nicht unmittelbar implementierenden Person freigegeben oder gegengeprüft werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "4fec93ee-f8ce-411c-820d-b2a7feb92e14",
+        "type": "process-procedure",
+        "title": "AWS Security Hub Dashboards, Custom Insights, SLOs und Management-Berichte aufbauen",
+        "description": "Verdichtet Findings und Steuerungsinformationen in operativen Dashboards, benutzerdefinierten Insights und Management-Berichten; definiert Bearbeitungsziele für relevante Findings-Klassen und überwacht deren Einhaltung.",
+        "purpose": "Macht den Sicherheitszustand der AWS-Umgebung entscheidungsfähig, priorisierbar und steuerbar, statt nur rohe Findings bereitzustellen.",
+        "links": [
+          {
+            "href": "#038910ce-8230-5c69-ac5e-ec8378076df4",
+            "rel": "reference",
+            "text": "Insights in Security Hub"
+          },
+          {
+            "href": "#7aa1600f-712b-5452-8eab-92d033c86bcb",
+            "rel": "reference",
+            "text": "Custom Insights verstehen"
+          },
+          {
+            "href": "#e74fcc62-9b22-5838-8b2b-909ba21ea295",
+            "rel": "reference",
+            "text": "Custom Insights erstellen"
+          },
+          {
+            "href": "#61724300-4506-5d9a-8b38-403e2f500276",
+            "rel": "reference",
+            "text": "Findings aus der Heimatregion abfragen"
+          },
+          {
+            "href": "#376e03c2-17fd-4ad5-8fcd-f8060622e9fc",
+            "rel": "reference",
+            "text": "AWS CLI: create-insight"
+          },
+          {
+            "href": "#e74fcc62-9b22-5838-8b2b-909ba21ea295",
+            "rel": "reference",
+            "text": "AWS Security Hub: eigene Insights erstellen"
+          }
+        ],
+        "remarks": "Technische Umsetzung (Konsole): Security Hub -> `Insights` -> `Create Insight`; Gruppierung z. B. nach `AwsAccountId`, `SeverityLabel`, `ComplianceStatus`, `ResourceType` oder `ProductName`. Für Management-Sichten monatlich oder wöchentlich dieselben Insight-Filter als Berichtsvorlage verwenden.\nTechnische Umsetzung (CLI): z. B. `aws securityhub create-insight --name \"High Findings nach Konto\" --filters '{\"SeverityLabel\":[{\"Value\":\"HIGH\",\"Comparison\":\"EQUALS\"},{\"Value\":\"CRITICAL\",\"Comparison\":\"EQUALS\"}],\"RecordState\":[{\"Value\":\"ACTIVE\",\"Comparison\":\"EQUALS\"}]}' --group-by-attribute AwsAccountId`.\nSLO-/Kennzahlenbeispiele: Zeit bis Ersttriage für High/Critical Findings, Anteil Findings mit `WorkflowStatus=NEW` älter als 24h/72h, Anteil deaktivierter Controls, Anteil Findings mit dokumentierter Ausnahme. Diese Kennzahlen über Insights, `get-findings`-Abfragen oder Downstream-Dashboards (SIEM/QuickSight/Grafana) aggregieren.",
+        "control-implementations": [
+          {
+            "uuid": "660cfe73-9336-4ce4-91aa-0f8640442934",
+            "source": "#22222222-2222-4222-8222-222222222222",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "cbdb322d-f741-407e-8b8e-b5a758b408bb",
+                "control-id": "_5d8dccb2-5fea-43c1-a804-0b49f481a1ca",
+                "description": "Die Institutionsleitung wird regelmäßig über den Stand der Security-Hub-basierten Sicherheitslage informiert.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.5.2_stm",
+                    "uuid": "bb5cd236-de18-4ed9-85f7-264c6809178e",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem verdichtete Security-Hub-Informationen in regelmäßigen Management-Berichten oder Dashboards an die Leitungsebene kommuniziert werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "22ccdb33-336d-4031-9473-e97671ba4c97",
+                "control-id": "_3111f074-e762-4bf0-b0b4-3d548e27cef5",
+                "description": "Berichte berücksichtigen sowohl Erfolge als auch Probleme, etwa persistente High-Findings, Ausfälle von Integrationen oder überfällige Bearbeitungen.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.5.1.3_stm",
+                    "uuid": "6021d1b1-61e3-4350-ad5b-14b26a098722",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Auswertungen nicht nur Befunde auflisten, sondern auch bisherige Erfolge, verbleibende Probleme und relevante Vorfalls- oder Problemtrends dokumentieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "04f4caa7-2f64-4530-b925-bc9812f35086",
+                "control-id": "_c6ecb13d-2c6a-495d-89fd-8d9e699b3ff9",
+                "description": "Aus Dashboards und Auswertungen werden priorisierte Maßnahmenvorschläge mit realistischem Umsetzungsaufwand abgeleitet.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.5.1.9_stm",
+                    "uuid": "7529e37d-9353-4d3e-b714-fbd58c0db82d",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Auswertungen in priorisierte Maßnahmenvorschläge überführt werden, beispielsweise für neue Integrationen, Control-Anpassungen, Routing-Verbesserungen oder personelle Zuständigkeiten."
+                  }
+                ]
+              },
+              {
+                "uuid": "fe8d2cd5-7a81-4f6b-8011-a4036bc4199f",
+                "control-id": "_17e221bd-3b74-453a-ad4e-e2cb346b6af5",
+                "description": "Dashboards und Insights sind Teil eines effektiven Monitoring-Ansatzes und nicht bloß ad-hoc genutzte Einzelansichten.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1_stm",
+                    "uuid": "e418a4c6-d093-49b6-a176-0ba564240619",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Security-Hub-Dashboards und Insights als reguläre Monitoring-Methode zur Überwachung der Informationssicherheit etabliert werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "df48f92d-8a4b-4423-9c76-25a2d8b8b9cf",
+        "type": "process-procedure",
+        "title": "AWS Security Hub eigene Exporte, Poller und Zusatzintegrationen throttling-sicher gestalten",
+        "description": "Optionales Muster für Umgebungen, die Security Hub zusätzlich mit eigenen Skripten, Exporten, Synchronisationsjobs oder Datenpipelines nutzen. Es regelt Backoff, Rate-Limits, Parallelität, Lasttests und Fehlerbehandlung.",
+        "purpose": "Verhindert selbstverursachte Ausfälle oder degradierte Datenqualität durch übermäßige Abfragen, unkontrollierte Parallelität oder fehlerhafte Export- und Importstrecken.",
+        "links": [
+          {
+            "href": "#61724300-4506-5d9a-8b38-403e2f500276",
+            "rel": "reference",
+            "text": "Findings aus der Heimatregion abfragen"
+          },
+          {
+            "href": "#e1b4281c-5ca6-568d-8954-bdcdfcfb8a8e",
+            "rel": "reference",
+            "text": "Ereignisgetriebener Bezug von Findings"
+          },
+          {
+            "href": "#2e86fb12-3844-5dec-b040-51bbb7265a93",
+            "rel": "reference",
+            "text": "AWS CLI Security Hub Übersicht"
+          }
+        ],
+        "remarks": "Technische Umsetzung: Eigene Poller grundsätzlich auf paginierte `GetFindings`-Aufrufe mit `NextToken`, kontrollierter Parallelität, Exponential Backoff und Jitter auslegen. Keine Endlosschleifen mit Sekundentakt. Polling-Intervalle, Max-Parallelität und Retry-Budget pro Integrationspfad dokumentieren.\nEmpfohlenes Muster: bevorzugt EventBridge statt aggressivem Polling nutzen; wo Polling nötig bleibt, pro Konto/Region einen klaren Pull-Zyklus definieren, Ergebnisse puffern und Fehlversuche mit DLQ oder Wiederanlaufsteuerung behandeln. Vor Produktivnahme Last- und Fehlerszenarien testen. Throttling, dauerhafte API-Fehler, Queue-Staus und Backoff-Ereignisse protokollieren und alarmieren, damit die Monitoring-Kette nicht still ausfällt.",
+        "control-implementations": [
+          {
+            "uuid": "3bfddcd7-01a8-4d61-86ca-7aac8a7f67ba",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Zuordnung des AWS-Security-Hub-Umsetzungsmusters zu passenden Anforderungen des Grundschutz++-Katalogs.",
+            "implemented-requirements": [
+              {
+                "uuid": "ab6dc13e-f6ee-4315-91c6-bdb5cd082978",
+                "control-id": "_17e221bd-3b74-453a-ad4e-e2cb346b6af5",
+                "description": "Eigene technische Monitoring- oder Exportmechanismen für Security Hub werden robust und betrieblich beherrschbar umgesetzt.",
+                "statements": [
+                  {
+                    "statement-id": "PERF.6.1_stm",
+                    "uuid": "5b68c25e-f571-4375-ab38-9d0b0308a9bd",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem eigene Security-Hub-Poller, Exporte oder Integrationen so ausgelegt werden, dass sie den Monitoring-Betrieb unterstützen, ohne die Stabilität oder Datenverfügbarkeit durch unkontrollierte Last zu gefährden."
+                  }
+                ]
+              },
+              {
+                "uuid": "e98cc601-116e-43b1-b1ab-b89d3872068e",
+                "control-id": "_2edf4a68-0d86-4da9-ada4-9939c2508f2c",
+                "description": "Vor wesentlichen Änderungen an eigenen Export- oder Pollingmechanismen werden Last- und Fehlerszenarien getestet.",
+                "statements": [
+                  {
+                    "statement-id": "TEST.3.1_stm",
+                    "uuid": "b507556f-2fb5-4c8c-b907-36607293055e",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem eigene Security-Hub-Abfrage- oder Exportpfade vor Produktivbetrieb auf Rate-Limits, Fehlerbehandlung, Wiederanlauf und Volumenverhalten getestet werden."
+                  }
+                ]
+              },
+              {
+                "uuid": "168e488e-6a27-4bd6-a0aa-c61b40a6f9bf",
+                "control-id": "_dc58d353-86e1-4070-9f86-b7f0e0f93305",
+                "description": "Fehler, Throttling und andere sicherheitsrelevante Betriebsereignisse in eigenen Zusatzintegrationen werden protokolliert.",
+                "statements": [
+                  {
+                    "statement-id": "DET.3.1_stm",
+                    "uuid": "f10b783b-47cf-4281-8a33-e385b1a9aa14",
+                    "description": "Der Statement-Inhalt wird umgesetzt, indem Throttling, dauerhafte Fehler und relevante Betriebsabweichungen in selbst betriebenen Security-Hub-Zusatzintegrationen protokolliert und auswertbar gemacht werden."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "capabilities": [
+      {
+        "uuid": "9f9094b0-88e7-4a63-b7ea-50f8dda2be1e",
+        "name": "aws-security-hub-sicherheitsbaseline",
+        "description": "Gruppiert die wiederverwendbaren AWS-Security-Hub-Umsetzungsmuster zu einer zusammenhängenden Sicherheitsbaseline für zentrale Verwaltung, Integrationen, Compliance-Standards, Findungsbearbeitung, Protokollierung, Änderungssteuerung und Berichterstattung.",
+        "incorporates-components": [
+          {
+            "component-uuid": "88346dfd-f922-42f3-b323-f6c23e72ea5e",
+            "description": "AWS Security Hub organisationsweit aktivieren und zentral steuern"
+          },
+          {
+            "component-uuid": "1e81ae0b-6927-4034-ac9f-be4d834f2b56",
+            "description": "AWS Security Hub Kern-Integrationen und Voraussetzungen absichern"
+          },
+          {
+            "component-uuid": "0d3e115a-ab3b-4f1c-8ae3-661e2a34235f",
+            "description": "AWS Security Hub Standards, Controls und Ausnahmen risikoorientiert steuern"
+          },
+          {
+            "component-uuid": "55b7b407-010e-4c6a-a955-e1a09c1b3af5",
+            "description": "AWS Security Hub Administration mit Least Privilege, Rollentrennung und MFA absichern"
+          },
+          {
+            "component-uuid": "2aef3e7c-bd49-490e-b6d2-0dfa436dc79f",
+            "description": "AWS Security Hub Findings priorisieren, automatisiert routen und erstreagieren"
+          },
+          {
+            "component-uuid": "3a331a3e-7275-4841-a4ca-964b761136aa",
+            "description": "AWS Security Hub Änderungen revisionssicher protokollieren und sicherheitskritische API-Ereignisse alarmieren"
+          },
+          {
+            "component-uuid": "9b1c8682-f6c8-40f8-9335-6bcc00783ce4",
+            "description": "AWS Security Hub als Code verwalten und Änderungen mit unabhängiger Freigabe absichern"
+          },
+          {
+            "component-uuid": "4fec93ee-f8ce-411c-820d-b2a7feb92e14",
+            "description": "AWS Security Hub Dashboards, Custom Insights, SLOs und Management-Berichte aufbauen"
+          },
+          {
+            "component-uuid": "df48f92d-8a4b-4423-9c76-25a2d8b8b9cf",
+            "description": "AWS Security Hub eigene Exporte, Poller und Zusatzintegrationen throttling-sicher gestalten"
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "11111111-1111-4111-8111-111111111111",
+          "title": "BSI Stand der Technik Kernel Catalog",
+          "description": "Öffentlich referenzierter Kernel-Katalog des Grundschutz++.",
+          "rlinks": [
+            {
+              "href": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/Quellkataloge/Kernel/BSI-Stand-der-Technik-Kernel-catalog.json",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "22222222-2222-4222-8222-222222222222",
+          "title": "BSI Methodik Grundschutz++ Catalog",
+          "description": "Öffentlich referenzierter Methodik-Katalog des Grundschutz++.",
+          "rlinks": [
+            {
+              "href": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/Quellkataloge/Methodik-Grundschutz%2B%2B/BSI-Methodik-Grundschutz%2B%2B-catalog.json",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "ec172389-44e0-57d9-b64c-6435aa84b60f",
+          "title": "NIST-OSCAL-Referenz zum Komponentendefinitionsmodell v1.1.3 (JSON)",
+          "description": "Offizielle Referenz des Component-Definition-Modells.",
+          "rlinks": [
+            {
+              "href": "https://pages.nist.gov/OSCAL-Reference/models/v1.1.3/component-definition/json-reference/",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "29f11e3b-c1c1-5518-8d91-29539dc8f620",
+          "title": "AWS Security Hub Benutzerhandbuch",
+          "description": "Übersicht und Benutzerhandbuch zu AWS Security Hub beziehungsweise Security Hub CSPM.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/what-is-securityhub.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "2ae2aa7b-4f10-541f-822f-01c57de490c8",
+          "title": "Integration von Security Hub CSPM mit AWS Organizations",
+          "description": "Delegierten Administrator für Security Hub benennen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/designate-orgs-admin-account.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "6f93cb18-300b-5395-9889-188cc42c5206",
+          "title": "AWS CLI: enable-organization-admin-account",
+          "description": "CLI-Befehl zum Benennen eines delegierten Security-Hub-Administrators.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/enable-organization-admin-account.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "944523f1-4072-5289-9ed2-313726748c55",
+          "title": "Einführung in die zentrale Konfiguration in Security Hub CSPM",
+          "description": "Zentrale Konfiguration von Dienst, Standards und Controls.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/central-configuration-intro.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "de06ba44-035b-5ff2-beaf-dad72a5f05ff",
+          "title": "Erstellen und Zuweisen von Konfigurationsrichtlinien",
+          "description": "Konfigurationsrichtlinien für Accounts und OUs erstellen und verknüpfen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/create-associate-policy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "4526df3d-7016-5ce3-b168-fe5512650aa5",
+          "title": "AWS CLI: create-configuration-policy",
+          "description": "CLI-Referenz zum Erstellen von Konfigurationsrichtlinien.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/create-configuration-policy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "c4dd651d-567c-55d4-8fbd-462de1e20411",
+          "title": "AWS CLI: update-configuration-policy",
+          "description": "CLI-Referenz zum Aktualisieren von Konfigurationsrichtlinien.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/update-configuration-policy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "3fe4e466-bd86-515a-a576-364b74737f97",
+          "title": "Regionsübergreifende Aggregation in Security Hub aktivieren",
+          "description": "Home Region und Linked Regions für die Aggregation festlegen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/finding-aggregation-enable.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "2e263617-16a4-57b2-86d0-11559e9db373",
+          "title": "Aggregationskonfiguration anzeigen",
+          "description": "Konfiguration der regionsübergreifenden Aggregation anzeigen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/finding-aggregation-view-config.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "82d5b73a-bf3a-559e-9db0-226599a6ca2e",
+          "title": "Findings-Fluss aus Integrationen aktivieren",
+          "description": "Produktintegrationen und das Einspeisen von Findings aktivieren.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-integration-enable.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "c5e7224a-c0d2-5a87-a293-c7471a99b6d8",
+          "title": "AWS Config als Voraussetzung für Kontroll-Findings",
+          "description": "AWS Config als technische Voraussetzung für Security-Hub-Kontroll-Findings.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-setup-prereqs.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "a149878b-e408-51e8-bd6f-c4f4719c70b2",
+          "title": "Controls in Security Hub CSPM verwalten",
+          "description": "Security Controls in zentraler Konfiguration verwalten.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/controls-view-manage.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "3fa78929-861e-58f9-86b4-7097c84496ee",
+          "title": "Konfigurationsrichtlinien für Standards und Controls",
+          "description": "Überblick über Konfigurationsrichtlinien.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/configuration-policies-overview.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "84483073-4486-5477-9d8e-c3a5d961726f",
+          "title": "Controls deaktivieren",
+          "description": "Nicht passende Controls gezielt deaktivieren.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/disable-controls-overview.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "ee999cb0-b754-528e-92a5-fa5581c71a7e",
+          "title": "Kontroll-Findings erzeugen und aktualisieren",
+          "description": "Hinweise zu Suppression, Aktualisierung und Auswertung von Kontroll-Findings.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/controls-findings-create-update.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "9f2cb5e1-2808-5e12-b74e-680400f16e0d",
+          "title": "Control-Parameter anpassen",
+          "description": "Parameterwerte für Security Controls zentral anpassen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/customize-control-parameters.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "ae85c3a2-57f6-50e8-88cd-afff416ac7d8",
+          "title": "Automatisierungsregeln in Security Hub",
+          "description": "Automation Rules zum Aktualisieren oder Suppressen von Findings.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/automation-rules.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "a8640728-bea8-5741-b338-c563eda718e6",
+          "title": "Automatisierte Änderungen und Aktionen auf Findings",
+          "description": "Überblick über Automationsfunktionen in Security Hub.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/automations.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "8813423c-1c1f-5c3a-8787-60b73bf9255c",
+          "title": "Automatisierungsregeln erstellen",
+          "description": "Automationsregeln per Konsole oder CLI erstellen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/create-automation-rules.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "e6afc0ba-975d-5a88-878f-c5176c734b22",
+          "title": "Custom Actions für EventBridge",
+          "description": "Custom Actions aus Security Hub an EventBridge senden.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-cwe-custom-actions.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "e1b4281c-5ca6-568d-8954-bdcdfcfb8a8e",
+          "title": "EventBridge-Regeln für importierte Findings",
+          "description": "Imported Findings Events in EventBridge auswerten.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-cwe-all-findings.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "8788dc07-8c8f-5de0-91b9-1a6d76826190",
+          "title": "BatchUpdateFindings für Kunden",
+          "description": "Findings programmgesteuert aktualisieren.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/finding-update-batchupdatefindings.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "69951403-1f0b-5074-b34d-a7869baf0545",
+          "title": "CloudTrail-Integration für Security Hub",
+          "description": "Security-Hub-API-Aktivitäten per CloudTrail protokollieren.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/cloudtrail-integration.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "018ffb80-ca56-5a7a-b92e-716d662f4a13",
+          "title": "CloudTrail-Trail erstellen und Log-Datei-Validierung",
+          "description": "CloudTrail-Trail mit Log-Datei-Validierung betreiben.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-create-and-update-a-trail-by-using-the-aws-cli.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "b21be184-3767-584c-852c-2127c9af1281",
+          "title": "AWS Security Hub IAM-Aktionen, Ressourcen und Condition Keys",
+          "description": "IAM-Autorisierungsmodell für Security Hub.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/service-authorization/latest/reference/list_awssecurityhub.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "d432a297-c9a6-5a38-8564-bb06f2be9d90",
+          "title": "Workflow-Status von Findings setzen",
+          "description": "Findings-Workflow-Status manuell oder automatisiert ändern.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/findings-workflow-status.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "038910ce-8230-5c69-ac5e-ec8378076df4",
+          "title": "Insights in Security Hub",
+          "description": "Insights anzeigen und nutzen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-insights.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "7aa1600f-712b-5452-8eab-92d033c86bcb",
+          "title": "Custom Insights verstehen",
+          "description": "Custom Insights als kuratierte Teilmengen von Findings nutzen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-custom-insights.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "e74fcc62-9b22-5838-8b2b-909ba21ea295",
+          "title": "Custom Insights erstellen",
+          "description": "Custom Insights per CLI oder API erstellen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-custom-insight-create-api.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "38e3baac-a77c-59ca-a0f0-776ca65c0440",
+          "title": "Findings und ASFF in Security Hub",
+          "description": "Findings-Format und regionsübergreifende Aggregation von Findings.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-findings.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "61724300-4506-5d9a-8b38-403e2f500276",
+          "title": "AWS CLI: get-findings",
+          "description": "Findings in der Heimatregion inklusive verknüpfter Regionen abfragen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/get-findings.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "2e86fb12-3844-5dec-b040-51bbb7265a93",
+          "title": "AWS CLI Security Hub Übersicht",
+          "description": "Überblick über verfügbare Security-Hub-CLI-Befehle.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "b0e74b51-88ae-40cf-ad96-c0d7567a0fd5",
+          "title": "AWS CLI: update-organization-configuration",
+          "description": "AWS CLI: update-organization-configuration",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/update-organization-configuration.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "8bd0cd65-b1cb-49ad-8408-52f92a01a348",
+          "title": "AWS Security Hub: Delegated Administrator setzen",
+          "description": "AWS Security Hub: Delegated Administrator setzen",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-set-da.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "a4c04ba9-d46a-48bd-ae04-e3fdeec11775",
+          "title": "AWS CLI: create-finding-aggregator",
+          "description": "AWS CLI: create-finding-aggregator",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/create-finding-aggregator.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "9fb68b4c-8506-4329-a74c-46a48f0db2f5",
+          "title": "AWS CLI: start-configuration-policy-association",
+          "description": "AWS CLI: start-configuration-policy-association",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/start-configuration-policy-association.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "b035e789-1685-4f51-8d94-6aff5077570e",
+          "title": "AWS CLI: batch-enable-standards",
+          "description": "AWS CLI: batch-enable-standards",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/batch-enable-standards.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "bf25d976-582f-480a-9134-b9a2e4713501",
+          "title": "AWS CLI: batch-update-standards-control-associations",
+          "description": "AWS CLI: batch-update-standards-control-associations",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/batch-update-standards-control-associations.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "422b950b-6540-451a-a57b-b9719285dfee",
+          "title": "AWS CLI: create-automation-rule",
+          "description": "AWS CLI: create-automation-rule",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/create-automation-rule.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "c4b4c430-49ec-452f-bfc9-2b866591eee5",
+          "title": "AWS CLI: create-action-target",
+          "description": "AWS CLI: create-action-target",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/create-action-target.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "83efa41d-9891-4f02-9143-717fceeaffb7",
+          "title": "AWS CLI: batch-update-findings",
+          "description": "AWS CLI: batch-update-findings",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/batch-update-findings.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "376e03c2-17fd-4ad5-8fcd-f8060622e9fc",
+          "title": "AWS CLI: create-insight",
+          "description": "AWS CLI: create-insight",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/create-insight.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "ca6881f4-4fd6-44a5-810b-c7839d47b6a1",
+          "title": "AWS Security Hub: Custom Actions",
+          "description": "AWS Security Hub: Custom Actions",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-cwe-configure.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "7ac812f9-1ddf-4163-89df-4d6d6367769b",
+          "title": "AWS CLI: enable-security-hub",
+          "description": "AWS CLI: enable-security-hub",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/cli/latest/reference/securityhub/enable-security-hub.html",
+              "media-type": "text/html"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
