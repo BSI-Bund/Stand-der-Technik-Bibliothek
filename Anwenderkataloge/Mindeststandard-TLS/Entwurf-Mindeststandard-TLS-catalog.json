@@ -1,0 +1,958 @@
+{
+  "catalog": {
+    "uuid": "ebc7e0da-4ca9-407f-8a75-f6bc143ee161",
+    "metadata": {
+      "title": "Entwurf Mindeststandard Bund TLS",
+      "last-modified": "2026-04-23T13:28:33Z",
+      "version": "2026-04-23T13:28:32.097584+00:00",
+      "oscal-version": "1.1.3",
+      "roles": [
+        {
+          "id": "creator",
+          "title": "Creator"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "creator",
+          "party-uuids": [
+            "2c6a8535-83d2-477b-b538-47efbf33e9a8"
+          ]
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "2c6a8535-83d2-477b-b538-47efbf33e9a8",
+          "type": "person",
+          "name": "Mindeststandards Bund",
+          "email-addresses": [
+            "mindeststandards@bsi.bund.de"
+          ]
+        }
+      ],
+      "remarks": "**HINWEIS:** Dieses Dokument ist ein Entwurf.\n\n# 1. Mindeststandard des BSI zur Verwendung von Transport Layer Security\n\n## 1.1 Einleitung\nDas Bundesamt für Sicherheit in der Informationstechnik (BSI) erarbeitet Mindeststandards für die Sicherheit der Informationstechnik des Bundes auf der Grundlage des § 44 Abs. 1 BSIG. Als gesetzliche Vorgabe definieren Mindeststandards ein konkretes Mindestniveau für die Informationssicherheit. Die Definition erfolgt auf Basis der fachlichen Expertise des BSI in der Überzeugung, dass dieses Mindestniveau in der Bundesverwaltung nicht unterschritten werden darf. Der Mindeststandard richtet sich primär an IT-Verantwortliche, IT-Sicherheitsbeauftragte (IT-SiBe) und IT-Betriebspersonal. \n\n## 1.2 Geltungsbereich und Abgrenzung dieses Mindeststandards\nIm Rahmen der stetig zunehmenden Digitalisierung und der damit verbundenen Übertragung von Informationen über Kommunikationsnetze ist es eine zwingende Notwendigkeit, Informationen während der Übertragung abzusichern, um die Schutzziele Vertraulichkeit, Authentizität und Integrität gewährleisten zu können. Eine zuverlässige Absicherung der Übertragung in Netzen kann durch den Einsatz des Protokolls Transport Layer Security (TLS) erreicht werden. TLS wird verwendet, um Informationen während der Übertragung in Netzen kryptographisch durch Etablierung eines sicheren Kanals (verschlüsselt, authentisiert und integritätsgeschützt) abzusichern. So können Daten aus höheren Schichten des OSI-Referenzmodells sicher über TCP/IP-basierte Verbindungen übertragen werden (z.B. HTTPS, FTPS, IMAPS, LDAPS). Es existieren jedoch unterschiedliche Versionen von TLS, wobei nicht jede Version heute als sicher eingestuft werden kann. Daher ist es wichtig, die geeignete Version in der richtigen Konfiguration einzusetzen, um die oben genannten Schutzziele zu erreichen.\n\nDieser Mindeststandard stellt konkrete Anforderungen an die sichere Verwendung und Konfiguration von TLS. Dieser Mindeststandard fordert nicht, dass TLS zur kryptographischen Absicherung von Informationen während der Übertragung in Netzen verwendet werden muss. Unter der Voraussetzung, dass keine Einschränkungen für das angestrebte Sicherheitsniveau entstehen, können auch andere Protokolle und/oder Verfahren zur Transportverschlüsselung verwendet werden. Sobald jedoch TLS verwendet wird, müssen die in diesem Mindeststandards beschriebenen Sicherheitsanforderungen von Einrichtungen der Bundesverwaltung beachtet und umgesetzt werden.\n\nDer Mindeststandard setzt die IT-Grundschutz-Vorgehensweise des BSI zum Management der Informationssicherheit voraus. Er gilt für alle Schutzbedarfskategorien.  \nDie Erfüllung der im Mindeststandard vorgegebenen Sicherheitsanforderungen ist für ein angemessenes Sicherheitsniveau notwendig, aber in der Regel nicht hinreichend.  \nUnter Berücksichtigung des individuellen Schutzbedarfs muss die Prüfung sowie gegebenenfalls die Festlegung und Umsetzung eventuell zusätzlich erforderlicher Sicherheitsmaßnahmen erfolgen.",
+      "props": [
+        {
+          "name": "scope_implements_norm",
+          "ns": "http://csrc.nist.gov/ns/oscal/1.0",
+          "value": "§ 44 Abs.1 BSIG"
+        },
+        {
+          "name": "scope_target_audience",
+          "ns": "http://csrc.nist.gov/ns/oscal/1.0",
+          "value": "Bundesbehörden"
+        }
+      ],
+      "links": [
+        {
+          "href": "#b4db00bf-3408-4ad7-a26d-ae992266e472",
+          "rel": "reference",
+          "text": "BSI TR-02102"
+        }
+      ]
+    },
+    "groups": [
+      {
+        "id": "VER",
+        "title": "Verwendung von TLS-Protokoll-Versionen",
+        "props": [
+          {
+            "name": "label",
+            "value": "VER"
+          }
+        ],
+        "controls": [
+          {
+            "id": "KONF.2.2",
+            "class": "BSI-Stand-der-Technik-Kernel",
+            "title": "Kryptographische Verfahren in IT-Systemen",
+            "params": [
+              {
+                "id": "konf.2.2-prm1",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "8a4dc242-9279-59ab-ab31-32fade97f1b5"
+                  }
+                ],
+                "label": "anerkannten Standards"
+              }
+            ],
+            "props": [
+              {
+                "name": "label",
+                "value": "VER.1"
+              },
+              {
+                "name": "alt-identifier",
+                "value": "e4570c64-4790-4a5c-95e4-4c168d447566"
+              },
+              {
+                "name": "sec_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                "value": "normal-SdT"
+              },
+              {
+                "name": "effort_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                "value": "3"
+              },
+              {
+                "name": "tags",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/tags.csv",
+                "value": "Cryptography"
+              }
+            ],
+            "parts": [
+              {
+                "id": "KONF.2.2_stm",
+                "name": "statement",
+                "prose": "Konfiguration für IT-Systeme MUSS kryptographische Verfahren nach {{ insert: param, konf.2.2-prm1 }} im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement aktivieren.",
+                "props": [
+                  {
+                    "name": "documentation",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/documentation_guidelines.csv",
+                    "value": "Konfigurationshistorie"
+                  },
+                  {
+                    "name": "practice",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                    "value": "Konfiguration"
+                  },
+                  {
+                    "name": "target_object_categories",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/target_object_categories.csv",
+                    "value": "IT-Systeme"
+                  },
+                  {
+                    "name": "modal_verb",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                    "value": "MUSS"
+                  },
+                  {
+                    "name": "result",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "kryptographische Verfahren"
+                  },
+                  {
+                    "name": "result_specification",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "nach {{anerkannten Standards}} im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement"
+                  },
+                  {
+                    "name": "action_word",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                    "value": "aktivieren"
+                  }
+                ]
+              },
+              {
+                "id": "KONF.2.2_gdn",
+                "name": "guidance",
+                "prose": "Kryptographie wird für die Authentifizierung, Verschlüsselung und Integritätprüfung in Systemen verwendet, z.B. bei der Verschlüsselung von Speichermedien, bei der Anmeldung am System, Transportverschlüsselung von Systemupdates oder Integritätsprüfung von Systemfunktionen. Die Formulierung \"im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement\" bedeutet, dass die Funktionen so zu konfigurieren sind, wie in der Praktik Berechtigung (BER) festgelegt. Hierzu gehört insbesondere die Verwendung aktueller kryptographischer Verfahren, wie sie im Thema Kryptographie zu finden ist."
+              }
+            ]
+          },
+          {
+            "id": "KONF.14.1",
+            "class": "BSI-Stand-der-Technik-Kernel",
+            "title": "Verschlüsselung beim Transport",
+            "params": [
+              {
+                "id": "konf.14.1-prm1",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "ca6d1bd6-c782-5364-a4bc-1e4ed24050ae"
+                  }
+                ],
+                "label": "TLS 1.3 (oder TLS 1.2 mit PFS)",
+                "values": [
+                  "TLS 1.3 (oder TLS 1.2 mit PFS)"
+                ]
+              }
+            ],
+            "props": [
+              {
+                "name": "label",
+                "value": "VER.2"
+              },
+              {
+                "name": "alt-identifier",
+                "value": "99806244-514d-43e2-be34-4ac7ab0517ad"
+              },
+              {
+                "name": "sec_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                "value": "normal-SdT"
+              },
+              {
+                "name": "effort_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                "value": "2"
+              },
+              {
+                "name": "tags",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/tags.csv",
+                "value": "Produktbeschreibung, Cryptography, Zero Trust"
+              }
+            ],
+            "parts": [
+              {
+                "id": "KONF.14.1_stm",
+                "name": "statement",
+                "prose": "Konfiguration für Anwendungen KANN Kommunikation beim Transport über Netze nach {{ insert: param, konf.14.1-prm1 }} verschlüsseln.",
+                "props": [
+                  {
+                    "name": "documentation",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/documentation_guidelines.csv",
+                    "value": "Konfigurationshistorie"
+                  },
+                  {
+                    "name": "practice",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                    "value": "Konfiguration"
+                  },
+                  {
+                    "name": "target_object_categories",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/target_object_categories.csv",
+                    "value": "Anwendungen"
+                  },
+                  {
+                    "name": "modal_verb",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                    "value": "KANN"
+                  },
+                  {
+                    "name": "result",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "Kommunikation beim Transport"
+                  },
+                  {
+                    "name": "result_specification",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "über Netze nach {{einem anerkannten Standard}}"
+                  },
+                  {
+                    "name": "action_word",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                    "value": "verschlüsseln"
+                  }
+                ]
+              },
+              {
+                "id": "KONF.14.1_gdn",
+                "name": "guidance",
+                "prose": "Werden Daten unverschlüsselt übertragen, so könnten sie abgehört oder unbemerkt manipuliert werden. Relevant sind hierbei alle von der Anwendung übertragenen Daten, inklusive Authentifizierung an der Benutzerschnittstelle oder API, Abruf von Daten, Server-Server-Replikation oder zur Datensicherung. Das betrifft sowohl Inhalts- als auch Metadaten. Die Umsetzung kann mit Algorithmen zur Transportverschlüsselung wie Transport Layer Security (TLS) oder Ende-zu-Ende-Verschlüsselung erfolgen. Für aktuelle Verschlüsselungsverfahren siehe BSI TR-02102. Die Konfiguration der Verschlüsselung kann sich daran orientieren, wie lange die transportieren Daten, z.B. Transaktionen, vertraulich zu behandeln sind. Eine Herausforderung hierbei sind Anwendungen, die über allgemeine Anbindungen mit anderen Institutionen kommunizieren, z.B. E-Mails oder Anrufe ins öffentliche Telefonnetz. Diese Anwendungen können nur ihren Teil der Verbindungsstrecke verschlüsseln, so dass der Rest der Strecke und damit die Verbindung an sich dennoch unverschlüsselt sein könnte. Überträgt die Anwendung keine schützenswerten Daten über das Netz, so ist die Anforderung entbehrlich."
+              }
+            ],
+            "controls": [
+              {
+                "id": "KONF.14.1.1",
+                "class": "BSI-Stand-der-Technik-Kernel",
+                "title": "Obligatorische Verschlüsselung",
+                "props": [
+                  {
+                    "name": "label",
+                    "value": "VER.2.1"
+                  },
+                  {
+                    "name": "alt-identifier",
+                    "value": "b73c400e-b4f8-494c-ac02-619258f77a2d"
+                  },
+                  {
+                    "name": "sec_level",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                    "value": "normal-SdT"
+                  },
+                  {
+                    "name": "effort_level",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                    "value": "4"
+                  },
+                  {
+                    "name": "tags",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/tags.csv",
+                    "value": "Produktbeschreibung"
+                  }
+                ],
+                "parts": [
+                  {
+                    "id": "KONF.14.1.1_gdn",
+                    "name": "guidance",
+                    "prose": "Anfällige Verbindungen im Sinne dieses Mindeststandards sind alle TLS-Verbindungen, welche die Sicherheitsanforderungen (TLS 1.3 oder TLS 1.2 mit PFS) nicht erfüllen."
+                  },
+                  {
+                    "id": "KONF.14.1.1_stm",
+                    "name": "statement",
+                    "prose": "Konfiguration für Anwendungen MUSS unverschlüsselte und anfällige Verbindungen über Netze deaktivieren.",
+                    "props": [
+                      {
+                        "name": "documentation",
+                        "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/documentation_guidelines.csv",
+                        "value": "Konfigurationshistorie"
+                      },
+                      {
+                        "name": "practice",
+                        "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                        "value": "Konfiguration"
+                      },
+                      {
+                        "name": "target_object_categories",
+                        "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/target_object_categories.csv",
+                        "value": "Anwendungen"
+                      },
+                      {
+                        "name": "modal_verb",
+                        "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                        "value": "MUSS"
+                      },
+                      {
+                        "name": "result",
+                        "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                        "value": "unverschlüsselte und anfällige Verbindungen"
+                      },
+                      {
+                        "name": "result_specification",
+                        "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                        "value": "über Netze"
+                      },
+                      {
+                        "name": "action_word",
+                        "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                        "value": "deaktivieren"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "KONF.14.1.2",
+                "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                "title": "HTTPS für Webserver",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "33a77996-1ecd-46dd-a12c-216a207bdd1c"
+                  },
+                  {
+                    "name": "label",
+                    "value": "VER.2.2"
+                  }
+                ],
+                "parts": [
+                  {
+                    "name": "statement",
+                    "prose": "Bei Einsatz von Webservern MUSS für alle Verbindungen durch nicht vertrauenswürdige Netze eine TLS-Verbindung eingesetzt werden, die alle Anforderungen dieses Mindeststandards erfüllt."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "KONF.10.2",
+            "class": "BSI-Stand-der-Technik-Kernel",
+            "title": "Kryptographische Verfahren in Anwendungen",
+            "params": [
+              {
+                "id": "konf.10.2-prm1",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "472a0b3f-22b2-51ae-bf19-26db9abbe163"
+                  }
+                ],
+                "label": "anerkannten Standards"
+              }
+            ],
+            "props": [
+              {
+                "name": "label",
+                "value": "VER.3"
+              },
+              {
+                "name": "alt-identifier",
+                "value": "94aac721-fbe3-44d0-a0ce-55ebded001ab"
+              },
+              {
+                "name": "sec_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                "value": "normal-SdT"
+              },
+              {
+                "name": "effort_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                "value": "3"
+              },
+              {
+                "name": "tags",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/tags.csv",
+                "value": "Produktbeschreibung"
+              }
+            ],
+            "links": [
+              {
+                "href": "#KONF.14.1",
+                "rel": "related"
+              }
+            ],
+            "parts": [
+              {
+                "id": "KONF.10.2_stm",
+                "name": "statement",
+                "prose": "Konfiguration für Anwendungen MUSS kryptographische Verfahren nach {{ insert: param, konf.10.2-prm1 }} im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement aktivieren.",
+                "props": [
+                  {
+                    "name": "documentation",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/documentation_guidelines.csv",
+                    "value": "Konfigurationshistorie"
+                  },
+                  {
+                    "name": "practice",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                    "value": "Konfiguration"
+                  },
+                  {
+                    "name": "target_object_categories",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/target_object_categories.csv",
+                    "value": "Anwendungen"
+                  },
+                  {
+                    "name": "modal_verb",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                    "value": "MUSS"
+                  },
+                  {
+                    "name": "result",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "kryptographische Verfahren"
+                  },
+                  {
+                    "name": "result_specification",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "nach {{anerkannten Standards}} im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement"
+                  },
+                  {
+                    "name": "action_word",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                    "value": "aktivieren"
+                  }
+                ]
+              },
+              {
+                "id": "KONF.10.2_gdn",
+                "name": "guidance",
+                "prose": "Kryptographie wird für die Authentifizierung, Verschlüsselung und Integritätprüfung in Anwendungen verwendet, z.B. bei der Anmeldung an der Anwendung oder digitalen Signierung von Nachrichten. Die Formulierung \"im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement\" bedeutet, dass die Authentifizierung so erfolgt, wie in der Praktik Berechtigung (BER) festgelegt. Hierzu gehört insbesondere die Verwendung aktueller kryptographischer Verfahren, wie sie im Thema Schlüsselmanagement zu finden ist. Anerkannte kryptographische Verfahren sind in der BSI TR-02102 zu finden."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "BES",
+        "title": "Beschaffungsmanagement",
+        "props": [
+          {
+            "name": "label",
+            "value": "BES"
+          }
+        ],
+        "controls": [
+          {
+            "id": "BES.2.1.4",
+            "class": "BSI-Stand-der-Technik-Kernel",
+            "title": "Kompatibilität",
+            "props": [
+              {
+                "name": "label",
+                "value": "BES.1"
+              },
+              {
+                "name": "alt-identifier",
+                "value": "4625c5ac-57d7-404c-9ab3-620b724b36b8"
+              },
+              {
+                "name": "sec_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                "value": "normal-SdT"
+              },
+              {
+                "name": "effort_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                "value": "3"
+              },
+              {
+                "name": "tags",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/tags.csv",
+                "value": "Lieferketten"
+              }
+            ],
+            "parts": [
+              {
+                "id": "BES.2.1.4_stm",
+                "name": "statement",
+                "prose": "Beschaffungsmanagement für Einkäufe MUSS den Bedarf für die Kompatibilität mit der bestehenden Infrastruktur dokumentieren.",
+                "props": [
+                  {
+                    "name": "documentation",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/documentation_guidelines.csv",
+                    "value": "Beschaffungskriterien"
+                  },
+                  {
+                    "name": "practice",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                    "value": "Beschaffungsmanagement"
+                  },
+                  {
+                    "name": "target_object_categories",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/target_object_categories.csv",
+                    "value": "Einkäufe"
+                  },
+                  {
+                    "name": "modal_verb",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                    "value": "MUSS"
+                  },
+                  {
+                    "name": "result",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "den Bedarf für die Kompatibilität mit der bestehenden Infrastruktur"
+                  },
+                  {
+                    "name": "action_word",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                    "value": "dokumentieren"
+                  }
+                ]
+              },
+              {
+                "id": "BES.2.1.4_gdn",
+                "name": "guidance",
+                "prose": "Werden Beschaffungen ohne Betrachtung der Kompatibilität zur angebundenen Infrastruktur vorgenommen, kann es zu unvorhergesehenen Wechselwirkungen zwischen Komponenten kommen. Durch die steigende Komplexität von Infrastrukturen wächst auch das Risiko solcher Inkompatibilitäten oder Fehlerbilder. Zur relevanten Infrastruktur können je nach Einsatzzweck z.B. der Verzeichnisdienst, die Protokollierung von Ereignissen, das Monitoring oder der Datenspeicher gehören. Soweit möglich, ist es sinnvoll, zur Anbindung anerkannte Standards zu nutzen, z.B. REST-API und HTTPS für die Schnittstellen, TCP/IP und Ethernet (IEEE 802.3) für die Netzanbindung, SSH für die Administration,sowie SQL oder JSON für das Datenmanagement."
+              }
+            ],
+            "controls": [
+              {
+                "id": "BES.2.1.4.1",
+                "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                "title": "HTTPS für Webserver",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "681be37d-1aac-4324-a459-f0ed296525bd"
+                  },
+                  {
+                    "name": "label",
+                    "value": "BES.1.1"
+                  }
+                ],
+                "parts": [
+                  {
+                    "name": "statement",
+                    "prose": "Bei Neubeschaffungen, die für einen produktiven Einsatz gedacht sind und die folgenden Zielobjekte betreffen MUSS die Kompatibilität mit TLS 1.3 sichergestellt werden.\n\nZielobjekte: Webserver"
+                  }
+                ]
+              },
+              {
+                "id": "BES.2.1.4.2",
+                "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                "title": "TLS für Netzverbindungen",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "ec46fe18-53c6-42e0-ab72-e98c8b0825bf"
+                  },
+                  {
+                    "name": "label",
+                    "value": "BES.1.2"
+                  }
+                ],
+                "parts": [
+                  {
+                    "name": "statement",
+                    "prose": "Bei Neubeschaffungen, die für einen produktiven Einsatz gedacht sind und TLS verwenden SOLLTE die Kompatibilität mit TLS 1.3 sichergestellt werden."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "BES.4.3",
+            "class": "BSI-Stand-der-Technik-Kernel",
+            "title": "Beschaffung anhand der Kriterien",
+            "props": [
+              {
+                "name": "label",
+                "value": "BES.2"
+              },
+              {
+                "name": "alt-identifier",
+                "value": "f8089693-7d13-4f0e-b9a0-98102f685d74"
+              },
+              {
+                "name": "sec_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                "value": "normal-SdT"
+              },
+              {
+                "name": "effort_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                "value": "2"
+              },
+              {
+                "name": "tags",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/tags.csv",
+                "value": "Lieferketten"
+              }
+            ],
+            "parts": [
+              {
+                "id": "BES.4.3_stm",
+                "name": "statement",
+                "prose": "Beschaffungsmanagement für Einkäufe SOLLTE die Beschaffung anhand der festgelegten Kriterien verankern.",
+                "props": [
+                  {
+                    "name": "documentation",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/documentation_guidelines.csv",
+                    "value": "Prozess Beschaffung"
+                  },
+                  {
+                    "name": "practice",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                    "value": "Beschaffungsmanagement"
+                  },
+                  {
+                    "name": "target_object_categories",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/target_object_categories.csv",
+                    "value": "Einkäufe"
+                  },
+                  {
+                    "name": "modal_verb",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                    "value": "SOLLTE"
+                  },
+                  {
+                    "name": "result",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "die Beschaffung"
+                  },
+                  {
+                    "name": "result_specification",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "anhand der festgelegten Kriterien"
+                  },
+                  {
+                    "name": "action_word",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                    "value": "verankern"
+                  }
+                ]
+              },
+              {
+                "id": "BES.4.3_gdn",
+                "name": "guidance",
+                "prose": "Werden Waren, Systeme oder Dienstleistungen ohne überprüfbare Kriterien beschafft, kann dies zu Sicherheitslücken, finanziellen Schäden oder Abhängigkeiten führen. Beispielsweise könnte eine Institution Hardware von einem unbekannten Anbieter erwerben, deren Firmware Schadcode enthält, oder Cloud-Dienste nutzen, die ihre Datenhaltung in unsicheren Rechtsräumen vornehmen. Ebenso könnte ein IT-Dienstleister beauftragt werden, ohne dass geprüft wurde, ob er über angemessene Qualifikationen oder Referenzen verfügt, was im Ernstfall zu Ausfällen oder Datenverlust führen könnte."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ABW",
+        "title": "Abweichungen und Risikomanagement",
+        "props": [
+          {
+            "name": "label",
+            "value": "ABW"
+          }
+        ],
+        "controls": [
+          {
+            "id": "GC.11.1",
+            "class": "BSI-Methodik-Grundschutz",
+            "title": "Methodik für das Risikomanagement",
+            "props": [
+              {
+                "name": "label",
+                "value": "ABW.1"
+              },
+              {
+                "name": "alt-identifier",
+                "value": "0567f921-f474-4060-9a64-11e5148ebe09"
+              },
+              {
+                "name": "sec_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                "value": "normal-SdT"
+              },
+              {
+                "name": "effort_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                "value": "0"
+              }
+            ],
+            "parts": [
+              {
+                "id": "GC.11.1_stm",
+                "name": "statement",
+                "prose": "Governance und Compliance MUSS eine einheitliche Methodik für das Informationssicherheitsrisikomanagement auf Basis des Kontextes der Institution und der Anforderungen interessierter Parteien sowie der daraus hergeleiteten Risikoziele verankern.",
+                "props": [
+                  {
+                    "name": "documentation",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/documentation_guidelines.csv",
+                    "value": "Risikobewertung"
+                  },
+                  {
+                    "name": "practice",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                    "value": "Governance und Compliance"
+                  },
+                  {
+                    "name": "modal_verb",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                    "value": "MUSS"
+                  },
+                  {
+                    "name": "result",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "eine einheitliche Methodik für das Informationssicherheitsrisikomanagement"
+                  },
+                  {
+                    "name": "result_specification",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "auf Basis des Kontextes der Institution und der Anforderungen interessierter Parteien sowie der daraus hergeleiteten Risikoziele"
+                  },
+                  {
+                    "name": "action_word",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                    "value": "verankern"
+                  }
+                ]
+              },
+              {
+                "id": "GC.11.1_gdn",
+                "name": "guidance",
+                "prose": "Das Risikomanagement stellt sicher, dass Risiken systematisch identifiziert, eingeschätzt, bewertet und behandelt werden. Die Festlegung einheitlicher Kriterien für, Risikoeinschätzung, Risikobewertung und Risikobehandlung, sowie die Rolle des Risikoeigentümers sorgen für Transparenz und Verbindlichkeit.  Die Risikomanagementmethodik kann frei gewählt werden.  In einem separaten Dokument zur Risikobetrachtung werden verbindliche Vorgaben an die Risikomethodik vorgeschrieben. Die Vorgaben sind entsprechend gängiger Risikomanagement-Prozesse strukturiert."
+              }
+            ],
+            "controls": [
+              {
+                "id": "GC.11.1.1",
+                "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                "title": "Nichtkonformes TLS als Risiko",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "b8219f58-61d0-4299-8074-302efbb09a02"
+                  },
+                  {
+                    "name": "label",
+                    "value": "ABW.1.1"
+                  }
+                ],
+                "parts": [
+                  {
+                    "name": "statement",
+                    "prose": "Die Einrichtung MUSS den Einsatz nicht konformer Versionen und/oder nicht konformer kryptografischer Verfahren identifizieren und im Rahmen des eigenen Risikomanagements behandeln."
+                  }
+                ],
+                "controls": [
+                  {
+                    "id": "GC.11.1.1.1",
+                    "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                    "title": "Risikobehandlung",
+                    "props": [
+                      {
+                        "name": "alt-identifier",
+                        "value": "e384859c-2f6a-4a45-a98f-fad85d6f97ea"
+                      },
+                      {
+                        "name": "label",
+                        "value": "ABW.1.1.1"
+                      }
+                    ],
+                    "parts": [
+                      {
+                        "name": "statement",
+                        "prose": "Die Einrichtung MUSS die Risiken, die sich durch den Einsatz nicht konformer Versionen und/oder nicht konformer kryptografischer Verfahren ergeben, bewerten und dokumentieren."
+                      }
+                    ]
+                  },
+                  {
+                    "id": "GC.11.1.1.2",
+                    "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                    "title": "Autorisierung durch die Leitung",
+                    "props": [
+                      {
+                        "name": "alt-identifier",
+                        "value": "bbd5060a-4f7a-4f6a-b960-5247641ae30c"
+                      },
+                      {
+                        "name": "label",
+                        "value": "ABW.1.1.2"
+                      }
+                    ],
+                    "parts": [
+                      {
+                        "name": "statement",
+                        "prose": "Die Dokumentation des Restrisikos sowie der Zeit- und Maßnahmenplan zur Ablösung der nicht konformen Versionen und/oder der nicht konformen kryptografischen Verfahren MÜSSEN der jeweiligen Leitung der Einrichtung zur Zustimmung vorgelegt werden."
+                      }
+                    ]
+                  },
+                  {
+                    "id": "GC.11.1.1.3",
+                    "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                    "title": "Zeit- und Maßnahmenplan",
+                    "props": [
+                      {
+                        "name": "alt-identifier",
+                        "value": "e27b1e0a-2b6f-4e73-95bc-25e4d1ffc61b"
+                      },
+                      {
+                        "name": "label",
+                        "value": "ABW.1.1.3"
+                      }
+                    ],
+                    "parts": [
+                      {
+                        "name": "statement",
+                        "prose": "Die Einrichtung MUSS einen dem Risiko angemessenen Zeit- und Maßnahmenplan zur Ablösung der nicht konformen Versionen und/oder der nicht konformen kryptografischen Verfahren erstellen."
+                      }
+                    ]
+                  },
+                  {
+                    "id": "GC.11.1.1.4",
+                    "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                    "title": "Restrisiko",
+                    "props": [
+                      {
+                        "name": "alt-identifier",
+                        "value": "c42b3088-34a8-4ead-91bf-484c516d3816"
+                      },
+                      {
+                        "name": "label",
+                        "value": "ABW.1.1.4"
+                      }
+                    ],
+                    "parts": [
+                      {
+                        "name": "statement",
+                        "prose": "Die Einrichtung MUSS das nach der Umsetzung mitigierender Maßnahmen verbleibende Restrisiko dokumentieren."
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "UMS.5.1",
+            "class": "BSI-Methodik-Grundschutz",
+            "title": "Autorisierung von Ausnahmen",
+            "props": [
+              {
+                "name": "label",
+                "value": "ABW.2"
+              },
+              {
+                "name": "alt-identifier",
+                "value": "c3e9f936-827a-4af2-a750-0777a082477d"
+              },
+              {
+                "name": "sec_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/security_level.csv",
+                "value": "normal-SdT"
+              },
+              {
+                "name": "effort_level",
+                "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/effort_level.csv",
+                "value": "0"
+              }
+            ],
+            "parts": [
+              {
+                "id": "UMS.5.1_stm",
+                "name": "statement",
+                "prose": "Umsetzung MUSS Ausnahmegenehmigungen für Verpflichtungen durch eine zuständige Person oder Rolle autorisieren.",
+                "props": [
+                  {
+                    "name": "practice",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/practices.csv",
+                    "value": "Umsetzung"
+                  },
+                  {
+                    "name": "modal_verb",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/modal_verbs.csv",
+                    "value": "MUSS"
+                  },
+                  {
+                    "name": "result",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "Ausnahmegenehmigungen für Verpflichtungen"
+                  },
+                  {
+                    "name": "result_specification",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/result.csv",
+                    "value": "durch eine zuständige Person oder Rolle"
+                  },
+                  {
+                    "name": "action_word",
+                    "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/Dokumentation/namespaces/action_words.csv",
+                    "value": "autorisieren"
+                  }
+                ]
+              },
+              {
+                "id": "UMS.5.1_gdn",
+                "name": "guidance",
+                "prose": "Bei Zielkonflikten zwischen Verpflichtungen müssen diese gegeneinander abgewogen und falls erforderlich Ausnahmegenehmigungen eingeholt werden. Zur Entscheidungsfindung kann eine Risikobetrachtung vorgenommen werden. Hierbei sind auch die Anforderungen zur \"Aufgabenzuweisung\" und \"Anweisung zur Einhaltung\" zu berücksichtigen."
+              }
+            ],
+            "controls": [
+              {
+                "id": "UMS.5.1.1",
+                "class": "Entwurf-Mindeststandard-Bund-TLS-E",
+                "title": "Ausnahmegenehmigung durch das BSI",
+                "props": [
+                  {
+                    "name": "alt-identifier",
+                    "value": "7584114e-cb4d-4266-a332-87b12d2b60ca"
+                  },
+                  {
+                    "name": "label",
+                    "value": "ABW.2.1"
+                  }
+                ],
+                "parts": [
+                  {
+                    "name": "statement",
+                    "prose": "Falls eine oder mehrere der im Mindeststandard genannten SOLLTE- Anforderungen oder Maßnahmen nicht erfüllt umgesetzt werden, DARF dies NUR in sachlich begründeten Ausnahmefällen und nach Rücksprache mit dem BSI erfolgen."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "b4db00bf-3408-4ad7-a26d-ae992266e472",
+          "title": "BSI TR-02102",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/Technische-Richtlinien/TR-nach-Thema-sortiert/tr02102/tr-02102.html",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "9e0f521b4b34cff339d624a4d9a76472"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
