@@ -1,211 +1,326 @@
 {
   "component-definition": {
-    "uuid": "a8524709-cd21-4c05-92e4-97f40a574834",
+    "uuid": "b7742d1d-9195-4124-93eb-324fc09a525b",
     "metadata": {
-      "title": "Implementierungsvorschläge Passwortrichtlinie",
-      "last-modified": "2026-04-12T18:19:03Z",
-      "version": "2025-11-11T11:48:51.381854+00:00",
+      "title": "Vorlage und Empfehlungen für eine Passwortrichtlinie",
+      "last-modified": "2026-06-05T13:02:09Z",
+      "version": "2026-06-05T13:02:09Z",
       "oscal-version": "1.1.2",
       "props": [
         {
-          "name": "norm",
-          "value": "§ 44 Abs. 1 BSIG"
+          "name": "review-status",
+          "ns": "https://bsi.bund.de/ns/review",
+          "value": "in-review"
         }
       ],
       "parties": [
         {
-          "uuid": "15bfabf7-0496-402f-8a6b-253070376bfd",
+          "uuid": "58de8925-de1f-4813-803c-bea0cc5a0a28",
           "type": "organization",
-          "name": "BSI, Referat S16"
+          "name": "Bundesamt für Sicherheit in der Informationstechnik, Referat Stand der Technik"
         }
-      ]
+      ],
+      "remarks": "## 1. Zweck des Dokuments\nDieses Dokument enthält Vorlagen und Empfehlungen zur Passwortnutzung. **Implementierungsvorschläge für eine Passwortrichtlinie einer Institution**. Es dient als ergänzende Unterstützung zur Umsetzung der Anforderungen aus dem **Anwenderkatalog Grundschutz++**. \n\n## 2. Status der Empfehlungen\nBei den Inhalten dieses Dokuments handelt es sich ausdrücklich um **Vorschläge und Empfehlungen**. \n* **Keine Universalformel:** Die beschriebenen Maßnahmen (z. B. zur Konfiguration anlassbezogener Passwortwechsel) stellen einen bewährten Stand der Technik dar, sind jedoch nicht als starre Handlungsanweisung zu verstehen.\n* **Keine Rechtsverbindlichkeit:** Die Empfehlungen ersetzen nicht die eigenverantwortliche Prüfung der regulatorischen und gesetzlichen Anforderungen durch die jeweilige Institution.\n\n## 3. Notwendigkeit der individuellen Anpassung\nDer Grundschutz++ betont, dass ein Informationssicherheits-Managementsystem (ISMS) stets den **individuellen Kontext einer Institution** berücksichtigen muss. Für die Anwendung dieser Passwortrichtlinie bedeutet dies:\n* **Kontextbezug:** Jede Institution muss ihre spezifischen Geschäftsprozesse, die Art der verarbeiteten Informationen und die vorhandene IT-Infrastruktur bewerten.\n* **Risikoorientierung:** Die tatsächliche Umsetzung der Anforderungen sollte auf Basis einer institutionsspezifischen  Vorgehensweise nach Grundschutz++ erfolgen.\n* **Flexibilität:** Die Implementierungsvorschläge sind so konzipiert, dass sie als modularer Baukasten dienen. Institutionen sind angehalten, die Parameter (z. B. Bedingungen für den Passwortwechsel oder Meldewege zum Helpdesk) an ihre betrieblichen Realitäten und Sicherheitsbedarfe anzupassen."
     },
     "components": [
       {
-        "uuid": "b3cc41b6-256a-4865-b9a8-9a47e9cdbdbc",
+        "uuid": "c0833122-afdd-45d3-a18c-3d290492de28",
         "type": "policy",
-        "title": "Anlassbezogene Passwortwechsel",
-        "description": "Die Systeme und Anwendungen der Institution sind so konfiguriert, dass Zugangskonten für Nutzende keinen regelmäßigen Passwortwechsel erfordern. Falls Zugangsdaten möglicherweise kompromittiert sind (z.B. falls ihnen jemand über die Schulter gesehen hat bei der Eingabe oder die Zugangsdaten im Internet öffentlich bekannt geworden sind) so melden Sie sich bitte umgehend beim Helpdesk, um einen Passwortwechsel anzustoßen.",
+        "title": "Passwortrichtlinie",
+        "description": "## 1. Zweck und Geltungsbereich\nDiese Passwortrichtlinie regelt den Umgang mit Passwörtern und weiteren personengebundenen Authentisierungsmitteln in der Institution. Sie gilt für Nutzende institutioneller Zugangskonten und für Zugangskonten, bei denen Passwörter, PINs, Passwortmanager, alternative Authentifizierungswege oder vergleichbare Authentisierungsmittel verwendet werden. Technische Betriebsprozesse des Identitäts- und Berechtigungsmanagements werden in gesonderten Verfahren geregelt, soweit sie nicht unmittelbar Bestandteil dieser Richtlinie sind.\n\n## 2. Umgang mit personengebundenen Authentisierungsmitteln\nPersonengebundene Authentisierungsmittel werden ausschließlich durch die berechtigte Person verwendet, geschützt aufbewahrt und nicht an andere Personen weitergegeben. Zugangsdaten werden bei der Eingabe vor Einsichtnahme durch Dritte geschützt. Verdachtsfälle auf Kompromittierung, ungewöhnliche Login-Masken oder Aufforderungen zur Eingabe von Zugangsdaten außerhalb der vorgesehenen Systeme werden unverzüglich an den festgelegten Meldeweg der Institution gemeldet. Biometrische Merkmale werden als fälschbar behandelt; eine ausschließlich biometrische Authentifizierung wird nicht als alleinige Absicherung akzeptiert. Passwörter werden ausschließlich im Einklang mit dem festgelegten Stufenmodell zur Passwortqualität gewählt.\n\n## 3. Kriterien für die Qualität von Passwörtern\nDiese Regelung enthält das Stufenmodell der Institution für die Qualität von Passwörtern. Es legt Mindestlängen, Zeichensatzanforderungen, kompensierende Kontrollen und die besondere Behandlung lokaler Mobilgerätezugänge fest.\n\nDie Regelungen für die Passwortkonstruktion basieren auf einem Stufenmodell, das Sicherheit und Benutzerfreundlichkeit in Abhängigkeit von anderen kompensierenden Kontrollen wie Multi-Faktor-Authentifizierung (MFA) und Hardware-Sicherheit abwägt.\n\n### Stufe 1: Hohe Standardsicherheit\nDies ist die Standardregelung für alle institutionellen Zugangskonten, es sei denn, die spezifischen Bedingungen einer anderen Stufe sind erfüllt.\n**Mindestlänge:** Passwörter sind mindestens 20 Zeichen lang.\n**Komplexität:** Passwörter enthalten Zeichen aus mindestens zwei der folgenden vier Zeichensätzen: Großbuchstaben (A-Z), Kleinbuchstaben (a-z), Ziffern (0-9) oder Sonderzeichen. Systeme und Anwendungen sind so konfiguriert, dass sie mindestens zwei der aufgeführten Zeichensätze akzeptieren.\n**Allgemeine Regeln:** Passwörter dürfen kein Wörterbucheintrag, kein bekanntes kompromittiertes Passwort oder eine gebräuchliche Passphrase sein. Die Verwendung von Passphrasen ist zulässig, wenn sie die festgelegten Qualitätskriterien erfüllen. Mit Ausnahme des Zugangs zu Endgeräten werden Passwörter ausschließlich durch die Generierung im Passwortmanager der Institution gewählt, sodass für unterschiedliche Zugänge neue, zufällig generierte und komplexe Kennwörter erstellt werden.\n\n### Stufe 2: MFA-geschützter Zugriff\nDiese reduzierten Anforderungen gelten nur für Zugangskonten, die beide der folgenden Bedingungen erfüllen:\n(1) Das Zugangskonto ist durch eine genehmigte Multi-Faktor-Authentifizierungsmethode geschützt, wie z. B. eine TOTP-Authenticator-App oder einen FIDO2/WebAuthn-Hardware-Schlüssel.\n(2) Das Zugangskonto ist so konfiguriert, dass es nach maximal 10 fehlgeschlagenen Authentifizierungsversuchen gesperrt wird.\n**Mindestlänge:** Passwörter sind mindestens 12 Zeichen lang.\n**Komplexität:** Passwörter enthalten Zeichen aus mindestens dem alphabetischen Zeichensatz (a-z, A-Z). Die Verwendung zusätzlicher Zeichensätze ist zulässig.\n\n### Stufe 3: Lokaler Zugriff auf Mobilgeräte\nDiese Anforderungen gelten für die lokale Authentifizierung auf von der Institution verwalteten mobilen Geräten, die mit einem Hardware-Sicherheitschip zur verschlüsselten und manipulationssicheren Speicherung von Schlüsseldaten ausgestattet sind.\n**Format:** Eine PIN mit mindestens 8 Ziffern ist erforderlich.\n**Komplexität:** Es gibt keine zusätzlichen Anforderungen an den Zeichensatz. Alphanumerische Passcodes sind zulässig, sofern sie unterstützt und praktikabel sind.\n**Hardware-Schutz:** Die PIN oder der Passcode ist durch die Hardware-Sicherheitsfunktionen des Geräts geschützt, indem das Geheimnis in einem isolierten, verschlüsselten Bereich gespeichert ist, auf den selbst von einem kompromittierten Betriebssystem aus kein Zugriff möglich ist.\n**Gerätekonfiguration:** Das Gerät ist über das Mobile Device Management (MDM) so konfiguriert, dass nach 10 aufeinanderfolgenden fehlgeschlagenen Passcode-Eingaben alle Daten auf dem Gerät gelöscht werden.\n\n## 4. Nutzung des institutionellen Passwortmanagers\nDer von der Institution bereitgestellte Passwortmanager ist der einzige genehmigte Ort zur Speicherung institutioneller Passwörter. Passwörter werden nicht außerhalb dieses Passwortmanagers gespeichert oder aufgeschrieben, insbesondere nicht in unverschlüsselten Dateien, Notizen, Browser-Passwortspeichern oder programmierbaren Eingabegeräten. Das Master-Passwort und die Freigabemechanismen des Passwortmanagers werden mit derselben Sorgfalt geschützt wie andere primäre Authentisierungsmittel der Institution. Nicht mehr benötigte gespeicherte Zugangsdaten werden aus dem Passwortmanager entfernt.\n\n## 5. Anlassbezogene Passwortwechsel\nDiese Regelung legt fest, dass Passwörter nicht in festen Zeitabständen gewechselt werden. Ein Passwortwechsel wird ausschließlich anlassbezogen durchgeführt, insbesondere bei Verdacht auf Kompromittierung, nach festgestellter Weitergabe an unbefugte Dritte, bei einschlägigen Treffern in Leak-Datenbanken, nach Phishing-Vorfällen oder bei technischen Indikatoren für einen möglichen Missbrauch des Zugangs. Der Verdacht wird über den festgelegten Meldeweg der Institution gemeldet; anschließend wird der Passwortwechsel für die betroffenen Zugangskonten veranlasst.\n\n## 6. Entsperr- und Wiederherstellungsverfahren\nDieses Verfahren legt alternative Authentifizierungswege für das Entsperren eines Kontos oder das Zurücksetzen eines Passworts fest. Für das Entsperren eines Kontos oder das Zurücksetzen eines Passworts wird ein alternatives Authentifizierungsverfahren verwendet, das ein vergleichbares Vertrauensniveau wie der Primärzugang erreicht.\n\n**Self-Service:** Die Wiederherstellung über das Self-Service-Portal der Institution erfordert die erfolgreiche Verifikation mit mindestens zwei vorab registrierten Authentifizierungsmethoden.\n\n**Helpdesk-gestützt:** Für privilegierte Konten oder in Situationen, in denen Self-Service nicht möglich ist, wird die Identität der anfragenden Person durch zwei autorisierte interne Stellen geprüft, z. B. durch die fachliche Führungskraft und eine zuständige Stelle des IT-Sicherheits- oder Identitätsmanagements.\n\n## 7. Verbot von Gruppenkonten und Passwortwiederverwendung\nGruppenkonten sind untersagt. Zugangskonten werden personengebunden vergeben und nicht gemeinsam durch mehrere Personen genutzt. Die Weitergabe oder Wiederverwendung von Passwörtern für andere Zugangskonten, Systeme, Dienste oder Anwendungen ist untersagt.\n\n## 8. Durchsetzung und Richtlinienverstöße\nDiese Richtlinie wird allen Personen bekanntgegeben, für die sie gilt. Diese Personen werden zur Einhaltung der Richtlinie verpflichtet. Bei Verstößen werden die vorgesehenen Verfahren der Institution zur Behandlung von Richtlinienverstößen angewendet, um die Abweichung zu beenden und künftige Einhaltung durchzusetzen.",
         "control-implementations": [
           {
-            "uuid": "90b74c11-0d3d-4b28-ac42-30a5dab78135",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Anlassbezogene Passwortwechsel",
+            "uuid": "4127d7d7-945c-4573-ab38-6536094481d0",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Die Richtlinie in der Komponentenbeschreibung wird allen Personen bekanntgegeben, für die sie gilt. Diese Personen werden zur Einhaltung der Richtlinie verpflichtet. Bei Verstößen werden die vorgesehenen Verfahren der Institution zur Behandlung von Richtlinienverstößen angewendet, um die Abweichung zu beenden und künftige Einhaltung durchzusetzen.",
             "implemented-requirements": [
               {
+                "uuid": "88f48fb9-8d91-47a8-83dc-1a061d9061d3",
+                "control-id": "_fbdb73ce-38c5-466f-84a3-218a7d73eda9",
+                "description": "## 2. Umgang mit personengebundenen Authentisierungsmitteln\nPersonengebundene Authentisierungsmittel werden ausschließlich durch die berechtigte Person verwendet, geschützt aufbewahrt und nicht an andere Personen weitergegeben. Zugangsdaten werden bei der Eingabe vor Einsichtnahme durch Dritte geschützt. Verdachtsfälle auf Kompromittierung, ungewöhnliche Login-Masken oder Aufforderungen zur Eingabe von Zugangsdaten außerhalb der vorgesehenen Systeme werden unverzüglich an den festgelegten Meldeweg der Institution gemeldet. Biometrische Merkmale werden als fälschbar behandelt; eine ausschließlich biometrische Authentifizierung wird nicht als alleinige Absicherung akzeptiert. Passwörter werden ausschließlich im Einklang mit dem festgelegten Stufenmodell zur Passwortqualität gewählt.",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "28e8a0ef-d68f-4c6e-b823-0b415d5fe584",
+                "control-id": "_78719bfb-2d5c-492f-ba02-fc10a0bdf361",
+                "description": "Zugangsdaten werden bei der Eingabe vor Einsichtnahme durch Dritte geschützt.",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c5210793-07a9-4818-9084-e73146f5ed07",
+                "control-id": "_9065b5b9-cf47-40c1-9238-0f3e2f912fb9",
+                "description": "Biometrische Merkmale werden als fälschbar behandelt; eine ausschließlich biometrische Authentifizierung wird nicht als alleinige Absicherung akzeptiert.",
+                "links": [
+                  {
+                    "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "32e2698e-3695-4560-b307-70ec5646844c",
+                "control-id": "_b25f3f5e-0738-4794-b130-cc9a1e29084f",
+                "description": "Personengebundene Authentisierungsmittel werden ausschließlich durch die berechtigte Person verwendet, geschützt aufbewahrt und nicht an andere Personen weitergegeben.",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "d575d0b2-2426-4545-a6b6-02dc010a3641",
+                "control-id": "_48c3a712-943d-403e-8e04-cfc11d92a387",
+                "description": "Passwörter werden ausschließlich im Einklang mit dem festgelegten Stufenmodell zur Passwortqualität gewählt.",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "91209a21-ca54-4f41-a4a0-cc8550fd4814",
+                "control-id": "_af5ba77a-8d77-4a4f-8842-23ba9dedb829",
+                "description": "## 3. Kriterien für die Qualität von Passwörtern\nDiese Regelung enthält das Stufenmodell der Institution für die Qualität von Passwörtern. Es legt Mindestlängen, Zeichensatzanforderungen, kompensierende Kontrollen und die besondere Behandlung lokaler Mobilgerätezugänge fest.\n\nDie Regelungen für die Passwortkonstruktion basieren auf einem Stufenmodell, das Sicherheit und Benutzerfreundlichkeit in Abhängigkeit von anderen kompensierenden Kontrollen wie Multi-Faktor-Authentifizierung (MFA) und Hardware-Sicherheit abwägt.\n\n### Stufe 1: Hohe Standardsicherheit\nDies ist die Standardregelung für alle institutionellen Zugangskonten, es sei denn, die spezifischen Bedingungen einer anderen Stufe sind erfüllt.\n**Mindestlänge:** Passwörter sind mindestens 20 Zeichen lang.\n**Komplexität:** Passwörter enthalten Zeichen aus mindestens zwei der folgenden vier Zeichensätzen: Großbuchstaben (A-Z), Kleinbuchstaben (a-z), Ziffern (0-9) oder Sonderzeichen. Systeme und Anwendungen sind so konfiguriert, dass sie mindestens zwei der aufgeführten Zeichensätze akzeptieren.\n**Allgemeine Regeln:** Passwörter dürfen kein Wörterbucheintrag, kein bekanntes kompromittiertes Passwort oder eine gebräuchliche Passphrase sein. Die Verwendung von Passphrasen ist zulässig, wenn sie die festgelegten Qualitätskriterien erfüllen. Mit Ausnahme des Zugangs zu Endgeräten werden Passwörter ausschließlich durch die Generierung im Passwortmanager der Institution gewählt, sodass für unterschiedliche Zugänge neue, zufällig generierte und komplexe Kennwörter erstellt werden.\n\n### Stufe 2: MFA-geschützter Zugriff\nDiese reduzierten Anforderungen gelten nur für Zugangskonten, die beide der folgenden Bedingungen erfüllen:\n(1) Das Zugangskonto ist durch eine genehmigte Multi-Faktor-Authentifizierungsmethode geschützt, wie z. B. eine TOTP-Authenticator-App oder einen FIDO2/WebAuthn-Hardware-Schlüssel.\n(2) Das Zugangskonto ist so konfiguriert, dass es nach maximal 10 fehlgeschlagenen Authentifizierungsversuchen gesperrt wird.\n**Mindestlänge:** Passwörter sind mindestens 12 Zeichen lang.\n**Komplexität:** Passwörter enthalten Zeichen aus mindestens dem alphabetischen Zeichensatz (a-z, A-Z). Die Verwendung zusätzlicher Zeichensätze ist zulässig.\n\n### Stufe 3: Lokaler Zugriff auf Mobilgeräte\nDiese Anforderungen gelten für die lokale Authentifizierung auf von der Institution verwalteten mobilen Geräten, die mit einem Hardware-Sicherheitschip zur verschlüsselten und manipulationssicheren Speicherung von Schlüsseldaten ausgestattet sind.\n**Format:** Eine PIN mit mindestens 8 Ziffern ist erforderlich.\n**Komplexität:** Es gibt keine zusätzlichen Anforderungen an den Zeichensatz. Alphanumerische Passcodes sind zulässig, sofern sie unterstützt und praktikabel sind.\n**Hardware-Schutz:** Die PIN oder der Passcode ist durch die Hardware-Sicherheitsfunktionen des Geräts geschützt, indem das Geheimnis in einem isolierten, verschlüsselten Bereich gespeichert ist, auf den selbst von einem kompromittierten Betriebssystem aus kein Zugriff möglich ist.\n**Gerätekonfiguration:** Das Gerät ist über das Mobile Device Management (MDM) so konfiguriert, dass nach 10 aufeinanderfolgenden fehlgeschlagenen Passcode-Eingaben alle Daten auf dem Gerät gelöscht werden.\n",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "e529d538-2aaa-4725-b818-73489c4eadb9",
+                "control-id": "_7734048a-d797-49f0-87e6-f9c08ce5f5e7",
+                "description": "## 4. Nutzung des institutionellen Passwortmanagers\nDer von der Institution bereitgestellte Passwortmanager ist der einzige genehmigte Ort zur Speicherung institutioneller Passwörter. Passwörter werden nicht außerhalb dieses Passwortmanagers gespeichert oder aufgeschrieben, insbesondere nicht in unverschlüsselten Dateien, Notizen, Browser-Passwortspeichern oder programmierbaren Eingabegeräten. Das Master-Passwort und die Freigabemechanismen des Passwortmanagers werden mit derselben Sorgfalt geschützt wie andere primäre Authentisierungsmittel der Institution. Nicht mehr benötigte gespeicherte Zugangsdaten werden aus dem Passwortmanager entfernt.",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
                 "uuid": "aec1f0ad-4f9e-4621-be5f-67e517e29646",
-                "control-id": "_12ab3443-67a1-4ecd-9177-d9547f62d27e",
-                "description": "Die Systeme und Anwendungen der Institution sind so konfiguriert, dass Zugangskonten für Nutzende keinen regelmäßigen Passwortwechsel erfordern. Falls Zugangsdaten möglicherweise kompromittiert sind (z.B. falls ihnen jemand über die Schulter gesehen hat bei der Eingabe oder die Zugangsdaten im Internet öffentlich bekannt geworden sind) so melden Sie sich bitte umgehend beim Helpdesk, um einen Passwortwechsel anzustoßen.",
+                "control-id": "_4de1c314-e6b3-4b70-bc73-54cdafca7ae9",
+                "description": "## 5. Anlassbezogene Passwortwechsel\nDiese Regelung legt fest, dass Passwörter nicht in festen Zeitabständen gewechselt werden. Ein Passwortwechsel wird ausschließlich anlassbezogen durchgeführt, insbesondere bei Verdacht auf Kompromittierung, nach festgestellter Weitergabe an unbefugte Dritte, bei einschlägigen Treffern in Leak-Datenbanken, nach Phishing-Vorfällen oder bei technischen Indikatoren für einen möglichen Missbrauch des Zugangs. Der Verdacht wird über den festgelegten Meldeweg der Institution gemeldet; anschließend wird der Passwortwechsel für die betroffenen Zugangskonten veranlasst.",
                 "links": [
                   {
                     "href": "#b8a04a02-8834-47fa-85bd-acd0a44f307d",
                     "rel": "reference"
+                  },
+                  {
+                    "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
+                    "rel": "reference"
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "uuid": "7510837f-2cc5-4bb8-846e-e80d6ff7d1c4",
-        "type": "software",
-        "title": "Blockieren von Passwort Recycling",
-        "description": "Die Institution hat in den zentralen Verzeichnisdiensten eine Passworthistorie implementiert, die sicherstellt, dass die letzten zwölf verwendeten Passwörter nicht erneut vergeben werden können. Die Passwortregeln werden systemseitig durch das jeweilige Betriebssystem und zentrale Authentifizierungsdienste erzwungen. Für Systeme ohne native Unterstützung wird die Passwortprüfung über ein zentrales Identity-Management-System (IDM) mit entsprechender Schnittstellenkontrolle durchgeführt, sodass die Wiederverwendung von Passwörtern institutionseinheitlich verhindert wird.",
-        "control-implementations": [
-          {
-            "uuid": "2ecaf2ed-5903-4ace-babe-b8314ddc7232",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Blockieren von Passwort Recycling",
-            "implemented-requirements": [
+              },
               {
-                "uuid": "bf39ba76-bff1-4aae-a732-32c2b149046a",
-                "control-id": "_bf5b5f6a-f525-45fc-b5a5-62379b3e6b2f",
-                "description": "Die Institution hat in den zentralen Verzeichnisdiensten eine Passworthistorie implementiert, die sicherstellt, dass die letzten zwölf verwendeten Passwörter nicht erneut vergeben werden können. Die Passwortregeln werden systemseitig durch das jeweilige Betriebssystem und zentrale Authentifizierungsdienste erzwungen. Für Systeme ohne native Unterstützung wird die Passwortprüfung über ein zentrales Identity-Management-System (IDM) mit entsprechender Schnittstellenkontrolle durchgeführt, sodass die Wiederverwendung von Passwörtern institutionseinheitlich verhindert wird.",
-                "remarks": "Zur Umsetzung der Anforderung kann eine Institution verschiedene Ansätze verfolgen, abhängig vom Sicherheitsniveau und der vorhandenen Systemlandschaft. Eine einfache, aber wirksame Lösung besteht in der Aktivierung einer lokalen Passworthistorie innerhalb des Betriebssystems oder Verzeichnisdienstes, die eine definierte Anzahl zuvor genutzter Kennwörter sperrt. Für höhere Sicherheitsniveaus kann eine zentrale Authentifizierungsplattform eingesetzt werden, die Passwort-Hashwerte gegen bekannte Wiederholungen prüft und dabei auch Prüfungen gegen kompromittierte Kennwörter (z. B. aus Leckdatenbanken) ermöglicht."
+                "uuid": "120c8f78-e2c1-450b-bba5-61cb61b8f570",
+                "control-id": "_7d8e0d79-751c-4afe-bbe5-124004f01577",
+                "description": "## 6. Entsperr- und Wiederherstellungsverfahren\nDieses Verfahren legt alternative Authentifizierungswege für das Entsperren eines Kontos oder das Zurücksetzen eines Passworts fest. Für das Entsperren eines Kontos oder das Zurücksetzen eines Passworts wird ein alternatives Authentifizierungsverfahren verwendet, das ein vergleichbares Vertrauensniveau wie der Primärzugang erreicht.\n\n**Self-Service:** Die Wiederherstellung über das Self-Service-Portal der Institution erfordert die erfolgreiche Verifikation mit mindestens zwei vorab registrierten Authentifizierungsmethoden.\n\n**Helpdesk-gestützt:** Für privilegierte Konten oder in Situationen, in denen Self-Service nicht möglich ist, wird die Identität der anfragenden Person durch zwei autorisierte interne Stellen geprüft, z. B. durch die fachliche Führungskraft und eine zuständige Stelle des IT-Sicherheits- oder Identitätsmanagements.",
+                "links": [
+                  {
+                    "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ddab2122-d16d-428c-bf4a-febc82ecaa58",
+                "control-id": "_0573247f-65f3-4768-9d27-6c9c0f42c6cd",
+                "description": "Die Weitergabe oder Wiederverwendung von Passwörtern für andere Zugangskonten, Systeme, Dienste oder Anwendungen ist untersagt.",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b720c083-1b3a-4dbe-8e34-31bd6c9a64fe",
+                "control-id": "_78e70d76-b423-4707-a3c4-27f416fa7d14",
+                "description": "Gruppenkonten sind untersagt. Zugangskonten werden personengebunden vergeben und nicht gemeinsam durch mehrere Personen genutzt."
               }
             ]
           }
-        ]
+        ],
+        "remarks": "Umgang mit personengebundenen Authentisierungsmitteln: Als Orientierung ist relevant, Sensibilisierungstexte kurz, konkret und handlungsnah zu halten. Beispiele können Shoulder Surfing, Phishing-Masken, verlorene Token und versehentlich geteilte Passwörter aufgreifen, ohne Definitionen der Authentisierungsmittel zu wiederholen. Kriterien für die Qualität von Passwörtern: Das Stufenmodell kann Nutzbarkeit und Angriffsmöglichkeiten gemeinsam berücksichtigen. Für Anwendungen ist relevant, lange Passwörter ohne Abschneiden zu verarbeiten, Einfügen in Passwortfelder zu erlauben und verständliche Rückmeldungen bei abgelehnten Passwörtern zu geben. Nutzung des institutionellen Passwortmanagers: Ein strikt vorgegebener Passwortmanager erleichtert einheitliche Passworterzeugung, sicheren Austausch berechtigter Zugangsdaten und nachvollziehbare Entfernung nicht mehr benötigter Einträge. Die konkrete Produktauswahl und datenschutzrechtliche Freigabe bleiben angrenzende Entscheidungen. Anlassbezogene Passwortwechsel: Als Hintergrund ist relevant, dass feste Wechselintervalle ohne Sicherheitsanlass zu schwächeren Passwortmustern beitragen können. Ein anlassbezogener Wechsel ist besonders wirksam, wenn Monitoring, Meldung und Zurücksetzung organisatorisch ineinandergreifen. Entsperr- und Wiederherstellungsverfahren: Für Wiederherstellungsverfahren ist relevant, dass der Rückfallweg den Primärzugang nicht unterläuft. Geeignete Varianten können vorab registrierte Wiederherstellungsmethoden, Recovery-Codes, Helpdesk-Prüfung mit Vier-Augen-Prinzip oder erneute Identitätsprüfung sein. Verbot von Gruppenkonten und Passwortwiederverwendung: Für Altsysteme ist relevant, dass gemeinsame Konten in personengebundene Zugänge oder nachvollziehbare technische Alternativen überführt werden. Soweit eine Umgebung diese Vorgabe nicht erfüllen kann, ist sie nicht Bestandteil dieser fiktiven Zielumsetzung."
       },
       {
         "uuid": "e79e970d-ec9c-40a9-8000-0264e198a698",
-        "type": "policy",
-        "title": "Einhaltung der Löschfristen",
-        "description": "Für diese Datenkategorie ist eine Löschfrist von [Entscheidung: 7 Tagen bis 10 Jahren] festgelegt. Alle Nutzenden sind verpflichtet, Daten dieser Kategorie bei Fristablauf unverzüglich zu löschen. Bei der Löschung sind die Regelungen und Verfahren zum sicheren Löschen von Daten zu beachten.",
+        "type": "software",
+        "title": "Bereitgestellter Passwortmanager",
+        "description": "Ein bereitgestellter Passwortmanager stellt Nutzenden eine einheitliche, lokal verschlüsselte Ablage für institutionelle Zugangsdaten bereit. Die Komponente umfasst die automatische Bereitstellung auf verwalteten Endgeräten, die sichere Nutzung einer offline verfügbaren Passwortdatenbank und die Synchronisation dieser Datenbank über die zentrale Dateimanagement- und Synchronisationsplattform der Institution.",
         "control-implementations": [
           {
             "uuid": "e205cd1e-b93d-4d33-904d-54a50d5d2a27",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Einhaltung der Löschfristen",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Die technische Umsetzung provisioniert den offline nutzbaren, quelloffenen Passwortmanager automatisch auf allen Endgeräten von Nutzenden. Die verschlüsselte Passwortdatenbankdatei wird im persönlichen synchronisierten Dateibereich gespeichert und durch die zentrale Dateimanagementplattform zwischen den freigegebenen Geräten synchronisiert. Versionierung und Konflikterkennung der Dateiplattform unterstützen die Wiederherstellung und Behandlung fehlerhafter Synchronisationsstände.",
             "implemented-requirements": [
               {
                 "uuid": "ab7c74e3-9674-4524-98bb-ca791ef38d51",
-                "control-id": "_7aed1f72-5233-44dd-8531-b23337c89691",
-                "description": "Für diese Datenkategorie ist eine Löschfrist von [Entscheidung: 7 Tagen bis 10 Jahren] festgelegt. Alle Nutzenden sind verpflichtet, Daten dieser Kategorie bei Fristablauf unverzüglich zu löschen. Bei der Löschung sind die Regelungen und Verfahren zum sicheren Löschen von Daten zu beachten.",
-                "remarks": "Zielführend ist es hier, verbindliche Aufbewahrungs- und Löschfristen für alle Datenkategorien zu definieren und diese in den entsprechenden Geschäftsprozessen sowie im Verzeichnis der Verarbeitungstätigkeiten zu dokumentieren. Diese Festlegungen können dann über Löschfunktionen im Betriebssystem, Datenbanksystem oder Dokumentenmanagementsystem technisch automatisiert werden. Ergänzend kann die Löschung manuell anhand festgelegter Termine in den Fachabteilungen durchgeführt und dokumentiert werden. Dabei kann das Prinzip der Erforderlichkeit als Leitlinie dienen – Daten werden nur so lange gespeichert, wie sie für den festgelegten Zweck benötigt werden oder gesetzliche Vorgaben dies vorsehen. Mögliche Werte für die Frist sind beispielsweise „7 Tage“ für operative Logdaten, „3 Jahre“ für vertraglich relevante Unterlagen oder „10 Jahre“ für steuerrechtliche Nachweise. Für Umgebungen mit mittlerem Schutzniveau kann eine rollenbasierte Freigabe zur Löschung vorgesehen werden, bei der Fachverantwortliche die Löschung nach Ablauf der Frist prüfen und bestätigen. Hochsichere Institutionen – etwa aus kritischen Infrastrukturen oder Forschung – können Löschprozesse mit kryptografisch verifizierbaren Löschprotokollen, manipulationssicheren Audit-Trails und automatisierten Archivierungs-Workflows kombinieren. Wird Verschlüsselung eingesetzt, kann die gezielte Vernichtung von Schlüsseln als ergänzende Löschmethode genutzt werden, sofern nachvollziehbar dokumentiert ist, dass dadurch kein Zugriff auf die Daten mehr möglich bleibt. Auf diese Weise lassen sich sowohl rechtliche Grundsätze zur Löschung (etwa aus dem Datenschutz) als auch Nachweispflichten aus anderen Rechtsgebieten konsistent abbilden.\nFür die Umsetzung bieten sich verschiedene technische und prozessuale Maßnahmen an. Eine konsistente Steuerung kann erreicht werden, wenn Daten bereits bei der Erfassung mit einem Metadatenfeld zur Aufbewahrungsfrist versehen sind, das systemweit vererbt oder automatisch aus der Datenkategorie abgeleitet wird. Ein häufiges Problem besteht darin, dass Daten in Backups unbemerkt über die zulässige Frist hinaus bestehen bleiben; daher ist es sinnvoll, Löschroutinen so auszugestalten, dass sowohl produktive Systeme als auch Sicherungskopien erfasst werden. Eine praktikable Lösung besteht darin, Backup-Zyklen so zu planen, dass Daten nach Ablauf ihrer Frist automatisch überschrieben werden oder differenzielle Sicherungen regelmäßig konsolidiert werden.",
+                "control-id": "_c1cfa733-340c-497d-a3b6-8480d78e1278",
+                "description": "Alle Endgeräte von Nutzenden werden über die zentrale Endgeräteverwaltung automatisch mit einem offline nutzbaren, quelloffenen Passwortmanager provisioniert. Der Passwortmanager speichert Zugangsdaten ausschließlich in einer lokal verschlüsselten Passwortdatenbankdatei. Die Passwortdatenbankdatei wird im persönlichen synchronisierten Dateibereich der nutzenden Person abgelegt und über die zentrale Dateimanagement- und Synchronisationsplattform der Institution zwischen den freigegebenen Endgeräten synchronisiert. Die Synchronisation verwendet die vorhandenen Mechanismen für Benutzerzuordnung, Dateiversionierung, Konflikterkennung und Wiederherstellung früherer Dateistände. Der Zugriff auf die Passwortdatenbank wird durch ein Master-Passwort oder ein gleichwertiges Freigabeverfahren mit zusätzlichem Authentisierungsfaktor geschützt.",
                 "links": [
                   {
-                    "href": "#8eb17048-5c3f-49a2-ade6-305f9a05d818",
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#2f3c0c1e-6a5c-4b2a-992a-9a7c4d46d1a1",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#92c4a2b0-6a84-4be9-8e64-b96370a2d212",
                     "rel": "reference"
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        "remarks": "Ein offline nutzbarer, dateibasierter Passwortmanager reduziert die Abhängigkeit von einem dauerhaft erreichbaren Passwortmanager-Dienst. Die zentrale Dateisynchronisation erleichtert die Nutzung auf mehreren Endgeräten, ohne die Passwortdatenbank selbst in einen webbasierten Passwortspeicher zu verlagern. Relevant sind abgestimmte Vorgaben zu Speicherort, Backup, Dateiversionierung, Konfliktbehandlung, Schlüsseldateien und Offboarding."
       },
       {
-        "uuid": "9abd865e-287a-448b-8c99-0a211d798d49",
-        "type": "policy",
-        "title": "Entsperr- und Wiederherstellungsverfahren",
-        "description": "Um ein Konto zu entsperren oder ein Passwort zurückzusetzen, wird zunächst die Identität des Nutzenden erneut verifiziert.\n\n**Self-Service (Standardbenutzer):** Nutzende sind verpflichtet, sich für das Self-Service-Portal zur Passwortzurücksetzung (SSPR) der Institution zu registrieren. Die Wiederherstellung über SSPR erfordert die erfolgreiche Verifizierung durch mindestens zwei vorab registrierte, hochsichere Authentifizierungsmethoden (z. B. ein Code von einem Hardware-Token in Kombination mit einer biometrischen Verifizierung).\n\n* **Helpdesk-gestützt (Hohe Sicherheit):** Für privilegierte Konten oder in Situationen, in denen Self-Service nicht möglich ist, kontaktieren Nutzende den IT-Helpdesk. Die Identität der anfragenden Person wird dann von zwei autorisierten internen Personen gleichzeitig überprüft (z. B. dem direkten Vorgesetzten und einem Mitglied des IT-Sicherheitsteams).",
-        "control-implementations": [
-          {
-            "uuid": "0103a234-c1a7-4fee-b722-57524fb5b762",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Entsperr- und Wiederherstellungsverfahren",
-            "implemented-requirements": [
-              {
-                "uuid": "120c8f78-e2c1-450b-bba5-61cb61b8f570",
-                "control-id": "_4483f020-da27-44af-ae23-edf7d676d72f",
-                "description": "Um ein Konto zu entsperren oder ein Passwort zurückzusetzen, wird zunächst die Identität des Nutzenden erneut verifiziert.\n\n**Self-Service (Standardbenutzer):** Nutzende sind verpflichtet, sich für das Self-Service-Portal zur Passwortzurücksetzung (SSPR) der Institution zu registrieren. Die Wiederherstellung über SSPR erfordert die erfolgreiche Verifizierung durch mindestens zwei vorab registrierte, hochsichere Authentifizierungsmethoden (z. B. ein Code von einem Hardware-Token in Kombination mit einer biometrischen Verifizierung).\n\n* **Helpdesk-gestützt (Hohe Sicherheit):** Für privilegierte Konten oder in Situationen, in denen Self-Service nicht möglich ist, kontaktieren Nutzende den IT-Helpdesk. Die Identität der anfragenden Person wird dann von zwei autorisierten internen Personen gleichzeitig überprüft (z. B. dem direkten Vorgesetzten und einem Mitglied des IT-Sicherheitsteams)."
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "uuid": "cda1e10d-5895-4482-95a1-2752a14628be",
-        "type": "policy",
-        "title": "Gruppenkonten - Passwortwechsel bei Weggang",
-        "description": "Falls Sie eine Ausnahmegenehmigung haben, mit der Sie zur Nutzung EINES Zugangskontos gemeinsam mit anderen Personen berechtigt sind, ist es ihre Pflicht jeden Wechsel in der Zuständigkeit (also einen Aufgabenwechsel, Kündigung oder längere Abwesenheiten wie Elternzeit) beim Helpdesk zu melden. Für das Gruppenkonto wird dann unverzüglich ein neues Passwort erstellt, welches allen für das Zugangskonto berechtigten Personen mitgeteilt wird.",
-        "control-implementations": [
-          {
-            "uuid": "567cf9f8-3f81-41b8-a44f-7974a6aba745",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Gruppenkonten - Passwortwechsel bei Weggang",
-            "implemented-requirements": [
-              {
-                "uuid": "ddab2122-d16d-428c-bf4a-febc82ecaa58",
-                "control-id": "_c1cfa733-340c-497d-a3b6-8480d78e1278",
-                "description": "Falls Sie eine Ausnahmegenehmigung haben, mit der Sie zur Nutzung EINES Zugangskontos gemeinsam mit anderen Personen berechtigt sind, ist es ihre Pflicht jeden Wechsel in der Zuständigkeit (also einen Aufgabenwechsel, Kündigung oder längere Abwesenheiten wie Elternzeit) beim Helpdesk zu melden. Für das Gruppenkonto wird dann unverzüglich ein neues Passwort erstellt, welches allen für das Zugangskonto berechtigten Personen mitgeteilt wird."
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "uuid": "ef33a322-6f91-4c6c-a01e-7c725fbfe00b",
-        "type": "policy",
-        "title": "Kriterien für die Qualität von Passwörtern",
-        "description": "Die Regelungen für die Passwortkonstruktion basieren auf einem Stufenmodell, das Sicherheit und Benutzerfreundlichkeit in Abhängigkeit von anderen kompensierenden Kontrollen wie Multi-Faktor-Authentifizierung (MFA) und Hardware-Sicherheit abwägt.\n\n### Stufe 1: Hohe Standardsicherheit\nDies ist die Standardregelung für alle institutionellen Zugangskonten, es sei denn, die spezifischen Bedingungen einer anderen Stufe sind erfüllt.\n**Mindestlänge:** Passwörter sind mindestens 20 Zeichen lang.\n**Komplexität:** Passwörter enthalten Zeichen aus mindestens zwei der folgenden vier Zeichensätzen: Großbuchstaben (A-Z), Kleinbuchstaben (a-z), Ziffern (0-9) oder Sonderzeichen. Systeme und Anwendungen sind so konfiguriert, dass sie mindestens zwei der aufgeführten Zeichensätze akzeptieren.\n**Allgemeine Regeln:** Passwörter dürfen kein Wörterbucheintrag, kein bekanntes kompromittiertes Passwort oder eine gebräuchliche Passphrase sein. Den Benutzern wird die Verwendung von Passphrasen (z. B. \"Korrekt!Pferd-Batterie.Klammer\") empfohlen, da diese sowohl lang als auch einprägsam sind. Mit Ausnahme des Zugangs zu Endgeräten sind Nutzenden verpfichtet, Passwörter ausschließlich durch die Generierung im Passwortmanager der Institution zu wählen, sodass für unterschiedliche Zugänge neue, zufällig generierte und komplexe Kennwörter erstellt werden.\n\n### Stufe 2: MFA-geschützter Zugriff\nDiese reduzierten Anforderungen gelten nur für Zugangskonten, die beide der folgenden Bedingungen erfüllen:\n(1) Das Zugangskonto ist durch eine genehmigte Multi-Faktor-Authentifizierungsmethode geschützt, wie z. B. eine TOTP-Authenticator-App oder einen FIDO2/WebAuthn-Hardware-Schlüssel.\n(2) Das Zugangskonto ist so konfiguriert, dass das es nach maximal 10 fehlgeschlagenen Authentifizierungsversuchen gesperrt wird.\n**Mindestlänge**: Passwörter sind mindestens 12 Zeichen lang.\n**Komplexität**: Passwörter enthalten Zeichen aus mindestens dem alphabetischen Zeichensatz (a-z, A-Z). Die Verwendung zusätzlicher Zeichensätze wird dringend empfohlen.\n\n### Stufe 3: Lokaler Zugriff auf Mobilgeräte\nDiese Anforderungen gelten speziell für die lokale Authentifizierung auf von der Institution verwalteten mobilen Geräten (z. B. Smartphones, Tablets), die mit einem Hardware-Sicherheitschip zur verschlüsselten und manipulationssicheren Speicherung von Schlüsseldaten ausgestattet sind.\n**Format**: Eine PIN (Persönliche Identifikationsnummer) mit mindestens 8 Ziffern ist erforderlich.\n**Komplexität**: Es gibt keine zusätzlichen Anforderungen an den Zeichensatz. Alphanumerische Passcodes werden empfohlen, sofern sie unterstützt und praktikabel sind.\n**Hardware-Schutz**: Die PIN/der Passcode ist durch die Hardware-Sicherheitsfunktionen des Geräts geschützt, indem das Geheimnis in einem isolierten, verschlüsselten Bereich gespeichert ist, auf den selbst von einem kompromittierten Betriebssystem aus kein Zugriff möglich ist.\n**Gerätekonfiguration**: Das Gerät ist über das Mobile Device Management (MDM) so konfiguriert, dass nach 10 aufeinanderfolgenden fehlgeschlagenen Passcode-Eingaben alle Daten auf dem Gerät gelöscht werden.",
-        "control-implementations": [
-          {
-            "uuid": "aa68eacc-5f1c-4ed5-8dc1-40fc19b158aa",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Kriterien für die Qualität von Passwörtern",
-            "implemented-requirements": [
-              {
-                "uuid": "91209a21-ca54-4f41-a4a0-cc8550fd4814",
-                "control-id": "_7057a1f6-0804-49ac-9d7f-289ecc71fa33",
-                "description": "Die Regelungen für die Passwortkonstruktion basieren auf einem Stufenmodell, das Sicherheit und Benutzerfreundlichkeit in Abhängigkeit von anderen kompensierenden Kontrollen wie Multi-Faktor-Authentifizierung (MFA) und Hardware-Sicherheit abwägt.\n\n### Stufe 1: Hohe Standardsicherheit\nDies ist die Standardregelung für alle institutionellen Zugangskonten, es sei denn, die spezifischen Bedingungen einer anderen Stufe sind erfüllt.\n**Mindestlänge:** Passwörter sind mindestens 20 Zeichen lang.\n**Komplexität:** Passwörter enthalten Zeichen aus mindestens zwei der folgenden vier Zeichensätzen: Großbuchstaben (A-Z), Kleinbuchstaben (a-z), Ziffern (0-9) oder Sonderzeichen. Systeme und Anwendungen sind so konfiguriert, dass sie mindestens zwei der aufgeführten Zeichensätze akzeptieren.\n**Allgemeine Regeln:** Passwörter dürfen kein Wörterbucheintrag, kein bekanntes kompromittiertes Passwort oder eine gebräuchliche Passphrase sein. Den Benutzern wird die Verwendung von Passphrasen (z. B. \"Korrekt!Pferd-Batterie.Klammer\") empfohlen, da diese sowohl lang als auch einprägsam sind. Mit Ausnahme des Zugangs zu Endgeräten sind Nutzenden verpfichtet, Passwörter ausschließlich durch die Generierung im Passwortmanager der Institution zu wählen, sodass für unterschiedliche Zugänge neue, zufällig generierte und komplexe Kennwörter erstellt werden.\n\n### Stufe 2: MFA-geschützter Zugriff\nDiese reduzierten Anforderungen gelten nur für Zugangskonten, die beide der folgenden Bedingungen erfüllen:\n(1) Das Zugangskonto ist durch eine genehmigte Multi-Faktor-Authentifizierungsmethode geschützt, wie z. B. eine TOTP-Authenticator-App oder einen FIDO2/WebAuthn-Hardware-Schlüssel.\n(2) Das Zugangskonto ist so konfiguriert, dass das es nach maximal 10 fehlgeschlagenen Authentifizierungsversuchen gesperrt wird.\n**Mindestlänge**: Passwörter sind mindestens 12 Zeichen lang.\n**Komplexität**: Passwörter enthalten Zeichen aus mindestens dem alphabetischen Zeichensatz (a-z, A-Z). Die Verwendung zusätzlicher Zeichensätze wird dringend empfohlen.\n\n### Stufe 3: Lokaler Zugriff auf Mobilgeräte\nDiese Anforderungen gelten speziell für die lokale Authentifizierung auf von der Institution verwalteten mobilen Geräten (z. B. Smartphones, Tablets), die mit einem Hardware-Sicherheitschip zur verschlüsselten und manipulationssicheren Speicherung von Schlüsseldaten ausgestattet sind.\n**Format**: Eine PIN (Persönliche Identifikationsnummer) mit mindestens 8 Ziffern ist erforderlich.\n**Komplexität**: Es gibt keine zusätzlichen Anforderungen an den Zeichensatz. Alphanumerische Passcodes werden empfohlen, sofern sie unterstützt und praktikabel sind.\n**Hardware-Schutz**: Die PIN/der Passcode ist durch die Hardware-Sicherheitsfunktionen des Geräts geschützt, indem das Geheimnis in einem isolierten, verschlüsselten Bereich gespeichert ist, auf den selbst von einem kompromittierten Betriebssystem aus kein Zugriff möglich ist.\n**Gerätekonfiguration**: Das Gerät ist über das Mobile Device Management (MDM) so konfiguriert, dass nach 10 aufeinanderfolgenden fehlgeschlagenen Passcode-Eingaben alle Daten auf dem Gerät gelöscht werden.",
-                "remarks": "Vorschläge für eine benutzerfreundliche und sichere Implementierung in Oberflächen und Backends:\n* Maximale akzeptierte Länge: mindestens 64 Zeichen.\n* Copy & Paste in das Passwortfeld erlauben (Zwischenablage nicht blockieren).\n* Kein Abschneiden (trunking) von Passwörtern (Eingaben vollständig verarbeiten und speichern/prüfen).\n* aufklärende Hinweise im Anmeldeprozess zu integrieren, die Nutzende beim Erstellen starker Passwörter unterstützen und die Kriterien klar benennen. \n* Keine Passwort‑Hinweise (Hint‑Felder) anbieten, die Rückschlüsse auf das konkrete Passwort geben (z.B. \"Wie hieß ihr erstes Haustier?\")\n* Eine Passwortstärke‑Anzeige (Strength Meter) zur Rückmeldung bereitstellen.\n\nAuch adaptive Verfahren können helfen: Systeme und Anwendungen können eine höhere Passwortqualität verlangen, wenn Benutzer auf besonders sensible Anwendungen zugreifen oder aus unüblichen Netzwerken kommen. So kann die Vorgabe praxisnah umgesetzt werden, ohne dass sie allein durch rigide Regeln zur Belastung für die Nutzer wird."
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "uuid": "750899a9-fbd1-43a5-9372-28e9c2bc3bcd",
+        "uuid": "4d94b9ac-e377-47ea-997a-e49767ed2ed9",
         "type": "software",
-        "title": "Monitoring von Zugangsdaten",
-        "description": "Zugangsdaten werden auf Kompromittierung durch {{ insert: param, ber.5.9-prm1 }} überwacht. Dabei werden Datenbanken öffentlich bekannter Zugangsdaten auf Übereinstimmung mit dem jeweiligen Zugangskonto der Institution automatisch überprüft, sobald neue Datenabflüsse bekannt werden.",
+        "title": "Deaktivierung vorkonfigurierter Authentisierungsmittel",
+        "description": "Systeme und Anwendungen werden gegen herstellerseitige oder anderweitig vorkonfigurierte Authentisierungsmittel gehärtet. Vorkonfigurierte Authentisierungsmittel werden vor produktiver Nutzung deaktiviert oder ersetzt. Dies umfasst herstellerseitige Standardkonten, Default-Passwörter, vorinstallierte Schlüssel, Zertifikate, Hardware-Token und vergleichbare Zugangsmittel. Ein System oder eine Anwendung wird erst produktiv genutzt, wenn keine bekannten vorkonfigurierten Authentisierungsmittel mehr für unbefugte Zugriffe verwendbar sind.",
         "control-implementations": [
           {
-            "uuid": "ce31ceba-8f39-46ba-b40d-344304a2165c",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Monitoring von Zugangsdaten",
-            "implemented-requirements": []
-          }
-        ]
-      },
-      {
-        "uuid": "7ba2c7ac-f5ec-45f4-bb46-57362d8975a4",
-        "type": "policy",
-        "title": "Passwortmanager",
-        "description": "Der von der Institution bereitgestellte Passwort-Manager ist der einzig genehmigte Ort zur Speicherung von Anmeldeinformationen. Dieses Werkzeug ermöglicht die Verwendung von langen, zufälligen und einzigartigen Passwörtern für jeden Dienst und erhöht die Sicherheit erheblich. Nutzende sind dafür verantwortlich, ihr Master-Passwort für den Passwort-Manager mit der gleichen Sorgfalt zu schützen wie ihre primären Anmeldeinformationen für die Institution. Die Verwendung nicht genehmigter Passwort-Manager für institutionelle Anmeldedaten stellt einen Verstoß gegen diese Richtlinie dar.",
-        "control-implementations": [
-          {
-            "uuid": "ae9fbdbd-44c2-40c9-b2d2-0fd0e35f3bcf",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Passwortmanager",
+            "uuid": "ab27ec95-d001-40cd-b1f1-e2fa26a6e9ad",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Die technische Umsetzung erzwingt die beschriebenen Passwort- und Authentisierungsvorgaben in den betroffenen Systemen, Anwendungen oder zentralen Authentifizierungsdiensten. Die Konfiguration wird durch die zuständigen Betriebsstellen angewendet, dokumentiert und bei Änderungen nachvollziehbar angepasst.",
             "implemented-requirements": [
               {
-                "uuid": "e529d538-2aaa-4725-b818-73489c4eadb9",
+                "uuid": "7fbf9c43-1bec-4f5e-8e8e-b6803e965791",
                 "control-id": "_7e0edf55-22d6-42d8-973f-d3f8635a0913",
-                "description": "Der von der Institution bereitgestellte Passwort-Manager ist der einzig genehmigte Ort zur Speicherung von Anmeldeinformationen. Dieses Werkzeug ermöglicht die Verwendung von langen, zufälligen und einzigartigen Passwörtern für jeden Dienst und erhöht die Sicherheit erheblich. Nutzende sind dafür verantwortlich, ihr Master-Passwort für den Passwort-Manager mit der gleichen Sorgfalt zu schützen wie ihre primären Anmeldeinformationen für die Institution. Die Verwendung nicht genehmigter Passwort-Manager für institutionelle Anmeldedaten stellt einen Verstoß gegen diese Richtlinie dar."
+                "description": "Systeme und Anwendungen werden vor produktiver Nutzung gegen vorkonfigurierte Authentisierungsmittel geprüft. Herstellerseitige Standardkonten, Default-Passwörter, vorinstallierte Schlüssel, Zertifikate, Hardware-Token und vergleichbare Zugangsmittel werden deaktiviert oder ersetzt, bevor das System oder die Anwendung produktiv genutzt wird."
               }
             ]
           }
-        ]
+        ],
+        "remarks": "Die Prüfung kann in Härtungs- und Abnahmechecklisten verankert werden. Relevant sind neben Default-Passwörtern auch vorinstallierte Schlüssel, Zertifikate und Token, soweit sie einen Zugang ermöglichen."
+      },
+      {
+        "uuid": "6ab19d6a-6024-4f41-a52e-b0505fa6f6c9",
+        "type": "software",
+        "title": "MFA- und Biometriekonfiguration",
+        "description": "Für Anwendungen an externen Netzanschlüssen wird ein zentraler, quelloffener Identitätsprovider als WebAuthn-Relying-Party betrieben. In diesem Identitätsprovider ist eine Passkey- beziehungsweise FIDO2-basierte Authentifizierung für externe Zugänge aktiviert. Nutzende registrieren hierfür ein geeignetes Hardware- oder Plattform-Authentisierungsmittel; bei der Anmeldung wird eine origin-gebundene kryptographische Challenge signiert, sodass abgegriffene Passwörter oder einfache Einmalcodes nicht für einen erfolgreichen Zugriff ausreichen. Für Zugänge mit weitreichenden Berechtigungen ist dieser zweite Faktor verpflichtend. Eine Authentifizierung nur anhand biometrischer Merkmale ist deaktiviert; Biometrie wird nur zur lokalen Freigabe des Authentisierungsmittels verwendet, wenn zusätzlich der kryptographische FIDO2/WebAuthn-Nachweis gegenüber dem Identitätsprovider erfolgt.",
+        "control-implementations": [
+          {
+            "uuid": "d61f044e-cc05-49c4-b0c5-a8f29747358c",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Die technische Umsetzung nutzt einen zentralen, quelloffenen Identitätsprovider als WebAuthn-Relying-Party. Für externe Anwendungen und privilegierte Zugänge werden FIDO2-/Passkey-Authentisierungsflüsse aktiviert, Registrierungen geeigneter Authentisierungsmittel erzwungen und Anmeldeflüsse so konfiguriert, dass der Zugriff erst nach erfolgreicher kryptographischer Challenge-Response-Prüfung möglich ist. Biometrie wird nicht als alleiniger Faktor akzeptiert, sondern nur als lokale Freigabe eines Authentisierungsmittels.",
+            "implemented-requirements": [
+              {
+                "uuid": "f8dedc4a-fb3b-4015-a3f6-f8360c906059",
+                "control-id": "_4483f020-da27-44af-ae23-edf7d676d72f",
+                "description": "Eine Authentifizierung nur anhand biometrischer Merkmale wird in den betroffenen Systemen deaktiviert. Biometrische Merkmale werden nur zur lokalen Freigabe eines geeigneten Authentisierungsmittels verwendet, wenn zusätzlich ein kryptographischer FIDO2/WebAuthn-Nachweis gegenüber dem zentralen Identitätsprovider erfolgt.",
+                "links": [
+                  {
+                    "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#951a99f4-3f65-456a-9e06-651adff348bf",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "824cd7a1-0107-4933-818b-46ad271b13e0",
+                "control-id": "_2b9ddd3e-5233-46f5-abca-1793b89e2809",
+                "description": "Für Anwendungen an externen Netzanschlüssen wird im zentralen Identitätsprovider eine Passkey- beziehungsweise FIDO2-basierte Authentifizierung aktiviert. Nutzende registrieren ein geeignetes Hardware- oder Plattform-Authentisierungsmittel. Bei der Anmeldung signiert dieses Authentisierungsmittel eine origin-gebundene kryptographische Challenge, sodass Phishing-Seiten, abgegriffene Passwörter oder einfache Einmalcodes nicht für einen erfolgreichen Zugriff ausreichen.",
+                "links": [
+                  {
+                    "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#951a99f4-3f65-456a-9e06-651adff348bf",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "20581ea4-3376-4c47-9617-f059dc2766d1",
+                "control-id": "_55b70084-f446-42af-908b-0f514a72f380",
+                "description": "Für Zugänge mit weitreichenden Berechtigungen wird im zentralen Identitätsprovider ein zusätzlicher FIDO2-/Passkey-Faktor verpflichtend aktiviert. Administrative und vergleichbar privilegierte Zugänge können dadurch nicht allein mit einem Passwort verwendet werden; der Zugriff wird erst nach erfolgreicher kryptographischer Challenge-Response-Prüfung freigegeben.",
+                "links": [
+                  {
+                    "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#951a99f4-3f65-456a-9e06-651adff348bf",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "FIDO2-/Passkey-Verfahren sind besonders bei extern erreichbaren Anwendungen relevant, weil der kryptographische Nachweis an den legitimen Ursprung der Anwendung gebunden ist. Für die Einführung sind Registrierungsprozesse, Ersatzverfahren, Gerätelebenszyklus, Recovery und Administrationszugänge relevante Prüfpunkte. Biometrie kann die lokale Freigabe eines Authentisierungsmittels erleichtern, ersetzt aber nicht den kryptographischen Nachweis gegenüber dem Identitätsprovider."
+      },
+      {
+        "uuid": "7510837f-2cc5-4bb8-846e-e80d6ff7d1c4",
+        "type": "software",
+        "title": "Blockieren von Passwort-Recycling",
+        "description": "Zentrale Authentifizierungsdienste, Anwendungen und verwaltete Endgeräte blockieren die Wiederverwendung von Passwörtern. Beim Setzen oder Ändern eines Passworts wird geprüft, ob das neue Passwort mit einem zuvor verwendeten Passwort des betroffenen Zugangskontos übereinstimmt oder einer festgelegten Historie früherer Passwörter entspricht. Für lokale administrative Zugangsdaten werden eindeutige, systemindividuelle Geheimnisse verwendet, sodass keine Wiederverwendung über mehrere Systeme hinweg entsteht.",
+        "control-implementations": [
+          {
+            "uuid": "2ecaf2ed-5903-4ace-babe-b8314ddc7232",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Die technische Umsetzung erzwingt die beschriebenen Passwort- und Authentisierungsvorgaben in den betroffenen Systemen, Anwendungen oder zentralen Authentifizierungsdiensten. Die Konfiguration wird durch die zuständigen Betriebsstellen angewendet, dokumentiert und bei Änderungen nachvollziehbar angepasst.",
+            "implemented-requirements": [
+              {
+                "uuid": "bf39ba76-bff1-4aae-a732-32c2b149046a",
+                "control-id": "_d7c76736-0c1d-4693-92d5-894a8b740204",
+                "description": "Zentrale Authentifizierungsdienste, Anwendungen und verwaltete Endgeräte blockieren die Wiederverwendung von Passwörtern automatisch. Beim Setzen oder Ändern eines Passworts wird der Kandidat mit der Passwort-Historie des betroffenen Zugangskontos verglichen. Für lokale administrative Zugangsdaten werden eindeutige, systemindividuelle Geheimnisse verwendet, sodass keine Wiederverwendung über mehrere Systeme hinweg entsteht.",
+                "links": [
+                  {
+                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Die technische Umsetzung kann über zentrale Passwort-Historien, Abgleiche gegen zuvor genutzte Hashwerte und systemindividuelle lokale Administrationspasswörter erfolgen. Für Altsysteme ist relevant, die Wiederverwendung durch Migration auf zentrale Authentifizierung oder verwaltete lokale Geheimnisse abzulösen."
       },
       {
         "uuid": "759852b8-235e-4a82-a7b0-c34cbd418190",
         "type": "software",
-        "title": "Trivialpasswörter",
-        "description": "Bei der Eingabe eines neuen Passworts wird das Kandidaten‑Passwort vor der Speicherung gegen Sperrlisten (Deny‑Lists) einfacher bzw. öffentlich bekannter Passwörter geprüft. Die Prüfung erfolgt entweder lokal gegen gepflegte Listen oder datenschutzfreundlich über einen Remote‑Abgleich mit k‑Anonymität (z. B. Hash‑Präfixe). Das vollständige Passwort wird dabei weder gespeichert noch übertragen. Nur wenn kein Treffer gefunden wird, wird das Passwort akzeptiert; andernfalls erhalten Nutzende eine verständliche Fehlermeldung mit der Aufforderung, ein stärkeres Passwort zu wählen.",
+        "title": "Blockieren von Trivialpasswörtern",
+        "description": "Beim Setzen oder Ändern eines Passworts wird das Kandidatenpasswort vor der Speicherung gegen Sperrlisten trivialer, leicht erratbarer und öffentlich bekannter kompromittierter Passwörter geprüft. Die Prüfung erfolgt über eine institutionell gehostete Prüfdienstinstanz mit Leak-Datenbank und k-Anonymity-Abfrage; das vollständige Passwort wird dabei nicht übertragen. Das Passwort wird nur akzeptiert, wenn kein Treffer gegen die Sperrlisten oder definierten Trivialmuster festgestellt wird. Wird ein Treffer festgestellt, wird die Speicherung abgelehnt und die nutzende Person zur Eingabe eines anderen Passworts aufgefordert.",
         "control-implementations": [
           {
             "uuid": "9d3cc440-7cb7-4158-becc-63c78e8a536d",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Trivialpasswörter",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Die technische Umsetzung erzwingt die beschriebenen Passwort- und Authentisierungsvorgaben in den betroffenen Systemen, Anwendungen oder zentralen Authentifizierungsdiensten. Die Konfiguration wird durch die zuständigen Betriebsstellen angewendet, dokumentiert und bei Änderungen nachvollziehbar angepasst.",
             "implemented-requirements": [
               {
                 "uuid": "b1126a53-5430-4209-ae54-e2f656d262ec",
-                "control-id": "_383f3a5e-d627-46aa-960f-4e8c5c9c9592",
-                "description": "Bei der Eingabe eines neuen Passworts wird das Kandidaten‑Passwort vor der Speicherung gegen Sperrlisten (Deny‑Lists) einfacher bzw. öffentlich bekannter Passwörter geprüft. Die Prüfung erfolgt entweder lokal gegen gepflegte Listen oder datenschutzfreundlich über einen Remote‑Abgleich mit k‑Anonymität (z. B. Hash‑Präfixe). Das vollständige Passwort wird dabei weder gespeichert noch übertragen. Nur wenn kein Treffer gefunden wird, wird das Passwort akzeptiert; andernfalls erhalten Nutzende eine verständliche Fehlermeldung mit der Aufforderung, ein stärkeres Passwort zu wählen.",
-                "remarks": "Zur Umsetzung kann eine Institution auf etablierte Mechanismen zur Passwortvalidierung zurückgreifen, die beim Setzen oder Ändern eines Kennworts automatisch gegen Sperrlisten bekannter schwacher/kompromittierter Passwörter prüfen. Zweckmäßige Ausgestaltung:\n* Datenbasis: Kombination aus lokalen „Deny‑Lists“ (inkl. typischer Muster) und einem Abgleich mit öffentlichen Datenbanken kompromittierter Passwörter (z. B. Have I Been Pwned) über k‑Anonymität (Hash‑Präfixe).\n* Muster abdecken: Sequenzen (123456, abcdef), Tastatur‑Walks (qwertz, asdfgh), Wiederholungen (aaaaaa), Jahreszahlen/Monate, häufige Substitutionen (P@ssw0rd), organisationstypische Begriffe und Dienstnamen.\n* Vollständige Passwörter niemals speichern oder übertragen; Remote‑Abgleiche nur TLS‑geschützt und mit Hash‑Präfixen; minimal erforderliche Protokollierung ohne Geheimnisse. Fallback auf lokale Listen, falls externe Dienste nicht erreichbar sind (kein Blockieren von Passwortänderungen allein wegen Zeitüberschreitung).\n* Betrieb: Regelmäßige, nachvollziehbar dokumentierte Aktualisierung der Listen (z. B. monatlich oder bei großen Leaks); definierte Verantwortlichkeiten; automatisierte Update‑Jobs mit Monitoring und Alarmierung bei Fehlern.\n* Benutzererlebnis: Sofortiges, neutrales Feedback im UI (z. B. „Dieses Passwort ist unsicher/kompromittiert“), ohne verbotene Bestandteile offenzulegen; Hinweise auf Passphrasen und Passwortmanager.",
+                "control-id": "_f0722999-f8c4-4c75-810b-94d7563dd698",
+                "description": "Beim Setzen oder Ändern eines Passworts wird das Kandidatenpasswort vor der Speicherung automatisch gegen Sperrlisten trivialer, leicht erratbarer und öffentlich bekannter kompromittierter Passwörter geprüft. Die Prüfung erfolgt über eine institutionell gehostete Prüfdienstinstanz mit Leak-Datenbank und k-Anonymity-Abfrage; das vollständige Passwort wird nicht übertragen. Wird der Kandidat als unsicher erkannt, wird er nicht gespeichert und die nutzende Person wird zur Eingabe eines anderen Passworts aufgefordert.",
                 "links": [
                   {
                     "href": "#80b35a7b-2c4d-4021-9fee-76ce49226189",
@@ -219,88 +334,78 @@
               }
             ]
           }
-        ]
+        ],
+        "remarks": "Sperrlisten können lokale Listen, organisationsspezifische Begriffe und Listen bekannter kompromittierter Passwörter kombinieren. Bei Remote-Abgleichen ist Datenschutz als eigenes Freigabethema relevant; die Richtlinie legt hier nur das Sicherheitsergebnis fest."
       },
       {
-        "uuid": "3a863b24-155e-4074-ae9c-42ab5669d98a",
-        "type": "policy",
-        "title": "Weisung zur Erstellung von Passwörtern",
-        "description": "Alle Nutzenden sind verpflichtet, Passwörter ausschließlich im Einklang mit den festgeschriebenen Regelungen zur Passwortkomplexität zu wählen.",
+        "uuid": "750899a9-fbd1-43a5-9372-28e9c2bc3bcd",
+        "type": "software",
+        "title": "Monitoring von Zugangsdaten",
+        "description": "Eine technische Monitoring-Lösung erkennt institutionelle Zugangsdaten, die in bekannten Datenabflüssen oder Passwort-Hash-Sammlungen vorkommen. Die Komponente umfasst den internen Prüfdienst, die regelmäßige Aktualisierung der Prüfdaten, datensparsame Abfragen durch Anwendungen und zentrale Authentifizierungsdienste sowie die Übergabe von Treffern an die zuständige Stelle zur Behandlung des Sicherheitsereignisses.",
         "control-implementations": [
           {
-            "uuid": "1c9f7852-4a63-468c-9d88-f185671fb6cc",
-            "source": "#5b122a68-d5b1-47c7-b149-6892d8822da1",
-            "description": "Control implementation for Weisung zur Erstellung von Passwörtern",
+            "uuid": "ce31ceba-8f39-46ba-b40d-344304a2165c",
+            "source": "#11111111-1111-4111-8111-111111111111",
+            "description": "Die technische Monitoring-Lösung betreibt eine interne Spiegelung eines öffentlichen Breach- und Passwort-Hash-Korpus. Ein geplanter Aktualisierungsprozess lädt Hashbereiche herunter, stellt sie als internen Prüfdienst bereit und ermöglicht Abfragen über k-Anonymity-Hashpräfixe. Treffer aus Anwendungen, zentralen Authentifizierungsdiensten oder Monitoringprozessen werden an die zuständige Stelle gemeldet, damit betroffene Zugangsdaten gewechselt und das Sicherheitsereignis behandelt werden kann.",
             "implemented-requirements": [
               {
-                "uuid": "88f48fb9-8d91-47a8-83dc-1a061d9061d3",
-                "control-id": "_48c3a712-943d-403e-8e04-cfc11d92a387",
-                "description": "Alle Nutzenden sind verpflichtet, Passwörter ausschließlich im Einklang mit den festgeschriebenen Regelungen zur Passwortkomplexität zu wählen.",
-                "remarks": "Bei der Umsetzung dieser Anforderung ist es sinnvoll, zwischen verschiedenen Reifegraden der Sensibilisierung zu unterscheiden. In einer grundlegenden Ausprägung kann eine Institution einfache, verständliche Schulungsmaterialien oder E-Learning-Einheiten einsetzen, die anschaulich erklären, wie starke Passwörter aufgebaut sind und warum Wiederverwendung riskant ist. In einer erweiterten Variante können simulierte Passwortprüfungen oder Quizformate eingesetzt werden, die das Erlernte interaktiv festigen. Hochsichere Institutionen können ergänzend automatisierte Analysen von Passwortstärke in Authentifizierungsprozessen vorsehen, gekoppelt mit kontextsensitiven Hinweisen und der Empfehlung zur Nutzung von Passwortmanagern oder Passphrasen. Zweckmäßig ist auch, die Sensibilisierung mit realitätsnahen Beispielen – etwa aus bekannten Datenleaks – zu verknüpfen, um den Bezug zur eigenen IT-Sicherheitslage zu verdeutlichen.\nFür die effektive Umsetzung dieser Anforderung ist es zielführend, wenn Sensibilisierungsinhalte leicht zugänglich und praxisorientiert sind – beispielsweise über kurze Videoformate oder kompakte Intranetartikel. Hilfreich sind positive Formulierungen wie „Ein starkes Passwort schützt Ihre Daten besser als jede Firewall“, statt abschreckender oder rein technischer Darstellungen. Ein typisches Negativbeispiel wäre, ausschließlich auf formale Passwortregeln (etwa „mindestens acht Zeichen, Sonderzeichen erforderlich“) hinzuweisen, ohne den Hintergrund zu erläutern – dies führt häufig zu passwortschwachen Mustern wie „Passwort!1“. Zweckmäßig kann es sein, bei Passwortwechseln kurze Reminder einzublenden, die gute Passphrasen erläutern („Vier zufällige Wörter ergeben meist ein sicheres Passwort“) oder durch Infografiken anschaulich zeigen, wie Angriffe auf schwache Passwörter ablaufen. Auch die Integration der Sensibilisierung in bestehende Kommunikationskanäle – z. B. interne Newsletter oder Awareness-Tage – kann die Wirksamkeit deutlich erhöhen.",
+                "uuid": "a37b001a-b7be-4ed4-a7f4-376998a39174",
+                "control-id": "_4785649d-561d-4757-9421-4d0db14ee4df",
+                "description": "Ein Credential-Leak-Monitoring-Dienst überwacht institutionelle Zugangsdaten auf Hinweise aus bekannten Datenabflüssen. Die Institution betreibt hierfür eine interne Spiegelung eines öffentlichen Breach- und Passwort-Hash-Korpus. Ein geplanter Download-Prozess aktualisiert die Hashbereiche regelmäßig und speichert sie in einem internen Prüfdienst. Anwendungen, zentrale Authentifizierungsdienste und Monitoringprozesse fragen den internen Prüfdienst über k-Anonymity-Hashpräfixe ab, sodass vollständige Passwortwerte und vollständige Passwort-Hashes nicht an externe Stellen übertragen werden. Treffer werden an die zuständige Stelle gemeldet und lösen den anlassbezogenen Wechsel der betroffenen Zugangsdaten sowie die Behandlung des Sicherheitsereignisses aus.",
+                "set-parameters": [
+                  {
+                    "param-id": "ber.6.10-prm1",
+                    "values": [
+                      "Credential-Leak-Monitoring-Dienst"
+                    ]
+                  }
+                ],
                 "links": [
                   {
-                    "href": "#323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+                    "href": "#b346a88b-424e-402b-9da9-7891e4c07931",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#6cf4f8bb-611b-4143-8511-3d2ad7c3346a",
                     "rel": "reference"
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        "remarks": "Der interne Betrieb eines Breach- und Passwort-Hash-Prüfdienstes kann externe Abhängigkeiten und Datenübermittlungen reduzieren. Datenschutz, Vertragsgestaltung, zulässige Datenübermittlung, Pseudonymisierung, Protokollierung und Aufbewahrung der Treffer sind als eigene Prüfthemen relevant. Für die technische Umsetzung ist relevant, vollständige Passwortwerte nicht zu speichern oder zu übertragen und Treffer so zu behandeln, dass keine Passwort-Hashes unnötig offengelegt werden."
       }
     ],
     "capabilities": [
       {
         "uuid": "0e806237-cb76-411d-b170-47ae848a3cdb",
         "name": "Automatisierte Passwortrichtlinie",
-        "description": "",
+        "description": "Diese Capability bündelt technische Durchsetzungs- und Monitoringmechanismen, mit denen Systeme, Anwendungen und zentrale Authentifizierungsdienste die Passwortrichtlinie automatisiert unterstützen. Sie umfasst Bereitstellung des Passwortmanagers, Deaktivierung vorkonfigurierter Authentisierungsmittel, MFA- und Biometriekonfiguration, Blockierung ungeeigneter Passwörter sowie Monitoring kompromittierter Zugangsdaten.",
         "incorporates-components": [
           {
-            "component-uuid": "750899a9-fbd1-43a5-9372-28e9c2bc3bcd",
-            "description": ""
+            "component-uuid": "e79e970d-ec9c-40a9-8000-0264e198a698",
+            "description": "Stellt den verwalteten Passwortmanager als institutionelle Grundlage für sichere Passworterzeugung und -speicherung bereit."
+          },
+          {
+            "component-uuid": "4d94b9ac-e377-47ea-997a-e49767ed2ed9",
+            "description": "Entfernt oder deaktiviert vorkonfigurierte Authentisierungsmittel vor produktiver Nutzung."
+          },
+          {
+            "component-uuid": "6ab19d6a-6024-4f41-a52e-b0505fa6f6c9",
+            "description": "Erzwingt MFA für relevante Zugänge und verhindert eine ausschließlich biometrische Authentifizierung."
           },
           {
             "component-uuid": "7510837f-2cc5-4bb8-846e-e80d6ff7d1c4",
-            "description": ""
-          }
-        ]
-      },
-      {
-        "uuid": "c0833122-afdd-45d3-a18c-3d290492de28",
-        "name": "Passwortrichtlinie",
-        "description": "",
-        "incorporates-components": [
-          {
-            "component-uuid": "3a863b24-155e-4074-ae9c-42ab5669d98a",
-            "description": ""
+            "description": "Blockiert Passwortwiederverwendung innerhalb von Konten und über lokale administrative Zugangsdaten hinweg."
           },
           {
             "component-uuid": "759852b8-235e-4a82-a7b0-c34cbd418190",
-            "description": ""
+            "description": "Blockiert triviale, leicht erratbare und bekannte kompromittierte Passwörter beim Setzen oder Ändern."
           },
           {
-            "component-uuid": "7ba2c7ac-f5ec-45f4-bb46-57362d8975a4",
-            "description": ""
-          },
-          {
-            "component-uuid": "9abd865e-287a-448b-8c99-0a211d798d49",
-            "description": ""
-          },
-          {
-            "component-uuid": "b3cc41b6-256a-4865-b9a8-9a47e9cdbdbc",
-            "description": ""
-          },
-          {
-            "component-uuid": "cda1e10d-5895-4482-95a1-2752a14628be",
-            "description": ""
-          },
-          {
-            "component-uuid": "e79e970d-ec9c-40a9-8000-0264e198a698",
-            "description": ""
-          },
-          {
-            "component-uuid": "ef33a322-6f91-4c6c-a01e-7c725fbfe00b",
-            "description": ""
+            "component-uuid": "750899a9-fbd1-43a5-9372-28e9c2bc3bcd",
+            "description": "Überwacht institutionelle Zugangsdaten über einen Credential-Leak-Monitoring-Dienst auf Kompromittierung und löst die Behandlung betroffener Zugangsdaten aus."
           }
         ]
       }
@@ -308,24 +413,31 @@
     "back-matter": {
       "resources": [
         {
-          "uuid": "5b122a68-d5b1-47c7-b149-6892d8822da1",
-          "description": "BSI Stand der Technik Kernel Catalog",
+          "uuid": "11111111-1111-4111-8111-111111111111",
+          "title": "Anwenderkatalog Grundschutz++",
+          "description": "Lokaler OSCAL-Katalog Grundschutz++ als Quelle der implementierten Anforderungen.",
           "rlinks": [
             {
-              "href": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/Quellkataloge/Kernel/BSI-Stand-der-Technik-Kernel-catalog.json"
+              "href": "attachment:Grundschutz++-catalog.json",
+              "media-type": "application/oscal.catalog+json"
             }
           ]
         },
         {
           "uuid": "323f82c2-b5e8-4ddc-a280-7213a0e212e6",
+          "title": "BSI: Sichere Passwörter erstellen",
+          "description": "BSI-Faktenblatt mit Empfehlungen zur Erstellung und Nutzung sicherer Passwörter.",
           "rlinks": [
             {
-              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Checklisten/sichere_passwoerter_faktenblatt.pdf"
+              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Checklisten/sichere_passwoerter_faktenblatt.pdf",
+              "media-type": "application/pdf"
             }
           ]
         },
         {
           "uuid": "80b35a7b-2c4d-4021-9fee-76ce49226189",
+          "title": "NIST SP 800-63B: Digital Identity Guidelines - Authentication and Authenticator Management",
+          "description": "NIST-Leitlinie zu Authentisierung, Authenticator Management, Passwörtern, MFA, Biometrie und Account Recovery.",
           "rlinks": [
             {
               "href": "https://pages.nist.gov/800-63-4/sp800-63b.html"
@@ -333,26 +445,62 @@
           ]
         },
         {
-          "uuid": "8eb17048-5c3f-49a2-ade6-305f9a05d818",
-          "rlinks": [
-            {
-              "href": "https://www.bfdi.bund.de/SharedDocs/Downloads/DE/Themen/Telekommunikation/LeitfadenZumSpeichernVonVerkehrsdaten.pdf"
-            }
-          ]
-        },
-        {
           "uuid": "b346a88b-424e-402b-9da9-7891e4c07931",
+          "title": "Have I Been Pwned: Pwned Passwords",
+          "description": "Dienst und Schnittstelle zum Abgleich gegen bekannte kompromittierte Passwörter und Datenabflüsse.",
           "rlinks": [
             {
-              "href": "https://haveibeenpwned.com/"
+              "href": "https://haveibeenpwned.com/Passwords"
             }
           ]
         },
         {
           "uuid": "b8a04a02-8834-47fa-85bd-acd0a44f307d",
+          "title": "BSI: Passwortwechsel next level",
+          "description": "BSI-Information zur Einordnung anlassbezogener Passwortwechsel.",
           "rlinks": [
             {
               "href": "https://www.bsi.bund.de/DE/Service-Navi/Presse/Pressemitteilungen/Presse2025/250131_Passwortwechsel_next-level.html"
+            }
+          ]
+        },
+        {
+          "uuid": "2f3c0c1e-6a5c-4b2a-992a-9a7c4d46d1a1",
+          "title": "Quellcode eines offenen Offline-Passwortmanagers",
+          "description": "Quellcode eines offenen, dateibasierten Passwortmanagers zur lokalen verschlüsselten Speicherung von Passwortdatenbanken.",
+          "rlinks": [
+            {
+              "href": "https://github.com/keepassxreboot/keepassxc"
+            }
+          ]
+        },
+        {
+          "uuid": "92c4a2b0-6a84-4be9-8e64-b96370a2d212",
+          "title": "Quellcode einer offenen Plattform für zentrale Dateisynchronisation",
+          "description": "Quellcode einer offenen Plattform für zentrale Dateiablage, Synchronisation und Versionierung von Dateien zwischen Endgeräten.",
+          "rlinks": [
+            {
+              "href": "https://github.com/nextcloud/server"
+            }
+          ]
+        },
+        {
+          "uuid": "951a99f4-3f65-456a-9e06-651adff348bf",
+          "title": "Quellcode eines offenen Identitätsproviders mit WebAuthn-Unterstützung",
+          "description": "Quellcode eines offenen Identitätsproviders, der WebAuthn und Passkey-basierte Authentifizierung als Relying Party unterstützt.",
+          "rlinks": [
+            {
+              "href": "https://github.com/keycloak/keycloak"
+            }
+          ]
+        },
+        {
+          "uuid": "6cf4f8bb-611b-4143-8511-3d2ad7c3346a",
+          "title": "Quellcode zum Offline-Download kompromittierter Passwort-Hashbereiche",
+          "description": "Quellcode eines Werkzeugs zum regelmäßigen Download kompromittierter Passwort-Hashbereiche für eine interne Offline-Prüfung.",
+          "rlinks": [
+            {
+              "href": "https://github.com/HaveIBeenPwned/PwnedPasswordsDownloader"
             }
           ]
         }
