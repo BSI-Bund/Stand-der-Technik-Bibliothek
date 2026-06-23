@@ -7,6 +7,7 @@ Diese Bibliothek stellt strukturierte Sammlungen von BSI-Sicherheitsvorschriften
 Sie sind in einer Institution mit der Informationssicherheit betraut oder auditieren diese und möchten die Inhalte des BSI dafür nutzen?
 
 **→ Besuchen Sie das [Anwenderkataloge](./Anwenderkataloge/) Verzeichnis**
+**→ Nutzen Sie den [Stand der Technik-Viewer](https://bsi-community.github.io/Stand-der-Technik-Viewer/) um sich die Inhalte aus der SdT-Bibliothek anzeigen zu lassen**
  
 Hier finden Sie die fertigen Anwenderkataloge mit digital strukturierten Vorschriften, die direkt in einer Institution angewendet werden können.
 
