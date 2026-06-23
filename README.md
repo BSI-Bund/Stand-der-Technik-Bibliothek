@@ -8,7 +8,7 @@ Sie sind in einer Institution mit der Informationssicherheit betraut oder auditi
 
 **→ Besuchen Sie das [Anwenderkataloge](./Anwenderkataloge/) Verzeichnis**
 
-**→ Nutzen Sie den [Stand der Technik-Viewer](https://bsi-community.github.io/Stand-der-Technik-Viewer/) um sich die Inhalte aus der SdT-Bibliothek anzeigen zu lassen**
+**→ Nutzen Sie den [Stand der Technik-Viewer](https://bsi-community.github.io/Stand-der-Technik-Viewer/) um sich die Inhalte aus der SdT-Bibliothek in einer nutzerfreundlichen Umgebung anzeigen zu lassen**
  
 Hier finden Sie die fertigen Anwenderkataloge mit digital strukturierten Vorschriften, die direkt in einer Institution angewendet werden können.
 
