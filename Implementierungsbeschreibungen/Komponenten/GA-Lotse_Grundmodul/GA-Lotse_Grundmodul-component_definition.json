@@ -1,0 +1,119 @@
+{
+  "component-definition": {
+    "uuid": "f12d5a1b-76de-46ca-8526-0f08428c8789",
+    "metadata": {
+      "title": "Entwurf GA-Lotse Grundmodul",
+      "last-modified": "2026-06-18T11:51:23Z",
+      "version": "1.0.1",
+      "oscal-version": "1.1.2",
+      "props": [
+        {
+          "name": "product",
+          "ns": "https://bsi.bund.de/custom",
+          "value": "GA-Lotse"
+        },
+        {
+          "name": "review-status",
+          "ns": "https://bsi.bund.de/ns/review",
+          "value": "draft"
+        },
+        {
+          "name": "scope",
+          "ns": "https://bsi.bund.de/custom",
+          "value": "#0c1f2cdf-f966-5ec6-b281-a4c577ee4a8a"
+        }
+      ],
+      "document-ids": [
+        {
+          "identifier": "f12d5a1b-76de-46ca-8526-0f08428c8789"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "58de8925-de1f-4813-803c-bea0cc5a0a28",
+          "type": "organization",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik, Referat Stand der Technik"
+        }
+      ],
+      "remarks": "Der GA-Lotse ist eine moderne, modulare Anwendungsplattform für deutsche Gesundheitsämter, die den Flickenteppich an Alt-Software vereinheitlichen soll. Sie zeichnet sich durch höchste Sicherheitsstandards (Open Source, Zero-Trust-Architektur) aus. \n\nDas zentrale Grundmodul (auch Kernmodul genannt) bildet das Rückgrat der Software: Infrastruktur & Basisdienste: Es fungiert als Service-Mesh und stellt grundlegende technische Dienste für die gesamte Plattform zur Verfügung.\n\nZentrale Verwaltung: Es bündelt die essenziellen Daten und steuert die Kommunikation innerhalb des Systems.Modul-Architektur: Es dient als übergeordnetes Dach, an das verschiedene Fachmodule (z. B. Infektionsschutz, Hygieneüberwachung, Einschulungsuntersuchungen) bei Bedarf einfach angebunden werden können."
+    },
+    "import-component-definitions": [
+      {
+        "href": "#4395754b-e977-5333-ad02-eb30771bc3d1",
+        "remarks": "GA-Lotse (Gesundheitsamt-Lotse) verwendet Keycloak in ihrem Grundmodul als zentrale Komponente für das Identity and Access Management (IAM), um ein sicheres Single Sign-On (SSO) sowie ein präzises Rechte- und Rollenmanagement zu gewährleisten. Innerhalb dieser modernen, auf Zero Trust und Privacy by Design ausgerichteten Architektur steuert Keycloak den geschützten Zugriff der Mitarbeitenden auf die verschiedenen Fachmodule wie die Einschulungsuntersuchung oder die reisemedizinische Impfberatung. Die genauen technischen Konfigurationen und Quellcodes für diese Integration sind im OpenCoDE-Repository von GA-Lotse öffentlich dokumentiert."
+      }
+    ],
+    "components": [
+      {
+        "uuid": "072c4935-444b-4561-a6cb-900728e2f8be",
+        "type": "software",
+        "title": "E-Mail",
+        "description": "Das Basismodul ermöglicht die E-Mail-Kommunikation sowohl mit Mitarbeitern als auch mit Bürgern über den vorkonfigurierten SMTP-Server."
+      },
+      {
+        "uuid": "f5ba9182-d970-4c0d-bacd-0cde39356082",
+        "type": "software",
+        "title": "Kalender",
+        "description": "Mit dem Kalender kann der Dienstplan für Mitarbeiter des Gesundheitsamtes und damit auch für deren jeweilige Teams gepflegt werden. Zur Verfügung stehen Benutzerkalender, globale Kalender und Ressourcenkalender, die direkt von den Mitarbeitern und über die Geschäftsmodule eingesehen und verwaltet werden können.\n\nDas Basismodul enthält die Kalender der Benutzer und Ressourcen. Hier können Benutzer ihre Abwesenheiten, hauptsächlich Urlaub, verwalten, Ressourcenadministratoren können die Verfügbarkeit der Ressourcen verwalten.\n\nFeiertage werden zentral über globale Kalender verwaltet, die von GA-Lotse-Systemadministratoren aus .ics-Dateien importiert werden können."
+      },
+      {
+        "uuid": "c8bf3f4b-cab2-4fe3-bcce-4c4282742020",
+        "type": "software",
+        "title": "Kontaktmanagement",
+        "description": "Kontakte können im Basismodul verwaltet und angezeigt werden. Im Kontaktmanagement wird eine Liste aller Kontakte des Gesundheitsamtes angezeigt. Die Liste kann gefiltert (z. B. nach Typ) und sortiert (z. B. nach Name) werden. Zudem ist es möglich, Kontakte nach Namen zu suchen.\n\nIn der Detailansicht eines Kontakts können dessen Attribute aktualisiert werden, und es wird die vollständige Historie aller Änderungen angezeigt (einschließlich des verantwortlichen Benutzers sowie von Datum und Uhrzeit). Kontakte in der Kontaktverwaltung können entweder Personen oder Einrichtungen sein, mit denen das Gesundheitsamt zusammenarbeitet (z. B. ein Labor und dessen Mitarbeiter).\n\nWenn eine Person oder Einrichtung Gegenstand eines Verfahrens ist, ist sie in der Regel Teil der Zentralakte mit deren erhöhten Anforderungen an Datenschutz und Datensicherheit (z. B. das Konzept des Aktenstatus)."
+      }
+    ],
+    "capabilities": [
+      {
+        "uuid": "e08744a7-6bf8-4264-84ff-ec750105a883",
+        "name": "GA-Lotse Grundmodul",
+        "description": "Das Grundmodul (auch Basismodul) steuert die plattformweite Infrastruktur, während sich die spezifischen Fachabteilungen (wie Hygiene oder Einschulungsuntersuchungen) in den jeweils angebundenen Fachmodulen befinden.",
+        "incorporates-components": [
+          {
+            "component-uuid": "a2088070-ab70-498d-9d2a-fdc3967e24a9",
+            "description": "Keycloak ist eine kostenlose Open-Source-Software für Identitäts- und Zugriffsmanagement (Identity and Access Management, kurz IAM)."
+          },
+          {
+            "component-uuid": "072c4935-444b-4561-a6cb-900728e2f8be",
+            "description": "Das Basismodul ermöglicht die E-Mail-Kommunikation sowohl mit Mitarbeitern als auch mit Bürgern über den vorkonfigurierten SMTP-Server."
+          },
+          {
+            "component-uuid": "c8bf3f4b-cab2-4fe3-bcce-4c4282742020",
+            "description": "Kontakte können im Basismodul verwaltet und angezeigt werden. Im Kontaktmanagement wird eine Liste aller Kontakte des Gesundheitsamtes angezeigt. Die Liste kann gefiltert (z. B. nach Typ) und sortiert (z. B. nach Name) werden. Zudem ist es möglich, Kontakte nach Namen zu suchen.\n\nIn der Detailansicht eines Kontakts können dessen Attribute aktualisiert werden, und es wird die vollständige Historie aller Änderungen angezeigt (einschließlich des verantwortlichen Benutzers sowie von Datum und Uhrzeit). Kontakte in der Kontaktverwaltung können entweder Personen oder Einrichtungen sein, mit denen das Gesundheitsamt zusammenarbeitet (z. B. ein Labor und dessen Mitarbeiter).\n\nWenn eine Person oder Einrichtung Gegenstand eines Verfahrens ist, ist sie in der Regel Teil der Zentralakte mit deren erhöhten Anforderungen an Datenschutz und Datensicherheit (z. B. das Konzept des Aktenstatus)."
+          },
+          {
+            "component-uuid": "f5ba9182-d970-4c0d-bacd-0cde39356082",
+            "description": "Mit dem Kalender kann der Dienstplan für Mitarbeiter des Gesundheitsamtes und damit auch für deren jeweilige Teams gepflegt werden. Zur Verfügung stehen Benutzerkalender, globale Kalender und Ressourcenkalender, die direkt von den Mitarbeitern und über die Geschäftsmodule eingesehen und verwaltet werden können.\n\nDas Basismodul enthält die Kalender der Benutzer und Ressourcen. Hier können Benutzer ihre Abwesenheiten, hauptsächlich Urlaub, verwalten, Ressourcenadministratoren können die Verfügbarkeit der Ressourcen verwalten.\n\nFeiertage werden zentral über globale Kalender verwaltet, die von GA-Lotse-Systemadministratoren aus .ics-Dateien importiert werden können."
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "0c1f2cdf-f966-5ec6-b281-a4c577ee4a8a",
+          "rlinks": [
+            {
+              "href": "../profile-7b368e60-8193-5835-af99-1e39a8ad66ac.json"
+            }
+          ],
+          "title": "Anwenderkatalog Grundschutz++"
+        },
+        {
+          "uuid": "4395754b-e977-5333-ad02-eb30771bc3d1",
+          "title": "Entwurf Keycloack",
+          "document-ids": [
+            {
+              "identifier": "a4d10c7f-9697-4b56-9433-3a3d8f514c6d"
+            }
+          ],
+          "rlinks": [
+            {
+              "href": "Implementierungsbeschreibungen/Komponenten/Keycloack/Keycloack.json"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
