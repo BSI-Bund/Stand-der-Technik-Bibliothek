@@ -1,0 +1,1648 @@
+{
+  "component-definition": {
+    "uuid": "62655ce9-6b7a-4b12-b077-6e72f036f629",
+    "metadata": {
+      "title": "Implementierungsvorschläge WLAN",
+      "last-modified": "2026-07-27T08:13:55Z",
+      "version": "2026-06-09T09:26:33+00:00",
+      "oscal-version": "1.2.2",
+      "document-ids": [
+        {
+          "identifier": "aafa5158-bb43-420f-9771-c684402cf371",
+          "scheme": "https://www.ietf.org/rfc/rfc9562"
+        }
+      ],
+      "props": [
+        {
+          "name": "norm",
+          "value": "§ 44 Abs. 1 BSIG"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "7f975f1b-8f4a-49fd-ba02-a2f4fc905d87",
+          "type": "organization",
+          "name": "BSI, Referat S16"
+        }
+      ],
+      "remarks": "Diese OSCAL Component Definition ist eine wiederverwendbare Implementierungsvorlage und fachliche Umsetzungshilfe für WLAN. Inhalte können in ein System Security Plan übernommen werden, müssen jedoch an Informationsverbund, Schutzbedarf, Architektur, Betriebsmodell und geltende Vorgaben der jeweiligen Institution angepasst werden. Die Vorlage ist auf Planung, Bereitstellung, Betrieb, Nutzung, Überwachung und Außerbetriebnahme institutioneller WLAN-Infrastrukturen einschließlich Gast-, Management- und besonders geschützter Funknetze anwendbar. Funkabdeckung, zulässige Standards, Identitäts- und Geräteverfahren, Segmentzuordnung, Verfügbarkeitsziele sowie lokale Ausnahmen müssen anhand des Schutzbedarfs festgelegt werden. Entscheidungshinweise in eckigen Klammern kennzeichnen bewusst offengelassene lokale Festlegungen. Die beschriebenen Implementierungsmöglichkeiten begründen keine zusätzlichen regulatorischen Pflichten über die referenzierten Kataloganforderungen hinaus; ihre Eignung und Wirksamkeit werden vor Übernahme risikobasiert geprüft."
+    },
+    "components": [
+      {
+        "uuid": "9e8eacf2-6ebd-4322-9d3f-681b975e208e",
+        "type": "policy",
+        "title": "WLAN-Governance und freigegebene Betriebsregeln",
+        "description": "Die Institution verankert für ihre drahtlosen Netze verbindliche Architektur-, Betriebs- und Freigaberegeln. Darin sind Rollen, Mindeststandards, freigabepflichtige Änderungen, zugelassene Nutzungsarten, technische Ausnahmen und regelmäßige Wirksamkeitsprüfungen für alle produktiven WLAN-Umgebungen festgelegt.",
+        "control-implementations": [
+          {
+            "uuid": "6408876a-e484-4a6a-9d2a-aa2ccac3c3c8",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die zusammengefassten Anforderungen an WLAN-Governance werden durch verbindlich freigegebene Architektur- und Betriebsregeln, zugewiesene Verantwortlichkeiten sowie kontrollierte Änderungs- und Ausnahmeverfahren umgesetzt. WLAN-Service-Owner, Netzbetrieb und Informationssicherheit pflegen die Vorgaben versioniert und prüfen sie regelmäßig sowie anlassbezogen; Richtlinienfreigaben, Change-Tickets, Risikoakzeptanzen und Review-Protokolle belegen Autorisierung und fortdauernde Wirksamkeit.",
+            "implemented-requirements": [
+              {
+                "uuid": "94ca0518-13ff-4738-91a7-44ccd7d9114f",
+                "control-id": "_67c185f2-ebfd-49cc-a910-9a6dd0901578",
+                "description": "Die Institution verankert verbindliche Verfahren und Regelungen für Planung, Betrieb, Härtung und Überwachung ihrer WLAN-Infrastruktur. Die Vorgaben beschreiben insbesondere Rollen, Schutzprofile, Freigaben, technische Mindeststandards und den Umgang mit Ausnahmen für Access Points, Controller, SSIDs und zugehörige Sicherheitsdienste. Der WLAN-Service-Owner führt die Vorgabe versioniert, lässt sie durch Informationssicherheit und Netzbetrieb freigeben und prüft sie nach `[Entscheidung: Reviewintervall]` sowie nach Vorfällen, Standort- oder Plattformwechseln. Freigaben, Abweichungen, kompensierende Maßnahmen und Ablaufdaten werden in Richtlinie, Change-Tickets und Ausnahmeregister nachgewiesen.",
+                "links": [
+                  {
+                    "href": "#4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "8b8e3c11-2d6b-4dd6-bd7c-0e75d1fbb962",
+                "control-id": "_16e72553-fd92-4cc2-b3d6-d2c72809e6b1",
+                "description": "Die für WLAN geltenden Verfahren und Regelungen werden regelmäßig und anlassbezogen auf Aktualität geprüft. Sicherheitsvorfälle, neue Funktechnologien, geänderte Bedrohungslagen oder relevante Herstellerhinweise lösen eine dokumentierte Neubewertung der etablierten Standards und Betriebsfestlegungen aus. Der WLAN-Service-Owner führt die Vorgabe versioniert, lässt sie durch Informationssicherheit und Netzbetrieb freigeben und prüft sie nach `[Entscheidung: Reviewintervall]` sowie nach Vorfällen, Standort- oder Plattformwechseln. Freigaben, Abweichungen, kompensierende Maßnahmen und Ablaufdaten werden in Richtlinie, Change-Tickets und Ausnahmeregister nachgewiesen.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "87f19b44-0397-4d12-9ae8-59baf81fe958",
+                "control-id": "_1aa8319f-93fb-4236-991a-d799ab69e0c2",
+                "description": "Änderungen an sicherheitsrelevanten WLAN-Konfigurationen werden nur nach formaler Autorisierung freigegeben. Freigabepflichtig sind insbesondere Änderungen an SSIDs, Authentisierungsverfahren, Verschlüsselung, Funkparametern, Segmentgrenzen, Captive-Portalen und Controller-Policies. Wartung und Änderung erfolgen über autorisierte Changes mit gesicherter Ausgangskonfiguration, Testfällen, Wartungsfenster, Verantwortlichen und Rückfallkriterium. Erfolgs- und Sicherheitstests, Konfigurationsvergleich und Monitoringkontrolle werden dem Ticket beigefügt; Notfallchanges werden nachträglich genehmigt und auf Seiteneffekte geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "f9575244-c43c-4b40-a262-22db16f71ab7",
+        "type": "guidance",
+        "title": "WLAN-Inventar und Architekturabbild",
+        "description": "Die Institution führt für ihre drahtlosen Netze ein aktuelles Inventar und ein gemeinsames Architekturabbild. Dokumentiert werden Access Points, Controller, Antennen, SSIDs, Sicherheitsprofile, Segmentzuordnungen, Authentisierungswege, Managementpfade und relevante Standorte, damit Betrieb, Störungsanalyse und Incident Response dieselbe Datenbasis nutzen.",
+        "control-implementations": [
+          {
+            "uuid": "f32d438c-15db-421f-8b3e-98c7084be944",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die Komponente implementiert die Anforderungen an System-, Netz- und Gebäudedokumentation, indem sie Access Points, Controller, Managementsysteme, Funkzellen, Standorte, Verkabelungs- und Uplink-Beziehungen in konsistenten Inventaren und Plänen abbildet. Asset- und Netzverantwortliche synchronisieren technische Erkennung und genehmigte Dokumentation bei Inbetriebnahme und Änderung; Inventarexporte, Netz- und Strukturpläne, Standortlisten und Abgleichprotokolle dienen als Nachweis.",
+            "implemented-requirements": [
+              {
+                "uuid": "f94fe421-734b-4bcf-a774-40bd113ca66d",
+                "control-id": "_b10fc10c-a3be-4b30-977a-6a2d020760d6",
+                "description": "Die Institution dokumentiert ein Inventar der für das WLAN eingesetzten IT-Systeme mit eindeutiger Identifikation und letztem bekannten Verbleib. Dazu gehören Access Points, Controller, RADIUS-Systeme, Managementstationen, Sensoren und weitere drahtlos relevante Infrastruktursysteme. Der Netzbetrieb gleicht Inventar, Controllerbestand, Switchport- und Standortdaten nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig ab. Abweichungen wie unbekannte Access Points, veraltete Sicherheitsprofile oder nicht dokumentierte Uplinks erzeugen Tickets; Netzpläne, CMDB-Exporte und Abgleichprotokolle dienen als Nachweis.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a7441b57-dcb7-4f0f-a22f-04332e7cb076",
+                "control-id": "_7b2381fe-9617-4b2a-a8da-7972b81a3909",
+                "description": "Die drahtlosen Netze werden als Teil des Netzinventars mit internen Segmenten, externen Anschlüssen und Verwendungszwecken dokumentiert. SSIDs, Gast- und Ausnahmezugänge, Managementpfade und Übergabepunkte zu Internet, LAN oder Cloud-Diensten werden nachvollziehbar erfasst. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "d352f75f-a732-429f-bc15-635e24268121",
+                "control-id": "_7630e7d2-883b-4697-9b7a-b212dfa5666d",
+                "description": "Die Institution pflegt einen Netzplan, in dem die logische und physische WLAN-Struktur erkennbar ist. Der Plan zeigt mindestens Access-Point-Standorte, Controller-Beziehungen, Funkzellen, Segmentgrenzen und zentrale Sicherheitsdienste, damit Änderungen und Störungen ohne Rückgriff auf Einzelwissen analysiert werden können. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c87b96cc-b138-4b1f-bc8c-955efaf75fde",
+                "control-id": "_e51b3488-c9ce-4709-b2d1-c995eee3336a",
+                "description": "Für WLAN-relevante Standorte werden Strukturpläne oder gleichwertige Standortunterlagen gepflegt, in denen technische Infrastruktur, Ausleuchtungszonen, kritische Räumlichkeiten und Leitungswege erkennbar sind. Diese Unterlagen werden für Funkplanung, Schutzbereichsbewertung und Störungsanalyse genutzt. Access Points, Controller und Uplinks werden in freigegebenen Bereichen manipulations- und diebstahlgeschützt installiert. Regelmäßige Standortkontrollen, Zutrittsnachweise, Inventarabgleich und dokumentierte Behandlung beschädigter oder versetzter Komponenten belegen die fortdauernde Wirksamkeit.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "84ae691b-3f63-4081-9777-b44ca7b50c94",
+            "source": "#4e684f27-a8a0-4a5e-9b28-62fabaa07024",
+            "description": "Die methodischen Anforderungen an Informationsverbund, externe Schnittstellen und relevante Assets werden durch eine eindeutige Abgrenzung der WLAN-Dienste und ihrer Abhängigkeiten umgesetzt. Architektur- und Asset-Verantwortliche dokumentieren interne und externe Kommunikationsbeziehungen, Betriebsgrenzen und verantwortete Objekte und gleichen diese regelmäßig mit Inventar und Schutzbedarf ab; freigegebene Scope-Dokumente, Schnittstellenregister und Asset-Zuordnungen belegen die Vollständigkeit.",
+            "implemented-requirements": [
+              {
+                "uuid": "2a523e84-4e57-4a1b-a387-2c2b813fdb5c",
+                "control-id": "_cba2f75c-95f5-4398-9a8b-7773bdcd1c7d",
+                "description": "Der WLAN-bezogene Informationsverbund umfasst Funkinfrastruktur, Controller, Authentisierungs- und Managementdienste, angebundene Segmente, relevante Endgeräteklassen, Standorte sowie interne und externe Betriebsanteile. Scope-Grenzen und Abhängigkeiten werden für Planung, Risikobetrachtung und Vorfallbehandlung eindeutig dokumentiert. Der WLAN-Service-Owner führt die Vorgabe versioniert, lässt sie durch Informationssicherheit und Netzbetrieb freigeben und prüft sie nach `[Entscheidung: Reviewintervall]` sowie nach Vorfällen, Standort- oder Plattformwechseln. Freigaben, Abweichungen, kompensierende Maßnahmen und Ablaufdaten werden in Richtlinie, Change-Tickets und Ausnahmeregister nachgewiesen.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a5db9bc4-dbbd-444e-939c-d70814ed5c90",
+                "control-id": "_c30d414e-65e5-460e-8239-892f9a196a1f",
+                "description": "Externe WLAN-Schnittstellen wie Cloud-Management, Provider-RADIUS, Gastportale, Internet-Übergänge, Standortkopplungen und Supportzugänge werden mit Datenfluss, Protokoll, Authentisierung, Owner und Sicherheitsgrenze beschrieben. Neue oder geänderte Schnittstellen benötigen Architektur- und Sicherheitsfreigabe. Der Netzbetrieb gleicht Inventar, Controllerbestand, Switchport- und Standortdaten nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig ab. Abweichungen wie unbekannte Access Points, veraltete Sicherheitsprofile oder nicht dokumentierte Uplinks erzeugen Tickets; Netzpläne, CMDB-Exporte und Abgleichprotokolle dienen als Nachweis.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "728fabfb-0036-4dc7-ac5c-e392fb21beff",
+                "control-id": "_10e75c93-320b-4d4d-baaa-ed7392b274cf",
+                "description": "Alle für sicheren WLAN-Betrieb relevanten Assets werden erfasst, darunter Access Points, Controller, Antennen, Switchports, Zertifikats- und RADIUS-Dienste, SSIDs, Sicherheitsprofile, Standorte, Managementwerkzeuge und benötigte Netzbasisdienste. Abhängigkeiten und Verantwortungen sind im Assetmodell sichtbar. Der Netzbetrieb gleicht Inventar, Controllerbestand, Switchport- und Standortdaten nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig ab. Abweichungen wie unbekannte Access Points, veraltete Sicherheitsprofile oder nicht dokumentierte Uplinks erzeugen Tickets; Netzpläne, CMDB-Exporte und Abgleichprotokolle dienen als Nachweis.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "6b939901-1092-4d42-b637-b9e10bf6aa74",
+                "control-id": "_9a63c78e-a5bb-4d89-a02f-0cf7abdaba40",
+                "description": "WLAN-Assets erhalten eindeutige Kennung, Typ, Standort, Owner, Schutzbedarf, Firmware- oder Serviceversion, Managementpfad, Segment- und SSID-Zuordnung sowie Lifecycle-Status. Änderungen aus Rollout, Austausch oder Standortwechsel werden zeitnah nachgeführt und gegen den technischen Bestand abgeglichen. Der Netzbetrieb gleicht Inventar, Controllerbestand, Switchport- und Standortdaten nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig ab. Abweichungen wie unbekannte Access Points, veraltete Sicherheitsprofile oder nicht dokumentierte Uplinks erzeugen Tickets; Netzpläne, CMDB-Exporte und Abgleichprotokolle dienen als Nachweis.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "3607c330-23d3-4b9d-8ca8-48c43d812519",
+        "type": "service",
+        "title": "Sichere Funkzellen, institutionsspezifische SSIDs und verschlüsselte Netzanbindung",
+        "description": "Die Institution plant drahtlose Netze als bewusst abgegrenzte Funkzellen mit institutionsspezifischen SSIDs, kontrollierter Ausstrahlung und einheitlichen Sicherheitsprofilen. Produktive SSIDs verwenden aktuelle Verschlüsselungs- und Authentisierungsverfahren; Sicherheitsbereiche und technisch sensible Standorte werden in der Funkplanung gesondert behandelt.",
+        "control-implementations": [
+          {
+            "uuid": "6a4b0ad7-03f5-480c-b48b-1a3f307437ea",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die Anforderungen an sichere Funkversorgung werden durch geplante Funkzellen, institutionsspezifische Kennungen, kontrollierte Sendeleistung und geschützte Anbindung der WLAN-Komponenten an die Netzinfrastruktur umgesetzt. WLAN-Planung und Gebäudebetrieb berücksichtigen Sicherheitsbereiche, Abstrahlung, Montageorte und physische Schutzmaßnahmen; Ausleuchtungsprotokolle, Konfigurationsexporte, Standortfreigaben und wiederkehrende Funkmessungen weisen die kontrollierte Abdeckung nach.",
+            "implemented-requirements": [
+              {
+                "uuid": "d7b8f6ae-5234-4710-bb18-c62f17c7de4c",
+                "control-id": "_57639fa6-7898-4ad8-91c5-cc77106e0d02",
+                "description": "Die Institution testet die Netzabdeckung des WLANs unter realistischen Betriebsbedingungen und dokumentiert Abdeckung, Störquellen, Funklöcher und unerwünschte Reichweiten. Aus den Ergebnissen werden Kanalplanung, Zellgröße, Sendeleistung und Access-Point-Platzierung nachweisbar angepasst. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "99ae5f75-62a1-40ed-8904-6760cd4d6c38",
+                "control-id": "_0ecd6068-4509-4cb5-bf12-b35076cc88e3",
+                "description": "In Sicherheitsbereichen schränkt die Institution die WLAN-Ausstrahlung gezielt ein oder verhindert sie vollständig. Dazu werden z. B. Sendeleistung, Antennenausrichtung, Kanalplanung, bauliche Abschirmung oder der bewusste Verzicht auf Funkversorgung so eingesetzt, dass in abhör- oder störungssensiblen Räumen keine unkontrollierte Funkreichweite verbleibt. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b671fe91-718c-43f1-b136-4385cf5c3578",
+                "control-id": "_06d3eb79-4326-4bd8-87c0-9808909d29c7",
+                "description": "Die Institution aktiviert für ihre drahtlosen Netze institutionsspezifische SSIDs und verwendet keine herstellerseitigen Default-Namen in produktiven Umgebungen. SSID-Bezeichnungen folgen einem festgelegten Namensschema, das Nutzungszweck und organisatorische Zuordnung erkennen lässt, ohne unnötige sicherheitsrelevante Detailinformationen preiszugeben. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "78800164-53c8-4030-a0c0-dfac1bb663b9",
+                "control-id": "_45bb11ba-1018-430e-be4f-7cae54407f3c",
+                "description": "Die drahtlose Netzanbindung wird mit aktuellen, freigegebenen Sicherheitsstandards verschlüsselt. Für produktive Zugänge setzt die Institution WPA3-Enterprise mit zentraler Authentisierung und geschützten Management-Frames ein; technische Ausnahmen werden befristet dokumentiert und mit kompensierenden Segmentierungs- oder Egress-Regeln abgesichert. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests. Der Katalogparameter „nach einem anerkannten Standard“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: nach einem anerkannten Standard] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "f017b6d8-302e-48e6-b459-88d766e09621",
+                "control-id": "_9835ce0d-94a4-4acc-96cf-489f20750808",
+                "description": "Wo der Schutzbedarf dies erfordert, berücksichtigt die Institution elektromagnetische Abschirmung oder gleichwertige baulich-technische Maßnahmen bei der Gestaltung von WLAN-nahen Sicherheitsbereichen. Die Maßnahmen werden mit der Funkplanung abgestimmt und periodisch auf ihre fortbestehende Wirksamkeit geprüft. Access Points, Controller und Uplinks werden in freigegebenen Bereichen manipulations- und diebstahlgeschützt installiert. Regelmäßige Standortkontrollen, Zutrittsnachweise, Inventarabgleich und dokumentierte Behandlung beschädigter oder versetzter Komponenten belegen die fortdauernde Wirksamkeit.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "cfffff3a-b95e-4234-a06d-a8a18f961da0",
+                "control-id": "_525d2727-f932-4f27-bffc-7a8104194bc8",
+                "description": "Für die Funktionsfähigkeit des WLANs erforderliche Systeme wie Controller, Managementsysteme, zentrale Switches oder Sicherheitsgateways werden ausschliesslich in Räumen für technische Infrastruktur oder gleichwertig geschützten Bereichen betrieben. So wird die physische Manipulation an netzkritischen WLAN-Komponenten erschwert. Access Points, Controller und Uplinks werden in freigegebenen Bereichen manipulations- und diebstahlgeschützt installiert. Regelmäßige Standortkontrollen, Zutrittsnachweise, Inventarabgleich und dokumentierte Behandlung beschädigter oder versetzter Komponenten belegen die fortdauernde Wirksamkeit.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "a4e2cc4f-72e3-41e4-9516-4a216f63801d",
+        "type": "service",
+        "title": "Segmentierter und kontrollierter WLAN-Zugang",
+        "description": "Die Institution betreibt produktive, administrative, Gast-, IoT- und Ausnahmezugänge in getrennten Vertrauenszonen. IEEE-802.1X-basierte Authentisierung, dynamische Netzzugangskontrolle, Quarantäne und kontrollierte Übergänge setzen den minimal erforderlichen Zugriff durch; das WLAN-Management liegt in einer gesonderten Administrationszone.",
+        "control-implementations": [
+          {
+            "uuid": "b733529a-5926-4dcb-93fe-e12a8cce9f16",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die gruppierten Anforderungen an Segmentierung, Netzzugang und Verbindungssteuerung werden durch getrennte SSID-/VLAN-Sicherheitszonen, identitäts- und gerätebasierte Zulassung, restriktive Filterregeln und Quarantänepfade umgesetzt. Netzbetrieb und Berechtigungsverantwortliche betreiben Gast-, Management- und Produktivzugriffe mit Least Privilege und starker Authentisierung; NAC-, Firewall- und MFA-Konfigurationen, Freigabetickets, Zugriffsprotokolle und regelmäßige Regelprüfungen belegen die Durchsetzung.",
+            "implemented-requirements": [
+              {
+                "uuid": "e8849b3b-effd-4e97-8261-42562e9788df",
+                "control-id": "_ec31da4c-f5bd-43f5-b94f-f0fb7a5e1a18",
+                "description": "WLAN-bezogene Netzbereiche werden in Segmente mit eindeutigem Zweck und Schutzprofil unterteilt, etwa für Produktivsysteme, Administration, Gäste oder nicht verwaltete Geräte. Die Segmentierung orientiert sich an Schutzbedarf, Risikoklasse und benötigtem Kommunikationsumfang. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "e871ff01-cf2c-4471-9ce1-33ad2a8f350b",
+                "control-id": "_6ff2de76-4a01-42cc-a794-1a6ec9313f46",
+                "description": "Verbindungen zwischen WLAN-Segmenten und angrenzenden Netzbereichen werden auf dokumentierte und fachlich benötigte Kommunikationsbeziehungen eingeschränkt. Nicht explizit freigegebene Richtungen, Ports oder Dienste bleiben gesperrt; Gast- und Ausnahmezugänge erhalten nur die für ihren Zweck erforderlichen Ziele. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests. Der Katalogparameter „Kriterien“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: Kriterien] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c6dbd864-5560-4ec2-8f59-ceb584ee623e",
+                "control-id": "_9ec9762e-c115-4e56-8b45-b88a872f47ce",
+                "description": "Der Zugriff von IT-Systemen auf interne WLAN-Segmente wird vor der Freischaltung authentisiert und im Einklang mit den Vorgaben des Identitäts- und Berechtigungsmanagements autorisiert. Die Institution nutzt dafür zentral auswertbare Verfahren wie 802.1X, Zertifikatsprüfung oder gleichwertige Kontrollmechanismen. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "69bc02fc-0336-41e4-986e-7889d300ba37",
+                "control-id": "_77aebab8-462b-4849-aaa2-9c939af5e1dc",
+                "description": "Routing-Verbindungen und Transitpfade für WLAN-Datenverkehr werden nur über autorisierte Änderungsprozesse eingerichtet oder geändert. Default-Routen, dynamische Übergaben und statische Sonderpfade werden dokumentiert, fachlich begründet und auf minimal notwendige Reichweite begrenzt. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests. Der Katalogparameter „eine zuständige Person oder Rolle“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: eine zuständige Person oder Rolle] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "7254c54f-ada2-468a-899c-ca676084abf9",
+                "control-id": "_025c298a-7c8d-441d-b9d5-a1422556c6e1",
+                "description": "An WLAN-Perimetern schränkt und inspiziert die Institution Verbindungen über Firewalls, Gateways, Proxy- oder Security-Dienste. Exponierte Dienste wie Gästezugang, Internet-Breakout oder Portale werden über klar definierte Sicherheitsfunktionen geführt und nicht unkontrolliert direkt mit internen Segmenten gekoppelt. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "87a0942e-aeda-452d-8ff5-3ab3b44e5d25",
+                "control-id": "_b94287af-31a1-4500-a8da-89583fdaef92",
+                "description": "Direkte öffentliche Verbindungen aus internen oder schutzkritischen WLAN-Segmenten werden blockiert, sofern sie für den Betriebszweck nicht ausdrücklich erforderlich und freigegeben sind. Internet-Zugriffe laufen über kontrollierte Übergabepunkte mit dokumentierten Filter- und Protokollierungsmechanismen. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "05a66fea-5128-4a95-9b89-ffef9b23d019",
+                "control-id": "_73c9c122-d3f6-42f9-a6f1-6b454a8b1853",
+                "description": "Gastzugriffe werden einer eigenen SSID und einem technisch getrennten Gastsegment zugeordnet. Client-Isolation, DNS-/Web-Schutz und ausschliesslich benötigte Internetziele werden erzwungen; Zugriffe auf interne Netze sind standardmäßig blockiert und nur für einzeln genehmigte, protokollierte Sonderfälle zulässig. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "8867441a-46b8-4835-a457-9fe56a75c184",
+                "control-id": "_d02f23d0-9c15-4811-838f-6440ee744334",
+                "description": "Controller, Access Points, RADIUS/NAC und Managementwerkzeuge werden über ein dediziertes Managementnetz administriert. Direkte Administration aus Benutzer-, Gast- oder IoT-Segmenten ist blockiert; Zugriffe erfolgen über freigegebene Admin-Arbeitsplätze oder Sprungdienste mit MFA und zentraler Protokollierung. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "9455dc25-a135-4d9f-8d7c-dc8650914409",
+                "control-id": "_fec4fcdf-13e7-4a32-a3e1-52dce90ea1d7",
+                "description": "Die Netzzugangskontrolle bewertet Identität, Gerätezertifikat, Geräteklasse und - soweit technisch verfügbar - Sicherheitszustand vor und während des Zugriffs. RADIUS-/NAC-Policies weisen dynamisch Rollen oder Segmente zu und entziehen den Zugriff bei Statusänderung oder kompromittiertem Authentisierungsmittel. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests. Der Katalogparameter „dynamischer Kriterien“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: dynamischer Kriterien] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "586b59c0-ade3-49da-a926-7a9532366723",
+                "control-id": "_5f97efff-4db1-4b26-8ab9-4521108e5c0c",
+                "description": "Unbekannte, nicht konforme oder auffällige WLAN-Clients werden automatisch in ein Quarantäne- oder Remediation-Segment verschoben. Dieses erlaubt nur notwendige Registrierungs-, Update- und Supportziele; Freigabe in produktive Zonen erfolgt erst nach erfolgreicher Prüfung oder dokumentierter Ausnahme. Regeln werden als SSID-, VLAN-, ACL-, Firewall- oder NAC-Policy mit Default-Deny zwischen unterschiedlichen Vertrauenszonen umgesetzt. Der Netzbetrieb dokumentiert Zweck, Owner und Ablaufdatum jeder Ausnahme, prüft die tatsächlichen Kommunikationsflüsse regelmäßig und belegt die Wirksamkeit durch Regelwerks-Exporte, Flow-Auswertungen und Negativtests.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "7a20c096-98cf-41cf-8e84-3271a47ecf5b",
+                "control-id": "_55b70084-f446-42af-908b-0f514a72f380",
+                "description": "Administrative Zugänge zu WLAN-Controllern, Cloud-Management, RADIUS/NAC und zentralen Managementwerkzeugen erfordern MFA. Bevorzugt werden phishing-resistente Faktoren wie FIDO2/WebAuthn oder zertifikatsbasierte Authentisierung; Break-Glass-Zugänge sind getrennt verwahrt, alarmiert und nach jeder Nutzung zu prüfen. WLAN-Identitäten, administrative Rollen und technische Konten werden eindeutig zugeordnet, minimal berechtigt und für privilegierte Zugriffe mit MFA abgesichert. Der IAM- oder WLAN-Service-Owner prüft Zuweisungen und Notfallzugänge nach `[Entscheidung: Rezertifizierungsintervall]`; AAA-/PAM-Exporte, Anmeldeprotokolle und Freigabeentscheidungen dienen als Nachweis.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "abffa120-90ec-4da2-ac25-5c6a3918cdf3",
+        "type": "process-procedure",
+        "title": "Wartung, Änderung und abgesicherte Bereitstellung der WLAN-Infrastruktur",
+        "description": "Die Institution betreibt Access Points, Controller, Authentisierungs- und Managementdienste aus versionierten Härtungsbaselines. Default-Zugänge, ungenutzte Dienste und unsichere Administration werden beseitigt; Wartung, Firmwarewechsel und Konfigurationsänderungen folgen Tests, Freigabe, Driftkontrolle und Rückfallverfahren.",
+        "control-implementations": [
+          {
+            "uuid": "1d7d6bb4-89f9-44cf-9e2a-c15efe72fc42",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die Anforderungen an sicheren Lebenszyklus und Wartung der WLAN-Infrastruktur werden durch freigegebene Baselines, versionierte Konfigurationen, geschützte Geheimnisse sowie kontrollierte lokale und entfernte Administrationswege umgesetzt. WLAN-Betrieb testet Änderungen und Updates vor Freigabe, dokumentiert Wartungen und hält geprüfte Rückfallstände bereit; Konfigurationsrepository, Wartungsprotokolle, Testnachweise, Freigaben und Rückfalltests sichern Nachvollziehbarkeit und Wiederherstellbarkeit.",
+            "implemented-requirements": [
+              {
+                "uuid": "40880e21-41be-4065-b478-acfabee0464c",
+                "control-id": "_f4508940-fad1-49ff-b7f7-d6612790f145",
+                "description": "Wartungen an der WLAN-Infrastruktur erfolgen nach geregelten Verfahren mit abgestimmten Zeitfenstern, Verantwortlichkeiten und Nachweisen. Geplante Arbeiten an Access Points, Controllern, Antennen oder zentralen Authentisierungsdiensten werden vorab vorbereitet und nach ihrer Durchführung nachvollziehbar abgeschlossen. Wartung und Änderung erfolgen über autorisierte Changes mit gesicherter Ausgangskonfiguration, Testfällen, Wartungsfenster, Verantwortlichen und Rückfallkriterium. Erfolgs- und Sicherheitstests, Konfigurationsvergleich und Monitoringkontrolle werden dem Ticket beigefügt; Notfallchanges werden nachträglich genehmigt und auf Seiteneffekte geprüft. Der Katalogparameter „regelmäßig oder prädiktiv“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: regelmäßig oder prädiktiv] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "787e198a-8cff-420d-9ed3-20f54b5fef03",
+                "control-id": "_59a96eb8-75ad-420d-aab5-4d448f5c12ae",
+                "description": "Wartungen an WLAN-Komponenten dürfen nur von dazu autorisierten Personen oder Stellen durchgeführt werden. Privilegierte Hersteller-, Dienstleister- oder Administrationszugänge werden für Wartungszwecke kontrolliert freigeschaltet, protokolliert und anschliessend wieder auf den Sollzustand zurückgeführt. Wartung und Änderung erfolgen über autorisierte Changes mit gesicherter Ausgangskonfiguration, Testfällen, Wartungsfenster, Verantwortlichen und Rückfallkriterium. Erfolgs- und Sicherheitstests, Konfigurationsvergleich und Monitoringkontrolle werden dem Ticket beigefügt; Notfallchanges werden nachträglich genehmigt und auf Seiteneffekte geprüft. Der Katalogparameter „eine zuständige Person oder Rolle“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: eine zuständige Person oder Rolle] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "54e63a7d-4b97-4749-a79f-1335824fd2ca",
+                "control-id": "_a2ecedcb-3515-4d40-b4d3-b745142af15b",
+                "description": "Durchgeführte Wartungen an der WLAN-Infrastruktur werden mit Umfang, Zeitpunkt, Bearbeiter, Veränderungen und Ergebnissen dokumentiert. Die Dokumentation ist so detailliert, dass sie für Fehleranalyse, Compliance-Nachweise und Wiederherstellungsentscheidungen nutzbar bleibt. Wartung und Änderung erfolgen über autorisierte Changes mit gesicherter Ausgangskonfiguration, Testfällen, Wartungsfenster, Verantwortlichen und Rückfallkriterium. Erfolgs- und Sicherheitstests, Konfigurationsvergleich und Monitoringkontrolle werden dem Ticket beigefügt; Notfallchanges werden nachträglich genehmigt und auf Seiteneffekte geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "8fdf0462-9843-4fb4-88e6-2cbc6cfd1533",
+                "control-id": "_2edf4a68-0d86-4da9-ada4-9939c2508f2c",
+                "description": "Vor wesentlichen Änderungen an SSIDs, Authentisierung, Funkparametern, Segmentregeln oder Controller-Software prüft die Institution die Einhaltung der Sicherheitsanforderungen in einer Test- oder Pilotphase. Erst nach erfolgreichem Nachweis der Schutzwirkung erfolgt die Produktivfreigabe. Wartung und Änderung erfolgen über autorisierte Changes mit gesicherter Ausgangskonfiguration, Testfällen, Wartungsfenster, Verantwortlichen und Rückfallkriterium. Erfolgs- und Sicherheitstests, Konfigurationsvergleich und Monitoringkontrolle werden dem Ticket beigefügt; Notfallchanges werden nachträglich genehmigt und auf Seiteneffekte geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "2000fd55-56c3-4058-a75b-0a0e2aee497f",
+                "control-id": "_15a34e7f-067f-4f27-92a8-4d32cce4dee6",
+                "description": "Die Testabdeckung für WLAN-Änderungen umfasst nicht nur Einzelfunktionen, sondern auch das Zusammenspiel von Funkzelle, Authentisierung, VLAN-Zuordnung, Logging, Roaming und Client-Verhalten. So werden Seiteneffekte auf angrenzende Segmente und Sicherheitsdienste frühzeitig sichtbar. Wartung und Änderung erfolgen über autorisierte Changes mit gesicherter Ausgangskonfiguration, Testfällen, Wartungsfenster, Verantwortlichen und Rückfallkriterium. Erfolgs- und Sicherheitstests, Konfigurationsvergleich und Monitoringkontrolle werden dem Ticket beigefügt; Notfallchanges werden nachträglich genehmigt und auf Seiteneffekte geprüft. Der Katalogparameter „regelmäßig“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: regelmäßig] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a860951a-79e9-40b7-82ca-fc0954b4a9e3",
+                "control-id": "_aacff36a-50db-4403-9a46-34fa044a8a4d",
+                "description": "Für sicherheitsrelevante WLAN-Änderungen existiert eine dokumentierte Rückfalllösung, mit der auf den letzten freigegebenen Zustand zurückgewechselt werden kann. Dies umfasst gesicherte Konfigurationen, Firmware-Stände und klare Entscheidungskriterien für einen Rollback. Wartung und Änderung erfolgen über autorisierte Changes mit gesicherter Ausgangskonfiguration, Testfällen, Wartungsfenster, Verantwortlichen und Rückfallkriterium. Erfolgs- und Sicherheitstests, Konfigurationsvergleich und Monitoringkontrolle werden dem Ticket beigefügt; Notfallchanges werden nachträglich genehmigt und auf Seiteneffekte geprüft.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "80b7f165-2e0b-4e76-8dd2-d51dfe4d75b4",
+                "control-id": "_195fff6c-f5c2-466c-8a28-81b3167dad8d",
+                "description": "Pre-Shared Keys, RADIUS-Secrets, API-Token, private Zertifikatsschlüssel und sonstige WLAN-Konfigurationsgeheimnisse werden nicht im Klartext in Skripten oder Backups abgelegt. Sie liegen in einem Secret-Management- oder PAM-System mit rollenbasiertem Zugriff, Rotation und vollständiger Zugriffsprotokollierung. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "1fcb4784-9fe1-49de-9bfd-0f2f51a7a5fc",
+                "control-id": "_8bd05aba-b395-43cf-a38e-f4e8656df7c4",
+                "description": "Für jede unterstützte Access-Point-, Controller- und Authentisierungsplattform besteht eine freigegebene Grundkonfiguration. Sie definiert mindestens Managementprotokolle, NTP, Logging, SNMPv3 oder gleichwertige Telemetrie, sichere Kryptoprofile, Funkparameter, Administrationsrollen und deaktivierte Legacy-Funktionen. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "7b9e560d-99d3-48a1-91c2-a5670ea52c2c",
+                "control-id": "_3b25d629-b441-4365-96fb-d06e2e35b89d",
+                "description": "Soll- und Ist-Konfigurationen der WLAN-Infrastruktur werden versioniert und gegen unautorisierte Änderung geschützt. Automatisierte Exporte oder Infrastructure-as-Code-Artefakte erlauben Vergleich, Wiederherstellung und Vier-Augen-Review; Geheimnisse werden dabei getrennt und verschlüsselt behandelt. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "2df250e7-4db6-4cd3-93ba-f655b81f2d58",
+                "control-id": "_14a61781-67a3-41c7-9f73-89d5809ea2b0",
+                "description": "Herstellerseitige Standardkonten, Passwörter, Community Strings, SSIDs, Schlüssel und Zertifikate werden vor der ersten Netzanbindung ersetzt oder deaktiviert. Die Abnahme prüft dies technisch und sperrt die Produktivsetzung, solange bekannte Default-Zugänge erreichbar sind. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "40041a67-2db6-4235-9c7a-787371f09106",
+                "control-id": "_24c072af-d71b-4d57-8b8f-119194e5cb8a",
+                "description": "Nicht benötigte Funkbänder, SSIDs, Mesh-/Ad-hoc-Funktionen, WPS, Telnet/HTTP, ungesicherte SNMP-Versionen, lokale Adminoberflächen und Discovery-Dienste werden deaktiviert. Erforderliche Ausnahmen werden je Plattform begründet, durch Netzfilter oder Zugriffsbeschränkungen kompensiert und regelmäßig neu bewertet. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "87f4ae61-a599-4a00-aaf1-54c940ac40d2",
+                "control-id": "_a37d5c17-d296-4810-ac13-4a15e7b40e97",
+                "description": "Die produktive WLAN-Konfiguration wird automatisiert oder anhand freigegebener Checklisten gegen die Baseline geprüft. Kritische Abweichungen wie offene Administration, schwache Kryptografie, nicht geschützte Managementframes oder unerwartete SSIDs führen zu Alarm und priorisiertem Change. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung. Der Katalogparameter „regelmäßig“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: regelmäßig] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "5206a8fc-5025-4eef-8fc0-0bab7ccb5bef",
+                "control-id": "_6fa4659a-8472-4d26-9f3b-a3edfa412a8c",
+                "description": "Fernadministration und Fernwartung authentisieren sowohl die administrierende Person als auch das Zielsystem und nutzen verschlüsselte, freigegebene Protokolle. Externe Wartung erfolgt zeitlich befristet über PAM/VPN oder Sprungdienst und wird für den gesamten Zeitraum protokolliert. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "10cacf33-c2ea-487f-84eb-7d639e588edb",
+                "control-id": "_2e782e35-d708-49c3-b022-76616ae204be",
+                "description": "Fernwartungsfunktionen sind standardmäßig deaktiviert oder nur aus dem Managementnetz erreichbar. Freischaltungen benötigen Ticket, Zeitfenster, benannte Gegenstelle und begleitende Überwachung; nach Abschluss werden Konten, Tunnel und temporäre Regeln automatisch oder kontrolliert entzogen. Der WLAN-Betrieb setzt eine versionierte Härtungsbaseline durch, ändert Default-Zugangsdaten, deaktiviert ungenutzte Dienste und verwaltet Administrationsgeheimnisse in einem geschützten Secret- oder PAM-System. Konfigurationsdrift, Firmwarestand und Managementzugriff werden automatisiert geprüft; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "de5d6f21-1288-46eb-9e04-1424c14141ef",
+        "type": "software",
+        "title": "Protokollierung, Erkennung und Bewertung von Funk- und Netzereignissen",
+        "description": "Die Institution korreliert Ereignisse aus Access Points, Controllern, RADIUS, Firewalls und angrenzenden Managementsystemen in einem übergreifenden Monitoring- und Detektionsprozess. Anomalien in der Funkumgebung, unerlaubte Sendeanlagen, Verfügbarkeitsprobleme und verdächtige Kommunikationsmuster werden zeitnah bewertet und in definierte Reaktionswege überführt.",
+        "control-implementations": [
+          {
+            "uuid": "8a930931-0721-4ced-87b3-041c75e35ce2",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die Anforderungen an Protokollierung, Anomalieerkennung und Ereignisbewertung werden durch zentrale Erfassung und Korrelation von Authentisierungen, Funkereignissen, Konfigurationsänderungen, Erreichbarkeits- und Verkehrsauffälligkeiten umgesetzt. WLAN-Betrieb und Security Monitoring pflegen Erkennungsregeln, bewerten Meldungen nach definierten Kriterien und eskalieren bestätigte Vorfälle; Logquelleninventar, SIEM-Regeln, Alarmtickets, Bewertungsprotokolle und regelmäßige Erkennungstests belegen den Betrieb.",
+            "implemented-requirements": [
+              {
+                "uuid": "82a6b2d0-d7fb-48cb-a478-818e83ae9a48",
+                "control-id": "_dc58d353-86e1-4070-9f86-b7f0e0f93305",
+                "description": "Sicherheitsrelevante WLAN-Ereignisse werden manipulationsgeschützt protokolliert. Dazu gehören insbesondere Authentisierungsversuche, Policy-Verletzungen, Konfigurationsänderungen, Verbindungsabbrüche, Controller- oder Funkstörungen sowie erkannte Rogue- oder Interferenzereignisse. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "14652644-0b5a-40a9-8825-f0344605188e",
+                "control-id": "_e6cf2c48-c49f-4c10-9cca-252d903b0979",
+                "description": "Die Institution überwacht den WLAN-bezogenen Netzwerkverkehr und die Funksteuerereignisse auf Anomalien, etwa auf Rogue-AP-Indikatoren, Deauthentication-Angriffe, ungewöhnliche Fehlversuchsserien oder auffällige Datenströme. Relevante Signale werden korreliert und nach definierten Eskalationskriterien bearbeitet. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ee9a52a3-8af7-4acd-a7e8-59308c0d5b97",
+                "control-id": "_3757d23d-e17e-4bae-857e-c045505d579a",
+                "description": "Die Verfügbarkeit der WLAN-Infrastruktur wird kontinuierlich überwacht, einschließlich Controller-Erreichbarkeit, Funkabdeckung, Authentisierungsdiensten und wichtiger Übergabepunkte. Störungen, degradierte Funkzellen und Ausfälle lösen definierte Alarmierungen und Wiederanlaufmaßnahmen aus. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "e0b0e469-1b63-409e-b4c8-bb869ed27994",
+                "control-id": "_d85d0d64-bc5c-4a11-91d8-7c567abd5b21",
+                "description": "Die Institution erkennt unautorisierte Sendeanlagen oder unerwartete Funkquellen in ihrer WLAN-Umgebung über Sensorik, Controller-Funktionen oder regelmäßige Funkmessungen. Freigegebene Access Points und bekannte Sender werden als Vergleichsbasis gepflegt, damit abweichende Signale schnell identifiziert und untersucht werden können. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b728db56-a09f-45dd-ae5b-f03f40cee187",
+                "control-id": "_a8c7d445-54b4-40e2-aab5-b46e30549ec5",
+                "description": "Erkannte WLAN-Ereignisse werden daraufhin beurteilt, ob sie sicherheitsrelevant, störungsbedingt oder erwartbar sind. Die Bewertung folgt dokumentierten Kriterien, damit Alarme aus Funkplanung, Authentisierung, Segmentgrenzen oder Rogue-Erkennung konsistent priorisiert werden. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "fa2aac91-454b-4867-8c1f-54414e857745",
+                "control-id": "_0ec29d00-cea9-4337-8f83-b680453b21b2",
+                "description": "Eingänge aus Monitoring, Tickets, Nutzerhinweisen oder externen Meldungen zu WLAN-Auffälligkeiten werden strukturiert beurteilt und einem geregelten Bearbeitungsweg zugeordnet. So gehen weder technische Schwachstellenhinweise noch Hinweise auf Rogue- oder Empfangsprobleme ungeprüft verloren. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "393d5e95-4302-48a1-9594-0c96cba016b3",
+                "control-id": "_c25354d3-ed8f-4bac-ad0c-f0641d1b7f84",
+                "description": "Erfolgreiche und fehlgeschlagene WLAN-, RADIUS-, Administrator- und Break-Glass-Authentisierungen werden mit Identität, Gerät, SSID, Access Point, Ergebnis und Zeitbezug protokolliert. Korrelation erkennt Passwortspraying, Zertifikatsfehler, ungewöhnliche Standorte und wiederholte Ablehnungen. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "0f0970a6-4bbf-4d70-9ee4-e13e87afa3b2",
+                "control-id": "_39faab52-c5ca-4971-8f00-6eb34319cb55",
+                "description": "Controller-, Access-Point-, RADIUS-, DNS-, DHCP- und Uplink-Ausfälle sowie auffällige Roaming- oder Association-Fehler werden als Störungen der Netzerreichbarkeit erfasst. Schwellwerte unterscheiden lokale Funkprobleme von zentralen Dienststörungen und lösen abgestufte Alarm- und Eskalationswege aus. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "54f57d33-636a-4680-9e99-1c59e5afbe55",
+                "control-id": "_80109af2-9ed7-4aca-807e-aae712dc8e18",
+                "description": "WLAN-Übergabepunkte liefern Flow- oder gleichwertige Kommunikationsmetadaten, damit unerwartete Ost-West-Kommunikation, Beaconing, Massendatenübertragung und Umgehung vorgesehener Gateways erkannt werden. Inhalte werden nur verarbeitet, soweit dies rechtlich und risikobasiert erforderlich ist. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "cf1fb83f-95d3-46ea-a4b9-5a1563d38c5f",
+                "control-id": "_c17dd877-0922-4ca8-a38b-1d2f9ae04f0d",
+                "description": "Airtime, Kanalbelegung, Clientzahl, Fehlerraten, Controller- und Uplink-Auslastung werden je Standort und SSID überwacht. Kapazitätsalarme basieren auf dokumentierten Schwellenwerten und Trends; dauerhafte Überlastung führt zu Funkplanung, Kapazitätserweiterung oder begründeter Priorisierung. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "837e43ae-fbd2-4d73-8c76-7d36dcee18d7",
+        "type": "process-procedure",
+        "title": "Schwachstellen-, Patch- und Sicherheitsprüfprogramm für WLAN-Komponenten",
+        "description": "Die Institution unterhält für ihre drahtlose Infrastruktur ein geregeltes Programm zur Erkennung, Bewertung und Behandlung von Schwachstellen. Herstellerhinweise, Sicherheitsmeldungen, Konfigurationsprüfungen, regelmäßige Scans und wiederkehrende Wirksamkeitstests werden genutzt, um bekannte Risiken in Access Points, Controllern und angrenzenden Managementdiensten zeitnah zu behandeln.",
+        "control-implementations": [
+          {
+            "uuid": "85214faa-1ced-4735-9fd2-ed6f4f3bf38d",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die Komponente implementiert die Anforderungen an Schwachstellen- und Patchmanagement als durchgängigen Prozess von Hersteller- und Scannerhinweisen über Risikobewertung und Registerpflege bis zur fristgerechten Behebung oder genehmigten Ausnahme. Produktverantwortliche und WLAN-Betrieb planen authentisierte Prüfungen und Updates unter Berücksichtigung der Verfügbarkeit; Scanberichte, Schwachstellenregister, Patch- und Testtickets sowie befristete Risikoakzeptanzen dokumentieren Status und Wirksamkeit.",
+            "implemented-requirements": [
+              {
+                "uuid": "56efa670-26c2-481f-aaa7-49e1a32a2c5d",
+                "control-id": "_43918e89-a15c-490e-9cb5-94444c7e9299",
+                "description": "Die Institution betreibt für ihre WLAN-Infrastruktur ein zeitnahes Schwachstellenmanagement und bewertet relevante Hinweise aus Herstellerinformationen, CERT-Meldungen, Scannergebnissen und Betriebsbeobachtungen. Die Behandlung orientiert sich an Kritikalität, Ausnutzbarkeit und Exponierung der betroffenen Funk- und Managementkomponenten. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "5af6d7c6-0cc3-4ccb-b07e-c259bd68d000",
+                "control-id": "_f7550d0a-cf51-4586-a4e8-0c3831a10a79",
+                "description": "WLAN-bezogene Schwachstellen, offene Findings und technische Restrisiken werden in einem nachvollziehbaren Register geführt. Einträge enthalten mindestens betroffene Komponenten, Risikobewertung, Verantwortlichkeit, Fristen, Ausnahmeentscheidungen und den aktuellen Umsetzungsstand. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "98da8972-c48d-4f4d-a3ac-22d072f3bf92",
+                "control-id": "_7f84ed26-e585-402f-bc0e-40904319cfc8",
+                "description": "Die Institution führt für ihre WLAN-Infrastruktur regelmäßige Schwachstellenscans oder gleichwertige technische Prüfungen durch. Dabei werden insbesondere Controller, Managementoberflächen, zugehörige Serverdienste, exponierte Portale und administrative Schnittstellen betrachtet. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "e5ca0cd1-dcf7-4ec7-a2cf-55c16965d099",
+                "control-id": "_622f98fa-a211-4c1e-b655-5e9dd6c0d507",
+                "description": "Wiederkehrende Penetrationstests prüfen, ob die implementierten WLAN-Schutzmaßnahmen gegen realistische Angriffe wirksam bleiben. Der Scope umfasst je nach Schutzbedarf z. B. Authentisierung, Segmentgrenzen, Rogue-Szenarien, Managementzugänge und exponierte WLAN-nahe Dienste. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b4d9b29b-1ad0-4c3f-b5c1-67f8c07c6cf5",
+                "control-id": "_2134a13a-50a6-44b7-8df1-3ce041ef376a",
+                "description": "Die Institution führt für ihre drahtlose Infrastruktur eine Bedrohungsanalyse durch, in der typische Angriffswege, exponierte Komponenten, Schutzziele und zu erwartende Fehlkonfigurationsrisiken für produktive und Ausnahme-SSIDs bewertet werden. Die Ergebnisse fliessen in Sicherheitsprofile, Testscope und Priorisierung ein. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "513bc4cf-5e1d-4641-bf6a-a42c5b4f371c",
+                "control-id": "_cb35b6b0-15c3-488f-8759-ad66fe4883fa",
+                "description": "Externe Schwachstellenmeldungen mit Bezug zu eingesetzten WLAN-Komponenten werden strukturiert entgegengenommen, bewertet und in den Behandlungsprozess überführt. Die Institution legt fest, wie Herstellerwarnungen, CERT-Hinweise und verantwortliche Offenlegungen zeitnah in betriebliche Entscheidungen umgesetzt werden. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a7d9fc23-d993-489e-b9f0-9edab10de9da",
+                "control-id": "_b2c08460-0038-4f49-b459-dba756e55ae9",
+                "description": "Sicherheitsrelevante Patches und Firmware-Updates für Access Points, Controller und angrenzende Managementdienste werden zeitnah und risikobasiert eingespielt. Die Institution dokumentiert Priorisierung, Test, Freigabe, Rollback-Option und den Abschluss der Umsetzung. Access Points, Controller, RADIUS/NAC, Switches und Perimeter liefern zeitlich synchronisierte Ereignisse an eine zentrale Auswertung. Der Detection-Owner definiert Alarmkriterien, testet die Meldekette nach `[Entscheidung: Testintervall]` und dokumentiert Quellenabdeckung, Alarmtests, Triage-Entscheidungen und Incident-Tickets; temporär fehlende Telemetrie wird als überwachte Ausnahme behandelt.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "4544dc97-bb30-4a92-9ac4-316afaf6e6e6",
+        "type": "guidance",
+        "title": "Nutzungsregeln und Sensibilisierung für drahtlose Netze",
+        "description": "Die Institution ergänzt ihre technische WLAN-Absicherung um verbindliche Nutzungsregeln und zielgruppenbezogene Sensibilisierung. Mitarbeitende, Administrierende, Gäste und sonstige berechtigte Nutzende erhalten klare Vorgaben zum Umgang mit unverschlüsselten oder öffentlichen WLANs, zu unautorisierten Funknetzen sowie zu Meldewegen bei Auffälligkeiten oder Sicherheitsumgehungen.",
+        "control-implementations": [
+          {
+            "uuid": "7fd07d1c-d476-485a-a6ee-f9a7e66b6e06",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die Anforderungen an sicheres WLAN-Nutzungsverhalten werden durch verbindliche Nutzungsregeln und zielgruppengerechte Sensibilisierung zu öffentlichen, unverschlüsselten und nicht autorisierten Funknetzen umgesetzt. Fachverantwortliche und Awareness-Funktion vermitteln Meldewege, Verbote von Umgehungen und Grenzen eigener Konfigurationsänderungen; veröffentlichte Regeln, Schulungsnachweise, Wissensprüfungen, Meldetickets und ausgewertete Wiederholungsverstöße dienen als Nachweis.",
+            "implemented-requirements": [
+              {
+                "uuid": "53768775-4d36-47bf-9cf4-962c91c55f14",
+                "control-id": "_1ca19eb8-f4a2-42b5-85f1-ce96fce606bf",
+                "description": "Die Institution sensibilisiert berechtigte Personen dafür, keine unautorisierten WLANs, Hotspots oder sonstigen nicht freigegebenen Funkinfrastrukturen für dienstliche Datenverarbeitung zu nutzen oder bereitzustellen. Shadow-IT-Risiken und die Pflicht zur Verwendung freigegebener Netze werden verbindlich kommuniziert. Die verantwortliche Stelle vermittelt die Regeln zielgruppengerecht und wiederholt die Unterweisung nach `[Entscheidung: Intervall]` sowie anlassbezogen. Teilnahme, Lernkontrollen und gemeldete Auffälligkeiten werden dokumentiert; wiederholte Verstöße führen zu abgestuften Korrekturmaßnahmen und gegebenenfalls zum Entzug des WLAN-Zugangs.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9649ae87-4b72-4e84-9dcf-fb63f192094f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c53e8d17-76a6-4967-8274-f5fd56b3eb69",
+                "control-id": "_875e5c3d-64e7-403c-bfc7-456200e5e661",
+                "description": "Nutzende und Administrierende werden darauf hingewiesen, Sicherheitsfunktionen des WLANs nicht zu umgehen, etwa durch private Hotspots, deaktivierte Schutzmechanismen, unerlaubte Bridging-Konfigurationen oder technische Workarounds gegen Segment- und Authentisierungsregeln. Die verantwortliche Stelle vermittelt die Regeln zielgruppengerecht und wiederholt die Unterweisung nach `[Entscheidung: Intervall]` sowie anlassbezogen. Teilnahme, Lernkontrollen und gemeldete Auffälligkeiten werden dokumentiert; wiederholte Verstöße führen zu abgestuften Korrekturmaßnahmen und gegebenenfalls zum Entzug des WLAN-Zugangs.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9649ae87-4b72-4e84-9dcf-fb63f192094f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "0e6cbc1e-4acf-421d-b2e8-a41e88a83862",
+                "control-id": "_e849100d-2282-4c6a-b1c6-c6ec3999f9dc",
+                "description": "Änderungen an WLAN-relevanten Konfigurationen dürfen nur durch freigegebene Rollen vorgenommen werden. Die Institution vermittelt für Standardnutzende und lokale Betreiber eindeutig, welche Einstellungen nicht eigenmächtig verändert werden dürfen und wie legitime Änderungsbedarfe gemeldet werden. Die verantwortliche Stelle vermittelt die Regeln zielgruppengerecht und wiederholt die Unterweisung nach `[Entscheidung: Intervall]` sowie anlassbezogen. Teilnahme, Lernkontrollen und gemeldete Auffälligkeiten werden dokumentiert; wiederholte Verstöße führen zu abgestuften Korrekturmaßnahmen und gegebenenfalls zum Entzug des WLAN-Zugangs.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9649ae87-4b72-4e84-9dcf-fb63f192094f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "8f900d90-603c-4567-84be-2bdfcd633631",
+                "control-id": "_fd77e4dd-401d-4b06-a297-bfeded7d53ef",
+                "description": "Für sicherheitsrelevante WLAN-Ereignisse wie unerwartete SSIDs, Zertifikatswarnungen, Verbindungsabbrüche in sensiblen Bereichen oder Hinweise auf Rogue-Access-Points bestehen bekannte Meldewege. Die Sensibilisierung stellt sicher, dass solche Beobachtungen frühzeitig gemeldet und nicht als normale Störungen ignoriert werden. Die verantwortliche Stelle vermittelt die Regeln zielgruppengerecht und wiederholt die Unterweisung nach `[Entscheidung: Intervall]` sowie anlassbezogen. Teilnahme, Lernkontrollen und gemeldete Auffälligkeiten werden dokumentiert; wiederholte Verstöße führen zu abgestuften Korrekturmaßnahmen und gegebenenfalls zum Entzug des WLAN-Zugangs.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9649ae87-4b72-4e84-9dcf-fb63f192094f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a60ba2bb-e73d-42a5-9387-0ea318e4dd83",
+                "control-id": "_172adca9-01ae-4e68-815d-eff8157dab27",
+                "description": "Die Institution sensibilisiert für den Umgang mit öffentlichen WLANs und beschreibt, unter welchen Bedingungen dienstliche Systeme solche Netze nutzen dürfen. Wo die Nutzung nicht vermeidbar ist, werden Schutzmaßnahmen wie VPN, restriktive Zugriffsprofile und besondere Vorsicht bei sensiblen Anwendungen verbindlich vorgegeben. Die verantwortliche Stelle vermittelt die Regeln zielgruppengerecht und wiederholt die Unterweisung nach `[Entscheidung: Intervall]` sowie anlassbezogen. Teilnahme, Lernkontrollen und gemeldete Auffälligkeiten werden dokumentiert; wiederholte Verstöße führen zu abgestuften Korrekturmaßnahmen und gegebenenfalls zum Entzug des WLAN-Zugangs.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9649ae87-4b72-4e84-9dcf-fb63f192094f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "006b1d44-fd11-4dbf-b9bf-833e1a087cd2",
+                "control-id": "_b0c8ba84-b24f-4209-a739-ea13c2aea349",
+                "description": "Die Nutzung unverschlüsselter WLANs für dienstliche Verarbeitung wird untersagt oder auf klar definierte Ausnahmefälle mit zusätzlichen Schutzmaßnahmen beschränkt. Nutzende werden über die Risiken des Mithörens, der Manipulation und der Unsicherheit solcher Netze gezielt aufgeklärt. Die verantwortliche Stelle vermittelt die Regeln zielgruppengerecht und wiederholt die Unterweisung nach `[Entscheidung: Intervall]` sowie anlassbezogen. Teilnahme, Lernkontrollen und gemeldete Auffälligkeiten werden dokumentiert; wiederholte Verstöße führen zu abgestuften Korrekturmaßnahmen und gegebenenfalls zum Entzug des WLAN-Zugangs.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9649ae87-4b72-4e84-9dcf-fb63f192094f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "332239ce-2336-4456-9537-b6d22fa5b322",
+                "control-id": "_007d7888-bcc0-4595-b448-f178962c609f",
+                "description": "Die Institution sensibilisiert dafür, unautorisierte WLANs, fremde SSIDs mit institutionell wirkenden Namen oder unerwartete Funknetze als mögliches Risiko zu behandeln. Nutzende und Betriebsrollen wissen, wie solche Beobachtungen erkannt, gemeldet und bis zur Klärung nicht produktiv genutzt werden. Die verantwortliche Stelle vermittelt die Regeln zielgruppengerecht und wiederholt die Unterweisung nach `[Entscheidung: Intervall]` sowie anlassbezogen. Teilnahme, Lernkontrollen und gemeldete Auffälligkeiten werden dokumentiert; wiederholte Verstöße führen zu abgestuften Korrekturmaßnahmen und gegebenenfalls zum Entzug des WLAN-Zugangs.",
+                "links": [
+                  {
+                    "href": "#ea59a433-784e-455d-af00-97033c35b6f7",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9649ae87-4b72-4e84-9dcf-fb63f192094f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "0180602a-b1a2-4ce5-826f-29e29ea51625",
+        "type": "service",
+        "title": "Redundanz und Kapazitätssteuerung für produktive WLAN-Dienste",
+        "description": "Für betriebsrelevante drahtlose Netze stellt die Institution sicher, dass zentrale WLAN-Dienste weder durch einzelne Ausfallpunkte noch durch dauerhafte Überlastung unkontrolliert ausfallen. Dazu werden Redundanzen, Uplink-Kapazitäten und relevante Lastgrenzen für Controller, Funkzellen und Übergabepunkte geplant und überwacht.",
+        "control-implementations": [
+          {
+            "uuid": "96b90fe1-2a8d-457c-83fa-65b84d7ffcff",
+            "source": "#387afe50-02a7-4ffc-acc3-daa973d77937",
+            "description": "Die Anforderungen an Verfügbarkeit und Leistungsfähigkeit produktiver WLAN-Dienste werden durch redundante zentrale Funktionen, belastbare Uplinks und schutzbedarfsorientierte Kapazitätsplanung umgesetzt. WLAN- und Netzbetrieb überwachen Auslastung, Abdeckung und Failover-Fähigkeit, passen Dimensionierung kontrolliert an und behandeln Engpässe über definierte Eskalationen; Kapazitätsberichte, Redundanzkonfigurationen, Failover-Tests und Maßnahmentickets belegen die Vorsorge.",
+            "implemented-requirements": [
+              {
+                "uuid": "5dd27de3-508d-4c31-a5cd-3e707848010a",
+                "control-id": "_37f932b2-e132-4bf0-b8c3-eed73eadc680",
+                "description": "Für produktionskritische drahtlose Dienste setzt die Institution Redundanzen im zugrunde liegenden Kern- und Steuerungsnetz um, damit der Ausfall einzelner Controller, Übergänge oder zentraler Netzwerkkomponenten nicht zum unkontrollierten Gesamtausfall des WLAN-Betriebs führt. Kapazität und Redundanz werden gegen definierte SLOs, Spitzenlasten und Einzelkomponentenausfälle dimensioniert. Der Betrieb überwacht Clientzahl, Airtime, Kanalbelegung, Uplink- und Controllerauslastung, führt Failover- und Lasttests durch und dokumentiert Schwellenwerte, Trends, Testergebnisse und genehmigte Restrisiken.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "2340a92d-be42-4a81-a6d5-03dc80c1f574",
+                "control-id": "_82cfd8da-b3d8-4b87-8770-f39aaf7de728",
+                "description": "Die Netzanbindung und Übergabekapazität für WLAN-Segmente wird so dimensioniert, dass erwartbare Lastspitzen, Roaming-Ereignisse und authentisierungsnahe Spitzenwerte ohne dauerhafte Sicherheits- oder Verfügbarkeitsprobleme verarbeitet werden können. Planungsannahmen und Reserven werden regelmäßig überprüft. Kapazität und Redundanz werden gegen definierte SLOs, Spitzenlasten und Einzelkomponentenausfälle dimensioniert. Der Betrieb überwacht Clientzahl, Airtime, Kanalbelegung, Uplink- und Controllerauslastung, führt Failover- und Lasttests durch und dokumentiert Schwellenwerte, Trends, Testergebnisse und genehmigte Restrisiken.",
+                "links": [
+                  {
+                    "href": "#b316108a-361d-403d-90a7-c3842c4052fd",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f08a6633-a273-4f35-a7df-27ed73c15c00",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "387afe50-02a7-4ffc-acc3-daa973d77937",
+          "title": "BSI Stand-der-Technik Kernel OSCAL catalog",
+          "description": "Der BSI-OSCAL-Katalog wird als verbindliche Quelle für die in dieser Component Definition referenzierten Kontrollkennungen verwendet.",
+          "rlinks": [
+            {
+              "href": "attachment:BSI-Stand-der-Technik-Kernel-catalog.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "4ad4d8bf-70f2-4b4c-8e3f-0bee17a5b290",
+          "title": "BSI: WLAN & LAN - was man wissen sollte",
+          "description": "Die offizielle Fachquelle „BSI: WLAN & LAN - was man wissen sollte“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Router-WLAN-VPN/WLAN-LAN-was-man-wissen-sollte/wlan-lan-was-man-wissen-sollte_node.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "ea59a433-784e-455d-af00-97033c35b6f7",
+          "title": "BSI: Sicherheitstipps im privaten und öffentlichen WLAN",
+          "description": "Die offizielle Fachquelle „BSI: Sicherheitstipps im privaten und öffentlichen WLAN“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/DE/Themen/Verbraucherinnen-und-Verbraucher/Informationen-und-Empfehlungen/Cyber-Sicherheitsempfehlungen/Router-WLAN-VPN/Sicherheitstipps-fuer-privates-und-oeffentliches-WLAN/sicherheitstipps-fuer-privates-und-oeffentliches-wlan.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "b316108a-361d-403d-90a7-c3842c4052fd",
+          "title": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs)",
+          "description": "Die offizielle Fachquelle „NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs)“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.nist.gov/publications/guidelines-securing-wireless-local-area-networks-wlans-1",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "4e684f27-a8a0-4a5e-9b28-62fabaa07024",
+          "title": "BSI Methodik Grundschutz++ OSCAL catalog",
+          "description": "Der BSI-OSCAL-Katalog wird als verbindliche Quelle für die in dieser Component Definition referenzierten Kontrollkennungen verwendet.",
+          "rlinks": [
+            {
+              "href": "attachment:BSI-Methodik-Grundschutz++-catalog.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "495d432a-8a3f-4bc6-9ab2-89361cc3d7bc",
+          "title": "BSI IT-Grundschutz: NET.2.1 WLAN-Betrieb",
+          "description": "Die offizielle Fachquelle „BSI IT-Grundschutz: NET.2.1 WLAN-Betrieb“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_2_1_WLAN_Betrieb_Edition_2023.pdf?__blob=publicationFile&v=3",
+              "media-type": "application/pdf"
+            }
+          ]
+        },
+        {
+          "uuid": "9649ae87-4b72-4e84-9dcf-fb63f192094f",
+          "title": "BSI IT-Grundschutz: NET.2.2 WLAN-Nutzung",
+          "description": "Die offizielle Fachquelle „BSI IT-Grundschutz: NET.2.2 WLAN-Nutzung“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_2_2_WLAN_Nutzung_Edition_2023.pdf?__blob=publicationFile&v=3",
+              "media-type": "application/pdf"
+            }
+          ]
+        },
+        {
+          "uuid": "f08a6633-a273-4f35-a7df-27ed73c15c00",
+          "title": "NIST SP 800-153: Guidelines for Securing Wireless LANs",
+          "description": "Die offizielle Fachquelle „NIST SP 800-153: Guidelines for Securing Wireless LANs“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://csrc.nist.gov/pubs/sp/800/153/final",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "dbb967e2-470f-4adf-9cfc-fb054fdf8d30",
+          "title": "IEEE 802.11w: Protected Management Frames",
+          "description": "Die offizielle Fachquelle „IEEE 802.11w: Protected Management Frames“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://standards.ieee.org/ieee/802.11w/3736/",
+              "media-type": "text/html"
+            }
+          ]
+        }
+      ]
+    },
+    "capabilities": [
+      {
+        "uuid": "0b0a46a0-b5cc-4f62-bebf-b9926bc8e44d",
+        "name": "gesteuerter-wlan-lifecycle",
+        "description": "Diese Capability verbindet Governance, Bestands- und Architekturtransparenz sowie gehärteten Änderungs- und Schwachstellenbetrieb zu einem kontrollierten WLAN-Lifecycle.",
+        "incorporates-components": [
+          {
+            "component-uuid": "9e8eacf2-6ebd-4322-9d3f-681b975e208e",
+            "description": "Definiert verbindliche Rollen, Mindeststandards, Freigaben und Ausnahmen."
+          },
+          {
+            "component-uuid": "f9575244-c43c-4b40-a262-22db16f71ab7",
+            "description": "Stellt die aktuelle technische und räumliche Entscheidungsgrundlage bereit."
+          },
+          {
+            "component-uuid": "abffa120-90ec-4da2-ac25-5c6a3918cdf3",
+            "description": "Setzt Härtung, Konfigurationskontrolle und sichere Änderungen operativ um."
+          },
+          {
+            "component-uuid": "837e43ae-fbd2-4d73-8c76-7d36dcee18d7",
+            "description": "Bewertet und behandelt bekannte sowie neu erkannte technische Risiken."
+          }
+        ],
+        "remarks": "Die Capability ist für zentrale, dezentrale und cloudverwaltete WLAN-Plattformen anwendbar; lokale Rollen- und Toolbezeichnungen werden bei Instanziierung festgelegt."
+      },
+      {
+        "uuid": "ccea2947-466d-458d-878e-d47e578ff0e5",
+        "name": "sicherer-drahtloser-netzzugang",
+        "description": "Diese Capability stellt einen kryptographisch geschützten, identitäts- und gerätebezogenen WLAN-Zugang mit getrennten Vertrauenszonen und kontrollierten Übergängen bereit.",
+        "incorporates-components": [
+          {
+            "component-uuid": "3607c330-23d3-4b9d-8ca8-48c43d812519",
+            "description": "Begrenzt Funkabdeckung und erzwingt sichere SSID- und Kryptografieprofile."
+          },
+          {
+            "component-uuid": "a4e2cc4f-72e3-41e4-9516-4a216f63801d",
+            "description": "Ordnet Identitäten und Geräte geeigneten Segmenten zu und kontrolliert Kommunikation."
+          }
+        ],
+        "remarks": "Bei Legacy-Clients sind Übergangsprofile strikt zu isolieren, zu befristen und mit einem dokumentierten Migrationsplan zu versehen."
+      },
+      {
+        "uuid": "9c80c202-02b5-4568-8eb3-77c970b00008",
+        "name": "wlan-detektion-und-reaktion",
+        "description": "Diese Capability erkennt unerlaubte Funktechnik, Authentisierungsangriffe, Konfigurationsabweichungen und Verfügbarkeitsstörungen und überführt sie in geregelte Reaktionswege.",
+        "incorporates-components": [
+          {
+            "component-uuid": "de5d6f21-1288-46eb-9e04-1424c14141ef",
+            "description": "Erzeugt, korreliert und bewertet technische Telemetrie und Alarme."
+          },
+          {
+            "component-uuid": "4544dc97-bb30-4a92-9ac4-316afaf6e6e6",
+            "description": "Stärkt Erkennung und korrektes Meldeverhalten auf Seiten der Nutzenden."
+          }
+        ],
+        "remarks": "Datenschutz, Mitbestimmung und zulässige Aufbewahrungsfristen für Funk- und Nutzungsmetadaten sind vor Produktivsetzung festzulegen."
+      },
+      {
+        "uuid": "30eac6d1-e453-4250-9e57-62becb6269bf",
+        "name": "resilienter-wlan-dienst",
+        "description": "Diese Capability verbindet Funkplanung, Redundanz und Kapazitätssteuerung, damit betriebsrelevante WLAN-Dienste auch bei Last und Komponentenausfall kontrolliert weiterarbeiten.",
+        "incorporates-components": [
+          {
+            "component-uuid": "f9575244-c43c-4b40-a262-22db16f71ab7",
+            "description": "Liefert Standort-, Abhängigkeits- und Funkplanungsdaten für Resilienzentscheidungen."
+          },
+          {
+            "component-uuid": "0180602a-b1a2-4ce5-826f-29e29ea51625",
+            "description": "Dimensioniert, überwacht und testet kritische WLAN-Ressourcen und Ausweichpfade."
+          }
+        ],
+        "remarks": "Geforderte Verfügbarkeit, Funkabdeckung und akzeptierte Degradation sind je Standort und Geschäftsprozess festzulegen."
+      }
+    ]
+  }
+}
