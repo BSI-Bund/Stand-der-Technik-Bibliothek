@@ -1,0 +1,2213 @@
+{
+  "component-definition": {
+    "uuid": "246c5150-7197-4625-a572-f0e85930bb2f",
+    "metadata": {
+      "title": "Implementierungsvorschläge Netzarchitektur",
+      "last-modified": "2026-07-27T08:13:55Z",
+      "version": "2026-06-09T09:26:33+00:00",
+      "oscal-version": "1.2.2",
+      "document-ids": [
+        {
+          "identifier": "08b1f6ff-38d0-4a11-a30a-66f5ac8cef2a",
+          "scheme": "https://www.ietf.org/rfc/rfc9562"
+        }
+      ],
+      "props": [
+        {
+          "name": "norm",
+          "value": "§ 44 Abs. 1 BSIG"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "aee0f281-f847-4e85-bae1-290ad7965ecd",
+          "type": "organization",
+          "name": "BSI, Referat S16"
+        }
+      ],
+      "remarks": "Diese OSCAL Component Definition ist eine wiederverwendbare Implementierungsvorlage und fachliche Umsetzungshilfe für Netzarchitektur. Inhalte können in ein System Security Plan übernommen werden, müssen jedoch an Informationsverbund, Schutzbedarf, Architektur, Betriebsmodell und geltende Vorgaben der jeweiligen Institution angepasst werden. Die Vorlage ist auf logische und physische Netzarchitekturen, Segmentierung, Netzzugang, Perimeter, Weitverkehrsverbindungen, Basisdienste, Managementebenen, Resilienz und Netzüberwachung anwendbar. Vertrauenszonen, zulässige Kommunikationsbeziehungen, Verfügbarkeitsziele, Betriebsgrenzen, OT-Abhängigkeiten und akzeptierte Restrisiken müssen für den jeweiligen Informationsverbund festgelegt werden. Entscheidungshinweise in eckigen Klammern kennzeichnen bewusst offengelassene lokale Festlegungen. Die beschriebenen Implementierungsmöglichkeiten begründen keine zusätzlichen regulatorischen Pflichten über die referenzierten Kataloganforderungen hinaus; ihre Eignung und Wirksamkeit werden vor Übernahme risikobasiert geprüft."
+    },
+    "components": [
+      {
+        "uuid": "303f9bdc-7dbd-4b67-9621-24b8d144c205",
+        "type": "policy",
+        "title": "Netzarchitektur-Governance und freigegebene Strukturvorgaben",
+        "description": "Die Institution legt für ihre Netzarchitektur verbindliche Zielbilder, Betriebsregeln und Freigabemechanismen fest. Dazu gehören Segmentierungsprinzipien, Perimeter- und WAN-Schutz, Rollen für Routing- und Firewall-Änderungen, technische Mindeststandards, zyklische Reviews und der dokumentierte Umgang mit Ausnahmen.",
+        "control-implementations": [
+          {
+            "uuid": "2e1425ff-64bc-4aa3-8dfe-9ad3ce9b7328",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die zusammengefassten Anforderungen an Netzarchitektur-Governance werden durch verbindliche Strukturprinzipien, dokumentierte Verantwortlichkeiten und autorisierte Änderungsverfahren umgesetzt. Architekturboard, Netzbetrieb und Informationssicherheit pflegen Standards für Segmentierung, Vertrauensgrenzen, Protokolle und Ausnahmen versioniert und prüfen sie regelmäßig sowie anlassbezogen; Beschlüssse, Architekturfreigaben, Change-Tickets und Wirksamkeitsreviews belegen die Steuerung.",
+            "implemented-requirements": [
+              {
+                "uuid": "c2c99d3c-9b00-444d-a01f-fe9bf245594d",
+                "control-id": "_67c185f2-ebfd-49cc-a910-9a6dd0901578",
+                "description": "Die Institution verankert Verfahren und Regelungen für Entwurf, Betrieb, Härtung und Weiterentwicklung ihrer Netzarchitektur. Die Vorgaben beschreiben insbesondere Segmentierungslogik, Übergangszonen, Routing- und Firewall-Verantwortung, Freigabepfade und Sicherheitsmindeststandards für verteilte Kommunikationsnetze. Die Architekturverantwortung führt Zielbild, Standards und Entscheidungsprotokolle versioniert und stimmt sie mit Informationssicherheit, Betrieb und Fachverantwortlichen ab. Reviews erfolgen nach `[Entscheidung: Reviewintervall]` und anlassbezogen; Abweichungen erhalten Owner, Risikoentscheidung, kompensierende Kontrolle, Ablaufdatum und Nachweis der erneuten Bewertung.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#204679f4-d843-43f4-83e5-835bfcf422ee",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "956ffff5-3f3f-472f-b6ad-165a1fe46734",
+                "control-id": "_16e72553-fd92-4cc2-b3d6-d2c72809e6b1",
+                "description": "Die für die Netzarchitektur geltenden Verfahren und Regelungen werden regelmäßig und anlassbezogen auf Aktualität geprüft. Relevante Auslöser sind Sicherheitsvorfälle, neue Netzdienste, Architekturwechsel, Cloud- oder Standortintegration sowie veränderte Schutzbedarfe. Die Architekturverantwortung führt Zielbild, Standards und Entscheidungsprotokolle versioniert und stimmt sie mit Informationssicherheit, Betrieb und Fachverantwortlichen ab. Reviews erfolgen nach `[Entscheidung: Reviewintervall]` und anlassbezogen; Abweichungen erhalten Owner, Risikoentscheidung, kompensierende Kontrolle, Ablaufdatum und Nachweis der erneuten Bewertung.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "51e243de-094b-49e8-8999-7d0e2e41e46d",
+                "control-id": "_1aa8319f-93fb-4236-991a-d799ab69e0c2",
+                "description": "Sicherheitsrelevante Änderungen an der Netzarchitektur werden nur nach formaler Autorisierung freigegeben. Freigabepflichtig sind insbesondere Segmentierungswechsel, neue Transitbeziehungen, Routing-Änderungen, Perimeterregeln, WAN-Kopplungen und die Einbindung neuer Managementpfade. Änderungen erfolgen über autorisierte Changes mit Konfigurationssicherung, Auswirkungsanalyse, Testfällen, Wartungsfenster und Rückfallkriterium. Regelwerksvergleich, Erreichbarkeits-, Sicherheits- und Monitoringtests werden dem Ticket beigefügt; Notfallchanges werden nachträglich freigegeben und auf Seiteneffekte untersucht.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "8fb6fe6b-fbe5-473d-be0d-1012031318ff",
+        "type": "plan",
+        "title": "Informationsverbund, Netzinventar und Schnittstellendokumentation",
+        "description": "Die Institution führt für ihre Netzarchitektur ein technisches Abbild des Informationsverbunds, das interne und externe Schnittstellen, relevante Assets, Segmente, Übergabepunkte und Netzrollen gemeinsam beschreibt. Architektur, Betrieb und Risikobetrachtung nutzen damit dieselbe Dokumentationsbasis für logische wie physische Netzstrukturen.",
+        "control-implementations": [
+          {
+            "uuid": "d354b4fa-4e4a-4b5d-923f-e63d56c7460a",
+            "source": "#9d7fe0fa-7fa5-46e7-8f42-6775cbe08368",
+            "description": "Die Komponente implementiert die methodischen Anforderungen an Abgrenzung, Schnittstellen und Asset-Dokumentation, indem sie den Netzanteil des Informationsverbunds samt internen und externen Kommunikationsbeziehungen eindeutig erfasst. Architektur- und Asset-Verantwortliche gleichen Systeme, Anwendungen, Netzobjekte und Verantwortungsgrenzen bei Änderungen und periodisch ab; Scope-Dokumente, Schnittstellenregister, Asset-Zuordnungen und freigegebene Abgleichprotokolle sichern Vollständigkeit und Nachvollziehbarkeit.",
+            "implemented-requirements": [
+              {
+                "uuid": "55a49c9b-dfb0-41fb-b761-d84392ec22e8",
+                "control-id": "_cba2f75c-95f5-4398-9a8b-7773bdcd1c7d",
+                "description": "Der Informationsverbund wird für die Netzarchitektur technisch nachvollziehbar abgegrenzt. Dokumentiert werden insbesondere die einbezogenen Netze, Netzwerkdienste, Standort- und Cloud-Anbindungen, betroffenen Geschäftsprozesse sowie die Schnittstellen zu fremden oder ausgelagerten Infrastrukturen. Die Architekturverantwortung führt Zielbild, Standards und Entscheidungsprotokolle versioniert und stimmt sie mit Informationssicherheit, Betrieb und Fachverantwortlichen ab. Reviews erfolgen nach `[Entscheidung: Reviewintervall]` und anlassbezogen; Abweichungen erhalten Owner, Risikoentscheidung, kompensierende Kontrolle, Ablaufdatum und Nachweis der erneuten Bewertung.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c5cb01d1-9f6d-4e54-aae3-283b2d26fd9f",
+                "control-id": "_c30d414e-65e5-460e-8239-892f9a196a1f",
+                "description": "Die Institution definiert und dokumentiert die externen organisatorischen, technischen und infrastrukturellen Schnittstellen ihrer Netzarchitektur. Dazu gehören WAN-Anbindungen, Partnernetze, Internet-Übergänge, Fernwartungszugriffe, Carrier-Dienste und sonstige technische Übergabepunkte. Netzpläne, CMDB, IPAM, DNS, Routing- und Firewallbestandsdaten werden nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig gegeneinander geprüft. Unbekannte Netze, Schnittstellen, Routen oder Owner erzeugen Findings; freigegebene Diagramme, Konfigurationsexporte und Abgleichprotokolle bilden den Nachweis.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "82ae7383-63d7-472c-8bd5-262659fd6fd3",
+                "control-id": "_10e75c93-320b-4d4d-baaa-ed7392b274cf",
+                "description": "Alle für die betrachteten Geschäftsprozesse relevanten Netzwerk-Assets werden modelliert, darunter Segmente, Gateways, Firewall-Cluster, Managementsysteme, WAN-Strecken, zentrale Dienste und netznahe Sicherheitsfunktionen. So lassen sich Schutzbedarf, Abhängigkeiten und Steuerungsbedarf nachvollziehbar ableiten. Netzpläne, CMDB, IPAM, DNS, Routing- und Firewallbestandsdaten werden nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig gegeneinander geprüft. Unbekannte Netze, Schnittstellen, Routen oder Owner erzeugen Findings; freigegebene Diagramme, Konfigurationsexporte und Abgleichprotokolle bilden den Nachweis.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "479662e9-a5f4-4b09-97d5-278c5d8b7aa9",
+                "control-id": "_9a63c78e-a5bb-4d89-a02f-0cf7abdaba40",
+                "description": "Die relevanten Netzwerk-Assets werden mit eindeutiger Bezeichnung, Zweck, verantwortlicher Rolle, logischer Einordnung und bekannten Abhängigkeiten dokumentiert. Die Dokumentation wird so gepflegt, dass Architekturentscheidungen, Change Management und Incident Response auf dieselben Bestandsinformationen zugreifen können. Netzpläne, CMDB, IPAM, DNS, Routing- und Firewallbestandsdaten werden nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig gegeneinander geprüft. Unbekannte Netze, Schnittstellen, Routen oder Owner erzeugen Findings; freigegebene Diagramme, Konfigurationsexporte und Abgleichprotokolle bilden den Nachweis.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "4e35d4a0-6ba1-423b-9ff1-1d61a34df70d",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die Anforderungen an technische Inventare und Pläne werden durch konsistente Verzeichnisse von Systemen, Anwendungen, Netzkomponenten, Segmenten, Standorten und deren Abhängigkeiten umgesetzt. Netz- und Anwendungsverantwortliche verbinden automatisierte Erkennung mit fachlicher Freigabe und halten logische, physische und gebäudebezogene Pläne aktuell; Inventarexporte, Netz- und Strukturpläne, Versionshistorien und dokumentierte Soll-Ist-Abgleiche dienen als Nachweis.",
+            "implemented-requirements": [
+              {
+                "uuid": "00dc691b-7832-4238-818a-0043c50ca900",
+                "control-id": "_b10fc10c-a3be-4b30-977a-6a2d020760d6",
+                "description": "Die Institution dokumentiert ein Inventar der für die Netzarchitektur eingesetzten IT-Systeme mit eindeutiger Identifikationsbezeichnung und letztem bekannten Verbleib. Dazu gehören Router, Switches, Firewalls, Netzwerkmanagementsysteme, VPN-Gateways und weitere netzkritische Systeme. Netzpläne, CMDB, IPAM, DNS, Routing- und Firewallbestandsdaten werden nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig gegeneinander geprüft. Unbekannte Netze, Schnittstellen, Routen oder Owner erzeugen Findings; freigegebene Diagramme, Konfigurationsexporte und Abgleichprotokolle bilden den Nachweis.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "f9692634-ddb6-4b4a-af8f-bbba701ac8a3",
+                "control-id": "_d55d7e49-436e-4783-9ad0-5f92619da743",
+                "description": "Die netzrelevanten Anwendungen und Dienste werden als Teil des Architekturabbilds inventarisiert, soweit sie für Steuerung, Authentisierung, Routing, Monitoring oder Verkehrskontrolle der Netze erforderlich sind. So bleiben fachliche und technische Abhängigkeiten zu Netzwerkkomponenten transparent. Netzpläne, CMDB, IPAM, DNS, Routing- und Firewallbestandsdaten werden nach `[Entscheidung: Abgleichintervall]` automatisiert oder stichprobenartig gegeneinander geprüft. Unbekannte Netze, Schnittstellen, Routen oder Owner erzeugen Findings; freigegebene Diagramme, Konfigurationsexporte und Abgleichprotokolle bilden den Nachweis.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a1285de0-4298-4b0a-9303-32c818426839",
+                "control-id": "_7b2381fe-9617-4b2a-a8da-7972b81a3909",
+                "description": "Die Institution dokumentiert ein Inventar der Netze einschließlich interner Segmente, externer Netzanschlüssse und ihres Verwendungszwecks. Auch virtuelle Netze, DMZs, Managementnetze, Carrier-Übergänge und Cloud-Anbindungen werden nachvollziehbar erfasst. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b38c0292-2eb8-4594-a451-b07a05a74831",
+                "control-id": "_7630e7d2-883b-4697-9b7a-b212dfa5666d",
+                "description": "Die logische und physische Netzstruktur wird in einem aktuellen Netzplan dargestellt, der Segmente, Transitpfade, Sicherheitskomponenten und zentrale Übergangspunkte erkennen lässt. Der Netzplan dient als Grundlage für Architekturentscheidungen, Störungsanalyse und Sicherheitsbewertungen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "84d3c710-2a61-4bd0-aac0-705d172dddbe",
+                "control-id": "_e51b3488-c9ce-4709-b2d1-c995eee3336a",
+                "description": "Für die netzkritischen Standorte werden Strukturpläne oder gleichwertige Standortunterlagen gepflegt, in denen technische Räumlichkeiten, Leitungsführungen, Übergabepunkte und physische Perimeter erkennbar sind. Dadurch können Schwachstellen oder Single Points of Failure gezielt bewertet werden. Netztechnik und Verkabelung werden in freigegebenen, zutrittskontrollierten Bereichen mit dokumentierter Strom-, Klima- und Brandschutzabhängigkeit betrieben. Wiederkehrende Begehungen, Zutrittsnachweise, Beschriftungs- und Inventarkontrollen sowie Tests redundanter Versorgung belegen die Wirksamkeit.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "e6776f89-aae5-4733-904d-dabcf44c2e72",
+        "type": "service",
+        "title": "Segmentierte Netze und kontrollierte Kommunikationspfade",
+        "description": "Die Institution ordnet Systeme und Dienste nach Schutzbedarf, Funktion, Vertrauensniveau und Betriebsverantwortung in Sicherheitszonen ein. Gast-, Client-, Server-, Management-, Drucker-, VoIP-, OT-, Entwicklungs- und DMZ-Bereiche werden logisch oder physisch getrennt; Kommunikationsbeziehungen sind explizit freigegeben, minimal und überwacht.",
+        "control-implementations": [
+          {
+            "uuid": "7945d2e2-a5c6-4430-a0a8-f6e7050be054",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die umfangreiche Kontrollgruppe zur Netztrennung wird durch schutzbedarfs- und funktionsbezogene Zonen, Mikrosegmentierung, authentisierte Routingbeziehungen und kontrollierte Zugangsentscheidungen bis auf Workload- oder Geräteebene umgesetzt. Netzarchitektur und Betrieb definieren erlaubte Kommunikationspfade für externe Anschlüsse, Server, Clients, OT, VoIP, Test, Management und Sondernetze; Regelwerke, Datenflussfreigaben, NAC-/Quarantäneprotokolle und wiederkehrende Pfadtests belegen die Durchsetzung.",
+            "implemented-requirements": [
+              {
+                "uuid": "2b31d987-73ab-4f9c-a64c-30e67fcfcb20",
+                "control-id": "_ec31da4c-f5bd-43f5-b94f-f0fb7a5e1a18",
+                "description": "Die Institution unterteilt interne und verbundene Netze in Segmente mit eindeutigem Zweck und Schutzprofil. Die Segmentierung orientiert sich an Schutzbedarf, Betriebsfunktion, Vertrauensgrenze und notwendiger Kommunikationsnähe der angeschlossenen Systeme. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "9db48ac1-a22e-4843-829c-299afee445bd",
+                "control-id": "_6ff2de76-4a01-42cc-a794-1a6ec9313f46",
+                "description": "Verbindungen zwischen Netzsegmenten werden auf dokumentierte, fachlich benötigte Kommunikationsbeziehungen beschränkt. Nicht ausdrücklich freigegebene Richtungen, Protokolle oder Zielbereiche bleiben gesperrt; Freigaben werden aus einer Kommunikationsmatrix abgeleitet und regelmäßig überprüft. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert. Der Katalogparameter „Kriterien“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: Kriterien] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "1e048c9b-fe19-41c9-a3f3-b65ec2ea664b",
+                "control-id": "_193a28ca-0382-4998-874d-4c08b6326f26",
+                "description": "Für besonders schutzkritische oder standardisierte Umgebungen setzt die Institution Mikrosegmentierung oder gleichwertig granulare Steuerungsmechanismen ein. Damit wird laterale Bewegung zwischen Workloads, Verwaltungswegen und Sicherheitszonen zusätzlich reduziert. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "03bc96dd-db3e-4b66-819c-aecff34aef9c",
+                "control-id": "_f97736f7-f2c7-4366-a996-7e28512972de",
+                "description": "Die Topologie und Erreichbarkeit der Netzarchitektur werden überwacht, damit ungeplante Verbindungswege, Segmentabweichungen oder fehlerhafte Redundanzzustände zeitnah erkannt werden. Netzmanagement und Monitoring liefern dazu ein aktuelles Bild der aktiven Kommunikationsbeziehungen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert. Der Katalogparameter „regelmäßig“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: regelmäßig] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b484ad95-2de7-4ee5-b413-efa120254d14",
+                "control-id": "_9ec9762e-c115-4e56-8b45-b88a872f47ce",
+                "description": "Der Zugriff von IT-Systemen auf schutzkritische Netzsegmente wird im Einklang mit den Vorgaben des Identitäts- und Berechtigungsmanagements authentisiert. Die Institution setzt dafür kontrollierte Netzbeitrittsverfahren, administrative Zonengrenzen und nachvollziehbare Ausnahmebehandlungen ein. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#204679f4-d843-43f4-83e5-835bfcf422ee",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ab5e18a6-e8c4-413e-b8ca-b25b6012aa69",
+                "control-id": "_77aebab8-462b-4849-aaa2-9c939af5e1dc",
+                "description": "Routing-Verbindungen und Transitpfade werden nur über autorisierte Änderungsprozesse eingerichtet oder geändert. Die Institution dokumentiert, welche Personen oder Rollen neue Routen, Transitnetze oder Default-Pfade freigeben dürfen und wie deren Wirkung vor dem Produktivbetrieb geprüft wird. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert. Der Katalogparameter „eine zuständige Person oder Rolle“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: eine zuständige Person oder Rolle] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "8c84f4c4-652f-4da1-ab10-9a6570005fc6",
+                "control-id": "_739ad3ad-cbbc-4809-9f20-1c59e85c864b",
+                "description": "Soweit dynamische Routingprotokolle eingesetzt werden, authentisiert die Institution deren Kommunikationsbeziehungen oder setzt funktional gleichwertige Schutzmaßnahmen um. So wird verhindert, dass unautorisierte oder manipulierte Routing-Informationen unbemerkt in die Netzarchitektur gelangen. Weitverkehrs-, Administrations- und sonstige schutzbedürftige Verbindungen verwenden nach aktueller BSI-Eignung freigegebene Protokolle und Cipher Suites, z. B. TLS 1.3 oder IPsec mit zeitgemäßen AEAD-Verfahren. Zertifikate und Schlüssel werden zentral verwaltet, vor Ablauf und Widerruf überwacht und durch Konfigurationsexporte sowie Verbindungstests nachgewiesen.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#96631bd2-bd86-450c-830d-2e4cbd76bba3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a9f76def-5201-49da-9e44-58e862deef81",
+                "control-id": "_15bdb341-c907-4daa-9e39-1dc3777ef9bc",
+                "description": "Entwicklungs-, Test- und Laborumgebungen werden netzarchitektonisch so behandelt, dass sie nicht unkontrolliert mit produktiven Zonen verschmelzen. Transitbeziehungen in den Produktivverbund erfolgen nur über dokumentierte und sicherheitlich begrenzte Schnittstellen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "30ff6ba4-0dee-4ebf-9090-689685c11655",
+                "control-id": "_56a54bba-30a4-478f-8464-bc5194cae49f",
+                "description": "Externe Netzanschlüssse werden in eigenen Übergabezonen mit dokumentiertem Provider, Zweck, Adressraum, Routing, Schutzprofil und Owner betrieben. Direkte Pfade in interne Zonen sind ausgeschlossen; neue Anschlüsse benötigen Architektur- und Sicherheitsfreigabe sowie einen technischen Abnahmetest. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "fde8cce3-c763-4e8b-8467-f805a916e831",
+                "control-id": "_73c9c122-d3f6-42f9-a6f1-6b454a8b1853",
+                "description": "Gastnetze sind von internen Netzen und Managementdiensten getrennt und standardmäßig nur zum Internet geroutet. Client-Isolation, Bandbreiten- und Missbrauchsschutz sowie kontrollierte DNS-/Web-Nutzung werden umgesetzt; Ausnahmen für interne Ziele sind einzeln freizugeben und zu befristen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a8a32d10-c6c6-4e3a-ba0a-65e5785a1181",
+                "control-id": "_8af42e9e-5340-4690-9567-88a5309aee3a",
+                "description": "Clients und Server werden in getrennten Zonen betrieben; Serverzugriffe erfolgen nur zu benötigten Diensten und Verwaltungszugriffe ausschliesslich aus der Managementebene. Ost-West-Kommunikation zwischen Servern wird bei erhöhtem Risiko weiter segmentiert oder identitätsbasiert kontrolliert. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "6b847597-8c87-4756-9b79-9dba47a5ecd6",
+                "control-id": "_02cac8a8-60e3-481d-96bf-3fa484afea78",
+                "description": "VoIP- und UCC-Komponenten erhalten eigene Netz- und Vertrauenszonen mit beschränkten Signalisierungs-, Medien-, Management- und Providerpfaden. QoS darf Sicherheitskontrollen nicht umgehen; Internet- und Administrationszugriffe werden getrennt und protokolliert. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "83b4e070-5c0e-44ef-8cda-15d14f04fdd0",
+                "control-id": "_43badc07-0172-4666-9a72-0c0289b7f540",
+                "description": "OT-, Gebäudeautomations- und sonstige cyberphysische Systeme werden von Office- und Internetzonen getrennt. Nur dokumentierte Protokolle passieren über kontrollierte Gateways; Fernwartung, Engineering-Zugänge und Datenaustausch nutzen Sprungdienste, zeitliche Freigaben und OT-verträgliche Überwachung. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#944b5d30-9bf0-4ab4-8cbe-441765c1dc4c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "f43560bd-c62e-4bab-8348-27da3b17c9fd",
+                "control-id": "_f9e8c80d-0043-42ac-a71b-73ff1e6cad50",
+                "description": "Öffentlich erreichbare Dienste werden in einer oder mehreren DMZ-Zonen mit getrennten Ingress-, Egress- und Managementregeln betrieben. Eine Kompromittierung der DMZ darf keinen direkten Zugriff auf interne Daten- oder Administrationsnetze ermöglichen; erlaubte Backend-Flüsse sind einzeln dokumentiert und getestet. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "104933f9-ed1c-40e2-8da6-5f11d981457e",
+                "control-id": "_d02f23d0-9c15-4811-838f-6440ee744334",
+                "description": "Die Managementebene für Router, Switches, Firewalls, WLAN, DNS, NAC und Monitoring wird von Nutz- und Gastnetzen getrennt. Administration erfolgt über gehärtete Arbeitsplätze oder Sprungserver mit MFA, PAM/AAA und vollständiger Protokollierung; direkte Managementzugänge am Perimeter sind blockiert. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "10372cbc-cdb7-481c-b946-be6cb2bb16bd",
+                "control-id": "_53ea67c4-1ee1-47f3-abc2-0f2462c57cd1",
+                "description": "Entwicklungs-, Test- und Betriebsumgebungen sind netzseitig getrennt; Testsysteme können produktive Dienste oder Daten nur über explizit freigegebene Pfade erreichen. Temporare Integrationsverbindungen besitzen Ablaufdatum, Datenminimierung und Rückbaukontrolle. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "42bb43fa-ed02-4bc9-9f4f-5524db527266",
+                "control-id": "_dabbb234-5678-456b-8db4-4c7ac9ed1e12",
+                "description": "IPv4- und IPv6-Kommunikation werden gleichwertig segmentiert, gefiltert, protokolliert und getestet. Nicht genutzte Protokollfamilien oder Tunnelmechanismen sind deaktiviert; Regelwerke, Assetinventar und Schwachstellenscans dürfen IPv6 nicht unbeabsichtigt auslassen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "67fe9ae1-991d-4f66-b2ea-26f3ba87418d",
+                "control-id": "_48013e9f-7f90-495c-8cbd-aaf33f5060fb",
+                "description": "Drucker und Multifunktionsgeräte liegen in eigenen Segmenten mit beschränkten Druck-, Scan-, Verzeichnis-, Update- und Managementzielen. Direkte Kommunikation zu Benutzerclients oder freie Internetnutzung ist blockiert; Administration erfolgt aus der Managementzone. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "4d8902a1-c032-43b0-a2f6-55dc9fa9f8fb",
+                "control-id": "_8629ffa8-91c9-4ed3-b7b7-922aba672ab4",
+                "description": "Bei erhöhtem Schutzbedarf oder unzureichender logischer Trennbarkeit werden Sicherheitszonen durch getrennte Hardware, Ports, Switches oder Leitungswege physisch separiert. Gemeinsame Verwaltungs- und Monitoringkomponenten werden als explizite Vertrauensabhängigkeit dokumentiert und besonders gehärtet. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "dcda2433-995d-467e-becc-951d095543b1",
+                "control-id": "_c907e5e0-bccc-4467-9962-7f4972b0ad8f",
+                "description": "Sprungserver bilden den einzigen administrativen Übergang in besonders geschützte Zonen. Sie sind gehärtet, minimal ausgestattet, mit MFA/PAM abgesichert und zeichnen Sitzungen oder Befehle nach Schutzbedarf auf; Dateiübertragung und Zwischenablage sind kontrolliert. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b995f5c0-7c22-4513-acea-d5ea56ab1dc0",
+                "control-id": "_fec4fcdf-13e7-4a32-a3e1-52dce90ea1d7",
+                "description": "Dynamische Netzzugangskontrolle bewertet Identität, Gerät, Zertifikat, Rolle und Sicherheitszustand und weist das passende Segment oder Policy-Set zu. Statusänderungen können laufende Berechtigungen entziehen; Policies werden gegen Fehlzuordnung und Umgehung getestet. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert. Der Katalogparameter „dynamischer Kriterien“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: dynamischer Kriterien] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "27398523-fef5-4718-9923-9d2fae624099",
+                "control-id": "_5f97efff-4db1-4b26-8ab9-4521108e5c0c",
+                "description": "Nicht bekannte, kompromittierte oder nicht konforme Systeme werden in eine Quarantänezone mit ausschliesslich benötigten Analyse-, Registrierungs- und Updatezielen verschoben. Freigabe erfolgt erst nach dokumentierter Behebung oder befristeter, kompensierter Ausnahme. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "cf4c6bca-bcff-40f2-ad1a-a8522573c01d",
+        "type": "service",
+        "title": "Perimeterschutz und geschützte Weiterverkehrsverbindungen",
+        "description": "Die Institution sichert externe und interne Übergabepunkte durch mehrstufige Filterung, kontrollierte Verbindungsführung, DNS-/Web-Schutz, sichere Remote- und Managementpfade sowie nach Schutzbedarf verschlüsselte WAN-Verbindungen. Edge-Routing und DDoS-Abwehr begrenzen Spoofing, Route Leaks und direkte Exponierung.",
+        "control-implementations": [
+          {
+            "uuid": "cbb1a78b-16cb-4aa6-9505-bea1a846b3be",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die Komponente setzt die Anforderungen an Perimeter und Weiterverkehr durch mehrstufige Filter-, Proxy-, Gateway- und Routingkontrollen um, die direkte, anfällige oder nicht genehmigte Verbindungen blockieren und zulässigen Verkehr inspizieren. Netzbetrieb und Security Engineering steuern Internet-, DNS-, Management-, verschlüsselte und softwaredefinierte Verbindungen risikobasiert; Firewall- und Routingregeln, Freigabetickets, Inspektionsausnahmen, RPKI-/Edge-Nachweise und Regelrezertifizierungen dokumentieren die Wirksamkeit.",
+            "implemented-requirements": [
+              {
+                "uuid": "abc3362b-b32a-466f-a815-d315f81ea770",
+                "control-id": "_025c298a-7c8d-441d-b9d5-a1422556c6e1",
+                "description": "An Perimetern und sonstigen Übergabepunkten schränkt und inspiziert die Institution Verbindungen über abgestufte Sicherheitsfunktionen ein. Regeln, Proxies, Gateways oder vergleichbare Kontrollmechanismen werden so eingesetzt, dass nur freigegebener Verkehr über definierte Pfade in oder aus den geschützten Netzen gelangt. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "64dd6cdc-075c-4ba7-8488-463af112be48",
+                "control-id": "_b94287af-31a1-4500-a8da-89583fdaef92",
+                "description": "Direkte öffentliche Verbindungen zu internen oder besonders schutzkritischen Netzbereichen werden blockiert, sofern sie nicht ausdrücklich fachlich erforderlich und freigegeben sind. Exponierte Dienste werden stattdessen über kontrollierte DMZ-, Reverse-Proxy- oder vergleichbare Übergangszonen geführt. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ebdc5f02-0046-4152-812e-efc01ace5f47",
+                "control-id": "_acd884af-7aad-470c-bfcf-216cff90e9be",
+                "description": "Weiterverkehrsverbindungen werden über kontrollierte Pfade geführt, die dokumentiert, freigegeben und technisch abgesichert sind. Unkontrollierte Seitentransite oder informelle Umgehungspfade zwischen Standorten, Providern oder Sicherheitszonen werden vermieden. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert. Der Katalogparameter „physisch oder logisch“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: physisch oder logisch] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "cd0aeb6b-7410-49bb-a07d-6829fc287a09",
+                "control-id": "_1999335e-7d66-4dc5-8960-8115234e8e23",
+                "description": "Die Institution verschlüsselt schutzbedürftige Weiterverkehrsverbindungen mit aktuellen kryptographischen Verfahren und betreibt die Schlüssel- und Zertifikatsverwaltung kontrolliert. Die Verschlüsselung wird für Standortkopplungen, providergeführte Strecken oder vergleichbare WAN-Beziehungen passend zum Schutzbedarf durchgesetzt. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert. Der Katalogparameter „einem anerkannten Standard“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: einem anerkannten Standard] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c8a8adb6-f45f-4b67-b231-fd77bb25c6db",
+                "control-id": "_b4977fc1-727c-41c8-a397-f84ba68fc11a",
+                "description": "Anfällige oder nicht benötigte Protokolle und Dienste werden an Segmentgrenzen und Perimetern blockiert. Ausnahmen für Legacy-Systeme werden auf definierte Quellen und Ziele begrenzt, überwacht und mit einem Migrations- oder Ablöseplan versehen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "023fb8b6-91f0-4351-9796-f6999e1560a4",
+                "control-id": "_9e1420ba-9cc0-4d0d-a127-36881c1b90e5",
+                "description": "Direkte Managementverbindungen aus öffentlichen oder fachlichen Netzen zu Netzwerk-, Sicherheits- und Serversystemen sind blockiert. Administration wird über VPN/ZTNA, Sprungserver und Managementzone mit MFA geführt; Providerzugriffe sind zeitlich freizuschalten. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "8a11c755-a74a-46c6-8205-99149ed37922",
+                "control-id": "_b9019268-f8d4-4820-b744-2c79c31ce75a",
+                "description": "Edge-Router setzen Prefix-, Bogon- und Quelladressfilter, maximale Prefixgrenzen und dokumentierte Routing-Policies um. Bei eigener BGP-Teilnahme werden RPKI Route Origin Validation, Monitoring von Route Leaks und abgestimmte Providereskalationen eingesetzt, soweit technisch verfügbar. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#cf487276-bb59-4bcf-a0af-a37ed1e75c18",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "08574b2b-974d-4109-9666-10caa51e0ea6",
+                "control-id": "_657f0690-9aaf-42fb-8474-3986a22277c8",
+                "description": "Ob und wo verschlüsselte Verbindungen inspiziert werden, wird nach Schutzbedarf, Rechtslage, Datenschutz und technischer Wirksamkeit entschieden. Ausgenommene Kategorien, Zertifikatsverteilung, Schlüsselschutz und Umgang mit nicht inspizierbaren Protokollen sind dokumentiert; die Inspektion darf keine schwache Ersatzverschlüsselung erzeugen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "13f4f5ce-cd94-4e6d-9da4-848df3d7b1b1",
+                "control-id": "_4938a7c4-fdbb-4ca8-a33c-87d177d25f8b",
+                "description": "Interne Systeme verwenden freigegebene rekursive DNS-Dienste mit Logging, Filterung bekannter schädlicher Ziele und Validierung, soweit geeignet. Direkte externe DNS-Nutzung wird kontrolliert; DoH/DoT-Ausnahmen und Split-Horizon-Abhängigkeiten werden bewusst gestaltet und überwacht. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#71708f70-2379-4f6d-8a75-696cec36de6a",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "6cae5082-7144-4f35-98d9-ffcaaaed757e",
+                "control-id": "_bd23cb10-ab1e-42b2-81bc-b7c1705fb16a",
+                "description": "Bei hohem Schutzbedarf oder komplexen Perimetern wird eine mehrstufige Paketfilter-Anwendungsproxy-Paketfilter-Struktur oder gleichwertige Zonierung eingesetzt. Die Schichten besitzen getrennte Regelwerke und Verwaltungsrollen, damit der Ausfall oder die Fehlkonfiguration einer Stufe nicht den gesamten Schutz aufhebt. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "7191bd3f-dab4-4cf3-b155-80dd2fd6a028",
+                "control-id": "_e1e4bec9-8dc4-4062-a025-6ea70eedb9c9",
+                "description": "Software-definierte Verbindungen und Overlays werden über zentral freigegebene Policies, authentisierte Controller und abgesicherte APIs aufgebaut. Underlay- und Overlay-Pfade bleiben inventarisiert und überwacht; dynamische Änderungen müssen denselben Genehmigungs- und Nachweisregeln wie klassische Netzregeln folgen. Kommunikationsbeziehungen werden in einer freigegebenen Flow-Matrix mit Quelle, Ziel, Dienst, Zweck, Owner und Ablaufdatum beschrieben und an Segmentgrenzen nach Default-Deny umgesetzt. Architektur und Betrieb prüfen Regelwerk und tatsächliche Flüsse regelmäßig durch Policy-Analyse, Flow-Telemetrie und Negativtests; Ausnahmen sind befristet und kompensiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "33a75eee-84ea-457c-af7e-79ad24f312fd",
+        "type": "service",
+        "title": "Resiliente Kernnetze und belastbare Netzkapazität",
+        "description": "Die Institution plant ihre Netzarchitektur so, dass betriebsrelevante Ausfälle, Lastspitzen und volumetrische Angriffe die Kommunikationsversorgung nicht unkontrolliert unterbrechen. Redundanzen, Ausweichpfade, Lastverteilung und Schutz vor volumetrischen Lastlagen werden für kritische Bereiche gezielt aufgebaut und überwacht.",
+        "control-implementations": [
+          {
+            "uuid": "f22156b9-bef2-4713-abcc-e7e4039dc078",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die Anforderungen an belastbare Kernnetze werden durch redundante Pfade und zentrale Dienste, diversifizierte Anbindungen, ausreichende Ressourcenreserven und vorbereitete Schutzmaßnahmen gegen Überlastung und volumetrische Angriffe umgesetzt. Netzbetrieb und Service-Continuity-Verantwortliche überwachen Kapazität und Fehlerzustände, testen Umschaltungen und passen Schwellenwerte kontrolliert an; Topologien, Monitoringberichte, Lastprognosen, Failover- und DoS-Testnachweise belegen die Resilienz.",
+            "implemented-requirements": [
+              {
+                "uuid": "85686e72-e738-47b4-b932-7df392a998b7",
+                "control-id": "_37f932b2-e132-4bf0-b8c3-eed73eadc680",
+                "description": "Die Institution setzt für ihr Kernnetz Redundanzen um, damit der Ausfall einzelner zentraler Netzwerkkomponenten oder Transitpfade nicht den gesamten Verbund lahmlegt. Redundanzzustände und Umschaltverhalten werden dokumentiert und getestet. Redundanz und Kapazität werden gegen definierte SLOs, Spitzenlasten und Ausfallszenarien dimensioniert. Der Betrieb überwacht Auslastung und Fehlerbudgets, führt Failover-, Last- und DDoS-Übungen durch und dokumentiert Schwellenwerte, Testergebnisse sowie bewusst akzeptierte Einzelabhängigkeiten.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "014ee93b-3c34-4582-aefe-16a6cc2421d2",
+                "control-id": "_11904e1d-22f5-4855-b2b4-5b82a423c2d7",
+                "description": "Für besonders abhängige Telekommunikations- und WAN-Anbindungen werden redundante oder alternative Anbindungen vorgesehen, wenn der Schutzbedarf oder die Ausfallfolgen dies erfordern. Carrier- oder Leitungsabhängigkeiten werden bewusst bewertet und nach Möglichkeit reduziert. Redundanz und Kapazität werden gegen definierte SLOs, Spitzenlasten und Ausfallszenarien dimensioniert. Der Betrieb überwacht Auslastung und Fehlerbudgets, führt Failover-, Last- und DDoS-Übungen durch und dokumentiert Schwellenwerte, Testergebnisse sowie bewusst akzeptierte Einzelabhängigkeiten.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "19916d0e-f5c2-4903-90a0-6d68298aee00",
+                "control-id": "_d1a0c0ac-dc2e-4d90-b67d-b76eec256915",
+                "description": "Server- oder Plattformdienste, die für die Netzarchitektur unmittelbar erforderlich sind, werden für kritische Szenarien redundant oder ersetzbar betrieben. Dies betrifft insbesondere netznahe Management-, Authentisierungs- oder Sicherheitsdienste, deren Ausfall die Steuerbarkeit der Netze beeinträchtigen würde. Redundanz und Kapazität werden gegen definierte SLOs, Spitzenlasten und Ausfallszenarien dimensioniert. Der Betrieb überwacht Auslastung und Fehlerbudgets, führt Failover-, Last- und DDoS-Übungen durch und dokumentiert Schwellenwerte, Testergebnisse sowie bewusst akzeptierte Einzelabhängigkeiten.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "dc5fe866-36d7-4ee4-8fa9-18a01f8768b6",
+                "control-id": "_82cfd8da-b3d8-4b87-8770-f39aaf7de728",
+                "description": "Die Netzanbindung wird anhand erwartbarer Last, betrieblicher Reserven und kritischer Spitzenwerte dimensioniert. Engpässe an Übergabepunkten, Backbones oder zentralen Transitstrecken werden überwacht und fliessen in Kapazitäts- und Ausbauentscheidungen ein. Redundanz und Kapazität werden gegen definierte SLOs, Spitzenlasten und Ausfallszenarien dimensioniert. Der Betrieb überwacht Auslastung und Fehlerbudgets, führt Failover-, Last- und DDoS-Übungen durch und dokumentiert Schwellenwerte, Testergebnisse sowie bewusst akzeptierte Einzelabhängigkeiten.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "60d78365-0cef-4f7f-875a-01a375e9f210",
+                "control-id": "_50e54872-271e-41b4-b54a-50e9ebab82bd",
+                "description": "Wo mehrere Pfade oder Frontends zur Verfügung stehen, nutzt die Institution geeignete Lastverteilungsmechanismen, damit einzelne Komponenten nicht unnötig überlastet werden. Lastverteilung und Failover sind in der Netzarchitektur abgestimmt und dokumentiert. Redundanz und Kapazität werden gegen definierte SLOs, Spitzenlasten und Ausfallszenarien dimensioniert. Der Betrieb überwacht Auslastung und Fehlerbudgets, führt Failover-, Last- und DDoS-Übungen durch und dokumentiert Schwellenwerte, Testergebnisse sowie bewusst akzeptierte Einzelabhängigkeiten. Der Katalogparameter „netzbasierte oder serverbasierte“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: netzbasierte oder serverbasierte] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "5876764b-65c0-4bea-aace-e8bb226ab2f6",
+                "control-id": "_ac441ef0-08de-40c4-b600-8be20d8a55b1",
+                "description": "Zum Schutz gegen volumetrische DoS-Angriffe plant die Institution abgestufte Schutzmechanismen ein, etwa Provider-Unterstützung, vorgeschaltete Scrubbing-Dienste, Rate-Limits oder kapazitive Reserven an kritischen Übergabepunkten. Aktivierungswege und Eskalationskriterien sind vorab festgelegt. Redundanz und Kapazität werden gegen definierte SLOs, Spitzenlasten und Ausfallszenarien dimensioniert. Der Betrieb überwacht Auslastung und Fehlerbudgets, führt Failover-, Last- und DDoS-Übungen durch und dokumentiert Schwellenwerte, Testergebnisse sowie bewusst akzeptierte Einzelabhängigkeiten.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "317b162e-6390-4791-809d-5eaca44a0353",
+        "type": "service",
+        "title": "Physisch geschützte Netztechnik und strukturierte Verkabelung",
+        "description": "Netzkritische Systeme und Verkabelungen werden in kontrollierten Infrastrukturumgebungen betrieben. Standorte, technische Räumlichkeiten und Datenverkabelung sind so gestaltet, dass physische Manipulation, Fehlbedienung und infrastrukturelle Einzelrisiken für die Netzarchitektur möglichst früh begrenzt werden.",
+        "control-implementations": [
+          {
+            "uuid": "e70a141d-55fe-4dfe-80a7-56d1032fe5dd",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die Anforderungen an Standorte, Netztechnik und Verkabelung werden durch autorisierte Aufstellorte, Zutritts- und Manipulationsschutz sowie nachvollziehbar geplante, getrennte und gekennzeichnete Datenwege umgesetzt. Gebäude-, Netz- und Infrastrukturverantwortliche kontrollieren Einbau, Patchfelder, Trassen, Reserven und Änderungen; Standortfreigaben, Verkabelungspläne, Abnahmeprotokolle, Zutrittsnachweise und regelmäßige Sichtprüfungen dokumentieren den physischen Schutz.",
+            "implemented-requirements": [
+              {
+                "uuid": "0801bf84-2734-47d2-9221-42f3a2e7aa67",
+                "control-id": "_b25c2cfd-431c-4996-9041-47ae0e516432",
+                "description": "Standorte für kritische Netztechnik werden nur nach formaler Autorisierung genutzt. Die Institution legt fest, welche Gebäude, Räumlichkeiten oder externen Technikstandorte für Backbone-, Carrier-, Perimeter- oder Managementkomponenten zulässig sind. Netztechnik und Verkabelung werden in freigegebenen, zutrittskontrollierten Bereichen mit dokumentierter Strom-, Klima- und Brandschutzabhängigkeit betrieben. Wiederkehrende Begehungen, Zutrittsnachweise, Beschriftungs- und Inventarkontrollen sowie Tests redundanter Versorgung belegen die Wirksamkeit.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a281139b-029c-45ff-bfc6-167cf4ec9007",
+                "control-id": "_525d2727-f932-4f27-bffc-7a8104194bc8",
+                "description": "Für die Funktionsfähigkeit des Netzes erforderliche Systeme wie Router, Switches, Firewalls oder Netzwerkmanagementsysteme werden ausschliesslich in Räumen für technische Infrastruktur oder gleichwertig geschützten Bereichen betrieben. Physische Zugriffe auf netzkritische Komponenten bleiben damit kontrollierbar. Netztechnik und Verkabelung werden in freigegebenen, zutrittskontrollierten Bereichen mit dokumentierter Strom-, Klima- und Brandschutzabhängigkeit betrieben. Wiederkehrende Begehungen, Zutrittsnachweise, Beschriftungs- und Inventarkontrollen sowie Tests redundanter Versorgung belegen die Wirksamkeit.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "a6808cc2-b478-4707-bbfb-074e54136ebc",
+                "control-id": "_3324eb2a-6548-46c1-9d15-96192fdae5a9",
+                "description": "Die Datenverkabelung wird strukturiert geplant, dokumentiert und vor unbeabsichtigten oder manipulativen Eingriffen geschützt. Kritische Verbindungen, Übergabepunkte und Patchfelder sind eindeutig zuordenbar und können bei Störungen oder Erweiterungen gezielt behandelt werden. Netztechnik und Verkabelung werden in freigegebenen, zutrittskontrollierten Bereichen mit dokumentierter Strom-, Klima- und Brandschutzabhängigkeit betrieben. Wiederkehrende Begehungen, Zutrittsnachweise, Beschriftungs- und Inventarkontrollen sowie Tests redundanter Versorgung belegen die Wirksamkeit.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c8f24a55-2a79-4943-b5d9-142575fb7a74",
+                "control-id": "_7260f1aa-7b3b-42aa-a4f2-c85bd8047a4b",
+                "description": "Der Zugang zu Räumen für technische Infrastruktur ist für Netzkomponenten kontrolliert geregelt. Zutrittsrechte, Begleitpflichten und Nachweise sind so ausgestaltet, dass unautorisierte Eingriffe in Backbone-, Carrier- oder Perimetertechnik möglichst früh verhindert oder nachvollzogen werden können. Netztechnik und Verkabelung werden in freigegebenen, zutrittskontrollierten Bereichen mit dokumentierter Strom-, Klima- und Brandschutzabhängigkeit betrieben. Wiederkehrende Begehungen, Zutrittsnachweise, Beschriftungs- und Inventarkontrollen sowie Tests redundanter Versorgung belegen die Wirksamkeit. Der Katalogparameter „für den Betrieb zuständige Personen oder Rollen“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: für den Betrieb zuständige Personen oder Rollen] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b8e35fbb-6ab3-4468-ab47-178237d8a912",
+                "control-id": "_eeaa8977-05e5-4eaa-a5b7-ea490eb543cd",
+                "description": "Kritische Kern-, Perimeter- und Managementkomponenten werden an redundante, getrennt geführte Strompfade oder geeignete USV- und Notstromversorgung angebunden. Umschaltung, Laufzeit und Alarmierung werden regelmäßig getestet und in die Netz-Wiederanlaufplanung aufgenommen. Netztechnik und Verkabelung werden in freigegebenen, zutrittskontrollierten Bereichen mit dokumentierter Strom-, Klima- und Brandschutzabhängigkeit betrieben. Wiederkehrende Begehungen, Zutrittsnachweise, Beschriftungs- und Inventarkontrollen sowie Tests redundanter Versorgung belegen die Wirksamkeit. Der Katalogparameter „eine Stützzeit“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: eine Stützzeit] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "14ce1985-a131-4928-970b-23f15a24938a",
+        "type": "software",
+        "title": "Monitoring, Schwachstellenmanagement und Vorfallbewertung für Netze",
+        "description": "Die Institution sammelt Telemetrie aus Firewalls, Routern, Switches, WAN-Komponenten, DNS, Remote-Zugangswegen und netznahen Sicherheitsdiensten in einem übergreifenden Monitoring- und Detektionsprozess. Auffällige Kommunikationsmuster, Verfügbarkeitsverluste und sicherheitsrelevante Schwachstellen werden systematisch erfasst, priorisiert und in geregelte Behandlungswege überführt.",
+        "control-implementations": [
+          {
+            "uuid": "a8caf7d6-3967-4b8a-ab33-3e712c6458e6",
+            "source": "#9d7fe0fa-7fa5-46e7-8f42-6775cbe08368",
+            "description": "Die methodische Leistungsbewertung der Netzsicherheit wird durch definierte Kennzahlen für Verfügbarkeit, Erkennungsleistung, Schwachstellenbehandlung und Reaktionsfähigkeit unterstützt. Netz-Service-Owner und Informationssicherheitsmanagement bewerten Trends und Zielabweichungen in festgelegten Reviews, priorisieren Verbesserungen und verfolgen sie bis zum Abschluss; Dashboards, Managementprotokolle, Maßnahmenlisten und Wirksamkeitsnachweise dokumentieren den Regelkreis.",
+            "implemented-requirements": [
+              {
+                "uuid": "20263fd1-fc54-43f2-93f5-c62219b6f67a",
+                "control-id": "_17e221bd-3b74-453a-ad4e-e2cb346b6af5",
+                "description": "Die Institution verankert für ihre Netzarchitektur wirksame Monitoring-Methoden und -Tools, um Sicherheitsvorfälle regelmäßig zu überwachen. Logquellen, Kennzahlen, Alarmierungen und Auswertungswege sind so aufgebaut, dass netzbezogene Risiken nicht nur erkannt, sondern auch für Verbesserungen des Sicherheitsmanagements nutzbar gemacht werden. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "5d4be31f-c5f8-46ce-94cc-28b48fb37030",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die Anforderungen an Netzüberwachung, Anomalie- und Schwachstellenbehandlung werden durch zentrale Telemetrie, korrelierte Erkennungsregeln, gepflegte Schwachstellenregister und risikobasierte Behebungsprozesse umgesetzt. Netzbetrieb, SOC und Produktverantwortliche bewerten Störungen, Verkehrsauffälligkeiten, Scans und externe Meldungen, eskalieren Vorfälle und steuern Patches oder Ausnahmen; Logquelleninventar, Alarmtickets, Scanberichte, Patchnachweise und Erkennungstests belegen die Umsetzung.",
+            "implemented-requirements": [
+              {
+                "uuid": "ac825255-37b8-4c6f-8f09-f1c52dfc48f2",
+                "control-id": "_dc58d353-86e1-4070-9f86-b7f0e0f93305",
+                "description": "Sicherheitsrelevante Ereignisse der Netzarchitektur werden manipulationsgeschützt protokolliert. Dazu gehören insbesondere Authentisierungsereignisse an Übergangspunkten, Routing- oder Policy-Änderungen, Ausfälle netzkritischer Komponenten sowie sicherheitsrelevante Verbindungs- und Alarmdaten. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "6c0d3c42-71a3-4119-987c-abd4b81fd5b7",
+                "control-id": "_e6cf2c48-c49f-4c10-9cca-252d903b0979",
+                "description": "Der Netzwerkverkehr wird segment- und perimeterübergreifend auf Anomalien überwacht, etwa auf unerwartete Kommunikationspfade, Portscans, Brute-Force-Muster, DNS-Tunneling oder sonstige auffällige Verbindungsprofile. Relevante Erkennungen werden korreliert und nach definierten Eskalationsregeln bearbeitet. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "071275b5-89f3-4937-a716-11b6efa63054",
+                "control-id": "_3757d23d-e17e-4bae-857e-c045505d579a",
+                "description": "Die Verfügbarkeit der Netzarchitektur wird kontinuierlich überwacht, einschließlich Backbone, Transitstrecken, Perimeterkomponenten und zentraler Managementpfade. Störungen, degradierte Redundanzzustände und Kapazitätsengpässe lösen definierte Alarmierungen und Nachverfolgung aus. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ab104b2f-d115-45a0-9535-4c8718934db0",
+                "control-id": "_43918e89-a15c-490e-9cb5-94444c7e9299",
+                "description": "Die Institution betreibt ein zeitnahes Schwachstellenmanagement für netzarchitektonische Komponenten und bewertet Herstellerhinweise, Scannergebnisse, Betriebsbeobachtungen und externe Meldungen risikobasiert. Priorisierung und Umsetzung orientieren sich an Exponierung, Kritikalität und Angriffspotenzial der betroffenen Netzdienste. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "52a56de5-5df1-4726-8043-b1858169c8c3",
+                "control-id": "_f7550d0a-cf51-4586-a4e8-0c3831a10a79",
+                "description": "Offene Schwachstellen und Findings der Netzarchitektur werden in einem nachvollziehbaren Register geführt. Das Register dokumentiert betroffene Komponenten, Bewertung, Verantwortlichkeiten, Fristen, Abweichungen und den aktuellen Umsetzungsstand. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "57b75b30-1222-4e0b-bcd4-3399395fb208",
+                "control-id": "_7f84ed26-e585-402f-bc0e-40904319cfc8",
+                "description": "Regelmäßige Schwachstellenscans oder gleichwertige technische Prüfungen beziehen netzrelevante Systeme, Managementschnittstellen und exponierte Übergabepunkte ein. Die Prüfungen werden so geplant, dass sie aussagekräftige Ergebnisse liefern, ohne kritische Betriebsbereiche unkontrolliert zu stören. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c4e48ef4-2241-4484-a509-36a9f4d1f412",
+                "control-id": "_622f98fa-a211-4c1e-b655-5e9dd6c0d507",
+                "description": "Wiederkehrende Penetrationstests prüfen die Wirksamkeit netzarchitektonischer Schutzmaßnahmen gegen realistische Angriffe. Je nach Schutzbedarf umfasst der Scope Segmentgrenzen, Perimeterdienste, Transitpfade, Routing- oder Administrationsszenarien. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "83adcb6b-46a6-43d4-83c7-90b468fb6ffc",
+                "control-id": "_2134a13a-50a6-44b7-8df1-3ce041ef376a",
+                "description": "Die Institution führt für ihre Netzarchitektur eine Bedrohungsanalyse durch, in der Angriffswege, Abhängigkeiten, exponierte Kommunikationspfade und mögliche Seiteneffekte von Architekturentscheidungen bewertet werden. Ergebnisse fliessen in Segmentierung, Perimeterschutz und Testscope ein. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c202414f-dd54-4179-9cd4-7982ba2fc378",
+                "control-id": "_cb35b6b0-15c3-488f-8759-ad66fe4883fa",
+                "description": "Externe Schwachstellenmeldungen mit Bezug zu eingesetzten Netzwerkkomponenten oder Architekturmustern werden strukturiert entgegengenommen, bewertet und in den Behandlungsprozess überführt. Herstellerwarnungen, CERT-Hinweise und öffentliche Sicherheitsmeldungen lösen dokumentierte Folgeentscheidungen aus. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "4da21e15-add3-4f64-95c1-024c8bb9a0e5",
+                "control-id": "_b2c08460-0038-4f49-b459-dba756e55ae9",
+                "description": "Sicherheitsrelevante Patches und Firmware-Updates für Router, Firewalls, Switches, Gateways und netznahe Managementdienste werden zeitnah und risikobasiert umgesetzt. Test, Freigabe, Rollback und Abschluss der Umsetzung werden nachvollziehbar dokumentiert. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "052c309a-89d0-4007-8c10-32a953585dec",
+                "control-id": "_a8c7d445-54b4-40e2-aab5-b46e30549ec5",
+                "description": "Netzbezogene Ereignisse werden daraufhin beurteilt, ob sie sicherheitsrelevant, störungsbedingt oder erwartbar sind. Die Bewertung folgt dokumentierten Kriterien, damit Alarme aus Segmentierung, Perimeter, Routing oder Verfügbarkeitsüberwachung konsistent priorisiert werden. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "dfb5a671-8ed7-42d3-9aaa-efe4c0d65360",
+                "control-id": "_0ec29d00-cea9-4337-8f83-b680453b21b2",
+                "description": "Eingänge aus Monitoring, Betrieb, Nutzerhinweisen oder externen Meldungen zu netzarchitektonischen Auffälligkeiten werden strukturiert beurteilt und einem geregelten Bearbeitungsweg zugeordnet. So bleiben weder Schwachstellenhinweise noch Anzeichen für Architektur- oder Verbindungsfehler unbearbeitet. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#68a25380-900a-46ba-83ab-8717d718f00c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ef3eaf8f-c2a6-47c8-82fa-c808b6420c8d",
+                "control-id": "_39faab52-c5ca-4971-8f00-6eb34319cb55",
+                "description": "Störungen der Erreichbarkeit von Segmenten, Gateways, DNS, VPN, WAN und zentralen Managementdiensten werden mit Ursache, betroffenen Pfaden und Zeitbezug protokolliert. Korrelation unterdrückt reine Folgealarme, ohne den ursprünglichen Ausfall oder sicherheitsrelevante Muster zu verdecken. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c16b7d7a-7ffc-4bf1-97ad-fac1ccd3083c",
+                "control-id": "_80109af2-9ed7-4aca-807e-aae712dc8e18",
+                "description": "Flow-Telemetrie wird an strategischen Segmentgrenzen, Perimetern und Kernnetzpunkten erhoben. Baselines und Erkennungsregeln identifizieren neue Kommunikationsbeziehungen, Beaconing, Datenabfluss, Scans und Umgehung vorgesehener Sicherheitsdienste; Datenschutz und Aufbewahrung sind festgelegt. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "5517acd7-aa80-449f-8c64-7a996c3011c3",
+                "control-id": "_c17dd877-0922-4ca8-a38b-1d2f9ae04f0d",
+                "description": "Bandbreite, Paketverlust, Latenz, Fehler, Sessionauslastung und Queue-Zustände werden für kritische Pfade überwacht. Kapazitätsalarme beruhen auf dokumentierten Schwellen und Trends und werden mit Geschäftszeiten, Wartungen und DDoS-Indikatoren korreliert. Firewalls, Router, Switches, DNS, NAC, VPN und WAN-Dienste liefern zeitlich synchronisierte Logs, Flow-Daten und Verfügbarkeitsmetriken an eine zentrale Auswertung. Der Detection-Owner prüft Quellenabdeckung und Alarmketten nach `[Entscheidung: Testintervall]`; Alerts, Triage, Incident-Tickets und temporäre Telemetrielücken werden nachvollziehbar dokumentiert.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "7aec24ed-e99c-4303-aca7-d5d3f91db9ef",
+        "type": "process-procedure",
+        "title": "Wartung, Sicherheitstests und abgesicherte Rückfallverfahren für Netzkomponenten",
+        "description": "Die Institution behandelt sicherheitsrelevante Wartungen und Änderungen an Netzkomponenten als kontrollierten Lifecycle. Prüfungen, Testabdeckung, Rückfallverfahren und Dokumentation sind so organisiert, dass Netzumbauten oder Firmware-Wechsel keine unkontrollierten Seiteneffekte auf den Produktivverbund verursachen.",
+        "control-implementations": [
+          {
+            "uuid": "f5478845-8b6a-4767-aa54-f1e41eeadbed",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die Anforderungen an Wartung, Sicherheitstests und Rückfall werden durch autorisierte Arbeitsaufträge, geschützte Wartungszugänge, dokumentierte Eingriffe und vorab geprüfte Wiederherstellungsoptionen umgesetzt. Netzbetrieb und Change-Verantwortliche testen Änderungen risikobasiert, trennen Test und Produktion und halten freigegebene Konfigurationsstände bereit; Wartungsprotokolle, Testberichte, Freigaben, Konfigurationssicherungen und Rückfallübungen liefern den Nachweis.",
+            "implemented-requirements": [
+              {
+                "uuid": "96f833f3-486e-45e6-8596-bb132e9c67eb",
+                "control-id": "_f4508940-fad1-49ff-b7f7-d6612790f145",
+                "description": "Wartungen an netzkritischen Komponenten erfolgen nach geregelten Verfahren mit abgestimmten Zeitfenstern, Verantwortlichkeiten und Nachweisen. Geplante Arbeiten an Routern, Switches, Firewalls, Gateways oder zugehörigen Managementdiensten werden vorbereitet, sicher umgesetzt und nachvollziehbar abgeschlossen. Änderungen erfolgen über autorisierte Changes mit Konfigurationssicherung, Auswirkungsanalyse, Testfällen, Wartungsfenster und Rückfallkriterium. Regelwerksvergleich, Erreichbarkeits-, Sicherheits- und Monitoringtests werden dem Ticket beigefügt; Notfallchanges werden nachträglich freigegeben und auf Seiteneffekte untersucht. Der Katalogparameter „regelmäßig oder prädiktiv“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: regelmäßig oder prädiktiv] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "cf594e68-0d71-49ac-a610-e9c3877e9ab2",
+                "control-id": "_59a96eb8-75ad-420d-aab5-4d448f5c12ae",
+                "description": "Wartungen an Netzwerkkomponenten dürfen nur von autorisierten Personen oder Stellen durchgeführt werden. Hersteller-, Carrier- oder Dienstleisterzugriffe werden für Wartungszwecke kontrolliert freigeschaltet, protokolliert und nach Abschluss auf den Sollzustand zurückgeführt. Änderungen erfolgen über autorisierte Changes mit Konfigurationssicherung, Auswirkungsanalyse, Testfällen, Wartungsfenster und Rückfallkriterium. Regelwerksvergleich, Erreichbarkeits-, Sicherheits- und Monitoringtests werden dem Ticket beigefügt; Notfallchanges werden nachträglich freigegeben und auf Seiteneffekte untersucht. Der Katalogparameter „eine zuständige Person oder Rolle“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: eine zuständige Person oder Rolle] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "2fe9dd2f-7646-4763-abdf-5313ed777e66",
+                "control-id": "_a2ecedcb-3515-4d40-b4d3-b745142af15b",
+                "description": "Durchgeführte Wartungen an der Netzarchitektur werden mit Umfang, Zeitpunkt, Veränderungen, Bearbeiter und Ergebnis dokumentiert. Die Dokumentation ist für Fehleranalyse, Audit und Rückführung auf stabile Konfigurationsstände nutzbar. Änderungen erfolgen über autorisierte Changes mit Konfigurationssicherung, Auswirkungsanalyse, Testfällen, Wartungsfenster und Rückfallkriterium. Regelwerksvergleich, Erreichbarkeits-, Sicherheits- und Monitoringtests werden dem Ticket beigefügt; Notfallchanges werden nachträglich freigegeben und auf Seiteneffekte untersucht.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "987fcf8e-1e87-471e-94ce-5ac26d78b04e",
+                "control-id": "_2edf4a68-0d86-4da9-ada4-9939c2508f2c",
+                "description": "Vor wesentlichen Architektur- oder Konfigurationsänderungen testet die Institution die Einhaltung der Sicherheitsanforderungen. Der Testscope umfasst betroffene Segmente, Transitpfade, Authentisierungs- und Logging-Wirkung sowie mögliche Auswirkungen auf angrenzende Netze oder Dienste. Änderungen erfolgen über autorisierte Changes mit Konfigurationssicherung, Auswirkungsanalyse, Testfällen, Wartungsfenster und Rückfallkriterium. Regelwerksvergleich, Erreichbarkeits-, Sicherheits- und Monitoringtests werden dem Ticket beigefügt; Notfallchanges werden nachträglich freigegeben und auf Seiteneffekte untersucht.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c98a47ae-aa00-4f3c-b880-1098bceda3c9",
+                "control-id": "_15a34e7f-067f-4f27-92a8-4d32cce4dee6",
+                "description": "Die Testabdeckung für Netzkomponenten und Architekturwechsel bezieht das Zusammenspiel von Segmentierung, Routing, Firewalling, Monitoring, Redundanz und Managementpfaden ein. So werden Folgefehler oder Sicherheitslücken nicht nur lokal, sondern im Gesamtkontext erkannt. Änderungen erfolgen über autorisierte Changes mit Konfigurationssicherung, Auswirkungsanalyse, Testfällen, Wartungsfenster und Rückfallkriterium. Regelwerksvergleich, Erreichbarkeits-, Sicherheits- und Monitoringtests werden dem Ticket beigefügt; Notfallchanges werden nachträglich freigegeben und auf Seiteneffekte untersucht. Der Katalogparameter „regelmäßig“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: regelmäßig] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "d72c293c-05a2-4aed-a412-5791862f040b",
+                "control-id": "_aacff36a-50db-4403-9a46-34fa044a8a4d",
+                "description": "Für sicherheitsrelevante Netzumbauten und Konfigurationsänderungen existiert eine dokumentierte Rückfalllösung mit gesicherten Konfigurationsständen und klaren Rollback-Kriterien. Dadurch können instabile oder unsichere Veränderungen kontrolliert auf einen bekannten Zustand zurückgeführt werden. Änderungen erfolgen über autorisierte Changes mit Konfigurationssicherung, Auswirkungsanalyse, Testfällen, Wartungsfenster und Rückfallkriterium. Regelwerksvergleich, Erreichbarkeits-, Sicherheits- und Monitoringtests werden dem Ticket beigefügt; Notfallchanges werden nachträglich freigegeben und auf Seiteneffekte untersucht.",
+                "links": [
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "uuid": "153645fc-43b8-4c34-9ef1-ef9a600754b6",
+        "type": "service",
+        "title": "Vertrauenswürdige Netzbasisdienste und Managementebene",
+        "description": "Die Institution betreibt DNS, Zeitquellen, AAA/NAC sowie Konfigurations- und Managementzugriffe als besonders geschützte Basisdienste. Eine getrennte Managementebene, versionierte Baselines, starke Administratorauthentisierung und kontrollierte Fernwartung verhindern, dass die Steuerung des Netzes aus Nutz- oder Gastzonen kompromittiert wird.",
+        "remarks": "Abhängigkeiten zwischen DNS, NTP, Verzeichnisdiensten, Zertifikatsinfrastruktur, Monitoring und Netzmanagement sind im Wiederanlaufplan gemeinsam zu betrachten.",
+        "control-implementations": [
+          {
+            "uuid": "631b743d-dab2-403d-bf63-f4a690da5384",
+            "source": "#8111d876-6a1c-41de-8a19-4352ab60f8a9",
+            "description": "Die Anforderungen an vertrauenswürdige Basis- und Managementdienste werden durch gehärtete, versionierte Konfigurationen, kontrollierte DNS- und Zeitquellen sowie stark authentisierte und eingeschränkte Fernadministration umgesetzt. Netzbetrieb verwaltet Baselines und Änderungen zentral, überwacht Namensauflösung, Zeitsynchronisation und Managementzugriffe und behandelt Abweichungen kontrolliert; Konfigurationsrepository, DNS-/NTP-Prüfungen, Administrationslogs und Rezertifizierungen belegen den sicheren Betrieb.",
+            "implemented-requirements": [
+              {
+                "uuid": "e9233e1a-2842-4caf-ab15-130461694ed4",
+                "control-id": "_8bd05aba-b395-43cf-a38e-f4e8656df7c4",
+                "description": "Für Router, Switches, Firewalls, VPN, Load Balancer und Netzbasisdienste bestehen plattformspezifische Baselines. Sie definieren sichere Managementprotokolle, AAA, NTP, Logging, SNMPv3 oder Telemetrie, Kryptografie, Routing- und Control-Plane-Schutz sowie deaktivierte Legacy-Funktionen. Netzkomponenten und Basisdienste werden aus versionierten, freigegebenen Baselines konfiguriert; ungenutzte Dienste, Default-Zugänge und direkte Managementpfade sind deaktiviert. Automatisierte Compliance-Prüfungen erkennen Drift; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "d4963068-887c-4c07-9e1a-f2acc8db315f",
+                "control-id": "_3b25d629-b441-4365-96fb-d06e2e35b89d",
+                "description": "Soll- und Ist-Konfigurationen werden versioniert, integritätsgeschützt und regelmäßig gesichert. Automatisierte Exporte oder Infrastructure-as-Code erlauben Vier-Augen-Review, Driftvergleich und Wiederherstellung; Secrets werden getrennt verwaltet. Netzkomponenten und Basisdienste werden aus versionierten, freigegebenen Baselines konfiguriert; ungenutzte Dienste, Default-Zugänge und direkte Managementpfade sind deaktiviert. Automatisierte Compliance-Prüfungen erkennen Drift; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "8ffd54aa-f4f4-40ee-9e99-7861b086a37e",
+                "control-id": "_490400dc-4769-4127-9869-720a3ce1585c",
+                "description": "Interne Systeme nutzen definierte, resiliente DNS-Resolver; autoritative, rekursive und administrative DNS-Rollen werden getrennt. Zonen, Weiterleitungen, Split-Horizon-Regeln und Abhängigkeiten von Cloud- oder Providerdiensten sind dokumentiert und werden auf Fehlkonfiguration und Missbrauch überwacht. Netzkomponenten und Basisdienste werden aus versionierten, freigegebenen Baselines konfiguriert; ungenutzte Dienste, Default-Zugänge und direkte Managementpfade sind deaktiviert. Automatisierte Compliance-Prüfungen erkennen Drift; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#71708f70-2379-4f6d-8a75-696cec36de6a",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "9f1dc26a-a2e3-49af-ab7e-808ff17a4b91",
+                "control-id": "_ccb6bfb1-1b49-4d03-9705-2d05bca018b5",
+                "description": "Verschlüsseltes DNS wird dort eingesetzt, wo es Vertraulichkeit und Authentizität verbessert, ohne zentrale Schutz- und Loggingziele zu umgehen. Die Institution steuert zugelassene DoT-/DoH-Resolver, Zertifikatsprüfung und Ausnahmen und verhindert unkontrollierte externe Resolvernutzung. Netzkomponenten und Basisdienste werden aus versionierten, freigegebenen Baselines konfiguriert; ungenutzte Dienste, Default-Zugänge und direkte Managementpfade sind deaktiviert. Automatisierte Compliance-Prüfungen erkennen Drift; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung. Der Katalogparameter „einen anerkannten kryptographischen Algorithmus“ wird in dieser wiederverwendbaren Vorlage nicht pauschal festgelegt. Die lokale Ausprägung wird als [Entscheidung: einen anerkannten kryptographischen Algorithmus] dokumentiert, durch die fachlich verantwortliche Rolle freigegeben und bei Änderungen erneut geprüft.",
+                "links": [
+                  {
+                    "href": "#71708f70-2379-4f6d-8a75-696cec36de6a",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "d6867e36-2078-4cb1-9380-fb5d30e5afaf",
+                "control-id": "_6fa4659a-8472-4d26-9f3b-a3edfa412a8c",
+                "description": "Fernwartungs- und Administrationspfade authentisieren Person und Zielsystem stark und nutzen freigegebene verschlüsselte Protokolle. Externe Zugriffe laufen über VPN/ZTNA und Sprungdienst mit MFA, zeitlicher Freigabe und Sitzungsprotokollierung. Netzkomponenten und Basisdienste werden aus versionierten, freigegebenen Baselines konfiguriert; ungenutzte Dienste, Default-Zugänge und direkte Managementpfade sind deaktiviert. Automatisierte Compliance-Prüfungen erkennen Drift; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#96631bd2-bd86-450c-830d-2e4cbd76bba3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "f14c9fe7-e2f6-4f38-9bbd-5acac67a1635",
+                "control-id": "_2e782e35-d708-49c3-b022-76616ae204be",
+                "description": "Fernwartungsfunktionen sind standardmäßig gesperrt oder nur aus der Managementzone erreichbar. Freischaltung benötigt Change oder Wartungsticket, benannte Gegenstelle, Zeitfenster und Überwachung; nach Abschluss werden Konten, Tunnel und temporäre Regeln entzogen. Netzkomponenten und Basisdienste werden aus versionierten, freigegebenen Baselines konfiguriert; ungenutzte Dienste, Default-Zugänge und direkte Managementpfade sind deaktiviert. Automatisierte Compliance-Prüfungen erkennen Drift; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "5c5ca858-8bba-4001-9291-ebb6421c5f0e",
+                "control-id": "_92eee157-2b9b-4a80-8f17-4b124590d72f",
+                "description": "Netzkomponenten, DNS, AAA, Firewalls und Monitoring verwenden authentisierte, redundante Zeitquellen mit abgestufter Vertrauenskette. Abweichungen und Sprünge werden alarmiert, da sie Protokollkorrelation, Zertifikatsprüfung und Routingbetrieb beeinträchtigen können. Netzkomponenten und Basisdienste werden aus versionierten, freigegebenen Baselines konfiguriert; ungenutzte Dienste, Default-Zugänge und direkte Managementpfade sind deaktiviert. Automatisierte Compliance-Prüfungen erkennen Drift; Abweichungen benötigen Ticket, Risikoentscheidung, kompensierende Kontrolle und Befristung.",
+                "links": [
+                  {
+                    "href": "#186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1c683366-bb42-43a7-908f-a9b6203e0410",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "8111d876-6a1c-41de-8a19-4352ab60f8a9",
+          "title": "BSI Stand-der-Technik Kernel OSCAL catalog",
+          "description": "Der BSI-OSCAL-Katalog wird als verbindliche Quelle für die in dieser Component Definition referenzierten Kontrollkennungen verwendet.",
+          "rlinks": [
+            {
+              "href": "attachment:BSI-Stand-der-Technik-Kernel-catalog.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "9d7fe0fa-7fa5-46e7-8f42-6775cbe08368",
+          "title": "BSI Methodik Grundschutz++ OSCAL catalog",
+          "description": "Der BSI-OSCAL-Katalog wird als verbindliche Quelle für die in dieser Component Definition referenzierten Kontrollkennungen verwendet.",
+          "rlinks": [
+            {
+              "href": "attachment:BSI-Methodik-Grundschutz++-catalog.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "1c683366-bb42-43a7-908f-a9b6203e0410",
+          "title": "NIST SP 800-207: Zero Trust Architecture",
+          "description": "Die offizielle Fachquelle „NIST SP 800-207: Zero Trust Architecture“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://csrc.nist.gov/pubs/sp/800/207/final",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "68a25380-900a-46ba-83ab-8717d718f00c",
+          "title": "CISA: Microsegmentation in Zero Trust, Part One",
+          "description": "Die offizielle Fachquelle „CISA: Microsegmentation in Zero Trust, Part One“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.cisa.gov/resources-tools/resources/microsegmentation-zero-trust-part-one-introduction-and-planning",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "204679f4-d843-43f4-83e5-835bfcf422ee",
+          "title": "BSI: Zero Trust",
+          "description": "BSI position paper and orientation on zero-trust principles and least privilege in networked environments.",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Informationen-und-Empfehlungen/Zero-Trust/zero-trust.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "186c70d8-80ba-4f29-92a7-8bc5e571f33b",
+          "title": "BSI IT-Grundschutz: NET.1.1 Netzarchitektur und -design",
+          "description": "Die offizielle Fachquelle „BSI IT-Grundschutz: NET.1.1 Netzarchitektur und -design“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Grundschutz/IT-GS-Kompendium_Einzel_PDFs_2023/09_NET_Netze_und_Kommunikation/NET_1_1_Netzarchitektur_und_design_Edition_2023.pdf?__blob=publicationFile&v=3",
+              "media-type": "application/pdf"
+            }
+          ]
+        },
+        {
+          "uuid": "48ba3ab4-a226-426a-8c1b-516a4dd4569c",
+          "title": "NIST SP 1800-35: Implementing a Zero Trust Architecture",
+          "description": "Die offizielle Fachquelle „NIST SP 1800-35: Implementing a Zero Trust Architecture“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://csrc.nist.gov/pubs/sp/1800/35/final",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "cf487276-bb59-4bcf-a0af-a37ed1e75c18",
+          "title": "NIST SP 800-189: BGP Security and DDoS Mitigation",
+          "description": "Die offizielle Fachquelle „NIST SP 800-189: BGP Security and DDoS Mitigation“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://csrc.nist.gov/pubs/sp/800/189/final",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "71708f70-2379-4f6d-8a75-696cec36de6a",
+          "title": "NIST SP 800-81 Rev. 3: Secure DNS Deployment Guide",
+          "description": "Die offizielle Fachquelle „NIST SP 800-81 Rev. 3: Secure DNS Deployment Guide“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://csrc.nist.gov/pubs/sp/800/81/r3/final",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "944b5d30-9bf0-4ab4-8cbe-441765c1dc4c",
+          "title": "NIST SP 800-82 Rev. 3: Guide to Operational Technology Security",
+          "description": "Die offizielle Fachquelle „NIST SP 800-82 Rev. 3: Guide to Operational Technology Security“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://csrc.nist.gov/pubs/sp/800/82/r3/final",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "96631bd2-bd86-450c-830d-2e4cbd76bba3",
+          "title": "BSI TR-02102-1 Kryptographische Verfahren",
+          "description": "Die offizielle Fachquelle „BSI TR-02102-1 Kryptographische Verfahren“ unterstützt die zugehörigen Implementierungshinweise; der konkrete fachliche Bezug wird über die Referenzlinks der jeweiligen Anforderungen hergestellt.",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR02102/BSI-TR-02102.html",
+              "media-type": "text/html"
+            }
+          ]
+        }
+      ]
+    },
+    "capabilities": [
+      {
+        "uuid": "ecc506b4-b751-462a-825b-67b7675c8bd9",
+        "name": "gesteuerte-netzarchitektur",
+        "description": "Diese Capability verbindet verbindliche Architekturprinzipien mit aktuellem Netz-, Asset- und Schnittstellenwissen sowie kontrollierten Änderungs- und Testverfahren.",
+        "incorporates-components": [
+          {
+            "component-uuid": "303f9bdc-7dbd-4b67-9621-24b8d144c205",
+            "description": "Definiert Zielbilder, Standards, Rollen, Freigaben und Ausnahmen."
+          },
+          {
+            "component-uuid": "8fb6fe6b-fbe5-473d-be0d-1012031318ff",
+            "description": "Stellt die aktuelle technische Entscheidungs- und Nachweisgrundlage bereit."
+          },
+          {
+            "component-uuid": "7aec24ed-e99c-4303-aca7-d5d3f91db9ef",
+            "description": "Führt Änderungen reproduzierbar, getestet und rückfallfähig aus."
+          }
+        ],
+        "remarks": "Architekturentscheidungen sind für On-Premises-, Cloud-, WAN-, OT- und hybride Netzanteile gemeinsam zu betrachten."
+      },
+      {
+        "uuid": "ddfb8f69-7eb7-48f9-af3e-c1c25bdb2d2f",
+        "name": "segmentierung-und-kontrollierte-konnektivitaet",
+        "description": "Diese Capability begrenzt Vertrauensbeziehungen und laterale Bewegung durch Sicherheitszonen, Netzzugangskontrolle, explizite Kommunikationspfade und geschützte Basis- und Managementdienste.",
+        "incorporates-components": [
+          {
+            "component-uuid": "e6776f89-aae5-4733-904d-dabcf44c2e72",
+            "description": "Ordnet Zielobjekte Sicherheitszonen zu und erzwingt minimal notwendige Flüsse."
+          },
+          {
+            "component-uuid": "153645fc-43b8-4c34-9ef1-ef9a600754b6",
+            "description": "Schützt Steuerungs-, Namens-, Zeit- und Administrationsfunktionen des Netzes."
+          }
+        ],
+        "remarks": "Mikrosegmentierung ergänzt, aber ersetzt nicht die saubere Makrosegmentierung, Assetkenntnis und identitätsbasierte Zugriffspolitik."
+      },
+      {
+        "uuid": "74fd0dd8-3d06-459d-ae22-2ac1886c5504",
+        "name": "perimeter-wan-und-internet-resilienz",
+        "description": "Diese Capability sichert externe Übergänge, Weitverkehrsverbindungen und Internet-Routing und verbindet sie mit Redundanz, Kapazitätssteuerung und DDoS-Abwehr.",
+        "incorporates-components": [
+          {
+            "component-uuid": "cf4c6bca-bcff-40f2-ad1a-a8522573c01d",
+            "description": "Filtert, inspiziert und verschlüsselt Übergabepunkte sowie externe Kommunikationspfade."
+          },
+          {
+            "component-uuid": "33a75eee-84ea-457c-af7e-79ad24f312fd",
+            "description": "Stellt Ausweichpfade, ausreichende Ressourcen und Schutz gegen volumetrische Lastlagen bereit."
+          }
+        ],
+        "remarks": "Eigene BGP-Teilnahme, Carrierabhängigkeiten und DDoS-Mitigation sind mit Providern zu testen und nicht nur vertraglich zu beschreiben."
+      },
+      {
+        "uuid": "f2c5c7b2-be76-49ba-b791-c41310af2281",
+        "name": "netztransparenz-detektion-und-wirksamkeitspruefung",
+        "description": "Diese Capability kombiniert technische Telemetrie, Schwachstellen- und Bedrohungsmanagement mit physischer und logischer Wirksamkeitsprüfung der Netzschutzmaßnahmen.",
+        "incorporates-components": [
+          {
+            "component-uuid": "14ce1985-a131-4928-970b-23f15a24938a",
+            "description": "Erkennt Anomalien, Ausfälle, Schwachstellen und sicherheitsrelevante Ereignisse."
+          },
+          {
+            "component-uuid": "317b162e-6390-4791-809d-5eaca44a0353",
+            "description": "Schützt die materielle Infrastruktur und Versorgungsgrundlagen der Netzarchitektur."
+          }
+        ],
+        "remarks": "Logische Monitoringlücken und physische Einzelabhängigkeiten sind im Risikoregister sichtbar zu halten und mit Tests oder kompensierenden Kontrollen zu behandeln."
+      }
+    ]
+  }
+}
