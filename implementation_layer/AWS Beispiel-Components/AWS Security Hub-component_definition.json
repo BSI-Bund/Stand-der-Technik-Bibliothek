@@ -1,0 +1,797 @@
+{
+  "component-definition": {
+    "uuid": "5d5a1776-cfec-412e-b205-d4e2f7d2f3ed",
+    "metadata": {
+      "title": "Stand der Technik AWS Security Hub Version V2/Essentials mit AWS Security Hub CSPM (Dienststand 2026-07-28)",
+      "published": "2026-07-28T11:52:03+02:00",
+      "last-modified": "2026-07-28T11:52:03+02:00",
+      "version": "0.3.0-review",
+      "oscal-version": "1.1.3",
+      "document-ids": [
+        {
+          "identifier": "e91af4c9-a4a3-4d12-9b8c-341caf2cc8f1",
+          "scheme": "https://www.ietf.org/rfc/rfc9562"
+        }
+      ],
+      "props": [
+        {
+          "name": "Keywords",
+          "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+          "value": "AWS Security Hub; Security Hub V2; AWS Security Hub CSPM; OCSF; CSPM; Sicherheitsanalyse"
+        },
+        {
+          "name": "scope",
+          "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+          "value": "#4ef25315-6d06-474b-9b80-d2c45b25de57"
+        }
+      ],
+      "roles": [
+        {
+          "id": "prepared-by",
+          "title": "Erstellt von"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "58de8925-de1f-4813-803c-bea0cc5a0a28",
+          "type": "organization",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik, Referat Stand der Technik",
+          "email-addresses": [
+            "stand-der-technik@bsi.bund.de"
+          ]
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "prepared-by",
+          "party-uuids": [
+            "58de8925-de1f-4813-803c-bea0cc5a0a28"
+          ]
+        }
+      ],
+      "links": [
+        {
+          "href": "#4ef25315-6d06-474b-9b80-d2c45b25de57",
+          "rel": "source",
+          "text": "BSI Stand der Technik Kernel"
+        },
+        {
+          "href": "#6718e950-961d-4e90-97e1-452cf4555595",
+          "rel": "reference",
+          "text": "AWS Security Hub – General Availability"
+        }
+      ],
+      "remarks": "Produktbezug ist der allgemein verfügbare AWS Security Hub V2/Essentials-Dienststand am 28.07.2026 zusammen mit AWS Security Hub CSPM. Beschrieben wird die sichere Mehrkonten- und Mehrregionen-Nutzung mit delegiertem Administrator, zentraler Konfiguration, OCSF-basierter Analyse, Automation Rules, CloudTrail-Nachweisen und Betreiberaufgaben. Preview-Funktionen, AWS Security Hub Extended und nicht aktivierte Quelldienste sind nicht umfasst. Der regionale verwaltete Cloud-Dienst hat keine installierbare semantische Produktversion; GA-Funktionsfamilie und Dienststand bilden daher den Versionsbezug. Es werden keine Component Definitions importiert."
+    },
+    "components": [
+      {
+        "uuid": "ee54f363-00a4-4f73-ad53-23f7ce5812fd",
+        "type": "software",
+        "title": "AWS Security Hub V2/Essentials",
+        "description": "Regionaler verwalteter AWS-Sicherheitsdienst für OCSF-basierte Aggregation, Normalisierung, Korrelation, Risikoanalyse, Findings-Triage, Trends und Automatisierung über Konten und Regionen.",
+        "purpose": "Zentrale Sicht auf Exposures, Bedrohungen, Ressourcen und Sicherheitsabdeckung sowie priorisierte Bearbeitung von Security Findings.",
+        "props": [
+          {
+            "name": "Taxonomy-L1",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Detect"
+          },
+          {
+            "name": "Taxonomy-L2",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Security Operations"
+          },
+          {
+            "name": "Taxonomy-L3",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Security Analytics"
+          },
+          {
+            "name": "Taxonomy-L4",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "SIEM"
+          },
+          {
+            "name": "Taxonomy-Mapping-Rationale",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Die primäre Wirkung ist die normalisierte Sammlung, Korrelation und Analyse von Security Findings. SOAR ist nur eine Nebenfunktion begrenzter Automation Rules; XDR ist unpassend, weil der Dienst selbst keine Endpoint- oder Network-Telemetrie erzeugt; allgemeines Cloud Monitoring ist zu breit."
+          }
+        ],
+        "links": [
+          {
+            "href": "https://aws.amazon.com/blogs/aws/aws-security-hub-now-generally-available-with-near-real-time-analytics-and-risk-prioritization/",
+            "rel": "reference",
+            "text": "General Availability"
+          },
+          {
+            "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-enable.html",
+            "rel": "reference",
+            "text": "Aktivierung"
+          },
+          {
+            "href": "https://ocsf.io/",
+            "rel": "reference",
+            "text": "OCSF"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "a0016605-ef4a-44fe-a3e1-34aac6fb1662",
+            "source": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/control_layer/Grundschutz%2B%2B/sources/catalogs/Kernel/BSI-Stand-der-Technik-Kernel-G0-catalog.json",
+            "description": "Der AWS-Security-Hub-V2-Kerndienst stellt zusammenhängende technische Beiträge zu Zugriffsschutz, Cloud-Signalintegration, automatisierter Erkennung, Triage, Erstreaktion, Nachweisführung und quantitativer Sicherheitsanalyse bereit. Die einzelnen Zuordnungen grenzen den Produktbeitrag jeweils von verbleibenden Betreiberaufgaben ab.",
+            "implemented-requirements": [
+              {
+                "uuid": "f0069550-4764-4083-be1d-07154bf9fddb",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "Differenzierbare IAM-Aktionen ermöglichen getrennte Rollen für Administration, Konfiguration und reine Auswertung.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto IAM-Rollen und Berechtigungsrichtlinien anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind zweckgebundene Rollen ohne unnötige Administratorrechte; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > IAM > Roles beziehungsweise IAM Identity Center > Permission sets öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-iam liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/security_iam_id-based-policy-examples.html",
+                    "rel": "reference",
+                    "text": "BER.4.1 – Prinzip der geringsten Berechtigungen"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-iam",
+                    "value": "aws iam get-account-authorization-details --filter LocalManagedPolicy Role --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Sichtung lokaler IAM-Rollen und verwalteter Richtlinien vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen und erforderliche IAM-Leserechte. Die Ausführung ist kontoweit lesend; sensible Richtlinieninhalte sind geschützt zu speichern. Erwartet werden zweckgebundene Rollen ohne unnötige Administratorrechte. Abweichungen werden mit Konto, Zeitpunkt, Rolle und Bewertung dokumentiert; föderierte Zuweisungen, Permission Boundaries und Organizations-SCPs sind zusätzlich separat zu prüfen."
+                  }
+                ]
+              },
+              {
+                "uuid": "21883d69-dc82-4780-82b8-f3d139109623",
+                "control-id": "_4123f246-95b2-4785-9714-17a5e68462c5",
+                "description": "IAM-Nutzungs- und Richtliniendaten unterstützen die Rezertifizierung der Security-Hub-Zugriffe im Turnus {{mindestens vierteljährlich sowie anlassbezogen}}.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Berechtigungsregister, letzte Nutzung und wirksame Richtlinien anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind regelmäßig rezertifizierte und noch benötigte Zugriffe; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > IAM > Access reports und IAM Identity Center > Permission sets öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-iam liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/security_iam_id-based-policy-examples.html",
+                    "rel": "reference",
+                    "text": "BER.4.4 – Überprüfung von Berechtigungen"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-iam",
+                    "value": "aws iam get-account-authorization-details --filter LocalManagedPolicy Role --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Sichtung lokaler IAM-Rollen und verwalteter Richtlinien vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen und erforderliche IAM-Leserechte. Die Ausführung ist kontoweit lesend; sensible Richtlinieninhalte sind geschützt zu speichern. Erwartet werden zweckgebundene Rollen ohne unnötige Administratorrechte. Abweichungen werden mit Konto, Zeitpunkt, Rolle und Bewertung dokumentiert; föderierte Zuweisungen, Permission Boundaries und Organizations-SCPs sind zusätzlich separat zu prüfen."
+                  }
+                ],
+                "set-parameters": [
+                  {
+                    "param-id": "ber.4.4-prm1",
+                    "values": [
+                      "mindestens vierteljährlich sowie anlassbezogen"
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "654e1ae6-f7ee-4421-b440-5b3d2f3c8e23",
+                "control-id": "_55b70084-f446-42af-908b-0f514a72f380",
+                "description": "Privilegierter Zugriff wird über IAM oder IAM Identity Center mit MFA geschützt; die Durchsetzung liegt im autoritativen Identitätsdienst.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto MFA-Richtlinie und privilegierte Anmeldeprotokolle anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind erzwungene MFA ohne gemeinsame Dauerzugänge; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > IAM Identity Center > Settings > Authentication oder den angebundenen Identitätsanbieter öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nFür die heterogenen Identitätsanbieter besteht kein sicherer universeller Security-Hub-Befehl. Deshalb ist keine config-commands-Eigenschaft vorhanden; MFA wird im autoritativen IdP als Richtlinie oder IaC umgesetzt und mit Richtlinienexport sowie Anmeldeprotokollen nachgewiesen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/security_iam_id-based-policy-examples.html",
+                    "rel": "reference",
+                    "text": "BER.5.9 – Mehr-Faktor-Authentisierung für weitreichende Berechtigungen"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse."
+              },
+              {
+                "uuid": "46fa1a77-6aae-484e-8a8a-dfec967f4cab",
+                "control-id": "_681494bd-8d1d-4b34-84f6-abab2f4ea751",
+                "description": "Security Hub V2 integriert Findings unterstützter AWS-Sicherheitsdienste in ein gemeinsames OCSF-basiertes Analysemodell.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Konfigurationsrichtlinie, Datenquellen und Security Coverage anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind vollständige Abdeckung der vorgesehenen Konten und Regionen; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Management > Configurations und Summary > Security coverage öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-v2 liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-recommendations.html",
+                    "rel": "reference",
+                    "text": "DET.3.2 – Integration von Cloud-Diensten"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-v2",
+                    "value": "aws securityhub describe-security-hub-v2 --region <HOME_REGION> --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "96b02ea9-8c1c-40a5-8b70-3fd4469120c3",
+                "control-id": "_d1691e68-55a6-4b71-8d55-08a10eaeb4a5",
+                "description": "Security Hub V2 korreliert normalisierte Findings und Ressourcenbeziehungen nahezu in Echtzeit durch {{AWS Security Hub V2 mit OCSF-basierter Korrelation und Risikoanalyse}}.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto OCSF-Findings, Analysestatus und Severity anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind aktuelle, nachvollziehbare Findings aus erwarteten Quellen; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Summary und Security > Findings öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-findings liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://aws.amazon.com/blogs/aws/aws-security-hub-now-generally-available-with-near-real-time-analytics-and-risk-prioritization/",
+                    "rel": "reference",
+                    "text": "DET.4.2 – Automatische Angriffserkennung"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-findings",
+                    "value": "aws securityhub get-findings-v2 --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ],
+                "set-parameters": [
+                  {
+                    "param-id": "det.4.2-prm1",
+                    "values": [
+                      "AWS Security Hub V2 mit OCSF-basierter Korrelation und Risikoanalyse"
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "dbfaf258-17c7-48fe-bbe4-9a5bf7acf6a9",
+                "control-id": "_a71bbf22-4b3a-41d0-8ec8-6de7a9790040",
+                "description": "CloudTrail protokolliert Security-Hub-API-Aufrufe und macht Richtlinien- und Regeländerungen nachvollziehbar.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto CloudTrail-Trail und Security-Hub-Management-Events anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind vollständige, geschützte und einem Akteur zuordenbare Änderungsprotokolle; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > CloudTrail > Event history mit Event source securityhub.amazonaws.com öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-cloudtrail liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/sh-securityhub-ct.html",
+                    "rel": "reference",
+                    "text": "DET.4.4 – Änderungen an Sicherheitsrichtlinien"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-cloudtrail",
+                    "value": "aws cloudtrail lookup-events --lookup-attributes AttributeKey=EventSource,AttributeValue=securityhub.amazonaws.com --max-results 50 --region <HOME_REGION> --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "8819441f-20da-4371-8ef0-e4ae29f3ffdb",
+                "control-id": "_92f55893-595b-4d3d-80eb-ef8e7b5ed1cb",
+                "description": "Automation Rules klassifizieren und aktualisieren Findings nach {{OCSF-basierte Severity-, Status-, Ressourcen-, Konto- und Regionskriterien}} durch {{AWS Security Hub V2 Automation Rules und Korrelationsanalyse}}.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Automation Rules, Reihenfolge, Kriterien und Preview-Treffer anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind begründete Regeln mit erwarteten Treffern ohne schädliche Überschneidung; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Management > Automations öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-regeln liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-automation-rules.html",
+                    "rel": "reference",
+                    "text": "DET.6.1.1 – Automatisierte Feststellung"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-regeln",
+                    "value": "aws securityhub list-automation-rules-v2 --region <HOME_REGION> --max-results 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ],
+                "set-parameters": [
+                  {
+                    "param-id": "det.6.1.1-prm1",
+                    "values": [
+                      "OCSF-basierte Severity-, Status-, Ressourcen-, Konto- und Regionskriterien"
+                    ]
+                  },
+                  {
+                    "param-id": "det.6.1.1-prm2",
+                    "values": [
+                      "AWS Security Hub V2 Automation Rules und Korrelationsanalyse"
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "f69e2ca9-a7dd-4afe-834b-027717dcdf80",
+                "control-id": "_f45e08b7-8f42-469a-aa22-63b93daba60e",
+                "description": "Automation Rules und EventBridge unterstützen die Weiterleitung relevanter Findings an freigegebene Alarmierungsziele durch {{AWS Security Hub V2 Automation Rules und Amazon EventBridge}}.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Testfinding, Automation Rule, EventBridge-Ziel und Empfangsbestätigung anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind fristgerechte, deduplizierte und einer Rolle zugeordnete Alarmierung; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Management > Automations und EventBridge > Rules öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-regeln liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen. Das organisationsspezifische EventBridge-Ziel und seine Fehlerbehandlung sind zusätzlich separat zu konfigurieren.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-automations.html",
+                    "rel": "reference",
+                    "text": "DET.6.1.2 – Automatische Alarmierung"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-regeln",
+                    "value": "aws securityhub list-automation-rules-v2 --region <HOME_REGION> --max-results 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ],
+                "set-parameters": [
+                  {
+                    "param-id": "det.6.1.2-prm2",
+                    "values": [
+                      "AWS Security Hub V2 Automation Rules und Amazon EventBridge"
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "e8c9479d-1a02-41f8-87f6-e4a35d2fb76d",
+                "control-id": "_02e94d9c-cd23-4cb4-a6ef-7ccd7efb0869",
+                "description": "Findings halten Status, Zeitstempel, Kommentare und Ressourcenbezug als technischen Untersuchungsnachweis fest.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Finding-Status, Kommentare, Zeitstempel und Exportnachweise anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind nachvollziehbare Bearbeitung und Aufbewahrung gemäß Vorgabe; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Security > Findings öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-findings liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen. Eine geschützte Langzeitablage und das autoritative Fall- oder Berichtssystem bleiben extern umzusetzen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/dashboard-v2.html",
+                    "rel": "reference",
+                    "text": "DET.6.1.3 – Dokumentation von Ergebnissen"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-findings",
+                    "value": "aws securityhub get-findings-v2 --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "90594339-d1d0-4f89-8be1-387e89751e65",
+                "control-id": "_988a898a-f7c3-4e6c-9746-8b20e2e85ecd",
+                "description": "Triage Dashboard, Filter und Automation Rules unterstützen die priorisierte Erstbearbeitung.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto neue kritische und hohe Findings mit Ticket, Eigentümer und Reaktionszeit anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind fristgerechte Zuordnung und begründete Erstbehandlung; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Summary > Triage und Security > Findings öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-findings liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/dashboard-v2.html",
+                    "rel": "reference",
+                    "text": "REA.2.1 – Triage und Erstreaktion"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-findings",
+                    "value": "aws securityhub get-findings-v2 --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "24bac6bd-73cd-4524-ab54-dd9de298ca2d",
+                "control-id": "_3c124fd5-bd24-4864-a931-b3a226177f2e",
+                "description": "Automation Rules können Findings nicht-destruktiv aktualisieren; EventBridge kann freigegebene externe Runbooks anstoßen.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Regelvorschau und kontrolliertes Testfinding anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind eng begrenzte reversible Aktionen mit Fehlerbehandlung; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Management > Automations > Create rule öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-regeln liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen. Destruktive Ressourcenreaktionen benötigen ein servicespezifisches freigegebenes Runbook mit Rücksetzweg.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-automation-rules.html",
+                    "rel": "reference",
+                    "text": "REA.2.2 – Automatische Erstreaktion"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-regeln",
+                    "value": "aws securityhub list-automation-rules-v2 --region <HOME_REGION> --max-results 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "78690888-726c-4af8-b812-1ee53cb3de71",
+                "control-id": "_484b2d34-72ad-4472-b5c9-bf0643f7afd7",
+                "description": "Strukturierte Findings und CloudTrail-Daten liefern technische Inhalte für die autoritative Vorfallsakte.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Finding, Incident-Ticket, CloudTrail-Ereignisse und Abschlussbewertung anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind eindeutige Referenzen, vollständige Zeitleiste und geschützte Nachweise; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Security > Findings und CloudTrail > Event history öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-findings liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen. Eine geschützte Langzeitablage und das autoritative Fall- oder Berichtssystem bleiben extern umzusetzen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/sh-securityhub-ct.html",
+                    "rel": "reference",
+                    "text": "REA.2.3 – Dokumentation von Vorfällen"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-findings",
+                    "value": "aws securityhub get-findings-v2 --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              },
+              {
+                "uuid": "54289012-aba2-4c2b-9f5a-4a154ea6b145",
+                "control-id": "_b2a6adf2-ffe3-4b9d-9678-e938e425cb58",
+                "description": "Executive Dashboard und Coverage-Ansichten stellen Trends und Kennzahlen zur Wirksamkeitsbeobachtung bereit.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Dashboard-Trends, Filter, Datenquellen und Vergleichsreihe anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind reproduzierbare Kennzahlen mit stabiler Coverage und Maßnahmenbezug; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Summary > Executive öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-findings liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen. Eine geschützte Langzeitablage und das autoritative Fall- oder Berichtssystem bleiben extern umzusetzen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/dashboard-v2.html",
+                    "rel": "reference",
+                    "text": "REA.3.1.1 – Quantitative Analyse"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-findings",
+                    "value": "aws securityhub get-findings-v2 --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Voraussetzungen sind Organisations- und Regionenmodell, delegiertes Administratorkonto, aktivierte Quelldienste, Least-Privilege-IAM, MFA, organisationsweiter CloudTrail-Trail und definierte Triage- sowie Incident-Prozesse. Der Dienst ersetzt weder Quelldetektoren noch Langzeitarchiv, IAM-Governance oder Incident-Verantwortung."
+      },
+      {
+        "uuid": "81b62d57-f47f-470e-b936-1b4b365863cb",
+        "type": "software",
+        "title": "AWS Security Hub CSPM (Dienststand 2026-07-28)",
+        "description": "Cloud-Security-Posture-Management-Funktion für zentrale Konfigurationsrichtlinien, Sicherheitsstandards, Security Controls und AWS-Config-basierte Konformitätsbewertungen über Konten und Regionen.",
+        "purpose": "Sicherheitsbaselines zentral ausrollen, Konfigurationsdrift verhindern und Abweichungen unterstützter AWS-Ressourcen als Findings bereitstellen.",
+        "props": [
+          {
+            "name": "Taxonomy-L1",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Protect"
+          },
+          {
+            "name": "Taxonomy-L2",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Cloud & Container"
+          },
+          {
+            "name": "Taxonomy-L3",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Cloud Posture Management"
+          },
+          {
+            "name": "Taxonomy-L4",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "CSPM"
+          },
+          {
+            "name": "Taxonomy-Mapping-Rationale",
+            "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+            "value": "Die primäre Wirkung ist die kontinuierliche Cloud-Posture-Bewertung und zentrale Durchsetzung von CSPM-Richtlinien. CNAPP wäre zu breit, da keine vollständige Workload-, IaC- und Identitätsschutzplattform vorliegt; Configuration Compliance Monitoring beschreibt nur den Prüfpfad."
+          }
+        ],
+        "links": [
+          {
+            "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/central-configuration-intro.html",
+            "rel": "reference",
+            "text": "Central Configuration"
+          },
+          {
+            "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/enable-controls-overview.html",
+            "rel": "reference",
+            "text": "Security Controls"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "4712a7dc-398e-4b0f-a604-2f0793295c1c",
+            "source": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/control_layer/Grundschutz%2B%2B/sources/catalogs/Kernel/BSI-Stand-der-Technik-Kernel-G0-catalog.json",
+            "description": "AWS Security Hub CSPM stellt die technische Basis für zentral verwaltete und über Konten sowie Regionen vererbte Sicherheitsbaselines bereit. Die Control-Zuordnungen beschreiben sowohl die automatische Verteilung genehmigter Konfigurationsrichtlinien als auch die AWS-Config-basierte Prüfung unterstützter Ressourcen.",
+            "implemented-requirements": [
+              {
+                "uuid": "2df5cf3b-f2f2-425f-9ca4-cd8d97251d71",
+                "control-id": "_fceb6b0b-2cf9-4644-9f48-c6b307b2d0ad",
+                "description": "Central Configuration verteilt genehmigte Standards, Controls und Parameter über Konten und Regionen durch {{AWS Security Hub CSPM mit zentralen Konfigurationsrichtlinien}}.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Konfigurationsrichtlinien, Associations und effektive Einstellungen anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind zentral verwaltete Ziele mit erfolgreichem Status und dokumentierten Ausnahmen; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub CSPM > Configuration > Policies öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-richtlinien liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/central-configuration-intro.html",
+                    "rel": "reference",
+                    "text": "KONF.2.5.1 – Automatische Konfigurationsverwaltung"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-richtlinien",
+                    "value": "aws securityhub list-configuration-policies --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ],
+                "set-parameters": [
+                  {
+                    "param-id": "konf.2.5.1-prm1",
+                    "values": [
+                      "AWS Security Hub CSPM mit zentralen Konfigurationsrichtlinien"
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "2d641251-4dd8-44b7-8aef-d58233453f7f",
+                "control-id": "_9e53c0f8-53e0-439b-a4ce-ee321f55ac52",
+                "description": "CSPM Controls bewerten unterstützte AWS-Ressourcen mithilfe von AWS Config gegen aktivierte Standards durch {{AWS Security Hub CSPM Controls auf Basis von AWS Config}}.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Standards, Controls, AWS-Config-Recorder, Coverage und Ergebnisstichprobe anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind vollständige Aufzeichnung und erklärbare Konformitätsergebnisse; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub CSPM > Security standards und Controls sowie AWS Config > Settings öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-richtlinien liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/enable-controls-overview.html",
+                    "rel": "reference",
+                    "text": "KONF.10.5.1 – Automatisierte Überprüfung der Konfiguration"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-richtlinien",
+                    "value": "aws securityhub list-configuration-policies --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ],
+                "set-parameters": [
+                  {
+                    "param-id": "konf.10.5.1-prm1",
+                    "values": [
+                      "AWS Security Hub CSPM Controls auf Basis von AWS Config"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Voraussetzungen sind AWS Organizations, delegierter CSPM-Administrator, Home-Region, verknüpfte Regionen, aktivierte AWS-Config-Aufzeichnung, genehmigte Control-Baseline und Ausnahmeverfahren. Nicht unterstützte Ressourcen und fachliche Sollvorgaben bleiben extern zu behandeln."
+      }
+    ],
+    "capabilities": [
+      {
+        "uuid": "98b1e289-3065-433d-8eaf-ff236e6a15a1",
+        "name": "Zentrale AWS-Sicherheitsanalyse und Cloud-Sicherheitslage",
+        "description": "Gemeinsame Fähigkeit von AWS Security Hub V2/Essentials und AWS Security Hub CSPM zur risikobasierten Priorisierung und Korrelation komplexer Angriffspfade.",
+        "incorporates-components": [
+          {
+            "component-uuid": "ee54f363-00a4-4f73-ad53-23f7ce5812fd",
+            "description": "Liefert normalisierte Findings, Korrelation, Triage, Trends und Automation."
+          },
+          {
+            "component-uuid": "81b62d57-f47f-470e-b936-1b4b365863cb",
+            "description": "Liefert zentrale Posture-Richtlinien und Konformitätsfindings."
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "85cb79ca-5a8b-4720-b7d1-073c60ff67f5",
+            "source": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/control_layer/Grundschutz%2B%2B/sources/catalogs/Kernel/BSI-Stand-der-Technik-Kernel-G0-catalog.json",
+            "description": "Die gemeinsame Capability entsteht aus dem gemeinsamen Einsatz der OCSF-basierten V2-Analyse und der CSPM-Posture-Signale. Priorisierte Findings werden dabei mit Ressourcenbeziehungen und Cloud-Konfigurationskontext verbunden, ohne fehlende Quelldienste oder organisatorische Risikokriterien zu ersetzen.",
+            "implemented-requirements": [
+              {
+                "uuid": "b0beb5df-ea5d-459d-b2d7-0907ad9dcda2",
+                "control-id": "_a9af82d7-44b8-412c-b8a0-becbda9b1da9",
+                "description": "V2-Analyse und CSPM-Kontext priorisieren Findings anhand von {{Security-Hub-Severity, Exposition, Ressourcenbeziehungen und dokumentierte Geschäftskritikalität}}.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto kritische und hohe Findings mit Exposure-, Ressourcen- und CSPM-Kontext anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind nachvollziehbare Rangfolge und fristgerechte Bearbeitung; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Summary > Triage und Security > Findings öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-findings liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://aws.amazon.com/blogs/aws/aws-security-hub-now-generally-available-with-near-real-time-analytics-and-risk-prioritization/",
+                    "rel": "reference",
+                    "text": "DET.5.1.1 – Risikobasierte Priorisierung"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-findings",
+                    "value": "aws securityhub get-findings-v2 --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ],
+                "set-parameters": [
+                  {
+                    "param-id": "det.5.1.1-prm1",
+                    "values": [
+                      "Security-Hub-Severity, Exposition, Ressourcenbeziehungen und dokumentierte Geschäftskritikalität"
+                    ]
+                  }
+                ]
+              },
+              {
+                "uuid": "b33abc9c-a337-4383-a994-1c4d346f73bc",
+                "control-id": "_1221903d-e402-49b0-a7ac-763a11683a4b",
+                "description": "OCSF-normalisierte Findings und Ressourcenbeziehungen machen zusammenhängende Exposures und Angriffspfade sichtbar.\n\n### Prüfung\nIm delegierten Administratorkonto beziehungsweise zuständigen Sicherheitskonto Mehrsignal-Testfall, Quellfindings, Ressourcenbeziehungen und Regionen anhand der Produktansicht, eines aktuellen JSON-Nachweises und einer repräsentativen Stichprobe prüfen. Konform sind vollständige aktuelle Korrelation ohne unerklärte Signalisolierung; fehlende, unklare, überfällige oder nicht genehmigte Ergebnisse gelten als Abweichung und müssen vor einer Änderung dokumentiert und risikobasiert behandelt werden.\n\n### Umsetzung\n#### Benutzeroberfläche (GUI)\nAWS Console > Security Hub > Summary und Security > Findings öffnen, Konto, Home-Region, verknüpfte Regionen, Status und relevante Filter dokumentieren und die angezeigten Ergebnisse mit der genehmigten Baseline sowie vorhandenen Tickets oder Änderungsnachweisen vergleichen.\n\n#### CLI/API/IaC\nDie config-commands-Eigenschaft der Klasse pruefung-aggregation liefert den maschinenlesbaren Prüfpfad. Änderungen werden erst nach fachlicher Freigabe und dokumentierter Auswertung des Istzustands vorgenommen; organisationsspezifische Rollen, Fristen, Ausnahmen und Zielsysteme werden nicht durch einen unsicheren generischen Änderungsbefehl vorweggenommen.",
+                "links": [
+                  {
+                    "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/security-hub-region-aggregation.html",
+                    "rel": "reference",
+                    "text": "DET.5.3.2 – Korrelation komplexer Angriffswege"
+                  }
+                ],
+                "remarks": "Betreiberaufgabe: Zuständigkeit, Freigabe, Ausnahmen, Aufbewahrung der Nachweise und regelmäßige Wirksamkeitsbewertung sind organisationsspezifisch festzulegen. AWS Security Hub liefert den beschriebenen technischen Beitrag, ersetzt jedoch weder fachliche Risikoeinstufung noch Incident-Response-, IAM-, Datenschutz- oder Change-Prozesse.",
+                "props": [
+                  {
+                    "name": "config-commands",
+                    "ns": "https://bsi.bund.de/ns/sdt/custom-properties/placeholder",
+                    "class": "pruefung-aggregation",
+                    "value": "aws securityhub list-aggregators-v2 --region <HOME_REGION> --max-items 100 --output json",
+                    "remarks": "Zweck ist eine revisionsfähige Bestandsaufnahme vor Änderungen. Voraussetzung sind AWS CLI v2, kurzlebige Anmeldeinformationen, erforderliche Leserechte und die ausdrücklich gewählte Home-Region. Alle in spitzen Klammern dargestellten Platzhalter sind durch freigegebene Werte im dokumentierten AWS-Format zu ersetzen. Die Ausführung ist lesend, verändert keine Ressourcen und liefert JSON als Nachweis. Leere, fehlende oder abweichende Felder sind fachlich zu bewerten und mit Konto, Region, Zeitpunkt und ausführender Rolle zu protokollieren."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "4ef25315-6d06-474b-9b80-d2c45b25de57",
+          "title": "BSI Stand der Technik Kernel G0 Catalog",
+          "description": "Verbindlicher OSCAL Source Catalog für alle Control-IDs.",
+          "rlinks": [
+            {
+              "href": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/control_layer/Grundschutz%2B%2B/sources/catalogs/Kernel/BSI-Stand-der-Technik-Kernel-G0-catalog.json",
+              "media-type": "application/oscal.catalog+json"
+            }
+          ]
+        },
+        {
+          "uuid": "6718e950-961d-4e90-97e1-452cf4555595",
+          "title": "AWS Security Hub – General Availability",
+          "description": "Herstellerquelle zur allgemeinen Verfügbarkeit und OCSF-basierten Risikoanalyse.",
+          "rlinks": [
+            {
+              "href": "https://aws.amazon.com/blogs/aws/aws-security-hub-now-generally-available-with-near-real-time-analytics-and-risk-prioritization/",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "47e0c827-105b-41c2-9da1-e67877fe3c54",
+          "title": "Enabling AWS Security Hub",
+          "description": "Herstellerdokumentation zu Aktivierung und delegiertem Administrator.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-enable.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "272385e8-188c-4047-9e6a-eb6b47ac56dd",
+          "title": "Security Hub configuration for organizations",
+          "description": "Herstellerdokumentation zur empfohlenen Organisationskonfiguration.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-da-policy.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "4803b204-10f3-4557-bcad-f0f516ea34cd",
+          "title": "Security Hub recommendations",
+          "description": "Herstellerempfehlungen zu CSPM und Quelldiensten.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-recommendations.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "6690b0f4-a36b-42ae-9be7-a1fafd783147",
+          "title": "Cross-Region aggregation",
+          "description": "Herstellerdokumentation zu Home-Region und verknüpften Regionen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/security-hub-region-aggregation.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "b272e82e-1805-4853-bb90-5900fbb6406f",
+          "title": "Security Hub V2 Automation Rules",
+          "description": "Herstellerdokumentation zu Kriterien, Preview und Aktionen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-v2-automation-rules.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "48066f97-7db7-4523-98da-9d5e3e1f1eab",
+          "title": "Security Hub Summary Dashboard",
+          "description": "Herstellerdokumentation zu Executive-, Triage-, Trends- und Coverage-Ansichten.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/dashboard-v2.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "05c87260-2f25-4f1c-9f82-78e95113dae7",
+          "title": "Security Hub IAM policy examples",
+          "description": "Herstellerdokumentation zu Least Privilege, MFA und Access Analyzer.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/security_iam_id-based-policy-examples.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "30bf17db-3305-4e65-8db6-7eba8a11b149",
+          "title": "Security Hub API calls with CloudTrail",
+          "description": "Herstellerdokumentation zur Protokollierung von Security-Hub-API-Aufrufen.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/sh-securityhub-ct.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "5a77f3e6-0d4c-4e28-9917-1292c64b780d",
+          "title": "Security Hub CSPM central configuration",
+          "description": "Herstellerdokumentation zu Policies, Vererbung und Drift-Vermeidung.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/central-configuration-intro.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "4999e2a4-3033-47bf-b32f-0096ef7f975a",
+          "title": "Security Hub CSPM Controls",
+          "description": "Herstellerdokumentation zu Security Controls und Standards.",
+          "rlinks": [
+            {
+              "href": "https://docs.aws.amazon.com/securityhub/latest/userguide/enable-controls-overview.html",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "a664338d-8ebd-4567-be06-9e7b6fa76c63",
+          "title": "Open Cybersecurity Schema Framework",
+          "description": "Herstellerneutrale Ursprungsquelle für das normalisierte Ereignisschema.",
+          "rlinks": [
+            {
+              "href": "https://ocsf.io/",
+              "media-type": "text/html"
+            }
+          ]
+        },
+        {
+          "uuid": "bdd2f177-cf1e-431c-805d-a0747b0b150a",
+          "title": "NCCoE Mapping to NIST 800 Series",
+          "description": "Unabhängige NIST/NCCoE-Praxisquelle zur Nutzung von AWS Security Hub.",
+          "rlinks": [
+            {
+              "href": "https://pages.nist.gov/ACMVPDocs/appendix-e/MappingtoNIST800Series.html",
+              "media-type": "text/html"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
