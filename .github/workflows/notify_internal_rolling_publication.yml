@@ -1,0 +1,53 @@
+name: Notify Internal Rolling Publication
+
+on:
+  pull_request_target:
+    types:
+      - closed
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rolling-publication-callback-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    name: Notify Bibliothek-intern
+    if: >-
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'main' &&
+      github.event.pull_request.head.ref == 'automation/rolling-publication' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send verified merge event
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.INTERNAL_REPO_DISPATCH_PAT }}
+          script: |
+            const pullRequest = context.payload.pull_request;
+            if (!pullRequest.merge_commit_sha) {
+              core.setFailed("Merged pull request has no merge commit SHA.");
+              return;
+            }
+
+            await github.rest.repos.createDispatchEvent({
+              owner: "Stand-der-Technik",
+              repo: "Bibliothek-intern",
+              event_type: "rolling-publication-merged",
+              client_payload: {
+                repository: context.payload.repository.full_name,
+                pull_request: pullRequest.number,
+                merge_commit_sha: pullRequest.merge_commit_sha,
+              },
+            });
+
+            await core.summary
+              .addHeading("Rolling publication callback")
+              .addRaw(
+                `Notified Bibliothek-intern about merged public pull request #${pullRequest.number}.`
+              )
+              .write();
