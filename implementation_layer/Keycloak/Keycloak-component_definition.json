@@ -1,0 +1,800 @@
+{
+  "component-definition": {
+    "uuid": "a9c5ad63-9bc8-4e3e-8e54-e45f2f1daed7",
+    "metadata": {
+      "title": "Entwurf Keycloak Component Definition",
+      "last-modified": "2026-07-29T14:57:06Z",
+      "version": "2026-07-29T14:57:06Z",
+      "oscal-version": "1.2.2",
+      "document-ids": [
+        {
+          "identifier": "db954e0d-c551-4a93-8a7f-a0d723b56e45",
+          "scheme": "https://www.ietf.org/rfc/rfc9562"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "a7c2acb9-369d-4df0-9c7a-1a84e78cecd2",
+          "type": "organization",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik"
+        }
+      ],
+      "links": [
+        {
+          "href": "#0c203588-637a-4b4a-a547-bb89da695457",
+          "rel": "reference",
+          "text": "Keycloak Release Notes"
+        },
+        {
+          "href": "#99a1c603-732f-4610-9d0b-5c94fbccc6f9",
+          "rel": "reference",
+          "text": "Weitere Keycloak Guides und Dokumentation. "
+        }
+      ],
+      "remarks": "Keycloak ist eine Open-Source-Software für das Identitäts- und Zugriffsmanagement (IAM), die als zentrale Plattform zur Authentifizierung von Nutzenden und zur Steuerung von Zugriffsrechten und Berechtigungen dient.\n\nDies ermöglicht es Identitätsprüfungen an einem einzigen, gehärteten Ort zu bündeln, statt sie auf viele einzelne Anwendungen zu verteilen. Durch die Bereitstellung von Single Sign-On (SSO) müssen sich Nutzende nur noch ein einziges Mal anmelden, um auf alle verknüpften Apps zuzugreifen, wodurch das Risiko durch mehrfach eingegebene Passwörter sinkt. Für zusätzlichen Schutz sorgt die integrierte Mehrfaktor-Authentifizierung (MFA) über Einmalpasswörter (OTP), während bestehende Benutzerspeicher wie Active Directory oder LDAP über Identity Federation nahtlos angebunden werden können.\n\nKeycloak basiert auf etablierten Industriestandards wie OpenID Connect, OAuth 2.0 etc. und ermöglicht Administrierenden über eine feingranulare, rollenbasierte Autorisierung (RBAC) die exakte Kontrolle darüber, wer welche Daten einsehen und nutzen darf.\n\nAbgrenzung:\n\nIm Rahmen dieser Dokumentation wird ausschließlich der Keycloak Server Administration Guide herangezogen. Der Fokus liegt somit rein auf der administrativen Konfiguration von Identitäten, Berechtigungen und Mandanten (Realms) über die Keycloak-Bedienoberfläche.\n\nDiese Component Definition bezieht sich auf die Keycloak Version 26.7.0 und beruft sich daher auf die Keycloak-Dokumentation für diesen Versionsstand.\n\nAls Anwendungsszenario wird eine Webanwendung (browserbasierte Single Page Application, SPA) betrachtet.\n\nErweiterungen im Sinne der Wiederverwendbarkeit der Keycloak Component Definition sind vorgesehen und erwünscht."
+    },
+    "components": [
+      {
+        "uuid": "dbd515d0-1a79-4200-ab50-cd2c2cf4474e",
+        "type": "software",
+        "title": "Realm",
+        "description": "Die Komponente beschreibt die sicherheitsrelevante Basiskonfiguration eines Keycloak-Realms als abgegrenzten Verwaltungs- und Vertrauensbereich. Sie umfasst Realm-Zweck, Realm-Abgrenzung, Benutzerprofilverwaltung, Pflichtfelder, Attributvalidierungen, E-Mail- und Benachrichtigungskonfiguration sowie grundlegende Login- und Realm-Einstellungen. Die Komponente bildet den zentralen Konfigurationsrahmen, in dem Keycloak Benutzer, Rollen, Gruppen, Clients und Identitätsattribute für einen Realm verwaltet.",
+        "control-implementations": [
+          {
+            "uuid": "6f0e92de-fddc-4df7-9618-e1cfb3226909",
+            "source": "#00903e72-6424-4db5-89b6-a48f17fcb8c6",
+            "description": "Die zugeordneten Anforderungen werden durch Realm-weite Keycloak-Konfigurationen für Benutzer, Identitätsdaten, Gruppen, Rollen, Authentication Flows, Password Policies, MFA, Passkeys, Sessions, Brute-Force-Detection und User Events unterstützt. Keycloak stellt hierfür Admin-Console-Funktionen, Realm-Objekte, Event-Erzeugung und Realm-Exports bereit; externe Betriebsverantwortungen werden in Remarks abgegrenzt.",
+            "implemented-requirements": [
+              {
+                "uuid": "06567621-b609-464f-b695-3f3b22cacb95",
+                "control-id": "_c18f2b2d-fb62-42d5-bf73-ec3966ed0fb4",
+                "description": "Keycloak unterstützt das Inventar der Berechtigungen, indem Realm-Daten zu Benutzern, Dienstkonten, Gruppen, Realm-Rollen, Client-Rollen, Role Mappings, Clients, Client Scopes bereitgestellt werden; Keycloak stellt damit Inventardaten bereit, während das eigentliche vollständige Berechtigungsinventar Betreiber- und Institutionenverantwortung bleibt. Die Umsetzung erfolgt über Users, Groups, Roles, Clients, Client scopes, Sessions sowie über Realm export und die Admin REST API.",
+                "links": [
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "99b7a095-3605-432f-b0f7-4625ae61b818",
+                "control-id": "_7bba1e58-63d0-4588-81dc-f87c512e7e82",
+                "description": "Keycloak implementiert die Ereigniserzeugung zu Stammdatenänderungen, indem Änderungen an Benutzerdaten, Attributen, Gruppenmitgliedschaften und Credentials als Admin Events und bei Anmeldebezug als User Events erzeugt werden. Die Umsetzung erfolgt über Realm settings > Events > Admin events sowie Users > Benutzer > Details, Attributes, Groups und Credentials; bei User Profile wird die Datenstruktur über Realm settings > User profile gepflegt.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ca3c6aba-e4c1-4255-8185-c258736da2e8",
+                "control-id": "_fbc81602-53a3-44a0-a6bf-c83b3ec60964",
+                "description": "Keycloak unterstützt die Deaktivierung von Identitäten bei Weggang, indem Benutzerkonten deaktiviert, Rollen entzogen und aktive Sitzungen beendet werden können. Die Umsetzung erfolgt über Users > Benutzer > Enabled = Off, Users > Benutzer > Role mapping, Groups, Sessions > Logout sowie bei föderierten Quellen über User federation > LDAP provider > Synchronize changed users.",
+                "links": [
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "1cafb8e8-97d1-4c9a-aa34-fc8312c62914",
+                "control-id": "_f7541c92-ff46-4d17-9232-2998a41c6613",
+                "description": "Keycloak unterstützt das Löschen nicht mehr benötigter Identitäten, indem lokale Realm-Benutzer gelöscht oder bis zum Ablauf festgelegter Fristen deaktiviert gehalten werden können. Die Umsetzung erfolgt über Users > Benutzer > Delete beziehungsweise vor Ablauf der Löschfrist über Users > Benutzer > Enabled = Off; zusätzlich werden Rollen, Gruppen, Consents, Sessions und Offline Sessions geprüft.",
+                "links": [
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b46285cf-cdd1-4d69-8981-d6156d54cac2",
+                "control-id": "_46f20b63-b07f-4c25-bdcc-b58239432290",
+                "description": "Keycloak unterstützt die initiale Ausgabe von Authentifizierungsmitteln, indem temporäre Passwörter, Required Actions, OTP-Registrierung, WebAuthn-Registrierung und Recovery Codes kontrolliert für Benutzer gesetzt werden können. Die Umsetzung erfolgt über Users > Add user, Users > Benutzer > Credentials, Authentication > Required actions sowie Authentication > Policies > WebAuthn policy oder OTP policy.",
+                "links": [
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "7c2e1f12-b4af-415c-845a-a31635ff5c86",
+                "control-id": "_265ee5bc-059a-4bde-b480-9bc1611171bf",
+                "description": "Keycloak implementiert realmbezogene Brute-Force-Erkennung und Sperrmechanismen, indem Brute-Force-Detection für password-, OTP- und Recovery-Code-basierte Anmeldeversuche aktiviert wird. Die Umsetzung erfolgt über Realm settings > Security defenses > Brute force detection mit Brute Force Mode, Max Login Failures, Quick Login Check Milliseconds, Minimum Quick Login Wait, Wait Increment, Max Wait, Failure Reset Time und Maximum Secondary Authentication Failures; die konkreten Werte werden als [Entscheidung: Anmeldeversuchsgrenze je Realm und Schutzbedarf] festgelegt.",
+                "links": [
+                  {
+                    "href": "#abddffdb-07d5-42d5-8152-9abea8990d10",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c49799b0-337f-43ab-8b50-3c04c6860ee0",
+                "control-id": "_5c8bb88d-6692-4904-908a-ed3f7a81b34e",
+                "description": "Keycloak implementiert die Begrenzung inaktiver Sitzungen, indem Realm- und Client-Session-Laufzeiten begrenzt und inaktive SSO-Sitzungen beendet werden. Die Umsetzung erfolgt über Realm settings > Sessions mit SSO Session Idle, SSO Session Max, Client Session Idle, Client Session Max sowie bei einzelnen Clients über Clients > Client > Advanced settings und bei Bedarf über Offline Session Idle.",
+                "links": [
+                  {
+                    "href": "#9542fd15-1769-4571-b5ed-aa72fccfb845",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "5bb7469c-7658-43f9-9422-dbbd47831ba2",
+                "control-id": "_dd5fcc0c-d602-4d15-839c-5adb4fef150e",
+                "description": "Keycloak implementiert den Schutz gegen User Enumeration in Anmeldefehlern, indem generische Login-Fehler und passende Login-Flows genutzt werden. Die Umsetzung erfolgt über Authentication > Flows, Realm settings > Login, Theme-Prüfung sowie über die Reset-Credentials- und Login-Meldungen; Keycloak zeigt bei gesperrten Benutzern im Brute-Force-Fall ebenfalls eine generische Fehlermeldung an.",
+                "links": [
+                  {
+                    "href": "#abddffdb-07d5-42d5-8152-9abea8990d10",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "31940a84-d892-4f86-b394-abcbd3106b24",
+                "control-id": "_610f7bda-9051-44a0-bc6e-c8cbbac35af0",
+                "description": "Keycloak unterstützt ereignisgesteuerte Deaktivierungen, indem Benutzerzustände über die Admin Console, die Admin REST API, Federation-Synchronisation und Workflows nach definierten Ereignissen angepasst werden können. Die Umsetzung erfolgt über Users > Benutzer > Enabled = Off, User federation > LDAP provider > Synchronize changed users, Realm settings > Events und bei automatisierten Prozessen über Admin REST API oder Workflows.",
+                "links": [
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "4a801e49-89eb-459a-98c0-739127828958",
+                "control-id": "_2b9ddd3e-5233-46f5-abca-1793b89e2809",
+                "description": "Keycloak implementiert phishing-resistente Mehr-Faktor-Authentisierung, indem WebAuthn, Passkeys und step-up-fähige Authentication Flows für externe oder besonders exponierte Zugriffe konfiguriert werden. Die Umsetzung erfolgt über Authentication > Flows, Authentication > Policies > WebAuthn policy, WebAuthn Passwordless policy, Required actions > WebAuthn Register oder Passkeys sowie über client- oder gruppenbezogene Flow-Auswahl.",
+                "links": [
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "3bdcb5a0-2566-4db4-b473-5343203d922f",
+                "control-id": "_d7c76736-0c1d-4693-92d5-894a8b740204",
+                "description": "Keycloak implementiert technische Policy-Prüfungen gegen Passwort-Recycling, indem Passworthistorie und Wiederverwendungsregeln in der Realm-Passwortrichtlinie aktiviert werden. Die Umsetzung erfolgt über Authentication > Policies > Password policy und die Richtlinie für Password history beziehungsweise Not recently used; ergänzend wird bei bestehenden Benutzern eine Required Action Update Password gesetzt, wenn die Richtlinie neu eingeführt wird.",
+                "links": [
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "cbe99416-3894-47c9-a584-b331ce0b0cf1",
+                "control-id": "_f0722999-f8c4-4c75-810b-94d7563dd698",
+                "description": "Keycloak implementiert technische Policy-Prüfungen gegen Trivialpasswörter, indem Passwort-Blacklists, Mindestlängen, Zeichenklassen, Not Username und weitere Password-Policy-Provider eingesetzt werden. Die Umsetzung erfolgt über Authentication > Policies > Password policy mit Password blacklist, Length, Digits, Uppercase, Lowercase, Special characters, Not username und gegebenenfalls Regex patterns; die Blacklist-Dateien werden serverseitig als freigegebene Passwortlisten bereitgestellt.",
+                "links": [
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "fac37a95-6095-4bf7-8f19-99b03f6c982b",
+                "control-id": "_af5ba77a-8d77-4a4f-8842-23ba9dedb829",
+                "description": "Keycloak implementiert technische Policy-Prüfungen für Passwortqualität, indem die Realm-Passwortrichtlinie Länge, Komplexität, Hashing-Eigenschaften und Wiederverwendung steuert. Die Umsetzung erfolgt über Authentication > Policies > Password policy mit [Entscheidung: Mindestlänge], [Entscheidung: Zeichenklassen], Hashing Algorithm, Hashing Iterations, Password history, Not username, Blacklist und gegebenenfalls Regex-Regeln.",
+                "links": [
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "4e0f5964-f48e-4192-9612-f22796d35bf2",
+                "control-id": "_4de1c314-e6b3-4b70-bc73-54cdafca7ae9",
+                "description": "Keycloak implementiert die technische Erzwingung anlassbezogener Passwortwechsel, indem Passwortänderungen gezielt über Required Actions, Credential Reset oder Expire password ausgelöst werden. Die Umsetzung erfolgt über Users > Benutzer > Credentials > Reset password, Required user actions > Update Password, Authentication > Required actions und bei Vorfällen über Admin REST API oder Workflow.",
+                "links": [
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c881bee9-a036-4ac1-8bd1-9e68be1fd7af",
+                "control-id": "_4785649d-561d-4757-9421-4d0db14ee4df",
+                "description": "Keycloak unterstützt das Monitoring von Zugangsdaten auf Kompromittierung, indem fehlgeschlagene Logins, ungewöhnliche Reset-Vorgänge, Brute-Force-Ereignisse, Credential-Änderungen und Admin-Eingriffe als Events bereitgestellt werden. Die Umsetzung erfolgt über Realm settings > Events, Event listeners, Admin events, Brute force detection und gegebenenfalls Required Actions für betroffene Benutzer.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#abddffdb-07d5-42d5-8152-9abea8990d10",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "59e8fa21-6349-4475-8fd5-cb3c5d45f83a",
+                "control-id": "_2f0d27ba-6f8f-4f1e-9f5b-29cd79d7b08d",
+                "description": "Keycloak unterstützt Mandantenfähigkeit, indem getrennte Realms als abgegrenzte Verwaltungs- und Vertrauensbereiche mit eigener Benutzer-, Rollen-, Gruppen-, Client-, Schlüssel- und Flow-Konfiguration betrieben werden können. Die Umsetzung erfolgt über die Auswahl beziehungsweise Erstellung separater Realms, Realm settings, Clients, Roles, Groups, Identity providers und gegebenenfalls Organizations, wenn innerhalb eines Realms organisationsbezogene Strukturen abgebildet werden.",
+                "links": [
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "4740d41a-ad4e-47a7-b130-a78961f45ddb",
+                "control-id": "_dc58d353-86e1-4070-9f86-b7f0e0f93305",
+                "description": "Keycloak implementiert die Ereigniserzeugung und Ereignisbereitstellung für sicherheitsrelevante Realm-Ereignisse, indem User Events, Admin Events und Event Listener genutzt werden. Die Umsetzung erfolgt über Realm settings > Events mit Save events, Event types, Event listeners, Admin events und Include representation sowie über die serverseitige Log-Konfiguration.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "d79f2e1d-4a2a-424c-8732-d934f69a3ff9",
+                "control-id": "_c25354d3-ed8f-4bac-ad0c-f0641d1b7f84",
+                "description": "Keycloak implementiert die Protokollierung von Authentifizierungen, indem erfolgreiche und fehlgeschlagene Login-, Logout-, Token- und Reset-Ereignisse als User Events erfasst werden. Die Umsetzung erfolgt über Realm settings > Events > User events settings mit Save events und Auswahl relevanter Event types wie LOGIN, LOGIN_ERROR, LOGOUT, CODE_TO_TOKEN, REFRESH_TOKEN, RESET_PASSWORD und UPDATE_PASSWORD.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c71eab19-cfb7-4ce9-9d8a-371739ba254b",
+                "control-id": "_c4cb825e-c401-44a5-8ecf-de12b33e6a16",
+                "description": "Keycloak implementiert die Protokollierung von Was, Wann und Wo, indem Events mit Zeitpunkt, Realm, Client, Benutzerkennung, IP-Adresse, Event-Typ, Ergebnis und betroffener Ressource gespeichert oder weitergegeben werden. Die Umsetzung erfolgt über Realm settings > Events, Admin events, Event listeners und bei Bedarf Include representation für administrative Änderungen.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "3f0aa397-2928-4a75-be67-becc5d6da0da",
+                "control-id": "_8a99b098-7642-4fec-996c-cbe94e7f88e6",
+                "description": "Keycloak unterstützt die Protokollierung von Anwendungsfehlern, indem serverseitige Fehler, Authentifizierungsfehler, Federation-Probleme, Client-Fehlkonfigurationen und Event-Listener-Probleme in der Logging-Kette sichtbar werden. Die Umsetzung erfolgt über die serverseitige Keycloak-Log-Konfiguration, Realm settings > Events für fachliche Fehlerereignisse und gezielte Log-Level-Prüfung bei Betriebsvorfällen.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "c1ceebfd-2515-4d2c-90cc-09441085dd3a",
+                "control-id": "_d1691e68-55a6-4b71-8d55-08a10eaeb4a5",
+                "description": "Keycloak unterstützt automatische Angriffserkennung, indem Brute-Force-Detection, Login-Fehler, ungewöhnliche Reset-Vorgänge, Token-Fehler und Admin Events als auswertbare Signale bereitgestellt werden. Die Umsetzung erfolgt über Realm settings > Security defenses > Brute force detection, Realm settings > Events, Event listeners und definierte Alarmregeln auf LOGIN_ERROR, USER_DISABLED_BY_TEMPORARY_LOCKOUT, RESET_PASSWORD_ERROR und administrativen Änderungen.",
+                "links": [
+                  {
+                    "href": "#abddffdb-07d5-42d5-8152-9abea8990d10",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ed4ff55c-1e67-4adf-b803-bfca1861e180",
+                "control-id": "_426ad852-4455-43a4-b4ff-795ee2caa47b",
+                "description": "Keycloak unterstützt Kriterien für Zufallszahlen bei der Schlüsselerzeugung, indem Realm-Schlüssel über die zugrundeliegende Java- und Plattform-Kryptografie beziehungsweise über angebundene Keystore- oder HSM-Mechanismen erzeugt werden. Die Umsetzung erfolgt über Realm settings > Keys > Providers, den ausgewählten Provider-Typ und bei externem Schlüsselmaterial über kontrollierten Import aus freigegebenen Quellen.",
+                "links": [
+                  {
+                    "href": "#c0ec05dc-5c1c-4dfd-83bf-a5ecc6744078",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "MFA und Passkeys werden in dieser Component eingeordnet, weil sie über Realm-weite Authentication Flows, Required Actions und Policies gesteuert werden. Betreiberverantwortungen wie vollständiges Berechtigungsinventar, Löschfristen, Datenschutzfreigaben, zentrale Logaufbewahrung, Zeitquellen und externe Credential-Monitoring-Dienste sind ergänzend außerhalb der Keycloak-Realm-Konfiguration zu regeln."
+      },
+      {
+        "uuid": "38c86464-aa5e-489f-9c0b-4b9894e7dc22",
+        "type": "software",
+        "title": "Admin Console",
+        "description": "Die Komponente beschreibt die geschützte Keycloak Admin Console als Administrationsoberfläche und Berechtigungssteuerung. Über sie wird festgelegt, wer Keycloak-Konfigurationen, Benutzer, Rollen, Clients, Authentication Flows, Events und sicherheitsrelevante Realm-Parameter ändern darf.",
+        "control-implementations": [
+          {
+            "uuid": "c90fd7fa-df70-4bb1-baee-f34c3622b194",
+            "source": "#00903e72-6424-4db5-89b6-a48f17fcb8c6",
+            "description": "Die zugeordneten Anforderungen werden durch rollenbasierte und feingranulare Administration, getrennte privilegierte Konten, Admin Permissions, realm-management-Rollen, MFA für Administrierende, Admin Events, kontrollierte Break-Glass-Nutzung und regelmäßige Reviews privilegierter Berechtigungen unterstützt. Keycloak stellt dafür Admin Console, Admin REST API, Permissions, Policies, Rollen, Gruppen und Event-Protokollierung bereit; ergänzende Freigabe- und Netzschutzprozesse werden in Remarks abgegrenzt.",
+            "implemented-requirements": [
+              {
+                "uuid": "d1faf0d5-7bd6-4c79-8a55-6d804a7d2bb4",
+                "control-id": "_e83e80c1-6725-4812-82be-f86dce11d07e",
+                "description": "Keycloak implementiert die Einschränkung der Einrichtung, Änderung und Löschung von Identitäten, indem administrative Benutzerverwaltung nur dafür berechtigten Rollen und Gruppen erlaubt wird. Die Umsetzung erfolgt über Admin Console > Realm selection, Realm settings > Admin permissions, Roles, Groups, Users > Role mapping sowie bei dedizierten Realm-Admins über die realm-management-Clientrollen wie manage-users, view-users und query-users.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "007489f9-b6e5-40e6-a3e7-1273efa992cb",
+                "control-id": "_0aec1964-0172-4194-836b-90fa6d8002ba",
+                "description": "Keycloak unterstützt ein zentrales Managementsystem für Zugangskonten, indem Benutzer, Gruppen, Rollen, Clients, Service Accounts und administrative Ressourcen über eine zentrale Admin Console und Admin REST API verwaltet werden. Die Umsetzung erfolgt über die Admin Console, Users, Groups, Roles, Clients, User federation und die Admin REST API; kritische Systeme werden als Clients oder föderierte Quellen priorisiert angebunden.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "13991577-fc25-4fbb-aa86-ee062df4d554",
+                "control-id": "_6b065020-06dc-4be4-86f7-12371499a6c0",
+                "description": "Keycloak implementiert die Einschränkung des Managements von Zugangskonten, indem Managementfunktionen auf administrative Rollen begrenzt und bei Bedarf feingranular delegiert werden. Die Umsetzung erfolgt über Realm settings > Admin permissions, Permissions, Policies, Roles, Groups und realm-management-Clientrollen; Teiladministrierende erhalten nur die benötigten Scopes für Benutzer, Gruppen, Rollen oder Clients.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "08c4356d-afa3-4b18-826f-4bac68bca49a",
+                "control-id": "_744a1a50-616b-4092-91f6-b2b4b1b0aa01",
+                "description": "Keycloak implementiert die Ereigniserzeugung zu Änderungen an Zugangskonten, indem administrative Änderungen an Benutzern, Rollen, Gruppen, Credentials, Sessions und Clients als Admin Events aufgezeichnet werden. Die Umsetzung erfolgt über Realm settings > Events > Admin events mit Save events und bei Bedarf Include representation; relevante Änderungen erfolgen über Users, Groups, Roles und Clients.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "117c26d2-18b2-43f4-a5dc-114366145dc9",
+                "control-id": "_3aee31a9-78e2-453e-8bce-d4212130dbf7",
+                "description": "Keycloak unterstützt die eindeutige Zuordnung von Zugangskonto zu Identität, indem Benutzerobjekte, externe IDs, föderierte Kennungen, Gruppen und separate Admin-Konten nachvollziehbar gepflegt werden. Die Umsetzung erfolgt über Users > Benutzer > Details, Attributes, Federated identity, Groups und Role mapping; für Administrierende werden getrennte persönliche Admin-Benutzer statt gemeinsam genutzter Standardkonten angelegt.",
+                "links": [
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "29a359d8-52e3-4e66-a525-0f759adc5d20",
+                "control-id": "_4791c533-f811-48cf-9957-6e1d438028f5",
+                "description": "Keycloak unterstützt separate privilegierte Zugangskonten, indem administrative Tätigkeiten über eigene Benutzerkonten, Gruppen und Rollen vom normalen Nutzungskonto getrennt werden. Die Umsetzung erfolgt über Users > Add user für persönliche Admin-Konten, Groups > Admin-Gruppe, Role mapping auf realm-management-Rollen sowie MFA-Pflicht im relevanten Admin-Realm.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "605e1029-6154-47f0-b897-ca0ee983ae1c",
+                "control-id": "_abdd8f32-ec02-491a-a39b-7b0b25a597ca",
+                "description": "Keycloak unterstützt Notfallzugangskonten, indem ein eng begrenztes Break-Glass-Konto für den Ausfall regulärer Administrationswege angelegt und kontrolliert verwahrt werden kann. Die Umsetzung erfolgt über Users > Add user, Groups oder Role mapping für minimal notwendige Notfallrechte, Authentication > Required actions, Credentials und Sessions; das Konto wird im Regelbetrieb deaktiviert oder technisch besonders überwacht.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "f25ae90a-d641-4065-911f-f0d118d4ff57",
+                "control-id": "_0e1f4190-44ad-48f0-9504-781aef585ba0",
+                "description": "Keycloak unterstützt das Prinzip der geringsten Berechtigungen, indem administrative Rechte über Rollen, Gruppen, Permissions und Policies auf die minimal erforderlichen Verwaltungsfunktionen begrenzt werden. Die Umsetzung erfolgt über Realm settings > Admin permissions, Roles, Groups, Users > Role mapping, Clients > realm-management und Evaluating Permissions; direkte Volladministrationsrechte werden auf wenige freigegebene Konten begrenzt.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "0ef5bfde-c39f-4795-b9d4-2ca866942a0f",
+                "control-id": "_a9aa521b-e610-40ae-80d0-f1dd3b4ec47f",
+                "description": "Keycloak implementiert rollenbasierte Berechtigungen, indem Realm-Rollen, Client-Rollen, Gruppen, Composite Roles und Role Mappings als primärer Berechtigungsmechanismus genutzt werden. Die Umsetzung erfolgt über Roles, Clients > Client > Roles, Groups > Role mapping, Users > Role mapping und gegebenenfalls Default groups; direkte Sonderrechte an Einzelkonten werden als Ausnahme dokumentiert und befristet.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "4b86521c-5527-4ca2-aefc-62a70a8a4aca",
+                "control-id": "_e549f464-b2fb-42a1-83b9-21bd3bb0f3cf",
+                "description": "Keycloak unterstützt JIT-/JEA-nahe Berechtigungen, indem privilegierte Rollen zeitlich, fachlich und personell begrenzt zugewiesen und unmittelbar wieder entzogen werden können. Die Umsetzung erfolgt über Users oder Groups > Role mapping, Admin permissions, kurzlebige Gruppenmitgliedschaften, Required Actions und Admin REST API; betroffene Rechte werden als [Entscheidung: kritische Keycloak-Adminrechte für temporäre Aktivierung] festgelegt.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "38be663b-efde-48b3-a6da-dc8ee2fc9703",
+                "control-id": "_55b70084-f446-42af-908b-0f514a72f380",
+                "description": "Keycloak implementiert Mehr-Faktor-Authentisierung für weitreichende Berechtigungen, indem administrative Konten und Rollen über angepasste Authentication Flows zu OTP, WebAuthn oder Passkeys verpflichtet werden. Die Umsetzung erfolgt über Authentication > Flows, Authentication > Required actions, Authentication > Policies > OTP policy, WebAuthn policy oder WebAuthn Passwordless policy sowie über gruppen- oder clientbezogene Flow-Auswahl für die Admin Console.",
+                "links": [
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "e3d4a4c7-3380-4fdc-a7e3-b5d43539de2f",
+                "control-id": "_91968d63-7ef1-4625-a3a5-039c340577b1",
+                "description": "Keycloak implementiert die Einschränkung privilegierter Funktionen der Anwendung, indem Admin Console, Admin REST API, Client-Konfiguration, Realm Keys, User Management, Impersonation und Rollenverwaltung nur berechtigten Admin-Rollen zugänglich gemacht werden. Die Umsetzung erfolgt über Realm settings > Admin permissions, realm-management-Rollen, Permissions, Policies, Groups, Users > Role mapping sowie bei Bedarf über dedizierte Realm-Admin-Konsolen.",
+                "links": [
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "7fbf74f6-5bfb-47ce-a6ac-45a4a4c12aee",
+                "control-id": "_e7d500ff-393c-4c14-baed-c87b676efe5c",
+                "description": "Keycloak implementiert die Ereigniserzeugung zu privilegierten Ereignissen, indem administrative Änderungen an Realms, Benutzern, Gruppen, Rollen, Clients, Realm Keys, Authentication Flows und Event-Konfiguration als Admin Events aufgezeichnet werden. Die Umsetzung erfolgt über Realm settings > Events > Admin events mit Save events und Include representation sowie durch kontrollierte Nutzung der Admin Console und Admin REST API.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Admin-spezifisches Event Logging und MFA für weitreichende Berechtigungen werden in dieser Component eingeordnet. Plattformadministration, Datenbankadministration, Containerbetrieb, Zertifikatsbetrieb, Netzwerkfilter und externe Genehmigungsworkflows sind nicht Bestandteil der Admin Console selbst."
+      },
+      {
+        "uuid": "4c1e14ed-7119-4136-897a-4bfc1c658703",
+        "type": "service",
+        "title": "OIDC/OAuth2 Provider Endpoints",
+        "description": "Die Komponente beschreibt den von Anwendungen genutzten OIDC/OAuth2-Protokoll- und Token-Dienst eines Keycloak-Realms. Über diese Provider Endpoints stellt Keycloak OIDC/OAuth2-Flows, Tokens, Claims, Schlüsselmaterial und Vertrauensinformationen für Anwendungen bereit.",
+        "control-implementations": [
+          {
+            "uuid": "e950c766-4a34-423b-9447-71ed3a646bdf",
+            "source": "#00903e72-6424-4db5-89b6-a48f17fcb8c6",
+            "description": "Die zugeordneten Anforderungen werden durch zentral bereitgestellte OIDC/OAuth2-Endpunkte, restriktive Client-Konfiguration, begrenzte Scopes und Audiences, geprüfte Redirect-URIs, kontrollierte Service Accounts, Realm-Key-Management, Token-Signatur und endpointbezogene Ereignisse unterstützt. Keycloak stellt dafür Discovery, Authorization, Token, UserInfo und JWKS sowie Admin-Console-Konfiguration unter Clients, Client scopes, Realm settings > Keys und Realm settings > Events bereit. Die vollständige Umsetzung erfordert ergänzende Validierung in konsumierenden Anwendungen, Reverse-Proxy- oder Firewall-Regeln für nicht benötigte Pfade sowie zentrale Korrelation von Token- und Client-Ereignissen.",
+            "implemented-requirements": [
+              {
+                "uuid": "4ece37e4-34ac-46e6-809e-123491d6c207",
+                "control-id": "_494391e7-774c-4cc4-b9ed-dc8ab652e83b",
+                "description": "Keycloak unterstützt Single-Sign-On für angebundene Webanwendungen, indem OIDC/OAuth2 Provider Endpoints, Client-Konfiguration und die Ausgabe signierter, zeitlich begrenzter Tokens genutzt werden. Die Umsetzung erfolgt über Clients > Create client, Clients > Client > Settings, Valid redirect URIs, Web origins, Client authentication, Client scopes, Mappers sowie über den Discovery-Endpunkt /realms/{realm}/.well-known/openid-configuration, Authorization Endpoint, Token Endpoint, UserInfo Endpoint und JWKS.",
+                "links": [
+                  {
+                    "href": "#d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#f622dc67-2fbb-4773-bda8-0d58b349e996",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "7b9fdab4-d992-4bdd-a677-75f4249b8423",
+                "control-id": "_383f3a5e-d627-46aa-960f-4e8c5c9c9592",
+                "description": "Keycloak unterstützt die Dokumentation von Funktionen ohne vorherige Authentifizierung, indem die öffentlich erreichbaren OIDC/OAuth2-Metadatenendpunkte sowie Login-, Reset- und Registrierungsfunktionen je Realm beschrieben werden. Die Umsetzung erfolgt über Realm settings > Login, Authentication > Flows, Clients > Client > Settings sowie über dokumentierte Endpunkte wie /realms/{realm}/.well-known/openid-configuration, /protocol/openid-connect/auth, /protocol/openid-connect/token, /protocol/openid-connect/certs und Reset Credentials.",
+                "links": [
+                  {
+                    "href": "#d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#737a572e-4ef1-4646-9f05-00bd33ac27f0",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "9445589c-71a7-4f8d-b74b-9e218dcc785e",
+                "control-id": "_d9e08db0-484e-4cce-89de-2f29f1a52e4e",
+                "description": "Keycloak implementiert Token-Signatur und Schlüsselbereitstellung, indem Realm Keys für OIDC/OAuth2-Token-Signatur und Protokoll-Metadaten über definierte Key Provider erzeugt und priorisiert werden. Die Umsetzung erfolgt über Realm settings > Keys > Providers > Add provider mit Algorithm, Priority, Enabled und Active; nicht freigegebene oder abgelöste Provider werden passiv gesetzt oder deaktiviert.",
+                "links": [
+                  {
+                    "href": "#c0ec05dc-5c1c-4dfd-83bf-a5ecc6744078",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "fc3c97fb-4b7d-44ea-a709-ca1b06398c9b",
+                "control-id": "_39301f7d-20ca-49c0-97e5-a8b048877e68",
+                "description": "Keycloak implementiert die Verwendung vorgegebener Schlüssellängen, indem Realm-Key-Provider und importierte Schlüssel für OIDC/OAuth2-Nutzung mit geeigneten Key Sizes beziehungsweise Kurvenparametern konfiguriert werden. Die Umsetzung erfolgt über Realm settings > Keys > Providers mit RSA-, EC- oder Keystore-Providern sowie bei clientbezogenem Schlüsselmaterial über Clients > Client > Keys oder Credentials; die Werte werden als [Entscheidung: zulässige Key Sizes und Algorithmen] dokumentiert.",
+                "links": [
+                  {
+                    "href": "#c0ec05dc-5c1c-4dfd-83bf-a5ecc6744078",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "dc6dc9e5-d857-4f4d-ac21-d1d18cfbb728",
+                "control-id": "_efea2ba5-e5b5-4344-9341-b87340dab114",
+                "description": "Keycloak implementiert Token-Signatur und Schlüsselbereitstellung über Realm Keys und JWKS, indem OIDC/OAuth2-Tokens, JWKS, Client-Authentisierung und Schlüsselrotation auf freigegebene Realm- und Client-Schlüssel gebunden werden. Die Umsetzung erfolgt über Realm settings > Keys, Clients > Client > Settings, Clients > Client > Keys oder Credentials, Client scopes und die jeweiligen Signatur- oder Verschlüsselungsalgorithmen; kompromittierte Schlüssel werden passiv gesetzt, deaktiviert oder rotiert.",
+                "links": [
+                  {
+                    "href": "#c0ec05dc-5c1c-4dfd-83bf-a5ecc6744078",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "ac4f8072-7da5-4933-a0cc-1523647b8de2",
+                "control-id": "_cc6a9a9d-cb65-4e22-aad5-d93f73e522b8",
+                "description": "Keycloak unterstützt minimal erforderliche Berechtigungen für Anwendungen, indem OIDC/OAuth2-Clients nur die benötigten Scopes, Rollen, Service-Account-Rechte, Token-Claims und Audiences erhalten. Die Umsetzung erfolgt über Clients > Client > Service account roles, Clients > Client > Client scopes, Scope, Mappers, Role scope mappings sowie über Client policies zur Begrenzung zulässiger Client-Konfigurationen.",
+                "links": [
+                  {
+                    "href": "#d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "3e202506-902d-4503-b9e4-e5d6d8e32d9a",
+                "control-id": "_e0194ca3-39a2-4c07-9e7e-c4aad16597c6",
+                "description": "Keycloak unterstützt die Überwachung anomaler Nutzung von Anwendungen, indem OIDC/OAuth2-nahe Authentifizierungs-, Token-, Session-, Client- und Admin-Ereignisse mit Benutzer, Client, Quelle und Ergebnis als Analysegrundlage bereitgestellt werden. Die Umsetzung erfolgt über Realm settings > Events, Admin events, Event listeners, Sessions, Clients > Client > Sessions und die Auswertung von Ereignissen wie LOGIN_ERROR, CODE_TO_TOKEN_ERROR, REFRESH_TOKEN_ERROR oder ungewöhnlichen Client-Zugriffen.",
+                "links": [
+                  {
+                    "href": "#f3c48d0b-7241-4e76-bd90-0843158504e3",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "0cdf1250-6c0a-42b0-a97d-348e40ec7de3",
+                "control-id": "_6089e247-2518-4c90-b991-df8cbb24585f",
+                "description": "Keycloak unterstützt die Deaktivierung der Weiterleitung mehrfach verwendbarer Anmeldeinformationen, indem OIDC/OAuth2-Flows mit kurzlebigen, signierten Tokens, Client-Authentisierung und eingeschränkten Scopes statt der Weitergabe von Benutzerpasswörtern oder wiederverwendbaren Zugangsdaten genutzt werden. Die Umsetzung erfolgt über Clients > Client > Settings mit Standard flow, Direct access grants nur bei begründeter Freigabe, Client authentication, Proof Key for Code Exchange bei öffentlichen Clients, Clients > Client > Client scopes, Role scope mappings sowie Realm settings > Tokens für begrenzte Token-Laufzeiten.",
+                "links": [
+                  {
+                    "href": "#d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#9542fd15-1769-4571-b5ed-aa72fccfb845",
+                    "rel": "reference"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "remarks": "Diese Component behandelt ausschließlich OIDC/OAuth2 als Service-Schnittstelle. Konsumierende Anwendungen müssen ausgestellte Tokens korrekt validieren, lokale Anmeldewege passend absichern und ihre eigenen Autorisierungsentscheidungen auf Basis der erhaltenen Claims und Audiences treffen."
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "00903e72-6424-4db5-89b6-a48f17fcb8c6",
+          "title": "BSI Stand der Technik Kernel G0 – OSCAL Catalog",
+          "description": "Dieser Katalog enthält Kontrollmechanismen für ein Managementsystem für Informationssicherheit (ISMS). Enthalten sind ausschließlich technologie- und herstellerneutrale, abstrakte Sicherheitsanforderungen wie Sicherheitsziele oder Zielzustände. Diese Anforderungen richten sich nach den typischen Risiken und Risikobewertungen bei typischen Informationsverarbeitungen. Nicht enthalten sind spezifische Maßnahmen, die sich an bestimmte Zielgruppen oder Sicherheitsniveaus richten. Dieser Katalog hier enthält auch nicht die Anforderungen an ein ISMS als Ganzes, sondern lediglich die konkreten technisch-organisatorischen Anforderungen (Controls).",
+          "rlinks": [
+            {
+              "href": "https://github.com/Stand-der-Technik/Bibliothek-intern/blob/main/control_layer/Grundschutz%2B%2B/sources/catalogs/Kernel/BSI-Stand-der-Technik-Kernel-G0-catalog.json"
+            }
+          ]
+        },
+        {
+          "uuid": "16111f58-f625-469d-8930-d3efa4df0524",
+          "title": "Keycloak Server Administration Guide Version 26.7.0",
+          "description": "Offizielle Keycloak-Dokumentation für Serveradministration, Funktionen und zentrale Konzepte.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#keycloak-features-and-concepts"
+            }
+          ]
+        },
+        {
+          "uuid": "737a572e-4ef1-4646-9f05-00bd33ac27f0",
+          "title": "Keycloak Server Administration Guide - Configuring realms",
+          "description": "Offizielle Keycloak-Dokumentation zur Realm-Konfiguration, Realm Keys, E-Mail, Login-Optionen und Realm-Betrieb.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#configuring-realms"
+            }
+          ]
+        },
+        {
+          "uuid": "176d9a0d-8dc6-42af-ab7f-5884987a9e08",
+          "title": "Keycloak Server Administration Guide - Managing access to realm resources",
+          "description": "Offizielle Keycloak-Dokumentation zur Verwaltung von Realm-Administrationszugriffen, Admin Permissions und delegierter Administration.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#managing-access-to-realm-resources"
+            }
+          ]
+        },
+        {
+          "uuid": "f3c48d0b-7241-4e76-bd90-0843158504e3",
+          "title": "Keycloak Server Administration Guide - Configuring auditing to track events",
+          "description": "Offizielle Keycloak-Dokumentation zu User Events, Admin Events, Event Listenern und Auditing.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#configuring-auditing-to-track-events"
+            }
+          ]
+        },
+        {
+          "uuid": "f622dc67-2fbb-4773-bda8-0d58b349e996",
+          "title": "Keycloak Server Administration Guide - Configuring authentication",
+          "description": "Offizielle Keycloak-Dokumentation zu Authentication Flows, Password Policies, OTP, WebAuthn, Passkeys und Required Actions.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#configuring-authentication"
+            }
+          ]
+        },
+        {
+          "uuid": "c0ec05dc-5c1c-4dfd-83bf-a5ecc6744078",
+          "title": "Keycloak Server Administration Guide - Configuring realm keys",
+          "description": "Offizielle Keycloak-Dokumentation zu Realm Keys, Key Providern, Rotation, passiven und deaktivierten Schlüsseln.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#configuring-realm-keys"
+            }
+          ]
+        },
+        {
+          "uuid": "9542fd15-1769-4571-b5ed-aa72fccfb845",
+          "title": "Keycloak Server Administration Guide - Managing user sessions",
+          "description": "Offizielle Keycloak-Dokumentation zu Sessions, Logout, Revocation, Token- und Session-Timeouts.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#managing-user-sessions"
+            }
+          ]
+        },
+        {
+          "uuid": "abddffdb-07d5-42d5-8152-9abea8990d10",
+          "title": "Keycloak Server Administration Guide - Mitigating security threats",
+          "description": "Offizielle Keycloak-Dokumentation zu Brute-Force-Schutz, Threat-Mitigation und sicherheitsrelevanten Schutzmechanismen.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#mitigating-security-threats"
+            }
+          ]
+        },
+        {
+          "uuid": "d77a616b-0bed-4e71-acc0-b11cf8ac640a",
+          "title": "Keycloak Server Administration Guide - OpenID Connect and OAuth2 endpoints",
+          "description": "Offizielle Keycloak-Dokumentation zu OpenID Connect, OAuth2, OIDC-Clients, Token-Flows, Provider-Endpunkten und Client-Konfiguration.",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/26.7.0/server_admin/#sso-protocols"
+            }
+          ]
+        },
+        {
+          "uuid": "0c203588-637a-4b4a-a547-bb89da695457",
+          "title": "Keycloak Release Notes",
+          "description": "Weiterführende Dokumentation zu den Versionshinweisen",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/docs/latest/release_notes/#keycloak-26-7-0"
+            }
+          ]
+        },
+        {
+          "uuid": "99a1c603-732f-4610-9d0b-5c94fbccc6f9",
+          "title": "Weitere Keycloak Guides und Dokumentation",
+          "description": "Weiterführende Dokumentation zu Keycloak. Bei der Durchsicht der Dokumentation muss die passende Version ausgewählt werden. Unter 'Archived releases' befinden sich ältere Versionen.  ",
+          "rlinks": [
+            {
+              "href": "https://www.keycloak.org/documentation"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
