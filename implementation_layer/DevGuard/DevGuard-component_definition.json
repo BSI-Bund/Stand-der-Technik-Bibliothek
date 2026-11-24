@@ -3,7 +3,7 @@
     "uuid": "13918947-c75a-4f53-ba56-e428ef5d0490",
     "metadata": {
       "title": "DevGuard Komponentendefinition",
-      "last-modified": "2026-11-24T10:06:06Z",
+      "last-modified": "2026-11-24T10:51:38Z",
       "version": "1.0.0",
       "oscal-version": "1.2.2",
       "roles": [
@@ -60,7 +60,7 @@
               {
                 "uuid": "ecdb2f1d-8e18-4cf7-b405-0f97e65ef347",
                 "control-id": "DLS.2.1",
-                "description": "Wird DevGuard als Online-Dienst genutzt, kann die Anmeldung mit Passkeys oder mit TOTP als zweitem Faktor abgesichert werden. Die Identitätsverwaltung erfolgt über Ory Kratos; Nutzende richten die Verfahren in den Benutzereinstellungen ein.",
+                "description": "Wird DevGuard als Online-Dienst genutzt, kann die Anmeldung mit Passkeys oder mit TOTP als zweitem Faktor abgesichert werden. Die Identitätsverwaltung erfolgt über Ory Kratos. Nutzende richten die Verfahren in den Benutzereinstellungen ein.",
                 "remarks": "Teilweise Umsetzung: TOTP ist im DevGuard-Helm-Chart standardmäßig deaktiviert und muss vom Betreiber aktiviert werden. Dass alle Konten MFA nutzen, stellt die Institution sicher."
               },
               {
@@ -72,14 +72,14 @@
               {
                 "uuid": "9d0c64a9-020e-4930-9e25-66b85563fe8a",
                 "control-id": "TEST.3.1.2",
-                "description": "Die Dependency Firewall von DevGuard wird als Proxy vor Paketquellen betrieben (npm, Go, PyPI, Maven, Composer, Debian, Alpine, OCI-Registries). Sie blockiert bekannte Schadpakete und setzt von der Institution definierte Allow- und Deny-Regeln durch, z. B. zu Registry, Paketname, Version oder Veröffentlichungszeitpunkt.",
+                "description": "Die Dependency Firewall von DevGuard wird als Proxy vor Paketquellen betrieben (npm, Go, PyPI, Maven, Composer, Debian, Alpine, OCI-Registries). Sie blockiert bekannte Schadpakete und setzt von der Institution definierte Regeln zum Erlauben und Blockieren von Paketen durch, z. B. zu Registry, Paketname, Version oder Veröffentlichungszeitpunkt.",
                 "remarks": "Teilweise Umsetzung: Welche Quellen als unzuverlässig oder unbekannt gelten, legt die Institution in den Regeln fest. Die Regeln wirken nur, wenn Pakete ausschließlich über die Dependency Firewall bezogen werden."
               },
               {
                 "uuid": "eea46518-d401-40d5-a035-8728a341bd20",
                 "control-id": "TEST.3.1.6",
                 "description": "Mit den CI-Integrationen von DevGuard (GitLab-CI-Komponenten, GitHub-Actions-Workflows) laufen bei jeder Änderung automatisch Sicherheitsprüfungen: statische Codeanalyse, Secret Scanning, IaC-Scanning und Software Composition Analysis. Die Ergebnisse werden in DevGuard zusammengeführt.",
-                "remarks": "Teilweise Umsetzung: Abgedeckt sind Sicherheitsprüfungen. Funktions- und Regressionstests sind nicht Bestandteil von DevGuard."
+                "remarks": "Teilweise Umsetzung: Abgedeckt sind Sicherheitsprüfungen. Funktionstests und Regressionstests sind nicht Bestandteil von DevGuard."
               },
               {
                 "uuid": "831af001-15e1-447b-a55d-30ed3ca176bf",
@@ -102,12 +102,12 @@
                 "uuid": "f33d903e-37fd-4929-a142-818cd14b7d4b",
                 "control-id": "DET.5.2",
                 "description": "DevGuard dokumentiert jede erkannte Schwachstelle mit betroffener Komponente (Package URL inkl. Version), Kritikalität (CVSS-Wert und Risikowert) und Status (z. B. offen, behoben, akzeptiert, False Positive). Statusänderungen werden als Ereignisse mit Benutzer, Zeitpunkt und Begründung protokolliert.",
-                "remarks": "Teilweise Umsetzung: Erfasst sind nur Befunde aus DevGuard-Scans und importierten SBOM- oder SARIF-Daten. Schwachstellen aus anderen Quellen, z. B. Netzwerkscans oder Penetrationstests, führt die Institution gesondert."
+                "remarks": "Teilweise Umsetzung: Erfasst sind nur Befunde aus DevGuard-Scans und importierten SBOM-Daten oder SARIF-Daten. Schwachstellen aus anderen Quellen, z. B. Netzwerkscans oder Penetrationstests, führt die Institution gesondert."
               },
               {
                 "uuid": "078e84e3-29b3-4557-9695-bfe10fff89d0",
                 "control-id": "DET.5.3",
-                "description": "DevGuard scannt Softwareabhängigkeiten, Container-Images, Quellcode und IaC-Dateien. Schwachstellen in Abhängigkeiten werden mit einem Risikowert bewertet; die Behandlung aller Befunde wird über Bewertungsstatus und Tickets unterstützt.",
+                "description": "DevGuard scannt Softwareabhängigkeiten, Container-Images, Quellcode und IaC-Dateien. Schwachstellen in Abhängigkeiten werden mit einem Risikowert bewertet. Die Behandlung aller Befunde unterstützt DevGuard über Bewertungsstatus und Tickets.",
                 "remarks": "Teilweise Umsetzung: Netzbasierte Schwachstellenscans von IT-Systemen führt DevGuard nicht durch."
               },
               {
@@ -131,7 +131,7 @@
               {
                 "uuid": "4083280d-f33b-4da4-97f0-70b01cdd8a0b",
                 "control-id": "DEV.4.2",
-                "description": "Die Dependency Firewall von DevGuard wird als Proxy vor Paketquellen betrieben (npm, Go, PyPI, Maven, Composer, Debian, Alpine, OCI-Registries). Sie blockiert bekannte Schadpakete und setzt von der Institution definierte Allow- und Deny-Regeln durch, z. B. zu Registry, Paketname, Version oder Veröffentlichungszeitpunkt.",
+                "description": "Die Dependency Firewall von DevGuard wird als Proxy vor Paketquellen betrieben (npm, Go, PyPI, Maven, Composer, Debian, Alpine, OCI-Registries). Sie blockiert bekannte Schadpakete und setzt von der Institution definierte Regeln zum Erlauben und Blockieren von Paketen durch, z. B. zu Registry, Paketname, Version oder Veröffentlichungszeitpunkt.",
                 "remarks": "Teilweise Umsetzung: Welche Quellen als unzuverlässig oder unbekannt gelten, legt die Institution in den Regeln fest. Die Regeln wirken nur, wenn Pakete ausschließlich über die Dependency Firewall bezogen werden."
               },
               {
@@ -154,7 +154,7 @@
                 "uuid": "f2bfe236-6e15-4bb1-a789-ec43570c2707",
                 "control-id": "DEV.4.11",
                 "description": "Mit den CI-Integrationen von DevGuard können bei jeder Änderung am Quellcode automatisiert statische Codeanalyse (Semgrep), Secret Scanning (Gitleaks), IaC-Scanning (Checkov) und Software Composition Analysis (Trivy) ausgeführt werden. Die Ergebnisse werden in DevGuard zusammengeführt. Bei offenen Befunden bzw. bei Überschreiten der Schwellwerte beendet sich der devguard-scanner mit einem Fehler, sodass die Pipeline fehlschlägt.",
-                "remarks": "Teilweise Umsetzung: Abgedeckt sind Sicherheitstests. Funktions-, Integrations- und Regressionstests sind nicht Bestandteil von DevGuard."
+                "remarks": "Teilweise Umsetzung: Abgedeckt sind Sicherheitstests. Funktionstests, Integrationstests und Regressionstests sind nicht Bestandteil von DevGuard."
               }
             ]
           }
@@ -182,7 +182,7 @@
         },
         {
           "uuid": "d05a26d5-0841-4ddc-877e-6794047df4ff",
-          "title": "DevGuard v1.19.2 – Quellcode",
+          "title": "Quellcode von DevGuard v1.19.2",
           "rlinks": [
             {
               "href": "https://github.com/l3montree-dev/devguard/tree/v1.19.2"
