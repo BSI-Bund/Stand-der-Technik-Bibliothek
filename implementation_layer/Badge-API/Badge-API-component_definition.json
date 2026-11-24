@@ -1,0 +1,121 @@
+{
+  "component-definition": {
+    "uuid": "23597fd6-8618-43e2-8261-4f642786082c",
+    "metadata": {
+      "title": "Badge API Komponentendefinition",
+      "last-modified": "2026-11-24T10:18:24Z",
+      "version": "1.0.0",
+      "oscal-version": "1.2.2",
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Herausgeber"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "39aadc04-5e13-4f1a-a184-98ea7d5e214d",
+          "type": "organization",
+          "name": "ZenDiS GmbH"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "publisher",
+          "party-uuids": [
+            "39aadc04-5e13-4f1a-a184-98ea7d5e214d"
+          ]
+        }
+      ]
+    },
+    "components": [
+      {
+        "uuid": "66cbbb25-e312-4cc0-a654-2d2e293d28f8",
+        "type": "software",
+        "title": "Badge API",
+        "description": "Die Badge API ist eine Open-Source-Software (MIT) des openCode-Badge-Programms. Sie prüft Repositories auf GitLab und GitHub automatisiert anhand konfigurierbarer Checks und vergibt auf dieser Grundlage Badges. Die Ergebnisse stellt sie über eine REST-API als SARIF-Bericht und als Badge-Grafik bereit.",
+        "links": [
+          {
+            "href": "#036c6718-c405-4672-92c2-62404b5c9f0d",
+            "rel": "reference"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "52b06dc6-8393-454b-a16b-6b883aff2308",
+            "source": "#395bea44-a67a-4a2b-bcf1-11855d15a470",
+            "description": "Die Badge API prüft automatisiert, ob ein Repository die beschriebenen Maßnahmen umsetzt, und unterstützt so den Nachweis der folgenden Anforderungen. Da sie die Maßnahmen nicht selbst umsetzt, sind alle Anforderungen in den Remarks als „Teilweise Umsetzung“ gekennzeichnet; dort steht auch, was die Institution ergänzen muss.",
+            "implemented-requirements": [
+              {
+                "uuid": "85f69026-df3d-45a1-a353-f18925519aaf",
+                "control-id": "UMS.1.1",
+                "description": "Die Badge API wertet den in einem OSCAL System Security Plan (SSP) dokumentierten Umsetzungsstatus aus. Das SSP stammt aus DevGuard (Standard-Branch) oder aus einer Datei SystemSecurityPlan.json im Repository. Die Prüfung ist bestanden, wenn alle Anforderungen, die zu den konfigurierten Filtern (Präfix der Kontroll-ID, Sicherheitsniveau, Modalverb) passen, als umgesetzt (implemented) oder nicht anwendbar (not-applicable) dokumentiert sind.",
+                "remarks": "Teilweise Umsetzung: Die Badge API wertet nur den im SSP dokumentierten Status aus; ob die Anforderungen tatsächlich umgesetzt sind, prüft sie nicht. Erfasst werden nur die über die Konfiguration ausgewählten Anforderungen eines einzelnen Repositories, nicht das gesamte Anforderungspaket der Institution."
+              },
+              {
+                "uuid": "b7e9650b-8fab-4d24-ad18-315f1cfc45db",
+                "control-id": "DET.5.9",
+                "description": "Die Badge API prüft, ob im Standard-Branch eines Repositories eine Sicherheitsrichtlinie (SECURITY.md oder .github/SECURITY.md) vorhanden ist.",
+                "remarks": "Teilweise Umsetzung: Geprüft wird nur, ob die Datei vorhanden ist, nicht ihr Inhalt und nicht die Bearbeitung eingehender Meldungen."
+              },
+              {
+                "uuid": "5adeb6ba-2f44-4d70-ae3d-319eeba6adde",
+                "control-id": "DET.5.12",
+                "description": "Die Badge API ermittelt anhand der VEX-Daten aus DevGuard, ob im Standard-Branch eines Repositories Schwachstellen mit einem CVSS-Wert ab 7,0 offen sind, also weder behoben noch als nicht betroffen oder False Positive bewertet. Das Ergebnis stellt sie über die REST-API und als Badge bereit.",
+                "remarks": "Teilweise Umsetzung: Berücksichtigt werden nur Schwachstellen ab CVSS 7,0 in openCode-Repositories, die an DevGuard angebunden sind. Die Prüfung läuft bei Abfrage über die REST-API oder per Kommandozeile; regelmäßige Prüfläufe richtet der Betreiber ein."
+              },
+              {
+                "uuid": "a90172a0-7500-42c0-a846-95f62997627f",
+                "control-id": "DEV.2.4",
+                "description": "Die Badge API prüft für den Standard-Branch eines Repositories, ob er geschützt ist, ob Force Pushes unterbunden sind und ob Merge- und Push-Rechte auf die Rolle Maintainer oder höher beschränkt sind.",
+                "remarks": "Teilweise Umsetzung: Die Badge API prüft die Einstellungen nur; eingeschränkt wird der Zugriff in der Git-Plattform. Geprüft wird nur der Standard-Branch."
+              },
+              {
+                "uuid": "ecec04af-5dfc-481c-bc07-0fbfb9e7da3a",
+                "control-id": "DEV.4.3",
+                "description": "Die Badge API prüft für die Container-Images des jüngsten Releases in der Container-Registry des Repositories, ob jeweils eine SBOM-Attestierung im Format CycloneDX oder SPDX vorhanden ist.",
+                "remarks": "Teilweise Umsetzung: Geprüft werden nur Container-Images, deren Tag zum jüngsten Release passt. Geprüft wird das Vorhandensein der Attestierung, nicht ihre Signatur und nicht der Inhalt der SBOM."
+              },
+              {
+                "uuid": "1d68454e-853c-4aaf-a2b5-f71b20b08e93",
+                "control-id": "DEV.4.5",
+                "description": "Die Badge API prüft für das jüngste Release (Tag) im konfigurierten Zeitraum anhand der VEX-Daten aus DevGuard, ob Schwachstellen mit einem CVSS-Wert ab 7,0, die DevGuard zum Release-Zeitpunkt bereits erfasst hatte, noch offen sind, also weder behoben noch als nicht betroffen oder False Positive bewertet.",
+                "remarks": "Teilweise Umsetzung: Die Prüfung erfolgt nach dem Release und gilt nur für openCode-Repositories, die an DevGuard angebunden sind. Den Test vor dem Release führt die Institution mit anderen Werkzeugen durch, z. B. mit DevGuard."
+              }
+            ]
+          }
+        ],
+        "remarks": "Gilt für Badge API 2.8.2. Welche Checks aktiv sind und welche Schwellwerte gelten, legt die Konfiguration der Badge API fest. Die Badge API prüft Repositories nur; die geprüften Maßnahmen werden im jeweiligen Projekt bzw. in der Git-Plattform umgesetzt."
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "395bea44-a67a-4a2b-bcf1-11855d15a470",
+          "title": "Anwenderkatalog Grundschutz++ (aufgelöster Katalog)",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/dc44ea4fb5815ef84b941a8b5bcc4eaf363daf35/control_layer/Grundschutz%2B%2B/Grundschutz%2B%2B-resolved_catalog.json",
+              "media-type": "application/json",
+              "hashes": [
+                {
+                  "algorithm": "SHA-256",
+                  "value": "9497c7a94207a2a1f3a20e00bcf72b95c062a8052c4f04a33dd5aaf79ac90d7a"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "036c6718-c405-4672-92c2-62404b5c9f0d",
+          "title": "Badge API 2.8.2 – Quellcode",
+          "rlinks": [
+            {
+              "href": "https://gitlab.opencode.de/open-code/badgebackend/badge-api/-/tree/2.8.2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
