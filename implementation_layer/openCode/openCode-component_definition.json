@@ -1,0 +1,342 @@
+{
+  "component-definition": {
+    "uuid": "14dc6119-48f7-4f58-acf4-e3efad09d170",
+    "metadata": {
+      "title": "openCode Komponentendefinition",
+      "last-modified": "2026-11-24T10:51:38Z",
+      "version": "1.0.0",
+      "oscal-version": "1.2.2",
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Herausgeber"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "39aadc04-5e13-4f1a-a184-98ea7d5e214d",
+          "type": "organization",
+          "name": "Zentrum für Digitale Souveränität der Öffentlichen Verwaltung GmbH"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "publisher",
+          "party-uuids": [
+            "39aadc04-5e13-4f1a-a184-98ea7d5e214d"
+          ]
+        }
+      ]
+    },
+    "components": [
+      {
+        "uuid": "6aab5105-799d-44b8-9eb7-c50a57819855",
+        "type": "service",
+        "title": "openCode",
+        "description": "openCode ist die Open-Source-Plattform für die öffentliche Verwaltung. Kern ist eine GitLab-Instanz (gitlab.opencode.de) für Quellcodeverwaltung, Merge Requests und CI/CD. Es stehen die GitLab Community Edition Funktionen zur Verfügung.",
+        "links": [
+          {
+            "href": "#832cc183-e078-4c92-b5ec-c466512c7bff",
+            "rel": "reference"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "c0546d19-312c-4b80-98a8-849e4e0f79b5",
+            "source": "#d41a02bd-9422-4c1d-8d94-c7e2dd1bdfec",
+            "description": "openCode unterstützt die Umsetzung der folgenden Anforderungen mit Funktionen der GitLab-Stufe Free. Deckt openCode eine Anforderung nur teilweise ab, ist dies in den Remarks der Anforderung mit „Teilweise Umsetzung“ gekennzeichnet. Dort steht auch, was die Institution ergänzen muss.",
+            "implemented-requirements": [
+              {
+                "uuid": "3dd2ec34-4ea7-496f-81d7-72a21ef7b6e4",
+                "control-id": "DLS.2.1",
+                "description": "Die Anmeldung an der Weboberfläche von openCode erfolgt über den zentralen Identitätsdienst des Betreibers (Keycloak, OpenID Connect). Dieser erzwingt eine Zwei-Faktor-Authentifizierung.",
+                "links": [
+                  {
+                    "href": "#ae4d625f-5c01-4759-8fce-be4d5e6701e4",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "b8c6fd32-d3fe-49e7-b553-460767ec1e3e",
+                "control-id": "TEST.2.1",
+                "description": "openCode protokolliert jede Änderung am Repository als Commit mit Zeitpunkt, Autor und Commit-Nachricht. Mit Tags und Releases lassen sich Versionsstände kennzeichnen. Beim Erstellen eines Releases setzt GitLab einen Tag und archiviert einen Stand des Codes.",
+                "links": [
+                  {
+                    "href": "#4dede2d6-64f4-4287-b4ff-bce911ce08a0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#3f6df569-3f62-4c95-aadc-ec5e5ef9e9d7",
+                    "rel": "reference"
+                  }
+                ],
+                "remarks": "Teilweise Umsetzung: Erfasst werden Änderungen am Inhalt des Repositorys. Welche Änderungen als wesentlich gelten und wie sie in Release-Notes beschrieben werden, legt das Projekt fest."
+              },
+              {
+                "uuid": "72a43315-441a-4cd8-a890-cfe071ffedd1",
+                "control-id": "TEST.3.1.6",
+                "description": "CI/CD-Pipelines in openCode können automatisch bei Ereignissen wie einem Push auf einen Branch oder dem Erstellen eines Merge Requests laufen. Der Betreiber stellt dafür gemeinsam genutzte Runner auf Kubernetes bereit.",
+                "links": [
+                  {
+                    "href": "#ef3fb39d-d9a8-48c2-bcb5-be6191ce38e6",
+                    "rel": "reference"
+                  }
+                ],
+                "remarks": "Teilweise Umsetzung: Welche Tests laufen, legt das Projekt in seiner Pipeline-Konfiguration fest. Die gemeinsam genutzten Runner stehen nach Verfügbarkeit (best effort) bereit."
+              },
+              {
+                "uuid": "1d3cdd44-1fc4-4975-a475-a732084db1a7",
+                "control-id": "TEST.4.1",
+                "description": "Änderungen an geschützten Branches lassen sich in openCode auf die Rollen beschränken, die in der Branch-Regel zum Mergen bzw. Pushen zugelassen sind (Allowed to merge, Allowed to push and merge). Mit der Merge-Prüfung „Pipelines must succeed“ kann ein Merge Request erst nach erfolgreicher Pipeline übernommen werden.",
+                "links": [
+                  {
+                    "href": "#db799677-d2c6-42c2-9f00-b2ae39c1c47f",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#6b41c0d4-b8e1-4288-beb7-081f42c3cf14",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#1ff15224-fa53-4205-b675-7e6ff582603b",
+                    "rel": "reference"
+                  }
+                ],
+                "remarks": "Teilweise Umsetzung: Verbindliche Genehmigungsregeln für Merge Requests (Required approvals) gibt es erst ab GitLab Premium. In openCode sind Genehmigungen daher optional. Die Kriterien einschließlich der Sicherheitsanforderungen legt das Projekt fest, z. B. als Prüfungen in der Pipeline."
+              },
+              {
+                "uuid": "ef6f39a0-14b7-477b-a2b1-ace200ccbbd7",
+                "control-id": "DEV.2.4",
+                "description": "openCode beschränkt den schreibenden Zugriff auf Repositorys rollenbasiert: Auf ungeschützte Branches pushen nur die Rollen Developer, Maintainer und Owner. Die Rollen Guest, Planner, Reporter und Security Manager können nicht pushen. Auf geschützte Branches pushen und mergen nur die in der Branch-Regel zugelassenen Rollen. Der Standard-Branch ist standardmäßig geschützt, und Force Pushes sind nur möglich, wenn sie für den geschützten Branch freigeschaltet werden.",
+                "links": [
+                  {
+                    "href": "#96eec14f-8065-4694-9e14-4abc8fdfa658",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#db799677-d2c6-42c2-9f00-b2ae39c1c47f",
+                    "rel": "reference"
+                  }
+                ]
+              },
+              {
+                "uuid": "59e541a2-e4f9-4f43-8b57-3353ff0f8f04",
+                "control-id": "DEV.2.5",
+                "description": "Zugangsdaten für CI/CD-Pipelines lassen sich in openCode als CI/CD-Variablen außerhalb des Quellcodes ablegen. Variablen können maskiert (kein Klartext in Job-Logs), geschützt (nur in Pipelines auf geschützten Branches oder Tags verfügbar) und verborgen (nach dem Speichern nicht mehr in der Oberfläche anzeigbar) werden. Projektvariablen verwalten nur Mitglieder mit mindestens der Rolle Maintainer.",
+                "links": [
+                  {
+                    "href": "#db5db10c-9f3c-4bed-b849-979e28165202",
+                    "rel": "reference"
+                  }
+                ],
+                "remarks": "Teilweise Umsetzung: Gilt für Zugangsdaten, die in Pipelines verwendet werden. Zugangsdaten, die im Quellcode abgelegt werden, schützt diese Funktion nicht."
+              },
+              {
+                "uuid": "d8027000-025d-4336-8923-b5b265d72337",
+                "control-id": "DEV.4.10",
+                "description": "openCode protokolliert Änderungen am Quellcode als Commits mit Zeitpunkt, Autor, Committer, Commit-Nachricht und den geänderten Dateien (Diff).",
+                "links": [
+                  {
+                    "href": "#4dede2d6-64f4-4287-b4ff-bce911ce08a0",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#879d37a9-c6fc-4624-9f38-d31237d37904",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#ad77be0b-8bd5-4b24-9512-2e4670932aad",
+                    "rel": "reference"
+                  }
+                ],
+                "remarks": "Teilweise Umsetzung: Die Begründung ergibt sich aus der Commit-Nachricht und hängt von deren Pflege ab. Die Angaben zu Autor und Committer sind nur bei signierten Commits kryptografisch belegt. Erzwingen lassen sich signierte Commits erst mit Push-Regeln ab GitLab Premium."
+              },
+              {
+                "uuid": "01b9344a-f745-4d70-a27e-1ff825644b5f",
+                "control-id": "DEV.4.11",
+                "description": "CI/CD-Pipelines in openCode können bei Änderungen am Quellcode automatisch laufen, z. B. bei einem Push oder einem Merge Request. Mit der Merge-Prüfung „Pipelines must succeed“ wird eine Änderung erst nach erfolgreicher Pipeline übernommen.",
+                "links": [
+                  {
+                    "href": "#ef3fb39d-d9a8-48c2-bcb5-be6191ce38e6",
+                    "rel": "reference"
+                  },
+                  {
+                    "href": "#6b41c0d4-b8e1-4288-beb7-081f42c3cf14",
+                    "rel": "reference"
+                  }
+                ],
+                "remarks": "Teilweise Umsetzung: Welche Tests laufen, legt das Projekt in seiner Pipeline-Konfiguration fest. Die gemeinsam genutzten Runner stehen nach Verfügbarkeit (best effort) bereit."
+              }
+            ]
+          }
+        ],
+        "remarks": "Stand: 24.11.2026. Registrieren kann sich jede Person. Gruppen und Projekte legen nur freigeschaltete Angehörige der öffentlichen Verwaltung an, auch für beauftragte Dienstleister. Die Angaben zur GitLab-Edition, zur Registrierung, zur Zwei-Faktor-Authentifizierung und zu den CI-Runnern beruhen auf Auskunft des Betreibers. Die GitLab-Dokumentation ist jeweils auf docs.gitlab.com und in der Fassung verlinkt, die die openCode-Instanz unter /help ausliefert und die zur dort betriebenen GitLab-Version passt."
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "d41a02bd-9422-4c1d-8d94-c7e2dd1bdfec",
+          "title": "Anwenderkatalog Grundschutz++ (aufgelöster Katalog)",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/dc44ea4fb5815ef84b941a8b5bcc4eaf363daf35/control_layer/Grundschutz%2B%2B/Grundschutz%2B%2B-resolved_catalog.json",
+              "media-type": "application/json",
+              "hashes": [
+                {
+                  "algorithm": "SHA-256",
+                  "value": "9497c7a94207a2a1f3a20e00bcf72b95c062a8052c4f04a33dd5aaf79ac90d7a"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "832cc183-e078-4c92-b5ec-c466512c7bff",
+          "title": "openCode, die Open-Source-Plattform für die öffentliche Verwaltung",
+          "rlinks": [
+            {
+              "href": "https://opencode.de/de"
+            },
+            {
+              "href": "https://gitlab.opencode.de"
+            }
+          ]
+        },
+        {
+          "uuid": "ae4d625f-5c01-4759-8fce-be4d5e6701e4",
+          "title": "GitLab-Dokumentation zu OpenID Connect als Authentifizierungsanbieter",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/administration/auth/oidc/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/administration/auth/oidc"
+            }
+          ]
+        },
+        {
+          "uuid": "4dede2d6-64f4-4287-b4ff-bce911ce08a0",
+          "title": "GitLab-Dokumentation zu Commits",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/project/repository/commits/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/project/repository/commits/_index"
+            }
+          ]
+        },
+        {
+          "uuid": "3f6df569-3f62-4c95-aadc-ec5e5ef9e9d7",
+          "title": "GitLab-Dokumentation zu Releases",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/project/releases/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/project/releases/_index"
+            }
+          ]
+        },
+        {
+          "uuid": "ef3fb39d-d9a8-48c2-bcb5-be6191ce38e6",
+          "title": "GitLab-Dokumentation zu CI/CD-Pipelines",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/ci/pipelines/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/ci/pipelines/_index"
+            }
+          ]
+        },
+        {
+          "uuid": "db799677-d2c6-42c2-9f00-b2ae39c1c47f",
+          "title": "GitLab-Dokumentation zu geschützten Branches",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/project/repository/branches/protected/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/project/repository/branches/protected"
+            }
+          ]
+        },
+        {
+          "uuid": "6b41c0d4-b8e1-4288-beb7-081f42c3cf14",
+          "title": "GitLab-Dokumentation zu Auto-Merge und zur Merge-Prüfung „Pipelines must succeed“",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/project/merge_requests/auto_merge/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/project/merge_requests/auto_merge"
+            }
+          ]
+        },
+        {
+          "uuid": "1ff15224-fa53-4205-b675-7e6ff582603b",
+          "title": "GitLab-Dokumentation zu Genehmigungen für Merge Requests",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/project/merge_requests/approvals/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/project/merge_requests/approvals/_index"
+            }
+          ]
+        },
+        {
+          "uuid": "96eec14f-8065-4694-9e14-4abc8fdfa658",
+          "title": "GitLab-Dokumentation zu Rollen und Berechtigungen",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/permissions/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/permissions"
+            }
+          ]
+        },
+        {
+          "uuid": "db5db10c-9f3c-4bed-b849-979e28165202",
+          "title": "GitLab-Dokumentation zu CI/CD-Variablen",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/ci/variables/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/ci/variables/_index"
+            }
+          ]
+        },
+        {
+          "uuid": "879d37a9-c6fc-4624-9f38-d31237d37904",
+          "title": "GitLab-Dokumentation zu signierten Commits",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/project/repository/signed_commits/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/project/repository/signed_commits/_index"
+            }
+          ]
+        },
+        {
+          "uuid": "ad77be0b-8bd5-4b24-9512-2e4670932aad",
+          "title": "GitLab-Dokumentation zu Push-Regeln",
+          "rlinks": [
+            {
+              "href": "https://docs.gitlab.com/user/project/repository/push_rules/"
+            },
+            {
+              "href": "https://gitlab.opencode.de/help/user/project/repository/push_rules"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
