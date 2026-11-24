@@ -1,0 +1,188 @@
+{
+  "component-definition": {
+    "uuid": "13918947-c75a-4f53-ba56-e428ef5d0490",
+    "metadata": {
+      "title": "DevGuard Komponentendefinition",
+      "last-modified": "2026-11-24T08:32:51Z",
+      "version": "1.0.0",
+      "oscal-version": "1.2.2",
+      "roles": [
+        {
+          "id": "publisher",
+          "title": "Herausgeber"
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "cae01079-9b39-4b52-be7f-f72139e08aca",
+          "type": "organization",
+          "name": "L3montree GmbH"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "publisher",
+          "party-uuids": [
+            "cae01079-9b39-4b52-be7f-f72139e08aca"
+          ]
+        }
+      ]
+    },
+    "components": [
+      {
+        "uuid": "d16de776-64cf-41c8-9a1b-c7b9402f3981",
+        "type": "software",
+        "title": "DevGuard",
+        "description": "DevGuard ist eine Open-Source-Plattform (AGPL-3.0) für das Schwachstellenmanagement in der Softwareentwicklung. Sie besteht aus einem Server mit Weboberfläche, dem Kommandozeilenwerkzeug devguard-scanner für CI/CD-Pipelines und einer Dependency Firewall, die als Proxy vor Paketquellen betrieben wird.",
+        "links": [
+          {
+            "href": "#d05a26d5-0841-4ddc-877e-6794047df4ff",
+            "rel": "reference"
+          }
+        ],
+        "control-implementations": [
+          {
+            "uuid": "be793845-d666-4e83-a928-2d11aabaa23c",
+            "source": "#96324fb8-a6d4-4a59-82a3-041cd79a86d9",
+            "description": "DevGuard unterstützt die Umsetzung der folgenden Anforderungen technisch. Deckt DevGuard eine Anforderung nur teilweise ab, ist dies in den Remarks der Anforderung mit „Teilweise Umsetzung“ gekennzeichnet. Eine Mitwirkung bzw. spezielle Nutzung durch eine Institution ist ebenso gekennzeichnet.",
+            "implemented-requirements": [
+              {
+                "uuid": "61c1be72-257a-4900-b2c7-95ea936232c2",
+                "control-id": "ASST.2.4",
+                "description": "Der devguard-scanner erzeugt für Quellcode-Repositories und Container-Images eine SBOM im Format CycloneDX oder übernimmt eine vorhandene CycloneDX-SBOM. DevGuard speichert die SBOM je Anwendung, Branch bzw. Tag und Artefakt und stellt sie als CycloneDX-JSON zum Export bereit."
+              },
+              {
+                "uuid": "0f126529-1a06-4c05-b020-71b48903927c",
+                "control-id": "BES.7.4.4.1",
+                "description": "DevGuard nimmt die SBOM gelieferter Software im Format CycloneDX entgegen oder erzeugt sie aus einem gelieferten Container-Image. Die SBOM wird gespeichert und fortlaufend mit der Schwachstellendatenbank abgeglichen.",
+                "remarks": "Teilweise Umsetzung: Die Bereitstellung der SBOM durch den Lieferanten regelt die Institution vertraglich."
+              },
+              {
+                "uuid": "ecdb2f1d-8e18-4cf7-b405-0f97e65ef347",
+                "control-id": "DLS.2.1",
+                "description": "Wird DevGuard als Online-Dienst genutzt, kann die Anmeldung mit Passkeys oder mit TOTP als zweitem Faktor abgesichert werden. Die Identitätsverwaltung erfolgt über Ory Kratos; Nutzende richten die Verfahren in den Benutzereinstellungen ein.",
+                "remarks": "Teilweise Umsetzung: TOTP ist im DevGuard-Helm-Chart standardmäßig deaktiviert und muss vom Betreiber aktiviert werden. Dass alle Konten MFA nutzen, stellt die Institution sicher."
+              },
+              {
+                "uuid": "05f787b5-9178-40e4-80f3-2f43bf884ba5",
+                "control-id": "TEST.3.1.1",
+                "description": "DevGuard dokumentiert die Ergebnisse der Sicherheitsscans je Anwendung, Branch bzw. Tag und Artefakt. Erkennung, Bewertung und Behebung jedes Befunds werden als Ereignisse mit Zeitpunkt protokolliert.",
+                "remarks": "Teilweise Umsetzung: Erfasst sind nur Sicherheitstests, die über DevGuard laufen oder deren Ergebnisse importiert werden."
+              },
+              {
+                "uuid": "9d0c64a9-020e-4930-9e25-66b85563fe8a",
+                "control-id": "TEST.3.1.2",
+                "description": "Die Dependency Firewall von DevGuard wird als Proxy vor Paketquellen betrieben (npm, Go, PyPI, Maven, Composer, Debian, Alpine, OCI-Registries). Sie blockiert bekannte Schadpakete und setzt von der Institution definierte Allow- und Deny-Regeln durch, z. B. zu Registry, Paketname, Version oder Veröffentlichungszeitpunkt.",
+                "remarks": "Teilweise Umsetzung: Welche Quellen als unzuverlässig oder unbekannt gelten, legt die Institution in den Regeln fest. Die Regeln wirken nur, wenn Pakete ausschließlich über die Dependency Firewall bezogen werden."
+              },
+              {
+                "uuid": "eea46518-d401-40d5-a035-8728a341bd20",
+                "control-id": "TEST.3.1.6",
+                "description": "Mit den CI-Integrationen von DevGuard (GitLab-CI-Komponenten, GitHub-Actions-Workflows) laufen bei jeder Änderung automatisch Sicherheitsprüfungen: statische Codeanalyse, Secret Scanning, IaC-Scanning und Software Composition Analysis. Die Ergebnisse werden in DevGuard zusammengeführt.",
+                "remarks": "Teilweise Umsetzung: Abgedeckt sind Sicherheitsprüfungen. Funktions- und Regressionstests sind nicht Bestandteil von DevGuard."
+              },
+              {
+                "uuid": "831af001-15e1-447b-a55d-30ed3ca176bf",
+                "control-id": "TEST.3.1.8",
+                "description": "DevGuard gleicht die Komponenten der SBOM mit einer Schwachstellendatenbank ab (Software Composition Analysis). Der devguard-scanner beendet sich mit einem Fehler, wenn noch nicht bewertete Schwachstellen den mit --failOnRisk bzw. --failOnCVSS gesetzten Schwellwert (Standard: critical) erreichen. Damit kann die Bereitstellung in der Pipeline blockiert werden."
+              },
+              {
+                "uuid": "30139b3b-c5c0-4715-a590-1ef0b82570e2",
+                "control-id": "DET.5.1",
+                "description": "DevGuard erkennt Schwachstellen in Software durch Scans in der CI-Pipeline und durch einen automatischen erneuten Abgleich gespeicherter SBOMs nach jeder Aktualisierung der Schwachstellendatenbank. Zur Behandlung werden Befunde bewertet (z. B. akzeptiert, False Positive), können automatisch als Tickets in GitHub, GitLab oder Jira angelegt werden und werden bis zur Behebung nachverfolgt.",
+                "remarks": "Teilweise Umsetzung: DevGuard deckt Schwachstellen in Software ab. Verfahren, Zuständigkeiten und Fristen legt die Institution fest."
+              },
+              {
+                "uuid": "f74f0b7b-8853-405b-91e1-1a055c8d0dd9",
+                "control-id": "DET.5.1.1",
+                "description": "DevGuard berechnet je Schwachstelle einen Risikowert aus dem CVSS-Vektor, den je Asset festgelegten Anforderungen an Vertraulichkeit, Integrität und Verfügbarkeit (CVSS-Environmental-Metriken), Hinweisen auf Exploits und aktive Ausnutzung (CISA KEV, EUVD), der EPSS-Wahrscheinlichkeit und der Tiefe der Komponente im Abhängigkeitsbaum.",
+                "remarks": "Teilweise Umsetzung: Die Frist für die Überprüfung legt die Institution fest."
+              },
+              {
+                "uuid": "f33d903e-37fd-4929-a142-818cd14b7d4b",
+                "control-id": "DET.5.2",
+                "description": "DevGuard dokumentiert jede erkannte Schwachstelle mit betroffener Komponente (Package URL inkl. Version), Kritikalität (CVSS-Wert und Risikowert) und Status (z. B. offen, behoben, akzeptiert, False Positive). Statusänderungen werden als Ereignisse mit Benutzer, Zeitpunkt und Begründung protokolliert.",
+                "remarks": "Teilweise Umsetzung: Erfasst sind nur Befunde aus DevGuard-Scans und importierten SBOM- oder SARIF-Daten. Schwachstellen aus anderen Quellen, z. B. Netzwerkscans oder Penetrationstests, führt die Institution gesondert."
+              },
+              {
+                "uuid": "078e84e3-29b3-4557-9695-bfe10fff89d0",
+                "control-id": "DET.5.3",
+                "description": "DevGuard scannt Softwareabhängigkeiten, Container-Images, Quellcode und IaC-Dateien. Schwachstellen in Abhängigkeiten werden mit einem Risikowert bewertet; die Behandlung aller Befunde wird über Bewertungsstatus und Tickets unterstützt.",
+                "remarks": "Teilweise Umsetzung: Netzbasierte Schwachstellenscans von IT-Systemen führt DevGuard nicht durch."
+              },
+              {
+                "uuid": "aad932b1-4544-4986-b82d-b9af1a11656b",
+                "control-id": "DET.5.10",
+                "description": "Für verwundbare Abhängigkeiten ermittelt DevGuard, sofern bekannt, die Version, in der die Schwachstelle behoben ist. Die Schwachstellen werden nach Risikowert priorisiert und können automatisch als Tickets in GitHub, GitLab oder Jira angelegt werden.",
+                "remarks": "Teilweise Umsetzung: Installation und Ausrollen von Patches erfolgen außerhalb von DevGuard."
+              },
+              {
+                "uuid": "16fb25b1-23c9-4e82-9252-3a85fa780166",
+                "control-id": "DET.5.12",
+                "description": "DevGuard überwacht die Komponenten gescannter Anwendungen und Container-Images automatisch: Nach jeder Aktualisierung der Schwachstellendatenbank werden gespeicherte SBOMs erneut abgeglichen. Neue Befunde werden angezeigt und, sofern eingerichtet, als Tickets angelegt.",
+                "remarks": "Teilweise Umsetzung: Überwacht werden nur Anwendungen, deren SBOM in DevGuard vorliegt."
+              },
+              {
+                "uuid": "1761b73f-8bf2-42f2-bbfc-78ad1e28a04a",
+                "control-id": "DEV.2.5",
+                "description": "Das Secret Scanning von DevGuard (Gitleaks) erkennt im Quellcode einschließlich der Git-Historie hinterlegte Zugangsdaten wie API-Schlüssel, Passwörter oder Tokens. Bei offenen Befunden beendet sich der devguard-scanner mit einem Fehler, sodass die Pipeline fehlschlägt.",
+                "remarks": "Teilweise Umsetzung: DevGuard erkennt Zugangsdaten im Quellcode, schränkt den Zugriff auf Zugangsdaten aber nicht selbst ein."
+              },
+              {
+                "uuid": "4083280d-f33b-4da4-97f0-70b01cdd8a0b",
+                "control-id": "DEV.4.2",
+                "description": "Die Dependency Firewall von DevGuard wird als Proxy vor Paketquellen betrieben (npm, Go, PyPI, Maven, Composer, Debian, Alpine, OCI-Registries). Sie blockiert bekannte Schadpakete und setzt von der Institution definierte Allow- und Deny-Regeln durch, z. B. zu Registry, Paketname, Version oder Veröffentlichungszeitpunkt.",
+                "remarks": "Teilweise Umsetzung: Welche Quellen als unzuverlässig oder unbekannt gelten, legt die Institution in den Regeln fest. Die Regeln wirken nur, wenn Pakete ausschließlich über die Dependency Firewall bezogen werden."
+              },
+              {
+                "uuid": "0a07567a-258e-403a-a5ba-f3903a038b4b",
+                "control-id": "DEV.4.3",
+                "description": "Mit den CI-Integrationen von DevGuard (GitLab-CI-Komponenten, GitHub-Actions-Workflows) kann die SBOM in jedem Pipeline-Lauf automatisiert erzeugt und an DevGuard übermittelt werden, sodass sie vor dem Release vorliegt."
+              },
+              {
+                "uuid": "8c1756a9-c39e-474f-9066-112527b8747b",
+                "control-id": "DEV.4.4",
+                "description": "Die Dependency Firewall von DevGuard prüft angefragte Pakete gegen eine Datenbank bekannter Schadpakete und blockiert diese, bevor sie in den Build gelangen.",
+                "remarks": "Teilweise Umsetzung: Abgedeckt ist die Prüfung auf bekannte Schadpakete. Die Prüfung von Prüfsummen und Signaturen stellt die Institution anderweitig sicher, z. B. über den Paketmanager."
+              },
+              {
+                "uuid": "3cf28bf9-77f4-43b2-a1f6-113281ed05d3",
+                "control-id": "DEV.4.5",
+                "description": "DevGuard prüft eingebundene Bibliotheken und Container-Images auf bekannte Schwachstellen und gibt, sofern bekannt, die Version an, in der die Schwachstelle behoben ist. Über die Schwellwerte --failOnRisk bzw. --failOnCVSS kann ein Release blockiert werden, solange betroffene Komponenten weder aktualisiert noch bewertet sind."
+              },
+              {
+                "uuid": "f2bfe236-6e15-4bb1-a789-ec43570c2707",
+                "control-id": "DEV.4.11",
+                "description": "Mit den CI-Integrationen von DevGuard können bei jeder Änderung am Quellcode automatisiert statische Codeanalyse (Semgrep), Secret Scanning (Gitleaks), IaC-Scanning (Checkov) und Software Composition Analysis (Trivy) ausgeführt werden. Die Ergebnisse werden in DevGuard zusammengeführt. Bei offenen Befunden bzw. bei Überschreiten der Schwellwerte beendet sich der devguard-scanner mit einem Fehler, sodass die Pipeline fehlschlägt.",
+                "remarks": "Teilweise Umsetzung: Abgedeckt sind Sicherheitstests. Funktions-, Integrations- und Regressionstests sind nicht Bestandteil von DevGuard."
+              }
+            ]
+          }
+        ],
+        "remarks": "Gilt für DevGuard v1.19.2. Die Wirkung setzt voraus, dass die DevGuard-CI-Integration in den Pipelines der betrachteten Anwendungen eingesetzt wird."
+      }
+    ],
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "96324fb8-a6d4-4a59-82a3-041cd79a86d9",
+          "title": "Anwenderkatalog Grundschutz++ (aufgelöster Katalog)",
+          "rlinks": [
+            {
+              "href": "https://raw.githubusercontent.com/BSI-Bund/Stand-der-Technik-Bibliothek/dc44ea4fb5815ef84b941a8b5bcc4eaf363daf35/control_layer/Grundschutz%2B%2B/Grundschutz%2B%2B-resolved_catalog.json"
+            }
+          ]
+        },
+        {
+          "uuid": "d05a26d5-0841-4ddc-877e-6794047df4ff",
+          "title": "DevGuard v1.19.2 – Quellcode",
+          "rlinks": [
+            {
+              "href": "https://github.com/l3montree-dev/devguard/tree/v1.19.2"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
