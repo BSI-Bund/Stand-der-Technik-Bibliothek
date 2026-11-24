@@ -1,0 +1,2245 @@
+{
+  "profile": {
+    "uuid": "3eabc790-e421-4dae-a66d-d1080e2eaeb4",
+    "metadata": {
+      "title": "DIVA - Durchgängige Identitätsprüfung, Verifikation und Absicherung",
+      "last-modified": "2026-11-23T14:27:36.393848+00:00",
+      "version": "2026-11-23T14:27:36.393865+00:00",
+      "oscal-version": "1.1.3",
+      "roles": [
+        {
+          "id": "creator",
+          "title": "Creator"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "creator",
+          "party-uuids": [
+            "58de8925-de1f-4813-803c-bea0cc5a0a28"
+          ]
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "58de8925-de1f-4813-803c-bea0cc5a0a28",
+          "type": "person",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik, Referat Stand der Technik",
+          "email-addresses": [
+            "stand-der-technik@bsi.bund.de"
+          ]
+        }
+      ],
+      "remarks": "Dieses Dokument enthält Anforderungen zum zentralen Identitäts- und Berechtigungsmanagement, zur Absicherung des Zugriffs von Endgeräten und Netzen, sowie dem Schutz von Anwendungen und Datenbeständen vor unberechtigtem Zugriff. Dabei wird von einer **Cybersicherheitsarchitektur nach dem Zero-Trust-Prinzip** ausgegangen, basierend auf den Eckpunkten des Beauftragten der Bundesregierung für Informationstechnik, die vom BMDS als Eckpunkte einer Zero-Trust-IT-Sicherheitsarchitektur des Bundes veröffentlicht wurden. \n\nDie Anforderungen beschäftigen sich mit den innerhalb einer Institution notwendigen Schritten. Nicht enthalten sind Anforderungen an die Abstimmung institutionsübergreifender föderierter (bspw. zwischen Bundeseinrichtungen), föderaler (Bund-Länder-Kommunen) oder internationaler (bspw. EU) Kommunikationssysteme. Die Anforderungen sind dem Katalog des Grundschutz++ entnommen, wobei Modalverben entsprechend an eine Zero-Trust-Architektur angepasst worden. Es handelt sich dabei NICHT um einen verpflichtenden Mindeststandard des BSI oder um ein vollständiges ISMS nach Grundschutz++.\n\nDieses Dokument richtet sich an Behörden und Einrichtungen der Bundesverwaltung, die ihre IT-Infrastrukturen nach dem **Grundsatz „Never Trust, Always Verify“** ausrichten wollen. Jeglicher Zugriff auf Ressourcen – unabhängig davon, ob er aus dem internen Netz oder von extern erfolgt – erfordert dabei eine **dynamische, risikobasierte Authentifizierung und Autorisierung pro Transaktion**. Ziel dieser Anforderungen ist die Gewährleistung eines einheitlich hohen Sicherheitsniveaus in der Identitätsprüfung, Verifikation und Absicherung von Zugängen, die Minimierung der Angriffsfläche bei lateralen Bewegungen im Netzwerk sowie die Sicherstellung der Datensouveränität in einer zunehmend dezentralisierten IT-Landschaft.",
+      "props": [
+        {
+          "name": "scope_target_audience",
+          "ns": "http://csrc.nist.gov/ns/oscal/1.0",
+          "value": "Bundesbehörden"
+        }
+      ],
+      "document-ids": [
+        {
+          "scheme": "https://www.ietf.org/rfc/rfc9562",
+          "identifier": "1946aa58-409e-4af2-b12d-be237c4090f3"
+        }
+      ],
+      "links": [
+        {
+          "href": "#043cf4f7-77fa-4cee-b0e1-954c64d66e5c",
+          "rel": "reference",
+          "text": "BSI Positionspapier Zero Trust 2023"
+        },
+        {
+          "href": "#e040b41a-169d-433e-aa11-1a80aaaa982a",
+          "rel": "reference",
+          "text": "Eckpunkte einer Zero-TrustIT-Sicherheitsarchitektur des Bundes"
+        },
+        {
+          "href": "#672c87ee-9628-4e4c-b62c-9992d9765e0b",
+          "rel": "reference",
+          "text": "US NIST Zero Trust Architecture"
+        }
+      ]
+    },
+    "imports": [
+      {
+        "href": "#317969e9-5623-4d77-91c1-deba33576b01",
+        "include-controls": [
+          {
+            "with-ids": [
+              "GC.1.1"
+            ],
+            "with-child-controls": "no"
+          }
+        ]
+      },
+      {
+        "href": "#bff68865-2bec-43d9-aed9-ac563d33257e",
+        "include-controls": [
+          {
+            "with-ids": [
+              "BER.5.13",
+              "BER.6.6",
+              "BER.6.4",
+              "BER.5.9",
+              "BER.5.8",
+              "BER.4.8",
+              "BER.5.14",
+              "BER.4.4",
+              "BER.4.1.2",
+              "BER.4.1.1",
+              "BER.4.1",
+              "BER.3.11",
+              "BER.3.10",
+              "BER.3.9",
+              "BER.3.7",
+              "BER.3.6",
+              "BER.3.5",
+              "BER.3.4",
+              "BER.3.21",
+              "BER.3.20",
+              "BER.3.16",
+              "BER.3.13",
+              "BER.3.12",
+              "BER.3.1",
+              "BER.2.6",
+              "BER.2.5",
+              "BER.2.3",
+              "BER.2.2",
+              "BER.2.1",
+              "BER.1.4",
+              "BER.1.1",
+              "BER.1.3",
+              "BER.2.4",
+              "BER.3.2",
+              "BER.3.3",
+              "BER.3.14",
+              "BER.3.15",
+              "BER.4.2",
+              "BER.4.3",
+              "BER.4.4.1",
+              "BER.5.1",
+              "BER.5.1.1",
+              "BER.5.2",
+              "BER.5.3",
+              "BER.5.4",
+              "BER.5.6",
+              "BER.5.7",
+              "BER.5.10",
+              "BER.5.11",
+              "BER.6.2",
+              "BER.6.3",
+              "BER.6.5",
+              "KONF.6.5",
+              "KONF.6.13",
+              "KONF.4.1.1",
+              "KONF.4.1",
+              "KONF.3.1",
+              "KONF.2.9",
+              "KONF.2.5.1",
+              "KONF.2.5",
+              "KONF.2.4",
+              "KONF.14.1.2",
+              "KONF.14.1.1",
+              "KONF.14.1",
+              "KONF.13.2",
+              "KONF.13.1",
+              "KONF.12.1",
+              "KONF.11.8",
+              "KONF.11.1.2",
+              "KONF.11.1",
+              "KONF.10.4",
+              "KONF.1.1",
+              "SENS.9.3",
+              "SENS.8.8",
+              "SENS.7.20",
+              "SENS.6.2",
+              "SENS.4.2",
+              "SENS.4.1",
+              "SENS.3.2",
+              "SENS.3.1",
+              "SENS.2.8",
+              "SENS.2.6",
+              "SENS.2.4",
+              "SENS.2.3",
+              "SENS.2.2",
+              "SENS.10.3",
+              "SENS.1.1",
+              "BES.8.4",
+              "BES.7.1",
+              "BES.5.6.3",
+              "BES.5.6",
+              "BES.5.10.3",
+              "BES.5.10.2",
+              "BES.5.10.1",
+              "BES.5.10",
+              "BES.4.8.1",
+              "BES.4.8",
+              "BES.4.6.3",
+              "BES.4.6",
+              "BES.4.5.1",
+              "BES.4.5",
+              "BES.4.3",
+              "BES.4.2",
+              "BES.3.3",
+              "BES.3.2",
+              "BES.1.1",
+              "ASST.2.5",
+              "ASST.2.2",
+              "ASST.2.1",
+              "ASST.1.1",
+              "ARCH.5.1.12",
+              "ARCH.5.1",
+              "ARCH.4.1.2",
+              "ARCH.4.1.1",
+              "ARCH.4.1",
+              "ARCH.2.4",
+              "ARCH.2.3",
+              "ARCH.1.1",
+              "TEST.5.2",
+              "TEST.4.1",
+              "TEST.3.2",
+              "TEST.3.1.6",
+              "TEST.3.1.3",
+              "TEST.3.1.11",
+              "TEST.3.1",
+              "TEST.1.1",
+              "DEV.7.1",
+              "DEV.6.1",
+              "DEV.4.7",
+              "DEV.4.4",
+              "DEV.4.11",
+              "DEV.2.1",
+              "DEV.1.1",
+              "DET.5.9",
+              "DET.5.7",
+              "DET.5.5",
+              "DET.5.4",
+              "DET.5.10.2",
+              "DET.5.11",
+              "DET.5.10",
+              "DET.4.6.1",
+              "DET.4.6",
+              "DET.4.5",
+              "DET.4.11.2",
+              "DET.4.11.1",
+              "DET.4.10",
+              "DET.1.1",
+              "DET.3.1",
+              "DET.3.1.2",
+              "DET.3.7",
+              "DET.4.1",
+              "DET.4.2",
+              "DET.4.3",
+              "DET.4.4",
+              "DET.4.11",
+              "DET.5.1",
+              "DET.5.8",
+              "DET.5.10.1",
+              "DET.5.12",
+              "NOT.3.6",
+              "NOT.3.5",
+              "NOT.1.1",
+              "DEV.2.6",
+              "DET.6.1",
+              "DET.6.1.1",
+              "DET.6.1.2",
+              "DEV.2.6.1"
+            ],
+            "with-child-controls": "no"
+          }
+        ]
+      }
+    ],
+    "merge": {
+      "as-is": true
+    },
+    "modify": {
+      "alters": [
+        {
+          "control-id": "GC.1.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "GC.1.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "ISMS-Regelwerk",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "Verfahren und Regelungen zur Errichtung und Aufrechterhaltung eines ISMS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "nach {{einem anerkannten Standard}}",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Governance und Compliance SOLLTE Verfahren und Regelungen zur Errichtung und Aufrechterhaltung eines ISMS nach {{ insert: param, gc.1.1-prm1 }} verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DEV.4.11",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DEV.4.11_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Freigabeplan",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "Änderungen am Quellcode",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "im Einklang mit den Verfahren und Regelungen für Änderungen und Tests",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "testen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Entwicklung für Anwendungen MUSS Änderungen am Quellcode im Einklang mit den Verfahren und Regelungen für Änderungen und Tests testen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BER.4.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BER.4.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Inventar Berechtigungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Vergabe von Berechtigungen nach dem Prinzip der geringsten Berechtigungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "einschränken",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Berechtigung MUSS die Vergabe von Berechtigungen nach dem Prinzip der geringsten Berechtigungen einschränken."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BER.4.8",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BER.4.8_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "IT-Betriebskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "eine Vorgehensweise zum Entzug von Berechtigungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Berechtigung MUSS eine Vorgehensweise zum Entzug von Berechtigungen verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.3",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.3_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "IT-Systeme",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Netzplan",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "Verbindungen zu allen anderen IT-Systemen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "einschränken",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Architektur für IT-Systeme SOLLTE Verbindungen zu allen anderen IT-Systemen einschränken."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "TEST.5.2",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "TEST.5.2_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Bereitstellung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verschlüsseln",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Änderungen und Tests MUSS die Bereitstellung verschlüsseln."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.11.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.11.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Externe Netzanschlüsse",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Detektionskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "Authentifizierungsversuche auf unauthorisierte Verbindungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "{{regelmäßig}}",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "überprüfen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Detektion für Externe Netzanschlüsse SOLLTE Authentifizierungsversuche auf unauthorisierte Verbindungen {{ insert: param, det.4.11.1-prm1 }} überprüfen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "TEST.3.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "TEST.3.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Freigabeplan",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "vor wesentlichen Änderungen die Einhaltung der Sicherheitsanforderungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "testen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Änderungen und Tests MUSS vor wesentlichen Änderungen die Einhaltung der Sicherheitsanforderungen testen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.14.1.2",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.14.1.2_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Kommunikation Ende-zu-Ende",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "über Netze",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verschlüsseln",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für Anwendungen SOLLTE die Kommunikation Ende-zu-Ende über Netze verschlüsseln."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BER.3.6",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BER.3.6_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Administrierende",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Inventar Berechtigungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "separate Zugangskonten für administrative Tätigkeiten (Administrationskonten)",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Berechtigung für Administrierende MUSS separate Zugangskonten für administrative Tätigkeiten (Administrationskonten) verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BES.3.3",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BES.3.3_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Einkäufe",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Prozess Beschaffung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Beschaffung aus einer unbekannten oder unzuverlässigen Quelle",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "untersagen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Beschaffungsmanagement für Einkäufe MUSS die Beschaffung aus einer unbekannten oder unzuverlässigen Quelle untersagen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.6.13",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.6.13_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "dynamische Zugriffskontrolle",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "in der Anwendung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "aktivieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für Anwendungen SOLLTE dynamische Zugriffskontrolle in der Anwendung aktivieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.5.4",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.5.4_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "IT-Systeme",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Detektionskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die tatsächliche Abwehrfähigkeit",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "nach {{einer anerkannten Vorgehensweise}} {{regelmäßig}}",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "überprüfen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Detektion für IT-Systeme SOLLTE die tatsächliche Abwehrfähigkeit nach {{ insert: param, det.5.4-prm1 }} {{ insert: param, det.5.4-prm2 }} überprüfen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "SENS.9.3",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "SENS.9.3_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Nutzende",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Arbeitsanweisung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "zur Verwahrung von IT-Systemen und Datenträgern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "beim mobilen Arbeiten",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "anweisen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Sensibilisierung für Nutzende MUSS zur Verwahrung von IT-Systemen und Datenträgern beim mobilen Arbeiten anweisen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.5",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.5_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Detektionskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "unerwünschte Datenabflüsse",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "überwachen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Detektion SOLLTE unerwünschte Datenabflüsse überwachen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.11.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.11.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "Zugriffe auf schützenswerte Daten",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "authentifizieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für Anwendungen MUSS Zugriffe auf schützenswerte Daten im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement authentifizieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BES.4.8.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BES.4.8.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Einkäufe",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Leistungsbeschreibung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "ein Zertifikat oder Testat",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "nach {{einem passenden Sicherheitsstandard}}",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "vereinbaren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Beschaffungsmanagement für Einkäufe SOLLTE ein Zertifikat oder Testat nach {{ insert: param, bes.4.8.1-prm1 }} vereinbaren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "TEST.3.1.6",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "TEST.3.1.6_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Freigabeplan",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Auswirkungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "bei jeder Änderung automatisch",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "testen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Änderungen und Tests SOLLTE die Auswirkungen bei jeder Änderung automatisch testen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.11.1.2",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.11.1.2_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Gegenstelle vor dem Datenaustausch",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "authentifizieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für Anwendungen MUSS die Gegenstelle vor dem Datenaustausch im Einklang mit den zugehörigen Anforderungen zum Identitäts- und Berechtigungsmanagement authentifizieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BER.5.14",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BER.5.14_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "IT-Betriebskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Sperrung kompromittierter Authentifizierungsmittel",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Berechtigung MUSS die Sperrung kompromittierter Authentifizierungsmittel verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "SENS.7.20",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "SENS.7.20_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Nutzende, Informationen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Arbeitsanweisung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "zur Authentifizierung von Gesprächspartnern vor der Weitergabe von Informationen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "sensibilisieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Sensibilisierung für Nutzende von Informationen MUSS zur Authentifizierung von Gesprächspartnern vor der Weitergabe von Informationen sensibilisieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DEV.7.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DEV.7.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Entwicklungsdokumentation",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Bereitstellung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "im Einklang mit den entsprechenden Verfahren und Regelungen für Änderungen und Tests",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Entwicklung MUSS die Bereitstellung im Einklang mit den entsprechenden Verfahren und Regelungen für Änderungen und Tests verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.2.9",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.2.9_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "IT-Systeme",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "einen abgesicherten und authentisierten Bootprozess",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "aktivieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für IT-Systeme SOLLTE einen abgesicherten und authentisierten Bootprozess aktivieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.5.7",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.5.7_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Detektionskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "den Informationsverbund auf verdeckte Kommunikationskanäle",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "{{bei Sicherheitsvorfällen mit verdeckten Kanälen und regelmäßig}}",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "überprüfen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Detektion SOLLTE den Informationsverbund auf verdeckte Kommunikationskanäle {{ insert: param, det.5.7-prm1 }} überprüfen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DEV.4.7",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DEV.4.7_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Entwicklungsdokumentation",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "eine reproduzierbare Vorgehensweise zur Erstellung eines bestimmten Binärcodes aus dem Quellcode",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "dokumentieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Entwicklung für Anwendungen SOLLTE eine reproduzierbare Vorgehensweise zur Erstellung eines bestimmten Binärcodes aus dem Quellcode dokumentieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.14.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.14.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "Kommunikation beim Transport",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "über Netze nach {{einem anerkannten Standard}}",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verschlüsseln",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für Anwendungen MUSS Kommunikation beim Transport über Netze nach {{ insert: param, konf.14.1-prm1 }} verschlüsseln."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "SENS.8.8",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "SENS.8.8_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Nutzende, Räume",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Schulungsplan",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "zur sicheren Verwahrung von IT-Systemen und Datenträgern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "sensibilisieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Sensibilisierung für Nutzende von Räumen MUSS zur sicheren Verwahrung von IT-Systemen und Datenträgern sensibilisieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.5.10",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.5.10_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Detektionskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "ein zeitnahes Patchmanagement",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Detektion MUSS ein zeitnahes Patchmanagement verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.14.1.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.14.1.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "unverschlüsselte und anfällige Verbindungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "über Netze",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "deaktivieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für Anwendungen MUSS unverschlüsselte und anfällige Verbindungen über Netze deaktivieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ASST.2.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ASST.2.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Daten",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Inventar Informationen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "ein Inventar der Informationen und damit verbundener Assets",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "dokumentieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Informationen und Assets für Daten MUSS ein Inventar der Informationen und damit verbundener Assets dokumentieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DEV.2.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DEV.2.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Entwicklungsdokumentation",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Architektur nach dem Prinzip \"Security by Design\"",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Entwicklung MUSS die Architektur nach dem Prinzip \"Security by Design\" verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BER.1.4",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BER.1.4_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Inventar Berechtigungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "ein Inventar der Berechtigungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "mit Personen, Identitäten, Zugangskonten, Berechtigungen und deren jeweiliger Zuordnung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "dokumentieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Berechtigung MUSS ein Inventar der Berechtigungen mit Personen, Identitäten, Zugangskonten, Berechtigungen und deren jeweiliger Zuordnung dokumentieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.6.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.6.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Verzeichnisdienste",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Detektionskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "das Verhalten von Zugangskonten",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "überwachen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Detektion für Verzeichnisdienste SOLLTE das Verhalten von Zugangskonten überwachen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.6.5",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.6.5_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "IT-Systeme",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "dynamische Zugriffskontrolle",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "im System",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "aktivieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für IT-Systeme SOLLTE dynamische Zugriffskontrolle im System aktivieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.11.8",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.11.8_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "schützenswerte Daten",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": "bei der Speicherung (at-rest)",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verschlüsseln",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für Anwendungen MUSS schützenswerte Daten bei der Speicherung (at-rest) verschlüsseln."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.6",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.6_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Anwendungen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Detektionskonzept",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Nutzung der Anwendung auf Anomalien",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "überwachen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Detektion für Anwendungen SOLLTE die Nutzung der Anwendung auf Anomalien überwachen."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BES.4.5.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BES.4.5.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "IT-Produkte",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Leistungsbeschreibung",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "Nachweise zur Entwicklung nach einem Sicherheitslebenszyklus",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "vereinbaren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Beschaffungsmanagement für IT-Produkte SOLLTE Nachweise zur Entwicklung nach einem Sicherheitslebenszyklus vereinbaren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "NOT.3.6",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "NOT.3.6_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "documentation",
+                      "value": "Notfallhandbuch",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "alternative Sicherheitsmechanismen",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "result_specification",
+                      "value": ", die in Notfällen greifen,",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "verankern",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "MUSS",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Notfallplanung MUSS alternative Sicherheitsmechanismen , die in Notfällen greifen, verankern."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "SENS.3.2",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "SENS.3.2_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "Nutzende",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Schulungsplan",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "zum Öffnen verdächtiger Dateien ausschließlich auf einem isolierten IT-System (Sandbox)",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "sensibilisieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Sensibilisierung für Nutzende SOLLTE zum Öffnen verdächtiger Dateien ausschließlich auf einem isolierten IT-System (Sandbox) sensibilisieren."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "KONF.2.5.1",
+          "removes": [
+            {
+              "by-name": "statement"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "KONF.2.5.1_stm",
+                  "name": "statement",
+                  "props": [
+                    {
+                      "name": "target_object_categories",
+                      "value": "IT-Systeme",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/target_object_categories.csv"
+                    },
+                    {
+                      "name": "documentation",
+                      "value": "Konfigurationshistorie",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/documentation_guidelines.csv"
+                    },
+                    {
+                      "name": "result",
+                      "value": "die Überprüfung der Konfiguration durch {{einen automatisierten Mechanismus}}",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/result.csv"
+                    },
+                    {
+                      "name": "action_word",
+                      "value": "aktivieren",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/action_words.csv"
+                    },
+                    {
+                      "name": "modal_verb",
+                      "value": "SOLLTE",
+                      "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/tree/main/documentation/namespaces/modal_verbs.csv"
+                    }
+                  ],
+                  "prose": "Konfiguration für IT-Systeme SOLLTE die Überprüfung der Konfiguration durch {{ insert: param, konf.2.5.1-prm1 }} aktivieren."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "043cf4f7-77fa-4cee-b0e1-954c64d66e5c",
+          "title": "BSI Positionspapier Zero Trust 2023",
+          "rlinks": [
+            {
+              "href": "https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeLeitlinien/Zero-Trust/Zero-Trust_04072023.pdf?__blob=publicationFile&v=4",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "f85e5b5f472504fd3000bc32c8832e93"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "e040b41a-169d-433e-aa11-1a80aaaa982a",
+          "title": "Eckpunkte einer Zero-TrustIT-Sicherheitsarchitektur des Bundes",
+          "rlinks": [
+            {
+              "href": "https://bmds.bund.de/fileadmin/BMDS/Dokumente/Publikationen/Anlage_3-20260331_BMDS_ZT_Eckpunkte.pdf",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "aac3f877f6e2491f6e1fe806e59ef29d"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "672c87ee-9628-4e4c-b62c-9992d9765e0b",
+          "title": "US NIST Zero Trust Architecture",
+          "rlinks": [
+            {
+              "href": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "55a6f6de313c24d5c71e5f6f3ccdb552"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "317969e9-5623-4d77-91c1-deba33576b01",
+          "rlinks": [
+            {
+              "href": "../../../Grundschutz++/sources/catalogs/Methodik-Grundschutz++/BSI-Methodik-Grundschutz++-catalog.json",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "e40cd8ab6028e158c6f6f47776f89c4f"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "bff68865-2bec-43d9-aed9-ac563d33257e",
+          "rlinks": [
+            {
+              "href": "../../../Kernel/BSI-Stand-der-Technik-Kernel-catalog.json",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "ce27a49609faf56be050cf4957ceb232"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

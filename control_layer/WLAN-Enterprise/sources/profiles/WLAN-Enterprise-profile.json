@@ -1,0 +1,3673 @@
+{
+  "profile": {
+    "uuid": "00355900-1942-4273-b913-873c73f6079c",
+    "metadata": {
+      "title": "Stand der Technik WLAN-Enterprise",
+      "last-modified": "2026-11-20T16:58:38.174490+00:00",
+      "version": "2026-11-20T16:58:38.174507+00:00",
+      "oscal-version": "1.1.3",
+      "roles": [
+        {
+          "id": "creator",
+          "title": "Creator"
+        }
+      ],
+      "responsible-parties": [
+        {
+          "role-id": "creator",
+          "party-uuids": [
+            "58de8925-de1f-4813-803c-bea0cc5a0a28"
+          ]
+        }
+      ],
+      "parties": [
+        {
+          "uuid": "58de8925-de1f-4813-803c-bea0cc5a0a28",
+          "type": "person",
+          "name": "Bundesamt für Sicherheit in der Informationstechnik, Referat Stand der Technik",
+          "email-addresses": [
+            "stand-der-technik@bsi.bund.de"
+          ]
+        }
+      ],
+      "remarks": "Teilabdeckung: Dieses Profil behandelt das Zielobjekt WLAN. Anforderungen an die beteiligten IT-Systeme und Anwendungen sowie der vollständige Zertifikatslebenszyklus, das Patchmanagement und das Datensicherungsmanagement sind nicht vollständig durch eigene Controls abgebildet.\n\nBetrachtet werden professionell betriebene Enterprise-WLANs als Zielobjekte der Kategorie WLANs einschließlich ihrer Netzarchitektur, Netzzugangskontrolle, Funkverschlüsselung und netzbezogenen Überwachung. Die Anbindung an zentrale Authentisierungs-, Verzeichnis- und Zertifikatsdienste ist als betriebliche Abhängigkeit beschrieben. IEEE 802.1X und EAP-TLS tragen die individuelle Benutzer- oder Geräteauthentisierung. WPA3-Enterprise bildet den Zielbetrieb. WPA2-Enterprise mit AES-CCMP, EAP-TLS und verpflichtendem PMF bleibt als dokumentierte Bestandsausnahme in einem getrennten 2,4- oder 5-GHz-Zugang mit begrenztem Segment und Ablösebedingungen enthalten. Mischmodi und automatische Rückfälle sind ausgeschlossen.\n\nIdentitätsbasierte Gast- und IoT-Zugänge sind entsprechend ihrer Rolle einbezogen. Personal-, PSK- und offene Zugänge liegen außerhalb des Zugangsprofils; ihre Trennung vom Enterprise-WLAN bleibt Gegenstand der Übergangskontrollen. Private Heimnetze und öffentliche Mobilfunknetze sind ausgeschlossen.\n\n### Abgrenzung zu System- und Anwendungsprofilen\nAuch beim Betrieb eines Enterprise-WLANs sind die folgenden Themen relevant:\n\n- kryptographischer Hardwarespeicher und freigegebene Zeitquellen;\n- clientseitige Gegenstellenprüfung und weitere Supplicant-Konfiguration sowie verpflichtende Transportverschlüsselung ohne ungeschützten Rückfall;\n- Protokollierung sicherheitsrelevanter Anwendungsereignisse, privilegierter Aktionen sowie erfolgreicher und fehlgeschlagener Systemauthentisierungen.\n\nDie zugehörigen Konfigurationen und Betriebsprozesse sind in den jeweiligen IT-Systemen und Anwendungen zu pflegen. Sie gehören zu den Zielobjektkategorien IT-Systeme beziehungsweise Anwendungen und liegen außerhalb des Geltungsbereichs dieses auf das Zielobjekt WLAN ausgerichteten Profils. Ihre Bedeutung als Voraussetzung oder Datenquelle für den sicheren WLAN-Betrieb bleibt bestehen.\n\nZertifikatsausgabe, Erneuerung und Widerruf sind als Schnittstellen zur Praktik Berechtigung (BER) beschrieben. Ihre vollständige prozessuale Ausgestaltung und der eigenständige PKI-Betrieb sind aufgrund der vom Anwender festgelegten Beschränkung auf WLAN.2.6 „Zentrales Management“ nicht durch separate BER-Controls abgebildet.\n\nFirmwarepflege sowie Konfigurationssicherung und Wiederherstellung sind nur im Zusammenhang mit Änderungen und Netzresilienz abgebildet. Die vom Anwender freigegebene Auswahl enthält keine eigenständigen Controls für das vollständige Patch- und Datensicherungsmanagement. Diese Abgrenzung erklärt die begrenzte Dokumentabdeckung und bewertet die fehlenden Inhalte nicht als entbehrlich.\n\nBeschaffung und die Dokumentation von Beschaffungsanforderungen liegen außerhalb des Geltungsbereichs dieses WLAN-Profils.\n\nDas Dokument ersetzt weder ein vollständiges ISMS noch standortbezogene Risikoentscheidungen, den gesamten Notfallplan oder eine vollständige rechtliche Frequenznutzungsprüfung.",
+      "document-ids": [
+        {
+          "scheme": "https://www.ietf.org/rfc/rfc9562",
+          "identifier": "03343f0e-c945-4d7e-8eef-56816c036d11"
+        }
+      ],
+      "links": [
+        {
+          "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+          "rel": "reference",
+          "text": "ASD Information Security Manual, September 2026: Guidelines for networking"
+        },
+        {
+          "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+          "rel": "reference",
+          "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024"
+        },
+        {
+          "href": "#9dceb4f3-30f8-46cc-8fad-61bdbbfb9391",
+          "rel": "reference",
+          "text": "RFC 9190: EAP-TLS 1.3"
+        },
+        {
+          "href": "#5bebddab-ccf6-4ee0-bc0d-ce23e4ff83d0",
+          "rel": "reference",
+          "text": "RFC 6614: Transport Layer Security (TLS) Encryption for RADIUS"
+        },
+        {
+          "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+          "rel": "reference",
+          "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012"
+        },
+        {
+          "href": "#fa0b74bd-5719-42e2-8003-1e37226f9b67",
+          "rel": "reference",
+          "text": "NIST SP 800-63B-4: Digital Identity Guidelines - Authentication and Authenticator Management, 2025"
+        },
+        {
+          "href": "#68cadd65-33bf-4b4a-8295-e3167e55a65b",
+          "rel": "reference",
+          "text": "RFC 5961: Improving TCP Robustness to Blind In-Window Attacks"
+        },
+        {
+          "href": "#b879de66-cb2d-4827-a337-15d3cb14d9de",
+          "rel": "reference",
+          "text": "RFC 8085: UDP Usage Guidelines"
+        },
+        {
+          "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+          "rel": "reference",
+          "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021"
+        },
+        {
+          "href": "#c8a30581-2858-4ed9-b169-71e48ae9ef3a",
+          "rel": "reference",
+          "text": "Key Reinstallation Attacks: Forcing Nonce Reuse in WPA2"
+        },
+        {
+          "href": "#974fee7f-da78-4346-9bcf-f1c069d06a38",
+          "rel": "reference",
+          "text": "KRACK Attacks: Breaking WPA2"
+        },
+        {
+          "href": "#e15253a7-5bd2-42df-990a-01b0eeda2fdc",
+          "rel": "reference",
+          "text": "NCSC: 'Krack' Wi-Fi guidance"
+        }
+      ]
+    },
+    "imports": [
+      {
+        "href": "#4d163d32-4070-41d7-b256-da2e8751ca9e",
+        "include-controls": [
+          {
+            "with-ids": [
+              "ASST.2.2",
+              "ASST.2.2.1",
+              "ARCH.2.4",
+              "ARCH.2.5",
+              "ARCH.3.1",
+              "ARCH.9.1",
+              "ARCH.2.1",
+              "ARCH.2.2",
+              "ARCH.2.2.1",
+              "ARCH.2.2.2",
+              "ARCH.2.2.3",
+              "ARCH.2.2.4",
+              "ARCH.2.2.5",
+              "ARCH.2.2.6",
+              "ARCH.2.2.7",
+              "ARCH.2.2.8",
+              "ARCH.2.2.9",
+              "ARCH.2.2.10",
+              "ARCH.2.2.11",
+              "ARCH.4.1",
+              "ARCH.4.1.1",
+              "ARCH.4.1.2",
+              "ARCH.4.2",
+              "ARCH.4.3",
+              "ARCH.3.2",
+              "ARCH.3.3",
+              "ARCH.3.4",
+              "ARCH.5.1",
+              "ARCH.5.1.1",
+              "ARCH.5.1.2",
+              "ARCH.5.1.3",
+              "ARCH.5.1.4",
+              "ARCH.5.1.12",
+              "ARCH.8.1",
+              "ARCH.9.5",
+              "ARCH.2.6",
+              "DET.4.11",
+              "DET.4.11.2",
+              "DET.4.11.3",
+              "DET.4.12",
+              "DET.4.12.1",
+              "DET.4.19",
+              "GEB.6.3",
+              "SENS.10.4",
+              "SENS.7.14",
+              "BER.3.1",
+              "DET.4.4"
+            ],
+            "with-child-controls": "no"
+          }
+        ]
+      }
+    ],
+    "merge": {
+      "custom": {
+        "groups": [
+          {
+            "id": "WLAN.1",
+            "title": "Planung und Bestand",
+            "class": "WLAN-Enterprise",
+            "insert-controls": [
+              {
+                "include-controls": [
+                  {
+                    "with-ids": [
+                      "ASST.2.2",
+                      "ARCH.2.4",
+                      "ARCH.2.5",
+                      "ARCH.3.1",
+                      "ARCH.9.1"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "WLAN.2",
+            "title": "Segmentierung und Netzzugang",
+            "class": "WLAN-Enterprise",
+            "insert-controls": [
+              {
+                "include-controls": [
+                  {
+                    "with-ids": [
+                      "ARCH.2.1",
+                      "ARCH.2.2",
+                      "ARCH.4.1",
+                      "ARCH.4.2",
+                      "ARCH.4.3",
+                      "BER.3.1"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "WLAN.3",
+            "title": "Funkbetrieb",
+            "class": "WLAN-Enterprise",
+            "insert-controls": [
+              {
+                "include-controls": [
+                  {
+                    "with-ids": [
+                      "ARCH.3.2",
+                      "ARCH.3.3",
+                      "ARCH.3.4"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "WLAN.4",
+            "title": "Perimeterschutz und Resilienz",
+            "class": "WLAN-Enterprise",
+            "insert-controls": [
+              {
+                "include-controls": [
+                  {
+                    "with-ids": [
+                      "ARCH.5.1",
+                      "ARCH.8.1",
+                      "ARCH.9.5"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "WLAN.5",
+            "title": "Überwachung und Detektion",
+            "class": "WLAN-Enterprise",
+            "insert-controls": [
+              {
+                "include-controls": [
+                  {
+                    "with-ids": [
+                      "ARCH.2.6",
+                      "DET.4.11",
+                      "DET.4.12",
+                      "DET.4.19",
+                      "DET.4.4"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "WLAN.6",
+            "title": "Betriebsumgebung und Sensibilisierung",
+            "class": "WLAN-Enterprise",
+            "insert-controls": [
+              {
+                "include-controls": [
+                  {
+                    "with-ids": [
+                      "GEB.6.3",
+                      "SENS.10.4",
+                      "SENS.7.14"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "modify": {
+      "set-parameters": [
+        {
+          "param-id": "arch.2.2-prm1",
+          "label": "explizit freigegebenen Kommunikationsbeziehungen nach authentisierter Identität, zugewiesener Rolle, Quell- und Zielzone, Dienst und Verbindungsrichtung",
+          "values": [
+            "explizit freigegebenen Kommunikationsbeziehungen nach authentisierter Identität, zugewiesener Rolle, Quell- und Zielzone, Dienst und Verbindungsrichtung"
+          ]
+        },
+        {
+          "param-id": "arch.3.4-prm1",
+          "label": "ausschließlich nach WPA3-Enterprise oder WPA2-Enterprise mit AES-CCMP, EAP-TLS und geschützten Management-Frames (PMF)",
+          "values": [
+            "ausschließlich nach WPA3-Enterprise oder WPA2-Enterprise mit AES-CCMP, EAP-TLS und geschützten Management-Frames (PMF)"
+          ]
+        },
+        {
+          "param-id": "arch.2.6-prm1",
+          "label": "kontinuierlich",
+          "values": [
+            "kontinuierlich"
+          ]
+        },
+        {
+          "param-id": "det.4.19-prm1",
+          "label": "Wireless Intrusion Detection System (WIDS)",
+          "values": [
+            "Wireless Intrusion Detection System (WIDS)"
+          ]
+        }
+      ],
+      "alters": [
+        {
+          "control-id": "ASST.2.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ASST.2.2_gdn",
+                  "name": "guidance",
+                  "prose": "Das Systeminventar erfasst Access Points, Controller, AAA-Server und Managementplattformen mit eindeutiger Kennung, Standort, Betriebsverantwortung und Softwarestand. Bei extern betriebenen Komponenten sind Dienstbetreiber und institutionelle Zuständigkeit zugeordnet. Die Zuordnung von Geräteidentität und zugelassenem WLAN-Zugang ist mit der zentralen Verwaltung abgleichbar.\n\nControllerbestand und freigegebener Sollbestand werden automatisiert oder durch nachvollziehbare Bestandsprüfungen verglichen. Austausch, Standortwechsel und Supportende sind nachgeführt. Bei Außerbetriebnahme sind Gerätezugänge, Zertifikate und Managementberechtigungen entzogen. Eine Stichprobe ausgeschiedener Access Points prüft, dass sie weder im produktiven Bestand noch als berechtigte AAA-Teilnehmer verbleiben."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Identify",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Asset & Exposure Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Asset Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "CMDB",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ASST.2.2.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ASST.2.2.1_gdn",
+                  "name": "guidance",
+                  "prose": "Controller-Telemetrie, Funkbeobachtung und die Erfassung kabelseitiger Anschlüsse gleichen sichtbare Geräte mit dem freigegebenen Enterprise-WLAN-Bestand ab. Unbekannte Access Points, Bridges und angeschlossene Systeme sind anhand von Standort, Uplink und Gerätekennung untersucht; ein bekannter SSID-Name genügt nicht zur Autorisierung.\n\nBestätigte unautorisierte Geräte sind über eigene Netzkomponenten isoliert oder physisch entfernt. Nach einer fachlichen Freigabe wird das Inventar nachvollziehbar ergänzt. Ein genehmigter Test-Access-Point prüft den Weg vom Fund bis zur Bearbeitung durch die Administration. Wiederkehrende Fehlalarme werden verifiziert, bevor Erkennungsregeln oder der freigegebene Bestand geändert werden."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Identify",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Asset & Exposure Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Asset Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Asset Discovery",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.4",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.4_gdn",
+                  "name": "guidance",
+                  "prose": "Das Netzinventar führt die Enterprise-SSIDs, Funkzellen, VLANs, Controller, Uplinks und Übergänge mit ihrem Verwendungszweck und ihrer Zuständigkeit. Die Beziehungen zu RADIUS, führenden Verzeichnissen, Zertifikatsdiensten, DNS und Zeitquellen sind erfasst. Ein getrennter WPA2-Kompatibilitätszugang ist als Bestandsausnahme erkennbar.\n\nÄnderungen von Segmentzuordnung, Authentisierungsweg oder Dienstbetreiber sind mit den aktiven Konfigurationen abgeglichen. Der Netzbetrieb führt den Bestand im Änderungsverfahren nach. Eine Prüfung eines geänderten AAA-Pfades vergleicht dokumentierte Gegenstellen und erlaubte Verbindungen mit der tatsächlichen Weiterleitung."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Identify",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Asset & Exposure Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Asset Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "CMDB",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.5",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.5_gdn",
+                  "name": "guidance",
+                  "prose": "Der Netzplan bildet Funkzellen, Verteilnetz, Controller, Sicherheitszonen und Managementpfade des Enterprise-WLANs ab. Der Authentisierungspfad vom Supplicant über den Authenticator zum RADIUS-Dienst ist von der anschließenden Nutzdatenweiterleitung unterscheidbar. Verzeichnis-, PKI-, DNS- und Zeitabhängigkeiten sowie externe Betreibergrenzen sind dargestellt.\n\nDie Darstellung erlaubt das Erkennen gemeinsamer Ausfallpunkte und unkontrollierter Übergänge, ohne Zugangsmittel offenzulegen. Der Zugriff auf Detailpläne ist auf betriebliche und prüfende Rollen begrenzt. Bei einer Störungsübung wird der Anmeldeweg anhand des Plans nachvollzogen. Umbauten und Änderungen an Vertrauens- oder Betreibergrenzen sind im Plan nachgeführt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Identify",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Asset & Exposure Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Asset Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "CMDB",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.3.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.3.1_gdn",
+                  "name": "guidance",
+                  "prose": "Funkfeldplanung und wiederholbare Ausleuchtung prüfen die vorgesehenen Versorgungsbereiche des Enterprise-WLANs. Messungen berücksichtigen Zellüberlappung, Kanalbelegung, Störeinflüsse und die eingesetzten Clientklassen. Auch Bereiche mit unerwünschter Reichweite sind erfasst; Funkabdeckung allein begründet keine Zugangsberechtigung.\n\nAn Übergängen zwischen Funkzellen prüfen authentisierte Testclients die Verbindungskontinuität und den tatsächlichen Authentisierungs- beziehungsweise Roamingablauf. Ein WPA2-Bestandszugang wird nur in den freigegebenen 2,4- oder 5-GHz-Bereichen geprüft. Zulässige Frequenznutzung und Leistung sind standortbezogen geklärt. Nach baulichen Änderungen oder einer geänderten Geräteverteilung wird die Ausleuchtung wiederholt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.9.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.9.1_gdn",
+                  "name": "guidance",
+                  "prose": "Die Dimensionierung berücksichtigt gleichzeitig angemeldete Clients, benötigte Airtime, Anwendungsverkehr und Spitzen bei Anmeldung oder Wiederanmeldung. Access-Point-Uplinks und Controllerpfade sind auf die vorgesehene Last sowie den festgelegten Restbetrieb bei Ausfällen ausgelegt. Die Abhängigkeit vom Authentisierungsdienst ist in den Lastannahmen berücksichtigt.\n\nRepräsentative Benutzer- und Gerätegruppen erzeugen im Lasttest den erwarteten Datenverkehr einschließlich Roaming. Gemessen werden Durchsatz, Latenz, Paketverlust und Anmeldedauer. Ergebnisse und beobachtete Engpässe begründen die Nachdimensionierung. Neue Fachanwendungen oder eine geänderte Clientdichte lösen eine Aktualisierung der Bedarfsannahmen aus."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.1_gdn",
+                  "name": "guidance",
+                  "prose": "Die Segmentierung des Enterprise-WLANs folgt Schutzbedarf und erlaubten Benutzer- beziehungsweise Gerätefunktionen. SSID, VLAN und die nach erfolgreicher Authentisierung zugewiesene Rolle sind nachvollziehbar auf Sicherheitszonen abgebildet. Unterschiedliche Funknamen allein erzeugen keine Netztrennung.\n\nManagement und AAA-Dienste sind von gewöhnlichen Clientzonen getrennt. Benachbarte Gast-, IoT- oder PSK-Netze erhalten keinen pauschalen Übergang in das identitätsbasierte WLAN. Testclients mit unterschiedlichen Berechtigungen belegen die tatsächlich zugewiesenen Zonen. Vor Aufnahme einer neuen Gerätegruppe sind ihre Kommunikationsbeziehungen und die Auswirkungen auf bestehende Zonengrenzen geprüft."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2_gdn",
+                  "name": "guidance",
+                  "prose": "Zwischen den Sicherheitszonen gilt eine standardmäßig sperrende Kommunikationsmatrix. Die im Parameter genannten Kriterien bilden eine zusammengehörige Freigabeentscheidung: authentisierte Identität, zugewiesene Rolle, Quell- und Zielzone, Dienst und Verbindungsrichtung. Die konkreten Identitäten, Rollen, Dienste und Zielsysteme sind in der Umgebung festgelegt; aus der Guidance entstehen keine zusätzlichen Auswahlkriterien.\n\nRADIUS-Autorisierungsattribute werden nur von freigegebenen Gegenstellen übernommen und in den vorgesehenen VLANs oder Filterregeln umgesetzt. Positive und negative Verbindungstests prüfen die Matrix aus den jeweiligen WLAN-Rollen. Nicht mehr erforderliche Beziehungen werden nach Änderungen der betreffenden Dienste aus dem Regelsatz entfernt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.1_gdn",
+                  "name": "guidance",
+                  "prose": "Externe Verbindungen aus WLAN-Segmenten führen über festgelegte Kontrollpunkte zum Internet, zu Partnernetzen, Cloud-Diensten oder Fernzugängen. Unverwaltete Mobilfunkrouter, Client-Hotspots und parallele Funkverbindungen dürfen diese Übergänge nicht unkontrolliert umgehen; zugelassene Pfade werden gefiltert und protokolliert. Ein kontrollierter Test auf zusätzliche Hotspot- oder Tunnelpfade belegt die Wirksamkeit der Übergänge. Änderungen externer Anschlüsse und zugelassene Ausnahmen werden vor Aktivierung im Netzplan und in den Filterregeln berücksichtigt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.2_gdn",
+                  "name": "guidance",
+                  "prose": "Ein vorhandenes Gastnetz ist gegenüber dem identitätsbasierten Enterprise-WLAN, den AAA-Diensten und dem Managementnetz abgeschottet. Aus der Gastzone sind nur die für ihren Zweck ausdrücklich freigegebenen Dienste erreichbar. Gemeinsame Access Points oder Controller heben die Trennung nicht auf.\n\nDieses Control beschreibt die Grenze zum Gastnetz. Es legt keine Personal-, PSK- oder offene Zugangstechnik für Gäste fest. Identitätsbasierte Gastberechtigungen erhalten eine eigene, begrenzte Rolle. Tests aus der Gastzone bestätigen die Sperre interner und administrativer Ziele. Temporäre Übergänge werden nach Ende ihres genehmigten Zwecks entfernt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.3",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.3_gdn",
+                  "name": "guidance",
+                  "prose": "WLAN-Clients werden von Server- und Managementsystemen getrennt. Erforderliche Verbindungen laufen über kontrollierte Übergänge mit beschränkten Quellen, Zielen, Diensten und Richtungen, sodass ein kompromittiertes Endgerät nicht unmittelbar Controller, Verzeichnisdienste oder Administrationsschnittstellen erreicht. Die erreichbaren Serverdienste werden aus der Clientrolle getestet; Administrationsports bleiben dabei gesperrt. Neue Server oder geänderte Dienstports erhalten erst nach Freigabe eine Verbindung in das Clientsegment."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.4",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.4_gdn",
+                  "name": "guidance",
+                  "prose": "Sprach- und sonstige Datenverkehre im WLAN werden entsprechend Verfügbarkeit, Priorität und Schutzbedarf getrennt behandelt. Eigene Segmente oder gleichwertige Richtlinien für Voice over WLAN begrenzen laterale Zugriffe und werden mit QoS, Filterregeln und dem Ausfallkonzept abgestimmt. Ein Test unter gleichzeitiger Sprach- und Datenlast prüft die Dienstgüte und die unerlaubte Erreichbarkeit zwischen den Zonen. Bei Änderungen von Telefonieendgeräten oder Priorisierungsregeln wird die Verträglichkeit erneut bewertet."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.5",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.5_gdn",
+                  "name": "guidance",
+                  "prose": "OT- und IoT-Systeme, die am Enterprise-WLAN teilnehmen, sind über individuelle Geräteidentitäten und ihrem Zweck entsprechende Rollen angebunden. Die Kommunikation der Geräte ist auf benötigte Steuerungs-, Vermittlungs- und Verwaltungsdienste beschränkt. Normale WLAN-Clients erhalten keinen unmittelbaren Zugriff auf OT-Steuerfunktionen.\n\nGeräte ohne das freigegebene identitätsbasierte Zugangsverfahren werden nicht durch eine gelockerte Enterprise-SSID aufgenommen. Ein gegebenenfalls benachbartes Sondernetz liegt außerhalb dieses Zugangsprofils; seine Übergänge bleiben kontrolliert. Verbindungstests prüfen erlaubte Steuerwege und gesperrte Querzugriffe. Änderungen der OT-Kommunikation sind vor Freigabe mit dem zuständigen Betrieb abgestimmt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.6",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.6_gdn",
+                  "name": "guidance",
+                  "prose": "Extern erreichbare WLAN-Dienste werden über eine demilitarisierte Zone oder eine gleichwertig kontrollierte Übergangsarchitektur angebunden. Öffentliche, interne und administrative Kommunikationsrichtungen sind getrennt gefiltert, damit ein kompromittierter Dienst nicht unmittelbar in Client- oder Managementsegmente weiterleitet. Eine Prüfung aus der externen Dienstrolle bestätigt die gesperrten Wege in die internen Zonen. Veröffentlichte oder entfernte Dienste lösen die Anpassung der jeweiligen Ein- und Ausgangsregeln aus."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.7",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.7_gdn",
+                  "name": "guidance",
+                  "prose": "Administrative Schnittstellen von Access Points, Controllern und AAA-Komponenten sind ausschließlich aus einem getrennten Managementnetz erreichbar. Freigegebene Administrationssysteme und individuell zugeordnete Konten begrenzen den Zugang. Benutzerrollen des Enterprise-WLANs sowie Gast- und Sondernetze besitzen keinen unmittelbaren Managementpfad.\n\nSteuerverkehr, Überwachung und Wartung nutzen die vorgesehenen geschützten Verbindungen. Nicht benötigte Verwaltungsdienste sind deaktiviert. Bei extern betriebenen Plattformen sind Betreiberzugriffe und institutionelle Zugänge voneinander abgegrenzt. Negativtests aus Clientsegmenten prüfen die Abschottung. Nach einer Wiederherstellung oder einem Betreiberwechsel wird die Erreichbarkeit administrativer Dienste erneut mit dem Managementkonzept abgeglichen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.8",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.8_gdn",
+                  "name": "guidance",
+                  "prose": "Test- und Produktivbetrieb verwenden getrennte WLAN-Zonen und voneinander abgegrenzte AAA-Vertrauensbeziehungen. Produktive private Schlüssel und Zugangskonten werden nicht unkontrolliert in den Testaufbau kopiert. Änderungen von Firmware, EAP-Verfahren, Zertifikatsvertrauen oder Segmentzuweisung werden vor der Freigabe mit repräsentativen Supplicants geprüft.\n\nDer Testaufbau umfasst abgelehnte Anmeldungen, Zertifikatswechsel und den Ausfall eines RADIUS-Dienstes. Ein erprobter Rückfallstand erhält die freigegebene Zugangskontrolle; seine bekannten Schwachstellen sind bei der Entscheidung über eine Rückkehr berücksichtigt. Freigabe, Testergebnis und tatsächlicher Rollout sind zugeordnet. Notfalländerungen erhalten eine dokumentierte Ausnahmebehandlung und eine nachgeholte Prüfung."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.9",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.9_gdn",
+                  "name": "guidance",
+                  "prose": "Verbindungen zwischen IPv4- und IPv6-Systemen werden auf ausdrücklich benötigte Übergänge beschränkt. Übersetzung, Tunnel und parallele Protokollpfade sind dokumentiert und an kontrollierte Netzkomponenten gebunden. Nicht benötigte Übergangsmechanismen sind deaktiviert.\nDie Regeln für beide Protokollfamilien setzen denselben Schutzbedarf um. Adressvergabe und Router Advertisements werden so kontrolliert, dass kein ungefilterter Nebenpfad entsteht. Tests prüfen erlaubte und gesperrte Verbindungen über beide Protokollfamilien und vorhandene Übersetzungswege. Neue Tunnel, Änderungen der Adressierung und die Abschaltung einer Protokollfamilie werden im Netzplan und im Regelsatz nachgeführt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.10",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.10_gdn",
+                  "name": "guidance",
+                  "prose": "WLAN-Drucker mit individueller Geräteauthentisierung sind einer eingeschränkten Druckerzone zugeordnet. Autorisierte Clients erreichen die benötigten Druckdienste, jedoch keine Administrationsschnittstellen der Drucker. Discovery-Verkehr ist auf die für den Druckbetrieb freigegebenen Beziehungen begrenzt.\n\nEin Testdruck aus der vorgesehenen Benutzerrolle und ein gesperrter administrativer Zugriff belegen die Trennung. Drucker ohne das freigegebene Enterprise-Zugangsverfahren benötigen eine andere freigegebene Anbindung und bewirken keine allgemeine Absenkung der WLAN-Authentisierung. Bei Austausch eines Geräts werden seine Geräteberechtigung und die zugehörigen Freigaben entfernt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.2.11",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.2.11_gdn",
+                  "name": "guidance",
+                  "prose": "Physische Segmentierung wird eingesetzt, wenn logische Trennung den Schutzbedarf oder die geforderte Fehlerunabhängigkeit nicht ausreichend erfüllt. Für WLAN betrifft dies insbesondere getrennte Controller-, Switching-, Verkabelungs- oder Administrationspfade; gemeinsame Abhängigkeiten werden dokumentiert und bewertet. Eine Bestandsprüfung weist nach, welche Komponenten tatsächlich unabhängig sind. Umbauten erhalten diese Trennung oder führen zu einer dokumentierten Neubewertung der gemeinsamen Ausfall- und Vertrauensdomänen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.4.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.4.1_gdn",
+                  "name": "guidance",
+                  "prose": "### Identitätsbasierter Zugang\nDer reguläre WLAN-Zugang ist erst nach erfolgreicher IEEE-802.1X-Authentisierung und Zuordnung der freigegebenen Benutzer- oder Geräterolle geöffnet. EAP-TLS mit TLS 1.3 bildet den Zielbetrieb. MAC-Adressen und die ungeschützte äußere EAP-Identität ersetzen keinen kryptographischen Identitätsnachweis. Die zentrale Kontenverwaltung folgt WLAN.2.6 „Zentrales Management“.\n\nDie Netzzugangskontrolle setzt gepflegte Supplicant- und Zertifikatskonfigurationen sowie geschützte AAA-Verbindungen voraus. Deren Pflege erfolgt in den jeweiligen IT-Systemen und Anwendungen. Der Server prüft die Clientidentität und ihre Berechtigung für das betreffende WLAN. Ein getrennter WPA2-Bestandszugang verwendet ebenfalls EAP-TLS und dieselbe individuelle Berechtigungsverwaltung.\n\n### Fehlerfälle und Prüfung\nDer Ausfall des Authentisierungsdienstes öffnet keinen unkontrollierten internen Zugang. Eine fehlgeschlagene Anmeldung löst keinen Wechsel auf PSK, ein offenes Netz oder ein schwächeres EAP-Verfahren aus. Testfälle mit erlaubter Identität, gesperrtem Zugang und ungültigem Serverzertifikat prüfen Freigabe und Ablehnung. Änderungen an RADIUS-Richtlinien oder Supplicants erfordern eine erneute Prüfung der tatsächlich gewährten Netzrechte."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#9dceb4f3-30f8-46cc-8fad-61bdbbfb9391",
+                  "text": "RFC 9190: EAP-TLS 1.3",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#5bebddab-ccf6-4ee0-bc0d-ce23e4ff83d0",
+                  "text": "RFC 6614: Transport Layer Security (TLS) Encryption for RADIUS",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.4.1.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.4.1.1_gdn",
+                  "name": "guidance",
+                  "prose": "Die dynamische Netzzugangskontrolle bewertet den nachgewiesenen Zustand eines bereits identifizierten Clients. Geräteverwaltung, Sicherheitsupdates und erforderliche Schutzfunktionen bilden mögliche Zustandsmerkmale. Welche Merkmale und Grenzwerte für eine Geräteklasse maßgeblich sind, ist umgebungsspezifisch festgelegt; der Parameter bleibt deshalb offen.\n\nZustandssignale stammen aus überprüfbaren Quellen und besitzen eine festgelegte Gültigkeit. Änderungen lösen eine Neubewertung der Zugangsrolle aus. Fehlende oder veraltete Signale bewirken keine automatische Freigabe regulärer Rechte. Ein kontrollierter Zustandswechsel prüft Rollenänderung, Protokollierung und Rücknahme der Berechtigung. Nicht unterstützte Geräteklassen erhalten einen ausdrücklich begrenzten Behandlungspfad; neue Kriterien werden vor Aktivierung auf Fehlbewertungen geprüft."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.4.1.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.4.1.2_gdn",
+                  "name": "guidance",
+                  "prose": "Ein Quarantänenetz stellt ausschließlich freigegebene Registrierungs-, Prüf- oder Wiederherstellungsdienste bereit. Es besitzt keinen allgemeinen Übergang in das Enterprise-WLAN und erlaubt keine Zugriffe auf dessen Managementschnittstellen. Die Rückkehr in eine reguläre Rolle setzt eine erneute erfolgreiche Authentisierungs- und Zustandsprüfung voraus.\n\nEin nachgewiesen identifizierter, aber nicht konformer Client kann entsprechend der NAC-Entscheidung in diese Zone gelangen. Eine fehlgeschlagene EAP-TLS-Authentisierung ermöglicht dagegen nicht automatisch eine verschlüsselte WLAN-Sitzung: Die Quarantäne ersetzt keine erfolgreiche Einrichtung der geschützten Funkverbindung. Ein nicht konformer Testclient prüft die begrenzte Erreichbarkeit und den kontrollierten Rückweg. Fehlgeschlagene Registrierung oder Neubewertung öffnet keine dauerhafte Ausweichberechtigung."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#9dceb4f3-30f8-46cc-8fad-61bdbbfb9391",
+                  "text": "RFC 9190: EAP-TLS 1.3",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.4.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.4.2_gdn",
+                  "name": "guidance",
+                  "prose": "Routing- und Weiterleitungsänderungen zwischen WLAN-Zonen werden vor Aktivierung durch eine zuständige, vom technischen Ändernden angemessen getrennte Rolle freigegeben. Die Genehmigung bezieht sich auf Quelle, Ziel, Dienst, Richtung, Schutzbedarf und Laufzeit und wird mit der tatsächlich ausgerollten Konfiguration abgeglichen. Die konkrete Rolle wird institutionell festgelegt und deshalb nicht als universeller Parameter gesetzt. Eine Stichprobe vergleicht Genehmigung und aktive Route. Befristete Weiterleitungen werden nach Ablauf entfernt und auf verbliebene Nebenpfade geprüft."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.4.3",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.4.3_gdn",
+                  "name": "guidance",
+                  "prose": "Routingprotokolle in den an WLAN angebundenen Netzen akzeptieren Nachbarschaften und Aktualisierungen nur aus freigegebenen, authentisierten Quellen. Schlüssel und Vertrauensanker werden geschützt und erneuert; unerwartete Routenänderungen, Nachbarschaften oder Authentisierungsfehler werden protokolliert und alarmiert. Eine nicht authentisierte Testnachbarschaft wird zurückgewiesen und alarmiert. Ein Wechsel der Routingtechnik oder des Schlüsselmaterials wird vor der Übernahme auf gültige Nachbarschaften und wirksame Zurückweisung geprüft."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.3.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.3.2_gdn",
+                  "name": "guidance",
+                  "prose": "In Sicherheitsbereichen wird die Funkabstrahlung auf den betrieblich notwendigen Raum und die erforderliche Leistung begrenzt. Standort, Antennencharakteristik, Sendeleistung und bauliche Dämpfung werden durch Messungen verifiziert; verbleibende Außenreichweite fließt in Zugangskontrolle und Überwachung ein. Messpunkte innerhalb und außerhalb des Schutzbereichs dokumentieren die tatsächliche Reichweite. Bauliche Änderungen und eine neue Antennenposition führen zur erneuten Ausleuchtung; eine begrenzte Sendeleistung ersetzt keine Client-Authentisierung."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.3.3",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.3.3_gdn",
+                  "name": "guidance",
+                  "prose": "Die Enterprise-SSIDs sind institutionell festgelegt und ohne Hersteller-Standardnamen oder unnötige interne Detailangaben konfiguriert. Kontrolliert bereitgestellte Clientprofile ordnen jeder SSID das zulässige Zugangsverfahren und die erwartete Serveridentität zu. Die Übereinstimmung des Funknamens allein beweist nicht die Echtheit des Netzes.\n\nEin WPA2-Kompatibilitätszugang ist von der regulären WPA3-SSID getrennt erkennbar. Ein Abgleich von Controllerkonfiguration und Funkscan erfasst unerwartete oder veraltete SSIDs. Temporäre Netze sind nach Ende ihres Zwecks abgeschaltet; überholte Profile sind aus den verwalteten Clients entfernt. Änderungen am Funknamen werden gemeinsam mit den zugehörigen Vertrauens- und Zugangsprofilen geprüft."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.3.4",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.3.4_gdn",
+                  "name": "guidance",
+                  "prose": "### Zugelassene Verfahren\n\nDie Funkanbindung verwendet ausschließlich WPA3-Enterprise oder WPA2-Enterprise mit AES-CCMP, EAP-TLS und verpflichtenden geschützten Management-Frames (Protected Management Frames, PMF). Weitere Funkzugangsverfahren sind nicht freigegeben. PMF schützt bestimmte Management-Frames vor Manipulation und Fälschung; es bezeichnet keine pauschale Verschlüsselung aller Management-Frames.\n\n### WPA3-Zielbetrieb und WPA2-Bestand\n\nAuf der regulären WPA3-Enterprise-SSID sind WPA2 und sämtliche WPA2/WPA3-Übergangsmodi vollständig deaktiviert. WPA2-Enterprise ist ausschließlich für dokumentierte Bestandsgeräte in einem getrennten 2,4- oder 5-GHz-Zugang vorgesehen. Dort sind AES-CCMP, EAP-TLS und PMF verpflichtend. Betroffene Geräte, begrenztes Segment und Ablösebedingungen sind dokumentiert; die Komponenten erhalten Sicherheitsupdates. Geräte ohne die geforderten Verfahren werden nicht durch deren Abschaltung aufgenommen. Im 6-GHz-Band wird kein WPA2-Zugang bereitgestellt.\n\nWEP, ursprüngliches WPA, TKIP sowie Personal- und PSK-Verfahren sind auf sämtlichen erfassten Zugängen vollständig abgeschaltet. Mischmodi und automatische Rückfälle umgehen diese Ausschlüsse nicht.\n\n### Schutz vor Schlüsselneuinstallation\n\nBeim WPA2-Bestandsbetrieb ist der Schutz gegen Schlüsselneuinstallationsangriffe (KRACK) nachgewiesen. Diese Angriffe manipulieren die Schlüsselaushandlung und können zur Wiederverwendung von Nonces sowie zum Zurücksetzen von Wiederholungszählern führen. AES-CCMP, EAP-TLS und verpflichtendes PMF allein gewährleisten diesen Schutz nicht.\n\nFür die eingesetzten Access Points und WLAN-Clients sind die jeweils einschlägigen Sicherheitskorrekturen anhand der Herstellerinformationen und tatsächlich installierten Softwarestände geprüft. Ein aktualisierter Access Point belegt nicht automatisch den Schutz ungepatchter Clients. Der clientseitige Nachweis erfolgt durch die für die jeweiligen IT-Systeme zuständigen Stellen.\n\n### Verifikation und Roaming\n\nFunkaufzeichnungen und Verbindungsprotokolle belegen je Clientklasse das tatsächlich ausgehandelte Verfahren einschließlich PMF. Negative Tests bestätigen die Ablehnung ausgeschlossener Protokolle. Beim schnellen Roaming sind Übertragung und Speicherung des Schlüsselmaterials geschützt. Sitzungswiederaufnahme und Schlüsselzwischenspeicherung umgehen weder Ablauf noch Entzug der Zugangsberechtigung. Änderungen an Clientbestand, Firmware oder Roaming-Konfiguration lösen einen erneuten Kompatibilitäts- und Sicherheitstest aus.\n\nBei betroffenen Infrastrukturkomponenten bleibt IEEE 802.11r (Fast BSS Transition) bis zum Nachweis der Sicherheitskorrektur deaktiviert. Dies begrenzt die betreffende KRACK-Variante; andere Schlüsselneuinstallationsangriffe werden dadurch nicht ausgeschlossen. Herstellerseitig angebotene Schutzfunktionen für ungepatchte Clients werden hinsichtlich ihrer abgedeckten Angriffsvarianten und ihrer Auswirkungen auf Verbindungsaufbau und Stabilität geprüft.\n\n### Ergänzende Absicherung\n\nKorrekt konfigurierte und authentisierte TLS- oder VPN-Verbindungen schützen die von ihnen erfassten Nutzdaten zusätzlich. TLS und VPN beheben die KRACK-Schwachstellen der WLAN-Schlüsselaushandlung nicht. Die erforderlichen Sicherheitskorrekturen an betroffenen Access Points und WLAN-Clients bleiben notwendig. Für weiterhin verwundbare Komponenten ist die Beendigung des betroffenen WLAN-Betriebs vorgesehen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Data & AI",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Data Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Encryption",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#9dceb4f3-30f8-46cc-8fad-61bdbbfb9391",
+                  "text": "RFC 9190: EAP-TLS 1.3",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#c8a30581-2858-4ed9-b169-71e48ae9ef3a",
+                  "text": "Key Reinstallation Attacks: Forcing Nonce Reuse in WPA2",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#974fee7f-da78-4346-9bcf-f1c069d06a38",
+                  "text": "KRACK Attacks: Breaking WPA2",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#e15253a7-5bd2-42df-990a-01b0eeda2fdc",
+                  "text": "NCSC: 'Krack' Wi-Fi guidance",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.5.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.5.1_gdn",
+                  "name": "guidance",
+                  "prose": "Filter an Übergängen des Enterprise-WLANs setzen die ausdrücklich erlaubten Verbindungen zwischen Benutzer-, Geräte-, Server- und Managementzonen um. Die Zuordnung zur authentisierten Rolle bleibt auch bei dynamischer VLAN- oder ACL-Zuweisung nachvollziehbar. Innerhalb einer WLAN-Zone ist die direkte Clientkommunikation auf den dokumentierten Bedarf begrenzt.\n\nZustandsbehaftete Paketfilter und gegebenenfalls anwendungsbezogene Kontrollpunkte prüfen die freigegebenen Dienste. Positive und negative Tests aus den vorgesehenen Rollen vergleichen tatsächliche Erreichbarkeit und Regelsatz. Bei Rollenwechseln oder aufgegebenen Diensten werden nicht mehr benötigte Freigaben entfernt. Protokollierung und Auswertung erfassen Versuche, die kontrollierten Übergänge zu umgehen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.5.1.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.5.1.1_gdn",
+                  "name": "guidance",
+                  "prose": "An WLAN-Übergängen sind anfällige Verwaltungs- und Nutzdatenprotokolle blockiert. Dazu zählen etwa Telnet, SMBv1 und SNMPv1/v2c. Managementzugriffe auf die Enterprise-Infrastruktur verwenden die freigegebenen authentisierten und verschlüsselten Verfahren; eine erfolgreiche 802.1X-Anmeldung ersetzt deren Schutz nicht.\n\nErforderliche Ausnahmen außerhalb der ausgeschlossenen Funkverfahren sind auf benannte Quellen, Ziele und Dienste begrenzt und mit einer Ablösebedingung versehen. Dienstprüfungen aus den betroffenen Rollen belegen die Sperren. Neue Protokollschwachstellen und ein geänderter Geschäftsbedarf lösen die Neubewertung bestehender Ausnahmen aus. WEP, WPA und TKIP bleiben unabhängig davon gemäß WLAN.3.3 „Verschlüsselte Netzanbindung“ deaktiviert."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.5.1.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.5.1.2_gdn",
+                  "name": "guidance",
+                  "prose": "Die WLAN-nahe Netzinfrastruktur begrenzt typische Angriffe auf Schicht 2 und 3 durch geeignete Port-, Adress- und Nachbarschaftskontrollen. Schutzmechanismen gegen gefälschte ARP-, DHCP- und Router-Informationen werden mit Roaming, Redundanz und den vorgesehenen Clienttypen getestet. Genehmigte Tests mit gefälschten Adress- oder Routerinformationen belegen die jeweilige Abwehr. Neue Switch-, Controller- und Clientversionen werden auf Verträglichkeit mit den Kontrollen geprüft."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.5.1.3",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.5.1.3_gdn",
+                  "name": "guidance",
+                  "prose": "TCP-basierte Angriffe aus oder gegen WLAN-Segmente werden durch zustandsbehaftete Prüfung, belastbare Zeitgrenzen und ressourcenschonende Behandlung unvollständiger Verbindungen begrenzt. Ausnahmen für spezielle Anwendungen werden eng gefasst und anhand von Telemetrie auf Umgehung oder Überlastung überwacht. Prüfungen unzulässiger TCP-Zustandswechsel und injizierter Reset-Pakete erfolgen in einem freigegebenen Testnetz. Die Beobachtung der betroffenen Anwendung zeigt, ob Zustandsprüfung oder Ratenbegrenzung legitime Kommunikation beeinträchtigt. Nach Änderungen der Zwischenkomponenten wird der Test wiederholt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#68cadd65-33bf-4b4a-8295-e3167e55a65b",
+                  "text": "RFC 5961: Improving TCP Robustness to Blind In-Window Attacks",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.5.1.4",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.5.1.4_gdn",
+                  "name": "guidance",
+                  "prose": "UDP-basierte Angriffe, insbesondere Flooding, Reflection und Missbrauch der Adressvergabe, werden an WLAN-Übergängen begrenzt. Erlaubte UDP-Dienste sind nach Quelle, Ziel und Rate eingeschränkt; DHCP- und DNS-Verhalten wird gegen Baselines und missbräuchliche Last geprüft. Ein abgestimmter Lasttest prüft unerwünschte Antwortverstärkung und Ressourcenverbrauch, ohne fremde Ziele einzubeziehen. Erforderliche Sprach- und Namensdienste bleiben unter der vorgesehenen Last nutzbar; neue UDP-Dienste werden vor Freigabe auf missbrauchbare Antwortpfade geprüft."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#b879de66-cb2d-4827-a337-15d3cb14d9de",
+                  "text": "RFC 8085: UDP Usage Guidelines",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.5.1.12",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.5.1.12_gdn",
+                  "name": "guidance",
+                  "prose": "Softwaredefinierte Segment- und WLAN-Richtlinien dürfen Verbindungen anhand aktueller Identitäts-, Geräte-, Standort- und Risikosignale dynamisch anpassen. Signale und Entscheidungslogik werden authentisch, versioniert und ausfallsicher bereitgestellt; Änderungen werden vor Freigabe getestet und auf unbeabsichtigte Sperren oder Öffnungen überwacht. Ein kontrollierter Kontextwechsel belegt Freigabe und Rücknahme der erwarteten Verbindung. Bei fehlenden oder nicht mehr vertrauenswürdigen Signalen wird eine vorab definierte beschränkte Regel verwendet; eine automatische Erweiterung der Berechtigung findet nicht statt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Firewall / NGFW",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#791ce96d-42a5-44ea-a306-355ad2bf985b",
+                  "text": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.8.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.8.1_gdn",
+                  "name": "guidance",
+                  "prose": "Das Kernnetz hinter den Enterprise-Access-Points besitzt redundante Switching- und Weiterleitungskomponenten. Uplinks und Controlleranbindungen sind auf gemeinsame Ausfallpunkte geprüft; zwei logische Pfade über dieselbe ausgefallene Komponente bilden keine wirksame Redundanz. Die verfügbare Restkapazität ist für den festgelegten Betrieb bewertet.\n\nAusfalltests prüfen Umschaltung und Rückkehr, ohne Segmentregeln oder AAA-Vertrauen aufzuheben. Die Verfügbarkeit von RADIUS, Verzeichnissen und Zertifikatsprüfung ist als zusätzliche Dienstabhängigkeit dokumentiert und wird durch redundante Netzpfade allein nicht nachgewiesen. Nach Architekturänderungen sind Ausfallannahmen und Netzplan abgeglichen. Eine Wiederherstellungsprobe prüft auch die erhaltenen Zugangsbeschränkungen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.9.5",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.9.5_gdn",
+                  "name": "guidance",
+                  "prose": "Volumetrische Angriffe werden an den Internetübergängen und den für das Enterprise-WLAN benötigten Netzpfaden begrenzt. Vorgelagerte Abwehr und Ratenbegrenzung schützen verfügbare Bandbreite sowie die Ressourcen von Controllern und Authentisierungsdiensten. Auslösewerte und Eingriffe sind mit den betroffenen Betreibern abgestimmt.\n\nEin kontrollierter Lastversuch bewertet den verbleibenden legitimen Daten- und Anmeldeverkehr. Vorübergehende Sperren besitzen eine geregelte Aufhebung und Eskalation. Funkstörungen werden getrennt untersucht, da IP-basierte Abwehr kein Jamming verhindert. Änderungen an Zugangszahlen oder externen Dienstabhängigkeiten fließen in das Abwehr- und Kapazitätskonzept ein."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Respond",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Incident & Crisis Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Attack Mitigation",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "DDoS Mitigation",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#b879de66-cb2d-4827-a337-15d3cb14d9de",
+                  "text": "RFC 8085: UDP Usage Guidelines",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "ARCH.2.6",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "ARCH.2.6_gdn",
+                  "name": "guidance",
+                  "prose": "### Fortlaufender Soll-Ist-Abgleich\nDie Topologieüberwachung läuft als dauerhaft aktiver Dienst. Ereignisse von Controllern, Access Points und Switches sind zentral erfasst, beispielsweise über authentisierte SNMPv3-Meldungen, Syslog über TLS oder geschützte Verwaltungsschnittstellen. Wiederkehrende Abfragen ergänzen die Ereigniserfassung und erkennen ausgebliebene Meldungen. Ein automatischer Soll-Ist-Abgleich prüft Gerätebestand, Uplinks, Nachbarschaften und Segmentzuordnungen gegen die freigegebene Netzarchitektur.\n\nKontinuierlich bezeichnet die fortlaufende Erfassung und Auswertung im laufenden Betrieb. Abfrageintervalle und Alarmverzögerungen sind anhand der erforderlichen Erkennungszeit festgelegt.\n\n### Meldung und Nachverfolgung\nErkannte Abweichungen erzeugen einen Alarm oder ein Ticket und benachrichtigen die zuständige Administration mit Zeitpunkt, betroffenem Objekt, Sollzustand und beobachteter Änderung. Quittierung, Bearbeitung und Eskalation nicht übernommener Meldungen sind geregelt. Ausfälle der Datenerfassung und des Überwachungsdienstes werden gesondert gemeldet. Eine kontrollierte Uplink-Änderung sowie die Unterbrechung eines Erfassungspfades prüfen Erkennung, Benachrichtigung und Eskalation."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Monitoring & Observability",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Performance Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.11",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.11_gdn",
+                  "name": "guidance",
+                  "prose": "Die Anomalieerkennung korreliert WLAN-Verkehrsmetadaten mit Controller-, RADIUS-, DNS- und Firewallereignissen. Benutzer- oder Geräterolle, Standort und SSID ermöglichen die Unterscheidung erwarteter Nutzung von neuen Kommunikationsbeziehungen, Scans und ungewöhnlichen Datenabflüssen. Fehlanmeldungen und unerwartete Rollenwechsel ergänzen den Netzkontext.\n\nNormalwerte sind anhand des tatsächlichen Betriebs erhoben. Zuständigkeit und Eskalation richten sich nach dem erkannten Szenario. Genehmigte Testereignisse verfolgen den Weg von der Beobachtung bis zur Bearbeitung. Nach Segmentänderungen oder neuen Anwendungen sind Regeln und Normalwerte überprüft. Inhaltsdaten werden nur im erforderlichen und zulässigen Umfang erhoben; die Erkennung rechtfertigt keine unbegrenzte Mitschrift des WLAN-Verkehrs."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Security Operations",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Detection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "NDR",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.11.2",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.11.2_gdn",
+                  "name": "guidance",
+                  "prose": "Netzwerk-Honeypots können in geeigneten WLAN-nahen Segmenten unberechtigte Zugriffe sichtbar machen. Die Auswahl zwischen einfacher Diensteemulation und interaktionsreicheren Ködern richtet sich nach Erkenntnisbedarf und Betriebsrisiko. Ködersysteme enthalten keine produktiven Daten, Zugangsmittel oder Vertrauensbeziehungen.\nAusgehende Verbindungen sind so begrenzt, dass ein kompromittierter Köder nicht als Ausgangspunkt weiterer Angriffe dient. Ein genehmigter Zugriff auf einen Köderdienst prüft die Alarmierung. Reguläre Scans sind bei der Bewertung als mögliche Fehlalarmursache berücksichtigt. Ereignisdaten werden geschützt ausgewertet und nach dem festgelegten Zweck gelöscht. Bei nicht beherrschbarem Risiko wird der Honeypot isoliert oder außer Betrieb genommen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Security Operations",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Active Detection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Deception Technology",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.11.3",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.11.3_gdn",
+                  "name": "guidance",
+                  "prose": "Verkehrsflussdaten erfassen kritische Beziehungen zwischen Enterprise-WLAN, Serverzonen, AAA-Diensten und Managementnetz. Quelle, Ziel, Dienst, Datenmenge, Dauer und Richtung liefern die benötigten Metadaten, ohne automatisch sämtliche Paketnutzdaten aufzuzeichnen. Eine Zuordnung zur authentisierten Rolle erfolgt nur aus überprüften Autorisierungsdaten.\n\nWelche Flüsse kritisch sind und welche Beobachtungspunkte erforderlich sind, wird aus der tatsächlichen Netzarchitektur und dem Detektionszweck abgeleitet. Der Kriterienparameter bleibt deshalb umgebungsspezifisch offen. Eine Stichprobe prüft erfasste Felder, Zugriffsrechte und die Sichtbarkeit eines bekannten Testflusses. Änderungen des Zwecks oder der Übergänge lösen die Anpassung von Erfassungsstellen, Aufbewahrung und Löschung aus."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Security Operations",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Detection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "NDR",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.12",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.12_gdn",
+                  "name": "guidance",
+                  "prose": "Die Verfügbarkeitsüberwachung prüft den vollständigen Anmelde- und Nutzungspfad des Enterprise-WLANs. Funkverbindung, Controller, RADIUS, benötigte Verzeichnisse, DHCP, DNS und Zertifikatsstatusdienste sind als unterscheidbare Abhängigkeiten erfasst. Eine synthetische Anmeldung mit einem überwachten Testzugang ergänzt reine Erreichbarkeitsprüfungen.\n\nDienstbezogene Schwellwerte für Antwortzeiten, Fehler und Ausfälle sind in der Umgebung festgelegt; ein pauschaler skalarer Grenzwert wird nicht vorgegeben. Der Ausfall eines Testdienstes belegt die Alarmierung und Zuordnung zur zuständigen Administration. Wartungsunterdrückungen enden mit dem freigegebenen Wartungsfenster. Geänderte AAA- oder PKI-Abhängigkeiten sind in die synthetischen Prüfungen übernommen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Monitoring & Observability",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Performance Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.12.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.12.1_gdn",
+                  "name": "guidance",
+                  "prose": "Auslastungsdaten unterscheiden Funkzelle, Kanal, Access Point und Uplink. Für den Enterprise-Betrieb sind Anmeldespitzen und die Auslastung der abhängigen Controller- und AAA-Pfade mit der Netzlast korrelierbar. Normalwerte berücksichtigen typische Betriebszeiten und die vorgesehenen Benutzer- und Geräteklassen.\n\nAirtime, Bandbreite, Latenz, Paketverlust und Wiederholungen werden gegen die aus Dienstbedarf und Kapazitätsreserven abgeleiteten Schwellwerte bewertet. Diese Grenzen bleiben umgebungsspezifisch und deshalb ungesetzt. Ein kontrollierter Lasttest prüft, ob die Administration vor einer unzulässigen Beeinträchtigung benachrichtigt wird. Neue Anwendungen oder eine geänderte Gerätedichte lösen die Neubewertung von Normalwerten und Alarmgrenzen aus."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Monitoring & Observability",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Performance Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#35589990-3589-4d42-80cf-31fc9634a3ca",
+                  "text": "ASD Information Security Manual, September 2026: Guidelines for networking",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.19",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.19_gdn",
+                  "name": "guidance",
+                  "prose": "Ein Wireless Intrusion Detection System überwacht die relevanten Funkbereiche kontinuierlich auf unbekannte Sender, Rogue Access Points, Evil Twins und nicht freigegebene Client-Hotspots. Funk- und kabelseitige Beobachtungen werden mit dem Inventar abgeglichen und unterstützen die Lokalisierung; bestätigte Funde werden logisch oder physisch eingedämmt und in die Vorfallbearbeitung überführt. Ein genehmigter unbekannter Test-Access-Point belegt Erkennung und Lokalisierung. Die Abdeckung des WIDS wird je Funkband und Gerätekategorie geprüft; Sender außerhalb seines Erfassungsbereichs werden dadurch nicht ausgeschlossen. Eine Eindämmung erfolgt über eigene Netzkomponenten oder physische Entfernung. Absichtliche Funkstörungen oder erzwungene Abmeldungen fremder Verbindungen werden nicht als Abwehrmaßnahme eingesetzt."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Security Operations",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Intrusion Detection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "IDS / IPS",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "GEB.6.3",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "GEB.6.3_gdn",
+                  "name": "guidance",
+                  "prose": "Für den Netzbetrieb erforderliche zentrale Controller, Switches und Authentisierungsserver befinden sich in Räumen für technische Infrastruktur. Deren Zugang, Stromversorgung und Umgebungsbedingungen sind dem erforderlichen Betriebsschutz zugeordnet. Eine Begehung gleicht Standorte und Zutrittsberechtigungen mit dem Inventar ab.\nErfordert die Funkversorgung dezentral montierte Access Points außerhalb solcher Räume, wird dies als begründete Abweichung von der räumlichen Empfehlung dokumentiert. Zugangsschutz am Gehäuse, geschützte Uplinks und die Begrenzung von Reset- und Konsolenzugriffen vermindern das Risiko. Diese Maßnahmen werden nicht als gleichwertige Erfüllung der ausschließlichen Unterbringung in Technikräumen bezeichnet. Unbefugtes Abstecken, Austausch und Rücksetzen werden bei der Standortprüfung berücksichtigt. Änderungen an Montageort oder Verkabelung lösen eine erneute Bewertung aus."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Platform & Infrastructure",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Network Protection",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Network Security",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "SENS.10.4",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "SENS.10.4_gdn",
+                  "name": "guidance",
+                  "prose": "Die Sensibilisierung für strukturierte Verkabelung bezieht die Ethernet- und Power-over-Ethernet-Anbindungen der Access Points ein. Administrierende erkennen Ports, Patchfelder, VLAN-Zuordnungen, Kabelführung und Stromversorgung eindeutig und dokumentieren Änderungen so, dass Fehlanschlüsse, unbeabsichtigte Netzbrücken und vermeidbare Ausfälle auffallen. Eine praktische Zuordnungsübung an ausgewählten Patchfeldern und AP-Ports prüft das Verständnis. Nach Standortumbauten und geänderten PoE-Anforderungen werden Kennzeichnung und Unterweisung angepasst."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Govern",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Governance, Risk & Compliance",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Awareness & Training",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Security Awareness Platform",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "SENS.7.14",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "SENS.7.14_gdn",
+                  "name": "guidance",
+                  "prose": "Beschäftigte kennen die freigegebenen Enterprise-Verbindungsprofile und das Verfahren zur Genehmigung zusätzlicher WLAN-Zugänge. Private Access Points, Client-Hotspots und Funkbrücken sind als mögliche Umgehung von Segmentierung und identitätsbasierter Netzzulassung erläutert. Ein gleichlautender SSID-Name genügt nicht als Nachweis eines autorisierten Netzes.\n\nNicht freigegebene Profile und unerwartete Aufforderungen zur Änderung des Serververtrauens werden über den bekannten Meldeweg geklärt. Genehmigte Ausnahmen sind befristet und technisch auf ihren Zweck begrenzt. Eine Übung verfolgt eine Ausnahme bis zur Aufhebung und Entfernung des Profils. Änderungen mobiler Arbeitsmittel fließen in die Unterweisung ein; Sensibilisierung ersetzt nicht die technische Erkennung unautorisierter Sender."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Govern",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Governance, Risk & Compliance",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Awareness & Training",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Security Awareness Platform",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "BER.3.1",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "BER.3.1_gdn",
+                  "name": "guidance",
+                  "prose": "WLAN-Zugangskonten sind in einer zentralen Identitätsverwaltung geführt und über einen kontrollierten Authentisierungsdienst an die WLAN-Infrastruktur angebunden. Autorisierungsattribute und Kontostatus stammen aus festgelegten führenden Verzeichnissen. Lokale Kontobestände auf Access Points oder Controllern ersetzen diese Verwaltung nicht.\n\nDie Verwaltung der Identitäten, Zugangskonten, Berechtigungen und Authentisierungsmittel erfolgt nach der Praktik Berechtigung (BER) des Grundschutz++. Dazu gehören die kontrollierte Ausgabe und Zuordnung, die Überprüfung der Erforderlichkeit sowie der Entzug von Berechtigungen und der Widerruf von Zugangsmitteln.\n\nDie WLAN-Anbindung setzt Änderungen des zentralen Kontostatus und der zugewiesenen Berechtigungen auch bei Sitzungswiederaufnahme und Roaming durch. Ein Testkonto belegt die Übernahme von Anlage, Rollenänderung und Sperrung bis zur tatsächlich gewährten Netzerreichbarkeit. Der Ausfall der zentralen Verwaltung oder des Authentisierungsdienstes führt nicht zu einem unbeschränkten lokalen Ausweichzugang."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Protect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Identity & Access",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Identity Management",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "IAM",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#fa0b74bd-5719-42e2-8003-1e37226f9b67",
+                  "text": "NIST SP 800-63B-4: Digital Identity Guidelines - Authentication and Authenticator Management, 2025",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#9dceb4f3-30f8-46cc-8fad-61bdbbfb9391",
+                  "text": "RFC 9190: EAP-TLS 1.3",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "control-id": "DET.4.4",
+          "removes": [
+            {
+              "by-name": "guidance"
+            }
+          ],
+          "adds": [
+            {
+              "position": "starting",
+              "parts": [
+                {
+                  "id": "DET.4.4_gdn",
+                  "name": "guidance",
+                  "prose": "Die Überwachung vergleicht die Sicherheitsrichtlinien des Enterprise-WLANs mit den freigegebenen Ständen. Erkannt werden insbesondere deaktivierte 802.1X- oder PMF-Vorgaben, gelockerte Netzzulassungsregeln, unerwartete RADIUS-Gegenstellen und nicht freigegebene Rollen- oder Filterzuweisungen. Auch die Abschaltung der Überwachung selbst erzeugt eine Meldung.\n\nÄnderungsereignisse werden mit Genehmigungen und Konfigurationsständen korreliert. Nicht zugeordnete Abweichungen benachrichtigen die zuständige Administration und erhalten eine nachvollziehbare Bearbeitung. Ein kontrollierter Richtlinienwechsel prüft Meldung und fachliche Einordnung; die bloße Existenz eines Audit-Logs belegt keine aktive Überwachung. Nach Wiederherstellung oder Plattformwechsel sind die erfassten Richtlinienobjekte mit dem aktuellen Sollbestand abgeglichen."
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L1",
+                  "value": "Detect",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L1-NIST%20Funktionen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L2",
+                  "value": "Monitoring & Observability",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L2-Technologiedom%C3%A4nen.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L3",
+                  "value": "Compliance Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L3-Produktkategorien.csv"
+                }
+              ]
+            },
+            {
+              "props": [
+                {
+                  "name": "Taxonomy-L4",
+                  "value": "Configuration Compliance Monitoring",
+                  "ns": "https://github.com/BSI-Bund/Stand-der-Technik-Bibliothek/blob/main/documentation/namespaces/L4-Produkt-%20und%20Servicegruppen.csv"
+                }
+              ]
+            },
+            {
+              "position": "ending",
+              "links": [
+                {
+                  "href": "#5610f801-d53e-4d67-a169-963e15dd456d",
+                  "text": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+                  "rel": "reference"
+                },
+                {
+                  "href": "#8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+                  "text": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+                  "rel": "reference"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "back-matter": {
+      "resources": [
+        {
+          "uuid": "35589990-3589-4d42-80cf-31fc9634a3ca",
+          "title": "ASD Information Security Manual, September 2026: Guidelines for networking",
+          "rlinks": [
+            {
+              "href": "https://www.cyber.gov.au/ism/2026-09/guidelines-for-networking",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "3eee40bfcbb21164c75586cf501682ca"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "5610f801-d53e-4d67-a169-963e15dd456d",
+          "title": "Enhanced Visibility and Hardening Guidance for Communications Infrastructure, 4 December 2024",
+          "rlinks": [
+            {
+              "href": "https://www.cyber.gov.au/advisory/enhanced-visibility-and-hardening-guidance-for-communications-infrastructure",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "c980af028d7c8110b9a022553accdbc8"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "9dceb4f3-30f8-46cc-8fad-61bdbbfb9391",
+          "title": "RFC 9190: EAP-TLS 1.3",
+          "rlinks": [
+            {
+              "href": "https://www.rfc-editor.org/rfc/rfc9190.html",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "b367fd1a38c31951c60a5099908af253"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "5bebddab-ccf6-4ee0-bc0d-ce23e4ff83d0",
+          "title": "RFC 6614: Transport Layer Security (TLS) Encryption for RADIUS",
+          "rlinks": [
+            {
+              "href": "https://www.rfc-editor.org/rfc/rfc6614.html",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "ee54e35081b03cdc49315b029ec57471"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "8eb81064-74fb-436e-84b5-b0d6f2e8f818",
+          "title": "NIST SP 800-153: Guidelines for Securing Wireless Local Area Networks (WLANs), February 2012",
+          "rlinks": [
+            {
+              "href": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-153.pdf",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "10becbc9bab3db8f3ef4169a036bc80d"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "fa0b74bd-5719-42e2-8003-1e37226f9b67",
+          "title": "NIST SP 800-63B-4: Digital Identity Guidelines - Authentication and Authenticator Management, 2025",
+          "rlinks": [
+            {
+              "href": "https://pages.nist.gov/800-63-4/sp800-63b.html",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "7fce4d159fae1f3b4092eb0a49666830"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "68cadd65-33bf-4b4a-8295-e3167e55a65b",
+          "title": "RFC 5961: Improving TCP Robustness to Blind In-Window Attacks",
+          "rlinks": [
+            {
+              "href": "https://www.rfc-editor.org/rfc/rfc5961.html",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "26f1f63361ca86e8ab7be901908ad0e0"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "b879de66-cb2d-4827-a337-15d3cb14d9de",
+          "title": "RFC 8085: UDP Usage Guidelines",
+          "rlinks": [
+            {
+              "href": "https://www.rfc-editor.org/rfc/rfc8085.html",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "ea7f6734c6b73aa79c8f682669b553e3"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "791ce96d-42a5-44ea-a306-355ad2bf985b",
+          "title": "CCN-CERT BP 11: Security recommendations in corporate Wi-Fi networks, July 2021",
+          "rlinks": [
+            {
+              "href": "https://www.ccn-cert.cni.es/gl/pdf/informes-de-ciberseguridad-ccn-cert/informes-ccn-cert-buenas-practicas-bp/6125-ccn-cert-bp-11-security-recommendations-in-corporate-wi-fi-networks/file.html",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "56801679642af151f78237d2bae2ad1e"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "c8a30581-2858-4ed9-b169-71e48ae9ef3a",
+          "title": "Key Reinstallation Attacks: Forcing Nonce Reuse in WPA2",
+          "rlinks": [
+            {
+              "href": "https://papers.mathyvanhoef.com/ccs2017.pdf",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "01e0b6c1985c27210136df1a8674b145"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "974fee7f-da78-4346-9bcf-f1c069d06a38",
+          "title": "KRACK Attacks: Breaking WPA2",
+          "rlinks": [
+            {
+              "href": "https://www.krackattacks.com/",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "df77f75b1e43a509208f45351f2515a7"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "e15253a7-5bd2-42df-990a-01b0eeda2fdc",
+          "title": "NCSC: 'Krack' Wi-Fi guidance",
+          "rlinks": [
+            {
+              "href": "https://www.ncsc.gov.uk/guidance/krack",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "90b9c75fc7690eb5b2f42a07835d3253"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "uuid": "4d163d32-4070-41d7-b256-da2e8751ca9e",
+          "rlinks": [
+            {
+              "href": "../../../Kernel/BSI-Stand-der-Technik-Kernel-catalog.json",
+              "hashes": [
+                {
+                  "algorithm": "MD5",
+                  "value": "ce27a49609faf56be050cf4957ceb232"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
