@@ -1,0 +1,37 @@
+name: OSCAL Schema Validation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate OSCAL files
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 #v6.3.0
+        with:
+          distribution: temurin
+          java-version: "21"
+
+        # https://github.com/metaschema-framework/oscal-cli
+      - name: Install oscal-cli
+        run: |
+          curl -sSfL -o "$RUNNER_TEMP/oscal-cli.zip" https://repo1.maven.org/maven2/dev/metaschema/oscal/oscal-cli-enhanced/3.2.0/oscal-cli-enhanced-3.2.0-oscal-cli.zip
+          echo "e001b353ee245da6f4ff0ad930c4dfaa88083c63243ca004bd5f5bcef44e8ec8  $RUNNER_TEMP/oscal-cli.zip" | sha256sum -c -
+          unzip -q "$RUNNER_TEMP/oscal-cli.zip" -d "$RUNNER_TEMP/oscal-cli"
+
+      - name: Validate
+        run: find control_layer implementation_layer assessment_layer -name '*.json' -print0 | xargs -0 -n1 "$RUNNER_TEMP/oscal-cli/bin/oscal-cli" validate
